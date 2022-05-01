@@ -12,12 +12,12 @@ export default class _Document extends Document {
 
     return {
       ...initialProps,
-      styles: (
+      styles: [
         <>
           {initialProps.styles}
           <ServerStyles html={initialProps.html} server={stylesServer} />
         </>
-      ),
+      ],
     }
   }
 
