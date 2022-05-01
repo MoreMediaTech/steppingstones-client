@@ -4,7 +4,7 @@ import FAQItem from './FAQItem'
 const FAQSection = () => {
   
   return (
-    <section id="faqs" className=" bg-white space-y-4 pt-24 mb-8">
+    <section id="faqs" className=" bg-white space-y-4 pt-24 ">
       <div className="space-y-4">
         <h1 className="text-center text-4xl font-medium text-indigo-900">
           FAQs

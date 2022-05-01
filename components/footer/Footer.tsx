@@ -1,10 +1,11 @@
-import Image from 'next/image'
+import Image from 'next/image';
+
 import { FaTwitter } from 'react-icons/fa'
 
 const Footer = () => {
     const year = new Date().getFullYear()
   return (
-    <footer className="bottom-0 left-0 mb-0 w-full py-4 ">
+    <footer className="bottom-0 left-0 mb-0 w-full py-4 border-t border-indigo-100">
       <div className="container mx-auto space-y-4">
         <div className="flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
           <div>

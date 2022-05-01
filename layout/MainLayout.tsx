@@ -1,8 +1,17 @@
-import React from 'react'
+import { useState } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { Navbar } from '@components/navigation'
-import Footer from '@components/footer'
+import Footer from '@components/footer';
+import {
+  AppShell,
+  Header,
+  Aside,
+  Text,
+  MediaQuery,
+  Burger,
+  useMantineTheme,
+} from '@mantine/core'
 
 interface ILayout {
   title?: string
@@ -12,6 +21,8 @@ interface ILayout {
 
 function MainLayout({ title, description, children }: ILayout): JSX.Element {
   const router = useRouter()
+    const theme = useMantineTheme()
+    const [opened, setOpened] = useState(false)
   return (
     <div
       className="flex h-screen flex-col justify-between"
@@ -57,9 +68,24 @@ function MainLayout({ title, description, children }: ILayout): JSX.Element {
         <meta name="theme-color" content="#000000" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <Navbar />
-      <main className="relative z-0 min-h-screen">{children}</main>
-      <Footer />
+      <AppShell
+        styles={{
+          main: {
+            background:
+              theme.colorScheme === 'dark'
+                ? theme.colors.dark[8]
+                : theme.colors.gray[0],
+          },
+        }}
+        navbarOffsetBreakpoint="sm"
+        asideOffsetBreakpoint="sm"
+        fixed
+        padding={0}
+        header={<Navbar />}
+        footer={<Footer />}
+      >
+        <main className="relative z-0 ">{children}</main>
+      </AppShell>
     </div>
   )
 }

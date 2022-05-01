@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { Burger, Drawer } from '@mantine/core'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { Burger, Drawer, Header } from '@mantine/core'
+import { FaSignInAlt, FaUser } from 'react-icons/fa';
 
 const Navbar = () => {
+  const router = useRouter()
   const [pos, setPos] = useState<string>('top')
   const [opened, setOpened] = useState<boolean>(false)
   const title = opened ? 'Close navigation' : 'Open navigation'
@@ -20,15 +24,14 @@ const Navbar = () => {
   }, [])
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-    window.location.hash = ''
+    if (router.pathname === '/') {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      window.location.hash = ''
+    }
+    router.push('/')
   }
   return (
-    <header
-      className={`${
-        pos === 'top' ? 'absolute bg-white ' : 'shadow-b-2xl fixed bg-white '
-      } top-0 z-10 flex w-full flex-wrap items-center justify-between shadow-sm`}
-    >
+    <Header height={80}>
       <div className="mx-auto w-full max-w-screen-xl p-2">
         <div className="flex items-center justify-between space-x-4 lg:space-x-10">
           <div
@@ -58,6 +61,18 @@ const Navbar = () => {
               <a className="font-semibold text-gray-900" href="#faqs">
                 FAQs
               </a>
+              <Link href={'/auth/login'}>
+                <a className="flex items-center gap-1 font-semibold text-gray-900">
+                  <FaSignInAlt fontSize={14} />
+                  <span>Login</span>
+                </a>
+              </Link>
+              <Link href={'/auth/register'}>
+                <a className="flex items-center gap-1 font-semibold text-gray-900">
+                  <FaUser fontSize={12} />
+                  <span>Register</span>
+                </a>
+              </Link>
             </nav>
 
             <div className="hidden flex-1 items-center justify-end space-x-4 md:flex">
@@ -77,7 +92,6 @@ const Navbar = () => {
               onClick={() => setOpened((o) => !o)}
               title={title}
             />
-
             <Drawer
               opened={opened}
               onClose={() => setOpened(false)}
@@ -127,6 +141,18 @@ const Navbar = () => {
                   >
                     FAQs
                   </a>
+                  <Link href={'/auth/login'}>
+                    <a className="flex items-center text-2xl font-semibold text-gray-900">
+                      <FaSignInAlt fontSize={18} />
+                      <span>Login</span>
+                    </a>
+                  </Link>
+                  <Link href={'/auth/register'}>
+                    <a className="flex items-center text-2xl font-semibold text-gray-900">
+                      <FaUser fontSize={18} />
+                      <span>Register</span>
+                    </a>
+                  </Link>
                 </nav>
 
                 <div className="flex-1 items-center justify-end space-x-4 md:flex">
@@ -142,7 +168,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-    </header>
+    </Header>
   )
 }
 

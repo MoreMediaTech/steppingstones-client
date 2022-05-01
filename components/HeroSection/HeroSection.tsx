@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 const HeroSection = () => {
   return (
-    <section className="relative mt-20 md:h-[800px] flex items-center justify-center  p-4 ">
+    <section className="relative md:h-[800px] flex items-center justify-center  p-4 ">
       <div className="absolute h-full w-full bg-cover bg-center bg-no-repeat">
         <div className="relative h-full w-full">
           <Image
