@@ -10,6 +10,7 @@ import { counties } from 'data'
 import { registerUser, reset as resetAuthState, authSelector } from 'features/auth/authSlice'
 import Spinner from '@components/spinner'
 import { Button } from '@mantine/core'
+import { NEXT_URL } from '@config/index'
 
 const RegisterForm = () => {
     const router = useRouter()
@@ -35,7 +36,7 @@ const RegisterForm = () => {
     }
 
     if(isAuth || currentUser){
-        router.replace('http://localhost:3000/admin')
+        router.replace(`${NEXT_URL}/admin`)
     }
 
     dispatch(resetAuthState())

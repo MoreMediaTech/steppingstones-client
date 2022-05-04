@@ -11,6 +11,7 @@ import {
   authSelector,
 } from 'features/auth/authSlice'
 import Spinner from '@components/spinner'
+import { NEXT_URL } from '@config/index';
 
 const LoginForm = () => {
     const router = useRouter()
@@ -35,20 +36,20 @@ const LoginForm = () => {
       }
 
       if (isAuth || currentUser) {
-        router.replace('http://localhost:3000/admin')
+        router.replace(`${NEXT_URL}\admin`)
       }
 
       dispatch(resetAuthState())
     }, [currentUser, isAuth, isError, error])
 
-  const handleSignUp: SubmitHandler<IFormData> = async (data) => {
+  const handleLogin: SubmitHandler<IFormData> = async (data) => {
       console.log(data)
     dispatch(loginUser(data))
     reset()
   }
   return (
     <form
-      onSubmit={handleSubmit(handleSignUp)}
+      onSubmit={handleSubmit(handleLogin)}
       className="flex w-full max-w-screen-sm flex-col items-center space-y-2 px-2"
     >
       <div className="w-full rounded-md border-2 border-gray-200 bg-white">
