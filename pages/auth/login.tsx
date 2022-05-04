@@ -9,8 +9,8 @@ const Login = () => {
         <div className="container mx-auto  py-12">
           <div className="flex w-full flex-col items-center space-y-10 p-4 ">
             <h1 className="flex items-center gap-2 text-5xl">
-              <FaSignInAlt fontSize={34} />
-              <span>Login</span>
+              <FaSignInAlt fontSize={40} color="#01E2FD" />
+              <span className="text-indigo-900">Login</span>
             </h1>
             <LoginForm />
           </div>

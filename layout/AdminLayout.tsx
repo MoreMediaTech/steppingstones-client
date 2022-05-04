@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useRouter } from 'next/router'
 import {
   AppShell,
   Navbar,
@@ -9,10 +10,12 @@ import {
   MediaQuery,
   Burger,
   useMantineTheme,
+  Group,
 } from '@mantine/core'
 import Head from 'next/head'
 import { AdminNavbar } from '@components/navigation'
 import Image from 'next/image'
+import { UnstyledButton } from '@mantine/core'
 
 interface ILayout {
   title?: string
@@ -25,6 +28,7 @@ const AdminLayout = ({
   description,
   children,
 }: ILayout): JSX.Element => {
+  const router = useRouter()
   const theme = useMantineTheme()
   const [opened, setOpened] = useState(false)
 
@@ -92,23 +96,30 @@ const AdminLayout = ({
               style={{ display: 'flex', alignItems: 'center', height: '100%' }}
             >
               <div className="flex w-full items-center justify-between">
-                <div className="flex cursor-pointer items-center gap-2 lg:w-0 lg:flex-1">
-                  <div className="w-50 h-50 -mb-4">
-                    <Image
-                      src={'/SteppingStonesLogo2.png'}
-                      width={80}
-                      height={80}
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <h1 className="text-xl font-semibold uppercase text-indigo-900 sm:text-2xl">
-                      Stepping Stones
-                    </h1>
-                    <h3 className="text-xs capitalize text-sky-500">
-                      Business resource solutions
-                    </h3>
-                  </div>
-                </div>
+                <UnstyledButton
+                  onClick={() => {
+                    router.push('/')
+                  }}
+                >
+                  <Group>
+                    <div className="w-50 h-50 -mb-4">
+                      <Image
+                        src={'/SteppingStonesLogo2.png'}
+                        width={80}
+                        height={80}
+                      />
+                    </div>
+                    <div className="flex flex-col">
+                      <h1 className="text-xl font-semibold uppercase text-indigo-900 sm:text-2xl">
+                        Stepping Stones
+                      </h1>
+                      <h3 className="text-xs capitalize text-sky-500">
+                        Business resource solutions
+                      </h3>
+                    </div>
+                  </Group>
+                </UnstyledButton>
+               
               </div>
               <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
                 <Burger

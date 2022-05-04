@@ -9,6 +9,7 @@ import FormRowSelect from './FormComponents/FormRowSelect'
 import { counties } from 'data'
 import { registerUser, reset as resetAuthState, authSelector } from 'features/auth/authSlice'
 import Spinner from '@components/spinner'
+import { Button } from '@mantine/core'
 
 const RegisterForm = () => {
     const router = useRouter()
@@ -43,7 +44,7 @@ const RegisterForm = () => {
   const handleSignUp: SubmitHandler<IFormData> = async (data) => {
     console.log(data)
     if (data.password !== data.confirmPassword) {
-      return alert('Passwords do not match')
+      return showNotification({message:'Passwords do not match. Please try again.', color: 'red', autoClose: 3000})
     }
 
     const user = {
@@ -117,14 +118,14 @@ const RegisterForm = () => {
         {...register('county', { required: true })}
       />
       <div className="w-full">
-        <button
+        <Button
           type="submit"
-          disabled={isLoading}
-          className="w-full rounded-md border border-indigo-900 bg-indigo-900 px-4 py-2 text-white"
+          loading={isLoading}
+          variant="filled"
         >
-            {isLoading ? (<Spinner classes='h-8 w-8' /> ) : 'Sign Up'}
+            Sign Up
           
-        </button>
+        </Button>
       </div>
     </form>
   )

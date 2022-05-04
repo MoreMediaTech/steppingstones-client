@@ -8,6 +8,16 @@ export interface AuthError {
   message: string 
 }
 
+
+
+export interface CurrentUser {
+  id?: string
+  name?: string
+  email?: string
+  isAdmin?: boolean
+  role?: string
+}
+
 export interface AuthState {
   isAuth: boolean
   currentUser?: CurrentUser | null
@@ -18,22 +28,19 @@ export interface AuthState {
   error: AuthError | undefined
 }
 
-export interface CurrentUser {
-  id?: string
-  name?: string
-  email?: string
-  isAdmin?: boolean
-  role?: string
-}
+const user = typeof window !== 'undefined' && localStorage.getItem('user')
+
 export const initialState: AuthState = {
   isAuth: false,
   isLoading: false,
   isSuccess: false,
-  currentUser: null,
+  currentUser: user ? JSON.parse(user) : null,
   isError: false,
   message: '',
   error: { message: 'An Error occurred' },
 }
+
+
 
 // Register user
 export const registerUser = createAsyncThunk<
@@ -50,6 +57,35 @@ export const registerUser = createAsyncThunk<
       error.toString()
     return thunkAPI.rejectWithValue(message)
   }
+})
+
+// Login user
+export const loginUser = createAsyncThunk<
+  Partial<CurrentUser>,
+  Partial<CurrentUser>,
+  { dispatch: AppDispatch, rejectValue: AuthError }
+>('auth/login', async (user: Partial<CurrentUser>, thunkAPI) => {
+  try {
+    return await authService.login(user)
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
+export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
+    try {
+        return await authService.logout()
+    } catch (error) {
+        const message =
+        (error.response && error.response.data && error.response.data.message) ||
+        error.message ||
+        error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
 })
 
 export const authSlice = createSlice({
@@ -84,19 +120,35 @@ export const authSlice = createSlice({
       state.isLoading = true
       state.isError = false
       state.message = ''
-    })
-    builder.addCase(registerUser.fulfilled, (state, action) => {
+    }).addCase(registerUser.fulfilled, (state, action) => {
       state.isLoading = false
       state.isError = false
       state.message = ''
       state.isAuth = true
       state.currentUser = action.payload
-    })
-    builder.addCase(registerUser.rejected, (state, action) => {
+    }).addCase(registerUser.rejected, (state, action) => {
       state.isLoading = false
       state.isError = true
       state.error = action.payload
       state.currentUser = null
+    }).addCase(loginUser.pending, (state, action) => {
+      state.isLoading = true
+      state.isError = false
+      state.message = ''
+    }).addCase(loginUser.fulfilled, (state, action) => {
+      state.isLoading = false
+      state.isError = false
+      state.message = ''
+      state.isAuth = true
+      state.currentUser = action.payload
+    }).addCase(loginUser.rejected, (state, action) => {
+      state.isLoading = false
+      state.isError = true
+      state.error = action.payload
+      state.currentUser = null
+    }).addCase(logout.fulfilled, (state) => {
+        state.isAuth = false
+        state.currentUser = null
     })
   },
 })

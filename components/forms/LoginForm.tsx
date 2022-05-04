@@ -1,33 +1,55 @@
+import { useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { IFormData } from '@lib/types'
+import { useRouter } from 'next/router';
+import { IFormData } from '@lib/types';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'app/hooks';
+import { showNotification } from '@mantine/notifications';
+import {
+  loginUser,
+  reset as resetAuthState,
+  authSelector,
+} from 'features/auth/authSlice'
+import Spinner from '@components/spinner'
+
 const LoginForm = () => {
+    const router = useRouter()
+    const dispatch = useAppDispatch()
+    const { currentUser, isLoading, isError, isAuth, error } =
+      useSelector(authSelector)
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm<IFormData>()
+
+    useEffect(() => {
+      if (isError) {
+        showNotification({
+          message: error?.message,
+          autoClose: 3000,
+          color: 'red',
+          sx: { backgroundColor: 'red' },
+        })
+      }
+
+      if (isAuth || currentUser) {
+        router.replace('http://localhost:3000/admin')
+      }
+
+      dispatch(resetAuthState())
+    }, [currentUser, isAuth, isError, error])
+
   const handleSignUp: SubmitHandler<IFormData> = async (data) => {
       console.log(data)
-    try {
-    //   const response = await fetch('http://localhost:5001/api/users/signup', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(data),
-    //   })
-    //   const responseData = await response.json()
-    //   console.log(responseData)
-      reset()
-    } catch (error) {
-      console.error(error)
-    }
+    dispatch(loginUser(data))
+    reset()
   }
   return (
     <form
       onSubmit={handleSubmit(handleSignUp)}
-      className="flex w-full flex-col items-center space-y-2 max-w-screen-sm px-2"
+      className="flex w-full max-w-screen-sm flex-col items-center space-y-2 px-2"
     >
       <div className="w-full rounded-md border-2 border-gray-200 bg-white">
         <label htmlFor="email"></label>
@@ -58,9 +80,10 @@ const LoginForm = () => {
       <div className="w-full">
         <button
           type="submit"
-          className="rounded-md border border-indigo-900 bg-indigo-900 px-4 py-2 text-white"
+          disabled={isLoading}
+          className="rounded-md border border-indigo-900 bg-indigo-900 px-4 py-2 text-white w-full"
         >
-          Submit
+          {isLoading ? <Spinner classes="h-8 w-8" /> : 'Login'}
         </button>
       </div>
     </form>
