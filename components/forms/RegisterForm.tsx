@@ -7,13 +7,17 @@ import { showNotification } from '@mantine/notifications'
 import { useRouter } from 'next/router'
 import FormRowSelect from './FormComponents/FormRowSelect'
 import { counties } from 'data'
-import { registerUser, reset as resetAuthState, authSelector } from 'features/auth/authSlice'
+import {
+  registerUser,
+  reset as resetAuthState,
+  authSelector,
+} from 'features/auth/authSlice'
 import Spinner from '@components/spinner'
 import { Button } from '@mantine/core'
 import { NEXT_URL } from '@config/index'
 
 const RegisterForm = () => {
-    const router = useRouter()
+  const router = useRouter()
   const [opened, setOpen] = useState<boolean>(false)
   const {
     register,
@@ -23,20 +27,21 @@ const RegisterForm = () => {
   } = useForm<IFormData>()
 
   const dispatch = useAppDispatch()
-  const { currentUser, isLoading, isError, isAuth, error } = useSelector( authSelector)
+  const { currentUser, isLoading, isError, isAuth, error } =
+    useSelector(authSelector)
 
   useEffect(() => {
-    if(isError){
-        showNotification({
-          message: error?.message,
-          autoClose: 3000,
-          color: 'red',
-          sx: { backgroundColor: 'red' },
-        })
+    if (isError) {
+      showNotification({
+        message: error?.message,
+        autoClose: 3000,
+        color: 'red',
+        sx: { backgroundColor: 'red' },
+      })
     }
 
-    if(isAuth || currentUser){
-        router.replace(`${NEXT_URL}/admin`)
+    if (isAuth || currentUser) {
+      router.replace(`${NEXT_URL}/admin`)
     }
 
     dispatch(resetAuthState())
@@ -45,7 +50,11 @@ const RegisterForm = () => {
   const handleSignUp: SubmitHandler<IFormData> = async (data) => {
     console.log(data)
     if (data.password !== data.confirmPassword) {
-      return showNotification({message:'Passwords do not match. Please try again.', color: 'red', autoClose: 3000})
+      return showNotification({
+        message: 'Passwords do not match. Please try again.',
+        color: 'red',
+        autoClose: 3000,
+      })
     }
 
     const user = {
@@ -119,14 +128,20 @@ const RegisterForm = () => {
         {...register('county', { required: true })}
       />
       <div className="w-full">
-        <Button
+        <button
           type="submit"
-          loading={isLoading}
-          variant="filled"
+          disabled={isLoading}
+          className="w-full rounded-md border border-indigo-900 bg-indigo-900 px-4 py-2 text-white"
         >
-            Sign Up
-          
-        </Button>
+          {isLoading ? (
+            <div className='flex items-center space-x-2'>
+              <Spinner classes="h-4 w-4" /> 
+              <span>Signing up...</span>
+            </div>
+          ) : (
+            'Sign Up'
+          )}
+        </button>
       </div>
     </form>
   )

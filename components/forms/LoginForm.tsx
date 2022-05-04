@@ -82,9 +82,16 @@ const LoginForm = () => {
         <button
           type="submit"
           disabled={isLoading}
-          className="rounded-md border border-indigo-900 bg-indigo-900 px-4 py-2 text-white w-full"
+          className="w-full rounded-md border border-indigo-900 bg-indigo-900 px-4 py-2 text-white"
         >
-          {isLoading ? <Spinner classes="h-8 w-8" /> : 'Login'}
+          {isLoading ? (
+            <div className="flex items-center space-x-2">
+              <Spinner classes="h-4 w-4" />
+              <span>Login in...</span>
+            </div>
+          ) : (
+            'Login'
+          )}
         </button>
       </div>
     </form>
