@@ -1,5 +1,6 @@
 import { RegisterForm } from '@components/forms'
 import { MainLayout } from 'layout'
+import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import { FaUser } from 'react-icons/fa'
 
 const Register = () => {
@@ -22,5 +23,26 @@ const Register = () => {
     </MainLayout>
   )
 }
+
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const { req } = context
+  const cookies = req.cookies.ss_access_token
+
+  if (cookies) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {},
+  }
+}
+
 
 export default Register

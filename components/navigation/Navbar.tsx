@@ -75,6 +75,9 @@ const Navbar = () => {
     dispatch(reset())
     router.replace(`${NEXT_URL}`)
   }
+
+  const initials = currentUser?.name?.split(' ')?.map((n) => n[0])?.join('')
+  
   return (
     <Header height={80}>
       <div className="mx-auto w-full max-w-screen-xl p-2">
@@ -109,6 +112,8 @@ const Navbar = () => {
                           <UserButton
                             name={currentUser?.name ?? ''}
                             email={currentUser?.email ?? ''}
+                            initials={initials}
+                            show
                           />
                         }
                       >
@@ -219,6 +224,7 @@ const Navbar = () => {
                           <UserButton
                             name={currentUser?.name ?? ''}
                             email={currentUser.email ?? ''}
+                            initials={initials}
                             onClick={() => setIsOpen((o) => !o)}
                           />
                           <Collapse in={isOpen}>

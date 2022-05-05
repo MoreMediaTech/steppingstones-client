@@ -48,7 +48,6 @@ const RegisterForm = () => {
   }, [currentUser, isAuth, isError, error])
 
   const handleSignUp: SubmitHandler<IFormData> = async (data) => {
-    console.log(data)
     if (data.password !== data.confirmPassword) {
       return showNotification({
         message: 'Passwords do not match. Please try again.',

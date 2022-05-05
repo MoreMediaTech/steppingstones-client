@@ -1,5 +1,6 @@
 import { LoginForm } from '@components/forms'
 import { MainLayout } from 'layout'
+import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import { FaSignInAlt } from 'react-icons/fa'
 
 const Login = () => {
@@ -18,6 +19,26 @@ const Login = () => {
       </section>
     </MainLayout>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const { req } = context
+  const cookies = req.cookies.ss_access_token
+
+  if (cookies) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {},
+  }
 }
 
 export default Login

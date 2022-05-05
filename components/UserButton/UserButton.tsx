@@ -6,11 +6,13 @@ interface UserButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   image?: string
   name: string
   email: string
+  initials?: string
+  show?: boolean
   icon?: React.ReactNode
 }
 
 const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
-  ({ image, name, email, icon, ...others }: UserButtonProps, ref) => (
+  ({ image, name, email, icon, initials, show, ...others }: UserButtonProps, ref) => (
     <UnstyledButton
       ref={ref}
       sx={(theme) => ({
@@ -30,7 +32,9 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
       {...others}
     >
       <Group>
-        {image && <Avatar src={image} radius="xl" />}
+        <Avatar color="sky" radius="xl">
+          {initials}
+        </Avatar>
 
         <div style={{ flex: 1 }}>
           <Text size="sm" weight={500}>
@@ -42,7 +46,7 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
           </Text>
         </div>
 
-        {icon || <FaChevronRight fontSize={16} />}
+        {show && (icon || <FaChevronRight fontSize={16} />)}
       </Group>
     </UnstyledButton>
   )

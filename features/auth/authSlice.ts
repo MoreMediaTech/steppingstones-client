@@ -3,6 +3,7 @@ import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 
 import { AppThunk, RootState } from '../../app/store'
 import authService from './authService'
+import { getUser } from '@lib/getUser'
 
 export interface AuthError {
   message: string 
@@ -28,7 +29,9 @@ export interface AuthState {
   error: AuthError | undefined
 }
 
-const user = typeof window !== 'undefined' && localStorage.getItem('user')
+const user = typeof window !== 'undefined' && localStorage.getItem('user') || ''
+
+
 
 export const initialState: AuthState = {
   isAuth: false,

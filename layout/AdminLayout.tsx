@@ -11,12 +11,21 @@ import {
   Burger,
   useMantineTheme,
   Group,
+  Menu,
+  Button,
+  Divider,
 } from '@mantine/core'
 import Head from 'next/head'
-import { AdminNavbar } from '@components/navigation'
+import { CgMenuGridR } from 'react-icons/cg'
 import Image from 'next/image'
 import { UnstyledButton } from '@mantine/core'
+import { FaSignOutAlt } from 'react-icons/fa'
+import { useSelector } from 'react-redux'
+import { useAppDispatch } from 'app/hooks'
+import { authSelector, logout, reset } from 'features/auth/authSlice'
 
+import { AdminNavbar } from '@components/navigation'
+import { NEXT_URL } from '@config/index'
 interface ILayout {
   title?: string
   description?: string
@@ -29,8 +38,15 @@ const AdminLayout = ({
   children,
 }: ILayout): JSX.Element => {
   const router = useRouter()
+  const dispatch = useAppDispatch()
   const theme = useMantineTheme()
   const [opened, setOpened] = useState(false)
+
+  const handleLogout = () => {
+    dispatch(logout())
+    dispatch(reset())
+    router.replace(`${NEXT_URL}`)
+  }
 
   return (
     <div
@@ -119,7 +135,20 @@ const AdminLayout = ({
                     </div>
                   </Group>
                 </UnstyledButton>
-               
+                <div className="">
+                  <Menu placement="start" position="left">
+                    <Menu.Label>Application</Menu.Label>
+                    <Divider />
+                    <Menu.Item
+                      icon={<FaSignOutAlt fontSize={14} />}
+                      onClick={() => {
+                        handleLogout()
+                      }}
+                    >
+                      <span>Logout</span>
+                    </Menu.Item>
+                  </Menu>
+                </div>
               </div>
               <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
                 <Burger

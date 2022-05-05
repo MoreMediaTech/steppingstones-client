@@ -1,23 +1,12 @@
-import { API_URL } from "@config/index"
+import { axiosInstance } from './axiosDefaultConfig'
+import { SessionProps } from './types'
 
-type SessionProps = {
-  id: string
-  name: string
-  email: string
-  isAdmin: boolean
-  role: string
-}
-export async function getUser(req: { headers: { cookie: any } }): Promise<SessionProps> {
+export async function getUser(cookie: string): Promise<SessionProps> {
+  axiosInstance.defaults.headers.common['authorization'] = `Bearer ${cookie}`
   try {
-    const userRes = await fetch(`${API_URL}/api/users/getMe`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: req ?  `Bearer ${req.headers.cookie}`: '',
-      },
-    })
-    const user = await userRes.json()
-    return user
+    const { data } = await axiosInstance.get(`users/getMe`) 
+
+    return data
   } catch (error) {
     throw new Error('Unable to fetch user: ' + error.message)
   }

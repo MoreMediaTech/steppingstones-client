@@ -36,14 +36,13 @@ const LoginForm = () => {
       }
 
       if (isAuth || currentUser) {
-        router.replace(`${NEXT_URL}\admin`)
+        router.replace(`${NEXT_URL}/admin`)
       }
 
       dispatch(resetAuthState())
     }, [currentUser, isAuth, isError, error])
 
   const handleLogin: SubmitHandler<IFormData> = async (data) => {
-      console.log(data)
     dispatch(loginUser(data))
     reset()
   }
@@ -87,7 +86,6 @@ const LoginForm = () => {
           {isLoading ? (
             <div className="flex items-center space-x-2">
               <Spinner classes="h-4 w-4" />
-              <span>Login in...</span>
             </div>
           ) : (
             'Login'

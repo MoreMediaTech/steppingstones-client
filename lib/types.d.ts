@@ -5,3 +5,11 @@ export interface IFormData {
     confirmPassword?: string;
     county?: string;
 }
+
+export type SessionProps = {
+  id: string
+  name: string
+  email: string
+  isAdmin: boolean
+  role: string
+}
