@@ -6,7 +6,7 @@ import { axiosInstance } from '@lib/axiosDefaultConfig';
 
 // register user
 const register = async (data: Partial<CurrentUser>) => {
-    const response = await axios.post(`${API_URL}auth/register`, data , { headers: { 'Content-Type': 'application/json' } });
+    const response = await axios.post(`${API_URL}auth/register`, data , { headers: { 'Content-Type': 'application/json' }, withCredentials: false });
 
     if (response.data) {
          localStorage.setItem(
