@@ -23,7 +23,7 @@ const register = async (data: Partial<CurrentUser>) => {
 // login user
 const login = async (data: Partial<CurrentUser>) => {
   const response = await axios.post(`${API_URL}auth/login`, data, {
-    headers: { 'Content-Type': 'application/json', "Access-Control-Allow-Origin": "*" },
+    headers: { 'Content-Type': 'application/json' },
     withCredentials: false,
   })
 
