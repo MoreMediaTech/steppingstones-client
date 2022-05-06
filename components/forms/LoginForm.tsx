@@ -30,8 +30,7 @@ const LoginForm = () => {
         showNotification({
           message: error?.message,
           autoClose: 3000,
-          color: 'red',
-          sx: { backgroundColor: 'red' },
+          color: 'red'
         })
       }
 
