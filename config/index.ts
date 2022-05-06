@@ -5,5 +5,5 @@ export const NEXT_URL = dev
   : 'https://steppingstonesapp.com/'
 
 export const API_URL = dev
-  ? 'http://localhost:5001/api/'
-  : 'https://steppingstoneapp-server.herokuapp.com/api/'
+  ? 'http://localhost:5001/api/v1/'
+  : 'https://steppingstoneapp-server.herokuapp.com/api/v1/'
