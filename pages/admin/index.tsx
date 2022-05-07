@@ -1,12 +1,41 @@
 import { getUser } from '@lib/getUser'
-import { SessionProps } from '@lib/types'
-import { AdminLayout } from 'layout'
+import Link from 'next/link'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
-import React from 'react'
+import { SessionProps } from '@lib/types'
+import { Button } from '@mantine/core'
+import { AdminLayout } from 'layout'
 
 const AdminHome = ({ user }: { user: SessionProps}) => {
   return (
-    <AdminLayout>AdminHome</AdminLayout>
+    <AdminLayout title="Admin Home">
+      <section>
+        <div>
+          <h1>
+            Welcome to the <span>SteppingStones App</span> SteppingStones App
+            portal
+          </h1>
+        </div>
+        <div>
+          {user.isAdmin && user.role === 'PARTNER' ? (
+            <div>
+              <Button>
+                <Link href={'/admin/partner-portal'}>
+                  <a>Go to My Partner Portal</a>
+                </Link>
+              </Button>
+            </div>
+          ) : (
+            <div>
+              <Button>
+                <Link href={'/admin/dashboard'}>
+                  <a>Go to My Dashboard</a>
+                </Link>
+              </Button>
+            </div>
+          )}
+        </div>
+      </section>
+    </AdminLayout>
   )
 }
 
