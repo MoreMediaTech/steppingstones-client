@@ -1,42 +1,24 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
-import {
-  AppShell,
-  Navbar,
-  Header,
-  Footer,
-  Aside,
-  Text,
-  MediaQuery,
-  Burger,
-  useMantineTheme,
-  Group,
-  Menu,
-  Button,
-  Divider,
-} from '@mantine/core'
+import { AppShell, useMantineTheme } from '@mantine/core'
 import Head from 'next/head'
 import { CgMenuGridR } from 'react-icons/cg'
-import Image from 'next/image'
-import { UnstyledButton } from '@mantine/core'
-import { FaSignOutAlt } from 'react-icons/fa'
-import { useSelector } from 'react-redux'
 import { useAppDispatch } from 'app/hooks'
 
-
-import { authSelector, logout, reset } from 'features/auth/authSlice'
+import { logout, reset } from 'features/auth/authSlice'
 import { AdminNavbar, AdminSidebar } from '@components/navigation'
 import { NEXT_URL } from '@config/index'
 import { Children } from 'lib/types'
 interface ILayout extends Children {
   title?: string
   description?: string
-  showSidebar?: boolean
+  show?: boolean
 }
 
 const AdminLayout = ({
   title,
   description,
+  show,
   children,
 }: ILayout): JSX.Element => {
   const router = useRouter()
@@ -107,9 +89,14 @@ const AdminLayout = ({
         navbarOffsetBreakpoint="sm"
         asideOffsetBreakpoint="sm"
         fixed
-        navbar={<AdminSidebar opened={opened} show/>}
+        navbar={<AdminSidebar opened={opened} show={show} />}
         header={
-          <AdminNavbar opened={opened} setOpened={setOpened} theme={theme} handleLogout={handleLogout} />
+          <AdminNavbar
+            opened={opened}
+            setOpened={setOpened}
+            theme={theme}
+            handleLogout={handleLogout}
+          />
         }
       >
         {children}

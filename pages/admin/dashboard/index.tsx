@@ -2,23 +2,22 @@ import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import { getUser } from '@lib/getUser'
 import { SessionProps } from '@lib/types'
 import { ComponentShield } from '@components/NextShield'
-import { PartnerPortalLayout } from 'layout'
+import { AdminLayout } from 'layout'
 
 
-
-const index = ({ user }: { user: SessionProps }) => {
+const Dashboard = ({ user} : { user: SessionProps}) => {
   return (
-    <ComponentShield RBAC showForRole="PARTNER" userRole={user.role}>
-      <PartnerPortalLayout title="Partner Portal">
-        <section className="flex h-screen items-center justify-center">
-          <div className='container'>
+    <ComponentShield RBAC showForRole={"SS_EDITOR"} userRole={user.role}>
+      <AdminLayout title="Editor Dashboard">
+        <section className="flex h-full items-center justify-center">
+          <div className="">
             <h1>
               Welcome <span className="uppercase">{user.name}</span> to the
-              Partner Portal
+              Editor Dashboard
             </h1>
           </div>
         </section>
-      </PartnerPortalLayout>
+      </AdminLayout>
     </ComponentShield>
   )
 }
@@ -37,7 +36,9 @@ export const getServerSideProps: GetServerSideProps = async (
   }
 
   const user = await getUser(cookies)
-  if (!user?.isAdmin) {
+  const userRoles = ['SS_EDITOR', "COUNTY_EDITOR"]
+
+  if (!user?.isAdmin ) {
     return {
       redirect: {
         destination: '/not-authorized',
@@ -45,7 +46,7 @@ export const getServerSideProps: GetServerSideProps = async (
       },
     }
   }
-  if (user?.role !== 'PARTNER') {
+  if (!userRoles.includes(user.role)) {
     return {
       redirect: {
         destination: '/admin',
@@ -53,11 +54,9 @@ export const getServerSideProps: GetServerSideProps = async (
       },
     }
   }
-
-  
   return {
     props: { user: user as SessionProps },
   }
 }
 
-export default index
+export default Dashboard

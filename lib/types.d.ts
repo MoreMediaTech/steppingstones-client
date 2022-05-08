@@ -6,6 +6,11 @@ export interface IFormData {
   password?: string
   confirmPassword?: string
   county?: string
+  organisation?: string
+  postCode?: string 
+  contactNumber?: string
+  acceptTermsAndConditions?: boolean
+  acceptContactRequest?: boolean
 }
 
 export type SessionProps = {
@@ -31,8 +36,8 @@ export type ComponentShieldBaseProps = Children & { RBAC?: never; showIf?: never
 
 export type ComponentShieldRBACProps = Children & {
   RBAC: true
-  showForRole: string
-  userRole: string | undefined
+  showForRole: string[] | string
+  userRole: string | null
 }
 
 export type ComponentShieldAuthProps = Children & {
@@ -43,8 +48,8 @@ export type ComponentShieldAuthProps = Children & {
 
 export type ComponentShieldProps = Children & {
   RBAC?: boolean
-  userRole?: string | undefined
-  showForRole?: string
+  userRole?: string | null
+  showForRole?: string[] | string
   showIf?: boolean
   fallback?: ReactNode
 }

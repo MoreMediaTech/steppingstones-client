@@ -14,7 +14,7 @@ import { ComponentShieldAuthProps, ComponentShieldBaseProps, ComponentShieldProp
     children,
   } = props
 
-  if (RBAC) return <>{showForRole === userRole ? children : null}</>
+  if (RBAC && userRole) return <>{showForRole?.includes(userRole) ? children : null}</>
   if (showIf) return <>{children}</>
 
   return <>{fallback}</>

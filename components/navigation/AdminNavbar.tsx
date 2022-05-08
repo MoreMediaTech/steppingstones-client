@@ -1,5 +1,15 @@
-import { Burger, Divider, Group, Header, MantineTheme, MediaQuery, Menu, UnstyledButton } from '@mantine/core'
+import {
+  Burger,
+  Divider,
+  Group,
+  Header,
+  MantineTheme,
+  MediaQuery,
+  Menu,
+  UnstyledButton,
+} from '@mantine/core'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { Dispatch, SetStateAction } from 'react'
 import { FaSignOutAlt } from 'react-icons/fa'
@@ -11,8 +21,13 @@ interface IAdminNavbar {
   handleLogout: () => void
 }
 
-const AdminNavbar = ({theme, opened, setOpened, handleLogout}: IAdminNavbar) => {
-  const router = useRouter();
+const AdminNavbar = ({
+  theme,
+  opened,
+  setOpened,
+  handleLogout,
+}: IAdminNavbar) => {
+  const router = useRouter()
   return (
     <Header height={70} p="md">
       <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
@@ -43,6 +58,9 @@ const AdminNavbar = ({theme, opened, setOpened, handleLogout}: IAdminNavbar) => 
           <div className="">
             <Menu placement="start" position="left">
               <Menu.Label>Application</Menu.Label>
+              <Menu.Item onClick={() => router.push('/auth/profile')}>
+                Profile
+              </Menu.Item>
               <Divider />
               <Menu.Item
                 icon={<FaSignOutAlt fontSize={14} />}

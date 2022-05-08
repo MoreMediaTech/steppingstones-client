@@ -14,7 +14,7 @@ const AdminSidebar = ({ opened, show }: { opened: boolean, show?: boolean }) => 
     ?.map((n) => n[0])
     ?.join('')
 
-    const hideNavbar = show ? "sm" : "lg"
+    const hideNavbar = show ? "sm" : "xl"
   return (
     <Navbar
       p="md"

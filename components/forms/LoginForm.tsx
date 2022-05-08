@@ -10,8 +10,8 @@ import {
   reset as resetAuthState,
   authSelector,
 } from 'features/auth/authSlice'
-import Spinner from '@components/spinner'
 import { NEXT_URL } from '@config/index';
+import { Button, PasswordInput, TextInput } from '@mantine/core';
 
 const LoginForm = () => {
     const router = useRouter()
@@ -50,46 +50,62 @@ const LoginForm = () => {
       onSubmit={handleSubmit(handleLogin)}
       className="flex w-full max-w-screen-sm flex-col items-center space-y-2 px-2"
     >
-      <div className="w-full rounded-md border-2 border-gray-200 bg-white">
-        <label htmlFor="email"></label>
-        <input
-          type="email"
-          id="email"
-          placeholder="Email"
-          {...register('email', {
-            required: 'Email is required',
-            pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-              message: 'Invalid email address',
-            },
-          })}
-          className="focus:shadow-outline w-full appearance-none rounded-md p-2 focus:outline-none"
-        />
-      </div>
-      <div className="w-full rounded-md border-2 border-gray-200 bg-white">
-        <label htmlFor="password"></label>
-        <input
-          type="password"
-          id="password"
-          placeholder="Enter password"
-          {...register('password', { required: true })}
-          className="focus:shadow-outline w-full appearance-none rounded-md p-2 focus:outline-none"
-        />
-      </div>
+      <TextInput
+        id="email"
+        aria-label="Email"
+        placeholder="Email"
+        type="email"
+        {...register('email', {
+          required: true,
+          pattern: {
+            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+            message: 'Invalid email address',
+          },
+        })}
+        className="focus:shadow-outline w-full appearance-none rounded-md focus:outline-none"
+      />
+      {errors.email && (
+        <span className="text-center text-sm text-red-500">
+          {errors.email?.message || 'Your email is required'}
+        </span>
+      )}
+      <PasswordInput
+        id="password"
+        aria-label="password"
+        placeholder="Enter password"
+        {...register('password', {
+          required: true,
+          minLength: {
+            value: 7,
+            message: 'Please enter a password with at least 7 characters',
+          },
+          maxLength: {
+            value: 15,
+            message: 'Please enter a password not more than 15 characters',
+          },
+          pattern: {
+            value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{7,})/,
+            message:
+              'Password must contain at least one uppercase letter, one number and one special character',
+          },
+        })}
+        variant="unstyled"
+        className="w-full rounded-md border-2 border-gray-200 bg-white"
+      />
+      {errors.password && (
+        <span className="text-center text-sm text-red-500">
+          {errors.password?.message || 'A password is required'}
+        </span>
+      )}
       <div className="w-full">
-        <button
+         <Button
           type="submit"
-          disabled={isLoading}
+          loading={isLoading}
+          fullWidth
           className="w-full rounded-md border border-indigo-900 bg-indigo-900 px-4 py-2 text-white"
         >
-          {isLoading ? (
-            <div className="flex items-center space-x-2">
-              <Spinner classes="h-4 w-4" />
-            </div>
-          ) : (
-            'Login'
-          )}
-        </button>
+          {isLoading ? 'Logging In...' : 'Login'}
+        </Button>
       </div>
     </form>
   )

@@ -119,9 +119,15 @@ const Navbar = () => {
                       >
                         {/* ...menu items */}
                         <Menu.Label>Application</Menu.Label>
-                        <Menu.Item>
-                          <Link href={'/admin'}>
+                        {/* <Menu.Item>
+                          <Link href={'/admin/dashboard'}>
                             <a>Dashboard</a>
+                          </Link>
+                        </Menu.Item> */}
+                        <Divider />
+                        <Menu.Item>
+                          <Link href={'/auth/profile'}>
+                            <a>Profile</a>
                           </Link>
                         </Menu.Item>
                         <Divider />
