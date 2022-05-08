@@ -2,7 +2,7 @@ import React from 'react'
 import { Divider, Navbar } from '@mantine/core'
 import { useSelector } from 'react-redux'
 import { useAppDispatch } from 'app/hooks'
-import { authSelector, logout, reset } from 'features/auth/authSlice'
+import { authSelector } from 'features/auth/authSlice'
 import { NEXT_URL } from '@config/index'
 import UserButton from '@components/UserButton'
 
