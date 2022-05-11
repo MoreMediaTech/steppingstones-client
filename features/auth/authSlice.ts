@@ -4,34 +4,10 @@ import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 import { AppThunk, RootState } from '../../app/store'
 import authService from './authService'
 import { getUser } from '@lib/getUser'
+import { Error, AuthState, CurrentUser } from '@lib/types'
 
-export interface AuthError {
-  message: string 
-}
-
-
-
-export interface CurrentUser {
-  id?: string
-  name?: string
-  email?: string
-  isAdmin?: boolean
-  role?: string
-}
-
-export interface AuthState {
-  isAuth: boolean
-  currentUser?: CurrentUser | null
-  isLoading: boolean
-  isSuccess: boolean
-  isError: boolean
-  message: string
-  error: AuthError | undefined
-}
 
 const user = typeof window !== 'undefined' && localStorage.getItem('user') || ''
-
-
 
 export const initialState: AuthState = {
   isAuth: false,
@@ -40,6 +16,7 @@ export const initialState: AuthState = {
   currentUser: user ? JSON.parse(user) : null,
   isError: false,
   message: '',
+  token: "",
   error: { message: 'An Error occurred' },
 }
 
@@ -49,7 +26,7 @@ export const initialState: AuthState = {
 export const registerUser = createAsyncThunk<
   Partial<CurrentUser>,
   Partial<CurrentUser>,
-  { dispatch: AppDispatch, rejectValue: AuthError }
+  { dispatch: AppDispatch, rejectValue: Error }
 >('auth/register', async (user: Partial<CurrentUser>, thunkAPI) => {
   try {
     return await authService.register(user)
@@ -57,7 +34,7 @@ export const registerUser = createAsyncThunk<
     const message =
       (error.response && error.response.data && error.response.data.message) ||
       error.message ||
-      error.toString()
+      error.toString() || "Registration failed. Please try again."
     return thunkAPI.rejectWithValue(message)
   }
 })
@@ -66,7 +43,7 @@ export const registerUser = createAsyncThunk<
 export const loginUser = createAsyncThunk<
   Partial<CurrentUser>,
   Partial<CurrentUser>,
-  { dispatch: AppDispatch, rejectValue: AuthError }
+  { dispatch: AppDispatch, rejectValue: Error }
 >('auth/login', async (user: Partial<CurrentUser>, thunkAPI) => {
   try {
     return await authService.login(user)
@@ -74,7 +51,7 @@ export const loginUser = createAsyncThunk<
     const message =
       (error.response && error.response.data && error.response.data.message) ||
       error.message ||
-      error.toString()
+      error.toString() || "Unable to login. Please check your credentials and try again."
     return thunkAPI.rejectWithValue(message)
   }
 })
@@ -86,7 +63,7 @@ export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
         const message =
         (error.response && error.response.data && error.response.data.message) ||
         error.message ||
-        error.toString()
+        error.toString() || "Logout failed. Please try again."
         return thunkAPI.rejectWithValue(message)
     }
 })
@@ -98,15 +75,21 @@ export const authSlice = createSlice({
     setLoading: (state, { payload }: PayloadAction<boolean>) => {
       state.isLoading = payload
     },
-    setAuthSuccess: (state, { payload }: PayloadAction<CurrentUser>) => {
-      state.currentUser = payload
+    setAuthSuccess: (
+      state,
+      {
+        payload: { user, token },
+      }: PayloadAction<{ user: CurrentUser; token: string }>
+    ) => {
+      state.currentUser = user
+      state.token = token
       state.isAuth = true
     },
     setLogOut: (state) => {
       state.isAuth = false
       state.currentUser = undefined
     },
-    setAuthFailed: (state, { payload }: PayloadAction<AuthError>) => {
+    setAuthFailed: (state, { payload }: PayloadAction<Error>) => {
       state.error = payload
       state.isAuth = false
     },
@@ -119,40 +102,47 @@ export const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(registerUser.pending, (state, action) => {
-      state.isLoading = true
-      state.isError = false
-      state.message = ''
-    }).addCase(registerUser.fulfilled, (state, action) => {
-      state.isLoading = false
-      state.isError = false
-      state.message = ''
-      state.isAuth = true
-      state.currentUser = action.payload
-    }).addCase(registerUser.rejected, (state, action) => {
-      state.isLoading = false
-      state.isError = true
-      state.error = action.payload
-      state.currentUser = null
-    }).addCase(loginUser.pending, (state, action) => {
-      state.isLoading = true
-      state.isError = false
-      state.message = ''
-    }).addCase(loginUser.fulfilled, (state, action) => {
-      state.isLoading = false
-      state.isError = false
-      state.message = ''
-      state.isAuth = true
-      state.currentUser = action.payload
-    }).addCase(loginUser.rejected, (state, action) => {
-      state.isLoading = false
-      state.isError = true
-      state.error = action.payload
-      state.currentUser = null
-    }).addCase(logout.fulfilled, (state) => {
+    builder
+      .addCase(registerUser.pending, (state, action) => {
+        state.isLoading = true
+        state.isError = false
+        state.message = ''
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isError = false
+        state.message = ''
+        state.isAuth = true
+        state.currentUser = action.payload
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.error = action.payload
+        state.currentUser = null
+      })
+      .addCase(loginUser.pending, (state, action) => {
+        state.isLoading = true
+        state.isError = false
+        state.message = ''
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isError = false
+        state.message = ''
+        state.isAuth = true
+        state.currentUser = action.payload
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.error = action.payload
+        state.currentUser = null
+      })
+      .addCase(logout.fulfilled, (state) => {
         state.isAuth = false
         state.currentUser = null
-    })
+      })
   },
 })
 

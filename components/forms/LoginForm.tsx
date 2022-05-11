@@ -2,8 +2,7 @@ import { useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { IFormData } from '@lib/types';
-import { useSelector } from 'react-redux';
-import { useAppDispatch } from 'app/hooks';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { showNotification } from '@mantine/notifications';
 import {
   loginUser,
@@ -17,7 +16,7 @@ const LoginForm = () => {
     const router = useRouter()
     const dispatch = useAppDispatch()
     const { currentUser, isLoading, isError, isAuth, error } =
-      useSelector(authSelector)
+      useAppSelector(authSelector)
   const {
     register,
     handleSubmit,

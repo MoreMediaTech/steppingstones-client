@@ -5,14 +5,6 @@ import { IFormData } from '@lib/types'
 import { useAppDispatch } from 'app/hooks'
 import { showNotification } from '@mantine/notifications'
 import { useRouter } from 'next/router'
-import FormRowSelect from './FormComponents/FormRowSelect'
-import { counties } from 'data'
-import {
-  registerUser,
-  reset as resetAuthState,
-  authSelector,
-} from 'features/auth/authSlice'
-import Spinner from '@components/spinner'
 import {
   Button,
   Checkbox,
@@ -20,12 +12,21 @@ import {
   PasswordInput,
   TextInput,
 } from '@mantine/core'
-import { NEXT_URL } from '@config/index'
 import Link from 'next/link'
+
+
+import { counties } from 'data'
+import {
+  registerUser,
+  reset as resetAuthState,
+  authSelector,
+} from 'features/auth/authSlice'
+
+import { NEXT_URL } from '@config/index'
 
 const RegisterForm = () => {
   const router = useRouter()
-  const [opened, setOpen] = useState<boolean>(false)
+  
   const {
     register,
     handleSubmit,
@@ -82,7 +83,7 @@ const RegisterForm = () => {
     }
 
     console.log(user)
-    // dispatch(registerUser(user))
+    dispatch(registerUser(user))
     reset()
   }
   return (

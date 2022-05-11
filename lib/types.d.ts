@@ -28,6 +28,72 @@ export type RoleAccess<Routes extends string[]> = {
   }
 }
 
+export interface Error {
+  message: string
+}
+
+export interface CurrentUser {
+  id?: string
+  name?: string
+  email?: string
+  isAdmin?: boolean
+  role?: string
+}
+
+export interface AuthState {
+  isAuth: boolean
+  currentUser?: CurrentUser | null
+  isLoading: boolean
+  isSuccess: boolean
+  isError: boolean
+  message: string
+  token?: string
+  error: Error | undefined
+}
+
+export type PartnerDataProps = {
+  id?: string
+  title: string
+  organisation: string
+  description: string
+  category: string
+  businessType: string
+  website: string
+  isLive?: boolean
+  isHidden?: boolean
+  isApproved?: boolean
+  status?: string
+  areaOfOperation: AreasOfOperation
+}
+export interface IPartnerState {
+  isLoading: boolean
+  isSuccess: boolean
+  partnerData: PartnerDataProps[]
+  isError: boolean
+  message: string
+  error: Error | undefined
+}
+
+export interface IPartnerFormData {
+  title: string
+  organisation: string
+  description: string
+  category: string
+  businessType: string
+  website: string
+  areaOfOperation: AreasOfOperation
+}
+
+
+export enum AreasOfOperation { STARTUP = 'STARTUP',
+  SMALL_BUSINESS = 'SMALL_BUSINESS',
+  GROWING_BUSINESS = 'GROWING_BUSINESS',
+  BAME = 'BAME',
+  WOMEN_OWNED = 'WOMEN_OWNED',
+  ENTERPRISE = 'ENTERPRISE',
+  OTHER = 'OTHER'
+}
+
 export interface Children {
   children: ReactNode
 }

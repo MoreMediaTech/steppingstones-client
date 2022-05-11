@@ -1,8 +1,7 @@
-import axios from 'axios';
-import { CurrentUser } from './authSlice';
 import Cookies from 'js-cookie';
 import { API_URL } from '@config/index';
 import { axiosInstance } from '@lib/axiosDefaultConfig';
+import { CurrentUser } from '@lib/types';
 
 
 // register user
@@ -15,6 +14,7 @@ const register = async (data: Partial<CurrentUser>) => {
            JSON.stringify({
              name: response.data.name,
              email: response.data.email,
+             token: response.data.token,
            })
          )
          Cookies.set('ss_access_token', response.data.token, { expires: 7 })
