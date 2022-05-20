@@ -35,7 +35,7 @@ const RegisterForm = () => {
   } = useForm<IFormData>()
 
   const dispatch = useAppDispatch()
-  const { currentUser, isLoading, isError, isAuth, error } =
+  const {  isLoading, isError, isSuccess, error } =
     useSelector(authSelector)
 
   useEffect(() => {
@@ -48,12 +48,12 @@ const RegisterForm = () => {
       })
     }
 
-    if (isAuth || currentUser) {
-      router.replace(`${NEXT_URL}/admin`)
+    if (isSuccess) {
+      router.replace(`${NEXT_URL}/auth/login`)
     }
 
     dispatch(resetAuthState())
-  }, [currentUser, isAuth, isError, error])
+  }, [ isSuccess, isError, error])
 
   const handleSignUp: SubmitHandler<IFormData> = async (data) => {
     if (!data.acceptTermsAndConditions) {
@@ -82,7 +82,6 @@ const RegisterForm = () => {
       acceptContactRequest: data.acceptContactRequest,
     }
 
-    console.log(user)
     dispatch(registerUser(user))
     reset()
   }
@@ -286,7 +285,7 @@ const RegisterForm = () => {
           Terms and Conditions
         </h1>
         <p className="text-xs font-thin">
-          We want to let you know how Mansfield 4 Business works and why we need
+          We want to let you know how Stepping Stones works and why we need
           your registration details (all your personal registration details are
           listed above). Please see our{' '}
           <Link href={'/terms-condition'}>
@@ -314,7 +313,7 @@ const RegisterForm = () => {
           Under the new General Data Protection Regulation (GDPR) you are
           required to consent to your data (all your personal registration
           details are listed above) being stored and used to provide you with
-          Mansfield 4 Business services. Idox Software Limited will only use
+          Stepping Stones services. Stepping Stone will only use
           this data for the purposes of:
         </p>
         <ul className="ml-2 list-disc space-y-1 text-justify text-xs font-thin">
@@ -326,11 +325,6 @@ const RegisterForm = () => {
           <li>
             Sending you an email time to time requesting feedback about the
             service
-          </li>
-          <li>
-            Notifying you of any changes in the status of tracked schemes, saved
-            searches or saved items in your funding portfolio that you enable
-            within your Mansfield 4 Business account
           </li>
         </ul>
       </div>

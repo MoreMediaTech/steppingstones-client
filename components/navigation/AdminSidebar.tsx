@@ -6,7 +6,13 @@ import { authSelector } from 'features/auth/authSlice'
 import { NEXT_URL } from '@config/index'
 import UserButton from '@components/UserButton'
 
-const AdminSidebar = ({ opened, show }: { opened: boolean, show?: boolean }) => {
+const AdminSidebar = ({
+  opened,
+  show,
+}: {
+  opened: boolean
+  show?: boolean
+}) => {
   const dispatch = useAppDispatch()
   const { currentUser } = useSelector(authSelector)
   const initials = currentUser?.name
@@ -14,26 +20,27 @@ const AdminSidebar = ({ opened, show }: { opened: boolean, show?: boolean }) => 
     ?.map((n) => n[0])
     ?.join('')
 
-    const hideNavbar = show ? "sm" : "xl"
+  const hideNavbar = show ? 'sm' : 'xl'
   return (
-    <Navbar
-      p="md"
-      hiddenBreakpoint={hideNavbar}
-      hidden={!opened}
-      width={{ sm: 200, lg: 300 }}
-    >
-      <Navbar.Section grow>Links</Navbar.Section>
-      <Navbar.Section>
-        <Divider />
-        <UserButton
-          name={currentUser?.name ?? ''}
-          email={currentUser?.email ?? ''}
-          initials={initials}
-          show={false}
-        />
-      </Navbar.Section>
+    <header>
+      <Navbar
+        p="sm"
+        hiddenBreakpoint={hideNavbar}
+        hidden={!opened}
+        width={{ sm: 200, lg: 300 }}
+      >
+        <Navbar.Section grow>Links</Navbar.Section>
+        <Navbar.Section>
+          <Divider />
+          <UserButton
+            name={currentUser?.name ?? ''}
+            email={currentUser?.email ?? ''}
+            initials={initials}
+            show={false}
+          />
+        </Navbar.Section>
 
-      {/* <div className="flex h-full flex-col justify-between overflow-y-scroll bg-white">
+        {/* <div className="flex h-full flex-col justify-between overflow-y-scroll bg-white">
         <div></div>
 
         <div className="content-end">
@@ -46,7 +53,8 @@ const AdminSidebar = ({ opened, show }: { opened: boolean, show?: boolean }) => 
           />
         </div>
       </div> */}
-    </Navbar>
+      </Navbar>
+    </header>
   )
 }
 

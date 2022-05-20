@@ -1,10 +1,10 @@
-import { axiosInstance } from './axiosDefaultConfig'
+import axiosPrivateInstance from './axiosDefaultConfig'
 import { SessionProps } from './types'
 
 export async function getUser(cookie: string): Promise<SessionProps> {
-  axiosInstance.defaults.headers.common['authorization'] = `Bearer ${cookie}`
+  axiosPrivateInstance.defaults.headers.common.authorization = `Bearer ${cookie}`
   try {
-    const { data } = await axiosInstance.get(`users/getMe`) 
+    const { data } = await axiosPrivateInstance.get(`users/getMe`)
 
     return data
   } catch (error) {

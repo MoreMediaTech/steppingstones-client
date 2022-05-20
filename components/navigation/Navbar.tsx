@@ -11,7 +11,7 @@ import {
   Group,
   Menu,
   Divider,
-  Collapse
+  Collapse,
 } from '@mantine/core'
 import { FaSignInAlt, FaSignOutAlt, FaUser } from 'react-icons/fa'
 import { useSelector } from 'react-redux'
@@ -20,7 +20,7 @@ import { authSelector, logout, reset } from 'features/auth/authSlice'
 import { NEXT_URL } from '@config/index'
 import UserButton from '@components/UserButton'
 
-const AppLogo = ({scrollToTop} : { scrollToTop: () => void}) => (
+const AppLogo = ({ scrollToTop }: { scrollToTop: () => void }) => (
   <UnstyledButton
     className="flex cursor-pointer items-center gap-2 lg:w-0 lg:flex-1"
     onClick={scrollToTop}
@@ -49,6 +49,7 @@ const Navbar = () => {
   const [opened, setOpened] = useState<boolean>(false)
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const title = opened ? 'Close navigation' : 'Open navigation'
+
   useEffect(() => {
     const handleScrollTop = () => {
       const scrolled = document.scrollingElement?.scrollTop ?? 5
@@ -76,8 +77,11 @@ const Navbar = () => {
     router.replace(`${NEXT_URL}`)
   }
 
-  const initials = currentUser?.name?.split(' ')?.map((n) => n[0])?.join('')
-  
+  const initials = currentUser?.name
+    ?.split(' ')
+    ?.map((n) => n[0])
+    ?.join('')
+
   return (
     <Header height={80}>
       <div className="mx-auto w-full max-w-screen-xl p-2">
@@ -119,11 +123,19 @@ const Navbar = () => {
                       >
                         {/* ...menu items */}
                         <Menu.Label>Application</Menu.Label>
-                        {/* <Menu.Item>
-                          <Link href={'/admin/dashboard'}>
-                            <a>Dashboard</a>
-                          </Link>
-                        </Menu.Item> */}
+                        {currentUser.role !== 'PARTNER' ? (
+                          <Menu.Item>
+                            <Link href={'/admin/dashboard'}>
+                              <a>Dashboard</a>
+                            </Link>
+                          </Menu.Item>
+                        ) : (
+                          <Menu.Item>
+                            <Link href={'/admin/partner-portal'}>
+                              <a>Portal</a>
+                            </Link>
+                          </Menu.Item>
+                        )}
                         <Divider />
                         <Menu.Item>
                           <Link href={'/auth/profile'}>
@@ -131,17 +143,13 @@ const Navbar = () => {
                           </Link>
                         </Menu.Item>
                         <Divider />
-                        <Menu.Item>
-                          <Button
-                            variant="default"
-                            className=" w-full text-gray-900"
-                            leftIcon={<FaSignOutAlt fontSize={14} />}
-                            onClick={() => {
-                              handleLogout()
-                            }}
-                          >
-                            <span>Logout</span>
-                          </Button>
+                        <Menu.Item
+                          icon={<FaSignOutAlt fontSize={14} />}
+                          onClick={() => {
+                            handleLogout()
+                          }}
+                        >
+                          <span className="text-gray-900">Logout</span>
                         </Menu.Item>
                       </Menu>
                     </Group>
@@ -234,16 +242,35 @@ const Navbar = () => {
                             onClick={() => setIsOpen((o) => !o)}
                           />
                           <Collapse in={isOpen}>
-                            <Button
-                              variant="default"
-                              className=" text-2xl font-semibold text-gray-900 "
-                              leftIcon={<FaSignOutAlt fontSize={24} />}
+                            <Menu.Label>Application</Menu.Label>
+                            {currentUser.role !== 'PARTNER' ? (
+                              <Menu.Item>
+                                <Link href={'/admin/dashboard'}>
+                                  <a>Dashboard</a>
+                                </Link>
+                              </Menu.Item>
+                            ) : (
+                              <Menu.Item>
+                                <Link href={'/admin/partner-portal'}>
+                                  <a>Portal</a>
+                                </Link>
+                              </Menu.Item>
+                            )}
+                            <Divider />
+                            <Menu.Item>
+                              <Link href={'/auth/profile'}>
+                                <a>Profile</a>
+                              </Link>
+                            </Menu.Item>
+                            <Divider />
+                            <Menu.Item
+                              icon={<FaSignOutAlt fontSize={14} />}
                               onClick={() => {
                                 handleLogout()
                               }}
                             >
-                              <span>Logout</span>
-                            </Button>
+                              <span className="text-gray-900">Logout</span>
+                            </Menu.Item>
                           </Collapse>
                         </Group>
                       </li>

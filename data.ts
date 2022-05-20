@@ -9,7 +9,7 @@ export const faqItems = [
     id: 2,
     question: 'What is great about Stepping Stones?',
     answer:
-      'More Media Tech is currently building the Stepping Stones App. Subscribers will get an invitation to access the app and try out the features in the Summer of 2022. Your feedback will be used to make the app better and prepare for the official launch in the Winter of 2022.',
+      'You get the latest business support information tailored to your local district at your finger tips. You also get push to email function so you can reach out to your economic development officer for one-on-one support and access to resource information.',
   },
   {
     id: 3,

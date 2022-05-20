@@ -55,7 +55,7 @@ const AdminNavbar = ({
               </div>
             </Group>
           </UnstyledButton>
-          <div className="">
+          <div className="hidden md:block">
             <Menu placement="start" position="left">
               <Menu.Label>Application</Menu.Label>
               <Menu.Item onClick={() => router.push('/auth/profile')}>

@@ -47,7 +47,7 @@ export interface AuthState {
   isSuccess: boolean
   isError: boolean
   message: string
-  token?: string
+  token: string
   error: Error | undefined
 }
 

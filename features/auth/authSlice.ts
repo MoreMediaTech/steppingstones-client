@@ -5,8 +5,10 @@ import { AppThunk, RootState } from '../../app/store'
 import authService from './authService'
 import { getUser } from '@lib/getUser'
 import { Error, AuthState, CurrentUser } from '@lib/types'
+import Cookies from 'js-cookie'
 
-
+const token =
+  typeof window !== 'undefined' && localStorage.getItem('ss_access_token') || ''
 const user = typeof window !== 'undefined' && localStorage.getItem('user') || ''
 
 export const initialState: AuthState = {
@@ -16,7 +18,7 @@ export const initialState: AuthState = {
   currentUser: user ? JSON.parse(user) : null,
   isError: false,
   message: '',
-  token: "",
+  token: token,
   error: { message: 'An Error occurred' },
 }
 
@@ -24,7 +26,7 @@ export const initialState: AuthState = {
 
 // Register user
 export const registerUser = createAsyncThunk<
-  Partial<CurrentUser>,
+  string,
   Partial<CurrentUser>,
   { dispatch: AppDispatch, rejectValue: Error }
 >('auth/register', async (user: Partial<CurrentUser>, thunkAPI) => {
@@ -41,7 +43,7 @@ export const registerUser = createAsyncThunk<
 
 // Login user
 export const loginUser = createAsyncThunk<
-  Partial<CurrentUser>,
+  Partial<AuthState>,
   Partial<CurrentUser>,
   { dispatch: AppDispatch, rejectValue: Error }
 >('auth/login', async (user: Partial<CurrentUser>, thunkAPI) => {
@@ -53,6 +55,15 @@ export const loginUser = createAsyncThunk<
       error.message ||
       error.toString() || "Unable to login. Please check your credentials and try again."
     return thunkAPI.rejectWithValue(message)
+  }
+})
+
+export const fetchUser = createAsyncThunk('auth/me', async (_, thunkAPI) => {
+  try {
+    const response = await authService.getUser()
+    return response.data
+  } catch (error) {
+    return thunkAPI.rejectWithValue({ error: error.message })
   }
 })
 
@@ -111,9 +122,8 @@ export const authSlice = createSlice({
       .addCase(registerUser.fulfilled, (state, action) => {
         state.isLoading = false
         state.isError = false
-        state.message = ''
-        state.isAuth = true
-        state.currentUser = action.payload
+        state.isSuccess = true
+        state.message = action.payload
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false
@@ -131,7 +141,8 @@ export const authSlice = createSlice({
         state.isError = false
         state.message = ''
         state.isAuth = true
-        state.currentUser = action.payload
+        state.token = action.payload.token ?? ''
+        state.currentUser = action.payload.currentUser
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false

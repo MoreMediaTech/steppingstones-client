@@ -3,8 +3,11 @@ import type { AppProps } from 'next/app'
 import { Provider } from 'react-redux'
 import { NotificationsProvider } from '@mantine/notifications'
 import { store } from 'app/store'
+import { injectStore } from 'lib/axiosDefaultConfig';
+injectStore(store.getState());
 
 function MyApp({ Component, pageProps }: AppProps) {
+  
   return (
     <Provider store={store}>
       <NotificationsProvider position="top-right">
