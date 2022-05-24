@@ -12,14 +12,14 @@ const ContactUs = () => {
           <div className="flex flex-col px-4 py-8">
             <div className="mb-2">
               <Badge color="lime" size="lg" variant="filled">
-                Let's Talk
+                Can we have a chat
               </Badge>
             </div>
             <h1 className="text-2xl font-semibold">
-              Lets talk about your requirements
+              Sen us a quick note about your requirements
             </h1>
             <p className="text-justify font-thin">
-              Fill the form and send in your queries. We will respond as soon as
+              Fill the form and we will respond as soon as
               we can. Alternatively, you can reach out to us at{' '}
               <a
                 href="mailto:admin@steppingstonesapp.com"
