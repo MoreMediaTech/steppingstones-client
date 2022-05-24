@@ -8,7 +8,7 @@ const ContactUs = () => {
     <MainLayout title="Enquire">
       <section className="w-full h-screen bg-white">
         <div className="flex h-[400px] w-full flex-col items-center justify-center bg-blue-300"></div>
-        <div className="container mx-auto -my-72 grid grid-cols-1 gap-4 px-2 md:-my-40 md:grid-cols-2 max-w-screen-xl">
+        <div className="container mx-auto -my-80 grid grid-cols-1 gap-4 px-2 md:-my-48 md:grid-cols-2 max-w-screen-xl">
           <div className="flex flex-col px-4 py-8">
             <div className="mb-2">
               <Badge color="lime" size="lg" variant="filled">
