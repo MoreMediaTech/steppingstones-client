@@ -74,7 +74,7 @@ function MainLayout({ title, description, children }: ILayout): JSX.Element {
         header={<Navbar />}
         footer={<Footer />}
       >
-        <div className='h-auto'>{children}</div>
+        <div className=''>{children}</div>
       </AppShell>
     </main>
   )

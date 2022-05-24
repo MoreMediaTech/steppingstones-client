@@ -5,7 +5,7 @@ import { FaUser } from 'react-icons/fa'
 
 const Register = () => {
   return (
-    <MainLayout>
+    <MainLayout title='Register'>
       <section className="flex  w-full bg-white">
         <div className="container mx-auto flex flex-col items-center space-y-16 py-8">
           <div className="space-y-4 text-center">

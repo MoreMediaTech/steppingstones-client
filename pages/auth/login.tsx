@@ -5,7 +5,7 @@ import { FaSignInAlt } from 'react-icons/fa'
 
 const Login = () => {
   return (
-    <MainLayout title="Login Page">
+    <MainLayout title="Login">
       <section className=" w-full  bg-white">
         <div className="container mx-auto  py-12">
           <div className="flex w-full flex-col items-center space-y-10 p-4 ">

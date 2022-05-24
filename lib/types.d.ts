@@ -12,6 +12,12 @@ export interface IFormData {
   acceptTermsAndConditions?: boolean
   acceptContactRequest?: boolean
 }
+export type IEmailFormData = {
+  from: string
+  company: string
+  subject: string
+  message: string
+}
 
 export type SessionProps = {
   id: string

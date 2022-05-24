@@ -91,19 +91,37 @@ const Navbar = () => {
             <nav className="hidden text-sm font-medium lg:flex">
               <ul className="flex items-center space-x-8 text-sm font-medium">
                 <li>
-                  <a className="font-semibold text-gray-900" href="#about">
-                    About
-                  </a>
+                  {router.pathname === '/' ? (
+                    <a className="font-semibold text-gray-900" href="#about">
+                      About
+                    </a>
+                  ) : (
+                    <Link href={'/#about'}>
+                      <a className="font-semibold text-gray-900">About</a>
+                    </Link>
+                  )}
                 </li>
                 <li>
-                  <a className="font-semibold text-gray-900" href="#features">
-                    Features
-                  </a>
+                  {router.pathname === '/' ? (
+                    <a className="font-semibold text-gray-900" href="#features">
+                      Features
+                    </a>
+                  ) : (
+                    <Link href={'/#features'}>
+                      <a className="font-semibold text-gray-900">Features</a>
+                    </Link>
+                  )}
                 </li>
                 <li>
-                  <a className="font-semibold text-gray-900" href="#faqs">
-                    FAQs
-                  </a>
+                  {router.pathname === '/' ? (
+                    <a className="font-semibold text-gray-900" href="#faqs">
+                      FAQs
+                    </a>
+                  ) : (
+                    <Link href={'/#faqs'}>
+                      <a className="font-semibold text-gray-900">FAQs</a>
+                    </Link>
+                  )}
                 </li>
 
                 {currentUser ? (
@@ -178,12 +196,11 @@ const Navbar = () => {
             </nav>
 
             <div className="hidden flex-1 items-center justify-end space-x-4 lg:flex">
-              <a
-                className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-medium text-white"
-                href="#"
-              >
-                Enquire
-              </a>
+              <Link href={'/enquire'}>
+                <a className="rounded-lg bg-blue-600 px-5 py-2 text-lg font-medium text-white">
+                  Enquire
+                </a>
+              </Link>
             </div>
           </div>
 
@@ -208,28 +225,52 @@ const Navbar = () => {
                 <nav className="flex flex-col space-y-8 text-sm font-medium">
                   <ul className="flex flex-col space-y-8 text-sm font-medium">
                     <li>
-                      <a
-                        className="text-2xl font-semibold text-gray-900"
-                        href="#about"
-                      >
-                        About
-                      </a>
+                      {router.pathname === '/' ? (
+                        <a
+                          className="text-2xl font-semibold text-gray-900"
+                          href="#about"
+                        >
+                          About
+                        </a>
+                      ) : (
+                        <Link href={'/#about'}>
+                          <a className="text-2xl font-semibold text-gray-900">
+                            About
+                          </a>
+                        </Link>
+                      )}
                     </li>
                     <li>
-                      <a
-                        className="text-2xl font-semibold text-gray-900"
-                        href="#features"
-                      >
-                        Features
-                      </a>
+                      {router.pathname === '/' ? (
+                        <a
+                          className="text-2xl font-semibold text-gray-900"
+                          href="#features"
+                        >
+                          Features
+                        </a>
+                      ) : (
+                        <Link href={'/#features'}>
+                          <a className="text-2xl font-semibold text-gray-900">
+                            Features
+                          </a>
+                        </Link>
+                      )}
                     </li>
                     <li>
-                      <a
-                        className="text-2xl font-semibold text-gray-900"
-                        href="#faqs"
-                      >
-                        FAQs
-                      </a>
+                      {router.pathname === '/' ? (
+                        <a
+                          className="text-2xl font-semibold text-gray-900"
+                          href="#faqs"
+                        >
+                          FAQs
+                        </a>
+                      ) : (
+                        <Link href={'/#faqs'}>
+                          <a className="text-2xl font-semibold text-gray-900">
+                            FAQs
+                          </a>
+                        </Link>
+                      )}
                     </li>
 
                     {currentUser ? (
@@ -298,12 +339,11 @@ const Navbar = () => {
                 </nav>
 
                 <div className="flex-1 items-center justify-end space-x-4 lg:flex">
-                  <a
-                    className="rounded-lg bg-blue-600 px-5 py-2 text-lg font-medium text-white"
-                    href="#"
-                  >
-                    Enquire
-                  </a>
+                  <Link href={'/enquire'}>
+                    <a className="rounded-lg bg-blue-600 px-5 py-2 text-lg font-medium text-white">
+                      Enquire
+                    </a>
+                  </Link>
                 </div>
               </div>
             </Drawer>

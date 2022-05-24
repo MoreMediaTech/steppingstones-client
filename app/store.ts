@@ -1,6 +1,7 @@
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit'
 import authReducer from 'features/auth/authSlice'
 import partnerReducer from 'features/partner/partnerSlice'
+import emailReducer from 'features/email/emailSlice'
 
 // const saveAuthToken = (store) => (next) => (action) => {
 //   if (action.type === 'auth/login') {
@@ -15,6 +16,7 @@ export const store = configureStore({
   reducer: {
     auth: authReducer,
     partner: partnerReducer,
+    email: emailReducer,  
   },
   devTools: process.env.NODE_ENV !== 'production',
 });
