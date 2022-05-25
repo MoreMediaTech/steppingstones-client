@@ -16,7 +16,7 @@ const ContactUs = () => {
               </Badge>
             </div>
             <h1 className="text-2xl font-semibold">
-              Sen us a quick note about your requirements
+              Send us a quick note about your requirements
             </h1>
             <p className="text-justify font-thin">
               Fill the form and we will respond as soon as
