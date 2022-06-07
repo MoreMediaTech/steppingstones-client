@@ -13,12 +13,14 @@ const AboutSection = () => {
         </h3>
       </div>
       <div className="container mx-auto grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div className="h-[300px] w-full bg-blue-300">
+        <div className=" w-full ">
           <Image
             src={'/will-dunkley-RdyNNqHnLwQ-unsplash.jpg'}
             alt="Photo by Will Dunkley on Unsplash"
+            objectFit="cover"
+            layout="responsive"
             width={900}
-            height={360}
+            height={460}
           />
         </div>
         <div className="items-left flex items-center p-2 text-justify">
@@ -42,7 +44,7 @@ const AboutSection = () => {
             </button>
           </div>
         </div>
-        <div className="items-left  flex items-center p-2 text-justify">
+        <div className="items-left  order-3 flex items-center p-2 text-justify md:order-none">
           <div className="space-y-2">
             <h3 className="font-medium text-indigo-900">Why now?</h3>
             <p>
@@ -63,12 +65,14 @@ const AboutSection = () => {
             </button>
           </div>
         </div>
-        <div className="h-[300px] w-full bg-blue-300">
+        <div className="w-full ">
           <Image
             src={'/tom-podmore-hWMwHgkjcKU-unsplash.jpg'}
             alt="Photo by Tom Podmore on Unsplash"
+            objectFit="cover"
+            layout="responsive"
             width={900}
-            height={360}
+            height={460}
           />
         </div>
       </div>

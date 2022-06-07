@@ -2,28 +2,15 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import {
   AppShell,
-  Navbar,
-  Header,
-  Footer,
-  Aside,
-  Text,
-  MediaQuery,
-  Burger,
   useMantineTheme,
-  Group,
-  Menu,
-  Button,
-  Divider,
 } from '@mantine/core'
 import Head from 'next/head'
 import { CgMenuGridR } from 'react-icons/cg'
-import Image from 'next/image'
-import { UnstyledButton } from '@mantine/core'
-import { FaSignOutAlt } from 'react-icons/fa'
-import { useSelector } from 'react-redux'
-import { useAppDispatch } from 'app/hooks'
 
-import { authSelector, logout, reset } from 'features/auth/authSlice'
+
+
+import { useLogoutMutation } from 'features/auth/authApiSlice'
+import { useGetUserQuery } from 'features/user/usersApiSlice'
 import { AdminNavbar, AdminSidebar } from '@components/navigation'
 import { NEXT_URL } from '@config/index'
 import { Children } from 'lib/types'
@@ -35,15 +22,16 @@ interface ILayout extends Children {
 
 const PartnerPortalLayout = ({ title, description, children }: ILayout) => {
     const router = useRouter()
-    const dispatch = useAppDispatch()
+      const { data: currentUser } = useGetUserQuery()
+      const [logout] = useLogoutMutation()
     const theme = useMantineTheme()
     const [opened, setOpened] = useState(false)
 
-    const handleLogout = () => {
-      dispatch(logout())
-      dispatch(reset())
-      router.replace(`${NEXT_URL}`)
-    }
+   const handleLogout = () => {
+     logout()
+     localStorage.removeItem('token')
+     router.replace(`${NEXT_URL}`)
+   }
 
    return (
      <div
@@ -52,7 +40,7 @@ const PartnerPortalLayout = ({ title, description, children }: ILayout) => {
        data-testid="layout"
      >
        <Head>
-         <title>{title} - Stepping Stones</title>
+         <title>{title} | Stepping Stones</title>
          <link rel="icon" href="/favicon.ico" />
          <link
            rel="apple-touch-icon"

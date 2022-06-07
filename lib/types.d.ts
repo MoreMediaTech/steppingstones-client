@@ -7,7 +7,7 @@ export interface IFormData {
   confirmPassword?: string
   county?: string
   organisation?: string
-  postCode?: string 
+  postCode?: string
   contactNumber?: string
   acceptTermsAndConditions?: boolean
   acceptContactRequest?: boolean
@@ -45,16 +45,22 @@ export interface CurrentUser {
   email?: string
   isAdmin?: boolean
   role?: string
+  contactNumber?: string
+  county?: string
+  postCode?: string
+  organisation?: {
+    id?: string
+    name?: string
+    userId?: string
+    createdAt?: string
+  }
+  district?: string
 }
 
 export interface AuthState {
-  isAuth: boolean
-  currentUser?: CurrentUser | null
-  isLoading: boolean
-  isSuccess: boolean
-  isError: boolean
+  currentUser: CurrentUser | null
   message: string
-  token: string
+  token: string | null
   error: Error | undefined
 }
 
@@ -73,10 +79,7 @@ export type PartnerDataProps = {
   areaOfOperation: AreasOfOperation
 }
 export interface IPartnerState {
-  isLoading: boolean
-  isSuccess: boolean
   partnerData: PartnerDataProps[]
-  isError: boolean
   message: string
   error: Error | undefined
 }
@@ -91,21 +94,24 @@ export interface IPartnerFormData {
   areaOfOperation: AreasOfOperation
 }
 
-
-export enum AreasOfOperation { STARTUP = 'STARTUP',
+export enum AreasOfOperation {
+  STARTUP = 'STARTUP',
   SMALL_BUSINESS = 'SMALL_BUSINESS',
   GROWING_BUSINESS = 'GROWING_BUSINESS',
   BAME = 'BAME',
   WOMEN_OWNED = 'WOMEN_OWNED',
   ENTERPRISE = 'ENTERPRISE',
-  OTHER = 'OTHER'
+  OTHER = 'OTHER',
 }
 
 export interface Children {
   children: ReactNode
 }
 
-export type ComponentShieldBaseProps = Children & { RBAC?: never; showIf?: never }
+export type ComponentShieldBaseProps = Children & {
+  RBAC?: never
+  showIf?: never
+}
 
 export type ComponentShieldRBACProps = Children & {
   RBAC: true
@@ -132,7 +138,6 @@ export type NextShieldProps<
   PublicRoutesList extends string[]
 > =
   | {
-      
       isAuth: boolean
       isLoading: boolean
       router: NextRouter

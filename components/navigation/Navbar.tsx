@@ -6,7 +6,6 @@ import {
   Burger,
   Drawer,
   Header,
-  Button,
   UnstyledButton,
   Group,
   Menu,
@@ -14,22 +13,24 @@ import {
   Collapse,
 } from '@mantine/core'
 import { FaSignInAlt, FaSignOutAlt, FaUser } from 'react-icons/fa'
-import { useSelector } from 'react-redux'
-import { useAppDispatch } from 'app/hooks'
-import { authSelector, logout, reset } from 'features/auth/authSlice'
+
+import { usersApiSlice } from 'features/user/usersApiSlice'
+import { useGetUserQuery } from 'features/user/usersApiSlice'
+import { useLogoutMutation } from 'features/auth/authApiSlice'
 import { NEXT_URL } from '@config/index'
 import UserButton from '@components/UserButton'
+import { skipToken } from '@reduxjs/toolkit/dist/query'
 
 const AppLogo = ({ scrollToTop }: { scrollToTop: () => void }) => (
   <UnstyledButton
-    className="flex cursor-pointer items-center gap-2 lg:w-0 lg:flex-1"
+    className="flex cursor-pointer items-center lg:w-0 lg:flex-1"
     onClick={scrollToTop}
   >
     <Group>
-      <div className="w-50 h-50 -mb-4">
+      <div className="w-50 h-50 -mb-6">
         <Image src={'/SteppingStonesLogo2.png'} width={80} height={80} />
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-col -ml-6">
         <h1 className="text-xl font-semibold uppercase text-indigo-900 sm:text-2xl">
           Stepping Stones
         </h1>
@@ -43,8 +44,8 @@ const AppLogo = ({ scrollToTop }: { scrollToTop: () => void }) => (
 
 const Navbar = () => {
   const router = useRouter()
-  const dispatch = useAppDispatch()
-  const { currentUser } = useSelector(authSelector)
+  const { data: currentUser } = useGetUserQuery()
+  const [logout] = useLogoutMutation()
   const [pos, setPos] = useState<string>('top')
   const [opened, setOpened] = useState<boolean>(false)
   const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -71,9 +72,9 @@ const Navbar = () => {
     router.push('/')
   }
 
-  const handleLogout = () => {
-    dispatch(logout())
-    dispatch(reset())
+  const handleLogout = async () => {
+    logout();
+    localStorage.removeItem('token');
     router.replace(`${NEXT_URL}`)
   }
 
@@ -143,8 +144,8 @@ const Navbar = () => {
                         <Menu.Label>Application</Menu.Label>
                         {currentUser.role !== 'PARTNER' ? (
                           <Menu.Item>
-                            <Link href={'/admin/dashboard'}>
-                              <a>Dashboard</a>
+                            <Link href={'/admin/editor-portal'}>
+                              <a>Portal</a>
                             </Link>
                           </Menu.Item>
                         ) : (
@@ -286,8 +287,8 @@ const Navbar = () => {
                             <Menu.Label>Application</Menu.Label>
                             {currentUser.role !== 'PARTNER' ? (
                               <Menu.Item>
-                                <Link href={'/admin/dashboard'}>
-                                  <a>Dashboard</a>
+                                <Link href={'/admin/editor-portal'}>
+                                  <a>Portal</a>
                                 </Link>
                               </Menu.Item>
                             ) : (

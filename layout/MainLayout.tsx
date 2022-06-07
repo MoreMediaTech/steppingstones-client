@@ -65,6 +65,7 @@ function MainLayout({ title, description, children }: ILayout): JSX.Element {
               theme.colorScheme === 'dark'
                 ? theme.colors.dark[8]
                 : theme.colors.light,
+            height: '100%',
           },
         }}
         navbarOffsetBreakpoint="sm"
@@ -74,7 +75,7 @@ function MainLayout({ title, description, children }: ILayout): JSX.Element {
         header={<Navbar />}
         footer={<Footer />}
       >
-        <div className=''>{children}</div>
+        <div>{children}</div>
       </AppShell>
     </main>
   )

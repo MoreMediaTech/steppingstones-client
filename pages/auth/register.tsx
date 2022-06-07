@@ -28,7 +28,7 @@ export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
   const { req } = context
-  const cookies = req.cookies.ss_access_token
+  const cookies = req.cookies.ss_refresh_token
 
   if (cookies) {
     return {

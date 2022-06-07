@@ -25,7 +25,7 @@ const Footer = () => {
             </nav>
           </div>
           <div className="rounded-xl bg-blue-400 px-2 py-1 shadow-sm">
-            <a href="" className="flex items-center gap-2">
+            <a href="#" className="flex items-center gap-2">
               <FaTwitter fontSize={18} color="#fff" />
               <span className="text-white">tweet</span>
             </a>

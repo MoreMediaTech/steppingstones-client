@@ -8,6 +8,7 @@ import { NEXT_URL } from '@config/index'
 import { IEmailFormData, IFormData } from '@lib/types'
 import { useAppDispatch, useAppSelector } from 'app/hooks'
 import { emailSelector } from 'features/email/emailSlice'
+import { enquiryEmailTemplate } from '@lib/emailTemplates'
 
 const EnquiryForm = () => {
     const router = useRouter()
@@ -25,6 +26,14 @@ const EnquiryForm = () => {
 
   const handleSendEmail: SubmitHandler<IEmailFormData> = async (data) => {
     console.log(data)
+    const message = {
+      form: data.from,
+      to: 'admin@steppingstonesapp.com',
+      subject: data.subject,
+      company: data.company,
+      html: enquiryEmailTemplate(data.subject, data.message),
+    }
+    console.log(message)
     reset()
   }
   return (

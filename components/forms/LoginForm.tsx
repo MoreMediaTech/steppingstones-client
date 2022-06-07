@@ -1,22 +1,18 @@
-import { useEffect } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { useRouter } from 'next/router';
-import { IFormData } from '@lib/types';
-import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { showNotification } from '@mantine/notifications';
-import {
-  loginUser,
-  reset as resetAuthState,
-  authSelector,
-} from 'features/auth/authSlice'
-import { NEXT_URL } from '@config/index';
-import { Button, PasswordInput, TextInput } from '@mantine/core';
+import { useEffect } from 'react'
+import { useForm, SubmitHandler } from 'react-hook-form'
+import { useRouter } from 'next/router'
+import { showNotification } from '@mantine/notifications'
+import { Button, PasswordInput, TextInput } from '@mantine/core'
+
+
+import { useLoginMutation } from 'features/auth/authApiSlice'
+import { NEXT_URL } from '@config/index'
+import { AuthState, IFormData } from '@lib/types'
 
 const LoginForm = () => {
-    const router = useRouter()
-    const dispatch = useAppDispatch()
-    const { currentUser, isLoading, isError, isAuth, error } =
-      useAppSelector(authSelector)
+  const router = useRouter()
+
+  const [login, { isLoading, isError, error: loginError }] = useLoginMutation()
   const {
     register,
     handleSubmit,
@@ -24,25 +20,42 @@ const LoginForm = () => {
     formState: { errors },
   } = useForm<IFormData>()
 
-    useEffect(() => {
-      if (isError) {
+  const handleLogin: SubmitHandler<IFormData> = async (data) => {
+    try {
+      const responseData = await login({
+        email: data.email,
+        password: data.password,
+      }).unwrap()
+      localStorage.setItem('token', responseData.token)
+      router.replace(`${NEXT_URL}/admin`)
+      reset()
+    } catch (error) {
+      if (!error?.response) {
         showNotification({
-          message: error?.message,
+          message: 'No server response',
           autoClose: 3000,
-          color: 'red'
+          color: 'red',
+        })
+      } else if (error.response?.status === 400) {
+        showNotification({
+          message: 'Invalid credentials',
+          autoClose: 3000,
+          color: 'red',
+        })
+      } else if (error.response?.status === 401) {
+        showNotification({
+          message: 'Unauthorized',
+          autoClose: 3000,
+          color: 'red',
+        })
+      } else {
+        showNotification({
+          message: 'Login Failed',
+          autoClose: 3000,
+          color: 'red',
         })
       }
-
-      if (isAuth || currentUser) {
-        router.replace(`${NEXT_URL}/admin`)
-      }
-
-      dispatch(resetAuthState())
-    }, [currentUser, isAuth, isError, error])
-
-  const handleLogin: SubmitHandler<IFormData> = async (data) => {
-    dispatch(loginUser(data))
-    reset()
+    }
   }
   return (
     <form
@@ -53,6 +66,11 @@ const LoginForm = () => {
         id="email"
         aria-label="Email"
         placeholder="Email"
+        label={
+          <p className="mt-8 font-light text-white ">
+            Username<span className="text-red-500">*</span>
+          </p>
+        }
         type="email"
         {...register('email', {
           required: true,
@@ -68,9 +86,15 @@ const LoginForm = () => {
           {errors.email?.message || 'Your email is required'}
         </span>
       )}
+
       <PasswordInput
         id="password"
         aria-label="password"
+        label={
+          <p className="mt-2 font-light text-white ">
+            Password <span className="text-red-500">*</span>
+          </p>
+        }
         placeholder="Enter password"
         {...register('password', {
           required: true,
@@ -88,8 +112,7 @@ const LoginForm = () => {
               'Password must contain at least one uppercase letter, one number and one special character',
           },
         })}
-        variant="unstyled"
-        className="w-full rounded-md border-2 border-gray-200 bg-white"
+        className="w-full "
       />
       {errors.password && (
         <span className="text-center text-sm text-red-500">
@@ -97,13 +120,13 @@ const LoginForm = () => {
         </span>
       )}
       <div className="w-full">
-         <Button
+        <Button
           type="submit"
           loading={isLoading}
           fullWidth
-          className="w-full rounded-md border border-indigo-900 bg-indigo-900 px-4 py-2 text-white"
+          className="mt-4 w-full rounded-md border border-indigo-900 bg-indigo-900 text-white"
         >
-          {isLoading ? 'Logging In...' : 'Login'}
+          {isLoading ? 'Signing In...' : 'Sign In'}
         </Button>
       </div>
     </form>

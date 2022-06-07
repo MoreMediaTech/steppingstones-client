@@ -3,9 +3,9 @@ import { useRouter } from 'next/router'
 import { AppShell, useMantineTheme } from '@mantine/core'
 import Head from 'next/head'
 import { CgMenuGridR } from 'react-icons/cg'
-import { useAppDispatch } from 'app/hooks'
 
-import { logout, reset } from 'features/auth/authSlice'
+import { useLogoutMutation } from 'features/auth/authApiSlice'
+import { useGetUserQuery } from 'features/user/usersApiSlice'
 import { AdminNavbar, AdminSidebar } from '@components/navigation'
 import { NEXT_URL } from '@config/index'
 import { Children } from 'lib/types'
@@ -22,24 +22,25 @@ const AdminLayout = ({
   children,
 }: ILayout): JSX.Element => {
   const router = useRouter()
-  const dispatch = useAppDispatch()
+  const { data: currentUser } = useGetUserQuery()
+  const [logout] = useLogoutMutation()
   const theme = useMantineTheme()
-  const [opened, setOpened] = useState(false)
+
 
   const handleLogout = () => {
-    dispatch(logout())
-    dispatch(reset())
+    logout()
+    localStorage.removeItem('token')
     router.replace(`${NEXT_URL}`)
   }
 
   return (
     <div
-      className="flex h-screen flex-col justify-between"
+      className="flex flex-col md:flex-row"
       aria-label="layout"
       data-testid="layout"
     >
       <Head>
-        <title>{title} - Stepping Stones</title>
+        <title>{title} | Stepping Stones</title>
         <link rel="icon" href="/favicon.ico" />
         <link
           rel="apple-touch-icon"
@@ -77,30 +78,10 @@ const AdminLayout = ({
         <meta name="theme-color" content="#000000" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <AppShell
-        styles={{
-          main: {
-            background:
-              theme.colorScheme === 'dark'
-                ? theme.colors.dark[8]
-                : theme.colors.gray[0],
-          },
-        }}
-        navbarOffsetBreakpoint="sm"
-        asideOffsetBreakpoint="sm"
-        fixed
-        navbar={<AdminSidebar opened={opened} show={show} />}
-        header={
-          <AdminNavbar
-            opened={opened}
-            setOpened={setOpened}
-            theme={theme}
-            handleLogout={handleLogout}
-          />
-        }
-      >
+      <AdminSidebar handleLogout={handleLogout} />
+      <main className='relative md:ml-30 w-full'>
         {children}
-      </AppShell>
+      </main>
     </div>
   )
 }

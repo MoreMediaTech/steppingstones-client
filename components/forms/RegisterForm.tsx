@@ -14,46 +14,21 @@ import {
 } from '@mantine/core'
 import Link from 'next/link'
 
-
+import { useRegisterPartnerMutation } from 'features/auth/authApiSlice';
 import { counties } from 'data'
-import {
-  registerUser,
-  reset as resetAuthState,
-  authSelector,
-} from 'features/auth/authSlice'
+
 
 import { NEXT_URL } from '@config/index'
 
 const RegisterForm = () => {
   const router = useRouter()
-  
+  const [registerUser, { isLoading, isSuccess, isError, error }] = useRegisterPartnerMutation()
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm<IFormData>()
-
-  const dispatch = useAppDispatch()
-  const {  isLoading, isError, isSuccess, error } =
-    useSelector(authSelector)
-
-  useEffect(() => {
-    if (isError) {
-      showNotification({
-        message: error?.message,
-        autoClose: 3000,
-        color: 'red',
-        sx: { backgroundColor: 'red' },
-      })
-    }
-
-    if (isSuccess) {
-      router.replace(`${NEXT_URL}/auth/login`)
-    }
-
-    dispatch(resetAuthState())
-  }, [ isSuccess, isError, error])
 
   const handleSignUp: SubmitHandler<IFormData> = async (data) => {
     if (!data.acceptTermsAndConditions) {
@@ -81,10 +56,40 @@ const RegisterForm = () => {
       acceptTermsAndConditions: data.acceptTermsAndConditions,
       acceptContactRequest: data.acceptContactRequest,
     }
-
-    dispatch(registerUser(user))
-    reset()
-  }
+    try {
+      await registerUser(user).unwrap()
+      reset()
+       router.replace(`${NEXT_URL}/auth/login`)
+    } catch (error) {
+      if (!error?.response) {
+        showNotification({
+          message: 'No server response',
+          autoClose: 3000,
+          color: 'red',
+        })
+      } else if (error.response?.status === 400) {
+        showNotification({
+          message: 'Invalid credentials',
+          autoClose: 3000,
+          color: 'red',
+        })
+      } else if (error.response?.status === 401) {
+        showNotification({
+          message: 'Unauthorized',
+          autoClose: 3000,
+          color: 'red',
+        })
+      } else {
+        showNotification({
+          message: 'Unable to complete registration',
+          autoClose: 3000,
+          color: 'red',
+        })
+      }
+    }
+      
+    }
+    
   return (
     <form
       onSubmit={handleSubmit(handleSignUp)}
