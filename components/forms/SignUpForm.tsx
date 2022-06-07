@@ -19,7 +19,6 @@ const SignUpForm = () => {
         body: JSON.stringify(data),
       })
       const responseData = await response.json()
-      console.log(responseData)
       reset()
     } catch (error) {
       console.error(error)

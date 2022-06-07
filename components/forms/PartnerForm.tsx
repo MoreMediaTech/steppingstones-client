@@ -17,11 +17,7 @@ import { FaCheckCircle } from 'react-icons/fa'
 import { MdOutlineError } from 'react-icons/md'
 
 import { NEXT_URL } from '@config/index'
-import {
-  reset as resetPartnerState,
-  createPartnerData,
-  partnerSelector,
-} from 'features/partner/partnerSlice'
+import { useCreatePartnerDataMutation } from 'features/partner/partnerApiSlice'
 import RichTextEditor  from '@components/RichText'
 
 const areaOfOperation = [
@@ -44,13 +40,13 @@ const PartnerForm = () => {
   } = useForm<IPartnerFormData>()
   const [value, onChange] = useState('')
   const dispatch = useAppDispatch()
-  const { isError, error, message, isSuccess } = useAppSelector(partnerSelector)
+  const [createPartnerData,{ isError, error, isSuccess }] = useCreatePartnerDataMutation()
 
   useEffect(() => {
     if (isError) {
       showNotification({
         title: 'Error',
-        message: error?.message,
+        message: 'Something went wrong',
         autoClose: 3000,
         color: 'red',
         icon: <MdOutlineError fontSize={18} />,
@@ -60,7 +56,7 @@ const PartnerForm = () => {
     if (isSuccess) {
       showNotification({
         title: 'Success',
-        message: message,
+        message: 'Submission successful',
         autoClose: 3000,
         color: 'red',
         icon: <FaCheckCircle fontSize={18} />,
@@ -68,8 +64,7 @@ const PartnerForm = () => {
       router.replace(`${NEXT_URL}/admin/partner-portal`)
     }
 
-    dispatch(resetPartnerState())
-  }, [message, isSuccess, isError, error])
+  }, [ isSuccess, isError, error])
 
   const handleSignUp: SubmitHandler<IPartnerFormData> = async (data) => {}
 

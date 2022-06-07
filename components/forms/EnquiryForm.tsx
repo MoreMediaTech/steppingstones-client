@@ -7,14 +7,14 @@ import { Button, PasswordInput, Textarea, TextInput } from '@mantine/core'
 import { NEXT_URL } from '@config/index'
 import { IEmailFormData, IFormData } from '@lib/types'
 import { useAppDispatch, useAppSelector } from 'app/hooks'
-import { emailSelector } from 'features/email/emailSlice'
+import { useSendEnquiryMutation } from 'features/email/emailApiSlice'
 import { enquiryEmailTemplate } from '@lib/emailTemplates'
 
 const EnquiryForm = () => {
     const router = useRouter()
     const dispatch = useAppDispatch()
-    const { isLoading, isError, isSuccess, error, message } =
-      useAppSelector(emailSelector)
+    const [sendEnquiry, { isLoading, isError, isSuccess, error }] =
+      useSendEnquiryMutation()
   const {
     register,
     handleSubmit,
