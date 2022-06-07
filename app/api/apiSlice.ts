@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery, BaseQueryFn, FetchArgs, FetchBaseQueryError,
 import { QueryReturnValue } from '@reduxjs/toolkit/dist/query/baseQueryTypes'
 import { HYDRATE } from 'next-redux-wrapper'
 
-import { setCredentials, setLogOut } from 'features/auth/authSlice'
+import { setCredentials, resetCredentials } from 'features/auth/authSlice'
 import { CurrentUser } from '@lib/types'
 import { API_URL } from '@config/index'
 import { RootState } from 'app/store'
@@ -55,7 +55,7 @@ const baseQueryWithReAuth: BaseQueryFn = async (
       result = await baseQuery(args, api, extraOptions)
     }
   } else {
-    // api.dispatch(setLogOut())
+    // api.dispatch(resetCredentials())
   }
   return result
 }
