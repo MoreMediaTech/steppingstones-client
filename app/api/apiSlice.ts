@@ -91,6 +91,18 @@ export const partnerApiSlice = createApi({
   },
   endpoints: (builder) => ({}),
 })
+export const editorApiSlice = createApi({
+  reducerPath: 'editorApi',
+  baseQuery: baseQueryWithReAuth,
+  keepUnusedDataFor: 960,
+  tagTypes: ['Editor'],
+  extractRehydrationInfo(action, { reducerPath }) {
+    if (action.type === HYDRATE) {
+      return action.payload[reducerPath]
+    }
+  },
+  endpoints: (builder) => ({}),
+})
 
 export const emailApiSlice = createApi({
   reducerPath: 'emailApi',
