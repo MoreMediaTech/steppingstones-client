@@ -7,19 +7,26 @@ import { CurrentUser } from '@lib/types'
 import { API_URL } from '@config/index'
 import { RootState } from 'app/store'
 
+
 interface RefreshResult {
-    data?: {
+  error?: FetchBaseQueryError | undefined
+  data?:{
         token: string
-    } | undefined
+      }
+    | undefined
+  meta?: FetchBaseQueryMeta | undefined
 }
 
-const baseQuery = fetchBaseQuery({
+const baseQuery: BaseQueryFn<
+  string | FetchArgs,
+  any,
+  FetchBaseQueryError,
+  {},
+  FetchBaseQueryMeta
+> = fetchBaseQuery({
   baseUrl: API_URL,
   credentials: 'include',
-  prepareHeaders: (
-    headers,
-    api
-  ) => {
+  prepareHeaders: (headers, api) => {
     const { auth } = api.getState() as RootState
     const token = auth.token
     if (token) {
@@ -38,18 +45,18 @@ const baseQueryWithReAuth: BaseQueryFn = async (
   let result = await baseQuery(args, api, extraOptions)
   if (result?.error?.status === 401 || result?.error?.status === 403) {
     // send refresh token to get new token
-    const refreshResult: QueryReturnValue<
-      RefreshResult | unknown,
-      FetchBaseQueryError,
-      FetchBaseQueryMeta
-    > = await baseQuery('/refresh/', api, extraOptions)
+    const refreshResult: RefreshResult = await baseQuery(
+      '/refresh/',
+      api,
+      extraOptions
+    )
     if (refreshResult?.data) {
       const { auth } = api.getState() as RootState
       const user = auth.currentUser as CurrentUser
       // store new token
-      localStorage.setItem('token', refreshResult.data.token)
+      localStorage.setItem('token', refreshResult?.data?.token as string)
       api.dispatch(
-        setCredentials({ token: refreshResult?.data?.token, currentUser: user })
+        setCredentials({ token: refreshResult?.data?.token as string, currentUser: user })
       )
       // retry original request
       result = await baseQuery(args, api, extraOptions)
