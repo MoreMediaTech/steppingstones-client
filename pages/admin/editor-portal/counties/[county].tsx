@@ -1,4 +1,5 @@
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
+import { useRouter } from 'next/router'
 
 import { ComponentShield } from '@components/NextShield'
 import { AdminLayout } from 'layout'
@@ -6,16 +7,15 @@ import { CurrentUser } from '@lib/types'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
 import Spinner from '@components/spinner'
 import PortalHeader from '@components/PortalHeader'
-import PortalSection from '@components/PortalSection'
 
-
-const Dashboard = () => {
-  const { data: user, isLoading, isError, error} = useGetUserQuery()
+const County = ({ county }: { county: string }) => {
+  const router = useRouter()
+  const { data: user, isLoading, isError, error } = useGetUserQuery()
   return (
-    <AdminLayout title="Editor Dashboard" >
+    <AdminLayout title="Editor Dashboard">
       {isLoading && <Spinner classes="w-24 h-24" message="Loading..." />}
       {isError && (
-        <div className="flex items-center justify-center">
+        <div className="flex h-full items-center justify-center">
           An Error has occurred
         </div>
       )}
@@ -24,8 +24,23 @@ const Dashboard = () => {
         showForRole={'SS_EDITOR'}
         userRole={user?.role ?? ''}
       >
-        <PortalHeader user={user as CurrentUser} />
-       <PortalSection />
+        <section className="h-screen">
+          <PortalHeader user={user as CurrentUser} />
+          <div className="px-4 py-2">
+            <button
+              type="button"
+              className="rounded-md bg-[#0c6980] px-4 py-2 font-semibold text-white drop-shadow-lg"
+              onClick={() => {
+                router.back()
+              }}
+            >
+              Go Back
+            </button>
+          </div>
+          <section className="flex items-center justify-center md:h-[700px] md:py-28">
+            <h1>{county}</h1>
+          </section>
+        </section>
       </ComponentShield>
     </AdminLayout>
   )
@@ -36,6 +51,7 @@ export const getServerSideProps: GetServerSideProps = async (
 ) => {
   const { req } = context
   const cookies = req.cookies.ss_refresh_token
+  const { county } = context.query
 
   if (!cookies) {
     context.res.writeHead(302, {
@@ -65,8 +81,10 @@ export const getServerSideProps: GetServerSideProps = async (
   // }
   return {
     // props: { user: user as SessionProps },
-    props: {},
+    props: {
+      county: county,
+    },
   }
 }
 
-export default Dashboard
+export default County

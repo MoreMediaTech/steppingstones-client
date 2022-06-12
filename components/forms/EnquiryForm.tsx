@@ -11,10 +11,9 @@ import { useSendEnquiryMutation } from 'features/email/emailApiSlice'
 import { enquiryEmailTemplate } from '@lib/emailTemplates'
 
 const EnquiryForm = () => {
-    const router = useRouter()
-    const dispatch = useAppDispatch()
-    const [sendEnquiry, { isLoading, isError, isSuccess, error }] =
-      useSendEnquiryMutation()
+  const router = useRouter()
+  const [sendEnquiry, { isLoading, isError, isSuccess, error }] =
+    useSendEnquiryMutation()
   const {
     register,
     handleSubmit,
@@ -25,16 +24,23 @@ const EnquiryForm = () => {
   useEffect(() => {}, [])
 
   const handleSendEmail: SubmitHandler<IEmailFormData> = async (data) => {
-    console.log(data)
     const message = {
-      form: data.from,
+      from: data.from,
       to: 'admin@steppingstonesapp.com',
       subject: data.subject,
       company: data.company,
       html: enquiryEmailTemplate(data.subject, data.message),
     }
-    console.log(message)
-    reset()
+    try {
+      console.log(message)
+      await sendEnquiry(message).unwrap()
+      reset()
+    } catch (error) {
+      console.log(
+        '🚀 ~ file: EnquiryForm.tsx ~ line 42 ~ consthandleSendEmail:SubmitHandler<IEmailFormData>= ~ error',
+        error
+      )
+    }
   }
   return (
     <form

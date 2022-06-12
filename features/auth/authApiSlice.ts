@@ -26,6 +26,21 @@ export const authApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Auth'],
     }),
+    requestPasswordReset: builder.mutation({
+      query: ({ email }) => ({
+        url: 'auth/request-reset',
+        method: 'POST',
+        body: { email },
+      }),
+      invalidatesTags: ['Auth'],
+    }),
+    resetPassword: builder.mutation({
+      query: ({ token, password }) => ({
+        url: 'auth/reset',
+        method: 'POST',
+        body: { token, password },
+      }),
+    }),
     logout: builder.mutation<void, void>({
       query: () => ({
         url: 'auth/logout',
@@ -40,8 +55,9 @@ export const authApi = apiSlice.injectEndpoints({
       },
       invalidatesTags: ['Auth', 'User'],
     }),
+    
   }),
   overrideExisting: true,
 })
 
-export const { useLoginMutation, useRegisterPartnerMutation, useLogoutMutation } = authApi;
+export const { useLoginMutation, useRegisterPartnerMutation, useLogoutMutation, useRequestPasswordResetMutation, useResetPasswordMutation } = authApi;

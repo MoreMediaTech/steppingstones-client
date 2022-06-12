@@ -11,7 +11,7 @@ function NotFoundPage() {
   const router = useRouter()
   useEffect(() => {
     setTimeout(() => {
-      router.push('/')
+      router.back()
     }, 5000)
   }, [])
   return (

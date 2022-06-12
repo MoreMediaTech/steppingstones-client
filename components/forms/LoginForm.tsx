@@ -8,6 +8,7 @@ import { Button, PasswordInput, TextInput } from '@mantine/core'
 import { useLoginMutation } from 'features/auth/authApiSlice'
 import { NEXT_URL } from '@config/index'
 import { AuthState, IFormData } from '@lib/types'
+import Link from 'next/link'
 
 const LoginForm = () => {
   const router = useRouter()
@@ -114,6 +115,13 @@ const LoginForm = () => {
         })}
         className="w-full "
       />
+      <div className="mb-4 place-self-start">
+        <Link href={'/auth/forgot-password'}>
+          <a className="cursor-pointer  text-sm text-indigo-900">
+            Forgot Password?
+          </a>
+        </Link>
+      </div>
       {errors.password && (
         <span className="text-center text-sm text-red-500">
           {errors.password?.message || 'A password is required'}

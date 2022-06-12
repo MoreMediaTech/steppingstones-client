@@ -19,28 +19,9 @@ import { useGetUserQuery } from 'features/user/usersApiSlice'
 import { useLogoutMutation } from 'features/auth/authApiSlice'
 import { NEXT_URL } from '@config/index'
 import UserButton from '@components/UserButton'
-import { skipToken } from '@reduxjs/toolkit/dist/query'
+import { AppLogo } from './AppLogo'
 
-const AppLogo = ({ scrollToTop }: { scrollToTop: () => void }) => (
-  <UnstyledButton
-    className="flex cursor-pointer items-center lg:w-0 lg:flex-1"
-    onClick={scrollToTop}
-  >
-    <Group>
-      <div className="w-50 h-50 -mb-6">
-        <Image src={'/SteppingStonesLogo2.png'} width={80} height={80} />
-      </div>
-      <div className="flex flex-col -ml-6">
-        <h1 className="text-xl font-semibold uppercase text-indigo-900 sm:text-2xl">
-          Stepping Stones
-        </h1>
-        <h3 className="text-xs capitalize text-sky-500">
-          Business resource solutions
-        </h3>
-      </div>
-    </Group>
-  </UnstyledButton>
-)
+
 
 const Navbar = () => {
   const router = useRouter()
@@ -73,8 +54,8 @@ const Navbar = () => {
   }
 
   const handleLogout = async () => {
-    logout();
-    localStorage.removeItem('token');
+    logout()
+    localStorage.removeItem('token')
     router.replace(`${NEXT_URL}`)
   }
 
@@ -183,14 +164,6 @@ const Navbar = () => {
                         </a>
                       </Link>
                     </li>
-                    <li>
-                      <Link href={'/auth/register'}>
-                        <a className="flex items-center gap-1 font-semibold text-gray-900">
-                          <FaUser fontSize={12} />
-                          <span>Register</span>
-                        </a>
-                      </Link>
-                    </li>
                   </>
                 )}
               </ul>
@@ -214,14 +187,16 @@ const Navbar = () => {
             />
             <Drawer
               opened={opened}
+              title={
+                <div>
+                  <AppLogo scrollToTop={scrollToTop} />
+                </div>
+              }
               onClose={() => setOpened(false)}
               padding="xl"
               size="lg"
               position="right"
             >
-              <div>
-                <AppLogo scrollToTop={scrollToTop} />
-              </div>
               <div className="flex flex-col gap-4 space-y-8 p-8">
                 <nav className="flex flex-col space-y-8 text-sm font-medium">
                   <ul className="flex flex-col space-y-8 text-sm font-medium">
@@ -284,35 +259,37 @@ const Navbar = () => {
                             onClick={() => setIsOpen((o) => !o)}
                           />
                           <Collapse in={isOpen}>
-                            <Menu.Label>Application</Menu.Label>
-                            {currentUser.role !== 'PARTNER' ? (
+                            <Menu>
+                              <Menu.Label>Application</Menu.Label>
+                              {currentUser.role !== 'PARTNER' ? (
+                                <Menu.Item>
+                                  <Link href={'/admin/editor-portal'}>
+                                    <a>Portal</a>
+                                  </Link>
+                                </Menu.Item>
+                              ) : (
+                                <Menu.Item>
+                                  <Link href={'/admin/partner-portal'}>
+                                    <a>Portal</a>
+                                  </Link>
+                                </Menu.Item>
+                              )}
+                              <Divider />
                               <Menu.Item>
-                                <Link href={'/admin/editor-portal'}>
-                                  <a>Portal</a>
+                                <Link href={'/auth/profile'}>
+                                  <a>Profile</a>
                                 </Link>
                               </Menu.Item>
-                            ) : (
-                              <Menu.Item>
-                                <Link href={'/admin/partner-portal'}>
-                                  <a>Portal</a>
-                                </Link>
+                              <Divider />
+                              <Menu.Item
+                                icon={<FaSignOutAlt fontSize={14} />}
+                                onClick={() => {
+                                  handleLogout()
+                                }}
+                              >
+                                <span className="text-gray-900">Logout</span>
                               </Menu.Item>
-                            )}
-                            <Divider />
-                            <Menu.Item>
-                              <Link href={'/auth/profile'}>
-                                <a>Profile</a>
-                              </Link>
-                            </Menu.Item>
-                            <Divider />
-                            <Menu.Item
-                              icon={<FaSignOutAlt fontSize={14} />}
-                              onClick={() => {
-                                handleLogout()
-                              }}
-                            >
-                              <span className="text-gray-900">Logout</span>
-                            </Menu.Item>
+                            </Menu>
                           </Collapse>
                         </Group>
                       </li>
@@ -323,14 +300,6 @@ const Navbar = () => {
                             <a className="flex items-center gap-1 text-2xl font-semibold text-gray-900">
                               <FaSignInAlt fontSize={14} />
                               <span>Login</span>
-                            </a>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href={'/auth/register'}>
-                            <a className="flex items-center gap-1 text-2xl font-semibold text-gray-900">
-                              <FaUser fontSize={12} />
-                              <span>Register</span>
                             </a>
                           </Link>
                         </li>

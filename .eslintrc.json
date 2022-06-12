@@ -1,0 +1,11 @@
+{
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:react-hooks/recommended",
+    "plugin:react/recommended"
+  ],
+  "rules": {
+    "react-hooks/rules-of-hooks": "off",
+    "react/react-in-jsx-scope": "off"
+  }
+}
