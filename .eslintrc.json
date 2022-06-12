@@ -6,6 +6,9 @@
   ],
   "rules": {
     "react-hooks/rules-of-hooks": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "react/no-unescaped-entities": "off",
+    "jsx-a11y/alt-text": "off"
   }
 }
