@@ -52,4 +52,6 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
   )
 )
 
+UserButton.displayName = 'UserButton'
+
 export default UserButton;
