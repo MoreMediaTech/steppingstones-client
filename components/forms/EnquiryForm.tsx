@@ -4,9 +4,7 @@ import { useRouter } from 'next/router'
 import { showNotification } from '@mantine/notifications'
 import { Button, PasswordInput, Textarea, TextInput } from '@mantine/core'
 
-import { NEXT_URL } from '@config/index'
 import { IEmailFormData, IFormData } from '@lib/types'
-import { useAppDispatch, useAppSelector } from 'app/hooks'
 import { useSendEnquiryMutation } from 'features/email/emailApiSlice'
 import { enquiryEmailTemplate } from '@lib/emailTemplates'
 
@@ -32,14 +30,14 @@ const EnquiryForm = () => {
       html: enquiryEmailTemplate(data.subject, data.message),
     }
     try {
-      console.log(message)
       await sendEnquiry(message).unwrap()
       reset()
     } catch (error) {
-      console.log(
-        '🚀 ~ file: EnquiryForm.tsx ~ line 42 ~ consthandleSendEmail:SubmitHandler<IEmailFormData>= ~ error',
-        error
-      )
+     showNotification({
+        message: 'Unable to send enquiry',
+        autoClose: 3000,
+        color: 'red',
+     })
     }
   }
   return (

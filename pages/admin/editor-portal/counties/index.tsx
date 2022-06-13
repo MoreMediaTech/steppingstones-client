@@ -23,20 +23,20 @@ const County = () => {
   )
   function goToNextPage() {
     setCurrentPage((page) => page + 1)
-    if(currentPage > totalCountyButtonSlides) {
+    if(currentPage >= totalCountyButtonSlides) {
       setCurrentPage(1)
     }
   }
   function goToPreviousPage() {
     setCurrentPage((page) => page - 1)
-    if(currentPage < 1){
+    if(currentPage <= 1){
       setCurrentPage(totalCountyButtonSlides)
     }
   }
   const getPaginatedData = () => {
     const startIndex = currentPage * 12 - 12
     const endIndex = startIndex + 12
-    return counties.slice(startIndex, endIndex)
+    return counties.sort().slice(startIndex, endIndex)
   }
 
   return (
@@ -53,7 +53,7 @@ const County = () => {
         userRole={user?.role ?? ''}
       >
         <section className="h-screen">
-          <PortalHeader user={user as CurrentUser} />
+          <PortalHeader title="Uk Counties" subTitle='Please select from the menu eblow' />
           <section className="flex items-center justify-center md:h-[700px] md:py-28">
             <button
               type="button"
@@ -63,7 +63,7 @@ const County = () => {
               <MdOutlineArrowLeft fontSize={40} />
             </button>
             <div className="grid w-full max-w-screen-lg grid-cols-1 gap-8 overflow-hidden p-8 md:grid-cols-3">
-              {getPaginatedData().sort().map((county: string, index) => {
+              {getPaginatedData().map((county: string, index) => {
                 return (
                   <div
                     key={`${index}-${county}`}

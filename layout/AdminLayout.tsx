@@ -27,8 +27,8 @@ const AdminLayout = ({
   const theme = useMantineTheme()
 
 
-  const handleLogout = () => {
-    logout()
+  const handleLogout = async () => {
+    await logout().unwrap()
     localStorage.removeItem('token')
     router.replace(`${NEXT_URL}`)
   }

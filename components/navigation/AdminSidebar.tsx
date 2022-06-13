@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { UnstyledButton, Divider, Navbar, Burger, Drawer } from '@mantine/core'
+import { UnstyledButton, Divider, Navbar, Burger, Drawer, Indicator } from '@mantine/core'
 import { BiHomeCircle } from 'react-icons/bi'
 import { FaRegEnvelope, FaUsers, FaBriefcase, FaPowerOff } from 'react-icons/fa'
 import UserButton from '@components/UserButton'
@@ -55,8 +55,17 @@ const AdminSidebar = ({
             </Link>
             <Link href={'/admin/messages'}>
               <a className="relative flex items-center justify-center py-12">
-                <FaRegEnvelope fontSize={40} color="#5271ff" />
-                <div className="absolute left-3 top-11 h-5 w-5 rounded-full bg-red-500"></div>
+                <Indicator
+                  inline
+                  label={1}
+                  size={20}
+                  offset={7}
+                  position="top-start"
+                  color="red"
+                  withBorder
+                >
+                  <FaRegEnvelope fontSize={40} color="#5271ff" />
+                </Indicator>
               </a>
             </Link>
             <Link href={'/admin/profile'}>
@@ -128,7 +137,17 @@ const AdminSidebar = ({
               </Link>
               <Link href={'/admin/profile'}>
                 <a className="relative flex flex-col items-center justify-center ">
-                  <FaBriefcase fontSize={40} color="#5271ff" />
+                  <Indicator
+                    inline
+                    label={1}
+                    size={20}
+                    offset={7}
+                    position="top-start"
+                    color="red"
+                    withBorder
+                  >
+                    <FaRegEnvelope fontSize={40} color="#5271ff" />
+                  </Indicator>
                   <span className="text-xl capitalize text-[#5271ff]">
                     messages
                   </span>

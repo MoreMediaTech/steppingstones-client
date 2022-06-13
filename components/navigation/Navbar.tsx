@@ -54,7 +54,7 @@ const Navbar = () => {
   }
 
   const handleLogout = async () => {
-    logout()
+    await logout().unwrap()
     localStorage.removeItem('token')
     router.replace(`${NEXT_URL}`)
   }
@@ -184,6 +184,7 @@ const Navbar = () => {
               opened={opened}
               onClick={() => setOpened((o) => !o)}
               title={title}
+              color="#00dcb3"
             />
             <Drawer
               opened={opened}

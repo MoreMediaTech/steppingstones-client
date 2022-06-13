@@ -43,6 +43,11 @@ const baseQueryWithReAuth: BaseQueryFn = async (
   extraOptions
 ) => {
   let result = await baseQuery(args, api, extraOptions)
+  if(result?.error?.status === 400) {
+     localStorage.removeItem('token')
+     api.dispatch(resetCredentials())
+    result = await baseQuery(args, api, extraOptions)
+  }
   if (result?.error?.status === 401 || result?.error?.status === 403) {
     // send refresh token to get new token
     const refreshResult: RefreshResult = await baseQuery(
@@ -61,9 +66,7 @@ const baseQueryWithReAuth: BaseQueryFn = async (
       // retry original request
       result = await baseQuery(args, api, extraOptions)
     }
-  } else {
-    // api.dispatch(resetCredentials())
-  }
+  } 
   return result
 }
 
