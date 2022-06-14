@@ -8,10 +8,12 @@ const PortalHeader = ({
   user,
   title,
   subTitle,
+  district,
 }: {
   user?: CurrentUser
   title?: string
   subTitle?: string
+  district?: string
 }) => {
   const [opened, setOpened] = useState(false)
   const initials = user?.name
@@ -61,7 +63,7 @@ const PortalHeader = ({
             size={50}
             color="#00dcb3"
           />
-          <ContentDrawer opened={opened} setOpened={setOpened} />
+          <ContentDrawer opened={opened} setOpened={setOpened} district={district as string} />
         </div>
       </div>
     </header>

@@ -2,9 +2,9 @@ import { useEffect } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import { showNotification } from '@mantine/notifications'
-import { Button, PasswordInput, Textarea, TextInput } from '@mantine/core'
+import { Button, Textarea, TextInput } from '@mantine/core'
 
-import { IEmailFormData, IFormData } from '@lib/types'
+import { IEmailFormData } from '@lib/types'
 import { useSendEnquiryMutation } from 'features/email/emailApiSlice'
 import { enquiryEmailTemplate } from '@lib/emailTemplates'
 

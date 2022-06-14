@@ -1,12 +1,9 @@
-import React, { useState } from 'react'
 import { useRouter } from 'next/router'
-import { AppShell, useMantineTheme } from '@mantine/core'
+import { useMantineTheme } from '@mantine/core'
 import Head from 'next/head'
-import { CgMenuGridR } from 'react-icons/cg'
 
 import { useLogoutMutation } from 'features/auth/authApiSlice'
-import { useGetUserQuery } from 'features/user/usersApiSlice'
-import { AdminNavbar, AdminSidebar } from '@components/navigation'
+import { AdminSidebar } from '@components/navigation'
 import { NEXT_URL } from '@config/index'
 import { Children } from 'lib/types'
 interface ILayout extends Children {
@@ -22,13 +19,12 @@ const AdminLayout = ({
   children,
 }: ILayout): JSX.Element => {
   const router = useRouter()
-  const { data: currentUser } = useGetUserQuery()
   const [logout] = useLogoutMutation()
   const theme = useMantineTheme()
 
 
   const handleLogout = async () => {
-    await logout().unwrap()
+    logout()
     localStorage.removeItem('token')
     router.replace(`${NEXT_URL}`)
   }
