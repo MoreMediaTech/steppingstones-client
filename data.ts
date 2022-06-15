@@ -74,7 +74,6 @@ export const counties = [
   'Lanarkshire',
   'Ayrshire',
   'Northumberland',
-
   'Roxburghshire',
   'Dumfries-shire',
   'Kirkcudbrightshire',
@@ -105,7 +104,6 @@ export const counties = [
   'Merionethshire',
   'Norfolk',
   'West Midlands',
-
   'Suffolk',
   'Cambridgeshire',
   'Bedfordshire',
@@ -137,7 +135,6 @@ export const counties = [
   'Dorset',
   'Devon',
   'Cornwall',
-
   'Antrim',
   'Derry / Londonderry',
   'Down',
