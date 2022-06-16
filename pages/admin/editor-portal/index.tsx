@@ -12,7 +12,7 @@ import PortalSection from '@components/PortalSection'
 const Dashboard = () => {
   const { data: user, isLoading, isError, error} = useGetUserQuery()
   return (
-    <AdminLayout title="Editor Dashboard" >
+    <AdminLayout title="Counties - Editor Dashboard" >
       {isLoading && <Spinner classes="w-24 h-24" message="Loading..." />}
       {isError && (
         <div className="flex items-center justify-center">

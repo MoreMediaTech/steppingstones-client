@@ -17,10 +17,10 @@ const County = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const { data: user, isLoading, isError, error } = useGetUserQuery()
   const totalCountyButtonSlides = Math.ceil(counties.length / 12)
-  console.log(
-    '🚀 ~ file: counties.tsx ~ line 14 ~ county ~ totalCountyButtons',
-    totalCountyButtonSlides
-  )
+  // console.log(
+  //   '🚀 ~ file: counties.tsx ~ line 14 ~ county ~ totalCountyButtons',
+  //   totalCountyButtonSlides
+  // )
   function goToNextPage() {
     setCurrentPage((page) => page + 1)
     if(currentPage >= totalCountyButtonSlides) {
@@ -67,8 +67,8 @@ const County = () => {
                 return (
                   <div
                     key={`${index}-${county}`}
-                    className="md:w-54 flex h-24 items-center justify-center rounded-xl bg-[#5271ff] py-6 px-4 text-2xl font-semibold text-white drop-shadow-lg transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-[#0c6980] "
-                    onClick={() => router.replace(`${NEXT_URL}/admin/editor-portal/counties/${county}`)}
+                    className="md:w-54 flex h-24 items-center justify-center rounded-xl bg-[#5271ff] py-6 px-4 text-2xl font-semibold text-white cursor-pointer drop-shadow-lg transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-[#0c6980] "
+                    onClick={() => router.replace(`${NEXT_URL}/admin/editor-portal/county-portal/${county}`)}
                   >
                     <h1>{county}</h1>
                   </div>

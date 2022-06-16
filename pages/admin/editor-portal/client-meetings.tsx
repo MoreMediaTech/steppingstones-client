@@ -1,9 +1,9 @@
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import React from 'react'
 
-const Messages = () => {
+const ClientMeetings = () => {
   return (
-    <div>Messages</div>
+    <div>ClientMeetings</div>
   )
 }
 
@@ -46,4 +46,4 @@ export const getServerSideProps: GetServerSideProps = async (
 }
 
 
-export default Messages
+export default ClientMeetings

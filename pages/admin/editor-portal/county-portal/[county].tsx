@@ -10,9 +10,9 @@ import PortalHeader from '@components/PortalHeader'
 
 const County = ({ county }: { county: string }) => {
   const router = useRouter()
-  const { data: user, isLoading, isError, error } = useGetUserQuery()
+  const { data: user, isLoading, isError, isFetching } = useGetUserQuery()
   return (
-    <AdminLayout title="Editor Dashboard">
+    <AdminLayout title="County - Editor Dashboard">
       {isLoading && <Spinner classes="w-24 h-24" message="Loading..." />}
       {isError && (
         <div className="flex h-full items-center justify-center">
@@ -51,7 +51,7 @@ export const getServerSideProps: GetServerSideProps = async (
 ) => {
   const { req } = context
   const cookies = req.cookies.ss_refresh_token
-  const { county } = context.query
+  const county  = context.params?.county
 
   if (!cookies) {
     context.res.writeHead(302, {

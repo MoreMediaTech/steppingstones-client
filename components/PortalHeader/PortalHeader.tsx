@@ -1,8 +1,8 @@
-import { useState }from 'react'
+import { useState } from 'react'
 import { Avatar, Burger, Group, Text, TextInput } from '@mantine/core'
 import { IoIosSearch } from 'react-icons/io'
 import { CurrentUser } from '@lib/types'
-import ContentDrawer from '@components/navigation/ContentDrawer'
+import ContentDrawer from '@components/navigation/ContentDrawer/ContentDrawer'
 
 const PortalHeader = ({
   user,
@@ -54,18 +54,26 @@ const PortalHeader = ({
             icon={<IoIosSearch fontSize={30} fontWeight={500} />}
             size="lg"
             radius="md"
-            className="rounded-xl  bg-transparent shadow-xl"
+            className="rounded-xl w-full  bg-transparent shadow-xl"
           />
-          <Burger
-            opened={opened}
-            onClick={() => setOpened((o) => !o)}
-            title={drawerTitle}
-            size={50}
-            color="#00dcb3"
-          />
-          <ContentDrawer opened={opened} setOpened={setOpened} district={district as string} />
+          <div className={district ? 'display: flex' : 'hidden'}>
+            {district && (
+              <Burger
+                opened={opened}
+                onClick={() => setOpened((o) => !o)}
+                title={drawerTitle}
+                size={50}
+                color="#00dcb3"
+              />
+            )}
+          </div>
         </div>
       </div>
+      <ContentDrawer
+        opened={opened}
+        setOpened={setOpened}
+        district={district as string}
+      />
     </header>
   )
 }
