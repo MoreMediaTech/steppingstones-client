@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { UnstyledButton, Divider, Navbar, Burger, Drawer, Indicator } from '@mantine/core'
 import { BiHomeCircle } from 'react-icons/bi'
+import { MdOutlineCreateNewFolder } from 'react-icons/md'
 import { FaRegEnvelope, FaUsers, FaBriefcase, FaPowerOff } from 'react-icons/fa'
 import UserButton from '@components/UserButton'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
@@ -53,6 +54,11 @@ const AdminSidebar = ({
                 <BiHomeCircle fontSize={40} color="#5271ff" />
               </a>
             </Link>
+            {/* <Link href={'/admin/editor-portal'}>
+              <a className="flex items-center justify-center py-12">
+                <MdOutlineCreateNewFolder fontSize={40} color="#5271ff" />
+              </a>
+            </Link> */}
             <Link href={'/admin/messages'}>
               <a className="relative flex items-center justify-center py-12">
                 <Indicator
@@ -127,6 +133,14 @@ const AdminSidebar = ({
                   </span>
                 </a>
               </Link>
+              {/* <Link href={'/admin/editor-portal'}>
+                <a className="relative flex flex-col items-center justify-center ">
+                  <BiHomeCircle fontSize={40} color="#5271ff" />
+                  <span className="text-xl capitalize text-[#5271ff]">
+                    Create
+                  </span>
+                </a>
+              </Link> */}
               <Link href={'/admin/messages'}>
                 <a className="relative flex flex-col items-center justify-center ">
                   <FaRegEnvelope fontSize={40} color="#5271ff" />

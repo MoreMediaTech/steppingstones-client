@@ -10,15 +10,27 @@ import { createWrapper, HYDRATE } from 'next-redux-wrapper'
 import authReducer from 'features/auth/authSlice'
 import partnerReducer from 'features/partner/partnerSlice'
 import emailReducer from 'features/email/emailSlice'
-import { apiSlice, emailApiSlice, partnerApiSlice } from './api/apiSlice'
+import editorReducer from 'features/editor/editorSlice'
+import uploadReducer from 'features/upload/uploadSlice'
+import {
+  apiSlice,
+  emailApiSlice,
+  partnerApiSlice,
+  editorApiSlice,
+  uploadApiSlice,
+} from './api/apiSlice'
 
 const reducers = {
   [apiSlice.reducerPath]: apiSlice.reducer,
   [emailApiSlice.reducerPath]: emailApiSlice.reducer,
   [partnerApiSlice.reducerPath]: partnerApiSlice.reducer,
+  [editorApiSlice.reducerPath]: editorApiSlice.reducer,
+  [uploadApiSlice.reducerPath]: uploadApiSlice.reducer,
   auth: authReducer,
   partner: partnerReducer,
   email: emailReducer,
+  editor: editorReducer,
+  upload: uploadReducer,
 }
 
 const combinedReducer = combineReducers<typeof reducers>(reducers)
@@ -38,6 +50,8 @@ export const store = configureStore({
       apiSlice.middleware,
       emailApiSlice.middleware,
       partnerApiSlice.middleware,
+      editorApiSlice.middleware,
+      uploadApiSlice.middleware,
     ]),
   devTools: process.env.NODE_ENV !== 'production',
 })

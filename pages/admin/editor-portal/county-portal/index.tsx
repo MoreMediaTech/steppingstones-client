@@ -9,14 +9,31 @@ import { CurrentUser } from '@lib/types'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
 import Spinner from '@components/spinner'
 import PortalHeader from '@components/PortalHeader'
-import { counties } from 'data'
+
 import { NEXT_URL } from '@config/index'
+import { CreateCountyForm } from '@components/forms'
+import { useGetCountiesQuery } from 'features/editor/editorApiSlice'
+
+type CountyProps = {
+  id: string
+  name: string
+  authorId: string
+  published: boolean
+  viewCount: number
+}
 
 const County = () => {
   const router = useRouter()
+  const [opened, setOpened] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
-  const { data: user, isLoading, isError, error } = useGetUserQuery()
-  const totalCountyButtonSlides = Math.ceil(counties.length / 12)
+  const { data: user } = useGetUserQuery()
+  const {
+    data: counties,
+    isLoading: isLoadingCounties,
+    isError: isErrorCounties,
+  } = useGetCountiesQuery({ refetchOnMountOrArgChange: true })
+    // console.log("🚀 ~ file: index.tsx ~ line 27 ~ County ~ counties", counties)
+  const totalCountyButtonSlides = Math.ceil(counties?.length / 12)
   // console.log(
   //   '🚀 ~ file: counties.tsx ~ line 14 ~ county ~ totalCountyButtons',
   //   totalCountyButtonSlides
@@ -36,41 +53,70 @@ const County = () => {
   const getPaginatedData = () => {
     const startIndex = currentPage * 12 - 12
     const endIndex = startIndex + 12
-    return counties.sort().slice(startIndex, endIndex)
+    return counties?.slice(startIndex, endIndex)
   }
 
   return (
     <AdminLayout title="Editor Dashboard">
-      {isLoading && <Spinner classes="w-24 h-24" message="Loading..." />}
-      {isError && (
-        <div className="flex h-full items-center justify-center">
-          An Error has occurred
-        </div>
-      )}
       <ComponentShield
         RBAC
         showForRole={'SS_EDITOR'}
-        userRole={user?.role ?? ''}
+        userRole={user?.role as string}
       >
         <section className="h-screen">
-          <PortalHeader title="Uk Counties" subTitle='Please select from the menu eblow' />
+          <PortalHeader
+            title="Uk Counties"
+            subTitle="Please select from the menu eblow"
+          />
+          {isLoadingCounties && (
+            <Spinner classes="w-24 h-24" message="Loading..." />
+          )}
+          <section className="container mx-auto px-4 py-2">
+            <div className="flex justify-between">
+              <button
+                type="button"
+                className="w-1/4 rounded-md bg-[#0c6980] px-4 py-2 font-semibold text-white drop-shadow-lg"
+                onClick={() => {
+                  router.back()
+                }}
+              >
+                Go Back
+              </button>
+
+              <button
+                type="button"
+                className="w-1/4 rounded-md bg-[#0c6980] px-4 py-4 font-semibold text-white shadow-2xl transition delay-150 duration-300 
+              ease-in-out hover:-translate-y-1 hover:scale-y-100 hover:bg-[#0c5280f9]"
+                onClick={() => setOpened((o) => !o)}
+              >
+                Add County
+              </button>
+            </div>
+          </section>
+
           <section className="flex items-center justify-center md:h-[700px] md:py-28">
             <button
               type="button"
-              className="h-full bg-white/30 px-2 text-[#0c6980] backdrop-blur-sm drop-shadow-lg transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110"
+              className="h-full bg-white/30 px-2 text-[#0c6980] drop-shadow-lg backdrop-blur-sm transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110"
               onClick={goToPreviousPage}
             >
               <MdOutlineArrowLeft fontSize={40} />
             </button>
             <div className="grid w-full max-w-screen-lg grid-cols-1 gap-8 overflow-hidden p-8 md:grid-cols-3">
-              {getPaginatedData().map((county: string, index) => {
+              {getPaginatedData()?.map((county: CountyProps, index: number) => {
                 return (
                   <div
-                    key={`${index}-${county}`}
-                    className="md:w-54 flex h-24 items-center justify-center rounded-xl bg-[#5271ff] py-6 px-4 text-2xl font-semibold text-white cursor-pointer drop-shadow-lg transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-[#0c6980] "
-                    onClick={() => router.replace(`${NEXT_URL}/admin/editor-portal/county-portal/${county}`)}
+                    key={`${index}-${county.name}`}
+                    className="md:w-54 flex h-24 cursor-pointer items-center justify-center rounded-xl bg-[#5271ff] py-6 px-4 text-lg font-semibold text-white 
+                    drop-shadow-lg transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#0c6980] md:text-xl lg:text-2xl "
+                    onClick={() =>
+                      router.replace({
+                        pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county.name}`,
+                        query: { county: county.name, id: county.id },
+                      })
+                    }
                   >
-                    <h1>{county}</h1>
+                    <h1>{county.name}</h1>
                   </div>
                 )
               })}
@@ -78,7 +124,7 @@ const County = () => {
             <div className="h-full">
               <button
                 type="button"
-                className="h-full bg-white/30 px-2 text-[#0c6980] backdrop-blur-sm drop-shadow-lg transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 "
+                className="h-full bg-white/30 px-2 text-[#0c6980] drop-shadow-lg backdrop-blur-sm transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 "
                 onClick={goToNextPage}
               >
                 <MdOutlineArrowRight fontSize={44} />
@@ -86,6 +132,7 @@ const County = () => {
             </div>
           </section>
         </section>
+        <CreateCountyForm opened={opened} setOpened={setOpened} />
       </ComponentShield>
     </AdminLayout>
   )

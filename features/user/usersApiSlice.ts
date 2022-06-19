@@ -9,7 +9,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       async onQueryStarted(args, {dispatch, queryFulfilled}) {
        try {
            const result = await queryFulfilled
-           await dispatch(setCredentials({currentUser: result.data, token: JSON.parse(localStorage.getItem('token') as string)}))
+           dispatch(setCredentials({currentUser: result.data, token: JSON.parse(localStorage.getItem('token') as string)}))
        } catch (error) {
            dispatch(setError({message: error.message}))
        }

@@ -12,6 +12,37 @@ export interface IFormData {
   acceptTermsAndConditions?: boolean
   acceptContactRequest?: boolean
 }
+
+type EditorFormDataProps = {
+  intro: string
+  title: string
+  imageUrl: string | FileList | ArrayBuffer 
+  imageFile: FileList
+  content: string
+}
+export interface IContentDrawerSubNavData {
+  title: string
+  path: string
+  icon: JSX.Element
+  listIcon: JSX.Element
+  iconOpenClosed: JSX.Element
+  subNav: {
+    title: string
+    path: string
+    listIcon?: JSX.Element
+    iconOpenClosed?: JSX.Element
+    subNavTwo?: {
+      title: string
+      path: string
+    }[]
+  }[]
+}
+
+export type DistrictDataProps = {
+  id: string
+  name: string
+  imageUrl: string
+}
 export type IEmailFormData = {
   from: string
   company: string

@@ -39,16 +39,16 @@ const links: ILinks[] = [
 
 const PortalSection = () => {
   return (
-    <section className="relative mx-auto flex flex-grow items-center justify-center md:container md:p-8">
-      <div className="grid w-full grid-cols-1 gap-12 px-2 py-4 md:grid-cols-3 md:p-8 ">
+    <section className="relative mx-auto  overflow-auto md:container md:p-8">
+      <div className="grid w-full grid-cols-1 gap-4 overflow-auto  py-4 md:grid-cols-3 md:gap-12 ">
         {links.map((link, index) => (
           <div key={`${link}-${index}`}>
             <Link href={`/admin/editor-portal/${link.path}`}>
-              <a className="flex h-48 flex-col items-center justify-center rounded-lg bg-[#5271ff] py-8 px-4 text-2xl font-semibold 
-              text-white shadow-xl transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-[#0c6980] md:h-56 md:w-72">
-                <span>
-                  {link.icon}
-                </span>
+              <a
+                className="mx-4 flex h-40 flex-col items-center justify-center rounded-lg bg-[#5271ff] text-lg font-semibold text-white shadow-xl transition delay-150 duration-300 
+              ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#0c6980] md:mx-0 md:w-48 md:py-8 md:px-4 md:text-xl lg:h-56 lg:w-72 lg:text-2xl"
+              >
+                <span>{link.icon}</span>
                 {link.title}
               </a>
             </Link>

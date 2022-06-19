@@ -43,25 +43,34 @@ export const faqItems = [
   },
 ]
 
+export const districtPages = [
+  {
+    title: 'Why Invest In',
+    path: '/admin/editor-portal/county-portal/district/why-invest-in',
+  },
+  {
+    title: 'Economic Data',
+    path: '/admin/editor-portal/county-portal/district/economic-data',
+  },
+  {
+    title: 'Business Parks',
+    path: '/admin/editor-portal/county-portal/district/business-parks',
+  },
+  {
+    title: 'Council Services',
+    path: '/admin/editor-portal/county-portal/district/council-services',
+  },
+  {
+    title: 'Local News',
+    path: '/admin/editor-portal/county-portal/district/local-news',
+  },
+  {
+    title: 'Council Grants',
+    path: '/admin/editor-portal/county-portal/district/council-grants',
+  },
+]
+
 export const counties = [
-  'Shetland Islands',
-  'Orkney Islands',
-  'Caithness',
-  'Sutherland',
-  'Ross & Cromarty',
-  'Inverness-shire',
-  'Nairnshire',
-  'Morayshire',
-  'Banffshire',
-  'Aberdeenshire',
-  'Kincardineshire',
-  'Angus (Forfarshire)',
-  'Perthshire',
-  'Argyllshire',
-  'Fife',
-  'Kinross-shire',
-  'Clackmannanshire',
-  'Stirlingshire',
   'Dunbartonshire',
   'East Lothian',
   'Midlothian',
@@ -88,7 +97,6 @@ export const counties = [
   'Greater Manchester',
   'Merseyside',
   'Lincolnshire',
-  'Nottinghamshire',
   'S. Yorkshire',
   'Derbyshire',
   'Cheshire',

@@ -98,7 +98,7 @@ export const editorApiSlice = createApi({
   reducerPath: 'editorApi',
   baseQuery: baseQueryWithReAuth,
   keepUnusedDataFor: 960,
-  tagTypes: ['Editor'],
+  tagTypes: ['Editor', 'County', 'District'],
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
       return action.payload[reducerPath]
@@ -112,6 +112,19 @@ export const emailApiSlice = createApi({
   baseQuery: baseQueryWithReAuth,
   keepUnusedDataFor: 960,
   tagTypes: ['Email'],
+  extractRehydrationInfo(action, { reducerPath }) {
+    if (action.type === HYDRATE) {
+      return action.payload[reducerPath]
+    }
+  },
+  endpoints: (builder) => ({}),
+})
+
+export const uploadApiSlice = createApi({
+  reducerPath: 'uploadApi',
+  baseQuery: baseQueryWithReAuth,
+  keepUnusedDataFor: 960,
+  tagTypes: ['Upload'],
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
       return action.payload[reducerPath]

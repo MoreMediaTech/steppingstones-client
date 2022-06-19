@@ -15,14 +15,17 @@ import { MdArrowRight } from 'react-icons/md'
 
 import { contentDrawerSubNavData } from './ContentDrawerData'
 import ContentDrawerItem from './ContentDrawerListItem'
+import { DistrictDataProps } from '@lib/types'
 
 const ContentDrawer = ({
   opened,
   setOpened,
   district,
+  districtData,
 }: {
   opened: boolean
   district: string
+  districtData: DistrictDataProps
   setOpened: Dispatch<SetStateAction<boolean>>
 }) => {
   const [optionOne, setOptionOne] = useState(false)
@@ -114,6 +117,7 @@ const ContentDrawer = ({
                           key={`${item}-${index}`}
                           item={item}
                           district={district}
+                          districtData={districtData}
                         />
                       ))}
                     </Collapse>

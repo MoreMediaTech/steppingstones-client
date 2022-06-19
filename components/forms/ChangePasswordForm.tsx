@@ -1,6 +1,5 @@
 import { Button, PasswordInput } from '@mantine/core'
 import { Inputs } from 'pages/auth/forgot-password/[token]'
-import React from 'react'
 import { FieldError, SubmitHandler, UseFormHandleSubmit, UseFormRegister } from 'react-hook-form'
 
 interface IChangePasswordResetForm {

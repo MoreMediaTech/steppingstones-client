@@ -1,23 +1,8 @@
 import * as FaIcons from 'react-icons/fa'
 import * as MdIcons from 'react-icons/md'
+import { IContentDrawerSubNavData } from '@lib/types'
 
-export interface IContentDrawerSubNavData {
-  title: string
-  path: string
-  icon: JSX.Element
-  listIcon: JSX.Element
-  iconOpenClosed: JSX.Element
-  subNav: {
-    title: string
-    path: string
-    listIcon?: JSX.Element
-    iconOpenClosed?: JSX.Element
-    subNavTwo?: {
-      title: string
-      path: string
-    }[]
-  }[]
-}
+
 
 export const contentDrawerSubNavData: IContentDrawerSubNavData[] = [
   {

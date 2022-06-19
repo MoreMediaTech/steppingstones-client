@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Avatar, Burger, Group, Text, TextInput } from '@mantine/core'
 import { IoIosSearch } from 'react-icons/io'
-import { CurrentUser } from '@lib/types'
+import { CurrentUser, DistrictDataProps } from '@lib/types'
 import ContentDrawer from '@components/navigation/ContentDrawer/ContentDrawer'
 
 const PortalHeader = ({
@@ -9,11 +9,13 @@ const PortalHeader = ({
   title,
   subTitle,
   district,
+  districtData,
 }: {
   user?: CurrentUser
   title?: string
   subTitle?: string
   district?: string
+  districtData?: DistrictDataProps
 }) => {
   const [opened, setOpened] = useState(false)
   const initials = user?.name
@@ -54,7 +56,7 @@ const PortalHeader = ({
             icon={<IoIosSearch fontSize={30} fontWeight={500} />}
             size="lg"
             radius="md"
-            className="rounded-xl w-full  bg-transparent shadow-xl"
+            className="w-full rounded-xl  bg-transparent shadow-xl"
           />
           <div className={district ? 'display: flex' : 'hidden'}>
             {district && (
@@ -72,6 +74,7 @@ const PortalHeader = ({
       <ContentDrawer
         opened={opened}
         setOpened={setOpened}
+        districtData={districtData as DistrictDataProps}
         district={district as string}
       />
     </header>
