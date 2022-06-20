@@ -23,6 +23,7 @@ interface IDistrictFormComponent {
   }
   value: string
   setValue: React.Dispatch<React.SetStateAction<string>>
+  setIsEdit: React.Dispatch<React.SetStateAction<boolean>>
   isLoading: boolean
   register: UseFormRegister<EditorFormDataProps>
   handleSubmit: UseFormHandleSubmit<EditorFormDataProps>
@@ -36,10 +37,10 @@ const DistrictFormComponent = ({
   value,
   setValue,
   handleSubmit,
-
+  setIsEdit,
 }: IDistrictFormComponent) => {
-    const dispatch = useAppDispatch()
-    const { previewSource } = useAppSelector((state) => state.upload)
+  const dispatch = useAppDispatch()
+  const { previewSource } = useAppSelector((state) => state.upload)
   return (
     <form className="space-y-8" onSubmit={handleSubmit(submitHandler)}>
       <div className="p-2 font-semibold">
@@ -94,15 +95,19 @@ const DistrictFormComponent = ({
           Main Image
         </label>
         {previewSource ? (
-          <div className="w-full flex justify-start">
-            <div className='flex flex-col space-y-2'>
+          <div className="flex w-full justify-start">
+            <div className="flex flex-col space-y-2">
               <Image
                 src={previewSource as string}
                 alt="preview"
                 width={150}
                 height={150}
               />
-              <Button type="button" onClick={() => dispatch(clearState())} className="w-54 bg-blue-500">
+              <Button
+                type="button"
+                onClick={() => dispatch(clearState())}
+                className="w-54 bg-blue-500"
+              >
                 delete
               </Button>
             </div>
@@ -150,7 +155,16 @@ const DistrictFormComponent = ({
         />
       </div>
       <div className="my-4 flex w-full  md:justify-end ">
-        <div></div>
+        <div>
+          <Button
+            type="button"
+            fullWidth
+            className=" rounded-sm border border-red-700 bg-red-600 px-4 py-2 text-white hover:bg-red-700"
+            onClick={() => setIsEdit(false)}
+          >
+            Cancel
+          </Button>
+        </div>
         <div className="flex w-full items-center space-x-4">
           <div className="w-full text-gray-400">
             <p>Save and preview</p>

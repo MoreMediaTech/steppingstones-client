@@ -1,0 +1,23 @@
+.content {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.content h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 1.5rem 0;
+}
+
+.content p {
+    font-size: 1.25rem;
+    line-height: 1.5;
+    margin: 0 0 1.5rem 0;
+}
+
+.content p strong {
+    font-weight: 700;
+}

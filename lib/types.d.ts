@@ -13,6 +13,10 @@ export interface IFormData {
   acceptContactRequest?: boolean
 }
 
+type EditImageProps = {
+  imageFile: FileList
+}
+
 type EditorFormDataProps = {
   intro: string
   title: string

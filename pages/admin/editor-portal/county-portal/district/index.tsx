@@ -14,14 +14,26 @@ import { useGetDistrictByIdQuery } from 'features/editor/editorApiSlice'
 import { districtPages } from 'data'
 import { NEXT_URL } from '@config/index'
 
+const District = ({
+  district,
+  districtId,
+}: {
+  district: string
+  districtId: string
+}) => {
+  const router = useRouter()
+  const [opened, setOpened] = useState(false)
+  const { data: user } = useGetUserQuery()
+  const {
+    data: districtData,
+    isLoading: isLoadingDistrict,
+    isError: isErrorDistrict,
+  } = useGetDistrictByIdQuery(districtId, { refetchOnMountOrArgChange: true })
+  console.log(
+    '🚀 ~ file: index.tsx ~ line 47 ~ District ~ districtData',
+    districtData
+  )
 
-const District = ({ district, districtId}: {district: string, districtId: string}) => {
-     const router = useRouter()
-     const [opened, setOpened] = useState(false)
-     const { data: user } = useGetUserQuery()
-     const { data: districtData, isLoading: isLoadingDistrict, isError: isErrorDistrict } = useGetDistrictByIdQuery(districtId, { refetchOnMountOrArgChange: true })
-     console.log("🚀 ~ file: index.tsx ~ line 47 ~ District ~ districtData", districtData)
-     
   return (
     <AdminLayout title={`${district} District - Editor Dashboard`}>
       <ComponentShield
@@ -56,12 +68,14 @@ const District = ({ district, districtId}: {district: string, districtId: string
             {districtData && (
               <div className="flex w-full space-x-4">
                 <div className="cols-span-1">
-                  <Image
-                    src={districtData?.imageUrl}
-                    alt={districtData?.name}
-                    width={500}
-                    height={800}
-                  />
+                  {/* {districtData?.imageUrl !== null && (
+                    <Image
+                      src={districtData?.imageUrl}
+                      alt={districtData?.name}
+                      width={500}
+                      height={800}
+                    />
+                  )} */}
                 </div>
                 <div className="cols-span-3 w-full">
                   <div className="w-full py-8">
@@ -75,7 +89,10 @@ const District = ({ district, districtId}: {district: string, districtId: string
                           onClick={() =>
                             router.replace({
                               pathname: `${NEXT_URL}${pages.path}`,
-                              query: { district: districtData?.name, id: districtData?.id },
+                              query: {
+                                district: districtData?.name,
+                                id: districtData?.id,
+                              },
                             })
                           }
                         >

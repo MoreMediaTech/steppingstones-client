@@ -9,6 +9,7 @@ import {
 import { useUploadFileMutation } from 'features/upload/uploadApiSlice'
 import Spinner from '@components/spinner'
 import Image from 'next/image'
+import { MdCloudUpload } from 'react-icons/md'
 
 const FileUploadForm = () => {
   const {  previewSource, selectedFile } = useAppSelector(
@@ -79,8 +80,26 @@ const FileUploadForm = () => {
         </div>
       )}
       <form onSubmit={handleSubmitFile}>
-        <input type="file" onChange={handleFileInputChange} />
-        <button type="submit" className='border border-blue-500 px-4 py-2 bg-blue-500 text-white'>Upload</button>
+        <div className="flex w-full justify-start">
+          <label htmlFor="main-image" className="flex w-full">
+            <div className="flex w-1/4 cursor-pointer items-center justify-center border-2 border-gray-200 p-2">
+              <div className="flex h-32 w-full flex-col border-4 border-dashed hover:border-gray-300 hover:bg-gray-100">
+                <div className="flex flex-col items-center justify-center pt-7">
+                  <MdCloudUpload className="text-gray-300" fontSize={44} />
+                  <p className="text-gray-300">Select Image</p>
+                  <input
+                    id="main-image"
+                    type="file"
+                    accept="image/*"
+                    aria-label="main-image"
+                    className="w-full cursor-pointer opacity-0"
+                    {...register('imageFile')}
+                  />
+                </div>
+              </div>
+            </div>
+          </label>
+        </div>
       </form>
     </>
   )

@@ -12,6 +12,14 @@ const editorApi = editorApiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Editor', 'County'],
     }),
+    updateCounty: builder.mutation({
+      query: (data) => ({
+        url: `editor/county/${data.id}`,
+        method: 'PUT',
+        body: { ...data },
+      }),
+      invalidatesTags: ['Editor', 'County'],
+    }),
     getCountyById: builder.query({
       query: (id) => ({
         url: `editor/county/${id}`,
@@ -72,20 +80,20 @@ const editorApi = editorApiSlice.injectEndpoints({
       },
     }),
     createDistrictWhyInvest: builder.mutation({
-        query: (data) => ({
-            url: 'editor/county/district/why-invest',
-            method: 'POST',
-            body: { ...data },
-        }),
-        invalidatesTags: ['Editor', 'District'],
+      query: (data) => ({
+        url: 'editor/county/district/why-invest',
+        method: 'POST',
+        body: { ...data },
+      }),
+      invalidatesTags: ['Editor', 'District'],
     }),
     updateDistrictWhyInvest: builder.mutation({
-        query: (data) => ({
-            url: 'editor/county/district/why-invest',
-            method: 'PUT',
-            body: { ...data },
-        }),
-        invalidatesTags: ['Editor', 'District'],
+      query: (data) => ({
+        url: 'editor/county/district/why-invest',
+        method: 'PUT',
+        body: { ...data },
+      }),
+      invalidatesTags: ['Editor', 'District'],
     }),
   }),
 })
@@ -97,5 +105,6 @@ export const {
   useCreateDistrictMutation,
   useGetDistrictByIdQuery,
     useCreateDistrictWhyInvestMutation,
-    useUpdateDistrictWhyInvestMutation
+    useUpdateDistrictWhyInvestMutation,
+    useUpdateCountyMutation,
 } = editorApi
