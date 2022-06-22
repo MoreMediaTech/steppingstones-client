@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
+import { useForm, SubmitHandler } from 'react-hook-form'
+import { showNotification } from '@mantine/notifications'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
@@ -7,12 +9,18 @@ import { ComponentShield } from '@components/NextShield'
 import Spinner from '@components/spinner'
 import PortalHeader from '@components/PortalHeader'
 import { AdminLayout } from 'layout'
-
-import { CurrentUser } from '@lib/types'
+import { setError, setPreviewSource } from 'features/upload/uploadSlice'
+import { EditImageProps } from '@lib/types'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
-import { useGetDistrictByIdQuery } from 'features/editor/editorApiSlice'
+import {
+  useGetDistrictByIdQuery,
+  useUpdateDistrictByIdMutation,
+} from 'features/editor/editorApiSlice'
+import { useAppDispatch, useAppSelector } from 'app/hooks'
 import { districtPages } from 'data'
 import { NEXT_URL } from '@config/index'
+import { UnstyledButton } from '@mantine/core'
+import EditImageComponent from '@components/EditImageComponent'
 
 const District = ({
   district,
@@ -22,16 +30,64 @@ const District = ({
   districtId: string
 }) => {
   const router = useRouter()
+  const dispatch = useAppDispatch()
   const [opened, setOpened] = useState(false)
+  const [isEdit, setIsEdit] = useState(false)
   const { data: user } = useGetUserQuery()
+  const { previewSource, selectedFile } = useAppSelector(
+    (state) => state.upload
+  )
   const {
     data: districtData,
     isLoading: isLoadingDistrict,
     isError: isErrorDistrict,
   } = useGetDistrictByIdQuery(districtId, { refetchOnMountOrArgChange: true })
-  console.log(
-    '🚀 ~ file: index.tsx ~ line 47 ~ District ~ districtData',
-    districtData
+  const [updateDistrictById, { isLoading }] = useUpdateDistrictByIdMutation()
+
+  const {
+    handleSubmit,
+    register,
+    reset,
+    formState: { errors },
+  } = useForm<EditImageProps>()
+
+  const convertFileToBase64 = (file: File) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onloadend = () => {
+      dispatch(setPreviewSource(reader.result))
+    }
+    reader.onerror = () => {
+      showNotification({
+        message: 'Error converting file to base64',
+        color: 'red',
+      })
+      dispatch(setError({ message: 'something went wrong!' }))
+    }
+  }
+
+  const submitHandler: SubmitHandler<EditImageProps> = useCallback(
+    async (data) => {
+      console.log("🚀 ~ file: index.tsx ~ line 71 ~ data", data)
+      if (data.imageFile.length > 0) {
+        convertFileToBase64(data.imageFile[0] as File)
+      }
+      try {
+        const formData = {
+          id: districtId,
+          imageFile: previewSource,
+        }
+        await updateDistrictById(formData).unwrap()
+        setIsEdit(false)
+        router.replace({
+          pathname: `${NEXT_URL}${router.pathname}`,
+          query: { ...router.query },
+        })
+      } catch (error) {
+        dispatch(setError({ message: error.message }))
+      }
+    },
+    []
   )
 
   return (
@@ -43,10 +99,8 @@ const District = ({
       >
         <section className="h-screen">
           <PortalHeader
-            title={district}
+            title={`${district} District Council`}
             subTitle="Please select Area you want to review"
-            district={district}
-            districtData={districtData}
           />
           <section className="container mx-auto px-4 py-2">
             <div className="flex justify-between">
@@ -54,7 +108,12 @@ const District = ({
                 type="button"
                 className="w-1/4 rounded-md bg-[#0c6980] px-4 py-4 text-xl font-semibold text-white drop-shadow-lg"
                 onClick={() => {
-                  router.back()
+                  router.replace({
+                    pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${router.query.county}`,
+                    query: {
+                      ...router.query,
+                    },
+                  })
                 }}
               >
                 Go Back
@@ -67,15 +126,33 @@ const District = ({
           <section className="container mx-auto w-full py-24">
             {districtData && (
               <div className="flex w-full space-x-4">
-                <div className="cols-span-1">
-                  {/* {districtData?.imageUrl !== null && (
-                    <Image
-                      src={districtData?.imageUrl}
-                      alt={districtData?.name}
-                      width={500}
-                      height={800}
+                <div className="cols-span-1 w-full  md:w-2/5">
+                  {districtData?.imageUrl !== null && !isEdit ? (
+                    <div className="flex flex-col items-center space-y-2">
+                      <Image
+                        src={districtData?.imageUrl}
+                        alt={districtData?.name}
+                        width={500}
+                        height={800}
+                      />
+                      <UnstyledButton
+                        type="button"
+                        onClick={() => setIsEdit(true)}
+                        className="w-full rounded-md bg-[#0c6980] px-4 py-2 text-center font-semibold text-white shadow-xl transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#25525e] md:text-xl lg:text-2xl"
+                      >
+                        click to edit image
+                      </UnstyledButton>
+                    </div>
+                  ) : (
+                    <EditImageComponent
+                      register={register}
+                      handleSubmit={handleSubmit}
+                      submitHandler={submitHandler}
+                      isLoading={isLoading}
+                      errors={errors}
+                      setIsEdit={setIsEdit}
                     />
-                  )} */}
+                  )}
                 </div>
                 <div className="cols-span-3 w-full">
                   <div className="w-full py-8">
@@ -90,8 +167,10 @@ const District = ({
                             router.replace({
                               pathname: `${NEXT_URL}${pages.path}`,
                               query: {
+                                county: router.query.county,
+                                countyId: router.query.countyId,
                                 district: districtData?.name,
-                                id: districtData?.id,
+                                districtId: districtData?.id,
                               },
                             })
                           }
@@ -116,7 +195,7 @@ export const getServerSideProps: GetServerSideProps = async (
 ) => {
   const { req } = context
   const cookies = req.cookies.ss_refresh_token
-  const { district, id } = context.query
+  const { district, countyId, county, districtId } = context.query
 
   if (!cookies) {
     context.res.writeHead(302, {
@@ -148,7 +227,9 @@ export const getServerSideProps: GetServerSideProps = async (
     // props: { user: user as SessionProps },
     props: {
       district: district,
-      districtId: id,
+      districtId: districtId,
+      county: county,
+      countyId: countyId,
     },
   }
 }

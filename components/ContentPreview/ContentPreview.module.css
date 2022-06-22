@@ -21,3 +21,16 @@
 .content p strong {
     font-weight: 700;
 }
+
+.content img {
+    margin-bottom: 100vw;
+    width: 100vw;
+    margin-inline-start: 50%;
+    transform: translateX(-50%);
+}
+/* .content img {
+    box-shadow: 0 0 0 100vmax var(--clr-neutral);
+    clip-path: inset(0 -100vmax);
+    margin-bottom: 100vw;
+} */
+

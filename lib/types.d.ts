@@ -26,26 +26,48 @@ type EditorFormDataProps = {
 }
 export interface IContentDrawerSubNavData {
   title: string
-  path: string
+  path?: string
+  subPath?: string
   icon: JSX.Element
   listIcon: JSX.Element
   iconOpenClosed: JSX.Element
   subNav: {
     title: string
-    path: string
+    path?: string
+    subPath?: string
     listIcon?: JSX.Element
     iconOpenClosed?: JSX.Element
     subNavTwo?: {
       title: string
-      path: string
+      path?: string
+      subPath?: string
     }[]
   }[]
+}
+
+export type EconomicDataProps = {
+   workingAgePopulation: number
+  labourDemand: number
+  noOfRetailShops: number
+  unemploymentRate: number
+  employmentInvestmentLand: number
+  numOfRegisteredCompanies: number
+  numOfBusinessParks: number
+  averageHousingCost: number
+  averageWageEarnings: number
 }
 
 export type DistrictDataProps = {
   id: string
   name: string
   imageUrl: string
+  logo: string
+}
+export type CountyDataProps = {
+  id: string
+  name: string
+  imageUrl: string
+  logo: string
 }
 export type IEmailFormData = {
   from: string

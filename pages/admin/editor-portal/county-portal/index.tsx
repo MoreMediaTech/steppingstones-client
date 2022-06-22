@@ -112,7 +112,7 @@ const County = () => {
                     onClick={() =>
                       router.replace({
                         pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county.name}`,
-                        query: { county: county.name, id: county.id },
+                        query: { county: county.name, countyId: county.id },
                       })
                     }
                   >

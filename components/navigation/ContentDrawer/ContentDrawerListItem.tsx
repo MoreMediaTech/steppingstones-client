@@ -1,16 +1,14 @@
 import { useState } from 'react'
 import Link from 'next/link'
-import { Collapse, List, UnstyledButton } from '@mantine/core'
-import { DistrictDataProps, IContentDrawerSubNavData } from '@lib/types'
+import { Collapse, List } from '@mantine/core'
+import { CountyDataProps, IContentDrawerSubNavData } from '@lib/types'
 
 const ContentDrawerItem = ({
   item,
-  district,
-  districtData,
+  countyData,
 }: {
   item: IContentDrawerSubNavData
-  district: string
-  districtData: DistrictDataProps
+  countyData: CountyDataProps
 }) => {
   const [opened, setOpened] = useState(false)
   return (
@@ -38,14 +36,12 @@ const ContentDrawerItem = ({
     >
       <Link
         href={{
-          pathname: `${item.path}`,
-          query: { district: `${district}`, id: `${districtData.id}` },
+          pathname: item.path && `${item.path}/${countyData.name}/${item.subPath}`,
+          query: { county: `${countyData.name}`, countyId: `${countyData.id}` },
         }}
       >
         <a onClick={() => setOpened((o) => !o)}>
-          {item.title.includes('Why Invest')
-            ? `${item.title} ${district}?`
-            : item.title}
+          {item.title}
         </a>
       </Link>
       <List withPadding listStyleType="disc" center icon={item.listIcon}>
@@ -59,10 +55,10 @@ const ContentDrawerItem = ({
               <List.Item key={subItem.title} className="my-4">
                 <Link
                   href={{
-                    pathname: subItem.path,
+                    pathname: `${subItem.path}/${countyData.name}/${subItem.subPath}`,
                     query: {
-                      district: `${district}`,
-                      id: `${districtData.id}`,
+                      county: `${countyData.name}`,
+                      countyId: `${countyData.id}`,
                     },
                   }}
                 >

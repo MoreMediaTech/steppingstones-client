@@ -1,21 +1,19 @@
 import { useState } from 'react'
 import { Avatar, Burger, Group, Text, TextInput } from '@mantine/core'
 import { IoIosSearch } from 'react-icons/io'
-import { CurrentUser, DistrictDataProps } from '@lib/types'
+import { CurrentUser, CountyDataProps } from '@lib/types'
 import ContentDrawer from '@components/navigation/ContentDrawer/ContentDrawer'
 
 const PortalHeader = ({
   user,
   title,
   subTitle,
-  district,
-  districtData,
+  countyData,
 }: {
   user?: CurrentUser
   title?: string
   subTitle?: string
-  district?: string
-  districtData?: DistrictDataProps
+  countyData?: CountyDataProps
 }) => {
   const [opened, setOpened] = useState(false)
   const initials = user?.name
@@ -58,8 +56,8 @@ const PortalHeader = ({
             radius="md"
             className="w-full rounded-xl  bg-transparent shadow-xl"
           />
-          <div className={district ? 'display: flex' : 'hidden'}>
-            {district && (
+          <div className={!!countyData ? 'display: flex' : 'hidden'}>
+            {!!countyData && (
               <Burger
                 opened={opened}
                 onClick={() => setOpened((o) => !o)}
@@ -74,8 +72,7 @@ const PortalHeader = ({
       <ContentDrawer
         opened={opened}
         setOpened={setOpened}
-        districtData={districtData as DistrictDataProps}
-        district={district as string}
+        countyData={countyData as CountyDataProps}
       />
     </header>
   )

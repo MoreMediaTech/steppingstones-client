@@ -6,7 +6,9 @@ import RequestPasswordResetForm from './RequestPasswordResetForm'
 import ChangePasswordForm from './ChangePasswordForm'
 import CreateCountyForm from './CreateCountyForm'
 import AddDistrictForm from './AddDistrictForm'
-import DistrictFormComponent from './DistrictFormComponent'
+import ContentFormComponent from './ContentFormComponent'
+import EconomicDataForm from './EconomicDataForm'
+import CountySectionForm from './CountySectionForm'
 
 export {
   SignUpForm,
@@ -17,5 +19,7 @@ export {
   ChangePasswordForm,
   CreateCountyForm,
   AddDistrictForm,
-  DistrictFormComponent
+  ContentFormComponent,
+  EconomicDataForm,
+  CountySectionForm,
 }

@@ -1,31 +1,20 @@
 import { Dispatch, SetStateAction, useState } from 'react'
-import {
-  UnstyledButton,
-  Collapse,
-  Drawer,
-  Navbar,
-  List,
-  ScrollArea,
-} from '@mantine/core'
-import Link from 'next/link'
-import { FaListUl, FaRegFile } from 'react-icons/fa'
-import { AiOutlineRight } from 'react-icons/ai'
-import { RiArrowRightFill } from 'react-icons/ri'
+import { UnstyledButton, Collapse, Drawer, List } from '@mantine/core'
+
+import { FaListUl } from 'react-icons/fa'
 import { MdArrowRight } from 'react-icons/md'
 
 import { contentDrawerSubNavData } from './ContentDrawerData'
 import ContentDrawerItem from './ContentDrawerListItem'
-import { DistrictDataProps } from '@lib/types'
+import { CountyDataProps } from '@lib/types'
 
 const ContentDrawer = ({
   opened,
   setOpened,
-  district,
-  districtData,
+  countyData,
 }: {
   opened: boolean
-  district: string
-  districtData: DistrictDataProps
+  countyData: CountyDataProps
   setOpened: Dispatch<SetStateAction<boolean>>
 }) => {
   const [optionOne, setOptionOne] = useState(false)
@@ -74,7 +63,7 @@ const ContentDrawer = ({
               withPadding
               listStyleType="disc"
               icon={
-                <div className="flex items-center space-x-1 -ml-8">
+                <div className="-ml-8 flex items-center space-x-1">
                   <span
                     className={`${
                       optionTwo
@@ -116,8 +105,7 @@ const ContentDrawer = ({
                         <ContentDrawerItem
                           key={`${item}-${index}`}
                           item={item}
-                          district={district}
-                          districtData={districtData}
+                          countyData={countyData}
                         />
                       ))}
                     </Collapse>

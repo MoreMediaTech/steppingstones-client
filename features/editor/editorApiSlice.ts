@@ -79,6 +79,14 @@ const editorApi = editorApiSlice.injectEndpoints({
         }
       },
     }),
+    updateDistrictById: builder.mutation({
+        query: (data) => ({
+            url: `editor/county/district/${data.id}`,
+            method: 'PUT',
+            body: { ...data },
+        }),   
+        invalidatesTags: ['Editor', 'District'], 
+    }),
     createDistrictWhyInvest: builder.mutation({
       query: (data) => ({
         url: 'editor/county/district/why-invest',
@@ -102,9 +110,10 @@ export const {
   useCreateCountyMutation,
   useGetCountiesQuery,
   useGetCountyByIdQuery,
+  useUpdateCountyMutation,
   useCreateDistrictMutation,
   useGetDistrictByIdQuery,
     useCreateDistrictWhyInvestMutation,
     useUpdateDistrictWhyInvestMutation,
-    useUpdateCountyMutation,
+    useUpdateDistrictByIdMutation
 } = editorApi
