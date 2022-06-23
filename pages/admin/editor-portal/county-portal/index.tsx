@@ -75,7 +75,7 @@ const County = () => {
             <div className="flex justify-between">
               <button
                 type="button"
-                className="w-1/4 rounded-md bg-[#0c6980] px-4 py-2 font-semibold text-white drop-shadow-lg"
+                className="w-1/4 rounded-md bg-[#5E17EB] px-4 py-2 font-semibold text-white drop-shadow-lg"
                 onClick={() => {
                   router.back()
                 }}
@@ -85,7 +85,7 @@ const County = () => {
 
               <button
                 type="button"
-                className="w-1/4 rounded-md bg-[#0c6980] px-4 py-4 font-semibold text-white shadow-2xl transition delay-150 duration-300 
+                className="bg-[#5E17EB w-1/4 rounded-md px-4 py-4 font-semibold text-white shadow-2xl transition delay-150 duration-300 
               ease-in-out hover:-translate-y-1 hover:scale-y-100 hover:bg-[#0c5280f9]"
                 onClick={() => setOpened((o) => !o)}
               >
@@ -97,7 +97,7 @@ const County = () => {
           <section className="flex items-center justify-center md:h-[700px] md:py-28">
             <button
               type="button"
-              className="h-full bg-white/30 px-2 text-[#0c6980] drop-shadow-lg backdrop-blur-sm transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110"
+              className="h-full bg-white/30 px-2 text-[#5E17EB] drop-shadow-lg backdrop-blur-sm transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110"
               onClick={goToPreviousPage}
             >
               <MdOutlineArrowLeft fontSize={40} />
@@ -107,7 +107,7 @@ const County = () => {
                 return (
                   <div
                     key={`${index}-${county.name}`}
-                    className="md:w-54 flex h-24 cursor-pointer items-center justify-center rounded-xl bg-[#5271ff] py-6 px-4 text-lg font-semibold text-white 
+                    className="md:w-54 flex h-24 cursor-pointer items-center justify-center rounded-xl bg-[#5E17EB] py-6 px-4 text-lg font-semibold text-white 
                     drop-shadow-lg transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#0c6980] md:text-xl lg:text-2xl "
                     onClick={() =>
                       router.replace({
@@ -124,7 +124,7 @@ const County = () => {
             <div className="h-full">
               <button
                 type="button"
-                className="h-full bg-white/30 px-2 text-[#0c6980] drop-shadow-lg backdrop-blur-sm transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 "
+                className="h-full bg-white/30 px-2 text-[#5E17EB] drop-shadow-lg backdrop-blur-sm transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 "
                 onClick={goToNextPage}
               >
                 <MdOutlineArrowRight fontSize={44} />

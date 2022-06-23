@@ -1,3 +1,4 @@
+import { CountyDataProps } from '@lib/types'
 import { editorApiSlice } from 'app/api/apiSlice'
 import { AxiosError } from 'axios'
 import { setCounties, setCounty, setDistrict, setError } from './editorSlice'
@@ -10,7 +11,7 @@ const editorApi = editorApiSlice.injectEndpoints({
         method: 'POST',
         body: { ...data },
       }),
-      invalidatesTags: ['Editor', 'County'],
+      invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
     }),
     updateCounty: builder.mutation({
       query: (data) => ({
@@ -18,13 +19,13 @@ const editorApi = editorApiSlice.injectEndpoints({
         method: 'PUT',
         body: { ...data },
       }),
-      invalidatesTags: ['Editor', 'County'],
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
     }),
     getCountyById: builder.query({
-      query: (id) => ({
+      query: (id: string) => ({
         url: `editor/county/${id}`,
       }),
-      providesTags: ['County'],
+      providesTags: (result, error, arg) => [{ type: 'Editor', id: arg }],
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled
@@ -41,7 +42,12 @@ const editorApi = editorApiSlice.injectEndpoints({
       query: () => ({
         url: 'editor/county',
       }),
-      providesTags: ['Editor', 'County'],
+      providesTags: (result, error, arg) => [
+        ...result?.map((county: Partial<CountyDataProps>) => ({
+          type: 'Editor',
+          id: county.id,
+        })),
+      ],
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           const result = await queryFulfilled
@@ -56,17 +62,17 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     createDistrict: builder.mutation({
       query: (data) => ({
-        url: 'editor/county/district',
+        url: 'editor/district',
         method: 'POST',
         body: { ...data },
       }),
-      invalidatesTags: ['Editor', 'District'],
+      invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
     }),
     getDistrictById: builder.query({
       query: (id) => ({
-        url: `editor/county/district/${id}`,
+        url: `editor/district/${id}`,
       }),
-      providesTags: ['Editor', 'District'],
+      providesTags: (result, error, arg) => [{ type: 'Editor', id: arg }],
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           const result = await queryFulfilled
@@ -80,28 +86,60 @@ const editorApi = editorApiSlice.injectEndpoints({
       },
     }),
     updateDistrictById: builder.mutation({
-        query: (data) => ({
-            url: `editor/county/district/${data.id}`,
-            method: 'PUT',
-            body: { ...data },
-        }),   
-        invalidatesTags: ['Editor', 'District'], 
-    }),
-    createDistrictWhyInvest: builder.mutation({
       query: (data) => ({
-        url: 'editor/county/district/why-invest',
-        method: 'POST',
-        body: { ...data },
-      }),
-      invalidatesTags: ['Editor', 'District'],
-    }),
-    updateDistrictWhyInvest: builder.mutation({
-      query: (data) => ({
-        url: 'editor/county/district/why-invest',
+        url: `editor/district/${data.id}`,
         method: 'PUT',
         body: { ...data },
       }),
-      invalidatesTags: ['Editor', 'District'],
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateDistrictWhyInvestIn: builder.mutation({
+      query: (data) => ({
+        url: `editor/why-invest`,
+        method: 'POST',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateEconomicData: builder.mutation({
+      query: (data) => ({
+        url: `editor/economic-data`,
+        method: 'POST',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateDistrictBusinessParks: builder.mutation({
+      query: (data) => ({
+        url: `editor/business-parks`,
+        method: 'POST',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateDistrictCouncilGrants: builder.mutation({
+      query: (data) => ({
+        url: `editor/council-grants`,
+        method: 'POST',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateDistrictCouncilServices: builder.mutation({
+      query: (data) => ({
+        url: `editor/council-services`,
+        method: 'POST',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateDistrictLocalNews: builder.mutation({
+      query: (data) => ({
+        url: `editor/council-services`,
+        method: 'POST',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
     }),
   }),
 })
@@ -113,7 +151,11 @@ export const {
   useUpdateCountyMutation,
   useCreateDistrictMutation,
   useGetDistrictByIdQuery,
-    useCreateDistrictWhyInvestMutation,
-    useUpdateDistrictWhyInvestMutation,
-    useUpdateDistrictByIdMutation
+  useUpdateOrCreateDistrictWhyInvestInMutation,
+  useUpdateDistrictByIdMutation,
+  useUpdateOrCreateEconomicDataMutation,
+  useUpdateOrCreateDistrictBusinessParksMutation,
+  useUpdateOrCreateDistrictCouncilGrantsMutation,
+  useUpdateOrCreateDistrictCouncilServicesMutation,
+  useUpdateOrCreateDistrictLocalNewsMutation,
 } = editorApi

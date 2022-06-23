@@ -98,7 +98,7 @@ export const editorApiSlice = createApi({
   reducerPath: 'editorApi',
   baseQuery: baseQueryWithReAuth,
   keepUnusedDataFor: 960,
-  tagTypes: ['Editor', 'County', 'District'],
+  tagTypes: ['Editor'],
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
       return action.payload[reducerPath]

@@ -68,7 +68,6 @@ const District = ({
 
   const submitHandler: SubmitHandler<EditImageProps> = useCallback(
     async (data) => {
-      console.log("🚀 ~ file: index.tsx ~ line 71 ~ data", data)
       if (data.imageFile.length > 0) {
         convertFileToBase64(data.imageFile[0] as File)
       }

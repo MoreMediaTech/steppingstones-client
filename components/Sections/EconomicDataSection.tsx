@@ -2,10 +2,11 @@ import { useCallback, useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { Paper, UnstyledButton } from '@mantine/core'
 import { BiEdit } from 'react-icons/bi'
+import { useRouter } from 'next/router'
 
 import { setError } from 'features/upload/uploadSlice'
 import {
-  useCreateDistrictWhyInvestMutation,
+  useUpdateOrCreateEconomicDataMutation,
   useGetDistrictByIdQuery,
 } from 'features/editor/editorApiSlice'
 import { useAppDispatch } from 'app/hooks'
@@ -13,15 +14,17 @@ import { EconomicDataProps } from '@lib/types'
 import ContentPreview from '@components/ContentPreview'
 import Spinner from '@components/spinner'
 import EconomicDataForm from '@components/forms/EconomicDataForm'
+import { NEXT_URL } from '@config/index'
 
 const EconomicDataSection = ({ id }: { id: string }) => {
+  const router = useRouter()
   const dispatch = useAppDispatch()
   const {
     data: districtData,
     isLoading: isLoadingDistrict,
     isError: isErrorDistrict,
   } = useGetDistrictByIdQuery(id, { refetchOnMountOrArgChange: true })
-  const [createDistrictWhyInvest, { isLoading }] = useCreateDistrictWhyInvestMutation()
+  const [updateOrCreateEconomicData, { isLoading }] = useUpdateOrCreateEconomicDataMutation()
   const [isEdit, setIsEdit] = useState(false)
   const {
     handleSubmit,
@@ -50,15 +53,21 @@ const EconomicDataSection = ({ id }: { id: string }) => {
         const formData = {
           ...data,
           districtId: id,
+          id: districtData?.economicData?.id,
         }
-        await createDistrictWhyInvest(formData).unwrap()
+        await updateOrCreateEconomicData(formData).unwrap()
         reset()
+         router.replace({
+           pathname: `${NEXT_URL}/admin/editor-portal/county-portal/district`,
+           query: { ...router.query },
+         })
       } catch (error) {
         dispatch(setError({ message: error.message }))
       }
     },
     []
   )
+  
   return (
     <section className="relative h-auto w-full flex-grow px-2 py-2  md:py-8 md:px-8">
       <section className="container">

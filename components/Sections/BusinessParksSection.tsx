@@ -3,19 +3,22 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { showNotification } from '@mantine/notifications'
 import { Paper, UnstyledButton } from '@mantine/core'
 import { BiEdit } from 'react-icons/bi'
+import { useRouter } from 'next/router'
 
 import { ContentFormComponent } from '@components/forms'
 import { setError, setPreviewSource } from 'features/upload/uploadSlice'
 import {
-  useCreateDistrictWhyInvestMutation,
+  useUpdateOrCreateDistrictBusinessParksMutation,
   useGetDistrictByIdQuery,
 } from 'features/editor/editorApiSlice'
 import { useAppDispatch, useAppSelector } from 'app/hooks'
 import { EditorFormDataProps } from '@lib/types'
 import ContentPreview from '@components/ContentPreview'
 import Spinner from '@components/spinner'
+import { NEXT_URL } from '@config/index'
 
 const BusinessParksSection = ({ id }: { id: string }) => {
+  const router = useRouter()
   const dispatch = useAppDispatch()
   const { previewSource } = useAppSelector(
     (state) => state.upload
@@ -25,8 +28,8 @@ const BusinessParksSection = ({ id }: { id: string }) => {
     isLoading: isLoadingDistrict,
     isError: isErrorDistrict,
   } = useGetDistrictByIdQuery(id, { refetchOnMountOrArgChange: true })
-  const [createDistrictWhyInvest, { isLoading }] =
-    useCreateDistrictWhyInvestMutation()
+  const [updateOrCreateDistrictBusinessParks, { isLoading }] =
+    useUpdateOrCreateDistrictBusinessParksMutation()
 
   const [value, setValue] = useState(districtData?.businessParks?.content)
   const [isEdit, setIsEdit] = useState(false)
@@ -68,13 +71,14 @@ const BusinessParksSection = ({ id }: { id: string }) => {
           imageFile: previewSource,
           content: value,
           districtId: id,
+          id: districtData?.businessParks?.id,
         }
-        console.log(
-          '🚀 ~ file: why-invest-in.tsx ~ line 35 ~ const submitHandler:SubmitHandler<EditorFormDataProps>=useCallback ~ data',
-          formData
-        )
-        await createDistrictWhyInvest(formData).unwrap()
+        await updateOrCreateDistrictBusinessParks(formData).unwrap()
         reset()
+          router.replace({
+            pathname: `${NEXT_URL}/admin/editor-portal/county-portal/district`,
+            query: { ...router.query },
+          })
       } catch (error) {
         dispatch(setError({ message: error.message }))
       }

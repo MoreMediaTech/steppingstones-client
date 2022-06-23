@@ -10,13 +10,13 @@ export const authApi = apiSlice.injectEndpoints({
         method: 'POST',
         body: { email, password },
       }),
+      invalidatesTags: [{ type: 'Auth', id: 'LIST' }],
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
-          const {data} = await queryFulfilled
+          const { data } = await queryFulfilled
           await dispatch(usersApiSlice.endpoints.getUser.initiate())
         } catch (error) {}
       },
-      invalidatesTags: ['Auth'],
     }),
     registerPartner: builder.mutation({
       query: (data) => ({
@@ -24,7 +24,7 @@ export const authApi = apiSlice.injectEndpoints({
         method: 'POST',
         body: { ...data },
       }),
-      invalidatesTags: ['Auth'],
+      invalidatesTags: [{ type: 'Auth', id: 'LIST' }],
     }),
     requestPasswordReset: builder.mutation({
       query: ({ email }) => ({
@@ -32,7 +32,7 @@ export const authApi = apiSlice.injectEndpoints({
         method: 'POST',
         body: { email },
       }),
-      invalidatesTags: ['Auth'],
+      invalidatesTags: [{ type: 'Auth', id: 'LIST' }],
     }),
     resetPassword: builder.mutation({
       query: ({ token, password }) => ({
@@ -40,6 +40,7 @@ export const authApi = apiSlice.injectEndpoints({
         method: 'POST',
         body: { token, password },
       }),
+      invalidatesTags: [{ type: 'Auth', id: 'LIST' }],
     }),
     logout: builder.mutation<void, void>({
       query: () => ({
@@ -53,9 +54,8 @@ export const authApi = apiSlice.injectEndpoints({
           dispatch(usersApiSlice.util.resetApiState())
         } catch (error) {}
       },
-      invalidatesTags: ['Auth', 'User'],
+      invalidatesTags: [{ type: 'Auth', id: 'LIST' }],
     }),
-    
   }),
   overrideExisting: true,
 })

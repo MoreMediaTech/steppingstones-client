@@ -65,7 +65,7 @@ const Navbar = () => {
     ?.join('')
 
   return (
-    <Header height={80}>
+    <Header height={90}>
       <div className="mx-auto w-full max-w-screen-xl p-2">
         <div className="flex items-center justify-between space-x-4 lg:space-x-10">
           <AppLogo scrollToTop={scrollToTop} />
@@ -74,18 +74,26 @@ const Navbar = () => {
               <ul className="flex items-center space-x-8 text-sm font-medium">
                 <li>
                   {router.pathname === '/' ? (
-                    <a className="font-semibold text-gray-900" href="#about">
+                    <a
+                      className="text-lg font-semibold text-gray-900"
+                      href="#about"
+                    >
                       About
                     </a>
                   ) : (
                     <Link href={'/#about'}>
-                      <a className="font-semibold text-gray-900">About</a>
+                      <a className="text-lg font-semibold text-gray-900">
+                        About
+                      </a>
                     </Link>
                   )}
                 </li>
                 <li>
                   {router.pathname === '/' ? (
-                    <a className="font-semibold text-gray-900" href="#features">
+                    <a
+                      className="text-lg font-semibold text-gray-900"
+                      href="#features"
+                    >
                       Features
                     </a>
                   ) : (
@@ -96,12 +104,17 @@ const Navbar = () => {
                 </li>
                 <li>
                   {router.pathname === '/' ? (
-                    <a className="font-semibold text-gray-900" href="#faqs">
+                    <a
+                      className="text-lg font-semibold text-gray-900"
+                      href="#faqs"
+                    >
                       FAQs
                     </a>
                   ) : (
                     <Link href={'/#faqs'}>
-                      <a className="font-semibold text-gray-900">FAQs</a>
+                      <a className="text-lg font-semibold text-gray-900">
+                        FAQs
+                      </a>
                     </Link>
                   )}
                 </li>
@@ -171,7 +184,7 @@ const Navbar = () => {
 
             <div className="hidden flex-1 items-center justify-end space-x-4 lg:flex">
               <Link href={'/enquire'}>
-                <a className="rounded-lg bg-blue-600 px-5 py-2 text-lg font-medium text-white">
+                <a className="rounded-lg bg-[#5E17EB] px-5 py-2 text-lg font-medium text-white">
                   Enquire
                 </a>
               </Link>
@@ -198,7 +211,7 @@ const Navbar = () => {
               size="lg"
               position="right"
             >
-              <div className="flex flex-col gap-4 space-y-8 p-8">
+              <div className="flex flex-col gap-4 space-y-8 p-2">
                 <nav className="flex flex-col space-y-8 text-sm font-medium">
                   <ul className="flex flex-col space-y-8 text-sm font-medium">
                     <li>
@@ -311,7 +324,7 @@ const Navbar = () => {
 
                 <div className="flex-1 items-center justify-end space-x-4 lg:flex">
                   <Link href={'/enquire'}>
-                    <a className="rounded-lg bg-blue-600 px-5 py-2 text-lg font-medium text-white">
+                    <a className="rounded-lg bg-[#5E17EB] px-5 py-2 text-lg font-medium text-white">
                       Enquire
                     </a>
                   </Link>
