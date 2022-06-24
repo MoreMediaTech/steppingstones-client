@@ -46,7 +46,7 @@ const BecomeAGreenerBusiness = ({
                    className="w-1/4 rounded-md bg-[#0c6980] px-4 py-2 font-semibold text-white drop-shadow-lg"
                    onClick={() => {
                      router.replace({
-                       pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}`,
+                       pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}/support-for-startups/`,
                        query: { ...router.query },
                      })
                    }}

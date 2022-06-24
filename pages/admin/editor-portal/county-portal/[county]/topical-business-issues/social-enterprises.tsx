@@ -9,9 +9,9 @@ import { useGetCountyByIdQuery } from 'features/editor/editorApiSlice'
 import Spinner from '@components/spinner'
 import PortalHeader from '@components/PortalHeader'
 import { NEXT_URL } from '@config/index'
-import { HelpForCovidBusinessSupportSection } from '@components/Sections'
+import { HelpForSocialEnterprisesSection } from '@components/Sections'
 
-const HelpForCovidBusinessSupport = ({
+const HelpForSocialEnterprises = ({
   county,
   countyId,
 }: {
@@ -19,7 +19,7 @@ const HelpForCovidBusinessSupport = ({
   countyId: string
 }) => {
   const router = useRouter()
-  const { data: user, isLoading, isError, isFetching } = useGetUserQuery()
+  const { data: user } = useGetUserQuery()
    const { isLoading: isLoadingCounty } = useGetCountyByIdQuery(countyId, {
      refetchOnMountOrArgChange: true,
    })
@@ -46,7 +46,7 @@ const HelpForCovidBusinessSupport = ({
                    className="w-1/4 rounded-md bg-[#0c6980] px-4 py-2 font-semibold text-white drop-shadow-lg"
                    onClick={() => {
                      router.replace({
-                       pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}`,
+                       pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}/topical-business-issues/`,
                        query: { ...router.query },
                      })
                    }}
@@ -58,7 +58,7 @@ const HelpForCovidBusinessSupport = ({
            </section>
 
            <section className="container mx-auto">
-            <HelpForCovidBusinessSupportSection id={countyId} />
+            <HelpForSocialEnterprisesSection id={countyId} />
            </section>
          </section>
        </ComponentShield>
@@ -89,4 +89,4 @@ export const getServerSideProps: GetServerSideProps = async (
   }
 }
 
-export default HelpForCovidBusinessSupport
+export default HelpForSocialEnterprises

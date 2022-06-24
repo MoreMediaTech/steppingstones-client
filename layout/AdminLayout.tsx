@@ -10,6 +10,7 @@ interface ILayout extends Children {
   title?: string
   description?: string
   show?: boolean
+  children: React.ReactNode
 }
 
 const AdminLayout = ({

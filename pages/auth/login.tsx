@@ -2,42 +2,57 @@ import { LoginForm } from '@components/forms'
 import { MainLayout } from 'layout'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import Image from 'next/image'
+import { motion } from 'framer-motion'
 import { FaSignInAlt } from 'react-icons/fa'
+
+const variants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1 },
+}
 
 const Login = () => {
   return (
     <MainLayout title="Login">
-      <section className=" h-screen w-full bg-white">
-        <div className="grid h-full md:grid-cols-2">
-          <div className="flex flex-col items-center bg-teal-500 px-4 py-32 md:px-12">
-            <div className="flex w-full flex-col items-center space-y-10 p-4 ">
-              <h1 className="flex items-center gap-2 text-5xl">
-                <FaSignInAlt fontSize={40} color="#01E2FD" />
-                <span className="text-indigo-900">Sign In</span>
-              </h1>
-              <p className="text-2xl font-thin text-white">
-                Welcome to Stepping Stones
-              </p>
-            </div>
-            <LoginForm />
+      <section className="relative h-screen w-full bg-white">
+        <div className="absolute top-0 h-full w-full bg-cover bg-center">
+          <div className="relative h-full w-full">
+            <Image
+              src={'/SS_Staircase.jpeg'}
+              alt="Staircase image"
+              layout="fill"
+              objectFit="cover"
+              quality={50}
+              priority
+            />
+            <div
+              id="blackOverlay"
+              className="absolute h-full w-full bg-black opacity-50"
+            ></div>
           </div>
-          <div className="hidden flex-col items-center justify-center space-y-12 bg-white md:flex">
-            <div>
-              <Image
-                src={'/android-chrome-512x512.png'}
-                alt="Stepping stones app logo"
-                width={150}
-                height={150}
-              />
-            </div>
-            <div>
-              <Image
-                src={'/nottingham-county.png'}
-                alt="Stepping stones app logo"
-                width={350}
-                height={550}
-              />
-            </div>
+        </div>
+        <div className="container relative mx-auto h-full">
+          <div className="flex h-full flex-col flex-wrap items-center justify-center">
+            <motion.div
+              className="flex w-full flex-col items-center  opacity-75"
+              initial="hidden"
+              animate="visible"
+              variants={variants}
+              transition={{ delay: 1.0, duration: 2.0 }}
+            >
+              <div>
+                <Image
+                  src={'/android-chrome-512x512.png'}
+                  alt="Stepping stones app logo"
+                  width={250}
+                  height={250}
+                />
+              </div>
+              <h1 className="flex items-center gap-2 text-4xl">
+                <FaSignInAlt fontSize={40} color="#00DCB3" />
+                <span className="text-[#5E17EB]">Sign In</span>
+              </h1>
+              <LoginForm />
+            </motion.div>
           </div>
         </div>
       </section>

@@ -9,13 +9,17 @@ export const contentDrawerSubNavData: IContentDrawerSubNavData[] = [
     title: 'Business news and information',
     path: '/admin/editor-portal/county-portal',
     subPath: 'business-news-and-information',
+    path2: '/admin/editor-portal/county-portal',
+    subPath2: 'business-news-and-information',
     icon: <FaIcons.FaListUl color="#f4900c" />,
     listIcon: <FaIcons.FaRegFile color="#00dcb3" className="-ml-8 " />,
     iconOpenClosed: <MdIcons.MdArrowRight />,
     subNav: [],
   },
   {
-    title: 'Support for Start-ups',
+    title: 'Support for Startups',
+    path2: '/admin/editor-portal/county-portal',
+    subPath2: 'support-for-startups',
     icon: <FaIcons.FaListUl color="#f4900c" />,
     listIcon: <FaIcons.FaRegFile color="#00dcb3" className="-ml-8" />,
     iconOpenClosed: <MdIcons.MdArrowRight />,
@@ -60,50 +64,114 @@ export const contentDrawerSubNavData: IContentDrawerSubNavData[] = [
     ],
   },
   {
-    title: 'Support for established businesses',
-    path: '/admin/editor-portal/county-portal',
-    subPath: 'support-for-established-businesses',
+    title: 'Growing a business',
+    path2: '/admin/editor-portal/county-portal',
+    subPath2: 'growing-a-business',
     icon: <FaIcons.FaListUl color="#f4900c" />,
     listIcon: <FaIcons.FaRegFile color="#00dcb3" />,
     iconOpenClosed: <MdIcons.MdArrowRight />,
-    subNav: [],
+    subNav: [
+      {
+        title: 'Find Funding',
+        path: '/admin/editor-portal/county-portal',
+        subPath: 'growing-a-business/find-funding',
+      },
+      {
+        title: 'Operate More Efficiently',
+        path: '/admin/editor-portal/county-portal',
+        subPath: 'growing-a-business/operate-more-efficiently',
+      },
+      {
+        title: 'Find Tenders and Contracts',
+        path: '/admin/editor-portal/county-portal',
+        subPath: 'growing-a-business/find-tenders-and-contracts',
+      },
+      {
+        title: 'Improve Skills',
+        path: '/admin/editor-portal/county-portal',
+        subPath: 'growing-a-business/improve-skills',
+      },
+      {
+        title: 'Trading Overseas',
+        path: '/admin/editor-portal/county-portal',
+        subPath: 'growing-a-business/trading-overseas',
+      },
+      {
+        title: 'Develop Products and Services',
+        path: '/admin/editor-portal/county-portal',
+        subPath: 'growing-a-business/develop-products-and-services',
+      },
+      {
+        title: 'Find New Markets',
+        path: '/admin/editor-portal/county-portal',
+        subPath: 'growing-a-business/find-new-markets',
+      },
+      {
+        title: 'Employ People',
+        path: '/admin/editor-portal/county-portal',
+        subPath: 'growing-a-business/employ-people',
+      },
+      {
+        title: 'Commercial Property',
+        path: '/admin/editor-portal/county-portal',
+        subPath: 'growing-a-business/commercial-property',
+      },
+    ],
   },
   {
-    title: 'Topical business issues',
+    title: 'Topical Issues',
+    path2: '/admin/editor-portal/county-portal',
+    subPath2: 'topical-business-issues',
     icon: <FaIcons.FaListUl color="#f4900c" />,
     listIcon: <FaIcons.FaRegFile color="#00dcb3" className="-ml-8 " />,
     iconOpenClosed: <MdIcons.MdArrowRight />,
     subNav: [
       {
-        title: 'Help with mental health and wellbeing',
+        title: 'Online Digitalisation',
         path: '/admin/editor-portal/county-portal',
-        subPath:
-          'topical-business-issues/help-for-mental-health-and-wellbeing',
+        subPath: 'topical-business-issues/online-digitalisation',
       },
       {
-        title: 'Help for social enterprises',
+        title: 'Mental health and wellbeing at Work',
         path: '/admin/editor-portal/county-portal',
-        subPath:
-          'topical-business-issues/help-for-social-enterprises',
+        subPath: 'topical-business-issues/mental-health-and-wellbeing',
       },
       {
-        title: 'Help for Heritage and Tourism',
+        title: 'Support for LGBTQ+ and Disabilities',
         path: '/admin/editor-portal/county-portal',
-        subPath:
-          'topical-business-issues/help-for-heritage-and-tourism',
+        subPath: 'topical-business-issues/lgbtq-and-disabilities',
       },
       {
-        title: 'Help for Covid Business Support',
+        title: 'Social enterprises',
         path: '/admin/editor-portal/county-portal',
-        subPath:
-          'topical-business-issues/help-for-covid-business-support',
+        subPath: 'topical-business-issues/social-enterprises',
       },
       {
-        title: 'Help for Carbon & Net Zero Targets',
+        title: 'Heritage and Tourism',
         path: '/admin/editor-portal/county-portal',
-        subPath:
-          'topical-business-issues/help-for-carbon-and-net-zero-targets',
+        subPath: 'topical-business-issues/heritage-and-tourism',
+      },
+      {
+        title: 'Covid Business Support',
+        path: '/admin/editor-portal/county-portal',
+        subPath: 'topical-business-issues/covid-business-support',
+      },
+      {
+        title: 'Low Carbon & Net Zero Targets',
+        path: '/admin/editor-portal/county-portal',
+        subPath: 'topical-business-issues/carbon-and-net-zero-targets',
       },
     ],
+  },
+  {
+    title: 'Feature Article',
+    path: '/admin/editor-portal/county-portal',
+    subPath: 'feature-article',
+    path2: '/admin/editor-portal/county-portal',
+    subPath2: 'feature-article',
+    icon: <FaIcons.FaListUl color="#f4900c" />,
+    listIcon: <FaIcons.FaRegFile color="#00dcb3" className="-ml-8 " />,
+    iconOpenClosed: <MdIcons.MdArrowRight />,
+    subNav: [],
   },
 ]

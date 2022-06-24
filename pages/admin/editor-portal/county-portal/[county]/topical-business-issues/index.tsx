@@ -1,49 +1,50 @@
 import { useCallback, useState } from 'react'
-import { useForm, SubmitHandler } from 'react-hook-form'
-import { showNotification } from '@mantine/notifications'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
+import { useForm, SubmitHandler } from 'react-hook-form'
 
 import { ComponentShield } from '@components/NextShield'
 import Spinner from '@components/spinner'
 import PortalHeader from '@components/PortalHeader'
+
 import { AdminLayout } from 'layout'
-import { setError, setPreviewSource } from 'features/upload/uploadSlice'
-import { EditImageProps } from '@lib/types'
+import { EditImageProps, IContentDrawerSubNavData } from '@lib/types'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
 import {
-  useGetDistrictByIdQuery,
-  useUpdateDistrictByIdMutation,
+  useGetCountyByIdQuery,
+  useUpdateCountyMutation,
 } from 'features/editor/editorApiSlice'
-import { useAppDispatch, useAppSelector } from 'app/hooks'
-import { districtPages } from 'data'
 import { NEXT_URL } from '@config/index'
-import { UnstyledButton } from '@mantine/core'
+import { useAppDispatch, useAppSelector } from 'app/hooks'
 import EditImageComponent from '@components/EditImageComponent'
+import { UnstyledButton } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
+import { setError, setPreviewSource } from 'features/upload/uploadSlice'
+import { contentDrawerSubNavData } from '@components/navigation/ContentDrawer/ContentDrawerData'
 
-const District = ({
-  district,
-  districtId,
+const TopicalBusinessIssues = ({
+  county,
+  countyId,
 }: {
-  district: string
-  districtId: string
+  county: string
+  countyId: string
 }) => {
   const router = useRouter()
-  const dispatch = useAppDispatch()
   const [opened, setOpened] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
+  const dispatch = useAppDispatch()
   const { data: user } = useGetUserQuery()
+  const {
+    data: countyData,
+    isLoading: isLoadingCounty,
+    isError: isErrorCounty,
+  } = useGetCountyByIdQuery(countyId, { refetchOnMountOrArgChange: true })
+  const [updateCounty, { isLoading }] = useUpdateCountyMutation()
   const { previewSource, selectedFile } = useAppSelector(
     (state) => state.upload
   )
-  const {
-    data: districtData,
-    isLoading: isLoadingDistrict,
-    isError: isErrorDistrict,
-  } = useGetDistrictByIdQuery(districtId, { refetchOnMountOrArgChange: true })
-  const [updateDistrictById, { isLoading }] = useUpdateDistrictByIdMutation()
-
+    const topicalBusinessIssuesSubPaths = contentDrawerSubNavData.filter(item => item.title === 'Topical Issues')
   const {
     handleSubmit,
     register,
@@ -71,35 +72,37 @@ const District = ({
       if (data.imageFile.length > 0) {
         convertFileToBase64(data.imageFile[0] as File)
       }
+      const updatedData = { id: countyId, imageFile: previewSource }
+
       try {
-        const formData = {
-          id: districtId,
-          imageFile: previewSource,
-        }
-        await updateDistrictById(formData).unwrap()
+        // await updateCounty(updatedData).unwrap()
+        reset()
         setIsEdit(false)
         router.replace({
           pathname: `${NEXT_URL}${router.pathname}`,
           query: { ...router.query },
         })
       } catch (error) {
-        dispatch(setError({ message: error.message }))
+        showNotification({
+          message: 'Error updating county image',
+          color: 'red',
+        })
       }
     },
     []
   )
-
   return (
-    <AdminLayout title={`${district} District - Editor Dashboard`}>
+    <AdminLayout title={`${county} County - Editor Dashboard`}>
       <ComponentShield
         RBAC
         showForRole={'SS_EDITOR'}
-        userRole={user?.role as string}
+        userRole={user?.role ?? ''}
       >
-        <section className="h-screen">
+        <section className="h-screen overflow-auto">
           <PortalHeader
-            title={`${district} District Council`}
-            subTitle="Please select Area you want to review"
+            title={`${county} County Portal`}
+            subTitle="Please select district from the menu below"
+            countyData={countyData}
           />
           <section className="container mx-auto px-4 py-2">
             <div className="flex justify-between">
@@ -109,10 +112,8 @@ const District = ({
                 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:text-xl lg:text-2xl"
                 onClick={() => {
                   router.replace({
-                    pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${router.query.county}`,
-                    query: {
-                      ...router.query,
-                    },
+                    pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}`,
+                    query: { ...router.query },
                   })
                 }}
               >
@@ -120,20 +121,20 @@ const District = ({
               </button>
             </div>
           </section>
-          {isLoadingDistrict && (
+          {isLoadingCounty && (
             <Spinner classes="w-24 h-24" message="Loading..." />
           )}
-          <section className="container mx-auto w-full py-24">
-            {districtData && (
-              <div className="flex w-full space-x-4">
+          <section className="container mx-auto w-full overflow-auto py-24 px-2 md:px-4">
+            {countyData && (
+              <div className="flex h-full w-full flex-col gap-8 md:flex-row">
                 <div className="cols-span-1 w-full  md:w-2/5">
-                  {districtData?.imageUrl !== null && !isEdit ? (
-                    <div className="flex flex-col items-center space-y-2">
+                  {countyData?.imageUrl !== null && !isEdit ? (
+                    <div className="flex flex-col space-y-2">
                       <Image
-                        src={districtData?.imageUrl}
-                        alt={districtData?.name}
+                        src={countyData?.imageUrl}
+                        alt={countyData?.name}
                         width={500}
-                        height={800}
+                        height={720}
                       />
                       <UnstyledButton
                         type="button"
@@ -155,30 +156,36 @@ const District = ({
                     />
                   )}
                 </div>
-                <div className="cols-span-3 w-full">
-                  <div className="w-full py-8">
-                    <div className="grid grid-cols-2 gap-y-8 gap-x-20">
-                      {districtPages.map((pages, index) => (
-                        <button
-                          key={`${pages.title}-${index}`}
-                          type="button"
-                          className="flex w-full  cursor-pointer items-center justify-center rounded-xl bg-[#5E17EB] py-6 px-4 text-lg font-semibold text-white 
-                    drop-shadow-lg transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:text-xl lg:text-2xl"
-                          onClick={() =>
-                            router.replace({
-                              pathname: `${NEXT_URL}${pages.path}`,
-                              query: {
-                                county: router.query.county,
-                                countyId: router.query.countyId,
-                                district: districtData?.name,
-                                districtId: districtData?.id,
-                              },
-                            })
-                          }
-                        >
-                          {pages.title}
-                        </button>
-                      ))}
+                <div className="h-full w-full md:w-3/4">
+                  <div className="flex flex-col">
+                    <div className="w-full space-y-4 py-8">
+                      <div className="grid grid-cols-2 gap-y-4 gap-x-4">
+                        {topicalBusinessIssuesSubPaths[0]?.subNav?.map(
+                          (
+                            content: Partial<IContentDrawerSubNavData>,
+                            index: number
+                          ) => (
+                            <button
+                              key={`${content.title}-${index}`}
+                              type="button"
+                              className="flex w-full  cursor-pointer items-center justify-center rounded-xl bg-[#5E17EB] py-4 px-2 text-lg font-semibold text-white 
+                    drop-shadow-lg transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:text-xl lg:text-xl"
+                              onClick={() =>
+                                router.replace({
+                                  pathname: `${NEXT_URL}${content.path}/${county}/${content.subPath}`,
+                                  query: {
+                                    ...router.query,
+                                    county,
+                                    countyId,
+                                  },
+                                })
+                              }
+                            >
+                              {content?.title}
+                            </button>
+                          )
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -196,7 +203,7 @@ export const getServerSideProps: GetServerSideProps = async (
 ) => {
   const { req } = context
   const cookies = req.cookies.ss_refresh_token
-  const { district, countyId, county, districtId } = context.query
+  const { county, countyId } = context.query
 
   if (!cookies) {
     context.res.writeHead(302, {
@@ -205,34 +212,13 @@ export const getServerSideProps: GetServerSideProps = async (
     context.res.end()
   }
 
-  // const user = await getUser(cookies)
-  // const userRoles = ['SS_EDITOR', "COUNTY_EDITOR"]
-
-  // if (!user?.isAdmin ) {
-  //   return {
-  //     redirect: {
-  //       destination: '/not-authorized',
-  //       permanent: false,
-  //     },
-  //   }
-  // }
-  // if (!userRoles.includes(user.role)) {
-  //   return {
-  //     redirect: {
-  //       destination: '/admin',
-  //       permanent: false,
-  //     },
-  //   }
-  // }
   return {
     // props: { user: user as SessionProps },
     props: {
-      district: district,
-      districtId: districtId,
       county: county,
       countyId: countyId,
     },
   }
 }
 
-export default District
+export default TopicalBusinessIssues

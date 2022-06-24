@@ -51,12 +51,12 @@ const AdminSidebar = ({
           <Navbar.Section grow>
             <Link href={'/admin/editor-portal'}>
               <a className="flex items-center justify-center py-12">
-                <BiHomeCircle fontSize={40} color="#5271ff" />
+                <BiHomeCircle fontSize={40} color="#00DCB3" />
               </a>
             </Link>
             {/* <Link href={'/admin/editor-portal'}>
               <a className="flex items-center justify-center py-12">
-                <MdOutlineCreateNewFolder fontSize={40} color="#5271ff" />
+                <MdOutlineCreateNewFolder fontSize={40} color="#00DCB3" />
               </a>
             </Link> */}
             <Link href={'/admin/messages'}>
@@ -70,26 +70,26 @@ const AdminSidebar = ({
                   color="red"
                   withBorder
                 >
-                  <FaRegEnvelope fontSize={40} color="#5271ff" />
+                  <FaRegEnvelope fontSize={40} color="#00DCB3" />
                 </Indicator>
               </a>
             </Link>
             <Link href={'/admin/profile'}>
               <a className="flex items-center justify-center py-12">
-                <FaBriefcase fontSize={40} color="#5271ff" />
+                <FaBriefcase fontSize={40} color="#00DCB3" />
               </a>
             </Link>
             <Link href={'/admin/users'}>
               <a className="flex items-center justify-center py-12">
-                <FaUsers fontSize={40} color="#5271ff" />
+                <FaUsers fontSize={40} color="#00DCB3" />
               </a>
             </Link>
           </Navbar.Section>
           <Navbar.Section>
-            <Divider color="#5271ff" />
+            <Divider color="#00DCB3" />
             <div className="flex items-center justify-center py-6">
               <UnstyledButton type="button" onClick={handleLogout}>
-                <FaPowerOff fontSize={40} fontWeight={100} color="#5271ff" />
+                <FaPowerOff fontSize={40} fontWeight={100} color="#00DCB3" />
               </UnstyledButton>
             </div>
           </Navbar.Section>
@@ -127,24 +127,24 @@ const AdminSidebar = ({
             <div className="mb-4 flex flex-col space-y-8">
               <Link href={'/admin/editor-portal'}>
                 <a className="relative flex flex-col items-center justify-center ">
-                  <BiHomeCircle fontSize={40} color="#5271ff" />
-                  <span className="text-xl capitalize text-[#5271ff]">
+                  <BiHomeCircle fontSize={40} color="#00DCB3" />
+                  <span className="text-xl capitalize text-[#00DCB3]">
                     Portal Home
                   </span>
                 </a>
               </Link>
               {/* <Link href={'/admin/editor-portal'}>
                 <a className="relative flex flex-col items-center justify-center ">
-                  <BiHomeCircle fontSize={40} color="#5271ff" />
-                  <span className="text-xl capitalize text-[#5271ff]">
+                  <BiHomeCircle fontSize={40} color="#00DCB3" />
+                  <span className="text-xl capitalize text-[#00DCB3]">
                     Create
                   </span>
                 </a>
               </Link> */}
               <Link href={'/admin/messages'}>
                 <a className="relative flex flex-col items-center justify-center ">
-                  <FaRegEnvelope fontSize={40} color="#5271ff" />
-                  <span className="text-xl capitalize text-[#5271ff]">
+                  <FaRegEnvelope fontSize={40} color="#00DCB3" />
+                  <span className="text-xl capitalize text-[#00DCB3]">
                     messages
                   </span>
                 </a>
@@ -160,29 +160,29 @@ const AdminSidebar = ({
                     color="red"
                     withBorder
                   >
-                    <FaRegEnvelope fontSize={40} color="#5271ff" />
+                    <FaRegEnvelope fontSize={40} color="#00DCB3" />
                   </Indicator>
-                  <span className="text-xl capitalize text-[#5271ff]">
+                  <span className="text-xl capitalize text-[#00DCB3]">
                     messages
                   </span>
                 </a>
               </Link>
               <Link href={'/admin/users'}>
                 <a className="relative flex flex-col items-center justify-center ">
-                  <FaUsers fontSize={40} color="#5271ff" />
-                  <span className="text-xl capitalize text-[#5271ff]">
+                  <FaUsers fontSize={40} color="#00DCB3" />
+                  <span className="text-xl capitalize text-[#00DCB3]">
                     Users
                   </span>
                 </a>
               </Link>
             </div>
             <div>
-              <Divider color="#5271ff" />
+              <Divider color="#00DCB3" />
               <div className="relative my-4 flex flex-col items-center justify-center">
                 <UnstyledButton type="button" onClick={handleLogout}>
-                  <FaPowerOff fontSize={40} fontWeight={100} color="#5271ff" />
+                  <FaPowerOff fontSize={40} fontWeight={100} color="#00DCB3" />
                 </UnstyledButton>
-                <span className="text-xl capitalize text-[#5271ff]">
+                <span className="text-xl capitalize text-[#00DCB3]">
                   Sign Out
                 </span>
               </div>

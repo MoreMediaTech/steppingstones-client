@@ -28,6 +28,8 @@ export interface IContentDrawerSubNavData {
   title: string
   path?: string
   subPath?: string
+  path2?: string
+  subPath2?: string
   icon: JSX.Element
   listIcon: JSX.Element
   iconOpenClosed: JSX.Element

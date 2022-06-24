@@ -75,7 +75,8 @@ const County = () => {
             <div className="flex justify-between">
               <button
                 type="button"
-                className="w-1/4 rounded-md bg-[#5E17EB] px-4 py-2 font-semibold text-white drop-shadow-lg"
+                className="w-1/4 rounded-md bg-[#5E17EB] px-4 py-2 text-center font-semibold text-white shadow-xl transition delay-150 
+                duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:text-xl lg:text-2xl"
                 onClick={() => {
                   router.back()
                 }}
@@ -85,7 +86,7 @@ const County = () => {
 
               <button
                 type="button"
-                className="bg-[#5E17EB w-1/4 rounded-md px-4 py-4 font-semibold text-white shadow-2xl transition delay-150 duration-300 
+                className="w-1/4 rounded-md bg-[#5E17EB] px-4 py-4 font-semibold text-white shadow-2xl transition delay-150 duration-300 
               ease-in-out hover:-translate-y-1 hover:scale-y-100 hover:bg-[#0c5280f9]"
                 onClick={() => setOpened((o) => !o)}
               >
@@ -151,25 +152,6 @@ export const getServerSideProps: GetServerSideProps = async (
     context.res.end()
   }
 
-  // const user = await getUser(cookies)
-  // const userRoles = ['SS_EDITOR', "COUNTY_EDITOR"]
-
-  // if (!user?.isAdmin ) {
-  //   return {
-  //     redirect: {
-  //       destination: '/not-authorized',
-  //       permanent: false,
-  //     },
-  //   }
-  // }
-  // if (!userRoles.includes(user.role)) {
-  //   return {
-  //     redirect: {
-  //       destination: '/admin',
-  //       permanent: false,
-  //     },
-  //   }
-  // }
   return {
     // props: { user: user as SessionProps },
     props: {},

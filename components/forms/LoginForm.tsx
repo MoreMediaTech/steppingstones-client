@@ -28,7 +28,7 @@ const LoginForm = () => {
         password: data.password,
       }).unwrap()
       localStorage.setItem('token', responseData.token)
-      router.replace(`${NEXT_URL}/admin`)
+      router.replace(`${NEXT_URL}/admin/editor-portal`)
       reset()
     } catch (error) {
       if (!error?.response) {
@@ -117,7 +117,7 @@ const LoginForm = () => {
       />
       <div className="mb-4 place-self-start">
         <Link href={'/auth/forgot-password'}>
-          <a className="cursor-pointer  text-sm text-indigo-900">
+          <a className="cursor-pointer  text-sm text-[#00DCB3]">
             Forgot Password?
           </a>
         </Link>
@@ -132,7 +132,7 @@ const LoginForm = () => {
           type="submit"
           loading={isLoading}
           fullWidth
-          className="mt-4 w-full rounded-md border border-indigo-900 bg-indigo-900 text-white"
+          className="mt-4 w-full rounded-md border border-[#5E17EB] bg-[#5E17EB] text-white hover:bg-[#3A0B99]"
         >
           {isLoading ? 'Signing In...' : 'Sign In'}
         </Button>

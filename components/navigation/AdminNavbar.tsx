@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import {
   Burger,
   Divider,
@@ -28,8 +29,32 @@ const AdminNavbar = ({
   handleLogout,
 }: IAdminNavbar) => {
   const router = useRouter()
+  const [pos, setPos] = useState<string>('top')
+
+  // Check the top position of the navigation in the window
+  useEffect(() => {
+    const handleScrollTop = () => {
+      const scrolled = document?.scrollingElement?.scrollTop as number
+      if (scrolled >= 2) {
+        setPos('moved')
+      } else {
+        setPos('top')
+      }
+    }
+    document.addEventListener('scroll', handleScrollTop)
+    return () => document.removeEventListener('scroll', handleScrollTop)
+  }, [])
+
   return (
-    <Header height={70} p="md">
+    <Header
+      height={70}
+      p="md"
+      className={`${
+        pos === 'top'
+          ? 'absolute  '
+          : 'shadow-b-2xl bg-white fixed '
+      }`}
+    >
       <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
         <div className="flex w-full items-center justify-between">
           <UnstyledButton

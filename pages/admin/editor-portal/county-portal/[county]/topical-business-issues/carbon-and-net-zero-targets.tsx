@@ -9,9 +9,9 @@ import { useGetCountyByIdQuery } from 'features/editor/editorApiSlice'
 import Spinner from '@components/spinner'
 import PortalHeader from '@components/PortalHeader'
 import { NEXT_URL } from '@config/index'
-import { HelpForHeritageAndTourismSection } from '@components/Sections'
+import { HelpForCarbonAndNetZeroTargetsSection } from '@components/Sections'
 
-const HelpForHeritageAndTourism = ({
+const HelpForCarbonAndNetZeroTargets = ({
   county,
   countyId,
 }: {
@@ -46,7 +46,7 @@ const HelpForHeritageAndTourism = ({
                    className="w-1/4 rounded-md bg-[#0c6980] px-4 py-2 font-semibold text-white drop-shadow-lg"
                    onClick={() => {
                      router.replace({
-                       pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}`,
+                       pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}/topical-business-issues/`,
                        query: { ...router.query },
                      })
                    }}
@@ -58,7 +58,7 @@ const HelpForHeritageAndTourism = ({
            </section>
 
            <section className="container mx-auto">
-            <HelpForHeritageAndTourismSection id={countyId} />
+            <HelpForCarbonAndNetZeroTargetsSection id={countyId} />
            </section>
          </section>
        </ComponentShield>
@@ -89,4 +89,4 @@ export const getServerSideProps: GetServerSideProps = async (
   }
 }
 
-export default HelpForHeritageAndTourism
+export default HelpForCarbonAndNetZeroTargets

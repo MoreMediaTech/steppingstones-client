@@ -9,9 +9,8 @@ import { useGetCountyByIdQuery } from 'features/editor/editorApiSlice'
 import Spinner from '@components/spinner'
 import PortalHeader from '@components/PortalHeader'
 import { NEXT_URL } from '@config/index'
-import { SupportForEstablishedBusinessSection } from '@components/Sections'
 
-const SupportForEstablishedBusiness = ({
+const ImproveSkills = ({
   county,
   countyId,
 }: {
@@ -20,9 +19,9 @@ const SupportForEstablishedBusiness = ({
 }) => {
   const router = useRouter()
   const { data: user } = useGetUserQuery()
-   const { isLoading: isLoadingCounty } = useGetCountyByIdQuery(countyId, {
-     refetchOnMountOrArgChange: true,
-   })
+  const { isLoading: isLoadingCounty } = useGetCountyByIdQuery(countyId, {
+    refetchOnMountOrArgChange: true,
+  })
   return (
     <AdminLayout title="County - Editor Dashboard">
       <ComponentShield
@@ -46,7 +45,7 @@ const SupportForEstablishedBusiness = ({
                   className="w-1/4 rounded-md bg-[#0c6980] px-4 py-2 font-semibold text-white drop-shadow-lg"
                   onClick={() => {
                     router.replace({
-                      pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}`,
+                      pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}/growing-a-business/`,
                       query: { ...router.query },
                     })
                   }}
@@ -57,9 +56,7 @@ const SupportForEstablishedBusiness = ({
             </section>
           </section>
 
-          <section className="container mx-auto">
-            <SupportForEstablishedBusinessSection id={countyId} />
-          </section>
+          <section className="container mx-auto"></section>
         </section>
       </ComponentShield>
     </AdminLayout>
@@ -88,4 +85,5 @@ export const getServerSideProps: GetServerSideProps = async (
     },
   }
 }
-export default SupportForEstablishedBusiness
+
+export default ImproveSkills

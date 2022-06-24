@@ -98,7 +98,7 @@ const Navbar = () => {
                     </a>
                   ) : (
                     <Link href={'/#features'}>
-                      <a className="font-semibold text-gray-900">Features</a>
+                      <a className="font-semibold text-lg text-gray-900">Features</a>
                     </Link>
                   )}
                 </li>
@@ -171,8 +171,8 @@ const Navbar = () => {
                   <>
                     <li>
                       <Link href={'/auth/login'}>
-                        <a className="flex items-center gap-1 font-semibold text-gray-900">
-                          <FaSignInAlt fontSize={14} />
+                        <a className="flex items-center gap-1 text-lg font-semibold text-gray-900">
+                          <FaSignInAlt fontSize={18} />
                           <span>Login</span>
                         </a>
                       </Link>
@@ -312,7 +312,7 @@ const Navbar = () => {
                         <li>
                           <Link href={'/auth/login'}>
                             <a className="flex items-center gap-1 text-2xl font-semibold text-gray-900">
-                              <FaSignInAlt fontSize={14} />
+                              <FaSignInAlt fontSize={24} />
                               <span>Login</span>
                             </a>
                           </Link>
