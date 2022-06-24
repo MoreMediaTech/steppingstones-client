@@ -93,7 +93,7 @@ const FileUploadForm = () => {
                     accept="image/*"
                     aria-label="main-image"
                     className="w-full cursor-pointer opacity-0"
-                    {...register('imageFile')}
+  
                   />
                 </div>
               </div>
