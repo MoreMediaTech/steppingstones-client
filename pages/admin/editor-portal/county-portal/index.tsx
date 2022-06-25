@@ -32,12 +32,9 @@ const County = () => {
     isLoading: isLoadingCounties,
     isError: isErrorCounties,
   } = useGetCountiesQuery({ refetchOnMountOrArgChange: true })
-    // console.log("🚀 ~ file: index.tsx ~ line 27 ~ County ~ counties", counties)
+
   const totalCountyButtonSlides = Math.ceil(counties?.length / 12)
-  // console.log(
-  //   '🚀 ~ file: counties.tsx ~ line 14 ~ county ~ totalCountyButtons',
-  //   totalCountyButtonSlides
-  // )
+
   function goToNextPage() {
     setCurrentPage((page) => page + 1)
     if(currentPage >= totalCountyButtonSlides) {
@@ -87,7 +84,7 @@ const County = () => {
               <button
                 type="button"
                 className="w-1/4 rounded-md bg-[#5E17EB] px-4 py-4 font-semibold text-white shadow-2xl transition delay-150 duration-300 
-              ease-in-out hover:-translate-y-1 hover:scale-y-100 hover:bg-[#0c5280f9]"
+              ease-in-out hover:-translate-y-1 hover:scale-y-100 hover:bg-[#3A0B99]"
                 onClick={() => setOpened((o) => !o)}
               >
                 Add County
@@ -108,8 +105,8 @@ const County = () => {
                 return (
                   <div
                     key={`${index}-${county.name}`}
-                    className="md:w-54 flex h-24 cursor-pointer items-center justify-center rounded-xl bg-[#5E17EB] py-6 px-4 text-lg font-semibold text-white 
-                    drop-shadow-lg transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#0c6980] md:text-xl lg:text-2xl "
+                    className="flex w-full  cursor-pointer items-center justify-center rounded-xl bg-[#5E17EB] py-6 px-4 text-lg font-semibold text-white 
+                    drop-shadow-lg transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:text-xl lg:text-2xl"
                     onClick={() =>
                       router.replace({
                         pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county.name}`,

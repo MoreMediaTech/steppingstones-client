@@ -1,4 +1,4 @@
-import { resetCredentials } from 'features/auth/authSlice';
+import { resetCredentials, setCredentials } from 'features/auth/authSlice';
 import { apiSlice } from "app/api/apiSlice";
 import { usersApiSlice } from "features/user/usersApiSlice";
 
@@ -12,9 +12,15 @@ export const authApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Auth', id: 'LIST' }],
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        await dispatch(usersApiSlice.endpoints.getUser.initiate())
         try {
           const { data } = await queryFulfilled
-          await dispatch(usersApiSlice.endpoints.getUser.initiate())
+           dispatch(
+             setCredentials({
+               currentUser: data.user,
+               token: data.token,
+             })
+           )
         } catch (error) {}
       },
     }),

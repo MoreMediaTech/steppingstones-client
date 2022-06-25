@@ -3,28 +3,33 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { showNotification } from '@mantine/notifications'
 import { Paper, UnstyledButton } from '@mantine/core'
 import { BiEdit } from 'react-icons/bi'
+import { useRouter } from 'next/router'
 
 import { CountySectionForm } from '@components/forms'
 import { setError } from 'features/upload/uploadSlice'
 import {
   useGetCountyByIdQuery,
-  useUpdateCountyMutation,
+  useUpdateOrCreateFeatureArticleMutation,
 } from 'features/editor/editorApiSlice'
 import { useAppDispatch } from 'app/hooks'
 import { EditorFormDataProps } from '@lib/types'
 import ContentPreview from '@components/ContentPreview'
 import Spinner from '@components/spinner'
+import { NEXT_URL } from '@config/index'
 
-const VatAndTaxSection = ({ id }: { id: string }) => {
+const FeatureArticleSection = ({ id }: { id: string }) => {
+  const router = useRouter()
   const dispatch = useAppDispatch()
   const {
     data: countyData,
     isLoading: isLoadingCounty,
     isError: isErrorCounty,
   } = useGetCountyByIdQuery(id, { refetchOnMountOrArgChange: true })
-  const [updateCounty, { isLoading }] = useUpdateCountyMutation()
 
-  const [value, setValue] = useState(countyData?.supportForStartups?.vatAndTax?.content)
+  const [updateOrCreateFeatureArticle, { isLoading }] =
+    useUpdateOrCreateFeatureArticleMutation()
+
+  const [value, setValue] = useState(countyData?.featureArticle?.content)
   const [isEdit, setIsEdit] = useState(false)
   const {
     handleSubmit,
@@ -33,7 +38,7 @@ const VatAndTaxSection = ({ id }: { id: string }) => {
     formState: { errors },
   } = useForm<Partial<EditorFormDataProps>>({
     defaultValues: {
-      title: countyData?.supportForStartups?.vatAndTax?.title,
+      title: countyData?.featureArticle?.title,
     },
   })
   const submitHandler: SubmitHandler<Partial<EditorFormDataProps>> =
@@ -43,15 +48,20 @@ const VatAndTaxSection = ({ id }: { id: string }) => {
           title: data.title,
           content: value,
           countyId: id,
+          id: countyData?.featureArticle?.id
         }
-        // await updateCounty(formData).unwrap()
+        await updateOrCreateFeatureArticle(formData).unwrap()
         reset()
+        router.replace({
+          pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${countyData.name}`,
+          query: { ...router.query },
+        })
       } catch (error) {
         dispatch(setError({ message: error.message }))
       }
     }, [])
   return (
-    <section className="relative h-auto w-full flex-grow px-2 py-2  md:py-8 md:px-8">
+    <section className="relative w-full flex-grow px-2 py-2  md:py-8 md:px-8">
       <section className="container">
         {isLoadingCounty ? (
           <Spinner classes="w-24 h-24" message="Loading..." />
@@ -66,8 +76,10 @@ const VatAndTaxSection = ({ id }: { id: string }) => {
                 <BiEdit fontSize={44} />
               </UnstyledButton>
             </div>
-            {!isEdit && countyData?.supportForStartups?.vatAndTax ? (
-              <ContentPreview content={countyData?.supportForStartups?.vatAndTax} />
+            {!isEdit && countyData?.featureArticle ? (
+              <ContentPreview
+                content={countyData?.featureArticle}
+              />
             ) : (
               <CountySectionForm
                 register={register}
@@ -86,4 +98,5 @@ const VatAndTaxSection = ({ id }: { id: string }) => {
     </section>
   )
 }
-export default VatAndTaxSection
+
+export default FeatureArticleSection

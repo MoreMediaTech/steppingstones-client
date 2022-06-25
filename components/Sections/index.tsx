@@ -21,6 +21,19 @@ import FindStartupFundingSection from './FindStartupFundingSection'
 import BusinessPlansSection from './BusinessPlansSection'
 import BusinessInsuranceSection from './BusinessInsuranceSection'
 import BecomingAGreenerBusinessSection from './BecomingAGreenerBusinessSection'
+import FeatureArticleSection from './FeatureArticleSection'
+import LGBTQandDisabilitiesSection from './LGBTQandDisabilitiesSection'
+import OnlineDigitalisationSection from './OnlineDigitalisationSection'
+import TradingOverseasSection from './TradingOverseasSection'
+import OperateMoreEfficientlySection from './OperateMoreEfficientlySection'
+import ImproveSkillsSection from './ImproveSkillsSection'
+import FindTendersAndContractsSection from './FindTendersAndContractsSection'
+import FindNewMarketsSections from './FindNewMarketsSections'
+import FindFundingSection from './FindFundingSection'
+import EmployPeopleSection from './EmployPeopleSection'
+import DevelopProductsAndServicesSection from './DevelopProductsAndServicesSection'
+import CommercialPropertySection from './CommercialPropertySection'
+
 
 export {
   BusinessParksSection,
@@ -46,4 +59,16 @@ export {
   BusinessPlansSection,
   BusinessInsuranceSection,
   BecomingAGreenerBusinessSection,
+  FeatureArticleSection,
+  LGBTQandDisabilitiesSection,
+  OnlineDigitalisationSection,
+  TradingOverseasSection,
+  OperateMoreEfficientlySection,
+  ImproveSkillsSection,
+  FindTendersAndContractsSection,
+  FindNewMarketsSections,
+  FindFundingSection,
+  EmployPeopleSection,
+  DevelopProductsAndServicesSection,
+  CommercialPropertySection,
 }

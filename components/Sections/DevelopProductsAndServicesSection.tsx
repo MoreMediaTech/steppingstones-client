@@ -14,8 +14,7 @@ import { useAppDispatch } from 'app/hooks'
 import { EditorFormDataProps } from '@lib/types'
 import ContentPreview from '@components/ContentPreview'
 import Spinner from '@components/spinner'
-
-const VatAndTaxSection = ({ id }: { id: string }) => {
+const DevelopProductsAndServicesSection = ({ id }: { id: string }) => {
   const dispatch = useAppDispatch()
   const {
     data: countyData,
@@ -24,7 +23,9 @@ const VatAndTaxSection = ({ id }: { id: string }) => {
   } = useGetCountyByIdQuery(id, { refetchOnMountOrArgChange: true })
   const [updateCounty, { isLoading }] = useUpdateCountyMutation()
 
-  const [value, setValue] = useState(countyData?.supportForStartups?.vatAndTax?.content)
+  const [value, setValue] = useState(
+    countyData?.supportForStartups?.vatAndTax?.content
+  )
   const [isEdit, setIsEdit] = useState(false)
   const {
     handleSubmit,
@@ -67,7 +68,9 @@ const VatAndTaxSection = ({ id }: { id: string }) => {
               </UnstyledButton>
             </div>
             {!isEdit && countyData?.supportForStartups?.vatAndTax ? (
-              <ContentPreview content={countyData?.supportForStartups?.vatAndTax} />
+              <ContentPreview
+                content={countyData?.supportForStartups?.vatAndTax}
+              />
             ) : (
               <CountySectionForm
                 register={register}
@@ -86,4 +89,5 @@ const VatAndTaxSection = ({ id }: { id: string }) => {
     </section>
   )
 }
-export default VatAndTaxSection
+
+export default DevelopProductsAndServicesSection

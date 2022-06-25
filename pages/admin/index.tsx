@@ -23,11 +23,6 @@ const AdminHome = () => {
     <MainLayout title="Admin Home">
       <section className="flex h-screen items-center justify-center bg-white">
         {isLoading && <Spinner classes="w-24 h-24" message="Loading..." />}
-        {isError && (
-          <div className="flex items-center justify-center">
-            An Error has occurred
-          </div>
-        )}
         {user && (
           <div className="flex flex-col space-y-2">
             <div>

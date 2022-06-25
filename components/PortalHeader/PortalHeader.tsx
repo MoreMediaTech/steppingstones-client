@@ -1,20 +1,19 @@
 import { useState, useEffect } from 'react'
 import { Avatar, Burger, Group, Text, TextInput } from '@mantine/core'
 import { IoIosSearch } from 'react-icons/io'
-import { CurrentUser, CountyDataProps } from '@lib/types'
+import { CurrentUser, CountyDataProps, DistrictDataProps } from '@lib/types'
 import ContentDrawer from '@components/navigation/ContentDrawer/ContentDrawer'
+import Image from 'next/image'
+import steppingstonesapplogo from '../../public/steppingstonesapplogo.png'
 
-const PortalHeader = ({
-  user,
-  title,
-  subTitle,
-  countyData,
-}: {
+interface IPortalHeaderProps {
   user?: CurrentUser
   title?: string
   subTitle?: string
-  countyData?: CountyDataProps
-}) => {
+  data?: CountyDataProps | DistrictDataProps
+}
+
+const PortalHeader = ({ user, title, subTitle, data }: IPortalHeaderProps) => {
   const [opened, setOpened] = useState(false)
   const [pos, setPos] = useState<string>('top')
   const initials = user?.name
@@ -40,29 +39,36 @@ const PortalHeader = ({
   }, [])
 
   return (
-    <header
-      className={`h-70  px-4 py-2 `}
-    >
-      <div className="container  mx-auto px-4 py-2">
+    <header className={`h-70 px-2 py-2 md:px-4 `}>
+      <div className="container  mx-auto py-2 md:px-4">
         <div className="flex flex-col items-center justify-between md:flex-row">
           <div className="mb-2">
             <Group>
-              <Avatar color="sky" radius="sm" size={'xl'}>
+              <div
+                className={` relative flex h-16 w-20 items-center justify-center rounded-md border border-[#3A0B99] bg-[#3A0B99] text-xl font-semibold text-white md:h-20 md:w-24`}
+              >
                 {user ? (
                   initials
                 ) : (
-                  <span className="px-2 text-xs">{title} County Portal</span>
+                  <Image
+                    src={data ? data?.logoIcon : steppingstonesapplogo}
+                    alt={
+                      data ? 'County or District logo' : 'Stepping Stones Logo'
+                    }
+                    layout="fill"
+                    objectFit="cover"
+                  />
                 )}
-              </Avatar>
+              </div>
 
               <div style={{ flex: 1 }}>
-                <Text size="xl" weight={500} color="#00a8a8">
+                <h1 className="font-mono text-lg font-semibold text-[#00dcb3] sm:text-[1.2rem] md:text-[1.6rem]">
                   {user ? ` Welcome back ${user?.name?.split(' ')[0]}` : title}
-                </Text>
+                </h1>
 
-                <Text color="#3848f1" size="md">
+                <h3 className="font-mono text-sm font-semibold text-[#3A0B99] md:text-base">
                   {user ? 'Please select from the menu below' : subTitle}
-                </Text>
+                </h3>
               </div>
             </Group>
           </div>
@@ -75,8 +81,8 @@ const PortalHeader = ({
               radius="md"
               className="w-full rounded-xl  bg-transparent shadow-xl"
             />
-            <div className={!!countyData ? 'display: flex' : 'hidden'}>
-              {!!countyData && (
+            <div className={!!data ? 'display: flex' : 'hidden'}>
+              {!!data && (
                 <Burger
                   opened={opened}
                   onClick={() => setOpened((o) => !o)}
@@ -92,7 +98,7 @@ const PortalHeader = ({
       <ContentDrawer
         opened={opened}
         setOpened={setOpened}
-        countyData={countyData as CountyDataProps}
+        countyData={data as CountyDataProps}
       />
     </header>
   )

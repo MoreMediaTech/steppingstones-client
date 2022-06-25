@@ -28,7 +28,7 @@ const LocalNews = ({
         <section className="h-screen overflow-auto bg-stone-100">
           <section className="sticky w-full bg-white drop-shadow-lg">
             <PortalHeader
-              title={district}
+              title={`${district} District Council`}
               subTitle="Please select Area you want to review"
             />
             <section className="container mx-auto bg-white px-4 py-4">

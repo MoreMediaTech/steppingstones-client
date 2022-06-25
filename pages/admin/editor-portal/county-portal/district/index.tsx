@@ -42,6 +42,7 @@ const District = ({
     isLoading: isLoadingDistrict,
     isError: isErrorDistrict,
   } = useGetDistrictByIdQuery(districtId, { refetchOnMountOrArgChange: true })
+
   const [updateDistrictById, { isLoading }] = useUpdateDistrictByIdMutation()
 
   const {
@@ -77,6 +78,7 @@ const District = ({
           imageFile: previewSource,
         }
         await updateDistrictById(formData).unwrap()
+        reset()
         setIsEdit(false)
         router.replace({
           pathname: `${NEXT_URL}${router.pathname}`,
@@ -123,7 +125,7 @@ const District = ({
           {isLoadingDistrict && (
             <Spinner classes="w-24 h-24" message="Loading..." />
           )}
-          <section className="container mx-auto w-full py-24">
+          <section className="container mx-auto w-full py-24 px-2 md:px-4">
             {districtData && (
               <div className="flex w-full space-x-4">
                 <div className="cols-span-1 w-full  md:w-2/5">

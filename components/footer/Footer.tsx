@@ -1,15 +1,16 @@
 import Image from 'next/image';
 
 import { FaTwitter } from 'react-icons/fa'
+import steppinstonesapplogo from '../../public/android-chrome-512x512.png'
 
 const Footer = () => {
     const year = new Date().getFullYear()
   return (
-    <footer className="bottom-0 left-0 mb-0 w-full py-4 border-t border-indigo-100">
+    <footer className="bottom-0 left-0 mb-0 w-full border-t border-indigo-100 py-4">
       <div className="container mx-auto space-y-4">
         <div className="flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
           <div>
-            <Image src={'/SteppingStonesLogo3.png'} width={200} height={200} />
+            <Image src={steppinstonesapplogo} width={200} height={200} />
           </div>
           <div>
             <nav className=" flex flex-col justify-between space-y-4 text-center text-sm  font-medium sm:flex-row sm:space-y-0 sm:space-x-24">

@@ -102,13 +102,13 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
           <PortalHeader
             title={`${county} County Portal`}
             subTitle="Please select district from the menu below"
-            countyData={countyData}
+            data={countyData}
           />
           <section className="container mx-auto px-4 py-2">
             <div className="flex justify-between">
               <button
                 type="button"
-                className="w-1/4 rounded-md bg-[#5E17EB] px-4 py-2 text-center font-semibold text-white shadow-xl transition delay-150 
+                className="md:w-1/4 rounded-md bg-[#5E17EB] px-4 py-2 text-center font-semibold text-white shadow-xl transition delay-150 
                 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:text-xl lg:text-2xl"
                 onClick={() => {
                   router.replace({
@@ -121,7 +121,7 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
 
               <button
                 type="button"
-                className="w-1/4 rounded-md bg-[#5E17EB] px-4 py-2 text-center font-semibold text-white shadow-xl transition delay-150 
+                className="md:w-1/4 rounded-md bg-[#5E17EB] px-4 py-2 text-center font-semibold text-white shadow-xl transition delay-150 
                 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:text-xl lg:text-2xl"
                 onClick={() => setOpened((o) => !o)}
               >
@@ -238,7 +238,7 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
                             <button
                               key={`${content.title}-${index}`}
                               type="button"
-                              className="flex w-full  cursor-pointer items-center justify-center rounded-xl bg-[#5E17EB] py-4 px-2 text-lg font-semibold text-white 
+                              className="flex w-full  cursor-pointer items-center justify-center rounded-xl bg-[#5E17EB] py-2 md:py-6 px-2 text-lg font-semibold text-white 
                     drop-shadow-lg transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:text-xl lg:text-xl"
                               onClick={() =>
                                 router.replace({

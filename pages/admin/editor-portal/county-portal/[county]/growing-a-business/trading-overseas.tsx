@@ -9,6 +9,7 @@ import { useGetCountyByIdQuery } from 'features/editor/editorApiSlice'
 import Spinner from '@components/spinner'
 import PortalHeader from '@components/PortalHeader'
 import { NEXT_URL } from '@config/index'
+import { TradingOverseasSection } from '@components/Sections'
 
 const TradingOverseas = ({
   county,
@@ -32,8 +33,8 @@ const TradingOverseas = ({
        <section className="h-screen overflow-auto bg-stone-100">
          <section className="sticky w-full bg-white shadow-lg">
            <PortalHeader
-             title="Uk Counties"
-             subTitle="Please select from the menu below"
+             title={`${county} County`}
+             subTitle="Please Preview or Edit your content"
            />
            {isLoadingCounty && (
              <Spinner classes="w-24 h-24" message="Loading..." />
@@ -57,7 +58,7 @@ const TradingOverseas = ({
          </section>
 
          <section className="container mx-auto">
-          
+          <TradingOverseasSection id={countyId} />
          </section>
        </section>
      </ComponentShield>

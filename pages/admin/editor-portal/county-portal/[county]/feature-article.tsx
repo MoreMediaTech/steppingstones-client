@@ -9,6 +9,7 @@ import { useGetCountyByIdQuery } from 'features/editor/editorApiSlice'
 import Spinner from '@components/spinner'
 import PortalHeader from '@components/PortalHeader'
 import { NEXT_URL } from '@config/index'
+import { FeatureArticleSection } from '@components/Sections'
 
 const FeatureArticle = ({
   county,
@@ -30,10 +31,10 @@ const FeatureArticle = ({
         userRole={user?.role ?? ''}
       >
         <section className="h-screen overflow-auto bg-stone-100">
-          <section className="sticky w-full bg-white shadow-lg">
+          <section className="sticky w-full bg-white shadow-lg py-2">
             <PortalHeader
-              title="Uk Counties"
-              subTitle="Please select from the menu below"
+              title={`${county} County`}
+              subTitle="Please Preview or Edit your content"
             />
             {isLoadingCounty && (
               <Spinner classes="w-24 h-24" message="Loading..." />
@@ -42,7 +43,7 @@ const FeatureArticle = ({
               <div className="flex justify-between">
                 <button
                   type="button"
-                  className="w-1/4 rounded-md bg-[#0c6980] px-4 py-2 font-semibold text-white drop-shadow-lg"
+                  className="md:w-1/4 rounded-md bg-[#0c6980] px-4 py-2 font-semibold text-white drop-shadow-lg"
                   onClick={() => {
                     router.replace({
                       pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}`,
@@ -57,7 +58,7 @@ const FeatureArticle = ({
           </section>
 
           <section className="container mx-auto">
-            
+            <FeatureArticleSection id={countyId} />
           </section>
         </section>
       </ComponentShield>

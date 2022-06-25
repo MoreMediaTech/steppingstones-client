@@ -3,12 +3,10 @@ import { useRouter } from 'next/router'
 
 import { ComponentShield } from '@components/NextShield'
 import { AdminLayout } from 'layout'
-import { CurrentUser } from '@lib/types'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
-import { useGetCountyByIdQuery } from 'features/editor/editorApiSlice'
-import Spinner from '@components/spinner'
 import PortalHeader from '@components/PortalHeader'
 import { NEXT_URL } from '@config/index'
+import { OnlineDigitalisationSection } from '@components/Sections'
 
 const OnlineDigitalisation = ({
   county,
@@ -19,9 +17,7 @@ const OnlineDigitalisation = ({
 }) => {
   const router = useRouter()
   const { data: user } = useGetUserQuery()
-  const { isLoading: isLoadingCounty } = useGetCountyByIdQuery(countyId, {
-    refetchOnMountOrArgChange: true,
-  })
+ 
   return (
     <AdminLayout title="County - Editor Dashboard">
       <ComponentShield
@@ -32,12 +28,9 @@ const OnlineDigitalisation = ({
         <section className="h-screen overflow-auto bg-stone-100">
           <section className="sticky w-full bg-white shadow-lg">
             <PortalHeader
-              title="Uk Counties"
-              subTitle="Please select from the menu below"
+              title={`${county} County`}
+              subTitle="Please Preview or Edit your content"
             />
-            {isLoadingCounty && (
-              <Spinner classes="w-24 h-24" message="Loading..." />
-            )}
             <section className="container mx-auto px-4 py-2">
               <div className="flex justify-between">
                 <button
@@ -57,7 +50,7 @@ const OnlineDigitalisation = ({
           </section>
 
           <section className="container mx-auto">
-            
+            <OnlineDigitalisationSection id={countyId} />
           </section>
         </section>
       </ComponentShield>

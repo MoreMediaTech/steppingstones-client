@@ -3,28 +3,33 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { showNotification } from '@mantine/notifications'
 import { Paper, UnstyledButton } from '@mantine/core'
 import { BiEdit } from 'react-icons/bi'
+import { useRouter } from 'next/router'
 
 import { CountySectionForm } from '@components/forms'
 import { setError } from 'features/upload/uploadSlice'
 import {
   useGetCountyByIdQuery,
-  useUpdateCountyMutation,
+  useUpdateOrCreateOnlineDigitilisationMutation,
 } from 'features/editor/editorApiSlice'
 import { useAppDispatch } from 'app/hooks'
 import { EditorFormDataProps } from '@lib/types'
 import ContentPreview from '@components/ContentPreview'
 import Spinner from '@components/spinner'
+import { NEXT_URL } from '@config/index'
 
-const VatAndTaxSection = ({ id }: { id: string }) => {
+const OnlineDigitalisationSECTION = ({ id }: { id: string }) => {
+  const router = useRouter()
   const dispatch = useAppDispatch()
   const {
     data: countyData,
     isLoading: isLoadingCounty,
     isError: isErrorCounty,
   } = useGetCountyByIdQuery(id, { refetchOnMountOrArgChange: true })
-  const [updateCounty, { isLoading }] = useUpdateCountyMutation()
+  const [updateOrCreateOnlineDigitilisation, { isLoading }] = useUpdateOrCreateOnlineDigitilisationMutation()
 
-  const [value, setValue] = useState(countyData?.supportForStartups?.vatAndTax?.content)
+  const [value, setValue] = useState(
+    countyData?.topicalBusinessIssues?.onlineDigitilisation?.content
+  )
   const [isEdit, setIsEdit] = useState(false)
   const {
     handleSubmit,
@@ -33,7 +38,7 @@ const VatAndTaxSection = ({ id }: { id: string }) => {
     formState: { errors },
   } = useForm<Partial<EditorFormDataProps>>({
     defaultValues: {
-      title: countyData?.supportForStartups?.vatAndTax?.title,
+      title: countyData?.topicalBusinessIssues?.onlineDigitilisation?.title,
     },
   })
   const submitHandler: SubmitHandler<Partial<EditorFormDataProps>> =
@@ -43,9 +48,14 @@ const VatAndTaxSection = ({ id }: { id: string }) => {
           title: data.title,
           content: value,
           countyId: id,
+          id: countyData?.topicalBusinessIssues?.id,
         }
-        // await updateCounty(formData).unwrap()
+        await updateOrCreateOnlineDigitilisation(formData).unwrap()
         reset()
+         router.replace({
+           pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${countyData.name}/topical-business-issues`,
+           query: { ...router.query },
+         })
       } catch (error) {
         dispatch(setError({ message: error.message }))
       }
@@ -66,8 +76,10 @@ const VatAndTaxSection = ({ id }: { id: string }) => {
                 <BiEdit fontSize={44} />
               </UnstyledButton>
             </div>
-            {!isEdit && countyData?.supportForStartups?.vatAndTax ? (
-              <ContentPreview content={countyData?.supportForStartups?.vatAndTax} />
+            {!isEdit && countyData?.topicalBusinessIssues?.onlineDigitilisation ? (
+              <ContentPreview
+                content={countyData?.topicalBusinessIssues?.onlineDigitilisation}
+              />
             ) : (
               <CountySectionForm
                 register={register}
@@ -86,4 +98,5 @@ const VatAndTaxSection = ({ id }: { id: string }) => {
     </section>
   )
 }
-export default VatAndTaxSection
+
+export default OnlineDigitalisationSECTION

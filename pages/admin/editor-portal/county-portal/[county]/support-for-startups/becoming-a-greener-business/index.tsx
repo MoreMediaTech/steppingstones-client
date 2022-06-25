@@ -33,8 +33,8 @@ const BecomeAGreenerBusiness = ({
          <section className="h-screen overflow-auto bg-stone-100">
            <section className="sticky w-full bg-white shadow-lg">
              <PortalHeader
-               title="Uk Counties"
-               subTitle="Please select from the menu below"
+               title={`${county} County`}
+               subTitle="Please Preview or Edit your content"
              />
              {isLoadingCounty && (
                <Spinner classes="w-24 h-24" message="Loading..." />
@@ -58,7 +58,7 @@ const BecomeAGreenerBusiness = ({
            </section>
 
            <section className="container mx-auto">
-            <BecomingAGreenerBusinessSection id={countyId} />
+             <BecomingAGreenerBusinessSection id={countyId} />
            </section>
          </section>
        </ComponentShield>

@@ -9,6 +9,7 @@ import { useGetCountyByIdQuery } from '../../../../../../features/editor/editorA
 import Spinner from '../../../../../../components/spinner'
 import PortalHeader from '../../../../../../components/PortalHeader'
 import { NEXT_URL } from '../../../../../../config/index'
+import { OperateMoreEfficientlySection } from '../../../../../../components/Sections'
 
 const OperateMoreEfficiently = ({
   county,
@@ -32,8 +33,8 @@ const OperateMoreEfficiently = ({
         <section className="h-screen overflow-auto bg-stone-100">
           <section className="sticky w-full bg-white shadow-lg">
             <PortalHeader
-              title="Uk Counties"
-              subTitle="Please select from the menu below"
+              title={`${county} County`}
+              subTitle="Please Preview or Edit your content"
             />
             {isLoadingCounty && (
               <Spinner classes="w-24 h-24" message="Loading..." />
@@ -57,7 +58,7 @@ const OperateMoreEfficiently = ({
           </section>
 
           <section className="container mx-auto">
-            
+            <OperateMoreEfficientlySection id={countyId} />
           </section>
         </section>
       </ComponentShield>

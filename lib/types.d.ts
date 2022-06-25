@@ -63,13 +63,13 @@ export type DistrictDataProps = {
   id: string
   name: string
   imageUrl: string
-  logo: string
+  logoIcon: string
 }
 export type CountyDataProps = {
   id: string
   name: string
   imageUrl: string
-  logo: string
+  logoIcon: string
 }
 export type IEmailFormData = {
   from: string

@@ -96,7 +96,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     updateOrCreateDistrictWhyInvestIn: builder.mutation({
       query: (data) => ({
         url: `editor/why-invest`,
-        method: 'POST',
+        method: 'PUT',
         body: { ...data },
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
@@ -104,7 +104,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     updateOrCreateEconomicData: builder.mutation({
       query: (data) => ({
         url: `editor/economic-data`,
-        method: 'POST',
+        method: 'PUT',
         body: { ...data },
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
@@ -112,7 +112,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     updateOrCreateDistrictBusinessParks: builder.mutation({
       query: (data) => ({
         url: `editor/business-parks`,
-        method: 'POST',
+        method: 'PUT',
         body: { ...data },
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
@@ -120,7 +120,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     updateOrCreateDistrictCouncilGrants: builder.mutation({
       query: (data) => ({
         url: `editor/council-grants`,
-        method: 'POST',
+        method: 'PUT',
         body: { ...data },
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
@@ -128,12 +128,68 @@ const editorApi = editorApiSlice.injectEndpoints({
     updateOrCreateDistrictCouncilServices: builder.mutation({
       query: (data) => ({
         url: `editor/council-services`,
-        method: 'POST',
+        method: 'PUT',
         body: { ...data },
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
     }),
     updateOrCreateDistrictLocalNews: builder.mutation({
+      query: (data) => ({
+        url: `editor/local-news`,
+        method: 'PUT',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateFeatureArticle: builder.mutation({
+      query: (data) => ({
+        url: `editor/feature-article`,
+        method: 'PUT',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateOnlineDigitilisation: builder.mutation({
+      query: (data) => ({
+        url: `editor/online-digitilisation`,
+        method: 'PUT',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateCommercialProperty: builder.mutation({
+      query: (data) => ({
+        url: `editor/commercial-property`,
+        method: 'POST',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateVatAndTax: builder.mutation({
+      query: (data) => ({
+        url: `editor/vat-and-tax`,
+        method: 'POST',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateDevelopProductsAndServices: builder.mutation({
+      query: (data) => ({
+        url: `editor/develop-products-and-services`,
+        method: 'POST',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateEmployPeople: builder.mutation({
+      query: (data) => ({
+        url: `editor/employ-people`,
+        method: 'POST',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateFindNewMarkets: builder.mutation({
       query: (data) => ({
         url: `editor/council-services`,
         method: 'POST',
@@ -142,6 +198,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
     }),
   }),
+  overrideExisting: true,
 })
 
 export const {
@@ -158,4 +215,11 @@ export const {
   useUpdateOrCreateDistrictCouncilGrantsMutation,
   useUpdateOrCreateDistrictCouncilServicesMutation,
   useUpdateOrCreateDistrictLocalNewsMutation,
+  useUpdateOrCreateFeatureArticleMutation,
+  useUpdateOrCreateOnlineDigitilisationMutation,
+  useUpdateOrCreateCommercialPropertyMutation,
+  useUpdateOrCreateVatAndTaxMutation,
+  useUpdateOrCreateDevelopProductsAndServicesMutation,
+  useUpdateOrCreateEmployPeopleMutation,
+  useUpdateOrCreateFindNewMarketsMutation,
 } = editorApi
