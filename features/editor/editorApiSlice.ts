@@ -160,7 +160,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     updateOrCreateCommercialProperty: builder.mutation({
       query: (data) => ({
         url: `editor/commercial-property`,
-        method: 'POST',
+        method: 'PUT',
         body: { ...data },
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
@@ -168,7 +168,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     updateOrCreateVatAndTax: builder.mutation({
       query: (data) => ({
         url: `editor/vat-and-tax`,
-        method: 'POST',
+        method: 'PUT',
         body: { ...data },
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
@@ -176,7 +176,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     updateOrCreateDevelopProductsAndServices: builder.mutation({
       query: (data) => ({
         url: `editor/develop-products-and-services`,
-        method: 'POST',
+        method: 'PUT',
         body: { ...data },
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
@@ -184,15 +184,184 @@ const editorApi = editorApiSlice.injectEndpoints({
     updateOrCreateEmployPeople: builder.mutation({
       query: (data) => ({
         url: `editor/employ-people`,
-        method: 'POST',
+        method: 'PUT',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateCountyWelcome: builder.mutation({
+      query: (data) => ({
+        url: `editor/county-welcome`,
+        method: 'PUT',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateCountyNews: builder.mutation({
+      query: (data) => ({
+        url: `editor/county-news`,
+        method: 'PUT',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateCountyLEP: builder.mutation({
+      query: (data) => ({
+        url: `editor/county-lep`,
+        method: 'PUT',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateCountyBNI: builder.mutation({
+      query: (data) => ({
+        url: `editor/county-bni`,
+        method: 'PUT',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateSocialEnterprises: builder.mutation({
+      query: (data) => ({
+        url: `editor/social-enterprises`,
+        method: 'PUT',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateLGBTQAndDisabilities: builder.mutation({
+      query: (data) => ({
+        url: `editor/lgbtq-and-disabilities`,
+        method: 'PUT',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateMHW: builder.mutation({
+      query: (data) => ({
+        url: `editor/mhw`,
+        method: 'PUT',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateHeritageAndTourism: builder.mutation({
+      query: (data) => ({
+        url: `editor/heritage-and-tourism`,
+        method: 'PUT',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateBusinessSupport: builder.mutation({
+      query: (data) => ({
+        url: `editor/business-support`,
+        method: 'PUT',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateCNZT: builder.mutation({
+      query: (data) => ({
+        url: `editor/cnzt`,
+        method: 'PUT',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateMarketResearch: builder.mutation({
+      query: (data) => ({
+        url: `editor/market-research`,
+        method: 'PUT',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateLegalChecklist: builder.mutation({
+      query: (data) => ({
+        url: `editor/legal-checklist`,
+        method: 'PUT',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateFindStartupFunding: builder.mutation({
+      query: (data) => ({
+        url: `editor/find-startup-funding`,
+        method: 'PUT',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateBusinessPlan: builder.mutation({
+      query: (data) => ({
+        url: `editor/business-plan`,
+        method: 'PUT',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateBusinessInsurance: builder.mutation({
+      query: (data) => ({
+        url: `editor/business-insurance`,
+        method: 'PUT',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateBGB: builder.mutation({
+      query: (data) => ({
+        url: `editor/bgb`,
+        method: 'PUT',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateTradingOverseas: builder.mutation({
+      query: (data) => ({
+        url: `editor/bgb`,
+        method: 'PUT',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateOME: builder.mutation({
+      query: (data) => ({
+        url: `editor/operate-more-efficiently`,
+        method: 'PUT',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateImproveSkills: builder.mutation({
+      query: (data) => ({
+        url: `editor/improve-skills`,
+        method: 'PUT',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    updateOrCreateFindTAndC: builder.mutation({
+      query: (data) => ({
+        url: `editor/find-tandc`,
+        method: 'PUT',
         body: { ...data },
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
     }),
     updateOrCreateFindNewMarkets: builder.mutation({
       query: (data) => ({
-        url: `editor/council-services`,
-        method: 'POST',
+        url: `editor/find-new-markets`,
+        method: 'PUT',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+
+    updateOrCreateFindFunding: builder.mutation({
+      query: (data) => ({
+        url: `editor/find-funding`,
+        method: 'PUT',
         body: { ...data },
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
@@ -222,4 +391,25 @@ export const {
   useUpdateOrCreateDevelopProductsAndServicesMutation,
   useUpdateOrCreateEmployPeopleMutation,
   useUpdateOrCreateFindNewMarketsMutation,
+  useUpdateOrCreateCountyWelcomeMutation,
+  useUpdateOrCreateCountyNewsMutation,
+  useUpdateOrCreateCountyLEPMutation,
+  useUpdateOrCreateCountyBNIMutation,
+  useUpdateOrCreateSocialEnterprisesMutation,
+  useUpdateOrCreateLGBTQAndDisabilitiesMutation,
+  useUpdateOrCreateMHWMutation,
+  useUpdateOrCreateHeritageAndTourismMutation,
+  useUpdateOrCreateBusinessSupportMutation,
+  useUpdateOrCreateCNZTMutation,
+  useUpdateOrCreateMarketResearchMutation,
+  useUpdateOrCreateLegalChecklistMutation,
+  useUpdateOrCreateFindStartupFundingMutation,
+  useUpdateOrCreateBusinessPlanMutation,
+  useUpdateOrCreateBusinessInsuranceMutation,
+  useUpdateOrCreateBGBMutation,
+  useUpdateOrCreateTradingOverseasMutation,
+  useUpdateOrCreateOMEMutation,
+  useUpdateOrCreateImproveSkillsMutation,
+  useUpdateOrCreateFindTAndCMutation,
+  useUpdateOrCreateFindFundingMutation,
 } = editorApi

@@ -3,29 +3,32 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { showNotification } from '@mantine/notifications'
 import { Paper, UnstyledButton } from '@mantine/core'
 import { BiEdit } from 'react-icons/bi'
+import { useRouter } from 'next/router'
 
 import { CountySectionForm } from '@components/forms'
 import { setError } from 'features/upload/uploadSlice'
 import {
   useGetCountyByIdQuery,
-  useUpdateCountyMutation,
+  useUpdateOrCreateFindFundingMutation,
 } from 'features/editor/editorApiSlice'
 import { useAppDispatch } from 'app/hooks'
 import { EditorFormDataProps } from '@lib/types'
 import ContentPreview from '@components/ContentPreview'
 import Spinner from '@components/spinner'
+import { NEXT_URL } from '@config/index'
 
 const FindFundingSection = ({ id }: { id: string }) => {
+  const router = useRouter()
   const dispatch = useAppDispatch()
   const {
     data: countyData,
     isLoading: isLoadingCounty,
     isError: isErrorCounty,
   } = useGetCountyByIdQuery(id, { refetchOnMountOrArgChange: true })
-  const [updateCounty, { isLoading }] = useUpdateCountyMutation()
+  const [updateOrCreateFindFunding, { isLoading }] = useUpdateOrCreateFindFundingMutation()
 
   const [value, setValue] = useState(
-    countyData?.supportForStartups?.vatAndTax?.content
+    countyData?.growingABusiness?.findFunding?.content
   )
   const [isEdit, setIsEdit] = useState(false)
   const {
@@ -35,7 +38,7 @@ const FindFundingSection = ({ id }: { id: string }) => {
     formState: { errors },
   } = useForm<Partial<EditorFormDataProps>>({
     defaultValues: {
-      title: countyData?.supportForStartups?.vatAndTax?.title,
+      title: countyData?.growingABusiness?.findFunding?.title,
     },
   })
   const submitHandler: SubmitHandler<Partial<EditorFormDataProps>> =
@@ -45,9 +48,15 @@ const FindFundingSection = ({ id }: { id: string }) => {
           title: data.title,
           content: value,
           countyId: id,
+          id: countyData?.growingABusiness?.id,
         }
-        // await updateCounty(formData).unwrap()
+        await updateOrCreateFindFunding(formData).unwrap()
         reset()
+         setIsEdit(false)
+         router.replace({
+           pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${countyData.name}/growing-a-business`,
+           query: { ...router.query },
+         })
       } catch (error) {
         dispatch(setError({ message: error.message }))
       }
@@ -68,9 +77,9 @@ const FindFundingSection = ({ id }: { id: string }) => {
                 <BiEdit fontSize={44} />
               </UnstyledButton>
             </div>
-            {!isEdit && countyData?.supportForStartups?.vatAndTax ? (
+            {!isEdit && countyData?.growingABusiness?.findFunding ? (
               <ContentPreview
-                content={countyData?.supportForStartups?.vatAndTax}
+                content={countyData?.growingABusiness?.findFunding}
               />
             ) : (
               <CountySectionForm

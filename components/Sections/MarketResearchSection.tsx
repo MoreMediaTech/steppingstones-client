@@ -3,26 +3,29 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { showNotification } from '@mantine/notifications'
 import { Paper, UnstyledButton } from '@mantine/core'
 import { BiEdit } from 'react-icons/bi'
+import { useRouter } from 'next/router'
 
 import { CountySectionForm } from '@components/forms'
 import { setError } from 'features/upload/uploadSlice'
 import {
   useGetCountyByIdQuery,
-  useUpdateCountyMutation,
+  useUpdateOrCreateMarketResearchMutation,
 } from 'features/editor/editorApiSlice'
 import { useAppDispatch } from 'app/hooks'
 import { EditorFormDataProps } from '@lib/types'
 import ContentPreview from '@components/ContentPreview'
 import Spinner from '@components/spinner'
+import { NEXT_URL } from '@config/index'
 
 const MarketResearchSection = ({ id }: { id: string }) => {
+  const router = useRouter()
   const dispatch = useAppDispatch()
   const {
     data: countyData,
     isLoading: isLoadingCounty,
     isError: isErrorCounty,
   } = useGetCountyByIdQuery(id, { refetchOnMountOrArgChange: true })
-  const [updateCounty, { isLoading }] = useUpdateCountyMutation()
+  const [updateOrCreateMarketResearch, { isLoading }] = useUpdateOrCreateMarketResearchMutation()
 
   const [value, setValue] = useState(countyData?.supportForStartups?.marketResearch?.content)
   const [isEdit, setIsEdit] = useState(false)
@@ -43,9 +46,15 @@ const MarketResearchSection = ({ id }: { id: string }) => {
           title: data.title,
           content: value,
           countyId: id,
+          id: countyData?.supportForStartups?.id,
         }
-        await updateCounty(formData).unwrap()
+        await updateOrCreateMarketResearch(formData).unwrap()
         reset()
+        setIsEdit(false)
+        router.replace({
+          pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${countyData.name}/support-for-startups`,
+          query: { ...router.query },
+        })
       } catch (error) {
         dispatch(setError({ message: error.message }))
       }
