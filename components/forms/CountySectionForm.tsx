@@ -5,10 +5,12 @@ import {
   UseFormHandleSubmit,
   UseFormRegister,
 } from 'react-hook-form'
+import dynamic from 'next/dynamic'
 
-import RichText from '@components/RichText'
 import { EditorFormDataProps } from '@lib/types'
-import React from 'react'
+const RichText = dynamic(() => import('@components/RichText'), {
+  ssr: false,
+})
 
 interface IEconomicDataForm {
   submitHandler: SubmitHandler<Partial<EditorFormDataProps>>
@@ -68,17 +70,8 @@ const CountySectionForm = ({
           Content:
         </label>
         <RichText
-          controls={[
-            ['bold', 'italic', 'underline', 'link', 'image'],
-            ['unorderedList', 'h1', 'h2', 'h3'],
-            ['sup', 'sub'],
-            ['alignLeft', 'alignCenter', 'alignRight'],
-          ]}
-          id="title"
-          aria-label="title"
-          className="w-full"
           value={value}
-          onChange={setValue}
+          setValue={setValue}
         />
       </div>
       <Divider />

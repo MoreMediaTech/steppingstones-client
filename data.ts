@@ -71,7 +71,6 @@ export const districtPages = [
 ]
 
 export const counties = [
-  'Dunbartonshire',
   'East Lothian',
   'Midlothian',
   'West Lothian',

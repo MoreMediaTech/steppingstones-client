@@ -42,7 +42,9 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
     data: countyData,
     isLoading: isLoadingCounty,
     isError: isErrorCounty,
+    refetch: refetchCounty,
   } = useGetCountyByIdQuery(countyId, { refetchOnMountOrArgChange: true })
+ 
   const [updateCounty, { isLoading }] = useUpdateCountyMutation()
   const { previewSource, selectedFile } = useAppSelector(
     (state) => state.upload
@@ -81,7 +83,7 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
         await updateCounty(updatedData).unwrap()
         reset()
         setIsEdit(false)
-        router.replace({pathname: `${NEXT_URL}${router.pathname}`, query: {...router.query}})
+        router.replace({pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}`, query: {...router.query}})
       } catch (error) {
         showNotification({
           message: 'Error updating county image',
@@ -89,10 +91,10 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
         })
       }
     },
-    []
+    [previewSource]
   )
   return (
-    <AdminLayout title={`${county} County - Editor Dashboard`}>
+    <AdminLayout title={`${countyData?.name} County - Editor Dashboard`}>
       <ComponentShield
         RBAC
         showForRole={'SS_EDITOR'}
@@ -100,7 +102,7 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
       >
         <section className="h-screen overflow-auto">
           <PortalHeader
-            title={`${county} County Portal`}
+            title={`${countyData?.name} County Portal`}
             subTitle="Please select district from the menu below"
             data={countyData}
           />
@@ -108,8 +110,8 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
             <div className="flex justify-between">
               <button
                 type="button"
-                className="md:w-1/4 rounded-md bg-[#5E17EB] px-4 py-2 text-center font-semibold text-white shadow-xl transition delay-150 
-                duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:text-xl lg:text-2xl"
+                className="rounded-md bg-[#5E17EB] px-4 py-2 text-center font-semibold text-white shadow-xl transition delay-150 duration-300 
+                ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:w-1/4 md:text-xl lg:text-2xl"
                 onClick={() => {
                   router.replace({
                     pathname: `${NEXT_URL}/admin/editor-portal/county-portal`,
@@ -121,8 +123,8 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
 
               <button
                 type="button"
-                className="md:w-1/4 rounded-md bg-[#5E17EB] px-4 py-2 text-center font-semibold text-white shadow-xl transition delay-150 
-                duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:text-xl lg:text-2xl"
+                className="rounded-md bg-[#5E17EB] px-4 py-2 text-center font-semibold text-white shadow-xl transition delay-150 duration-300 
+                ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:w-1/4 md:text-xl lg:text-2xl"
                 onClick={() => setOpened((o) => !o)}
               >
                 Add District
@@ -132,7 +134,7 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
           {isLoadingCounty && (
             <Spinner classes="w-24 h-24" message="Loading..." />
           )}
-          <section className="container mx-auto w-full py-24 px-2 md:px-4 overflow-auto">
+          <section className="container mx-auto w-full overflow-auto py-24 px-2 md:px-4">
             {countyData && (
               <div className="flex h-full w-full flex-col gap-8 md:flex-row">
                 <div className="cols-span-1 w-full  md:w-2/5">
@@ -207,12 +209,12 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
                         NEWS
                       </button>
                     </div>
-                    <div className="w-full py-8 space-y-4">
+                    <div className="w-full space-y-4 py-8">
                       <div className="grid grid-cols-2 gap-y-8 gap-x-10 md:gap-x-20">
                         {countyData?.districts?.map(
                           (district: DistrictProps) => (
                             <button
-                              key={district.id}
+                              key={district?.id}
                               type="button"
                               className="flex w-full  cursor-pointer items-center justify-center rounded-xl bg-[#5E17EB] py-6 px-4 text-lg font-semibold text-white 
                     drop-shadow-lg transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:text-xl lg:text-2xl"
@@ -221,8 +223,8 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
                                   pathname: `${NEXT_URL}/admin/editor-portal/county-portal/district`,
                                   query: {
                                     ...router.query,
-                                    district: district.name,
-                                    districtId: district.id,
+                                    district: district?.name,
+                                    districtId: district?.id,
                                   },
                                 })
                               }
@@ -234,15 +236,18 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
                       </div>
                       <div className="grid grid-cols-3 gap-y-4 gap-x-4">
                         {contentDrawerSubNavData?.map(
-                          (content: IContentDrawerSubNavData, index: number) => (
+                          (
+                            content: IContentDrawerSubNavData,
+                            index: number
+                          ) => (
                             <button
-                              key={`${content.title}-${index}`}
+                              key={`${content?.title}-${index}`}
                               type="button"
-                              className="flex w-full  cursor-pointer items-center justify-center rounded-xl bg-[#5E17EB] py-2 md:py-6 px-2 text-lg font-semibold text-white 
-                    drop-shadow-lg transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:text-xl lg:text-xl"
+                              className="flex w-full  cursor-pointer items-center justify-center rounded-xl bg-[#5E17EB] py-2 px-2 text-lg font-semibold text-white drop-shadow-lg 
+                    transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:py-6 md:text-xl lg:text-xl"
                               onClick={() =>
                                 router.replace({
-                                  pathname: `${NEXT_URL}${content.path2}/${county}/${content.subPath2}`,
+                                  pathname: `${NEXT_URL}${content?.path2}/${county}/${content?.subPath2}`,
                                   query: {
                                     ...router.query,
                                     county,
@@ -267,6 +272,8 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
           opened={opened}
           setOpened={setOpened}
           countyId={countyId}
+          county={countyData?.name}
+          refetch={refetchCounty}
         />
       </ComponentShield>
     </AdminLayout>

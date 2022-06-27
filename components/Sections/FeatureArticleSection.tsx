@@ -59,7 +59,7 @@ const FeatureArticleSection = ({ id }: { id: string }) => {
       } catch (error) {
         dispatch(setError({ message: error.message }))
       }
-    }, [])
+    }, [value])
   return (
     <section className="relative w-full flex-grow px-2 py-2  md:py-8 md:px-8">
       <section className="container">

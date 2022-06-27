@@ -19,7 +19,7 @@ const MarketResearch = ({
   countyId: string
 }) => {
   const router = useRouter()
-  const { data: user, isLoading, isError, isFetching } = useGetUserQuery()
+  const { data: user } = useGetUserQuery()
    const { isLoading: isLoadingCounty } = useGetCountyByIdQuery(countyId, {
      refetchOnMountOrArgChange: true,
    })

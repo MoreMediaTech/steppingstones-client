@@ -25,9 +25,10 @@ const LegalCheckListSection = ({ id }: { id: string }) => {
     isLoading: isLoadingCounty,
     isError: isErrorCounty,
   } = useGetCountyByIdQuery(id, { refetchOnMountOrArgChange: true })
+
   const [updateOrCreateLegalChecklist, { isLoading }] = useUpdateOrCreateLegalChecklistMutation()
 
-  const [value, setValue] = useState(countyData?.supportForStartups?.legalCheckList?.content)
+  const [value, setValue] = useState(countyData?.supportForStartups?.LegalChecklist?.content)
   const [isEdit, setIsEdit] = useState(false)
   const {
     handleSubmit,
@@ -36,7 +37,7 @@ const LegalCheckListSection = ({ id }: { id: string }) => {
     formState: { errors },
   } = useForm<Partial<EditorFormDataProps>>({
     defaultValues: {
-      title: countyData?.supportForStartups?.legalCheckList?.title,
+      title: countyData?.supportForStartups?.LegalChecklist?.title,
     },
   })
   const submitHandler: SubmitHandler<Partial<EditorFormDataProps>> =
@@ -58,7 +59,7 @@ const LegalCheckListSection = ({ id }: { id: string }) => {
       } catch (error) {
         dispatch(setError({ message: error.message }))
       }
-    }, [])
+    }, [value])
   return (
     <section className="relative h-auto w-full flex-grow px-2 py-2  md:py-8 md:px-8">
       <section className="container">
@@ -75,8 +76,8 @@ const LegalCheckListSection = ({ id }: { id: string }) => {
                 <BiEdit fontSize={44} />
               </UnstyledButton>
             </div>
-            {!isEdit && countyData?.supportForStartups?.legalCheckList ? (
-              <ContentPreview content={countyData?.supportForStartups?.legalCheckList} />
+            {!isEdit && countyData?.supportForStartups.LegalChecklist ? (
+              <ContentPreview content={countyData?.supportForStartups.LegalChecklist} />
             ) : (
               <CountySectionForm
                 register={register}

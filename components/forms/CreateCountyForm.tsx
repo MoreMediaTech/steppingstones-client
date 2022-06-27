@@ -16,9 +16,11 @@ type FormDataProps = {
 const CreateDirectoryForm = ({
   opened,
   setOpened,
+  refetch,
 }: {
   opened: boolean
   setOpened: React.Dispatch<React.SetStateAction<boolean>>
+  refetch: () => void
 }) => {
   const {
     handleSubmit,
@@ -32,6 +34,7 @@ const CreateDirectoryForm = ({
 
   const handleClose = () => {
     reset()
+    refetch()
     setOpened(false)
   }
 
@@ -40,7 +43,7 @@ const CreateDirectoryForm = ({
       try {
         await createCounty(data).unwrap()
         handleClose()
-        router.replace(`${NEXT_URL}${router.asPath}`)
+        router.replace(`${NEXT_URL}/admin/editor-portal/county-portal`)
       } catch (error) {
         if (!error?.response) {
           showNotification({

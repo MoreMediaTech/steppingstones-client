@@ -24,6 +24,7 @@ const EconomicDataSection = ({ id }: { id: string }) => {
     isLoading: isLoadingDistrict,
     isError: isErrorDistrict,
   } = useGetDistrictByIdQuery(id, { refetchOnMountOrArgChange: true })
+    console.log("🚀 ~ file: EconomicDataSection.tsx ~ line 27 ~ EconomicDataSection ~ districtData", districtData)
   const [updateOrCreateEconomicData, { isLoading }] = useUpdateOrCreateEconomicDataMutation()
   const [isEdit, setIsEdit] = useState(false)
   const {
@@ -38,11 +39,11 @@ const EconomicDataSection = ({ id }: { id: string }) => {
       noOfRetailShops: districtData?.economicData?.noOfRetailShops,
       employmentInvestmentLand:
         districtData?.economicData?.employmentInvestmentLand,
-      unemploymentRate: districtData?.economicData?.imageUrl,
+      unemploymentRate: districtData?.economicData?.unemploymentRate,
       numOfRegisteredCompanies:
         districtData?.economicData?.numOfRegisteredCompanies,
       numOfBusinessParks: districtData?.economicData?.numOfBusinessParks,
-      averageHousingCost: districtData?.economicData?.imageUrl,
+      averageHousingCost: districtData?.economicData?.averageHousingCost,
       averageWageEarnings: districtData?.economicData?.averageWageEarnings,
     },
   })
@@ -84,9 +85,7 @@ const EconomicDataSection = ({ id }: { id: string }) => {
                 <BiEdit fontSize={44} />
               </UnstyledButton>
             </div>
-            {!isEdit && districtData?.economicData ? (
-              <ContentPreview content={districtData?.economicData} />
-            ) : (
+            {districtData?.economicData && (
               <EconomicDataForm
                 register={register}
                 handleSubmit={handleSubmit}

@@ -38,27 +38,22 @@ const editorApi = editorApiSlice.injectEndpoints({
         }
       },
     }),
-    getCounties: builder.query({
+    getCounties: builder.query<CountyDataProps[], void>({
       query: () => ({
         url: 'editor/county',
       }),
-      providesTags: (result, error, arg) => [
-        ...result?.map((county: Partial<CountyDataProps>) => ({
-          type: 'Editor',
-          id: county.id,
-        })),
-      ],
-      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-        try {
-          const result = await queryFulfilled
-          dispatch(setCounties(result.data))
-        } catch (error) {
-          if (error instanceof AxiosError) {
-            dispatch(setError({ message: error.message }))
-          }
-          dispatch(setError({ message: 'Unable to get County objects' }))
-        }
-      },
+
+      providesTags: (result) =>
+        result
+          ? [
+              ...result?.map((county) => ({
+                type: 'Editor',
+                id: county?.id,
+              } as const)),
+              { type: 'Editor', id: 'LIST' },
+            ]
+          : [{ type: 'Editor', id: 'LIST' }],
+      
     }),
     createDistrict: builder.mutation({
       query: (data) => ({

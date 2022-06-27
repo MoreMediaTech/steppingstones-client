@@ -45,6 +45,7 @@ const SupportForEstablishedBusinessSection = ({ id }: { id: string }) => {
           title: data.title,
           content: value,
           countyId: id,
+          id: countyData?.supportForEstablishedBusiness?.id,
         }
         await updateCounty(formData).unwrap()
         reset()

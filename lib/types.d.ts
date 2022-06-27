@@ -70,6 +70,8 @@ export type CountyDataProps = {
   name: string
   imageUrl: string
   logoIcon: string
+  published: boolean
+  viewCount: number
 }
 export type IEmailFormData = {
   from: string

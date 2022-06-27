@@ -88,7 +88,7 @@ const District = ({
         dispatch(setError({ message: error.message }))
       }
     },
-    []
+    [previewSource]
   )
 
   return (

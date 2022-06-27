@@ -48,6 +48,7 @@ const NewsSection = ({ id }: { id: string }) => {
           countyId: id,
           id: countyData?.welcome?.id,
         }
+        console.log("🚀 ~ file: WelcomeSection.tsx ~ line 51 ~ useCallback ~ formData", formData)
         await updateOrCreateCountyWelcome(formData).unwrap()
         reset()
         setIsEdit(false)
@@ -58,7 +59,7 @@ const NewsSection = ({ id }: { id: string }) => {
       } catch (error) {
         dispatch(setError({ message: error.message }))
       }
-    }, [])
+    }, [value])
   return (
     <section className="relative h-auto w-full flex-grow px-2 py-2  md:py-8 md:px-8">
       <section className="container">

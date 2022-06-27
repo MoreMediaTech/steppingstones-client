@@ -16,10 +16,14 @@ const AddDistrictForm = ({
   opened,
   setOpened,
   countyId,
+  county,
+   refetch,
 }: {
   opened: boolean
   setOpened: React.Dispatch<React.SetStateAction<boolean>>
   countyId: string
+  county: string
+   refetch: () => void
 }) => {
   const {
     handleSubmit,
@@ -33,6 +37,7 @@ const AddDistrictForm = ({
 
   const handleClose = () => {
     reset()
+    refetch()
     setOpened(false)
   }
 
@@ -42,7 +47,10 @@ const AddDistrictForm = ({
       try {
         await createDistrict(newData).unwrap()
         handleClose()
-        router.replace(`${NEXT_URL}${router.asPath}`)
+        router.push({
+          pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}`,
+          query: { county, countyId},
+        })
       } catch (error) {
         if (!error?.response) {
           showNotification({

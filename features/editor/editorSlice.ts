@@ -1,12 +1,31 @@
+import { DistrictDataProps } from './../../lib/types.d';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { RootState } from 'app/store'
-import { Error } from '@lib/types'
+import { CountyDataProps, Error } from '@lib/types'
 
-export const initialState = {
+interface IEditorState {
+  counties: Partial<CountyDataProps[]>
+  district: Partial<DistrictDataProps>
+  county: Partial<CountyDataProps>
+  message: string
+  error: Error | null
+}
+
+export const initialState: IEditorState = {
   counties: [],
-  district: {},
-  county: {},
+  district: {
+    id: '',
+    name: '',
+    imageUrl: '',
+    logoIcon: '',
+  },
+  county: {
+     id: '',
+    name: '',
+    imageUrl: '',
+    logoIcon: '',
+  },
   message: '',
   error: { message: 'An Error occurred' },
 }
@@ -15,22 +34,19 @@ const editorSlice = createSlice({
   name: 'editor',
   initialState,
   reducers: {
-    setCounties: (state, { payload }: PayloadAction<[]>) => {
+    setCounties: (state, { payload }: PayloadAction<CountyDataProps[]>) => {
       state.counties = payload
     },
-    setCounty: (state, { payload }: PayloadAction<{}>) => {
+    setCounty: (state, { payload }: PayloadAction<CountyDataProps>) => {
       state.county = payload
     },
-    setDistrict: (state, { payload }: PayloadAction<[]>) => {
+    setDistrict: (state, { payload }: PayloadAction<DistrictDataProps>) => {
       state.district = payload
     },
     setError: (state, { payload }: PayloadAction<AxiosError | Error>) => {
       state.error = payload
     },
-    clearState: (state) => {
-      state.counties = []
-      state.district = {}
-    },
+    clearState: (state) => initialState,
   },
 })
 

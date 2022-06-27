@@ -49,6 +49,7 @@ const TradingOverseasSection = ({ id }: { id: string }) => {
           title: data.title,
           content: value,
           countyId: id,
+          id: countyData?.growingABusiness?.id,
         }
         await updateOrCreateTradingOverseas(formData).unwrap()
         reset()
@@ -60,7 +61,7 @@ const TradingOverseasSection = ({ id }: { id: string }) => {
       } catch (error) {
         dispatch(setError({ message: error.message }))
       }
-    }, [])
+    }, [value])
   return (
     <section className="relative h-auto w-full flex-grow px-2 py-2  md:py-8 md:px-8">
       <section className="container">

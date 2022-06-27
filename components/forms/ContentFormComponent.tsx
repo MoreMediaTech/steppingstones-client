@@ -7,11 +7,15 @@ import {
 } from 'react-hook-form'
 import { MdCloudUpload } from 'react-icons/md'
 import Image from 'next/image'
+import dynamic from 'next/dynamic'
 
-import RichText from '@components/RichText'
 import { EditorFormDataProps } from '@lib/types'
 import { clearState } from 'features/upload/uploadSlice'
 import { useAppDispatch, useAppSelector } from 'app/hooks'
+const RichTextEditor = dynamic(() => import('@components/RichText'), {
+  ssr: false,
+})
+
 
 interface IContentFormComponent {
   submitHandler: SubmitHandler<EditorFormDataProps>
@@ -140,19 +144,7 @@ const ContentFormComponent = ({
         <label htmlFor="content" className="w-1/4">
           Content:
         </label>
-        <RichText
-          controls={[
-            ['bold', 'italic', 'underline', 'link', 'image'],
-            ['unorderedList', 'h1', 'h2', 'h3'],
-            ['sup', 'sub'],
-            ['alignLeft', 'alignCenter', 'alignRight'],
-          ]}
-          id="content"
-          aria-label="content"
-          className="w-full"
-          value={value}
-          onChange={setValue}
-        />
+        <RichTextEditor value={value} setValue={setValue} />
       </div>
       <Divider />
       <div className="my-4 flex w-full items-center justify-between ">

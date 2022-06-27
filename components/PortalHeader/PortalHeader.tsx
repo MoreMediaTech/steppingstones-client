@@ -50,23 +50,31 @@ const PortalHeader = ({ user, title, subTitle, data }: IPortalHeaderProps) => {
                 {user ? (
                   initials
                 ) : (
-                  <Image
-                    src={data ? data?.logoIcon : steppingstonesapplogo}
-                    alt={
-                      data ? 'County or District logo' : 'Stepping Stones Logo'
-                    }
-                    layout="fill"
-                    objectFit="cover"
-                  />
+                  <>
+                    <Image
+                      src={
+                        !!data?.logoIcon
+                          ? data?.logoIcon
+                          : steppingstonesapplogo
+                      }
+                      alt={
+                        data
+                          ? 'County or District logo'
+                          : 'Stepping Stones Logo'
+                      }
+                      layout="fill"
+                      objectFit="cover"
+                    />
+                  </>
                 )}
               </div>
 
               <div style={{ flex: 1 }}>
-                <h1 className="font-mono text-lg font-semibold text-[#00dcb3] sm:text-[1.2rem] md:text-[1.6rem]">
+                <h1 className="text-lg font-semibold text-[#00dcb3] sm:text-[1.2rem] md:text-[1.6rem]">
                   {user ? ` Welcome back ${user?.name?.split(' ')[0]}` : title}
                 </h1>
 
-                <h3 className="font-mono text-sm font-semibold text-[#3A0B99] md:text-base">
+                <h3 className="text-sm font-semibold text-[#3A0B99] md:text-base">
                   {user ? 'Please select from the menu below' : subTitle}
                 </h3>
               </div>

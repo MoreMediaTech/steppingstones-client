@@ -10,8 +10,8 @@ type ContentPreviewProps = {
 const ContentPreview = ({ content }: ContentPreviewProps) => {
   return (
     <div className="w-full  overflow-auto p-4">
-      <div className="space-y-4 border border-gray-200 p-4">
-        <div className="font-mono text-2xl capitalize underline ">
+      <div className="space-y-6 border border-gray-200 p-4">
+        <div className="mb-2 text-2xl font-semibold capitalize text-[#00DCB3] ">
           <h1>{content?.title}</h1>
         </div>
         {!!content?.imageUrl && (
