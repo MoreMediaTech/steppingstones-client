@@ -78,9 +78,9 @@ const LGBTQandDisabilitiesSection = ({ id }: { id: string }) => {
                 <BiEdit fontSize={44} />
               </UnstyledButton>
             </div>
-            {!isEdit && countyData?.supportForStartups?.vatAndTax ? (
+            {!isEdit && countyData?.topicalBusinessIssues?.LGBTQAndDisabilities ? (
               <ContentPreview
-                content={countyData?.supportForStartups?.vatAndTax}
+                content={countyData?.topicalBusinessIssues?.LGBTQAndDisabilities}
               />
             ) : (
               <CountySectionForm
