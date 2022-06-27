@@ -139,8 +139,7 @@ const PartnerForm = () => {
       )}
       <RichTextEditor
         value={value}
-        onChange={onChange}
-        onImageUpload={handleImageUpload}
+        setValue={onChange}
       />
     </form>
   )
