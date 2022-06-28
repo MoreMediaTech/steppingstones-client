@@ -8,6 +8,7 @@ import { showNotification } from '@mantine/notifications'
 import { RequestPasswordResetForm } from '@components/forms'
 import { useRequestPasswordResetMutation } from 'features/auth/authApiSlice'
 import { validateEmail } from '@lib/emailVerification'
+import { IFormData } from '@lib/types'
 
 export type Inputs = {
   email: string
@@ -19,13 +20,13 @@ const ForgotPassword = () => {
     register,
     reset,
     formState: { errors },
-  } = useForm<Inputs>()
+  } = useForm<Partial<IFormData>>()
   const router = useRouter()
   const [requestPasswordReset, { isLoading, isError, isSuccess, error }] =
     useRequestPasswordResetMutation()
 
-  const submitHandler: SubmitHandler<Inputs> = useCallback(async (data) => {
-    if (!validateEmail(data.email)) {
+  const submitHandler: SubmitHandler<Partial<IFormData>> = useCallback(async (data) => {
+    if (!validateEmail(data?.email as string)) {
       showNotification({
         message: 'Please enter a valid email address',
         autoClose: 3000,

@@ -19,9 +19,9 @@ const LoginForm = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<IFormData>()
+  } = useForm<Partial<IFormData>>()
 
-  const handleLogin: SubmitHandler<IFormData> = async (data) => {
+  const handleLogin: SubmitHandler<Partial<IFormData>> = async (data) => {
     try {
       const responseData = await login({
         email: data.email,

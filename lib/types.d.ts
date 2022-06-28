@@ -3,14 +3,19 @@ import type { NextRouter } from 'next/router'
 export interface IFormData {
   name: string
   email: string
-  password?: string
-  confirmPassword?: string
-  county?: string
-  organisation?: string
-  postCode?: string
-  contactNumber?: string
-  acceptTermsAndConditions?: boolean
-  acceptContactRequest?: boolean
+  password: string
+  confirmPassword: string
+  role: string
+  isAdmin: boolean
+  emailVerified: boolean
+  acceptTermsAndConditions: boolean
+  county: string
+  district: string
+  contactNumber: string
+  postCode: string
+  imageUrl: string
+  acceptContactRequest: boolean
+  organisation: string
 }
 
 type EditImageProps = {

@@ -1,16 +1,15 @@
+import { IFormData } from '@lib/types'
 import { Button, TextInput } from '@mantine/core'
-
-import { Inputs } from 'pages/auth/forgot-password'
 import { FieldError, SubmitHandler, UseFormHandleSubmit, UseFormRegister } from 'react-hook-form'
 
 interface IRequestPasswordResetForm {
-  submitHandler: SubmitHandler<Inputs>
+  submitHandler: SubmitHandler<Partial<IFormData>>
   errors: {
     email?: FieldError | undefined
   }
   isLoading: boolean
-  register: UseFormRegister<Inputs>
-  handleSubmit: UseFormHandleSubmit<Inputs>
+  register: UseFormRegister<Partial<IFormData>>
+  handleSubmit: UseFormHandleSubmit<Partial<IFormData>>
 }
 
 const RequestPasswordResetForm = ({

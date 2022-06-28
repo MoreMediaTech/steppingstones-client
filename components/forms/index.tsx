@@ -9,6 +9,7 @@ import AddDistrictForm from './AddDistrictForm'
 import ContentFormComponent from './ContentFormComponent'
 import EconomicDataForm from './EconomicDataForm'
 import CountySectionForm from './CountySectionForm'
+import GeneralInformationForm from './GeneralInformationForm'
 
 export {
   SignUpForm,
@@ -22,4 +23,5 @@ export {
   ContentFormComponent,
   EconomicDataForm,
   CountySectionForm,
+  GeneralInformationForm,
 }

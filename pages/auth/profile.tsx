@@ -2,14 +2,14 @@ import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import { SessionProps } from '@lib/types'
 import { ComponentShield } from '@components/NextShield'
 import { AdminLayout, MainLayout } from 'layout'
-import { useGetUserQuery } from 'features/user/usersApiSlice'
+import UserProfileSection from '@components/UserProfileSection'
 
 const Profile = () => {
-  const { data: user, isLoading, isError, error } = useGetUserQuery()
+  
   return (
     <MainLayout title="Profile">
-      <section className="flex h-screen items-center justify-center">
-        <h1>Welcome {user?.name} to your profile</h1>
+      <section className="overflow-auto">
+        <UserProfileSection />
       </section>
     </MainLayout>
   )

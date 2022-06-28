@@ -12,6 +12,7 @@ import { showNotification } from '@mantine/notifications'
 import { useResetPasswordMutation } from 'features/auth/authApiSlice'
 import Spinner from '@components/spinner';
 import { ChangePasswordForm } from '@components/forms';
+import { IFormData } from '@lib/types';
 
 export type Inputs = {
   password: string
@@ -26,18 +27,18 @@ const ResetPassword = ({ token, valid}: { token: string, valid: boolean }) => {
    register,
    reset,
    formState: { errors },
- } = useForm<Inputs>()
+ } = useForm<Partial<IFormData>>()
 
-  const submitHandler: SubmitHandler<Inputs> = useCallback(
+  const submitHandler: SubmitHandler<Partial<IFormData>> = useCallback(
     async ({ password, confirmPassword }) => {
       if (password !== confirmPassword) {
         showNotification({
-            message: 'Passwords do not match',
-            autoClose: 3000,
-            color: 'red',
+          message: 'Passwords do not match',
+          autoClose: 3000,
+          color: 'red',
         })
       }
-      await resetPassword({token, password}).unwrap()
+      await resetPassword({ token, password }).unwrap()
       reset()
       router.push('/auth/login')
     },

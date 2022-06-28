@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
-import { Avatar, Burger, Group, Text, TextInput } from '@mantine/core'
+import { Burger, Group, Text, TextInput } from '@mantine/core'
 import { IoIosSearch } from 'react-icons/io'
 import { CurrentUser, CountyDataProps, DistrictDataProps } from '@lib/types'
 import ContentDrawer from '@components/navigation/ContentDrawer/ContentDrawer'
 import Image from 'next/image'
 import steppingstonesapplogo from '../../public/steppingstonesapplogo.png'
+import Avatar from '@components/Avatar'
 
 interface IPortalHeaderProps {
   user?: CurrentUser
@@ -44,31 +45,7 @@ const PortalHeader = ({ user, title, subTitle, data }: IPortalHeaderProps) => {
         <div className="flex flex-col items-center justify-between md:flex-row">
           <div className="mb-2">
             <Group>
-              <div
-                className={` relative flex h-16 w-20 items-center justify-center rounded-md border border-[#3A0B99] bg-[#3A0B99] text-xl font-semibold text-white md:h-20 md:w-24`}
-              >
-                {user ? (
-                  initials
-                ) : (
-                  <>
-                    <Image
-                      src={
-                        !!data?.logoIcon
-                          ? data?.logoIcon
-                          : steppingstonesapplogo
-                      }
-                      alt={
-                        data
-                          ? 'County or District logo'
-                          : 'Stepping Stones Logo'
-                      }
-                      layout="fill"
-                      objectFit="cover"
-                    />
-                  </>
-                )}
-              </div>
-
+              <Avatar imageUrl={data?.logoIcon as string} />
               <div style={{ flex: 1 }}>
                 <h1 className="text-lg font-semibold text-[#00dcb3] sm:text-[1.2rem] md:text-[1.6rem]">
                   {user ? ` Welcome back ${user?.name?.split(' ')[0]}` : title}

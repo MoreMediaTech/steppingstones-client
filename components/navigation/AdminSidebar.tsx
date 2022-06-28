@@ -1,8 +1,16 @@
 import { useState } from 'react'
-import { UnstyledButton, Divider, Navbar, Burger, Drawer, Indicator } from '@mantine/core'
+import {
+  UnstyledButton,
+  Divider,
+  Navbar,
+  Burger,
+  Drawer,
+  Indicator,
+  Menu,
+} from '@mantine/core'
 import { BiHomeCircle } from 'react-icons/bi'
 import { MdOutlineCreateNewFolder } from 'react-icons/md'
-import { FaRegEnvelope, FaUsers, FaBriefcase, FaPowerOff } from 'react-icons/fa'
+import { FaRegEnvelope, FaUsers, FaBriefcase, FaPowerOff, FaSignOutAlt } from 'react-icons/fa'
 import UserButton from '@components/UserButton'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
 import Link from 'next/link'
@@ -88,9 +96,36 @@ const AdminSidebar = ({
           <Navbar.Section>
             <Divider color="#00DCB3" />
             <div className="flex items-center justify-center py-6">
-              <UnstyledButton type="button" onClick={handleLogout}>
-                <FaPowerOff fontSize={40} fontWeight={100} color="#00DCB3" />
-              </UnstyledButton>
+              <Menu
+                withArrow
+                position="right"
+                placement="end"
+                control={
+                  <UnstyledButton type="button">
+                    <FaPowerOff
+                      fontSize={40}
+                      fontWeight={100}
+                      color="#00DCB3"
+                    />
+                  </UnstyledButton>
+                }
+              >
+                {/* ...menu items */}
+                <Menu.Label>Application</Menu.Label>
+
+                <Menu.Item>
+                  <Link href={'/auth/profile'}>
+                    <a>Profile</a>
+                  </Link>
+                </Menu.Item>
+                <Divider />
+                <Menu.Item
+                  icon={<FaSignOutAlt fontSize={14} />}
+                  onClick={handleLogout}
+                >
+                  <span className="text-gray-900">Logout</span>
+                </Menu.Item>
+              </Menu>
             </div>
           </Navbar.Section>
         </Navbar>
