@@ -12,7 +12,10 @@ interface UserButtonProps extends React.ComponentPropsWithoutRef<'button'> {
 }
 
 const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
-  ({ image, name, email, icon, initials, show, ...others }: UserButtonProps, ref) => (
+  (
+    { image, name, email, icon, initials, show, ...others }: UserButtonProps,
+    ref
+  ) => (
     <UnstyledButton
       ref={ref}
       sx={(theme) => ({
@@ -32,16 +35,16 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
       {...others}
     >
       <Group>
-        <Avatar color="sky" radius="xl">
+        <Avatar color="#5E17EB" radius="xl">
           {initials}
         </Avatar>
 
         <div style={{ flex: 1 }}>
-          <Text size="sm" weight={500}>
+          <Text size="sm" color="#5E17EB" weight={500}>
             {name}
           </Text>
 
-          <Text color="dimmed" size="xs">
+          <Text color="#00DCB3" size="xs">
             {email}
           </Text>
         </div>

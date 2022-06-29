@@ -21,10 +21,7 @@ import { useAppDispatch, useAppSelector } from 'app/hooks'
 import EditImageComponent from '@components/EditImageComponent'
 import { UnstyledButton } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import {
-  setError,
-  setPreviewSource,
-} from 'features/upload/uploadSlice'
+import { setError, setPreviewSource } from 'features/upload/uploadSlice'
 import { contentDrawerSubNavData } from '@components/navigation/ContentDrawer/ContentDrawerData'
 
 type DistrictProps = {
@@ -36,6 +33,9 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
   const router = useRouter()
   const [opened, setOpened] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
+  const [previewFile, setPreviewFile] = useState<string | ArrayBuffer | null>(
+    null
+  )
   const dispatch = useAppDispatch()
   const { data: user } = useGetUserQuery()
   const {
@@ -44,7 +44,7 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
     isError: isErrorCounty,
     refetch: refetchCounty,
   } = useGetCountyByIdQuery(countyId, { refetchOnMountOrArgChange: true })
- 
+
   const [updateCounty, { isLoading }] = useUpdateCountyMutation()
   const { previewSource, selectedFile } = useAppSelector(
     (state) => state.upload
@@ -61,7 +61,7 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
     const reader = new FileReader()
     reader.readAsDataURL(file)
     reader.onloadend = () => {
-      dispatch(setPreviewSource(reader.result))
+      setPreviewFile(reader.result)
     }
     reader.onerror = () => {
       showNotification({
@@ -72,27 +72,30 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
     }
   }
 
-  const submitHandler: SubmitHandler<EditImageProps> = useCallback(
-    async (data) => {
-      if (data.imageFile.length > 0) {
-        convertFileToBase64(data.imageFile[0] as File)
-      }
-      const updatedData = { id: countyId, imageFile: previewSource }
+  const submitHandler: SubmitHandler<EditImageProps> = async (data) => {
+    console.log(data)
+    if (data.imageFile.length > 0) {
+      convertFileToBase64(data.imageFile[0] as File)
+    }
+    const updatedData = { id: countyId, imageFile: previewFile }
 
-      try {
-        await updateCounty(updatedData).unwrap()
-        reset()
-        setIsEdit(false)
-        router.replace({pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}`, query: {...router.query}})
-      } catch (error) {
-        showNotification({
-          message: 'Error updating county image',
-          color: 'red',
-        })
-      }
-    },
-    [previewSource]
-  )
+    console.log('🚀 ~ file: index.tsx ~ line 82 ~ updatedData', updatedData)
+    try {
+      await updateCounty(updatedData).unwrap()
+      reset()
+      refetchCounty()
+      setIsEdit(false)
+      router.replace({
+        pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}`,
+        query: { ...router.query },
+      })
+    } catch (error) {
+      showNotification({
+        message: 'Error updating county image',
+        color: 'red',
+      })
+    }
+  }
   return (
     <AdminLayout title={`${countyData?.name} County - Editor Dashboard`}>
       <ComponentShield

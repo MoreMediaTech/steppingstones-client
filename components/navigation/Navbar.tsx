@@ -75,14 +75,14 @@ const Navbar = () => {
                 <li>
                   {router.pathname === '/' ? (
                     <a
-                      className="text-lg font-semibold text-gray-900"
+                      className="text-lg font-semibold text-[#5E17EB]"
                       href="#about"
                     >
                       About
                     </a>
                   ) : (
                     <Link href={'/#about'}>
-                      <a className="text-lg font-semibold text-gray-900">
+                      <a className="text-lg font-semibold text-[#5E17EB]">
                         About
                       </a>
                     </Link>
@@ -91,28 +91,28 @@ const Navbar = () => {
                 <li>
                   {router.pathname === '/' ? (
                     <a
-                      className="text-lg font-semibold text-gray-900"
+                      className="text-lg font-semibold text-[#5E17EB]"
                       href="#features"
                     >
                       Features
                     </a>
                   ) : (
                     <Link href={'/#features'}>
-                      <a className="font-semibold text-lg text-gray-900">Features</a>
+                      <a className="font-semibold text-lg text-[#5E17EB]">Features</a>
                     </Link>
                   )}
                 </li>
                 <li>
                   {router.pathname === '/' ? (
                     <a
-                      className="text-lg font-semibold text-gray-900"
+                      className="text-lg font-semibold text-[#5E17EB]"
                       href="#faqs"
                     >
                       FAQs
                     </a>
                   ) : (
                     <Link href={'/#faqs'}>
-                      <a className="text-lg font-semibold text-gray-900">
+                      <a className="text-lg font-semibold text-[#5E17EB]">
                         FAQs
                       </a>
                     </Link>
@@ -162,7 +162,7 @@ const Navbar = () => {
                             handleLogout()
                           }}
                         >
-                          <span className="text-gray-900">Logout</span>
+                          <span className="text-[#5E17EB]">Logout</span>
                         </Menu.Item>
                       </Menu>
                     </Group>
@@ -171,7 +171,7 @@ const Navbar = () => {
                   <>
                     <li>
                       <Link href={'/auth/login'}>
-                        <a className="flex items-center gap-1 text-lg font-semibold text-gray-900">
+                        <a className="flex items-center gap-1 text-lg font-semibold text-[#5E17EB]">
                           <FaSignInAlt fontSize={18} />
                           <span>Login</span>
                         </a>
@@ -217,14 +217,14 @@ const Navbar = () => {
                     <li>
                       {router.pathname === '/' ? (
                         <a
-                          className="text-2xl font-semibold text-gray-900"
+                          className="text-2xl font-semibold text-[#5E17EB]"
                           href="#about"
                         >
                           About
                         </a>
                       ) : (
                         <Link href={'/#about'}>
-                          <a className="text-2xl font-semibold text-gray-900">
+                          <a className="text-2xl font-semibold text-[#5E17EB]">
                             About
                           </a>
                         </Link>
@@ -233,14 +233,14 @@ const Navbar = () => {
                     <li>
                       {router.pathname === '/' ? (
                         <a
-                          className="text-2xl font-semibold text-gray-900"
+                          className="text-2xl font-semibold text-[#5E17EB]"
                           href="#features"
                         >
                           Features
                         </a>
                       ) : (
                         <Link href={'/#features'}>
-                          <a className="text-2xl font-semibold text-gray-900">
+                          <a className="text-2xl font-semibold text-[#5E17EB]">
                             Features
                           </a>
                         </Link>
@@ -249,14 +249,14 @@ const Navbar = () => {
                     <li>
                       {router.pathname === '/' ? (
                         <a
-                          className="text-2xl font-semibold text-gray-900"
+                          className="text-2xl font-semibold text-[#5E17EB]"
                           href="#faqs"
                         >
                           FAQs
                         </a>
                       ) : (
                         <Link href={'/#faqs'}>
-                          <a className="text-2xl font-semibold text-gray-900">
+                          <a className="text-2xl font-semibold text-[#5E17EB]">
                             FAQs
                           </a>
                         </Link>
@@ -301,7 +301,7 @@ const Navbar = () => {
                                   handleLogout()
                                 }}
                               >
-                                <span className="text-gray-900">Logout</span>
+                                <span className="text-[#5E17EB]">Logout</span>
                               </Menu.Item>
                             </Menu>
                           </Collapse>
@@ -311,7 +311,7 @@ const Navbar = () => {
                       <>
                         <li>
                           <Link href={'/auth/login'}>
-                            <a className="flex items-center gap-1 text-2xl font-semibold text-gray-900">
+                            <a className="flex items-center gap-1 text-2xl font-semibold text-[#5E17EB]">
                               <FaSignInAlt fontSize={24} />
                               <span>Login</span>
                             </a>

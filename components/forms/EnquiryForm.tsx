@@ -43,14 +43,21 @@ const EnquiryForm = () => {
   return (
     <form
       onSubmit={handleSubmit(handleSendEmail)}
-      className="flex flex-col rounded-lg bg-white px-8 py-8 shadow-xl "
+      className="flex flex-col rounded-lg bg-white px-8 py-8 shadow-2xl space-y-2 "
     >
-      <h1 className="text-2xl font-bold text-gray-900">Send a message</h1>
+      <h1 className="text-2xl font-bold text-[#5E17EB] mb-4">Leave a message</h1>
+      <p className="text-justify font-normal text-[#00DCB3]">
+        Fill the form and we will respond as soon as we can. Alternatively, you
+        can reach out to us at{' '}
+        <a href="mailto:admin@steppingstonesapp.com" className="text-[#5E17EB]">
+          our email address
+        </a>
+      </p>
       <TextInput
         id="from"
         aria-label="from"
         label={
-          <p className="mt-8 font-light text-gray-500 ">
+          <p className="mt-4 font-light text-gray-500 ">
             From <span className="text-red-500">*</span>
           </p>
         }
@@ -158,7 +165,8 @@ const EnquiryForm = () => {
           type="submit"
           loading={isLoading}
           fullWidth
-          className="w-full rounded-md border border-indigo-900 bg-indigo-900 px-4 py-2 text-white"
+          className="w-full rounded-md bg-[#5E17EB] px-4 text-center font-semibold text-white shadow-xl transition delay-150 duration-300 
+                ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99]  md:text-xl lg:text-2xl"
         >
           {isLoading ? 'Sending...' : 'Send'}
         </Button>

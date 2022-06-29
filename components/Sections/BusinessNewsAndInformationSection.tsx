@@ -24,6 +24,7 @@ const BusinessNewsAndInformationSection = ({ id }: { id: string }) => {
     data: countyData,
     isLoading: isLoadingCounty,
     isError: isErrorCounty,
+    refetch
   } = useGetCountyByIdQuery(id, { refetchOnMountOrArgChange: true })
   const [ updateOrCreateCountyBNI, { isLoading }] = useUpdateOrCreateCountyBNIMutation()
 
@@ -50,11 +51,8 @@ const BusinessNewsAndInformationSection = ({ id }: { id: string }) => {
         }
         await  updateOrCreateCountyBNI(formData).unwrap()
         reset()
+        refetch()
         setIsEdit(false)
-        router.replace({
-          pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${countyData.name}`,
-          query: { ...router.query },
-        })
       } catch (error) {
         dispatch(setError({ message: error.message }))
       }

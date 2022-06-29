@@ -76,9 +76,7 @@ const AdminLayout = ({
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <AdminSidebar handleLogout={handleLogout} />
-      <main className='relative md:ml-30 w-full'>
-        {children}
-      </main>
+      <main className="md:ml-30 relative w-full bg-slate-200">{children}</main>
     </div>
   )
 }

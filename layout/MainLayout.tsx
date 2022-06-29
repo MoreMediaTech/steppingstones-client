@@ -15,10 +15,7 @@ interface ILayout {
 function MainLayout({ title, description, children }: ILayout): JSX.Element {
     const theme = useMantineTheme()
   return (
-    <main
-      aria-label="layout"
-      data-testid="layout"
-    >
+    <main aria-label="layout" data-testid="layout">
       <Head>
         <title>{title} | Stepping Stones App</title>
         <link rel="icon" href="/favicon.ico" />
@@ -75,7 +72,7 @@ function MainLayout({ title, description, children }: ILayout): JSX.Element {
         header={<Navbar />}
         footer={<Footer />}
       >
-        <div>{children}</div>
+        <div className="bg-slate-200">{children}</div>
       </AppShell>
     </main>
   )

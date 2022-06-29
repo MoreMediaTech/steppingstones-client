@@ -29,7 +29,7 @@ const links: ILinks[] = [
     path: 'client-meetings',
     icon: <FaRegCalendarAlt fontSize={44} />,
   },
-  { title: 'Insight', path: 'insight', icon: <FaChartBar fontSize={44} /> },
+  { title: 'Insights', path: 'insight', icon: <FaChartBar fontSize={44} /> },
   {
     title: 'Feedback',
     path: 'feedback',
