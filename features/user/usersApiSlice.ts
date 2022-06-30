@@ -21,8 +21,45 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         }
       },
     }),
+    getUsers: builder.query<CurrentUser[], void>({
+      query: () => '/users',
+      providesTags: (result, error, arg) =>
+        result
+          ? result.map((user) => ({ type: 'User', id: user.id }))
+          : [{ type: 'User', id: 'LIST' }],
+    }),
+    getUserById: builder.query<CurrentUser, string>({
+      query: (id) => `/users/${id}`,
+      providesTags: (result, error, arg) => [{ type: 'User', id: result?.id }],
+    }),
+    createUser: builder.mutation<CurrentUser, CurrentUser>({
+      query: (user) => ({
+        url: '/users',
+        method: 'POST',
+        body: { ...user },
+      }),
+      invalidatesTags: (result, error, arg) => [
+        { type: 'User', id: result?.id },
+      ],
+    }),
+    updateUser: builder.mutation<CurrentUser, CurrentUser>({
+      query: (user) => ({
+        url: `/users/${user.id}`,
+        method: 'PUT',
+        body: { ...user },
+      }),
+      invalidatesTags: (result, error, arg) => [
+        { type: 'User', id: result?.id },
+      ],
+    }),
   }),
   overrideExisting: true,
 })
 
-export const { useGetUserQuery } = usersApiSlice
+export const {
+  useGetUserQuery,
+  useGetUsersQuery,
+  useGetUserByIdQuery,
+  useCreateUserMutation,
+  useUpdateUserMutation,
+} = usersApiSlice

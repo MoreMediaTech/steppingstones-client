@@ -4,6 +4,7 @@ export interface IFormData {
   name: string
   email: string
   password: string
+  newPassword: string
   confirmPassword: string
   role: string
   isAdmin: boolean

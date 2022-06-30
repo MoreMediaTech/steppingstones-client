@@ -25,10 +25,7 @@ const EconomicDataSection = ({ id }: { id: string }) => {
     isError: isErrorDistrict,
     refetch: refetchDistrict,
   } = useGetDistrictByIdQuery(id, { refetchOnMountOrArgChange: true })
-  console.log(
-    '🚀 ~ file: EconomicDataSection.tsx ~ line 27 ~ EconomicDataSection ~ districtData',
-    districtData
-  )
+
   const [updateOrCreateEconomicData, { isLoading }] =
     useUpdateOrCreateEconomicDataMutation()
   const [isEdit, setIsEdit] = useState(false)

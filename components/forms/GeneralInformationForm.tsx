@@ -1,50 +1,39 @@
 import { useCallback } from 'react'
 import {
-    FieldError,
-   useForm, 
-   SubmitHandler,
-  UseFormHandleSubmit,
-  UseFormRegister,
+  useForm,
+  SubmitHandler,
 } from 'react-hook-form'
 import { IFormData } from '@lib/types'
-import { TextInput } from '@mantine/core'
+import { Button, TextInput } from '@mantine/core'
 
-interface IGeneralInformationForm {
-  submitHandler: SubmitHandler<Partial<IFormData>>
-  errors: {
-    name?: FieldError | undefined
-    email?: FieldError | undefined
-    postCode?: FieldError | undefined
-    contactNumber?: FieldError | undefined
-  }
-  isLoading: boolean
-  register: UseFormRegister<Partial<IFormData>>
-  handleSubmit: UseFormHandleSubmit<Partial<IFormData>>
-}
 
 const GeneralInformationForm = () => {
-    const {
-      register,
-      handleSubmit,
-      reset,
-      formState: { errors },
-    } = useForm<Partial<IFormData>>()
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<Partial<IFormData>>()
 
-    const submitHandler: SubmitHandler<Partial<IFormData>> = useCallback(async (data) => {
-        console.log(data)
-    }, [])
-    return (
-      <form
-        aria-label="general-information-form"
-        data-testid="general-information-form"
-        onSubmit={handleSubmit(submitHandler)}
-        className="grid grid-cols-1 gap-4  bg-transparent md:grid-cols-2"
-      >
+  const submitHandler: SubmitHandler<Partial<IFormData>> = useCallback(
+    async (data) => {
+      console.log(data)
+    },
+    []
+  )
+  return (
+    <form
+      aria-label="general-information-form"
+      data-testid="general-information-form"
+      onSubmit={handleSubmit(submitHandler)}
+      className="grid grid-cols-1 gap-x-4 gap-y-6  bg-transparent md:grid-cols-2"
+    >
+      <div>
         <TextInput
           id="name"
           aria-label="name"
           placeholder="Your Full Name"
-          label={<p className="font-light text-gray-500 ">Name</p>}
+          label={<p className="font-normal text-gray-700 ">Name</p>}
           type="text"
           {...register('name', {
             required: true,
@@ -64,12 +53,14 @@ const GeneralInformationForm = () => {
             {errors.name?.message || 'Your full name is required'}
           </span>
         )}
+      </div>
+      <div>
         <TextInput
           id="email"
           aria-label="Email"
           placeholder="Email"
           type="email"
-          label={<p className="font-light text-gray-500 ">Email</p>}
+          label={<p className="font-normal text-gray-700 ">Email</p>}
           {...register('email', {
             required: true,
             pattern: {
@@ -84,12 +75,14 @@ const GeneralInformationForm = () => {
             {errors.email?.message || 'Your email is required'}
           </span>
         )}
+      </div>
+      <div>
         <TextInput
           id="contactNumber"
           aria-label="contact-number"
           placeholder="Your Contact Number"
           type="tel"
-          label={<p className="font-light text-gray-500 ">Contact Number</p>}
+          label={<p className="font-normal text-gray-700 ">Contact Number</p>}
           {...register('contactNumber', {
             required: true,
             pattern: {
@@ -109,16 +102,14 @@ const GeneralInformationForm = () => {
             {errors.contactNumber.message || 'Your contact number is required'}
           </span>
         )}
+      </div>
+      <div>
         <TextInput
           id="postCode"
           aria-label="post-code"
           placeholder="Your Post Code"
           type="text"
-          label={
-            <p className="font-light text-gray-500 ">
-              Zip/Postal Code
-            </p>
-          }
+          label={<p className="font-normal text-gray-700 ">Zip/Postal Code</p>}
           {...register('postCode', {
             required: true,
             pattern: {
@@ -133,8 +124,106 @@ const GeneralInformationForm = () => {
             {errors.postCode?.message || 'Your post code is required'}
           </span>
         )}
-      </form>
-    )
+      </div>
+      <div>
+        <TextInput
+          id="district"
+          aria-label="district"
+          placeholder="Your District"
+          type="text"
+          label={<p className="font-normal text-gray-700 ">District</p>}
+          {...register('district', {
+            required: true,
+            pattern: {
+              value: /^[A-Za-z -]+$/,
+              message: 'Please enter a valid district',
+            },
+          })}
+          className="focus:shadow-outline w-full appearance-none rounded-md focus:outline-none"
+        />
+        {errors.district && (
+          <span className="text-center text-sm text-red-500">
+            {errors.district?.message || 'Your district is required'}
+          </span>
+        )}
+      </div>
+      <div>
+        <TextInput
+          id="county"
+          aria-label="county"
+          placeholder="Your County"
+          type="text"
+          label={<p className="font-normal text-gray-700 ">County</p>}
+          {...register('county', {
+            required: true,
+            pattern: {
+              value: /^[A-Za-z -]+$/,
+              message: 'Please enter a valid County',
+            },
+          })}
+          className="focus:shadow-outline w-full appearance-none rounded-md focus:outline-none"
+        />
+        {errors.county && (
+          <span className="text-center text-sm text-red-500">
+            {errors.county?.message || 'Your county is required'}
+          </span>
+        )}
+      </div>
+      <div>
+        <TextInput
+          id="organisation"
+          aria-label="organisation"
+          placeholder="Your Organisation"
+          type="text"
+          label={<p className="font-normal text-gray-700 ">organisation</p>}
+          {...register('organisation', {
+            required: true,
+            pattern: {
+              value: /^[A-Za-z -]+$/,
+              message: 'Please enter a valid Organisation',
+            },
+          })}
+          className="focus:shadow-outline w-full appearance-none rounded-md focus:outline-none"
+        />
+        {errors.organisation && (
+          <span className="text-center text-sm text-red-500">
+            {errors.organisation?.message || 'Your Organisation is required'}
+          </span>
+        )}
+      </div>
+      <div>
+        <TextInput
+          id="role"
+          aria-label="role"
+          placeholder="Your Role"
+          type="text"
+          label={<p className="font-normal text-gray-700 ">Role</p>}
+          {...register('role', {
+            required: true,
+            pattern: {
+              value: /^[A-Za-z -]+$/,
+              message: 'Please enter a valid Organisation',
+            },
+          })}
+          className="focus:shadow-outline w-full appearance-none rounded-md focus:outline-none"
+        />
+        {errors.role && (
+          <span className="text-center text-sm text-red-500">
+            {errors.role?.message || 'Your role is required'}
+          </span>
+        )}
+      </div>
+      <div>
+        <Button
+          type="submit"
+          className="rounded-md bg-[#5E17EB] px-4 py-2 text-center font-semibold text-white shadow-xl transition delay-150 
+                duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:text-lg"
+        >
+          Save
+        </Button>
+      </div>
+    </form>
+  )
 }
 
-export default GeneralInformationForm;
+export default GeneralInformationForm

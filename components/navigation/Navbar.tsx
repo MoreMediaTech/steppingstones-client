@@ -2,24 +2,14 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import {
-  Burger,
-  Drawer,
-  Group,
-  Menu,
-  Divider,
-  Collapse,
-} from '@mantine/core'
+import { Burger, Drawer, Group, Menu, Divider, Collapse } from '@mantine/core'
 import { FaSignInAlt, FaSignOutAlt, FaUser } from 'react-icons/fa'
-
 
 import { useGetUserQuery } from 'features/user/usersApiSlice'
 import { useLogoutMutation } from 'features/auth/authApiSlice'
 import { NEXT_URL } from '@config/index'
 import UserButton from '@components/UserButton'
 import { AppLogo } from './AppLogo'
-
-
 
 const Navbar = () => {
   const router = useRouter()
@@ -65,7 +55,9 @@ const Navbar = () => {
   return (
     <header
       className={`top-0 z-10 flex w-full flex-wrap items-center justify-between  ${
-        pos === 'top' ? 'absolute bg-slate-50' : 'shadow-b-2xl fixed bg-slate-50'
+        pos === 'top'
+          ? 'absolute bg-slate-50'
+          : 'shadow-b-2xl fixed bg-slate-50'
       }`}
     >
       <div className="mx-auto w-full max-w-screen-xl p-2">
@@ -154,11 +146,11 @@ const Navbar = () => {
                           </Menu.Item>
                         )}
                         <Divider />
-                        <Menu.Item>
-                          <Link href={'/auth/profile'}>
+                        <Link href={'/auth/profile'}>
+                          <Menu.Item>
                             <a>Profile</a>
-                          </Link>
-                        </Menu.Item>
+                          </Menu.Item>
+                        </Link>
                         <Divider />
                         <Menu.Item
                           icon={<FaSignOutAlt fontSize={14} />}
