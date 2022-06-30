@@ -24,6 +24,7 @@ const BusinessInsuranceSection = ({ id }: { id: string }) => {
     data: countyData,
     isLoading: isLoadingCounty,
     isError: isErrorCounty,
+    refetch: refetchCounty,
   } = useGetCountyByIdQuery(id, { refetchOnMountOrArgChange: true })
   const [updateOrCreateBusinessInsurance, { isLoading }] = useUpdateOrCreateBusinessInsuranceMutation()
 
@@ -50,11 +51,8 @@ const BusinessInsuranceSection = ({ id }: { id: string }) => {
         }
         await updateOrCreateBusinessInsurance(formData).unwrap()
         reset()
+        refetchCounty()
         setIsEdit(false)
-        router.replace({
-          pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${countyData.name}/support-for-startups`,
-          query: { ...router.query },
-        })
       } catch (error) {
         dispatch(setError({ message: error.message }))
       }

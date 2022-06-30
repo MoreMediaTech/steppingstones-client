@@ -27,6 +27,7 @@ const BusinessParksSection = ({ id }: { id: string }) => {
     data: districtData,
     isLoading: isLoadingDistrict,
     isError: isErrorDistrict,
+    refetch: refetchDistrict,
   } = useGetDistrictByIdQuery(id, { refetchOnMountOrArgChange: true })
   const [updateOrCreateDistrictBusinessParks, { isLoading }] =
     useUpdateOrCreateDistrictBusinessParksMutation()
@@ -75,10 +76,8 @@ const BusinessParksSection = ({ id }: { id: string }) => {
         }
         await updateOrCreateDistrictBusinessParks(formData).unwrap()
         reset()
-          router.replace({
-            pathname: `${NEXT_URL}/admin/editor-portal/county-portal/district`,
-            query: { ...router.query },
-          })
+        refetchDistrict()
+        setIsEdit(false)
       } catch (error) {
         dispatch(setError({ message: error.message }))
       }

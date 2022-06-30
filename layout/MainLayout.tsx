@@ -15,7 +15,7 @@ interface ILayout {
 function MainLayout({ title, description, children }: ILayout): JSX.Element {
     const theme = useMantineTheme()
   return (
-    <main aria-label="layout" data-testid="layout">
+    <main aria-label="layout" data-testid="layout" className='flex flex-col justify-between'>
       <Head>
         <title>{title} | Stepping Stones App</title>
         <link rel="icon" href="/favicon.ico" />
@@ -55,25 +55,10 @@ function MainLayout({ title, description, children }: ILayout): JSX.Element {
         <meta name="theme-color" content="#000000" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <AppShell
-        styles={{
-          main: {
-            background:
-              theme.colorScheme === 'dark'
-                ? theme.colors.dark[8]
-                : theme.colors.light,
-            height: '100%',
-          },
-        }}
-        navbarOffsetBreakpoint="sm"
-        asideOffsetBreakpoint="sm"
-        fixed
-        padding={0}
-        header={<Navbar />}
-        footer={<Footer />}
-      >
-        <div className="bg-slate-200">{children}</div>
-      </AppShell>
+
+      <Navbar />
+      <main className="w-full flex-grow bg-slate-50 relative">{children}</main>
+      <Footer />
     </main>
   )
 }

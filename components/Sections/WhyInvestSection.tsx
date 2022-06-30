@@ -25,6 +25,7 @@ const WhyInvestSection = ({ id }: { id: string }) => {
     data: districtData,
     isLoading: isLoadingDistrict,
     isError: isErrorDistrict,
+    refetch: refetchDistrict,
   } = useGetDistrictByIdQuery(id)
   const [updateOrCreateDistrictWhyInvestIn, { isLoading }] =
     useUpdateOrCreateDistrictWhyInvestInMutation()
@@ -72,11 +73,8 @@ const WhyInvestSection = ({ id }: { id: string }) => {
         }
         await updateOrCreateDistrictWhyInvestIn(formData).unwrap()
         reset()
-        router.replace({
-          pathname: `${NEXT_URL}/admin/editor-portal/county-portal/district`,
-          query: { ...router.query },
-        })
-        
+       refetchDistrict()
+        setIsEdit(false)
       } catch (error) {
         dispatch(setError({ message: error.message }))
       }

@@ -24,6 +24,7 @@ const EmployPeopleSection = ({ id }: { id: string }) => {
     data: countyData,
     isLoading: isLoadingCounty,
     isError: isErrorCounty,
+    refetch: refetchCounty,
   } = useGetCountyByIdQuery(id, { refetchOnMountOrArgChange: true })
   const [updateOrCreateEmployPeople, { isLoading }] = useUpdateOrCreateEmployPeopleMutation()
 
@@ -52,11 +53,8 @@ const EmployPeopleSection = ({ id }: { id: string }) => {
         }
         await updateOrCreateEmployPeople(formData).unwrap()
         reset()
+        refetchCounty()
          setIsEdit(false)
-         router.replace({
-           pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${countyData.name}/growing-a-business`,
-           query: { ...router.query },
-         })
       } catch (error) {
         dispatch(setError({ message: error.message }))
       }

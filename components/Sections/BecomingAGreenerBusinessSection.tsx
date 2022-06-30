@@ -24,6 +24,7 @@ const BecomingAGreenerBusinessSection = ({ id }: { id: string }) => {
     data: countyData,
     isLoading: isLoadingCounty,
     isError: isErrorCounty,
+    refetch: refetchCounty,
   } = useGetCountyByIdQuery(id, { refetchOnMountOrArgChange: true })
   const [updateOrCreateBGB, { isLoading }] = useUpdateOrCreateBGBMutation()
 
@@ -49,11 +50,8 @@ const BecomingAGreenerBusinessSection = ({ id }: { id: string }) => {
         }
         await updateOrCreateBGB(formData).unwrap()
         reset()
+        refetchCounty()
         setIsEdit(false)
-        router.replace({
-          pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${countyData.name}/support-for-startups`,
-          query: { ...router.query },
-        })
       } catch (error) {
         dispatch(setError({ message: error.message }))
       }

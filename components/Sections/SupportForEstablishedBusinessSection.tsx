@@ -21,6 +21,7 @@ const SupportForEstablishedBusinessSection = ({ id }: { id: string }) => {
     data: countyData,
     isLoading: isLoadingCounty,
     isError: isErrorCounty,
+    refetch: refetchCounty,
   } = useGetCountyByIdQuery(id, { refetchOnMountOrArgChange: true })
   const [updateCounty, { isLoading }] = useUpdateCountyMutation()
 
@@ -49,6 +50,8 @@ const SupportForEstablishedBusinessSection = ({ id }: { id: string }) => {
         }
         await updateCounty(formData).unwrap()
         reset()
+        refetchCounty()
+        setIsEdit(false)
       } catch (error) {
         dispatch(setError({ message: error.message }))
       }

@@ -24,6 +24,7 @@ const LGBTQandDisabilitiesSection = ({ id }: { id: string }) => {
     data: countyData,
     isLoading: isLoadingCounty,
     isError: isErrorCounty,
+    refetch: refetchCounty,
   } = useGetCountyByIdQuery(id, { refetchOnMountOrArgChange: true })
   const [updateOrCreateLGBTQAndDisabilities, { isLoading }] =
     useUpdateOrCreateLGBTQAndDisabilitiesMutation()
@@ -54,10 +55,7 @@ const LGBTQandDisabilitiesSection = ({ id }: { id: string }) => {
         await updateOrCreateLGBTQAndDisabilities(formData).unwrap()
         reset()
         setIsEdit(false)
-        router.replace({
-          pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${countyData.name}/topical-business-issues`,
-          query: { ...router.query },
-        })
+        refetchCounty()
       } catch (error) {
         dispatch(setError({ message: error.message }))
       }

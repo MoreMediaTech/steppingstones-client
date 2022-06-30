@@ -24,6 +24,7 @@ const FindTendersAndContractsSection = ({ id }: { id: string }) => {
     data: countyData,
     isLoading: isLoadingCounty,
     isError: isErrorCounty,
+    refetch: refetchCounty,
   } = useGetCountyByIdQuery(id, { refetchOnMountOrArgChange: true })
   const [updateOrCreateFindTAndC, { isLoading }] = useUpdateOrCreateFindTAndCMutation()
 
@@ -52,11 +53,8 @@ const FindTendersAndContractsSection = ({ id }: { id: string }) => {
         }
         await updateOrCreateFindTAndC(formData).unwrap()
         reset()
+        refetchCounty()
          setIsEdit(false)
-         router.replace({
-           pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${countyData.name}/growing-a-business`,
-           query: { ...router.query },
-         })
       } catch (error) {
         dispatch(setError({ message: error.message }))
       }

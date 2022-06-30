@@ -24,6 +24,7 @@ const OnlineDigitalisationSECTION = ({ id }: { id: string }) => {
     data: countyData,
     isLoading: isLoadingCounty,
     isError: isErrorCounty,
+    refetch: refetchCounty,
   } = useGetCountyByIdQuery(id, { refetchOnMountOrArgChange: true })
   const [updateOrCreateOnlineDigitilisation, { isLoading }] = useUpdateOrCreateOnlineDigitilisationMutation()
 
@@ -52,10 +53,8 @@ const OnlineDigitalisationSECTION = ({ id }: { id: string }) => {
         }
         await updateOrCreateOnlineDigitilisation(formData).unwrap()
         reset()
-         router.replace({
-           pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${countyData.name}/topical-business-issues`,
-           query: { ...router.query },
-         })
+        refetchCounty()
+        setIsEdit(false)
       } catch (error) {
         dispatch(setError({ message: error.message }))
       }

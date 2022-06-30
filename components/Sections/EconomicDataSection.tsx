@@ -23,9 +23,14 @@ const EconomicDataSection = ({ id }: { id: string }) => {
     data: districtData,
     isLoading: isLoadingDistrict,
     isError: isErrorDistrict,
+    refetch: refetchDistrict,
   } = useGetDistrictByIdQuery(id, { refetchOnMountOrArgChange: true })
-    console.log("🚀 ~ file: EconomicDataSection.tsx ~ line 27 ~ EconomicDataSection ~ districtData", districtData)
-  const [updateOrCreateEconomicData, { isLoading }] = useUpdateOrCreateEconomicDataMutation()
+  console.log(
+    '🚀 ~ file: EconomicDataSection.tsx ~ line 27 ~ EconomicDataSection ~ districtData',
+    districtData
+  )
+  const [updateOrCreateEconomicData, { isLoading }] =
+    useUpdateOrCreateEconomicDataMutation()
   const [isEdit, setIsEdit] = useState(false)
   const {
     handleSubmit,
@@ -58,17 +63,15 @@ const EconomicDataSection = ({ id }: { id: string }) => {
         }
         await updateOrCreateEconomicData(formData).unwrap()
         reset()
-         router.replace({
-           pathname: `${NEXT_URL}/admin/editor-portal/county-portal/district`,
-           query: { ...router.query },
-         })
+        refetchDistrict()
+        setIsEdit(false)
       } catch (error) {
         dispatch(setError({ message: error.message }))
       }
     },
     []
   )
-  
+
   return (
     <section className="relative h-auto w-full flex-grow px-2 py-2  md:py-8 md:px-8">
       <section className="container">
@@ -85,7 +88,10 @@ const EconomicDataSection = ({ id }: { id: string }) => {
                 <BiEdit fontSize={44} />
               </UnstyledButton>
             </div>
-            {districtData?.economicData && (
+
+            {!isEdit && districtData?.economicData ? (
+              <ContentPreview economicData={districtData?.economicData} />
+            ) : (
               <EconomicDataForm
                 register={register}
                 handleSubmit={handleSubmit}

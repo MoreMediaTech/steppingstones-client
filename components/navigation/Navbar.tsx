@@ -65,7 +65,11 @@ const Navbar = () => {
     ?.join('')
 
   return (
-    <Header height={90}>
+    <header
+      className={`top-0 z-10 flex w-full flex-wrap items-center justify-between  ${
+        pos === 'top' ? 'absolute bg-slate-50' : 'shadow-b-2xl fixed bg-slate-50'
+      }`}
+    >
       <div className="mx-auto w-full max-w-screen-xl p-2">
         <div className="flex items-center justify-between space-x-4 lg:space-x-10">
           <AppLogo scrollToTop={scrollToTop} />
@@ -98,7 +102,9 @@ const Navbar = () => {
                     </a>
                   ) : (
                     <Link href={'/#features'}>
-                      <a className="font-semibold text-lg text-[#5E17EB]">Features</a>
+                      <a className="text-lg font-semibold text-[#5E17EB]">
+                        Features
+                      </a>
                     </Link>
                   )}
                 </li>
@@ -334,7 +340,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-    </Header>
+    </header>
   )
 }
 

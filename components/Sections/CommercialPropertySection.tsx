@@ -24,6 +24,7 @@ const CommercialPropertySection = ({ id }: { id: string }) => {
     data: countyData,
     isLoading: isLoadingCounty,
     isError: isErrorCounty,
+    refetch: refetchCounty,
   } = useGetCountyByIdQuery(id, { refetchOnMountOrArgChange: true })
   const [updateOrCreateCommercialProperty, { isLoading }] =
     useUpdateOrCreateCommercialPropertyMutation()
@@ -53,11 +54,8 @@ const CommercialPropertySection = ({ id }: { id: string }) => {
         }
         await updateOrCreateCommercialProperty(formData).unwrap()
         reset()
+        refetchCounty()
         setIsEdit(false)
-        router.replace({
-          pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${countyData.name}/growing-a-business`,
-          query: { ...router.query },
-        })
       } catch (error) {
         dispatch(setError({ message: error.message }))
       }

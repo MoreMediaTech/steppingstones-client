@@ -24,6 +24,7 @@ const FindNewMarketsSections = ({ id }: { id: string }) => {
     data: countyData,
     isLoading: isLoadingCounty,
     isError: isErrorCounty,
+    refetch: refetchCounty,
   } = useGetCountyByIdQuery(id, { refetchOnMountOrArgChange: true })
   const [updateOrCreateFindNewMarkets, { isLoading }] = useUpdateOrCreateFindNewMarketsMutation()
 
@@ -52,6 +53,7 @@ const FindNewMarketsSections = ({ id }: { id: string }) => {
         }
         await updateOrCreateFindNewMarkets(formData).unwrap()
         reset()
+        refetchCounty()
          setIsEdit(false)
          router.replace({
            pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${countyData.name}/growing-a-business`,

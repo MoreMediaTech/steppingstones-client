@@ -6,7 +6,7 @@ import steppinstonesapplogo from '../../public/android-chrome-512x512.png'
 const Footer = () => {
     const year = new Date().getFullYear()
   return (
-    <footer className="bottom-0 left-0 mb-0 w-full border-t border-indigo-100 py-4">
+    <footer className="bottom-0 left-0 mb-0 w-full border-t border-indigo-100 py-4 bg-slate-50">
       <div className="container mx-auto space-y-4">
         <div className="flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
           <div>

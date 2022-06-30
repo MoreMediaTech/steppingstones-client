@@ -24,6 +24,7 @@ const NewsSection = ({ id }: { id: string }) => {
     data: countyData,
     isLoading: isLoadingCounty,
     isError: isErrorCounty,
+    refetch: refetchCounty,
   } = useGetCountyByIdQuery(id, { refetchOnMountOrArgChange: true })
   const [updateOrCreateCountyWelcome, { isLoading }] = useUpdateOrCreateCountyWelcomeMutation()
 
@@ -51,11 +52,8 @@ const NewsSection = ({ id }: { id: string }) => {
         console.log("🚀 ~ file: WelcomeSection.tsx ~ line 51 ~ useCallback ~ formData", formData)
         await updateOrCreateCountyWelcome(formData).unwrap()
         reset()
+        refetchCounty()
         setIsEdit(false)
-         router.replace({
-           pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${countyData.name}`,
-           query: { ...router.query },
-         })
       } catch (error) {
         dispatch(setError({ message: error.message }))
       }
