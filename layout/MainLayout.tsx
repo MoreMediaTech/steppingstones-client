@@ -1,5 +1,6 @@
 import Head from 'next/head'
-import { Navbar } from '@components/navigation'
+import { Navbar } from '@components/navigation';
+import { useRouter } from 'next/router';
 import Footer from '@components/footer';
 import {
   AppShell,
@@ -13,9 +14,14 @@ interface ILayout {
 }
 
 function MainLayout({ title, description, children }: ILayout): JSX.Element {
+  const router = useRouter();
     const theme = useMantineTheme()
   return (
-    <main aria-label="layout" data-testid="layout" className='flex flex-col justify-between'>
+    <main
+      aria-label="layout"
+      data-testid="layout"
+      className="flex flex-col justify-between h-screen"
+    >
       <Head>
         <title>{title} | Stepping Stones App</title>
         <link rel="icon" href="/favicon.ico" />
@@ -57,7 +63,11 @@ function MainLayout({ title, description, children }: ILayout): JSX.Element {
       </Head>
 
       <Navbar />
-      <main className="w-full flex-grow bg-slate-50 relative">{children}</main>
+      <main
+        className={`w-full flex-grow bg-slate-50 relative  z-0`}
+      >
+        {children}
+      </main>
       <Footer />
     </main>
   )

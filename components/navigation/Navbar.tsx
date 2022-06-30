@@ -5,8 +5,6 @@ import { useRouter } from 'next/router'
 import {
   Burger,
   Drawer,
-  Header,
-  UnstyledButton,
   Group,
   Menu,
   Divider,
@@ -14,7 +12,7 @@ import {
 } from '@mantine/core'
 import { FaSignInAlt, FaSignOutAlt, FaUser } from 'react-icons/fa'
 
-import { usersApiSlice } from 'features/user/usersApiSlice'
+
 import { useGetUserQuery } from 'features/user/usersApiSlice'
 import { useLogoutMutation } from 'features/auth/authApiSlice'
 import { NEXT_URL } from '@config/index'
@@ -217,9 +215,9 @@ const Navbar = () => {
               size="lg"
               position="right"
             >
-              <div className="flex flex-col gap-4 space-y-8 p-2">
+              <div className="flex flex-col gap-4 space-y-8 py-4 px-2">
                 <nav className="flex flex-col space-y-8 text-sm font-medium">
-                  <ul className="flex flex-col space-y-8 text-sm font-medium">
+                  <ul className="flex flex-col space-y-12 text-sm font-medium">
                     <li>
                       {router.pathname === '/' ? (
                         <a
@@ -328,9 +326,9 @@ const Navbar = () => {
                   </ul>
                 </nav>
 
-                <div className="flex-1 items-center justify-end space-x-4 lg:flex">
+                <div className="flex-1 items-center justify-end lg:flex">
                   <Link href={'/enquire'}>
-                    <a className="rounded-lg bg-[#5E17EB] px-5 py-2 text-lg font-medium text-white">
+                    <a className="rounded-lg bg-[#5E17EB] px-6 py-4 text-xl font-medium text-white">
                       Enquire
                     </a>
                   </Link>

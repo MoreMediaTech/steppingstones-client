@@ -8,10 +8,12 @@ import type { NextPage } from 'next'
 const Home: NextPage = () => {
   return (
     <MainLayout title="Home">
-      <HeroSection />
-      <AboutSection />
-      <FeaturesSection />
-      <FAQSection />
+      <section>
+        <HeroSection />
+        <AboutSection />
+        <FeaturesSection />
+        <FAQSection />
+      </section>
     </MainLayout>
   )
 }
