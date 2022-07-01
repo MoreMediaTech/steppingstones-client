@@ -6,7 +6,7 @@ import Image from 'next/image'
 const ContactUs = () => {
   return (
     <MainLayout title="Enquire">
-      <section className="w-full bg-slate-50 mb-4">
+      <section className="w-full bg-slate-50 mb-4 mt-14">
         <div className="relative h-[600px] w-full bg-cover bg-center bg-no-repeat">
           <div className="h-full w-full">
             <Image

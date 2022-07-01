@@ -52,6 +52,14 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         { type: 'User', id: result?.id },
       ],
     }),
+    resetCredentials: builder.mutation<CurrentUser, CurrentUser>({
+      query: (user) => ({
+        url: `/resetCredentials/${user.id}`,
+        method: 'PUT',
+        body: { ...user },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'User', id: result?.id }],
+    }),
   }),
   overrideExisting: true,
 })
@@ -62,4 +70,5 @@ export const {
   useGetUserByIdQuery,
   useCreateUserMutation,
   useUpdateUserMutation,
+  useResetCredentialsMutation,
 } = usersApiSlice

@@ -1,19 +1,51 @@
 import { useCallback } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { IFormData } from '@lib/types'
 import { Button, PasswordInput, TextInput } from '@mantine/core'
+import { CurrentUser, IFormData } from '@lib/types'
+import { showNotification } from '@mantine/notifications'
+import { useResetCredentialsMutation } from 'features/user/usersApiSlice'
 
-const ProfileChangePassForm = () => {
+const ProfileChangePassForm = ({
+  refetch,
+  user,
+}: {
+  refetch: () => void
+  user: CurrentUser
+}) => {
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm<Partial<IFormData>>()
+  const [resetCredentials, { isLoading }] = useResetCredentialsMutation()
 
   const submitHandler: SubmitHandler<Partial<IFormData>> = useCallback(
     async (data) => {
       console.log(data)
+      if (data.newPassword !== data.confirmPassword) {
+        showNotification({
+          message: 'Passwords do not match. Please try again.',
+          autoClose: 3000,
+          color: 'red',
+        })
+      }
+      const newData = {
+        id: user.id,
+        password: data.password,
+        newPassword: data.newPassword,
+      }
+      try {
+        await resetCredentials(newData).unwrap()
+        refetch()
+        reset()
+      } catch (error) {
+        showNotification({
+          message: error.message,
+          autoClose: 3000,
+          color: 'red',
+        })
+      }
     },
     []
   )
@@ -26,13 +58,13 @@ const ProfileChangePassForm = () => {
     >
       <div className="mb-4">
         <PasswordInput
-          id="password"
-          aria-label="password"
-          placeholder="Current password"
+          id="current-password"
+          aria-label="current-password"
+          placeholder="Current Password"
           {...register('password', {
             required: true,
             minLength: {
-              value: 7,
+              value: 10,
               message: 'Please enter a password with at least 7 characters',
             },
             maxLength: {
@@ -57,8 +89,8 @@ const ProfileChangePassForm = () => {
       <div className="mb-4">
         <PasswordInput
           id="newPassword"
-          aria-label="password"
-          placeholder="new password"
+          aria-label="new-password"
+          placeholder="New Password"
           {...register('newPassword', {
             required: true,
             minLength: {
@@ -87,7 +119,7 @@ const ProfileChangePassForm = () => {
       <div>
         <PasswordInput
           id="confirmPassword"
-          aria-label="password"
+          aria-label="confirm-password"
           placeholder="Confirm password"
           {...register('confirmPassword', {
             required: true,

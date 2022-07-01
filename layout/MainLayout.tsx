@@ -64,7 +64,7 @@ function MainLayout({ title, description, children }: ILayout): JSX.Element {
 
       <Navbar />
       <main
-        className={`w-full flex-grow bg-slate-50 relative  z-0 mt-24`}
+        className={`w-full flex-grow bg-slate-50 relative  z-0 `}
       >
         {children}
       </main>

@@ -1,26 +1,59 @@
-import { useCallback } from 'react'
-import {
-  useForm,
-  SubmitHandler,
-} from 'react-hook-form'
-import { IFormData } from '@lib/types'
+import { useCallback, useEffect } from 'react'
+import { useForm, SubmitHandler } from 'react-hook-form'
+import { CurrentUser, IFormData } from '@lib/types'
 import { Button, TextInput } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
+import { useUpdateUserMutation } from 'features/user/usersApiSlice'
 
-
-const GeneralInformationForm = () => {
+const GeneralInformationForm = ({
+  refetch,
+  user,
+}: {
+  refetch: () => void
+  user: CurrentUser
+}) => {
+  const defaultValues = {
+    name: user?.name as string,
+    email: user?.email as string,
+    contactNumber: user?.contactNumber as string,
+    postCode: user?.postCode as string,
+    district: user?.district as string,
+    county: user?.county as string,
+    organisation: user?.organisation as string,
+    role: user?.role as string,
+  }
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<Partial<IFormData>>()
+  } = useForm<Partial<IFormData>>({
+    defaultValues: { ...defaultValues },
+  })
+  const [updateUser, { isLoading }] = useUpdateUserMutation()
+
+  useEffect(() => {
+    // reset the form when the user changes
+    reset({ ...defaultValues })
+  }, [user])
 
   const submitHandler: SubmitHandler<Partial<IFormData>> = useCallback(
     async (data) => {
       console.log(data)
+      try {
+        await updateUser(data as CurrentUser).unwrap()
+        refetch()
+      } catch (error) {
+        showNotification({
+          message: error.message,
+          autoClose: 3000,
+          color: 'red',
+        })
+      }
     },
     []
   )
+  
   return (
     <form
       aria-label="general-information-form"

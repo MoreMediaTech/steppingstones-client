@@ -1,1 +1,1 @@
-export { default } from './EditImageComponent'
+export { default } from './EditImageForm'
