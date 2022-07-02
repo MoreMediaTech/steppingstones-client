@@ -9,7 +9,7 @@ import { AdminLayout } from 'layout'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
 import { useGetCountyByIdQuery } from 'features/editor/editorApiSlice'
 import { NEXT_URL } from '@config/index'
-import { WelcomeSection } from '@components/Sections'
+import { WelcomeSection } from '@components/CountyDistrictSections'
 
 
 const Welcome = ({

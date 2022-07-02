@@ -67,7 +67,7 @@ const AdminSidebar = ({
                 <MdOutlineCreateNewFolder fontSize={40} color="#00DCB3" />
               </a>
             </Link> */}
-            <Link href={'/admin/messages'}>
+            <Link href={'/admin/editor-portal/messages'}>
               <a className="relative flex items-center justify-center py-12">
                 <Indicator
                   inline
@@ -82,12 +82,12 @@ const AdminSidebar = ({
                 </Indicator>
               </a>
             </Link>
-            <Link href={'/admin/profile'}>
+            <Link href={'#'}>
               <a className="flex items-center justify-center py-12">
                 <FaBriefcase fontSize={40} color="#00DCB3" />
               </a>
             </Link>
-            <Link href={'/admin/users'}>
+            <Link href={'/admin/editor-portal/users'}>
               <a className="flex items-center justify-center py-12">
                 <FaUsers fontSize={40} color="#00DCB3" />
               </a>
@@ -176,15 +176,7 @@ const AdminSidebar = ({
                   </span>
                 </a>
               </Link> */}
-              <Link href={'/admin/messages'}>
-                <a className="relative flex flex-col items-center justify-center ">
-                  <FaRegEnvelope fontSize={40} color="#00DCB3" />
-                  <span className="text-xl capitalize text-[#00DCB3]">
-                    messages
-                  </span>
-                </a>
-              </Link>
-              <Link href={'/admin/profile'}>
+              <Link href={'/admin/editor-portal/messages'}>
                 <a className="relative flex flex-col items-center justify-center ">
                   <Indicator
                     inline
@@ -202,7 +194,7 @@ const AdminSidebar = ({
                   </span>
                 </a>
               </Link>
-              <Link href={'/admin/users'}>
+              <Link href={'/admin/editor-portal/users'}>
                 <a className="relative flex flex-col items-center justify-center ">
                   <FaUsers fontSize={40} color="#00DCB3" />
                   <span className="text-xl capitalize text-[#00DCB3]">

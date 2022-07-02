@@ -54,14 +54,14 @@ const EconomicDataForm = ({
           type="number"
           aria-label="working-age-population"
           id="working-age-population"
-          step={0.01}
+          step="any"
           {...register('workingAgePopulation', {
             pattern: {
               value: /^(\d+(\.\d+)?)+$/,
               message: 'Please enter a valid District name',
             },
           })}
-          className="m-2 w-full rounded-md border border-gray-300 p-2  shadow-sm focus:border-indigo-400 focus:ring-2 focus:ring-indigo-200 md:w-3/5 appearance-none"
+          className="m-2 w-full appearance-none rounded-md border border-gray-300  p-2 shadow-sm focus:border-indigo-400 focus:ring-2 focus:ring-indigo-200 md:w-3/5"
         />
       </div>
       <Divider />
@@ -72,6 +72,7 @@ const EconomicDataForm = ({
         <input
           type="number"
           aria-label="labour-demand"
+          step="any"
           id="labour-demand"
           {...register('labourDemand', {
             pattern: {
@@ -91,6 +92,7 @@ const EconomicDataForm = ({
           type="number"
           aria-label="no-of-retail-shops"
           id="no-of-retail-shops"
+          step="any"
           {...register('noOfRetailShops', {
             pattern: {
               value: /^[a-zA-Z0-9!@#$%^&*()._ -]+$/,
@@ -109,6 +111,7 @@ const EconomicDataForm = ({
           type="number"
           aria-label="employment-investment-land"
           id="employment-investment-land"
+          step="any"
           {...register('employmentInvestmentLand', {
             pattern: {
               value: /^[a-zA-Z0-9!@#$%^&*()._ -]+$/,
@@ -127,6 +130,7 @@ const EconomicDataForm = ({
           type="number"
           aria-label="unemployment-rate"
           id="unemployment-rate"
+          step="any"
           {...register('unemploymentRate', {
             pattern: {
               value: /^[a-zA-Z0-9!@#$%^&*()._ -]+$/,
@@ -145,6 +149,7 @@ const EconomicDataForm = ({
           type="number"
           aria-label="num-of-registered-companies"
           id="num-of-registered-companies"
+          step="any"
           {...register('numOfRegisteredCompanies', {
             pattern: {
               value: /^[a-zA-Z0-9!@#$%^&*()._ -]+$/,
@@ -163,6 +168,7 @@ const EconomicDataForm = ({
           type="number"
           aria-label="num-of-business-parks"
           id="num-of-business-parks"
+          step="any"
           {...register('numOfBusinessParks', {
             pattern: {
               value: /^[a-zA-Z0-9!@#$%^&*()._ -]+$/,
@@ -181,6 +187,7 @@ const EconomicDataForm = ({
           type="number"
           aria-label="average-housing-cost"
           id="average-housing-cost"
+          step="any"
           {...register('averageHousingCost', {
             pattern: {
               value: /^[a-zA-Z0-9!@#$%^&*()._ -]+$/,
@@ -199,6 +206,7 @@ const EconomicDataForm = ({
           type="number"
           aria-label="average-wage-earnings"
           id="average-wage-earnings"
+          step="any"
           {...register('averageWageEarnings', {
             pattern: {
               value: /^[a-zA-Z0-9!@#$%^&*()._ -]+$/,

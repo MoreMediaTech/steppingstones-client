@@ -9,7 +9,7 @@ import { useGetCountyByIdQuery } from 'features/editor/editorApiSlice'
 import Spinner from '@components/spinner'
 import PortalHeader from '@components/PortalHeader'
 import { NEXT_URL } from '@config/index'
-import { HelpForMentalHealthAndWellBeingSection } from '@components/Sections'
+import { HelpForMentalHealthAndWellBeingSection } from '@components/CountyDistrictSections'
 
 const HelpForMentalHealthAndWellbeing = ({
   county,

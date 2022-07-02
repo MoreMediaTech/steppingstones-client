@@ -9,7 +9,7 @@ import { useGetCountyByIdQuery } from 'features/editor/editorApiSlice'
 import Spinner from '@components/spinner'
 import PortalHeader from '@components/PortalHeader'
 import { NEXT_URL } from '@config/index'
-import { HelpForCarbonAndNetZeroTargetsSection } from '@components/Sections'
+import { HelpForCarbonAndNetZeroTargetsSection } from '@components/CountyDistrictSections'
 
 const HelpForCarbonAndNetZeroTargets = ({
   county,

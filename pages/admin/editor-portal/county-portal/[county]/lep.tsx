@@ -9,7 +9,7 @@ import { AdminLayout } from 'layout'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
 import { useGetCountyByIdQuery } from 'features/editor/editorApiSlice'
 import { NEXT_URL } from '@config/index'
-import { LEPSection } from '@components/Sections'
+import { LEPSection } from '@components/CountyDistrictSections'
 
 
 const Lep = ({ county, countyId }: { county: string; countyId: string }) => {

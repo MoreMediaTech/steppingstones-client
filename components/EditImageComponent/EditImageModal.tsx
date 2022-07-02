@@ -1,20 +1,24 @@
-import { EditImageProps, IFormData } from '@lib/types'
-import React, { useCallback } from 'react'
+import { CurrentUser, EditImageProps, IFormData } from '@lib/types'
+import React, { useCallback, useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { Modal, Button, Group } from '@mantine/core'
+import { Modal } from '@mantine/core'
 import EditImageComponent from './EditImageForm'
 import { useUpdateUserMutation } from 'features/user/usersApiSlice'
+import { showNotification } from '@mantine/notifications'
 
 const EditImageModal = ({
   opened,
   setOpened,
   refetch,
+  user,
 }: {
   opened: boolean
   setOpened: React.Dispatch<React.SetStateAction<boolean>>
   refetch: () => void
+  user: Partial<CurrentUser>
 }) => {
-    const [updateUser, { isLoading }] = useUpdateUserMutation()
+  const [preview, setPreview] = useState<string | ArrayBuffer | null>(null)
+  const [updateUser, { isLoading }] = useUpdateUserMutation()
   const {
     register,
     handleSubmit,
@@ -22,17 +26,64 @@ const EditImageModal = ({
     formState: { errors },
   } = useForm<EditImageProps>()
 
+  const uploadFileHandler = (file: Blob) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onloadend = () => {
+      setPreview(reader.result)
+    }
+    reader.onerror = () => {
+      showNotification({
+        message: 'something went wrong!',
+        autoClose: 3000,
+        color: 'red',
+      })
+    }
+  }
+
+const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  e.preventDefault()
+  const file = e.target.files?.[0]
+  if (file) {
+    uploadFileHandler(file)
+  }
+}
+
   const submitHandler: SubmitHandler<EditImageProps> = useCallback(
     async (data) => {
-      console.log(data)
-      setOpened(false)
-      refetch()
+      const updatedImg = {
+        id: user?.id,
+        imageFile: preview
+      }
+      try {
+        await updateUser(updatedImg).unwrap()
+        setOpened(false)
+        setPreview(null)
+        refetch()
+        
+      } catch (error) {
+        showNotification({
+          message: 'Something went wrong! Unable to upload Image',
+          autoClose: 3000,
+          color: 'red',
+        })
+      }
     },
-    []
+    [preview]
   )
   return (
     <Modal opened={opened} onClose={() => setOpened(false)} title="Edit Image">
-        <EditImageComponent register={register} submitHandler={submitHandler} setIsEdit={setOpened} errors={errors} isLoading={isLoading} handleSubmit={handleSubmit} />
+      <EditImageComponent
+        register={register}
+        submitHandler={submitHandler}
+        setIsEdit={setOpened}
+        errors={errors}
+        isLoading={isLoading}
+        handleSubmit={handleSubmit}
+        preview={preview}
+        setPreview={setPreview}
+        handleChange={handleChange}
+      />
     </Modal>
   )
 }

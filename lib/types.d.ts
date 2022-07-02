@@ -113,6 +113,8 @@ export interface CurrentUser {
   isAdmin?: boolean
   role?: string
   contactNumber?: string
+  imageUrl?: string
+  imageFile?: string | ArrayBuffer | null
   county?: string
   postCode?: string
   organisation?: {
@@ -122,6 +124,8 @@ export interface CurrentUser {
     createdAt?: string
   }
   district?: string
+  emailVerified?: boolean
+  acceptTermsAndConditions?: boolean
 }
 
 export interface AuthState {

@@ -9,7 +9,7 @@ import { AdminLayout } from 'layout'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
 import { useGetCountyByIdQuery } from 'features/editor/editorApiSlice'
 import { NEXT_URL } from '@config/index'
-import { NewsSection } from '@components/Sections'
+import { NewsSection } from '@components/CountyDistrictSections'
 
 
 const News = ({ county, countyId }: { county: string; countyId: string }) => {

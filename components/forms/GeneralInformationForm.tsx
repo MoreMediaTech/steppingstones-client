@@ -19,7 +19,7 @@ const GeneralInformationForm = ({
     postCode: user?.postCode as string,
     district: user?.district as string,
     county: user?.county as string,
-    organisation: user?.organisation as string,
+    organisation: user?.organisation?.name as string,
     role: user?.role as string,
   }
   const {
@@ -39,13 +39,16 @@ const GeneralInformationForm = ({
 
   const submitHandler: SubmitHandler<Partial<IFormData>> = useCallback(
     async (data) => {
-      console.log(data)
+      const newData = {
+        id: user?.id as string,
+        ...data,
+      }
       try {
-        await updateUser(data as CurrentUser).unwrap()
+        await updateUser(newData as CurrentUser).unwrap()
         refetch()
       } catch (error) {
         showNotification({
-          message: error.message,
+          message: 'Something went wrong! Please try again',
           autoClose: 3000,
           color: 'red',
         })
@@ -69,7 +72,6 @@ const GeneralInformationForm = ({
           label={<p className="font-normal text-gray-700 ">Name</p>}
           type="text"
           {...register('name', {
-            required: true,
             minLength: {
               value: 2,
               message: 'Please enter a name with at least 2 characters',
@@ -95,7 +97,6 @@ const GeneralInformationForm = ({
           type="email"
           label={<p className="font-normal text-gray-700 ">Email</p>}
           {...register('email', {
-            required: true,
             pattern: {
               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
               message: 'Invalid email address',
@@ -117,7 +118,6 @@ const GeneralInformationForm = ({
           type="tel"
           label={<p className="font-normal text-gray-700 ">Contact Number</p>}
           {...register('contactNumber', {
-            required: true,
             pattern: {
               value: /^[0-9]{11}$/,
               message: 'Please enter a valid contact number',
@@ -144,7 +144,6 @@ const GeneralInformationForm = ({
           type="text"
           label={<p className="font-normal text-gray-700 ">Zip/Postal Code</p>}
           {...register('postCode', {
-            required: true,
             pattern: {
               value: /^[A-Za-z]{1,2}[0-9]{1,2} ?[0-9][A-Za-z]{2}$/i,
               message: 'Please enter a valid post code',
@@ -166,7 +165,6 @@ const GeneralInformationForm = ({
           type="text"
           label={<p className="font-normal text-gray-700 ">District</p>}
           {...register('district', {
-            required: true,
             pattern: {
               value: /^[A-Za-z -]+$/,
               message: 'Please enter a valid district',
@@ -188,7 +186,6 @@ const GeneralInformationForm = ({
           type="text"
           label={<p className="font-normal text-gray-700 ">County</p>}
           {...register('county', {
-            required: true,
             pattern: {
               value: /^[A-Za-z -]+$/,
               message: 'Please enter a valid County',
@@ -210,7 +207,6 @@ const GeneralInformationForm = ({
           type="text"
           label={<p className="font-normal text-gray-700 ">organisation</p>}
           {...register('organisation', {
-            required: true,
             pattern: {
               value: /^[A-Za-z -]+$/,
               message: 'Please enter a valid Organisation',
@@ -228,16 +224,11 @@ const GeneralInformationForm = ({
         <TextInput
           id="role"
           aria-label="role"
+          disabled={true}
           placeholder="Your Role"
           type="text"
           label={<p className="font-normal text-gray-700 ">Role</p>}
-          {...register('role', {
-            required: true,
-            pattern: {
-              value: /^[A-Za-z -]+$/,
-              message: 'Please enter a valid Organisation',
-            },
-          })}
+          {...register('role')}
           className="focus:shadow-outline w-full appearance-none rounded-md focus:outline-none"
         />
         {errors.role && (
@@ -249,6 +240,7 @@ const GeneralInformationForm = ({
       <div>
         <Button
           type="submit"
+          loading={isLoading}
           className="rounded-md bg-[#5E17EB] px-4 py-2 text-center font-semibold text-white shadow-xl transition delay-150 
                 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:text-lg"
         >

@@ -9,7 +9,7 @@ import { useGetCountyByIdQuery } from 'features/editor/editorApiSlice'
 import Spinner from '@components/spinner'
 import PortalHeader from '@components/PortalHeader'
 import { NEXT_URL } from '@config/index'
-import { ImproveSkillsSection } from '@components/Sections'
+import { ImproveSkillsSection } from '@components/CountyDistrictSections'
 
 const ImproveSkills = ({
   county,

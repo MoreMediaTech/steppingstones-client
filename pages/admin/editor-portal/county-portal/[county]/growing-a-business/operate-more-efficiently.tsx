@@ -9,7 +9,7 @@ import { useGetCountyByIdQuery } from '../../../../../../features/editor/editorA
 import Spinner from '../../../../../../components/spinner'
 import PortalHeader from '../../../../../../components/PortalHeader'
 import { NEXT_URL } from '../../../../../../config/index'
-import { OperateMoreEfficientlySection } from '../../../../../../components/Sections'
+import { OperateMoreEfficientlySection } from '../../../../../../components/CountyDistrictSections'
 
 const OperateMoreEfficiently = ({
   county,

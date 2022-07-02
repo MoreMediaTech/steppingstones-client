@@ -26,11 +26,16 @@ interface IContentFormComponent {
     content?: FieldError | undefined
   }
   value: string
+  preview: string | ArrayBuffer | null
   setValue: React.Dispatch<React.SetStateAction<string>>
   setIsEdit: React.Dispatch<React.SetStateAction<boolean>>
+  setPreview: React.Dispatch<
+    React.SetStateAction<string | ArrayBuffer | null>
+  >
   isLoading: boolean
   register: UseFormRegister<EditorFormDataProps>
   handleSubmit: UseFormHandleSubmit<EditorFormDataProps>
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const ContentFormComponent = ({
@@ -39,12 +44,14 @@ const ContentFormComponent = ({
   isLoading,
   register,
   value,
+  preview,
   setValue,
   handleSubmit,
   setIsEdit,
+  handleChange,
+  setPreview,
 }: IContentFormComponent) => {
-  const dispatch = useAppDispatch()
-  const { previewSource } = useAppSelector((state) => state.upload)
+
   return (
     <form className="space-y-8" onSubmit={handleSubmit(submitHandler)}>
       <div className="p-2 font-semibold">
@@ -98,18 +105,18 @@ const ContentFormComponent = ({
         <label htmlFor="main-image" className="flex w-1/4">
           Main Image
         </label>
-        {previewSource ? (
+        {preview ? (
           <div className="flex w-full justify-start">
             <div className="flex flex-col space-y-2">
               <Image
-                src={previewSource as string}
+                src={preview as string}
                 alt="preview"
                 width={150}
                 height={150}
               />
               <Button
                 type="button"
-                onClick={() => dispatch(clearState())}
+                onClick={() => setPreview(null)}
                 className="w-54 bg-blue-500"
               >
                 delete
@@ -130,7 +137,9 @@ const ContentFormComponent = ({
                       accept="image/*"
                       aria-label="main-image"
                       className="w-full cursor-pointer opacity-0"
-                      {...register('imageFile')}
+                      {...register('imageFile', {
+                        onChange: (e) => handleChange(e)
+                      })}
                     />
                   </div>
                 </div>

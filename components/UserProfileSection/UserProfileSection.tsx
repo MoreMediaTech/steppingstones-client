@@ -12,7 +12,7 @@ import { CurrentUser } from '@lib/types'
 const UserProfileSection = () => {
   const [opened, setOpened] = useState<boolean>(false)
     const { data: user, isLoading, refetch } = useGetUserQuery()
-    // console.log("🚀 ~ file: UserProfileSection.tsx ~ line 9 ~ UserProfileSection ~ user", user)
+
   return (
     <>
       <section className="container relative mx-auto mt-24 w-full max-w-screen-xl space-y-4 px-4 py-6">
@@ -21,7 +21,7 @@ const UserProfileSection = () => {
           <section className="w-full space-y-4 lg:col-span-1">
             <div className="flex w-full items-center space-x-6 rounded-md bg-white  p-6 shadow-xl">
               <div className="mr-2 w-20 rounded-full">
-                <Avatar imageUrl="" classes="rounded-lg" />
+                <Avatar imageUrl={user?.imageUrl as string} classes="rounded-lg bg-white" />
               </div>
               <div className="space-y-1">
                 <div>
@@ -90,7 +90,12 @@ const UserProfileSection = () => {
           </div>
         </section>
       </section>
-      <EditImageModal opened={opened} setOpened={setOpened} refetch={refetch} />
+      <EditImageModal
+        opened={opened}
+        setOpened={setOpened}
+        refetch={refetch}
+        user={user as CurrentUser}
+      />
     </>
   )
 }

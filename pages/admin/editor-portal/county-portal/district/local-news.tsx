@@ -6,7 +6,7 @@ import { AdminLayout } from 'layout'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
 import PortalHeader from '@components/PortalHeader'
 import { NEXT_URL } from '@config/index'
-import { LocalNewsSection } from '@components/Sections'
+import { LocalNewsSection } from '@components/CountyDistrictSections'
 
 
 const LocalNews = ({

@@ -6,7 +6,7 @@ import { AdminLayout } from 'layout'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
 import PortalHeader from '@components/PortalHeader'
 import { NEXT_URL } from '@config/index'
-import { BusinessParksSection } from '@components/Sections'
+import { BusinessParksSection } from '@components/CountyDistrictSections'
 
 
 const BusinessParks = ({

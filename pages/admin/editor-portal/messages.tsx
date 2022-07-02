@@ -1,9 +1,14 @@
+import { AdminLayout } from 'layout'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import React from 'react'
 
 const Messages = () => {
   return (
-    <div>Messages</div>
+    <AdminLayout title="Messages">
+      <section className="overflow-auto">
+        <h1>Messages</h1>
+      </section>
+    </AdminLayout>
   )
 }
 
@@ -20,25 +25,6 @@ export const getServerSideProps: GetServerSideProps = async (
     context.res.end()
   }
 
-  // const user = await getUser(cookies)
-  // const userRoles = ['SS_EDITOR', "COUNTY_EDITOR"]
-
-  // if (!user?.isAdmin ) {
-  //   return {
-  //     redirect: {
-  //       destination: '/not-authorized',
-  //       permanent: false,
-  //     },
-  //   }
-  // }
-  // if (!userRoles.includes(user.role)) {
-  //   return {
-  //     redirect: {
-  //       destination: '/admin',
-  //       permanent: false,
-  //     },
-  //   }
-  // }
   return {
     // props: { user: user as SessionProps },
     props: {},

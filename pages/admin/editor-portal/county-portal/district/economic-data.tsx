@@ -6,7 +6,7 @@ import { AdminLayout } from 'layout'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
 import PortalHeader from '@components/PortalHeader'
 import { NEXT_URL } from '@config/index'
-import { EconomicDataSection } from '@components/Sections'
+import { EconomicDataSection } from '@components/CountyDistrictSections'
 
 const EconomicData = ({
   district,

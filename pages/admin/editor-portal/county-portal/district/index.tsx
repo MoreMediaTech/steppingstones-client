@@ -4,22 +4,22 @@ import { showNotification } from '@mantine/notifications'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
+import { UnstyledButton } from '@mantine/core'
 
 import { ComponentShield } from '@components/NextShield'
 import Spinner from '@components/spinner'
 import PortalHeader from '@components/PortalHeader'
 import { AdminLayout } from 'layout'
-import { setError, setPreviewSource } from 'features/upload/uploadSlice'
+import { setError } from 'features/upload/uploadSlice'
 import { EditImageProps } from '@lib/types'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
 import {
   useGetDistrictByIdQuery,
   useUpdateDistrictByIdMutation,
 } from 'features/editor/editorApiSlice'
-import { useAppDispatch, useAppSelector } from 'app/hooks'
+import { useAppDispatch } from 'app/hooks'
 import { districtPages } from 'data'
 import { NEXT_URL } from '@config/index'
-import { UnstyledButton } from '@mantine/core'
 import EditImageComponent from '@components/EditImageComponent'
 
 const District = ({
@@ -31,16 +31,16 @@ const District = ({
 }) => {
   const router = useRouter()
   const dispatch = useAppDispatch()
-  const [opened, setOpened] = useState(false)
-  const [isEdit, setIsEdit] = useState(false)
+  const [opened, setOpened] = useState<boolean>(false)
+  const [isEdit, setIsEdit] = useState<boolean>(false)
+  const [preview, setPreview] = useState<string | ArrayBuffer | null>(null)
   const { data: user } = useGetUserQuery()
-  const { previewSource, selectedFile } = useAppSelector(
-    (state) => state.upload
-  )
+ 
   const {
     data: districtData,
     isLoading: isLoadingDistrict,
     isError: isErrorDistrict,
+    refetch: refetchDistrict,
   } = useGetDistrictByIdQuery(districtId, { refetchOnMountOrArgChange: true })
 
   const [updateDistrictById, { isLoading }] = useUpdateDistrictByIdMutation()
@@ -56,7 +56,7 @@ const District = ({
     const reader = new FileReader()
     reader.readAsDataURL(file)
     reader.onloadend = () => {
-      dispatch(setPreviewSource(reader.result))
+      setPreview(reader.result)
     }
     reader.onerror = () => {
       showNotification({
@@ -67,28 +67,36 @@ const District = ({
     }
   }
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    const file = e.target.files?.[0]
+    if (file) {
+      convertFileToBase64(file)
+    }
+  }
+
   const submitHandler: SubmitHandler<EditImageProps> = useCallback(
     async (data) => {
-      if (data.imageFile.length > 0) {
-        convertFileToBase64(data.imageFile[0] as File)
-      }
+
       try {
         const formData = {
           id: districtId,
-          imageFile: previewSource,
+          imageFile: preview,
         }
         await updateDistrictById(formData).unwrap()
-        reset()
+        refetchDistrict()
         setIsEdit(false)
-        router.replace({
-          pathname: `${NEXT_URL}${router.pathname}`,
-          query: { ...router.query },
-        })
+        setPreview(null)
       } catch (error) {
         dispatch(setError({ message: error.message }))
+        showNotification({
+          message: 'Something went wrong! Unable to upload Image',
+          autoClose: 3000,
+          color: 'red',
+        })
       }
     },
-    [previewSource]
+    [preview]
   )
 
   return (
@@ -154,6 +162,9 @@ const District = ({
                       isLoading={isLoading}
                       errors={errors}
                       setIsEdit={setIsEdit}
+                      preview={preview}
+                      setPreview={setPreview}
+                      handleChange={handleChange}
                     />
                   )}
                 </div>
