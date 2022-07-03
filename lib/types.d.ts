@@ -19,6 +19,13 @@ export interface IFormData {
   organisation: string
 }
 
+export enum ROLE {
+  PARTNER = 'PARTNER',
+  COUNTY_EDITOR = 'COUNTY_EDITOR',
+  SS_EDITOR = 'SS_EDITOR',
+  USER = 'USER',
+}
+
 type EditImageProps = {
   imageFile: FileList
 }
@@ -111,7 +118,9 @@ export interface CurrentUser {
   name?: string
   email?: string
   isAdmin?: boolean
-  role?: string
+  isSuperAdmin?: boolean
+  passwordInput?: string
+  role?: ROLE
   contactNumber?: string
   imageUrl?: string
   imageFile?: string | ArrayBuffer | null

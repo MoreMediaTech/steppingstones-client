@@ -23,9 +23,10 @@ const BecomingAGreenerBusinessSection = ({ id }: { id: string }) => {
     isError: isErrorCounty,
     refetch: refetchCounty,
   } = useGetCountyByIdQuery(id, { refetchOnMountOrArgChange: true })
+
   const [updateOrCreateBGB, { isLoading }] = useUpdateOrCreateBGBMutation()
 
-  const [value, setValue] = useState<string>(countyData?.supportForStartups?.becomingAGreenerBusiness?.content)
+  const [value, setValue] = useState<string>(countyData?.supportForStartups?.becomeAGreenerBusiness?.content)
   const [isEdit, setIsEdit] = useState<boolean>(false)
 
 
@@ -36,13 +37,13 @@ const BecomingAGreenerBusinessSection = ({ id }: { id: string }) => {
     formState: { errors },
   } = useForm<Partial<EditorFormDataProps>>({
     defaultValues: {
-      title: countyData?.supportForStartups?.becomingAGreenerBusiness?.title,
+      title: countyData?.supportForStartups?.becomeAGreenerBusiness?.title,
     },
   })
 
     useEffect(() => {
       // reset the form when the county data is changed/updated
-      reset({ title: countyData?.supportForStartups?.becomingAGreenerBusiness?.title })
+      reset({ title: countyData?.supportForStartups?.becomeAGreenerBusiness?.title })
     }, [countyData])
 
 
@@ -53,6 +54,7 @@ const BecomingAGreenerBusinessSection = ({ id }: { id: string }) => {
           title: data.title,
           content: value,
           countyId: id,
+          id: countyData?.supportForStartups?.id,
         }
         await updateOrCreateBGB(formData).unwrap()
         refetchCounty()
@@ -84,8 +86,8 @@ const BecomingAGreenerBusinessSection = ({ id }: { id: string }) => {
                 <BiEdit fontSize={44} />
               </UnstyledButton>
             </div>
-            {!isEdit && countyData?.supportForStartups?.becomingAGreenerBusiness ? (
-              <ContentPreview content={countyData?.supportForStartups?.becomingAGreenerBusiness} />
+            {!isEdit && countyData?.supportForStartups?.becomeAGreenerBusiness ? (
+              <ContentPreview content={countyData?.supportForStartups?.becomeAGreenerBusiness} />
             ) : (
               <CountySectionForm
                 register={register}

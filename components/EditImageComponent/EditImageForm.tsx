@@ -1,8 +1,5 @@
-import Spinner from '@components/spinner'
-import { EditImageProps } from '@lib/types'
 import { Button } from '@mantine/core'
 import Image from 'next/image'
-import React from 'react'
 import {
   FieldError,
   SubmitHandler,
@@ -10,7 +7,9 @@ import {
   UseFormRegister,
 } from 'react-hook-form'
 import { AiOutlineCloudUpload } from 'react-icons/ai'
-import { MdCloudUpload } from 'react-icons/md'
+import Spinner from '@components/spinner'
+import { EditImageProps } from '@lib/types'
+
 
 interface IEditImageComponent {
   submitHandler: SubmitHandler<EditImageProps>

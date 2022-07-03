@@ -54,7 +54,7 @@ const HelpForSocialEnterprisesSection = ({ id }: { id: string }) => {
           title: data.title,
           content: value,
           countyId: id,
-          id: countyData?.topicalBusinessIssues?.helpForSocialEnterprises?.id,
+          id: countyData?.topicalBusinessIssues?.id,
         }
         await updateOrCreateSocialEnterprises(formData).unwrap()
         refetchCounty()

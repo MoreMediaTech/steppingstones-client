@@ -1,27 +1,45 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { CurrentUser, IFormData } from '@lib/types'
-import { Button, TextInput } from '@mantine/core'
+import { Button, Checkbox,  TextInput } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { useUpdateUserMutation } from 'features/user/usersApiSlice'
 
-const GeneralInformationForm = ({
+const UpdateUserForm = ({
   refetch,
   user,
+  handleModalClose,
+  disabled
 }: {
   refetch: () => void
-  user: CurrentUser
+  user?: CurrentUser
+  handleModalClose?: () => void
+  disabled?: boolean
 }) => {
+
   const defaultValues = {
-    name: user?.name as string,
-    email: user?.email as string,
-    contactNumber: user?.contactNumber as string,
-    postCode: user?.postCode as string,
-    district: user?.district as string,
-    county: user?.county as string,
-    organisation: user?.organisation?.name as string,
-    role: user?.role as string,
+    name: user?.name ? (user?.name as string) : '',
+    email: user?.email ? (user?.email as string) : '',
+    contactNumber: user?.contactNumber ? (user?.contactNumber as string) : '',
+    postCode: user?.postCode ? (user?.postCode as string) : '',
+    district: user?.district ? (user?.district as string) : '',
+    county: user?.county ? (user?.county as string) : '',
+    organisation: user?.organisation?.name
+      ? (user?.organisation?.name as string)
+      : '',
+    emailVerified: user?.emailVerified ? (user?.emailVerified as boolean) : false,
+    isAdmin: user?.isAdmin ? (user?.isAdmin as boolean) : false,
+    acceptTermsAndConditions: user?.acceptTermsAndConditions ? (user?.acceptTermsAndConditions as boolean) : false,
+
   }
+  const [roles] = useState<string[]>([
+    'USER',
+    'SS_EDITOR',
+    'COUNTY_EDITOR',
+    'PARTNER',
+  ])
+  const [role, setRole] = useState<string>(user?.role as string)
+
   const {
     register,
     handleSubmit,
@@ -35,17 +53,20 @@ const GeneralInformationForm = ({
   useEffect(() => {
     // reset the form when the user changes
     reset({ ...defaultValues })
+    setRole(user?.role as string)
   }, [user])
 
   const submitHandler: SubmitHandler<Partial<IFormData>> = useCallback(
     async (data) => {
       const newData = {
         id: user?.id as string,
+        role,
         ...data,
       }
       try {
         await updateUser(newData as CurrentUser).unwrap()
         refetch()
+        handleModalClose!()
       } catch (error) {
         showNotification({
           message: 'Something went wrong! Please try again',
@@ -54,9 +75,9 @@ const GeneralInformationForm = ({
         })
       }
     },
-    []
+    [role]
   )
-  
+
   return (
     <form
       aria-label="general-information-form"
@@ -205,7 +226,7 @@ const GeneralInformationForm = ({
           aria-label="organisation"
           placeholder="Your Organisation"
           type="text"
-          label={<p className="font-normal text-gray-700 ">organisation</p>}
+          label={<p className="font-normal text-gray-700 ">Organisation</p>}
           {...register('organisation', {
             pattern: {
               value: /^[A-Za-z -]+$/,
@@ -221,22 +242,45 @@ const GeneralInformationForm = ({
         )}
       </div>
       <div>
-        <TextInput
+        <label htmlFor="role" className="block mb-1">
+          <p className="font-normal text-gray-700 ">Role</p>
+        </label>
+        <select
           id="role"
           aria-label="role"
-          disabled={true}
+          value={role}
+          disabled={disabled}
           placeholder="Your Role"
-          type="text"
-          label={<p className="font-normal text-gray-700 ">Role</p>}
-          {...register('role')}
-          className="focus:shadow-outline w-full appearance-none rounded-md focus:outline-none"
-        />
+          onChange={(e) => setRole(e.target.value)}
+          className="focus:shadow-outline mb-6 block w-full appearance-none rounded-md  border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-blue-500"
+        >
+          {roles?.map((itemValue, index) => {
+            return (
+              <option
+                key={`${index} + ${itemValue}`}
+                value={itemValue}
+              >
+                {itemValue}
+              </option>
+            )
+          })}
+        </select>
         {errors.role && (
           <span className="text-center text-sm text-red-500">
             {errors.role?.message || 'Your role is required'}
           </span>
         )}
       </div>
+      <div>
+        <Checkbox label="Admin" {...register('isAdmin')} />
+      </div>
+      <div>
+        <Checkbox disabled label="Email Verified" {...register('emailVerified')} />
+      </div>
+      <div>
+        <Checkbox disabled label="Accepted Terms and Conditions" {...register('acceptTermsAndConditions')} />
+      </div>
+      <div></div>
       <div>
         <Button
           type="submit"
@@ -251,4 +295,4 @@ const GeneralInformationForm = ({
   )
 }
 
-export default GeneralInformationForm
+export default UpdateUserForm

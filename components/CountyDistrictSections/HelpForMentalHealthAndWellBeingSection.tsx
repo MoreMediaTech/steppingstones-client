@@ -25,7 +25,7 @@ const HelpForMentalHealthAndWellBeingSection = ({ id }: { id: string }) => {
   } = useGetCountyByIdQuery(id, { refetchOnMountOrArgChange: true })
   const [updateOrCreateMHW, { isLoading }] = useUpdateOrCreateMHWMutation()
 
-  const [value, setValue] = useState<string>(countyData?.topicalBusinessIssues?.helpForMentalHealthAndWellBeing?.content)
+  const [value, setValue] = useState<string>(countyData?.topicalBusinessIssues?.helpForMentalHealthAndWellbeing?.content)
   const [isEdit, setIsEdit] = useState<boolean>(false)
 
 
@@ -36,13 +36,13 @@ const HelpForMentalHealthAndWellBeingSection = ({ id }: { id: string }) => {
     formState: { errors },
   } = useForm<Partial<EditorFormDataProps>>({
     defaultValues: {
-      title: countyData?.topicalBusinessIssues?.helpForMentalHealthAndWellBeing?.title,
+      title: countyData?.topicalBusinessIssues?.helpForMentalHealthAndWellbeing?.title,
     },
   })
 
   useEffect(() => {
     // reset the form when the county data is changed/updated
-    reset({ title: countyData?.topicalBusinessIssues?.helpForMentalHealthAndWellBeing?.title })
+    reset({ title: countyData?.topicalBusinessIssues?.helpForMentalHealthAndWellbeing?.title })
   }, [countyData])
 
 
@@ -85,8 +85,8 @@ const HelpForMentalHealthAndWellBeingSection = ({ id }: { id: string }) => {
                 <BiEdit fontSize={44} />
               </UnstyledButton>
             </div>
-            {!isEdit && countyData?.topicalBusinessIssues?.helpForMentalHealthAndWellBeing ? (
-              <ContentPreview content={countyData?.topicalBusinessIssues?.helpForMentalHealthAndWellBeing} />
+            {!isEdit && countyData?.topicalBusinessIssues?.helpForMentalHealthAndWellbeing ? (
+              <ContentPreview content={countyData?.topicalBusinessIssues?.helpForMentalHealthAndWellbeing} />
             ) : (
               <CountySectionForm
                 register={register}

@@ -5,7 +5,7 @@ import { CurrentUser, IFormData } from '@lib/types'
 import { showNotification } from '@mantine/notifications'
 import { useResetCredentialsMutation } from 'features/user/usersApiSlice'
 
-const ProfileChangePassForm = ({
+const UpdateUserPassForm = ({
   refetch,
   user,
 }: {
@@ -174,4 +174,4 @@ const ProfileChangePassForm = ({
   )
 }
 
-export default ProfileChangePassForm
+export default UpdateUserPassForm

@@ -4,7 +4,7 @@ import { Button } from '@mantine/core'
 import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa'
 
 import Avatar from '@components/Avatar'
-import { GeneralInformationForm, ProfileChangePassForm } from '@components/forms'
+import { UpdateUserForm, UpdateUserPassForm } from '@components/forms'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
 import EditImageModal from '@components/EditImageComponent/EditImageModal'
 import { CurrentUser } from '@lib/types'
@@ -42,14 +42,15 @@ const UserProfileSection = () => {
           <section className="space-y-4 lg:col-span-2">
             <div className=" w-full space-y-4 rounded-md bg-white px-4 pt-6 pb-8 shadow-xl">
               <h1 className="text-xl font-bold">General Information</h1>
-              <GeneralInformationForm
+              <UpdateUserForm
                 refetch={refetch}
                 user={user as CurrentUser}
+                disabled
               />
             </div>
             <div className="w-full space-y-4 rounded-md bg-white px-4 pt-6 pb-8 shadow-xl">
               <h1 className="text-xl font-bold">Password Information</h1>
-              <ProfileChangePassForm
+              <UpdateUserPassForm
                 refetch={refetch}
                 user={user as CurrentUser}
               />

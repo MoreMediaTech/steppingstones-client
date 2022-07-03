@@ -10,6 +10,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           const result = await queryFulfilled
+          console.log("🚀 ~ file: usersApiSlice.ts ~ line 13 ~ onQueryStarted ~ result", result.data)
           dispatch(
             setCredentials({
               currentUser: result.data,

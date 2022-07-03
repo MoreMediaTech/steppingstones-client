@@ -258,7 +258,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     updateOrCreateCNZT: builder.mutation({
       query: (data) => ({
-        url: `editor/cnzt`,
+        url: `editor/cznt`,
         method: 'PUT',
         body: { ...data },
       }),

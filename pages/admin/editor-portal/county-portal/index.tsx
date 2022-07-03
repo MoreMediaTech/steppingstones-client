@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 
 import { ComponentShield } from '@components/NextShield'
 import { AdminLayout } from 'layout'
-import { CountyDataProps, CurrentUser } from '@lib/types'
+import { CountyDataProps } from '@lib/types'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
 import Spinner from '@components/spinner'
 import PortalHeader from '@components/PortalHeader'
@@ -13,15 +13,8 @@ import PortalHeader from '@components/PortalHeader'
 import { NEXT_URL } from '@config/index'
 import { CreateCountyForm } from '@components/forms'
 import { useGetCountiesQuery } from 'features/editor/editorApiSlice'
-import { skipToken, SkipToken } from '@reduxjs/toolkit/dist/query'
 
-type CountyProps = {
-  id: string
-  name: string
-  authorId: string
-  published: boolean
-  viewCount: number
-}
+
 
 const County = () => {
   const router = useRouter()
@@ -68,9 +61,6 @@ const County = () => {
             title="UK Counties"
             subTitle="Please select from the menu below"
           />
-          {isLoadingCounties && (
-            <Spinner classes="w-24 h-24" message="Loading..." />
-          )}
           <section className="container mx-auto px-4 py-2">
             <div className="flex justify-between">
               <button
@@ -96,6 +86,9 @@ const County = () => {
           </section>
 
           <section className="flex items-center justify-center md:h-[700px] md:py-28">
+            {isLoadingCounties && (
+              <Spinner classes="w-24 h-24" message="Loading..." />
+            )}
             <button
               type="button"
               className="h-full bg-white/30 px-2 text-[#5E17EB] drop-shadow-lg backdrop-blur-sm transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110"
