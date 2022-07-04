@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import {
   UnstyledButton,
   Divider,
@@ -10,7 +10,13 @@ import {
 } from '@mantine/core'
 import { BiHomeCircle } from 'react-icons/bi'
 import { MdOutlineCreateNewFolder } from 'react-icons/md'
-import { FaRegEnvelope, FaUsers, FaBriefcase, FaPowerOff, FaSignOutAlt } from 'react-icons/fa'
+import {
+  FaRegEnvelope,
+  FaUsers,
+  FaBriefcase,
+  FaPowerOff,
+  FaSignOutAlt,
+} from 'react-icons/fa'
 import UserButton from '@components/UserButton'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
 import Link from 'next/link'
@@ -19,9 +25,13 @@ import Image from 'next/image'
 const AdminSidebar = ({
   show,
   handleLogout,
+  setIsOpen,
+  isOpen,
 }: {
   show?: boolean
   handleLogout?: () => void
+  isOpen?: boolean
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
   const { data: currentUser } = useGetUserQuery()
   const [opened, setOpened] = useState(false)
@@ -31,7 +41,7 @@ const AdminSidebar = ({
     ?.map((n) => n[0])
     ?.join('')
 
-  const hideNavbar = show ? 'sm' : 'xl'
+  const width = isOpen ? '288' : '100'
   return (
     <header className="relative">
       <div className='sm:gap-1" items-left mb-2 flex w-screen gap-4 p-2 md:hidden '>
@@ -43,8 +53,11 @@ const AdminSidebar = ({
           color="#00dcb3"
         />
       </div>
-      <div className="hidden md:block">
-        <Navbar p="sm" width={{ base: 100 }}>
+      <div
+        className={`w-30' group hidden hover:w-64 transition-all duration-300 ease-in-out md:block`}
+        onClick={() => setIsOpen!((o) => !o)}
+      >
+        <Navbar p="sm" width={{ base: width }} className="space-y-8">
           <Navbar.Section mt="xs">
             <Link href={'/'}>
               <a>
@@ -56,19 +69,24 @@ const AdminSidebar = ({
               </a>
             </Link>
           </Navbar.Section>
-          <Navbar.Section grow>
+          <Navbar.Section grow className="space-y-14 px-2">
             <Link href={'/admin/editor-portal'}>
-              <a className="flex items-center justify-center py-12">
-                <BiHomeCircle fontSize={40} color="#00DCB3" />
+              <a className="flex items-center justify-start space-x-4 rounded-lg p-2 group-hover:hover:bg-[#00DCB3]/20">
+                <BiHomeCircle fontSize={30} color="#00DCB3" />
+                <span
+                  className={`mt-1 hidden text-xl text-[#00DCB3] group-hover:block`}
+                >
+                  Portal Home
+                </span>
               </a>
             </Link>
             {/* <Link href={'/admin/editor-portal'}>
               <a className="flex items-center justify-center py-12">
-                <MdOutlineCreateNewFolder fontSize={40} color="#00DCB3" />
+                <MdOutlineCreateNewFolder fontSize={30} color="#00DCB3" />
               </a>
             </Link> */}
             <Link href={'/admin/editor-portal/messages'}>
-              <a className="relative flex items-center justify-center py-12">
+              <a className="relative flex items-center justify-start space-x-4 rounded-lg p-2 group-hover:hover:bg-[#00DCB3]/20">
                 <Indicator
                   inline
                   label={1}
@@ -78,35 +96,58 @@ const AdminSidebar = ({
                   color="red"
                   withBorder
                 >
-                  <FaRegEnvelope fontSize={40} color="#00DCB3" />
+                  <FaRegEnvelope fontSize={30} color="#00DCB3" />
                 </Indicator>
+                <span
+                  className={`hidden text-xl text-[#00DCB3] group-hover:block`}
+                >
+                  Messages
+                </span>
               </a>
             </Link>
             <Link href={'#'}>
-              <a className="flex items-center justify-center py-12">
-                <FaBriefcase fontSize={40} color="#00DCB3" />
+              <a className="flex items-center justify-start space-x-4 rounded-lg p-2 group-hover:hover:bg-[#00DCB3]/20">
+                <FaBriefcase fontSize={30} color="#00DCB3" />
+                <span
+                  className={`hidden text-xl text-[#00DCB3] group-hover:block `}
+                >
+                  Admin
+                </span>
               </a>
             </Link>
             <Link href={'/admin/editor-portal/users'}>
-              <a className="flex items-center justify-center py-12">
-                <FaUsers fontSize={40} color="#00DCB3" />
+              <a className="flex items-center justify-start space-x-4 rounded-lg p-2 group-hover:hover:bg-[#00DCB3]/20">
+                <FaUsers fontSize={30} color="#00DCB3" />
+                <span
+                  className={`hidden text-xl text-[#00DCB3] group-hover:block`}
+                >
+                  Users
+                </span>
               </a>
             </Link>
           </Navbar.Section>
-          <Navbar.Section>
-            <Divider color="#00DCB3" />
-            <div className="flex items-center justify-center py-6">
+          <Divider color="green" />
+          <Navbar.Section className="space-y-14 px-2 w-full">
+            <div className="flex items-center justify-start py-6 w-full">
               <Menu
                 withArrow
                 position="right"
                 placement="end"
                 control={
-                  <UnstyledButton type="button">
+                  <UnstyledButton
+                    type="button"
+                    className="flex items-center space-x-4 rounded-lg p-2 group-hover:hover:bg-[#00DCB3]/20 w-full"
+                  >
                     <FaPowerOff
-                      fontSize={40}
+                      fontSize={30}
                       fontWeight={100}
                       color="#00DCB3"
                     />
+                    <span
+                      className={`hidden text-xl text-[#00DCB3] group-hover:block`}
+                    >
+                      Settings
+                    </span>
                   </UnstyledButton>
                 }
               >

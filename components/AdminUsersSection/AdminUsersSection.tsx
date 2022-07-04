@@ -18,7 +18,9 @@ const AdminUsersSection = () => {
     <>
       <section className="container mx-auto max-w-screen-xl ">
         {isLoading ? (
-          <Spinner classes="w-24 h-24" message="Loading users..." />
+          <div className='flex items-center justify-center h-[400px]'>
+            <Spinner classes="w-24 h-24" message="Loading users..." />
+          </div>
         ) : (
           <AdminUsersTable
             users={users as CurrentUser[]}

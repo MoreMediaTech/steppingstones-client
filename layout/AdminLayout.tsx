@@ -1,5 +1,5 @@
+import { useState } from 'react'
 import { useRouter } from 'next/router'
-import { useMantineTheme } from '@mantine/core'
 import Head from 'next/head'
 
 import { useLogoutMutation } from 'features/auth/authApiSlice'
@@ -21,9 +21,8 @@ const AdminLayout = ({
 }: ILayout): JSX.Element => {
   const router = useRouter()
   const [logout] = useLogoutMutation()
-  const theme = useMantineTheme()
-
-
+  const [isOpen, setIsOpen] = useState(false)
+ 
   const handleLogout = async () => {
     logout()
     localStorage.removeItem('token')
@@ -75,8 +74,17 @@ const AdminLayout = ({
         <meta name="theme-color" content="#000000" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <AdminSidebar handleLogout={handleLogout} />
-      <main className="md:ml-30 relative w-full bg-slate-200">{children}</main>
+      <AdminSidebar
+        handleLogout={handleLogout}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      />
+      <main
+        className={`md:ml-30
+        relative w-full bg-slate-200`}
+      >
+        {children}
+      </main>
     </div>
   )
 }
