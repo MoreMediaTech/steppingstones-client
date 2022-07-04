@@ -25,7 +25,8 @@ const PartnerPortalLayout = ({ title, description, children }: ILayout) => {
       const { data: currentUser } = useGetUserQuery()
       const [logout] = useLogoutMutation()
     const theme = useMantineTheme()
-    const [opened, setOpened] = useState(false)
+    const [opened, setOpened] = useState<boolean>(false)
+    const [isOpen, setIsOpen] = useState<boolean>(false)
 
    const handleLogout = () => {
      logout()
@@ -93,7 +94,7 @@ const PartnerPortalLayout = ({ title, description, children }: ILayout) => {
          navbarOffsetBreakpoint="md"
          asideOffsetBreakpoint="sm"
          fixed
-         navbar={<AdminSidebar show />}
+         navbar={<AdminSidebar show setIsOpen={setIsOpen} />}
          header={
            <AdminNavbar
              opened={opened}
