@@ -45,6 +45,7 @@ const VatAndTaxSection = ({ id }: { id: string }) => {
   useEffect(() => {
     // reset the form when the county data is changed/updated
     reset({ title: countyData?.supportForStartups?.vatAndTax?.title })
+    setValue(countyData?.supportForStartups?.vatAndTax?.content)
   }, [countyData])
 
   const submitHandler: SubmitHandler<Partial<EditorFormDataProps>> =

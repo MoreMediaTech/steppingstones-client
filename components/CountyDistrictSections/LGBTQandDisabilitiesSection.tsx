@@ -47,6 +47,7 @@ const LGBTQandDisabilitiesSection = ({ id }: { id: string }) => {
   useEffect(() => {
     // reset the form when the county data is changed/updated
     reset({ title: countyData?.topicalBusinessIssues?.LGBTQAndDisabilities?.title })
+    setValue(countyData?.topicalBusinessIssues?.LGBTQAndDisabilities?.content)
   }, [countyData])
 
   const submitHandler: SubmitHandler<Partial<EditorFormDataProps>> =

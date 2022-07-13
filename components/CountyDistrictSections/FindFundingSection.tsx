@@ -46,6 +46,7 @@ const FindFundingSection = ({ id }: { id: string }) => {
   useEffect(() => {
     // reset the form when the county data is changed/updated
     reset({ title: countyData?.growingABusiness?.findFunding?.title })
+    setValue(countyData?.growingABusiness?.findFunding?.content)
   }, [countyData])
 
   const submitHandler: SubmitHandler<Partial<EditorFormDataProps>> =

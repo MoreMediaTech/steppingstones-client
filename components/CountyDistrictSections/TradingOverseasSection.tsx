@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { showNotification } from '@mantine/notifications'
 import { Paper, UnstyledButton } from '@mantine/core'
 import { BiEdit } from 'react-icons/bi'
+import { EditorState } from 'draft-js'
 
 import { CountySectionForm } from '@components/forms'
 import { setError } from 'features/upload/uploadSlice'
@@ -45,8 +46,10 @@ const TradingOverseasSection = ({ id }: { id: string }) => {
   useEffect(() => {
     // reset the form when the county data is changed/updated
     reset({ title: countyData?.growingABusiness?.tradingOverseas?.title })
+    setValue(countyData?.growingABusiness?.tradingOverseas?.content)
   }, [countyData])
 
+  
 
   const submitHandler: SubmitHandler<Partial<EditorFormDataProps>> =
     useCallback(async (data) => {

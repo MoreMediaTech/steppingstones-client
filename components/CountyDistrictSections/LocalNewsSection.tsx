@@ -45,6 +45,7 @@ const LocalNewsSection = ({ id }: { id: string }) => {
   useEffect(() => {
     // reset the form when the county data is changed/updated
     reset({ title: districtData?.localNews?.title })
+    setValue(districtData?.localNews?.content)
   }, [districtData])
 
   const convertFileToBase64 = (file: File) => {

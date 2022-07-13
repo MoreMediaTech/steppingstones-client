@@ -1,13 +1,23 @@
-import { AdminLayout } from 'layout'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
-import React from 'react'
 
-const Messages = () => {
+import { AdminLayout } from 'layout'
+import { ComponentShield } from '@components/NextShield'
+import { useGetUserQuery } from 'features/user/usersApiSlice'
+
+const Message = () => {
+    const { data: user, refetch } = useGetUserQuery()
   return (
-    <AdminLayout title="Messages">
-      <section className="overflow-auto">
+    <AdminLayout title="Message">
+        <ComponentShield
+        RBAC
+        showForRole={'SS_EDITOR'}
+        userRole={user?.role as string}
+      >
+
+      <section className="overflow-y-auto bg-slate-50">
         <h1>Messages</h1>
       </section>
+      </ComponentShield>
     </AdminLayout>
   )
 }
@@ -31,5 +41,4 @@ export const getServerSideProps: GetServerSideProps = async (
   }
 }
 
-
-export default Messages
+export default Message

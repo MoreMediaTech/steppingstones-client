@@ -19,6 +19,17 @@ export interface IFormData {
   organisation: string
 }
 
+export interface MessageProps {
+  id: string
+  from: string
+  to: string
+  subject: string
+  company: string
+  html: string
+  message: string
+  createdAt: string
+}
+
 export enum ROLE {
   PARTNER = 'PARTNER',
   COUNTY_EDITOR = 'COUNTY_EDITOR',

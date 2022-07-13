@@ -44,6 +44,7 @@ const FeatureArticleSection = ({ id }: { id: string }) => {
   useEffect(() => {
     // reset the form when the county data is changed/updated
     reset({ title: countyData?.featureArticle?.title })
+    setValue(countyData?.featureArticle?.content)
   }, [countyData])
 
   const submitHandler: SubmitHandler<Partial<EditorFormDataProps>> =

@@ -21,6 +21,7 @@ import { useAppDispatch } from 'app/hooks'
 import { districtPages } from 'data'
 import { NEXT_URL } from '@config/index'
 import EditImageComponent from '@components/EditImageComponent'
+import Button from '@components/Button'
 
 const District = ({
   district,
@@ -35,7 +36,7 @@ const District = ({
   const [isEdit, setIsEdit] = useState<boolean>(false)
   const [preview, setPreview] = useState<string | ArrayBuffer | null>(null)
   const { data: user } = useGetUserQuery()
- 
+
   const {
     data: districtData,
     isLoading: isLoadingDistrict,
@@ -77,7 +78,6 @@ const District = ({
 
   const submitHandler: SubmitHandler<EditImageProps> = useCallback(
     async (data) => {
-
       try {
         const formData = {
           id: districtId,
@@ -113,10 +113,10 @@ const District = ({
           />
           <section className="container mx-auto px-4 py-2">
             <div className="flex justify-between">
-              <button
+              <Button
                 type="button"
-                className="w-1/4 rounded-md bg-[#5E17EB] px-4 py-2 text-center font-semibold text-white shadow-xl transition delay-150 
-                duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:text-xl lg:text-2xl"
+                color="primary"
+                className="md:w-1/4"
                 onClick={() => {
                   router.replace({
                     pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${router.query.county}`,
@@ -127,77 +127,80 @@ const District = ({
                 }}
               >
                 Go Back
-              </button>
+              </Button>
             </div>
           </section>
-          {isLoadingDistrict && (
-            <Spinner classes="w-24 h-24" message="Loading..." />
-          )}
-          <section className="container mx-auto w-full py-24 px-2 md:px-4">
-            {districtData && (
-              <div className="flex w-full space-x-4">
-                <div className="cols-span-1 w-full  md:w-2/5">
-                  {districtData?.imageUrl !== null && !isEdit ? (
-                    <div className="flex flex-col items-center space-y-2">
-                      <Image
-                        src={districtData?.imageUrl}
-                        alt={districtData?.name}
-                        width={500}
-                        height={800}
-                      />
-                      <UnstyledButton
-                        type="button"
-                        onClick={() => setIsEdit(true)}
-                        className="w-full rounded-md bg-[#5E17EB] px-4 py-2 text-center font-semibold text-white shadow-xl transition delay-150 
-                        duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:text-xl lg:text-2xl"
-                      >
-                        click to edit image
-                      </UnstyledButton>
-                    </div>
-                  ) : (
-                    <EditImageComponent
-                      register={register}
-                      handleSubmit={handleSubmit}
-                      submitHandler={submitHandler}
-                      isLoading={isLoading}
-                      errors={errors}
-                      setIsEdit={setIsEdit}
-                      preview={preview}
-                      setPreview={setPreview}
-                      handleChange={handleChange}
-                    />
-                  )}
-                </div>
-                <div className="cols-span-3 w-full">
-                  <div className="w-full py-8">
-                    <div className="grid grid-cols-2 gap-y-8 gap-x-20">
-                      {districtPages.map((pages, index) => (
-                        <button
-                          key={`${pages.title}-${index}`}
+          {isLoadingDistrict ? (
+            <div className='flex items-center justify-center h-[700px]'>
+              <Spinner classes="w-24 h-24" message="Loading..." />
+            </div>
+          ) : (
+            <section className="container mx-auto w-full py-24 px-2 md:px-4">
+              {districtData && (
+                <div className="flex w-full space-x-4">
+                  <div className="cols-span-1 w-full  md:w-2/5">
+                    {districtData?.imageUrl !== null && !isEdit ? (
+                      <div className="flex flex-col items-center space-y-2">
+                        <Image
+                          src={districtData?.imageUrl}
+                          alt={districtData?.name}
+                          width={500}
+                          height={800}
+                        />
+                        <UnstyledButton
                           type="button"
-                          className="flex w-full  cursor-pointer items-center justify-center rounded-xl bg-[#5E17EB] py-6 px-4 text-lg font-semibold text-white 
-                    drop-shadow-lg transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:text-xl lg:text-2xl"
-                          onClick={() =>
-                            router.replace({
-                              pathname: `${NEXT_URL}${pages.path}`,
-                              query: {
-                                county: router.query.county,
-                                countyId: router.query.countyId,
-                                district: districtData?.name,
-                                districtId: districtData?.id,
-                              },
-                            })
-                          }
+                          onClick={() => setIsEdit(true)}
+                          className="w-full rounded-md bg-[#5E17EB] px-4 py-2 text-center font-semibold text-white shadow-xl transition delay-150 
+                        duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:text-xl lg:text-2xl"
                         >
-                          {pages.title}
-                        </button>
-                      ))}
+                          click to edit image
+                        </UnstyledButton>
+                      </div>
+                    ) : (
+                      <EditImageComponent
+                        register={register}
+                        handleSubmit={handleSubmit}
+                        submitHandler={submitHandler}
+                        isLoading={isLoading}
+                        errors={errors}
+                        setIsEdit={setIsEdit}
+                        preview={preview}
+                        setPreview={setPreview}
+                        handleChange={handleChange}
+                      />
+                    )}
+                  </div>
+                  <div className="cols-span-3 w-full">
+                    <div className="w-full py-8">
+                      <div className="grid grid-cols-2 gap-y-8 gap-x-20">
+                        {districtPages.map((pages, index) => (
+                          <button
+                            key={`${pages.title}-${index}`}
+                            type="button"
+                            className="flex w-full  cursor-pointer items-center justify-center rounded-xl bg-[#5E17EB] py-6 px-4 text-lg font-semibold text-white 
+                    drop-shadow-lg transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:text-xl lg:text-2xl"
+                            onClick={() =>
+                              router.replace({
+                                pathname: `${NEXT_URL}${pages.path}`,
+                                query: {
+                                  county: router.query.county,
+                                  countyId: router.query.countyId,
+                                  district: districtData?.name,
+                                  districtId: districtData?.id,
+                                },
+                              })
+                            }
+                          >
+                            {pages.title}
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            )}
-          </section>
+              )}
+            </section>
+          )}
         </section>
       </ComponentShield>
     </AdminLayout>
@@ -218,25 +221,6 @@ export const getServerSideProps: GetServerSideProps = async (
     context.res.end()
   }
 
-  // const user = await getUser(cookies)
-  // const userRoles = ['SS_EDITOR', "COUNTY_EDITOR"]
-
-  // if (!user?.isAdmin ) {
-  //   return {
-  //     redirect: {
-  //       destination: '/not-authorized',
-  //       permanent: false,
-  //     },
-  //   }
-  // }
-  // if (!userRoles.includes(user.role)) {
-  //   return {
-  //     redirect: {
-  //       destination: '/admin',
-  //       permanent: false,
-  //     },
-  //   }
-  // }
   return {
     // props: { user: user as SessionProps },
     props: {

@@ -42,6 +42,7 @@ const NewsSection = ({ id }: { id: string }) => {
   useEffect(() => {
     // reset the form when the county data is changed/updated
     reset({ title: countyData?.welcome?.title })
+    setValue(countyData?.welcome?.content)
   }, [countyData])
 
   const submitHandler: SubmitHandler<Partial<EditorFormDataProps>> =
@@ -68,12 +69,12 @@ const NewsSection = ({ id }: { id: string }) => {
     }, [value])
     
   return (
-    <section className="relative h-auto w-full flex-grow px-2 py-2  md:py-8 md:px-8">
-      <section className="container">
+    <section className="relative h-auto w-full flex-grow  p-2">
+      <section className="w-full bg-white rounded-md p-4 shadow-lg">
         {isLoadingCounty ? (
           <Spinner classes="w-24 h-24" message="Loading..." />
         ) : (
-          <Paper shadow="lg" p="md" radius="md" withBorder className="w-full">
+          <div className="w-full ">
             <div className="flex w-full justify-end">
               <UnstyledButton
                 type="button"
@@ -97,7 +98,7 @@ const NewsSection = ({ id }: { id: string }) => {
                 setIsEdit={setIsEdit}
               />
             )}
-          </Paper>
+          </div>
         )}
       </section>
     </section>

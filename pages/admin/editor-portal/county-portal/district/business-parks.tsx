@@ -7,6 +7,7 @@ import { useGetUserQuery } from 'features/user/usersApiSlice'
 import PortalHeader from '@components/PortalHeader'
 import { NEXT_URL } from '@config/index'
 import { BusinessParksSection } from '@components/CountyDistrictSections'
+import Button from '@components/Button'
 
 
 const BusinessParks = ({
@@ -25,7 +26,7 @@ const BusinessParks = ({
         showForRole={'SS_EDITOR'}
         userRole={user?.role ?? ''}
       >
-        <section className="h-screen overflow-auto bg-stone-100">
+        <section className="h-screen overflow-auto bg-stone-50">
           <section className="sticky w-full bg-white drop-shadow-lg">
             <PortalHeader
               title={`${district} District Council`}
@@ -33,10 +34,10 @@ const BusinessParks = ({
             />
             <section className="container mx-auto bg-white px-4 py-4">
               <div className="flex justify-between">
-                <button
+                <Button
                   type="button"
-                  className="rounded-md bg-[#0c6980] px-2 py-2 text-xl font-semibold text-white shadow-xl 
-                  transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#2796b2] md:px-4 md:py-2 md:text-xl lg:text-2xl "
+                  color='primary'
+                  className="md:w-1/4"
                   onClick={() =>
                     router.replace({
                       pathname: `${NEXT_URL}/admin/editor-portal/county-portal/district`,
@@ -47,7 +48,7 @@ const BusinessParks = ({
                   }
                 >
                   Go Back
-                </button>
+                </Button>
               </div>
             </section>
           </section>

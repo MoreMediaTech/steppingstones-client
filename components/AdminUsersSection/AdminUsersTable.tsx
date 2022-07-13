@@ -18,7 +18,7 @@ const AdminUsersTable = ({
 }) => {
   return (
     <>
-      <section className="container relative mx-auto w-full max-w-screen-xl shadow-md sm:rounded-lg">
+      <section className="relative md:w-full  shadow-md sm:rounded-lg">
         <div className="p-4">
           <label htmlFor="table-search" className="sr-only">
             Search
@@ -41,7 +41,7 @@ const AdminUsersTable = ({
             <input
               type="text"
               id="table-search"
-              className="block w-80 rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500  "
+              className="block md:w-80 rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500  "
               placeholder="Search for items"
             />
           </div>

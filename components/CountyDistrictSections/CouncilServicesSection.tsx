@@ -46,6 +46,7 @@ const CouncilServicesSection = ({ id }: { id: string }) => {
   useEffect(() => {
     // reset the form when the county data is changed/updated
     reset({ title: districtData?.councilServices?.title })
+    setValue(districtData?.councilServices?.content)
   }, [districtData])
 
   const convertFileToBase64 = (file: File) => {

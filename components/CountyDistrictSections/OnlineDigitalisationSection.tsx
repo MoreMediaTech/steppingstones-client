@@ -46,6 +46,7 @@ const OnlineDigitalisationSECTION = ({ id }: { id: string }) => {
   useEffect(() => {
     // reset the form when the county data is changed/updated
     reset({ title: countyData?.topicalBusinessIssues?.onlineDigitilisation?.title })
+    setValue(countyData?.topicalBusinessIssues?.onlineDigitilisation?.content)
   }, [countyData])
 
   const submitHandler: SubmitHandler<Partial<EditorFormDataProps>> =

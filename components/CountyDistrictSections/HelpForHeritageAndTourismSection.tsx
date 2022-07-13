@@ -45,6 +45,7 @@ const HelpForHeritageAndTourismSection = ({ id }: { id: string }) => {
   useEffect(() => {
     // reset the form when the county data is changed/updated
     reset({ title: countyData?.topicalBusinessIssues?.helpForHeritageAndTourism?.title })
+    setValue(countyData?.topicalBusinessIssues?.helpForHeritageAndTourism?.content)
   }, [countyData])
 
   const submitHandler: SubmitHandler<Partial<EditorFormDataProps>> =

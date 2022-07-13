@@ -45,6 +45,7 @@ const FindStartupFundingSection = ({ id }: { id: string }) => {
   useEffect(() => {
     // reset the form when the county data is changed/updated
     reset({ title: countyData?.supportForStartups?.findStartupFunding?.title })
+    setValue(countyData?.supportForStartups?.findStartupFunding?.content)
   }, [countyData])
 
 

@@ -43,6 +43,7 @@ const HelpForMentalHealthAndWellBeingSection = ({ id }: { id: string }) => {
   useEffect(() => {
     // reset the form when the county data is changed/updated
     reset({ title: countyData?.topicalBusinessIssues?.helpForMentalHealthAndWellbeing?.title })
+    setValue(countyData?.topicalBusinessIssues?.helpForMentalHealthAndWellbeing?.content)
   }, [countyData])
 
 

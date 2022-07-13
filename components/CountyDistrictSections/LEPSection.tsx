@@ -45,6 +45,7 @@ const LEPSection = ({ id }: { id: string }) => {
   useEffect(() => {
     // reset the form when the county data is changed/updated
     reset({ title: countyData?.lep?.title })
+    setValue(countyData?.lep?.content)
   }, [countyData])
   
   const submitHandler: SubmitHandler<Partial<EditorFormDataProps>> =

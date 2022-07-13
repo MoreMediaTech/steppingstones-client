@@ -10,6 +10,7 @@ import PortalHeader from '@components/PortalHeader'
 import { AdminLayout } from 'layout'
 import { CurrentUser } from '@lib/types'
 import CreateAdminModal from '@components/AdminUsersSection/CreateAdminModal'
+import Button from '@components/Button'
 
 const Users = () => {
   const { data: user, refetch } = useGetUserQuery()
@@ -26,19 +27,19 @@ const Users = () => {
         {user?.isSuperAdmin && (
           <section className="container mx-auto px-4 py-2">
             <div className="flex justify-end">
-              <button
+              <Button
                 type="button"
-                className=" rounded-md bg-[#5E17EB] px-2 py-2 font-semibold text-white shadow-2xl transition delay-150 duration-300 
-              ease-in-out hover:-translate-y-1 hover:scale-y-100 hover:bg-[#3A0B99] md:text-xl "
+                color="primary"
+                className="md:w-1/4"
                 onClick={() => setOpened((o) => !o)}
               >
                 Create Admin
-              </button>
+              </Button>
             </div>
           </section>
         )}
-        <section className="container mx-auto max-w-screen-xl overflow-auto px-2 lg:px-0 py-6">
-          <h1 className="text-xl font-semibold">Users</h1>
+        <section className="overflow-y-auto ">
+          <h1 className="text-xl font-semibold px-2">Users</h1>
           <AdminUsersSection />
         </section>
       </ComponentShield>

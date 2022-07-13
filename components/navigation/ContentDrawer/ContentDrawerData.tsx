@@ -6,17 +6,6 @@ import { IContentDrawerSubNavData } from '@lib/types'
 
 export const contentDrawerSubNavData: IContentDrawerSubNavData[] = [
   {
-    title: 'Business news and information',
-    path: '/admin/editor-portal/county-portal',
-    subPath: 'business-news-and-information',
-    path2: '/admin/editor-portal/county-portal',
-    subPath2: 'business-news-and-information',
-    icon: <FaIcons.FaListUl color="#f4900c" />,
-    listIcon: <FaIcons.FaRegFile color="#00dcb3" className="-ml-8 " />,
-    iconOpenClosed: <MdIcons.MdArrowRight />,
-    subNav: [],
-  },
-  {
     title: 'Support for Startups',
     path2: '/admin/editor-portal/county-portal',
     subPath2: 'support-for-startups',
@@ -150,11 +139,6 @@ export const contentDrawerSubNavData: IContentDrawerSubNavData[] = [
         title: 'Heritage and Tourism',
         path: '/admin/editor-portal/county-portal',
         subPath: 'topical-business-issues/heritage-and-tourism',
-      },
-      {
-        title: 'Covid Business Support',
-        path: '/admin/editor-portal/county-portal',
-        subPath: 'topical-business-issues/covid-business-support',
       },
       {
         title: 'Low Carbon & Net Zero Targets',

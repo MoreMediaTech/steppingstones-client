@@ -8,11 +8,9 @@ import CouncilServicesSection from './CouncilServicesSection'
 import CouncilGrantsSection from './CouncilGrantsSection'
 import BusinessParksSection from './BusinessParksSection'
 import SupportForEstablishedBusinessSection from './SupportForEstablishedBusinessSection'
-import BusinessNewsAndInformationSection from './BusinessNewsAndInformationSection'
 import HelpForSocialEnterprisesSection from './HelpForSocialEnterprisesSection'
 import HelpForMentalHealthAndWellBeingSection from './HelpForMentalHealthAndWellBeingSection'
 import HelpForHeritageAndTourismSection from './HelpForHeritageAndTourismSection'
-import HelpForCovidBusinessSupportSection from './HelpForCovidBusinessSupportSection'
 import HelpForCarbonAndNetZeroTargetsSection from './HelpForCarbonAndNetZeroTargetsSection'
 import VatAndTaxSection from './VatAndTaxSection'
 import MarketResearchSection from './MarketResearchSection'
@@ -46,11 +44,9 @@ export {
   WelcomeSection,
   WhyInvestSection,
   SupportForEstablishedBusinessSection,
-  BusinessNewsAndInformationSection,
   HelpForSocialEnterprisesSection,
   HelpForMentalHealthAndWellBeingSection,
   HelpForHeritageAndTourismSection,
-  HelpForCovidBusinessSupportSection,
   HelpForCarbonAndNetZeroTargetsSection,
   VatAndTaxSection,
   MarketResearchSection,

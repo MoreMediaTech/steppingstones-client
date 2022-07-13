@@ -23,7 +23,8 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "useUnknownInCatchVariables": false
+    "useUnknownInCatchVariables": false,
+     "noImplicitThis": false
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/CouncilGrantsSection"],
   "exclude": ["node_modules"]

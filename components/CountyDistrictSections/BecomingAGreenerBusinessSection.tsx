@@ -44,6 +44,7 @@ const BecomingAGreenerBusinessSection = ({ id }: { id: string }) => {
     useEffect(() => {
       // reset the form when the county data is changed/updated
       reset({ title: countyData?.supportForStartups?.becomeAGreenerBusiness?.title })
+      setValue(countyData?.supportForStartups?.becomeAGreenerBusiness?.content)
     }, [countyData])
 
 

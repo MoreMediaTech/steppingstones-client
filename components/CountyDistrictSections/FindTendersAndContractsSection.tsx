@@ -26,7 +26,7 @@ const FindTendersAndContractsSection = ({ id }: { id: string }) => {
   const [updateOrCreateFindTAndC, { isLoading }] = useUpdateOrCreateFindTAndCMutation()
 
   const [value, setValue] = useState<string>(
-    countyData?.growingABusiness?.improveSkills?.content
+    countyData?.growingABusiness?.findTendersAndContracts?.content
   )
   const [isEdit, setIsEdit] = useState<boolean>(false)
 
@@ -38,13 +38,14 @@ const FindTendersAndContractsSection = ({ id }: { id: string }) => {
     formState: { errors },
   } = useForm<Partial<EditorFormDataProps>>({
     defaultValues: {
-      title: countyData?.growingABusiness?.improveSkills?.title,
+      title: countyData?.growingABusiness?.findTendersAndContracts?.title,
     },
   })
 
   useEffect(() => {
     // reset the form when the county data is changed/updated
-    reset({ title: countyData?.growingABusiness?.improveSkills?.title })
+    reset({ title: countyData?.growingABusiness?.findTendersAndContracts?.title })
+    setValue(countyData?.growingABusiness?.findTendersAndContracts?.content)
   }, [countyData])
 
 
@@ -87,9 +88,9 @@ const FindTendersAndContractsSection = ({ id }: { id: string }) => {
                 <BiEdit fontSize={44} />
               </UnstyledButton>
             </div>
-            {!isEdit && countyData?.growingABusiness?.improveSkills ? (
+            {!isEdit && countyData?.growingABusiness?.findTendersAndContracts ? (
               <ContentPreview
-                content={countyData?.growingABusiness?.improveSkills}
+                content={countyData?.growingABusiness?.findTendersAndContracts}
               />
             ) : (
               <CountySectionForm

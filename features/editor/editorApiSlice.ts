@@ -208,14 +208,6 @@ const editorApi = editorApiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
     }),
-    updateOrCreateCountyBNI: builder.mutation({
-      query: (data) => ({
-        url: `editor/county-bni`,
-        method: 'PUT',
-        body: { ...data },
-      }),
-      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
-    }),
     updateOrCreateSocialEnterprises: builder.mutation({
       query: (data) => ({
         url: `editor/social-enterprises`,
@@ -243,14 +235,6 @@ const editorApi = editorApiSlice.injectEndpoints({
     updateOrCreateHeritageAndTourism: builder.mutation({
       query: (data) => ({
         url: `editor/heritage-and-tourism`,
-        method: 'PUT',
-        body: { ...data },
-      }),
-      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
-    }),
-    updateOrCreateBusinessSupport: builder.mutation({
-      query: (data) => ({
-        url: `editor/business-support`,
         method: 'PUT',
         body: { ...data },
       }),
@@ -314,7 +298,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     updateOrCreateTradingOverseas: builder.mutation({
       query: (data) => ({
-        url: `editor/bgb`,
+        url: `editor/trading-overseas`,
         method: 'PUT',
         body: { ...data },
       }),
@@ -389,12 +373,10 @@ export const {
   useUpdateOrCreateCountyWelcomeMutation,
   useUpdateOrCreateCountyNewsMutation,
   useUpdateOrCreateCountyLEPMutation,
-  useUpdateOrCreateCountyBNIMutation,
   useUpdateOrCreateSocialEnterprisesMutation,
   useUpdateOrCreateLGBTQAndDisabilitiesMutation,
   useUpdateOrCreateMHWMutation,
   useUpdateOrCreateHeritageAndTourismMutation,
-  useUpdateOrCreateBusinessSupportMutation,
   useUpdateOrCreateCNZTMutation,
   useUpdateOrCreateMarketResearchMutation,
   useUpdateOrCreateLegalChecklistMutation,

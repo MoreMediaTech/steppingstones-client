@@ -47,6 +47,7 @@ const OperateMoreEfficientlySection = ({ id }: { id: string }) => {
     reset({
       title: countyData?.growingABusiness?.operateMoreEfficiently?.title,
     })
+    setValue(countyData?.growingABusiness?.operateMoreEfficiently?.content)
   }, [countyData])
   
   const submitHandler: SubmitHandler<Partial<EditorFormDataProps>> =

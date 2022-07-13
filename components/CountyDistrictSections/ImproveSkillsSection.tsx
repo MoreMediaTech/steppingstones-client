@@ -47,6 +47,7 @@ const ImproveSkillsSection = ({ id }: { id: string }) => {
   useEffect(() => {
     // reset the form when the county data is changed/updated
     reset({ title: countyData?.growingABusiness?.improveSkills?.title })
+    setValue(countyData?.growingABusiness?.improveSkills?.content)
   }, [countyData])
 
  const submitHandler: SubmitHandler<Partial<EditorFormDataProps>> = useCallback(

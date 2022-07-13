@@ -7,6 +7,7 @@ import { useGetUserQuery } from 'features/user/usersApiSlice'
 import PortalHeader from '@components/PortalHeader'
 import { NEXT_URL } from '@config/index'
 import { OnlineDigitalisationSection } from '@components/CountyDistrictSections'
+import Button from '@components/Button'
 
 const OnlineDigitalisation = ({
   county,
@@ -25,7 +26,7 @@ const OnlineDigitalisation = ({
         showForRole={'SS_EDITOR'}
         userRole={user?.role ?? ''}
       >
-        <section className="h-screen overflow-auto bg-stone-100">
+        <section className="h-screen overflow-auto bg-stone-50">
           <section className="sticky w-full bg-white shadow-lg">
             <PortalHeader
               title={`${county} County`}
@@ -33,9 +34,10 @@ const OnlineDigitalisation = ({
             />
             <section className="container mx-auto px-4 py-2">
               <div className="flex justify-between">
-                <button
+                <Button
                   type="button"
-                  className="w-1/4 rounded-md bg-[#0c6980] px-4 py-2 font-semibold text-white drop-shadow-lg"
+                  color='primary'
+                  className="md:w-1/4"
                   onClick={() => {
                     router.replace({
                       pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}/topical-business-issues/`,
@@ -44,7 +46,7 @@ const OnlineDigitalisation = ({
                   }}
                 >
                   Go Back
-                </button>
+                </Button>
               </div>
             </section>
           </section>

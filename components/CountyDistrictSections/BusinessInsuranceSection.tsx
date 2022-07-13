@@ -44,6 +44,7 @@ const BusinessInsuranceSection = ({ id }: { id: string }) => {
   useEffect(() => {
     // reset the form when the county data is changed/updated
     reset({ title: countyData?.supportForStartups?.businessInsurance?.title })
+    setValue(countyData?.supportForStartups?.businessInsurance?.content)
   }, [countyData])
 
   const submitHandler: SubmitHandler<Partial<EditorFormDataProps>> =

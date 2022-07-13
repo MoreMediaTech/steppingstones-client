@@ -43,8 +43,8 @@ const AdminSidebar = ({
 
   const width = isOpen ? '288' : '100'
   return (
-    <header className="relative">
-      <div className='sm:gap-1" items-left mb-2 flex w-screen gap-4 p-2 md:hidden '>
+    <header className="relative bg-slate-50">
+      <div className=' mb-2  p-2 md:hidden '>
         <Burger
           opened={opened}
           aria-label={title}
@@ -54,10 +54,10 @@ const AdminSidebar = ({
         />
       </div>
       <div
-        className={`w-30' group hidden hover:w-64 transition-all duration-300 ease-in-out md:block`}
+        className={`w-30 group hidden hover:w-64 transition-all duration-300 ease-in-out md:block`}
         onClick={() => setIsOpen!((o) => !o)}
       >
-        <Navbar p="sm" width={{ base: width }} className="space-y-8">
+        <Navbar p="sm"  className="space-y-8">
           <Navbar.Section mt="xs">
             <Link href={'/'}>
               <a>

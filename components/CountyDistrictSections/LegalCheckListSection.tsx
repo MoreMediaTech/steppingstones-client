@@ -33,6 +33,7 @@ const LegalCheckListSection = ({ id }: { id: string }) => {
   useEffect(() => {
     // reset the form when the county data is changed/updated
     reset({ title: countyData?.supportForStartups?.LegalChecklist?.title })
+    setValue(countyData?.supportForStartups?.LegalChecklist?.content)
   }, [countyData])
 
   const {

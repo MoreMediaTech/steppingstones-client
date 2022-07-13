@@ -1,40 +1,37 @@
 // RichText.tsx in your components folder
 import dynamic from 'next/dynamic'
 import React from 'react'
+import RichTextToolbar from './RichTextToolbar'
 
+import styles from '../ContentPreview/ContentPreview.module.css'
 const ReactQuill = dynamic(import('react-quill'), {
   ssr: false,
-
 })
 
+// Undo and redo functions for Custom Toolbar
+function undoChange() {
+  this.quill.history?.undo()
+}
+function redoChange() {
+  this.quill.history?.redo()
+}
+
 const modules = {
-  toolbar: [
-    [{ header: '1' }, { header: '2' }, { font: [] }],
-    [{ size: ['small', false, 'large', 'huge'] }],
-    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-    ['blockquote'],
-    [
-      { list: 'ordered' },
-      { list: 'bullet' },
-      { indent: '-1' },
-      { indent: '+1' },
-    ],
-    ['link', 'image', 'video'],
-
-    [{ header: [1, 2, 3, 4, 5, 6, false] }],
-    [{ font: [] }],
-
-    ['clean'],
-  ],
-  clipboard: {
-    // toggle to add extra line breaks when pasting HTML:
-    matchVisual: false,
+  toolbar: {
+    container: '#toolbar',
+    handlers: {
+      undo: undoChange,
+      redo: redoChange,
+    },
+  },
+  history: {
+    delay: 500,
+    maxStack: 100,
+    userOnly: true,
   },
 }
-/*
- * Quill editor formats
- * See https://quilljs.com/docs/formats/
- */
+
+// Formats objects for setting up the Quill editor
 const formats = [
   'header',
   'font',
@@ -42,15 +39,20 @@ const formats = [
   'bold',
   'italic',
   'underline',
+  'align',
   'strike',
+  'script',
   'blockquote',
+  'background',
   'list',
   'bullet',
   'indent',
   'link',
   'image',
-  'video',
+  'color',
+  'code-block',
 ]
+
 
 const RichTextEditor = ({
   value,
@@ -61,6 +63,7 @@ const RichTextEditor = ({
 }) => {
   return (
     <div className='w-full'>
+      <RichTextToolbar id="toolbar" />
       <ReactQuill
         modules={modules}
         placeholder="compose here"
@@ -69,6 +72,7 @@ const RichTextEditor = ({
         onChange={(content) => setValue(content)}
         formats={formats}
         theme="snow"
+        style={{ height: '400px', overflowY: 'scroll' }}
       />
     </div>
   )

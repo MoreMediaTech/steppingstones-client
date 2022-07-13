@@ -46,6 +46,7 @@ const EmployPeopleSection = ({ id }: { id: string }) => {
   useEffect(() => {
     // reset the form when the county data is changed/updated
     reset({ title: countyData?.growingABusiness?.employPeople?.title })
+    setValue(countyData?.growingABusiness?.employPeople?.content)
   }, [countyData])
 
 

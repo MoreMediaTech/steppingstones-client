@@ -13,6 +13,7 @@ import PortalHeader from '@components/PortalHeader'
 import { NEXT_URL } from '@config/index'
 import { CreateCountyForm } from '@components/forms'
 import { useGetCountiesQuery } from 'features/editor/editorApiSlice'
+import Button from '@components/Button'
 
 const County = () => {
   const router = useRouter()
@@ -61,25 +62,25 @@ const County = () => {
           />
           <section className="container mx-auto px-4 py-2">
             <div className="flex justify-between">
-              <button
+              <Button
                 type="button"
-                className="w-1/4 rounded-md bg-[#5E17EB] px-4 py-2 text-center font-semibold text-white shadow-xl transition delay-150 
-                duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:text-xl lg:text-2xl"
+                color='primary'
+                className="md:w-1/4 "
                 onClick={() => {
                   router.back()
                 }}
               >
                 Go Back
-              </button>
+              </Button>
 
-              <button
+              <Button
                 type="button"
-                className="w-1/4 rounded-md bg-[#5E17EB] px-4 py-4 font-semibold text-white shadow-2xl transition delay-150 duration-300 
-              ease-in-out hover:-translate-y-1 hover:scale-y-100 hover:bg-[#3A0B99] md:text-xl lg:text-2xl"
+                color='primary'
+                className="md:w-1/4 "
                 onClick={() => setOpened((o) => !o)}
               >
                 Add County
-              </button>
+              </Button>
             </div>
           </section>
 

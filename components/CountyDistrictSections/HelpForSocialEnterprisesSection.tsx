@@ -44,6 +44,7 @@ const HelpForSocialEnterprisesSection = ({ id }: { id: string }) => {
   useEffect(() => {
     // reset the form when the county data is changed/updated
     reset({ title: countyData?.topicalBusinessIssues?.helpForSocialEnterprises?.title })
+    setValue(countyData?.topicalBusinessIssues?.helpForSocialEnterprises?.content)
   }, [countyData])
 
 

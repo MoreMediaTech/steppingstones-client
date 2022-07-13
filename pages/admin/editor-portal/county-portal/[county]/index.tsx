@@ -23,6 +23,7 @@ import { UnstyledButton } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { setError } from 'features/upload/uploadSlice'
 import { contentDrawerSubNavData } from '@components/navigation/ContentDrawer/ContentDrawerData'
+import Button from '@components/Button'
 
 type DistrictProps = {
   id: string
@@ -110,10 +111,10 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
           />
           <section className="container mx-auto px-4 py-2">
             <div className="flex justify-between">
-              <button
+              <Button
                 type="button"
-                className="rounded-md bg-[#5E17EB] px-4 py-2 text-center font-semibold text-white shadow-xl transition delay-150 duration-300 
-                ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:w-1/4 md:text-xl lg:text-2xl"
+                color="primary"
+                className=" md:w-1/4 "
                 onClick={() => {
                   router.replace({
                     pathname: `${NEXT_URL}/admin/editor-portal/county-portal`,
@@ -121,16 +122,16 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
                 }}
               >
                 Go Back
-              </button>
+              </Button>
 
-              <button
+              <Button
                 type="button"
-                className="rounded-md bg-[#5E17EB] px-4 py-2 text-center font-semibold text-white shadow-xl transition delay-150 duration-300 
-                ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:w-1/4 md:text-xl lg:text-2xl"
+                color='primary'
+                className="md:w-1/4 "
                 onClick={() => setOpened((o) => !o)}
               >
                 Add District
-              </button>
+              </Button>
             </div>
           </section>
           {isLoadingCounty && (
@@ -139,24 +140,26 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
           <section className="container mx-auto w-full overflow-auto py-24 px-2 md:px-4">
             {countyData && (
               <div className="flex h-full w-full flex-col gap-8 md:flex-row">
-                <div className="cols-span-1 w-full  md:w-2/5">
+                <div className="cols-span-1 w-full  md:w-2/5 space-y-2">
                   {countyData?.imageUrl !== null && !isEdit ? (
-                    <div className="flex flex-col space-y-2">
+                    <>
+                    <div className="relative flex flex-col space-y-2 w-full h-[650px] ">
                       <Image
                         src={countyData?.imageUrl}
                         alt={countyData?.name}
-                        width={500}
-                        height={720}
+                        objectFit="contain"
+                        layout="fill"
                       />
+                    </div>
                       <UnstyledButton
                         type="button"
                         onClick={() => setIsEdit(true)}
                         className="w-full rounded-md bg-[#5E17EB] px-4 py-2 text-center font-semibold text-white shadow-xl transition delay-150 
-                        duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:text-xl lg:text-2xl"
+                        duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:text-xl"
                       >
                         click to edit image
                       </UnstyledButton>
-                    </div>
+                    </>
                   ) : (
                     <EditImageComponent
                       register={register}
@@ -177,7 +180,7 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
                       <button
                         type="button"
                         className="flex w-full  cursor-pointer items-center justify-center rounded-xl bg-[#5E17EB] py-4 px-4 text-lg font-semibold text-white shadow-xl 
-                    transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:py-6 md:text-xl lg:text-2xl"
+                    transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:py-6 md:text-xl "
                         onClick={() => {
                           router.replace({
                             pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}/welcome`,
@@ -190,7 +193,7 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
                       <button
                         type="button"
                         className="flex w-full  cursor-pointer items-center justify-center rounded-xl bg-[#5E17EB] py-4 px-4 text-lg font-semibold text-white drop-shadow-lg 
-                    transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:py-6 md:text-xl lg:text-2xl"
+                    transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:py-6 md:text-xl "
                         onClick={() => {
                           router.replace({
                             pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}/lep`,
@@ -203,7 +206,7 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
                       <button
                         type="button"
                         className="flex w-full  cursor-pointer items-center justify-center rounded-xl bg-[#5E17EB] py-4 px-4 text-lg font-semibold text-white drop-shadow-lg 
-                    transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:py-6 md:text-xl lg:text-2xl"
+                    transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:py-6 md:text-xl "
                         onClick={() => {
                           router.replace({
                             pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}/news`,
@@ -215,14 +218,14 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
                       </button>
                     </div>
                     <div className="w-full space-y-4 py-8">
-                      <div className="grid grid-cols-2 gap-y-8 gap-x-10 md:gap-x-20">
+                      <div className="grid grid-cols-2 gap-y-4 gap-x-10 md:gap-x-20">
                         {countyData?.districts?.map(
                           (district: DistrictProps) => (
                             <button
                               key={district?.id}
                               type="button"
                               className="flex w-full  cursor-pointer items-center justify-center rounded-xl bg-[#5E17EB] py-6 px-4 text-lg font-semibold text-white 
-                    drop-shadow-lg transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:text-xl lg:text-2xl"
+                    drop-shadow-lg transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:text-xl "
                               onClick={() =>
                                 router.replace({
                                   pathname: `${NEXT_URL}/admin/editor-portal/county-portal/district`,
@@ -248,8 +251,8 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
                             <button
                               key={`${content?.title}-${index}`}
                               type="button"
-                              className="flex w-full  cursor-pointer items-center justify-center rounded-xl bg-[#5E17EB] py-2 px-2 text-lg font-semibold text-white drop-shadow-lg 
-                    transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:py-6 md:text-xl lg:text-xl"
+                              className="flex w-full  cursor-pointer items-center justify-center rounded-xl bg-[#5E17EB] py-2 px-2 text-lg font-semibold text-white shadow-lg 
+                    transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:py-6 "
                               onClick={() =>
                                 router.replace({
                                   pathname: `${NEXT_URL}${content?.path2}/${county}/${content?.subPath2}`,

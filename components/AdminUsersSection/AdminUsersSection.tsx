@@ -14,22 +14,24 @@ const AdminUsersSection = () => {
     setOpen(false)
     setUserState(null)
   }
+
+  if (isLoading) {
+    return (
+      <div className="item-center flex h-[700px] justify-center">
+        <Spinner classes="h-24 w-24" message="loading messages..." />
+      </div>
+    )
+  }
   return (
     <>
-      <section className="container mx-auto max-w-screen-xl ">
-        {isLoading ? (
-          <div className='flex items-center justify-center h-[400px]'>
-            <Spinner classes="w-24 h-24" message="Loading users..." />
-          </div>
-        ) : (
-          <AdminUsersTable
-            users={users as CurrentUser[]}
-            open={open}
-            setOpen={setOpen}
-            refetch={refetch}
-            setUser={setUserState}
-          />
-        )}
+      <section className="">
+        <AdminUsersTable
+          users={users as CurrentUser[]}
+          open={open}
+          setOpen={setOpen}
+          refetch={refetch}
+          setUser={setUserState}
+        />
       </section>
       <UpdateAdminUserModal
         key={user?.id}

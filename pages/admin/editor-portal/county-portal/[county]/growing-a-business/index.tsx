@@ -9,11 +9,10 @@ import PortalHeader from '@components/PortalHeader'
 import { AdminLayout } from 'layout'
 import { IContentDrawerSubNavData } from '@lib/types'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
-import {
-  useGetCountyByIdQuery,
-} from 'features/editor/editorApiSlice'
+import { useGetCountyByIdQuery } from 'features/editor/editorApiSlice'
 import { NEXT_URL } from '@config/index'
 import { contentDrawerSubNavData } from '@components/navigation/ContentDrawer/ContentDrawerData'
+import Button from '@components/Button'
 
 const GrowingABusiness = ({
   county,
@@ -22,55 +21,55 @@ const GrowingABusiness = ({
   county: string
   countyId: string
 }) => {
-    const router = useRouter()
-    const { data: user } = useGetUserQuery()
-    const {
-      data: countyData,
-      isLoading: isLoadingCounty,
-      isError: isErrorCounty,
-    } = useGetCountyByIdQuery(countyId, { refetchOnMountOrArgChange: true })
+  const router = useRouter()
+  const { data: user } = useGetUserQuery()
+  const {
+    data: countyData,
+    isLoading: isLoadingCounty,
+    isError: isErrorCounty,
+  } = useGetCountyByIdQuery(countyId, { refetchOnMountOrArgChange: true })
 
-    const growingABusinessSubPaths = contentDrawerSubNavData.filter(
-      (item) => item.title === 'Growing a business'
-    )
+  const growingABusinessSubPaths = contentDrawerSubNavData.filter(
+    (item) => item.title === 'Growing a business'
+  )
 
-    return (
-      <AdminLayout title={`${county} County - Editor Dashboard`}>
-        <ComponentShield
-          RBAC
-          showForRole={'SS_EDITOR'}
-          userRole={user?.role ?? ''}
-        >
-          <section className="h-screen overflow-auto">
-            <PortalHeader
-              title={`${county} County Portal`}
-              subTitle="Please select from the menu below"
-              data={countyData}
-            />
-            <section className="container mx-auto px-4 py-2">
-              <div className="flex justify-between">
-                <button
-                  type="button"
-                  className="md:w-1/4 rounded-md bg-[#5E17EB] px-4 py-2 text-center font-semibold text-white shadow-xl transition delay-150 
-                duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:text-xl lg:text-2xl"
-                  onClick={() => {
-                    router.replace({
-                      pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}`,
-                      query: { ...router.query },
-                    })
-                  }}
-                >
-                  Go Back
-                </button>
-              </div>
-            </section>
-            {isLoadingCounty && (
-              <Spinner classes="w-24 h-24" message="Loading..." />
-            )}
+  return (
+    <AdminLayout title={`${county} County - Editor Dashboard`}>
+      <ComponentShield
+        RBAC
+        showForRole={'SS_EDITOR'}
+        userRole={user?.role ?? ''}
+      >
+        <section className="h-screen overflow-auto">
+          <PortalHeader
+            title={`${county} County Portal`}
+            subTitle="Please select from the menu below"
+            data={countyData}
+          />
+          <section className="container mx-auto px-4 py-2">
+            <div className="flex justify-between">
+              <Button
+                type="button"
+                color="primary"
+                className="md:w-1/4"
+                onClick={() => {
+                  router.replace({
+                    pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}`,
+                    query: { ...router.query },
+                  })
+                }}
+              >
+                Go Back
+              </Button>
+            </div>
+          </section>
+          {isLoadingCounty ? (
+            <Spinner classes="w-24 h-24" message="Loading..." />
+          ) : (
             <section className="container mx-auto w-full overflow-auto py-24 px-2 md:px-4">
               {countyData && (
                 <div className="flex h-full w-full flex-col gap-8 md:flex-row">
-                  <div className="cols-span-1 w-full h-full  md:w-2/5">
+                  <div className="cols-span-1 h-full w-full  md:w-2/5">
                     {countyData?.imageUrl !== null && (
                       <div className="flex flex-col space-y-2">
                         <Image
@@ -118,10 +117,11 @@ const GrowingABusiness = ({
                 </div>
               )}
             </section>
-          </section>
-        </ComponentShield>
-      </AdminLayout>
-    )
+          )}
+        </section>
+      </ComponentShield>
+    </AdminLayout>
+  )
 }
 
 export const getServerSideProps: GetServerSideProps = async (

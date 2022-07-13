@@ -43,6 +43,7 @@ const HelpForCarbonAndNetZeroTargetsSection = ({ id }: { id: string }) => {
   useEffect(() => {
     // reset the form when the county data is changed/updated
     reset({ title: countyData?.topicalBusinessIssues?.helpForCarbonAndNetZeroTargets?.title })
+    setValue(countyData?.topicalBusinessIssues?.helpForCarbonAndNetZeroTargets?.content)
   }, [countyData])
 
 

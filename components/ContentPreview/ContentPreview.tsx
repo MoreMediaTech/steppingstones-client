@@ -2,6 +2,7 @@ import Image from 'next/image'
 import React from 'react'
 import parse from 'html-react-parser'
 import 'react-quill/dist/quill.snow.css'
+import styles from './ContentPreview.module.css'
 import EconomicDataPreview from './EconomicDataPreview'
 
 type ContentPreviewProps = {
@@ -37,11 +38,11 @@ const ContentPreview = ({ content, economicData }: ContentPreviewProps) => {
           </div>
         )}
         {content?.content && (
-          <div className="ql-editor">{parse(content?.content as string)}</div>
+          <div className={styles.ql_snow}>
+            <div className="ql-editor">{parse(content?.content as string)}</div>
+          </div>
         )}
-        {economicData && (
-          <EconomicDataPreview economicData={economicData} />
-        )}
+        {economicData && <EconomicDataPreview economicData={economicData} />}
       </div>
     </div>
   )

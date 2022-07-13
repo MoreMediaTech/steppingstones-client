@@ -42,6 +42,7 @@ const MarketResearchSection = ({ id }: { id: string }) => {
   useEffect(() => {
     // reset the form when the county data is changed/updated
     reset({ title: countyData?.supportForStartups?.marketResearch?.title })
+    setValue(countyData?.supportForStartups?.marketResearch?.content)
   }, [countyData])
 
   const submitHandler: SubmitHandler<Partial<EditorFormDataProps>> =

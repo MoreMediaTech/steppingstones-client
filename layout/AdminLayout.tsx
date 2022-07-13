@@ -81,7 +81,7 @@ const AdminLayout = ({
       />
       <main
         className={`md:ml-30
-        relative w-full bg-slate-200`}
+        relative w-full bg-slate-50`}
       >
         {children}
       </main>
