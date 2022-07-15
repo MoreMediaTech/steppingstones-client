@@ -24,7 +24,7 @@ const EnquiryForm = () => {
   const handleSendEmail: SubmitHandler<IEmailFormData> = async (data) => {
     const message = {
       from: data.from,
-      to: 'admin@steppingstonesapp.com',
+      to: 'enquires@steppingstonesapp.com',
       subject: data.subject,
       company: data.company,
       html: enquiryEmailTemplate(data.subject, data.message),

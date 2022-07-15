@@ -3,7 +3,7 @@ import { emailApiSlice } from 'app/api/apiSlice'
 
 export const emailApi = emailApiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    sendEnquiry: builder.mutation<MessageProps, MessageProps>({
+    sendEnquiry: builder.mutation<MessageProps, Partial<MessageProps>>({
       query: (data) => ({
         url: 'email/sendEnquiry',
         method: 'POST',
