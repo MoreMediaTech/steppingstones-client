@@ -64,7 +64,7 @@ const County = () => {
             <div className="flex justify-between">
               <Button
                 type="button"
-                color='primary'
+                color="primary"
                 className="md:w-1/4 "
                 onClick={() => {
                   router.back()
@@ -75,7 +75,7 @@ const County = () => {
 
               <Button
                 type="button"
-                color='primary'
+                color="primary"
                 className="md:w-1/4 "
                 onClick={() => setOpened((o) => !o)}
               >
