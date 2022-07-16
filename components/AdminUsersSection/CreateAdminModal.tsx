@@ -4,7 +4,7 @@ import { showNotification } from '@mantine/notifications'
 import { Modal } from '@mantine/core'
 
 import { useCreateUserMutation } from 'features/user/usersApiSlice'
-import { CurrentUser, EditImageProps, IFormData } from '@lib/types'
+import { CurrentUser } from '@lib/types'
 import CreateAdminForm from '@components/forms/CreateAdminForm'
 import { generatePass } from '@lib/generatePass'
 
