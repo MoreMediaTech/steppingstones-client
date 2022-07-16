@@ -113,11 +113,11 @@ export interface CookieConsentProps {
   customDeclineButtonProps: object
 }
 
-type EditImageProps = {
+export type EditImageProps = {
   imageFile: FileList
 }
 
-type EditorFormDataProps = {
+export type EditorFormDataProps = {
   intro: string
   title: string
   imageUrl: string | FileList | ArrayBuffer 
