@@ -3,10 +3,10 @@ import React from 'react'
 
 const CookiePolicy = () => {
   return (
-    <MainLayout>
-      <section className="relative mt-24 bg-slate-50">
-        <section className="container mx-auto max-w-screen-md space-y-4 py-8 text-justify font-normal">
-          <h1 className="text-lg font-semibold">
+    <MainLayout title="Cookie Policy">
+      <section className="relative mt-24 bg-slate-50 py-8">
+        <section className="mx-4 space-y-4 py-4 text-justify text-sm font-thin md:container md:mx-auto md:max-w-screen-md md:py-8">
+          <h1 className="text-sm md:text-lg font-bold">
             STEPPING STONES, SOLUTIONS FOR BUSINESS APP COOKIE POLICY
           </h1>
           <h2 className="font-semibold">Last updated July 12, 2022</h2>

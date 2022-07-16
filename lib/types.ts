@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import type { NextRouter } from 'next/router'
+
 export interface IFormData {
   name: string
   email: string
@@ -35,6 +36,81 @@ export enum ROLE {
   COUNTY_EDITOR = 'COUNTY_EDITOR',
   SS_EDITOR = 'SS_EDITOR',
   USER = 'USER',
+}
+
+export enum OPTIONS {
+  TOP = 'top',
+  BOTTOM = 'bottom',
+  NONE = 'none',
+  LOCATION = 'location',
+}
+
+export enum SAME_SITE_OPTIONS {
+  STRICT = 'strict',
+  LAX = 'lax',
+  NONE = 'none',
+}
+
+export enum VISIBLE_OPTIONS {
+  HIDDEN = 'hidden',
+  SHOW = 'show',
+  BY_COOKIE_VALUE = 'byCookieValue',
+}
+
+export interface CookieConsentProps {
+  location: OPTIONS
+  visible: VISIBLE_OPTIONS
+  isVisible: boolean
+  sameSite: SAME_SITE_OPTIONS
+  consentStyle: string
+  buttonStyle: string
+  declineButtonStyle: string
+  contentStyle: string
+  children: ReactNode // eslint-disable-line react/forbid-prop-types
+  disableStyles: boolean
+  hideOnAccept: boolean
+  hideOnDecline: boolean
+  accept: boolean
+  decline: boolean
+  handleAccept(): void
+  handleDecline(): void
+  setIsVisible: React.Dispatch<React.SetStateAction<boolean>>
+  setAccept: React.Dispatch<React.SetStateAction<boolean>>
+  setDecline: React.Dispatch<React.SetStateAction<boolean>>
+  buttonText: string | ReactNode
+  declineButtonText: string | ReactNode
+  cookieName: string
+  cookieValue: string | boolean | number
+  declineCookieValue: string | boolean | number
+  setDeclineCookie: boolean
+  debug: boolean
+  expires: number
+  containerClasses: string
+  contentClasses: string
+  buttonClasses: string
+  buttonWrapperClasses: string
+  declineButtonClasses: string
+  buttonId: string
+  declineButtonId: string
+  extraCookieOptions: object
+  disableButtonStyles: boolean
+  enableDeclineButton: boolean
+  flipButtons: boolean
+  ButtonComponent: ReactNode
+  cookieSecurity: boolean
+  overlay: boolean
+  overlayClasses: string
+  overlayStyle: object
+  onOverlayClick(): void
+  acceptOnOverlayClick: boolean
+  ariaAcceptLabel: string
+  ariaDeclineLabel: string
+  acceptOnScroll: boolean
+  acceptOnScrollPercentage: number
+  customContentAttributes: object
+  customContainerAttributes: object
+  customButtonProps: object
+  customDeclineButtonProps: object
 }
 
 type EditImageProps = {

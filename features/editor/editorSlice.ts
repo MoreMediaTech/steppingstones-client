@@ -1,4 +1,4 @@
-import { DistrictDataProps } from './../../lib/types.d';
+import { DistrictDataProps } from '../../lib/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { RootState } from 'app/store'

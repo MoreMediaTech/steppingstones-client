@@ -13,7 +13,7 @@ import { useLogoutMutation } from 'features/auth/authApiSlice'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
 import { AdminNavbar, AdminSidebar } from '@components/navigation'
 import { NEXT_URL } from '@config/index'
-import { Children } from 'lib/types'
+import { Children } from '@lib/types'
 interface ILayout extends Children {
   title?: string
   description?: string

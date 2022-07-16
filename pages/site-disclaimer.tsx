@@ -3,12 +3,16 @@ import React from 'react'
 
 const SiteDisclaimer = () => {
   return (
-    <MainLayout>
-      <section className="relative bg-slate-50">
-        <section className="container mx-auto max-w-screen-md space-y-2 py-8 text-justify font-normal">
-          <h1 className="text-lg font-semibold">STEPPING STONES, SOLUTIONS FOR BUSINESS APP DISCLAIMER NOTICE</h1>
+    <MainLayout title="Site Disclaimer">
+      <section className="relative mt-24 bg-slate-50 py-8">
+        <section className="mx-4 space-y-4 py-4 text-justify text-sm font-thin md:container md:mx-auto md:max-w-screen-md md:py-8">
+          <h1 className="text-lg font-bold">
+            STEPPING STONES, SOLUTIONS FOR BUSINESS APP DISCLAIMER NOTICE
+          </h1>
           <h2 className="font-semibold">Last updated July 12, 2022</h2>
-          <h2 className="font-semibold">Website Disclaimer of SteppingStonesApp.com</h2>
+          <h2 className="font-semibold">
+            Website Disclaimer of SteppingStonesApp.com
+          </h2>
           <p>Thank you for visiting the Stepping Stones.</p>
           <p>
             Please note that the information provided on SteppingStonesApp.com

@@ -1,4 +1,4 @@
-import { IEmailFormData } from './../../lib/types.d'
+import { IEmailFormData } from '../../lib/types'
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { AppThunk, RootState, AppDispatch } from 'app/store'

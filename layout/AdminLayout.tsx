@@ -5,7 +5,7 @@ import Head from 'next/head'
 import { useLogoutMutation } from 'features/auth/authApiSlice'
 import { AdminSidebar } from '@components/navigation'
 import { NEXT_URL } from '@config/index'
-import { Children } from 'lib/types'
+import { Children } from '@lib/types'
 interface ILayout extends Children {
   title?: string
   description?: string

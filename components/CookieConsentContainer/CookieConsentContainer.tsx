@@ -3,15 +3,19 @@ import { Modal, Accordion, Paper, Switch } from '@mantine/core'
 import Link from 'next/link'
 
 const CookieConsentContainer = ({
-  checked,
+  snCookies,
   opened,
-  setChecked,
+  setSNCookies,
   setOpened,
+  handleAccept,
+  handleConfirmChoices
 }: {
-  checked: boolean
+  snCookies: boolean
   opened: boolean
-  setChecked: React.Dispatch<React.SetStateAction<boolean>>
+  setSNCookies: React.Dispatch<React.SetStateAction<boolean>>
   setOpened: React.Dispatch<React.SetStateAction<boolean>>
+  handleAccept: () => void
+  handleConfirmChoices: () => void
 }) => {
   return (
     <Modal
@@ -26,7 +30,7 @@ const CookieConsentContainer = ({
     >
       <section className="space-y-2 border-t border-gray-200 py-4">
         <h1 className="font-semibold text-gray-900">Cookie Usage</h1>
-        <p className="text-gray-700">
+        <p className="text-sm text-gray-700 md:text-lg">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
           minim veniam quis exercitation.{' '}
@@ -41,11 +45,13 @@ const CookieConsentContainer = ({
         </p>
         <Accordion multiple>
           <Accordion.Item
-            label="Strictly necessary cookies"
+            label={
+              <p className="text-sm md:text-lg">Strictly necessary cookies</p>
+            }
             className="bg-gray-50"
           >
             <div className="flex justify-between gap-4 text-justify">
-              <p>
+              <p className="text-sm font-thin md:text-base">
                 These cookies are essential for the proper functioning of my
                 website. Without these cookies, the website would not work
                 properly
@@ -61,11 +67,15 @@ const CookieConsentContainer = ({
             </div>
           </Accordion.Item>
           <Accordion.Item
-            label="Performance and analytics cookies"
+            label={
+              <p className="text-sm md:text-lg">
+                Performance and analytics cookies
+              </p>
+            }
             className=" bg-gray-50"
           >
             <div className="flex justify-between gap-4 text-justify">
-              <p>
+              <p className="text-sm font-thin md:text-base">
                 These cookies collect information about how you use the website,
                 which pages you visited and which links you clicked on. All of
                 the data is anonymized and cannot be used to identify you
@@ -73,38 +83,39 @@ const CookieConsentContainer = ({
               <Switch
                 onLabel="ON"
                 offLabel="OFF"
-                checked={checked}
-                onChange={(event) => setChecked(event.currentTarget.checked)}
+                checked={snCookies}
+                onChange={(event) => setSNCookies(event.currentTarget.checked)}
                 size="lg"
                 color="green"
               />
             </div>
           </Accordion.Item>
         </Accordion>
-        <Paper className="py-4">
-          <p className="text-gray-700">
+        <Paper className="py-4 px-2 hover:bg-gray-50">
+          <p className="text-sm text-gray-700 md:text-lg">
             For more information about cookies and your choices, please visit
             our{' '}
           </p>
           <Link href={'/cookie-policy'}>
             <a
-              className="text-gray-900 underline"
+              className="text-sm text-gray-900 underline md:text-lg"
               onClick={() => setOpened(false)}
             >
               Cookie Policy
             </a>
           </Link>
         </Paper>
-        <Paper className="flex w-full items-center justify-between border-t border-gray-200 pt-4">
-          <div className="flex items-center gap-2">
-            <Button type="button" color="dark">
-              Accept all
-            </Button>
-            <Button type="button" color="gray">
-              Reject all
-            </Button>
-          </div>
-          <Button type="button" color="gray">
+        <Paper className="flex w-full flex-col items-center justify-between gap-2 border-t border-gray-200 pt-4 md:flex-row md:gap-16">
+          <Button type="button" color="dark" className="w-full md:w-1/3" onClick={handleAccept}>
+            Accept all
+          </Button>
+
+          <Button
+            type="button"
+            color="gray"
+            className="w-full text-xs md:w-1/3 md:text-lg"
+            onClick={handleConfirmChoices}
+          >
             Confirm Choices
           </Button>
         </Paper>

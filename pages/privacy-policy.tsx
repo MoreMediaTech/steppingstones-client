@@ -4,9 +4,9 @@ import Link from 'next/link'
 const PrivacyPolicy = () => {
   return (
     <MainLayout title="Privacy Policy">
-      <section className="relative mt-24 bg-slate-50 py-8">
-        <section className="container mx-auto max-w-screen-md space-y-4 py-8 text-justify font-normal">
-          <h1 className="text-lg font-semibold">
+      <section className="relative mt-24 bg-slate-50 py-4 md:py-8">
+        <section className="md:container mx-4 md:mx-auto md:max-w-screen-md space-y-4 py-4 md:py-8 text-sm text-justify font-thin">
+          <h1 className="text-sm md:text-lg font-bold">
             STEPPING STONES, SOLUTIONS FOR BUSINESS APP PRIVACY POLICY
           </h1>
           <h2 className="font-semibold">Last updated July 12, 2022</h2>
