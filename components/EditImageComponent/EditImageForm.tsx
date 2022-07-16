@@ -1,7 +1,10 @@
 import { Button } from '@mantine/core'
 import Image from 'next/image'
 import {
+  DeepRequired,
   FieldError,
+  FieldErrorsImpl,
+  Merge,
   SubmitHandler,
   UseFormHandleSubmit,
   UseFormRegister,
@@ -14,7 +17,9 @@ import { EditImageProps } from '@lib/types'
 interface IEditImageComponent {
   submitHandler: SubmitHandler<EditImageProps>
   errors: {
-    imageFile?: FieldError | undefined
+    imageFile?:
+      Merge<FieldError, FieldErrorsImpl<DeepRequired<FileList>>>
+      | undefined
   }
   isLoading: boolean
   preview: string | ArrayBuffer | null
