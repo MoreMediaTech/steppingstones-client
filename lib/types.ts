@@ -120,7 +120,7 @@ export type EditImageProps = {
 export type EditorFormDataProps = {
   intro: string
   title: string
-  imageUrl: string | FileList | ArrayBuffer 
+  imageUrl?: string | FileList | ArrayBuffer 
   imageFile: FileList
   content: string
 }

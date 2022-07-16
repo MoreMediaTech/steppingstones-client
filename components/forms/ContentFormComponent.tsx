@@ -20,9 +20,7 @@ const RichTextEditor = dynamic(() => import('@components/RichText'), {
 interface IContentFormComponent {
   submitHandler: SubmitHandler<EditorFormDataProps>
   errors: {
-    intro?: FieldError | undefined
     title?: FieldError | undefined
-    imageFile?: FieldError | undefined
     content?: FieldError | undefined
   }
   value: string
@@ -58,25 +56,6 @@ const ContentFormComponent = ({
         <h1>Content</h1>
       </div>
       <Divider />
-      <div className="flex w-full flex-col justify-between md:flex-row">
-        <label htmlFor="intro" className="w-1/4">
-          Intro
-        </label>
-        <Textarea
-          id="intro"
-          aria-label="intro"
-          placeholder="Enter Intro"
-          className="w-full"
-          autosize
-          minRows={3}
-          {...register('intro', {
-            pattern: {
-              value: /^[a-zA-Z0-9!@#$%^&*()._ -]+$/,
-              message: 'Please enter a valid District name',
-            },
-          })}
-        />
-      </div>
       <div className="flex w-full flex-col justify-between md:flex-row md:items-center">
         <label htmlFor="title" className="w-1/4">
           Title<span className="ml-1 text-red-500">*</span>
@@ -99,54 +78,6 @@ const ContentFormComponent = ({
             },
           })}
         />
-      </div>
-      <Divider />
-      <div className="flex w-full flex-col justify-between md:flex-row ">
-        <label htmlFor="main-image" className="flex w-1/4">
-          Main Image
-        </label>
-        {preview ? (
-          <div className="flex w-full justify-start">
-            <div className="flex flex-col space-y-2">
-              <Image
-                src={preview as string}
-                alt="preview"
-                width={150}
-                height={150}
-              />
-              <Button
-                type="button"
-                onClick={() => setPreview(null)}
-                className="w-54 bg-blue-500"
-              >
-                delete
-              </Button>
-            </div>
-          </div>
-        ) : (
-          <div className="flex w-full justify-start">
-            <label htmlFor="main-image" className="flex w-full">
-              <div className="flex w-1/4 cursor-pointer items-center justify-center border-2 border-gray-200 p-2">
-                <div className="flex h-32 w-full flex-col border-4 border-dashed hover:border-gray-300 hover:bg-gray-100">
-                  <div className="flex flex-col items-center justify-center pt-7">
-                    <MdCloudUpload className="text-gray-300" fontSize={44} />
-                    <p className="text-gray-300">Select Image</p>
-                    <input
-                      id="main-image"
-                      type="file"
-                      accept="image/*"
-                      aria-label="main-image"
-                      className="w-full cursor-pointer opacity-0"
-                      {...register('imageFile', {
-                        onChange: (e) => handleChange(e)
-                      })}
-                    />
-                  </div>
-                </div>
-              </div>
-            </label>
-          </div>
-        )}
       </div>
       <Divider />
       <div className="flex w-full flex-col justify-between md:flex-row ">
