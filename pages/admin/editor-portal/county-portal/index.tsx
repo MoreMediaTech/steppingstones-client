@@ -2,12 +2,12 @@ import { useState } from 'react'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import { MdOutlineArrowRight, MdOutlineArrowLeft } from 'react-icons/md'
 import { useRouter } from 'next/router'
+import { Loader } from '@mantine/core'
 
 import { ComponentShield } from '@components/NextShield'
 import { AdminLayout } from 'layout'
 import { CountyDataProps } from '@lib/types'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
-import Spinner from '@components/spinner'
 import PortalHeader from '@components/PortalHeader'
 
 import { NEXT_URL } from '@config/index'
@@ -86,7 +86,9 @@ const County = () => {
 
           <section className="flex items-center justify-center md:h-[700px] md:py-28">
             {isLoadingCounties ? (
-              <Spinner classes="w-24 h-24" message="Loading..." />
+              <div className="flex h-[700px] items-center justify-center">
+                <Loader size="xl" variant="bars" />
+              </div>
             ) : (
               <>
                 <div className="h-full">

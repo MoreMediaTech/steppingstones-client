@@ -1,7 +1,7 @@
 import { CountyDataProps } from '@lib/types'
 import { editorApiSlice } from 'app/api/apiSlice'
 import { AxiosError } from 'axios'
-import { setCounties, setCounty, setDistrict, setError } from './editorSlice'
+import { setCounties, setCounty, setDistrict, setError, setSection, setSubSection, setSubSubSection } from './editorSlice'
 
 const editorApi = editorApiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -31,7 +31,7 @@ const editorApi = editorApiSlice.injectEndpoints({
           const { data } = await queryFulfilled
           dispatch(setCounty(data))
         } catch (error) {
-          if (error instanceof AxiosError) {
+          if (error instanceof Error) {
             dispatch(setError({ message: error.message }))
           }
           dispatch(setError({ message: 'Unable to get County object' }))
@@ -46,14 +46,16 @@ const editorApi = editorApiSlice.injectEndpoints({
       providesTags: (result) =>
         result
           ? [
-              ...result?.map((county) => ({
-                type: 'Editor',
-                id: county?.id,
-              } as const)),
+              ...result?.map(
+                (county) =>
+                  ({
+                    type: 'Editor',
+                    id: county?.id,
+                  } as const)
+              ),
               { type: 'Editor', id: 'LIST' },
             ]
           : [{ type: 'Editor', id: 'LIST' }],
-      
     }),
     createDistrict: builder.mutation({
       query: (data) => ({
@@ -73,7 +75,7 @@ const editorApi = editorApiSlice.injectEndpoints({
           const result = await queryFulfilled
           dispatch(setDistrict(result.data))
         } catch (error) {
-          if (error instanceof AxiosError) {
+          if (error instanceof Error) {
             dispatch(setError({ message: error.message }))
           }
           dispatch(setError({ message: 'Unable to get County objects' }))
@@ -87,6 +89,126 @@ const editorApi = editorApiSlice.injectEndpoints({
         body: { ...data },
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    createSection: builder.mutation({
+      query: (data) => ({
+        url: 'editor/section',
+        method: 'POST',
+        body: { ...data },
+      }),
+      invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
+    }),
+    updateSectionById: builder.mutation({
+      query: (data) => ({
+        url: `editor/section/${data.id}`,
+        method: 'PUT',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    getSectionById: builder.query({
+      query: (id: string) => ({
+        url: `editor/section/${id}`,
+      }),
+      providesTags: (result, error, arg) => [{ type: 'Editor', id: arg }],
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const result = await queryFulfilled
+          dispatch(setSection(result.data))
+        } catch (error) {
+          if (error instanceof Error) {
+            dispatch(setError({ message: error.message }))
+          }
+          dispatch(setError({ message: 'Unable to get County objects' }))
+        }
+      },
+    }),
+    deleteSectionById: builder.mutation({
+      query: (id: string) => ({
+        url: `editor/section/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
+    }),
+    createSubSection: builder.mutation({
+      query: (data) => ({
+        url: 'editor/subsection',
+        method: 'POST',
+        body: { ...data },
+      }),
+      invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
+    }),
+    updateSubSectionById: builder.mutation({
+      query: (data) => ({
+        url: `editor/subsection/${data.id}`,
+        method: 'PUT',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    getSubSectionById: builder.query({
+      query: (id: string) => ({
+        url: `editor/subsection/${id}`,
+      }),
+      providesTags: (result, error, arg) => [{ type: 'Editor', id: arg }],
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const result = await queryFulfilled
+          dispatch(setSubSection(result.data))
+        } catch (error) {
+          if (error instanceof Error) {
+            dispatch(setError({ message: error.message }))
+          }
+          dispatch(setError({ message: 'Unable to get County objects' }))
+        }
+      },
+    }),
+    deleteSubSectionById: builder.mutation({
+      query: (id: string) => ({
+        url: `editor/subsection/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
+    }),
+    createSubSubSection: builder.mutation({
+      query: (data) => ({
+        url: 'editor/subsubsection',
+        method: 'POST',
+        body: { ...data },
+      }),
+      invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
+    }),
+    updateSubSubSectionById: builder.mutation({
+      query: (data) => ({
+        url: `editor/subsubsection/${data.id}`,
+        method: 'PUT',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    getSubSubSectionById: builder.query({
+      query: (id: string) => ({
+        url: `editor/subsubsection/${id}`,
+      }),
+      providesTags: (result, error, arg) => [{ type: 'Editor', id: arg }],
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const result = await queryFulfilled
+          dispatch(setSubSubSection(result.data))
+        } catch (error) {
+          if (error instanceof Error) {
+            dispatch(setError({ message: error.message }))
+          }
+          dispatch(setError({ message: 'Unable to get County objects' }))
+        }
+      },
+    }),
+    deleteSubSubSectionById: builder.mutation({
+      query: (id: string) => ({
+        url: `editor/subSubSection/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
     }),
     updateOrCreateDistrictWhyInvestIn: builder.mutation({
       query: (data) => ({
@@ -389,4 +511,16 @@ export const {
   useUpdateOrCreateImproveSkillsMutation,
   useUpdateOrCreateFindTAndCMutation,
   useUpdateOrCreateFindFundingMutation,
+  useCreateSectionMutation,
+  useGetSectionByIdQuery,
+  useUpdateSectionByIdMutation,
+  useDeleteSectionByIdMutation,
+  useCreateSubSectionMutation,
+  useGetSubSectionByIdQuery,
+  useUpdateSubSectionByIdMutation,
+  useDeleteSubSectionByIdMutation,
+  useCreateSubSubSectionMutation,
+  useGetSubSubSectionByIdQuery,
+  useUpdateSubSubSectionByIdMutation,
+  useDeleteSubSubSectionByIdMutation,
 } = editorApi

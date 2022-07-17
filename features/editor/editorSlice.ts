@@ -1,4 +1,4 @@
-import { DistrictDataProps } from '../../lib/types';
+import { DistrictDataProps, SectionProps, SubSectionProps, SubSubSectionProps } from '../../lib/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { RootState } from 'app/store'
@@ -8,6 +8,9 @@ interface IEditorState {
   counties: Partial<CountyDataProps[]>
   district: Partial<DistrictDataProps>
   county: Partial<CountyDataProps>
+  section: Partial<SectionProps>
+  subSection: Partial<SubSectionProps>
+  subSubSection: Partial<SubSubSectionProps>
   message: string
   error: Error | null
 }
@@ -26,6 +29,26 @@ export const initialState: IEditorState = {
     imageUrl: '',
     logoIcon: '',
   },
+  section: {
+    id: '',
+    name: '',
+    title: '',
+    content: '',
+    isSubSection: false,
+  },
+  subSection: {
+    id: '',
+    name: '',
+    title: '',
+    content: '',
+    isSubSubSection: false,
+  },
+  subSubSection: {
+    id: '',
+    name: '',
+    title: '',
+    content: '',
+  },
   message: '',
   error: { message: 'An Error occurred' },
 }
@@ -43,6 +66,15 @@ const editorSlice = createSlice({
     setDistrict: (state, { payload }: PayloadAction<DistrictDataProps>) => {
       state.district = payload
     },
+    setSection: (state, { payload }: PayloadAction<SectionProps>) => {
+      state.section = payload
+    },
+    setSubSection: (state, { payload }: PayloadAction<SubSectionProps>) => {
+      state.subSection = payload
+    },
+    setSubSubSection: (state, { payload }: PayloadAction<SubSubSectionProps>) => {
+      state.subSubSection = payload
+    },
     setError: (state, { payload }: PayloadAction<AxiosError | Error>) => {
       state.error = payload
     },
@@ -50,7 +82,7 @@ const editorSlice = createSlice({
   },
 })
 
-export const { setCounties, setCounty, setDistrict, setError, clearState } =
+export const { setCounties, setCounty, setDistrict, setSection, setSubSection, setSubSubSection, setError, clearState } =
   editorSlice.actions
 export const editorSelector = (state: RootState) => state.editor
 export default editorSlice.reducer

@@ -72,7 +72,7 @@ const RichTextEditor = ({
         onChange={(content) => setValue(content)}
         formats={formats}
         theme="snow"
-        style={{ height: '400px', overflowY: 'scroll' }}
+        style={{ height: '400px', overflowY: 'scroll', width: '100%' }}
       />
     </div>
   )

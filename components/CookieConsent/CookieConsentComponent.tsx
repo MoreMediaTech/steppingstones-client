@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Cookies from 'js-cookie'
 import { OPTIONS, SAME_SITE_OPTIONS, VISIBLE_OPTIONS } from '@lib/types'
 import CookieConsent from './CookieConsent'
-import CookieConsentContainer from '@components/CookieConsentContainer'
+import CookieConsentContainer from './CookieConsentContainer'
 
  function setCookie(
    cookieName: string,
@@ -12,11 +12,6 @@ import CookieConsentContainer from '@components/CookieConsentContainer'
    cookieSecurity: boolean,
    sameSite: SAME_SITE_OPTIONS
  ) {
-   // if (cookieSecurity === undefined) {
-   //   console.log(window.location.protocol)
-   //   cookieSecurity = location ? window.location.protocol === 'https:' : true
-   // }
-
    const cookieOptions = {
      maxAge,
      ...extraCookieOptions,
@@ -24,16 +19,6 @@ import CookieConsentContainer from '@components/CookieConsentContainer'
      secure: cookieSecurity,
    }
 
-   // Fallback for older browsers where can not set SameSite=None, SEE: https://web.dev/samesite-cookie-recipes/#handling-incompatible-clients
-   //   if (sameSite === SAME_SITE_OPTIONS.NONE) {
-   //     cookies.set(
-   //       getLegacyCookieName(cookieName),
-   //       cookieValue as string,
-   //       cookieOptions
-   //     )
-   //   }
-
-   // set the regular cookie
    Cookies.set(cookieName, JSON.stringify(cookieValue))
  }
 
@@ -42,7 +27,13 @@ const CookieConsentComponent = () => {
     const [isVisible, setIsVisible] = useState<boolean>(true)
     const [snCookies, setSNCookies] = useState<boolean>(false)
     const [pAndACookies, setPAndACookies] = useState<boolean>(false)
+
+    // default cookie name
     const COOKIE_NAME = 'ssapp-cookie-consent'
+
+    /**
+     * @description - This function is used to set the cookie consent cookie.
+     */
     const handleAccept = () => {
       setCookie(
         COOKIE_NAME,
@@ -55,6 +46,9 @@ const CookieConsentComponent = () => {
       setIsVisible(false)
     }
 
+    /**
+     * @description - function to handle the user accepting all cookies
+     */
     const handleAcceptAll = () => {
       setCookie(
         COOKIE_NAME,
@@ -72,6 +66,10 @@ const CookieConsentComponent = () => {
       setPAndACookies(true)
       setIsVisible(false)
     }
+
+    /**
+     * @description - function to handle the user declining the cookies.
+     */
     const handleDecline = () => {
       setCookie(
         COOKIE_NAME,
@@ -83,6 +81,10 @@ const CookieConsentComponent = () => {
       )
       setIsVisible(false)
     }
+
+    /**
+     * @description - function to handle/confirm the user cookie options
+     */
     const handleConfirmChoices = () => {
       setCookie(
         'ssapp-strictly-necessary-cookie-consent',

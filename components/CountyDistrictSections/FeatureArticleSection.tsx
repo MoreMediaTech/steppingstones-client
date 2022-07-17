@@ -60,7 +60,6 @@ const FeatureArticleSection = ({ id }: { id: string }) => {
         refetchCounty()
         setIsEdit(false)
       } catch (error) {
-        dispatch(setError({ message: error.message }))
         showNotification({
           message: 'Error updating county content',
           autoClose: 3000,

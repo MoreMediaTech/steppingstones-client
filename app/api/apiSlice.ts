@@ -71,8 +71,10 @@ const baseQueryWithReAuth: BaseQueryFn = async (
 }
 
 export const apiSlice = createApi({
+  reducerPath: 'api',
   baseQuery: baseQueryWithReAuth,
   tagTypes: ['Auth', 'User'],
+  keepUnusedDataFor: 500,
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
       return action.payload[reducerPath]

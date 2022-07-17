@@ -4,7 +4,7 @@ import { showNotification } from '@mantine/notifications'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
-import { UnstyledButton } from '@mantine/core'
+import { UnstyledButton, Loader } from '@mantine/core'
 
 import { ComponentShield } from '@components/NextShield'
 import Spinner from '@components/spinner'
@@ -108,7 +108,7 @@ const District = ({
       >
         <section className="h-screen">
           <PortalHeader
-            title={`${district} District Council`}
+            title={`${district}`}
             subTitle="Please select Area you want to review"
           />
           <section className="container mx-auto px-4 py-2">
@@ -131,8 +131,8 @@ const District = ({
             </div>
           </section>
           {isLoadingDistrict ? (
-            <div className='flex items-center justify-center h-[700px]'>
-              <Spinner classes="w-24 h-24" message="Loading..." />
+            <div className="flex h-[700px] items-center justify-center">
+              <Loader size="xl" variant="bars" />
             </div>
           ) : (
             <section className="container mx-auto w-full py-24 px-2 md:px-4">

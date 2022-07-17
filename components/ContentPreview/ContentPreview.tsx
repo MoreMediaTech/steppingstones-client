@@ -4,9 +4,10 @@ import parse from 'html-react-parser'
 import 'react-quill/dist/quill.snow.css'
 import styles from './ContentPreview.module.css'
 import EconomicDataPreview from './EconomicDataPreview'
+import { SectionProps, SubSectionProps, SubSubSectionProps } from '@lib/types'
 
 type ContentPreviewProps = {
-  content?: { title: string; imageUrl: string; content: string }
+  content?: { title: string; imageUrl?: string; content: string } | SectionProps | SubSectionProps | SubSubSectionProps
   economicData?: {
     averageHousingCost: number
     averageWageEarnings: number
@@ -22,10 +23,10 @@ type ContentPreviewProps = {
 
 const ContentPreview = ({ content, economicData }: ContentPreviewProps) => {
   return (
-    <div className="w-full  overflow-auto p-4">
-      <div className="space-y-6 border border-gray-200 p-4">
-        <div className="mb-2 text-2xl font-semibold capitalize text-[#00DCB3] ">
-          <h1>{content?.title ? content.title : 'Economic Data'}</h1>
+    <div className="w-full  overflow-auto py-2">
+      <div className="space-y-6 border border-gray-200 p-1 md:p-4">
+        <div className="mb-2 text-2xl font-semibold pl-4 capitalize text-[#00DCB3] ">
+          <h1>{content?.title ? content.title : 'Create New Content'}</h1>
         </div>
         {!!content?.imageUrl && (
           <div className="w-full">
@@ -37,7 +38,7 @@ const ContentPreview = ({ content, economicData }: ContentPreviewProps) => {
             />
           </div>
         )}
-        {content?.content && (
+        {(content?.content) && (
           <div className={styles.ql_snow}>
             <div className="ql-editor">{parse(content?.content as string)}</div>
           </div>

@@ -147,6 +147,32 @@ export interface IContentDrawerSubNavData {
   }[]
 }
 
+export type SectionProps = {
+  id: string
+  name: string
+  title?: string
+  content?: string
+  imageUrl?: string
+  isSubSection?: boolean
+  subSection?: SubSectionProps[]
+}
+export type SubSectionProps = {
+  id: string
+  name: string
+  title?: string
+  content?: string
+  imageUrl?: string
+  isSubSubSection?: boolean
+  subSection?: SubSubSectionProps[]
+}
+export type SubSubSectionProps = {
+  id: string
+  name: string
+  title?: string
+  content?: string
+  imageUrl?: string
+}
+
 export type EconomicDataProps = {
    workingAgePopulation: number
   labourDemand: number

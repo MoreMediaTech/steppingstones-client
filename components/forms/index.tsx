@@ -11,6 +11,7 @@ import EconomicDataForm from './EconomicDataForm'
 import CountySectionForm from './CountySectionForm'
 import UpdateUserForm from './UpdateUserForm'
 import UpdateUserPassForm from './UpdateUserPassForm'
+import CreateSectionForm from './CreateSectionForm'
 
 export {
   SignUpForm,
@@ -26,4 +27,5 @@ export {
   CountySectionForm,
   UpdateUserForm,
   UpdateUserPassForm,
+  CreateSectionForm,
 }

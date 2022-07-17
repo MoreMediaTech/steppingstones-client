@@ -34,7 +34,7 @@ const GrowingABusiness = ({
   )
 
   return (
-    <AdminLayout title={`${county} County - Editor Dashboard`}>
+    <AdminLayout title={`${county} - Editor Dashboard`}>
       <ComponentShield
         RBAC
         showForRole={'SS_EDITOR'}

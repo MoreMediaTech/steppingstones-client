@@ -1,6 +1,7 @@
 import { setupListeners } from '@reduxjs/toolkit/dist/query'
 import {
   Action,
+  AnyAction,
   configureStore,
   ThunkAction,
   combineReducers,
@@ -35,12 +36,19 @@ const reducers = {
 
 const combinedReducer = combineReducers<typeof reducers>(reducers)
 
-export const rootReducer: Reducer<RootState> = (state, action) => {
-  if (action.type === 'auth/logout') {
-    state = {} as RootState
-  }
-
-  return combinedReducer(state, action)
+export const rootReducer: Reducer<RootState> = (
+  state,
+  action: AnyAction
+) => {
+ if (action.type === HYDRATE) {
+   const nextState = {
+     ...state, // use previous state
+     ...action.payload, // apply delta from hydration
+   }
+   return nextState
+ } else {
+   return combinedReducer(state, action)
+ }
 }
 
 export const store = configureStore({

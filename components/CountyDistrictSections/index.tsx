@@ -31,7 +31,7 @@ import FindFundingSection from './FindFundingSection'
 import EmployPeopleSection from './EmployPeopleSection'
 import DevelopProductsAndServicesSection from './DevelopProductsAndServicesSection'
 import CommercialPropertySection from './CommercialPropertySection'
-
+import SectionContainer from './SectionContainer'
 
 export {
   BusinessParksSection,
@@ -67,4 +67,5 @@ export {
   EmployPeopleSection,
   DevelopProductsAndServicesSection,
   CommercialPropertySection,
+  SectionContainer,
 }
