@@ -172,7 +172,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     createSubSubSection: builder.mutation({
       query: (data) => ({
-        url: 'editor/subsubsection',
+        url: 'editor/sub-subsection',
         method: 'POST',
         body: { ...data },
       }),
@@ -180,7 +180,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     updateSubSubSectionById: builder.mutation({
       query: (data) => ({
-        url: `editor/subsubsection/${data.id}`,
+        url: `editor/sub-subsection/${data.id}`,
         method: 'PUT',
         body: { ...data },
       }),
@@ -188,7 +188,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     getSubSubSectionById: builder.query({
       query: (id: string) => ({
-        url: `editor/subsubsection/${id}`,
+        url: `editor/sub-subsection/${id}`,
       }),
       providesTags: (result, error, arg) => [{ type: 'Editor', id: arg }],
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
@@ -205,7 +205,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     deleteSubSubSectionById: builder.mutation({
       query: (id: string) => ({
-        url: `editor/subSubSection/${id}`,
+        url: `editor/sub-subsection/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
