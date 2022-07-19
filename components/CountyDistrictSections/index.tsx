@@ -7,30 +7,6 @@ import EconomicDataSection from './EconomicDataSection'
 import CouncilServicesSection from './CouncilServicesSection'
 import CouncilGrantsSection from './CouncilGrantsSection'
 import BusinessParksSection from './BusinessParksSection'
-import SupportForEstablishedBusinessSection from './SupportForEstablishedBusinessSection'
-import HelpForSocialEnterprisesSection from './HelpForSocialEnterprisesSection'
-import HelpForMentalHealthAndWellBeingSection from './HelpForMentalHealthAndWellBeingSection'
-import HelpForHeritageAndTourismSection from './HelpForHeritageAndTourismSection'
-import HelpForCarbonAndNetZeroTargetsSection from './HelpForCarbonAndNetZeroTargetsSection'
-import VatAndTaxSection from './VatAndTaxSection'
-import MarketResearchSection from './MarketResearchSection'
-import LegalCheckListSection from './LegalCheckListSection'
-import FindStartupFundingSection from './FindStartupFundingSection'
-import BusinessPlansSection from './BusinessPlansSection'
-import BusinessInsuranceSection from './BusinessInsuranceSection'
-import BecomingAGreenerBusinessSection from './BecomingAGreenerBusinessSection'
-import FeatureArticleSection from './FeatureArticleSection'
-import LGBTQandDisabilitiesSection from './LGBTQandDisabilitiesSection'
-import OnlineDigitalisationSection from './OnlineDigitalisationSection'
-import TradingOverseasSection from './TradingOverseasSection'
-import OperateMoreEfficientlySection from './OperateMoreEfficientlySection'
-import ImproveSkillsSection from './ImproveSkillsSection'
-import FindTendersAndContractsSection from './FindTendersAndContractsSection'
-import FindNewMarketsSections from './FindNewMarketsSections'
-import FindFundingSection from './FindFundingSection'
-import EmployPeopleSection from './EmployPeopleSection'
-import DevelopProductsAndServicesSection from './DevelopProductsAndServicesSection'
-import CommercialPropertySection from './CommercialPropertySection'
 import SectionContainer from './SectionContainer'
 
 export {
@@ -43,29 +19,5 @@ export {
   NewsSection,
   WelcomeSection,
   WhyInvestSection,
-  SupportForEstablishedBusinessSection,
-  HelpForSocialEnterprisesSection,
-  HelpForMentalHealthAndWellBeingSection,
-  HelpForHeritageAndTourismSection,
-  HelpForCarbonAndNetZeroTargetsSection,
-  VatAndTaxSection,
-  MarketResearchSection,
-  LegalCheckListSection,
-  FindStartupFundingSection,
-  BusinessPlansSection,
-  BusinessInsuranceSection,
-  BecomingAGreenerBusinessSection,
-  FeatureArticleSection,
-  LGBTQandDisabilitiesSection,
-  OnlineDigitalisationSection,
-  TradingOverseasSection,
-  OperateMoreEfficientlySection,
-  ImproveSkillsSection,
-  FindTendersAndContractsSection,
-  FindNewMarketsSections,
-  FindFundingSection,
-  EmployPeopleSection,
-  DevelopProductsAndServicesSection,
-  CommercialPropertySection,
   SectionContainer,
 }
