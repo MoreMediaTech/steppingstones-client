@@ -5,10 +5,10 @@ import { usersApiSlice } from "features/user/usersApiSlice";
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
-      query: ({ email, password }) => ({
+      query: ({ email, password, token }) => ({
         url: 'auth/login',
         method: 'POST',
-        body: { email, password },
+        body: { email, password, token },
       }),
       invalidatesTags: [{ type: 'Auth', id: 'LIST' }],
       async onQueryStarted(args, { dispatch, queryFulfilled }) {

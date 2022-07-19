@@ -1,8 +1,9 @@
-import { useEffect } from 'react'
+import {  useRef } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import { showNotification } from '@mantine/notifications'
 import { Button, Textarea, TextInput } from '@mantine/core'
+import ReCAPTCHA from 'react-google-recaptcha'
 
 import { IEmailFormData } from '@lib/types'
 import { useSendEnquiryMutation } from 'features/email/emailApiSlice'
@@ -10,7 +11,7 @@ import { enquiryEmailTemplate } from '@lib/emailTemplates'
 
 const EnquiryForm = () => {
   const router = useRouter()
-  const [sendEnquiry, { isLoading, isError, isSuccess, error }] =
+  const [sendEnquiry, { isLoading }] =
     useSendEnquiryMutation()
   const {
     register,
@@ -18,16 +19,18 @@ const EnquiryForm = () => {
     reset,
     formState: { errors },
   } = useForm<IEmailFormData>()
-
-  useEffect(() => {}, [])
+  const recaptchaRef = useRef<ReCAPTCHA | null>(null)
 
   const handleSendEmail: SubmitHandler<IEmailFormData> = async (data) => {
+    const token = await recaptchaRef.current?.executeAsync()
+    recaptchaRef?.current?.reset()
     const message = {
       from: data.from,
       to: 'enquires@steppingstonesapp.com',
       subject: data.subject,
       company: data.company,
       html: enquiryEmailTemplate(data.subject, data.message),
+      token
     }
     try {
       await sendEnquiry(message).unwrap()
@@ -43,9 +46,11 @@ const EnquiryForm = () => {
   return (
     <form
       onSubmit={handleSubmit(handleSendEmail)}
-      className="flex flex-col rounded-lg bg-white px-8 py-8 shadow-2xl space-y-2 "
+      className="flex flex-col space-y-2 rounded-lg bg-white px-8 py-8 shadow-2xl "
     >
-      <h1 className="text-2xl font-bold text-[#5E17EB] mb-4">Leave a message</h1>
+      <h1 className="mb-4 text-2xl font-bold text-[#5E17EB]">
+        Leave a message
+      </h1>
       <p className="text-justify font-normal text-[#00DCB3]">
         Fill the form and we will respond as soon as we can. Alternatively, you
         can reach out to us at{' '}
@@ -160,17 +165,43 @@ const EnquiryForm = () => {
           {errors.message?.message || 'A subject is required'}
         </span>
       )}
+      <ReCAPTCHA
+        ref={recaptchaRef}
+        size="invisible"
+        sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY as string}
+      />
       <div className="my-4 w-full">
         <Button
           type="submit"
           loading={isLoading}
           fullWidth
-          className="w-full rounded-md bg-[#5E17EB] px-4 text-center font-semibold text-white shadow-xl transition delay-150 duration-300 
-                ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99]  md:text-xl lg:text-2xl"
+          size="md"
+          variant="outline"
+          className="w-full rounded-md px-4 text-center font-semibold hover:text-white shadow-md transition delay-150 duration-300 
+                ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99]  md:text-xl "
         >
           {isLoading ? 'Sending...' : 'Send'}
         </Button>
       </div>
+      <p className="text-justify text-sm font-normal text-gray-300">
+        This site is protected by reCAPTCHA and the Google{' '}
+        <a
+          href="https://policies.google.com/privacy"
+          target="_"
+          className="underline"
+        >
+          Privacy Policy
+        </a>{' '}
+        and{' '}
+        <a
+          href="https://policies.google.com/terms"
+          target="_"
+          className="underline"
+        >
+          Terms of Service
+        </a>{' '}
+        apply.
+      </p>
     </form>
   )
 }

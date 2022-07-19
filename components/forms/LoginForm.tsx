@@ -1,14 +1,15 @@
-import { useEffect } from 'react'
+import { useRef } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import { showNotification } from '@mantine/notifications'
 import { Button, PasswordInput, TextInput } from '@mantine/core'
+import ReCAPTCHA from 'react-google-recaptcha'
+import Link from 'next/link'
 
 
 import { useLoginMutation } from 'features/auth/authApiSlice'
 import { NEXT_URL } from '@config/index'
 import { AuthState, IFormData } from '@lib/types'
-import Link from 'next/link'
 
 const LoginForm = () => {
   const router = useRouter()
@@ -20,12 +21,16 @@ const LoginForm = () => {
     reset,
     formState: { errors },
   } = useForm<Partial<IFormData>>()
+    const recaptchaRef = useRef<ReCAPTCHA | null>(null)
 
   const handleLogin: SubmitHandler<Partial<IFormData>> = async (data) => {
+        const token = await recaptchaRef.current?.executeAsync()
+        recaptchaRef?.current?.reset()
     try {
       const responseData = await login({
         email: data.email,
         password: data.password,
+        token
       }).unwrap()
       localStorage.setItem('token', responseData.token)
       router.replace(`${NEXT_URL}/admin/editor-portal`)
@@ -127,11 +132,17 @@ const LoginForm = () => {
           {errors.password?.message || 'A password is required'}
         </span>
       )}
+      <ReCAPTCHA
+        ref={recaptchaRef}
+        size="invisible"
+        sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY as string}
+      />
       <div className="w-full">
         <Button
           type="submit"
           loading={isLoading}
           fullWidth
+          size="md"
           className="mt-4 w-full rounded-md border border-[#5E17EB] bg-[#5E17EB] text-white hover:bg-[#3A0B99]"
         >
           {isLoading ? 'Signing In...' : 'Sign In'}

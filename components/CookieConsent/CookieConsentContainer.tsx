@@ -8,7 +8,7 @@ const CookieConsentContainer = ({
   setSNCookies,
   setOpened,
   handleAccept,
-  handleConfirmChoices
+  handleConfirmChoices,
 }: {
   snCookies: boolean
   opened: boolean
@@ -31,9 +31,14 @@ const CookieConsentContainer = ({
       <section className="space-y-2 border-t border-gray-200 py-4">
         <h1 className="font-semibold text-gray-900">Cookie Usage</h1>
         <p className="text-sm text-gray-700 md:text-lg">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam quis exercitation.{' '}
+          We use cookies to store or retrieve information on your browser. This
+          information may relate to you, your preferences, or your device and is
+          mostly used to make the site work as you expect it to. Because we
+          respect your right to privacy, you can choose not to allow some types
+          of cookies. Click on the different category headings to find out more
+          and change your settings. However, blocking some types of cookies may
+          impact your experience of the site and the services we are able to
+          offer.{' '}
           <Link href={'/privacy-policy'}>
             <a
               className="text-gray-900 underline"
@@ -106,7 +111,12 @@ const CookieConsentContainer = ({
           </Link>
         </Paper>
         <Paper className="flex w-full flex-col items-center justify-between gap-2 border-t border-gray-200 pt-4 md:flex-row md:gap-16">
-          <Button type="button" color="dark" className="w-full md:w-1/3" onClick={handleAccept}>
+          <Button
+            type="button"
+            color="dark"
+            className="w-full md:w-1/3"
+            onClick={handleAccept}
+          >
             Accept all
           </Button>
 
