@@ -29,9 +29,9 @@ const Welcome = ({
         userRole={user?.role as string}
       >
         <section className="h-screen overflow-auto bg-slate-50">
-          <section className="sticky w-full bg-white shadow-lg">
+          <section className="sticky w-full">
             <PortalHeader
-              title={`${county} County`}
+              title={`${county}`}
               subTitle="Please Preview or Edit your content"
             />
             <section className="container mx-auto px-4 py-2">

@@ -23,7 +23,7 @@ const Lep = ({ county, countyId }: { county: string; countyId: string }) => {
         userRole={user?.role as string}
       >
         <section className="h-screen overflow-auto bg-stone-50">
-          <section className="sticky w-full bg-white shadow-lg">
+          <section className="sticky w-full">
             <PortalHeader
               title={`${county} County`}
               subTitle="Please Preview or Edit your content"

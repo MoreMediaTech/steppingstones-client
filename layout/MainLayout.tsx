@@ -20,7 +20,7 @@ function MainLayout({ title, description, children }: ILayout): JSX.Element {
     <main
       aria-label="layout"
       data-testid="layout"
-      className="flex flex-col justify-between h-screen"
+      className="relative flex flex-col justify-between h-screen"
     >
       <Head>
         <title>{title} | Stepping Stones App</title>

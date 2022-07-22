@@ -26,10 +26,10 @@ const EconomicData = ({
         userRole={user?.role ?? ''}
       >
         <section className="h-screen overflow-auto bg-stone-50">
-          <section className="sticky w-full bg-white drop-shadow-lg">
+          <section className="sticky w-full">
             <PortalHeader
               title={`${district}`}
-              subTitle="Review or edit the content below"
+              subTitle="Please Preview or Edit your content"
             />
             <section className="container mx-auto bg-white px-4 py-4">
               <div className="flex justify-between">

@@ -65,7 +65,7 @@ const SectionContainer = ({
     )
   return (
     <section className="relative w-full flex-grow px-2 py-2  md:py-8 md:px-8">
-      <section className="container">
+      <section className="container mx-auto">
         {isLoadingSection ? (
           <div className="flex h-[700px] items-center justify-center">
             <Loader size="xl" variant="bars" />
