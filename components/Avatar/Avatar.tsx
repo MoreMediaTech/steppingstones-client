@@ -8,7 +8,7 @@ const Avatar = ({
 }: {
   imageUrl: string
   classes?: string
-  imgSize: string
+  imgSize?: string
 }) => {
   return (
     <div
