@@ -1,8 +1,8 @@
-import {  useState } from 'react'
+import { useEffect, useState } from 'react'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
-import { Loader } from '@mantine/core'
+import { Checkbox, Loader, Switch } from '@mantine/core'
 
 import { ComponentShield } from '@components/NextShield'
 import PortalHeader from '@components/PortalHeader'
@@ -19,6 +19,7 @@ import { NEXT_URL } from '@config/index'
 import Button from '@components/Button'
 import { wrapper } from 'app/store'
 import SectionContainer from '@components/CountyDistrictSections/SectionContainer'
+import { showNotification } from '@mantine/notifications'
 
 const Section = ({
   county,
@@ -32,8 +33,6 @@ const Section = ({
   imageUrl: string
 }) => {
   const router = useRouter()
-  const [openAddSectionModal, setAddOpenSectionModal] = useState<boolean>(false)
-
   const { data: user } = useGetUserQuery()
   const {
     data: sectionData,
@@ -42,6 +41,8 @@ const Section = ({
     refetch: refetchSection,
   } = useGetSectionByIdQuery(sectionId, { refetchOnMountOrArgChange: true })
 
+  const [openAddSectionModal, setAddOpenSectionModal] = useState<boolean>(false)
+  const [checked, setChecked] = useState<boolean>(sectionData?.isLive)
   const [createSubSection, { isLoading: isLoadingCreate }] =
     useCreateSubSectionMutation()
   const [updateSectionById, { isLoading }] = useUpdateSectionByIdMutation()
@@ -98,6 +99,17 @@ const Section = ({
               </div>
             ) : (
               <section className="w-full overflow-auto py-2 px-2 md:px-4">
+                <div className="container mx-auto flex justify-end px-2 md:px-4">
+                  {sectionData?.isSubSection && sectionData.isLive ? (
+                    <h1 className="rounded-xl bg-[#5E17EB] px-2 py-1 text-xl font-semibold text-white">
+                      Live
+                    </h1>
+                  ) : (
+                    <h1 className="rounded-xl bg-red-500 px-2 py-1 text-xl font-semibold text-white">
+                      Not Live
+                    </h1>
+                  )}
+                </div>
                 {sectionData?.isSubSection ? (
                   <section className="container mx-auto w-full overflow-auto py-24 px-2 md:px-4">
                     {sectionData && (
@@ -123,8 +135,12 @@ const Section = ({
                                     <button
                                       key={`${section.id}`}
                                       type="button"
-                                      className="flex w-full  cursor-pointer items-center justify-center rounded-xl bg-[#5E17EB] py-4 px-2 text-lg font-semibold text-white 
-                    drop-shadow-lg transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:text-xl lg:text-xl"
+                                      className={`${
+                                        (!!section?.isLive as boolean)
+                                          ? 'bg-[#5E17EB] hover:bg-[#3A0B99]'
+                                          : 'bg-red-500 hover:bg-red-700'
+                                      } flex w-full  cursor-pointer items-center justify-center rounded-xl py-2 px-2 text-lg font-semibold text-white shadow-lg 
+                    transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100  md:py-6 `}
                                       onClick={() =>
                                         router.replace({
                                           pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}/section/subsection`,

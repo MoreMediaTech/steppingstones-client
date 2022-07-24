@@ -257,8 +257,12 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
                               <button
                                 key={`${section?.id}`}
                                 type="button"
-                                className="flex w-full  cursor-pointer items-center justify-center rounded-xl bg-[#5E17EB] py-2 px-2 text-lg font-semibold text-white shadow-lg 
-                    transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:py-6 "
+                                className={`${
+                                  !!section?.isLive as boolean
+                                    ? 'bg-[#5E17EB] hover:bg-[#3A0B99]'
+                                    : 'bg-red-500 hover:bg-red-700'
+                                } flex w-full  cursor-pointer items-center justify-center rounded-xl py-2 px-2 text-lg font-semibold text-white shadow-lg 
+                    transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100  md:py-6 `}
                                 onClick={() =>
                                   router.replace({
                                     pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}/section`,

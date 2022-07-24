@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import { useRouter } from 'next/router'
 
@@ -17,6 +18,8 @@ const EconomicData = ({
   districtId: string
 }) => {
   const router = useRouter()
+  const [opened, setOpened] = useState(false)
+  const [type, setType] = useState<'create' | 'edit'>('create')
   const { data: user } = useGetUserQuery()
   return (
     <AdminLayout title="County - Editor Dashboard">
@@ -26,33 +29,48 @@ const EconomicData = ({
         userRole={user?.role ?? ''}
       >
         <section className="h-screen overflow-auto bg-stone-50">
-          <section className="sticky w-full">
-            <PortalHeader
-              title={`${district}`}
-              subTitle="Please Preview or Edit your content"
-            />
-            <section className="container mx-auto bg-white px-4 py-4">
-              <div className="flex justify-between">
-                <Button
-                  type="button"
-                  color="primary"
-                  className="md:w-1/4 "
-                  onClick={() =>
-                    router.replace({
-                      pathname: `${NEXT_URL}/admin/editor-portal/county-portal/district`,
-                      query: {
-                        ...router.query,
-                      },
-                    })
-                  }
-                >
-                  Go Back
-                </Button>
-              </div>
-            </section>
+          <PortalHeader
+            title={`${district}`}
+            subTitle="Please Preview or Edit your content"
+          />
+          <section className="container mx-auto px-4 py-4">
+            <div className="flex justify-between">
+              <Button
+                type="button"
+                color="primary"
+                className="md:w-1/4 "
+                onClick={() =>
+                  router.replace({
+                    pathname: `${NEXT_URL}/admin/editor-portal/county-portal/district`,
+                    query: {
+                      ...router.query,
+                    },
+                  })
+                }
+              >
+                Go Back
+              </Button>
+              <Button
+                type="button"
+                color="primary"
+                className="md:w-1/4 "
+                onClick={() => {
+                  setOpened(true)
+                  setType('create')
+                }}
+              >
+                Add Economic Data
+              </Button>
+            </div>
           </section>
           <section className="container mx-auto">
-            <EconomicDataSection id={districtId} />
+            <EconomicDataSection
+              id={districtId}
+              opened={opened}
+              setOpened={setOpened}
+              type={type}
+              setType={setType}
+            />
           </section>
         </section>
       </ComponentShield>

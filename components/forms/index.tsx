@@ -7,7 +7,6 @@ import ChangePasswordForm from './ChangePasswordForm'
 import CreateCountyForm from './CreateCountyForm'
 import AddDistrictForm from './AddDistrictForm'
 import ContentFormComponent from './ContentFormComponent'
-import EconomicDataForm from './EconomicDataForm'
 import CountySectionForm from './CountySectionForm'
 import UpdateUserForm from './UpdateUserForm'
 import UpdateUserPassForm from './UpdateUserPassForm'
@@ -23,7 +22,6 @@ export {
   CreateCountyForm,
   AddDistrictForm,
   ContentFormComponent,
-  EconomicDataForm,
   CountySectionForm,
   UpdateUserForm,
   UpdateUserPassForm,

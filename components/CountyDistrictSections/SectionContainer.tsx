@@ -32,6 +32,7 @@ const SectionContainer = ({
   } = useForm<Partial<EditorFormDataProps>>({
     defaultValues: {
       title: sectionData?.title,
+      isLive: sectionData?.isLive,
     },
   })
 
@@ -47,6 +48,7 @@ const SectionContainer = ({
         try {
           const formData = {
             title: data.title,
+            isLive: data.isLive,
             content: value,
             id: sectionData?.id,
           }
@@ -72,7 +74,12 @@ const SectionContainer = ({
           </div>
         ) : (
           <Paper shadow="lg" p="md" radius="md" withBorder className="w-full">
-            <div className="flex w-full justify-end">
+            <div className="flex w-full items-center justify-between">
+              {sectionData?.isLive ? (
+                <h1 className="text-[#5E17EB] text-xl font-semibold">Live</h1>
+              ) : (
+                <h1 className="text-red-500 text-xl font-semibold">Not Live</h1>
+              )}
               <UnstyledButton
                 type="button"
                 onClick={() => setIsEdit(!isEdit)}

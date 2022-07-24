@@ -1,4 +1,11 @@
-import { Button, Divider, Indicator, Textarea, TextInput } from '@mantine/core'
+import {
+  Button,
+  Checkbox,
+  Divider,
+  Indicator,
+  Textarea,
+  TextInput,
+} from '@mantine/core'
 import {
   FieldError,
   SubmitHandler,
@@ -37,6 +44,17 @@ const CountySectionForm = ({
 }: IEconomicDataForm) => {
   return (
     <form className="space-y-8" onSubmit={handleSubmit(submitHandler)}>
+      <div className="flex w-full flex-row items-center">
+        <label htmlFor="title" className="md:w-1/5 mr-2 md:mr-0">
+          Is Section Live<span className="ml-1 text-red-500">*</span>
+        </label>
+        <Checkbox
+          id="isLive"
+          aria-label="isLive"
+          {...register('isLive')}
+        />
+      </div>
+      <Divider />
       <div className="p-2 font-semibold">
         <h1>Content</h1>
       </div>
@@ -54,12 +72,11 @@ const CountySectionForm = ({
             required: true,
             minLength: {
               value: 2,
-              message:
-                'Please enter a District name with at least 2 characters',
+              message: 'Please enter a title with at least 2 characters',
             },
             pattern: {
-              value: /^[a-zA-Z0-9!@#$%^&*()._ -]+$/,
-              message: 'Please enter a valid District name',
+              value: /^[a-zA-Z0-9!@#$?%:/^&*()._ -]+$/,
+              message: 'Please enter a valid title',
             },
           })}
         />
@@ -69,10 +86,7 @@ const CountySectionForm = ({
         <label htmlFor="title" className="w-1/4">
           Content:
         </label>
-        <RichText
-          value={value}
-          setValue={setValue}
-        />
+        <RichText value={value} setValue={setValue} />
       </div>
       <Divider />
       <div className="my-4 flex w-full items-center justify-between ">

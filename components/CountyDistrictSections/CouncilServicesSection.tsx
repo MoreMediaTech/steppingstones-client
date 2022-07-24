@@ -1,7 +1,7 @@
 import { useCallback, useState, useEffect } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { showNotification } from '@mantine/notifications'
-import { Paper, UnstyledButton } from '@mantine/core'
+import { Loader, Paper, UnstyledButton } from '@mantine/core'
 import { BiEdit } from 'react-icons/bi'
 
 import { ContentFormComponent } from '@components/forms'
@@ -103,7 +103,9 @@ const CouncilServicesSection = ({ id }: { id: string }) => {
     <section className="relative h-auto w-full flex-grow px-2 py-2  md:py-8 md:px-8">
       <section className="container">
         {isLoadingDistrict ? (
-          <Spinner classes="w-24 h-24" message="Loading..." />
+          <div className="flex h-[700px] items-center justify-center">
+            <Loader size="xl" variant="bars" />
+          </div>
         ) : (
           <Paper shadow="lg" p="md" radius="md" withBorder className="w-full">
             <div className="flex w-full justify-end">

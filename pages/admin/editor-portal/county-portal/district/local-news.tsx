@@ -9,7 +9,6 @@ import { NEXT_URL } from '@config/index'
 import { LocalNewsSection } from '@components/CountyDistrictSections'
 import Button from '@components/Button'
 
-
 const LocalNews = ({
   district,
   districtId,
@@ -27,31 +26,30 @@ const LocalNews = ({
         userRole={user?.role ?? ''}
       >
         <section className="h-screen overflow-auto bg-stone-50">
-          <section className="sticky w-full">
-            <PortalHeader
-              title={`${district}`}
-              subTitle="Please Preview or Edit your content"
-            />
-            <section className="container mx-auto bg-white px-4 py-4">
-              <div className="flex justify-between">
-                <Button
-                  type="button"
-                  color="primary"
-                  className="md:w-1/4"
-                  onClick={() =>
-                    router.replace({
-                      pathname: `${NEXT_URL}/admin/editor-portal/county-portal/district`,
-                      query: {
-                        ...router.query,
-                      },
-                    })
-                  }
-                >
-                  Go Back
-                </Button>
-              </div>
-            </section>
+          <PortalHeader
+            title={`${district}`}
+            subTitle="Please Preview or Edit your content"
+          />
+          <section className="container mx-auto px-4 py-4">
+            <div className="flex justify-between">
+              <Button
+                type="button"
+                color="primary"
+                className="md:w-1/4"
+                onClick={() =>
+                  router.replace({
+                    pathname: `${NEXT_URL}/admin/editor-portal/county-portal/district`,
+                    query: {
+                      ...router.query,
+                    },
+                  })
+                }
+              >
+                Go Back
+              </Button>
+            </div>
           </section>
+
           <section className="container mx-auto">
             <LocalNewsSection id={districtId} />
           </section>

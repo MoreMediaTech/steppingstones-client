@@ -120,22 +120,53 @@ const AdminSidebar = ({
               </a>
             </Link>
           </Tooltip>
-          <Tooltip
-            label={
-              <p className="w-24 text-center font-semibold text-white">Admin</p>
-            }
-            closeDelay={500}
-            tooltipId="portal-home"
-            color="teal"
-            position="right"
+
+          <Menu
             withArrow
+            position="right"
+            placement="end"
+            className=""
+            control={
+              <Tooltip
+                label={
+                  <p className="w-24 text-center font-semibold text-white">
+                    Admin
+                  </p>
+                }
+                closeDelay={500}
+                tooltipId="portal-home"
+                color="teal"
+                position="right"
+                withArrow
+              >
+                <UnstyledButton
+                  type="button"
+                  className="flex w-full items-center space-x-4 rounded-lg p-2"
+                >
+                  <FaBriefcase fontSize={30} color="#00DCB3" />
+                </UnstyledButton>
+              </Tooltip>
+            }
           >
-            <Link href={'#'}>
-              <a className="flex items-center justify-start space-x-4 rounded-lg p-2 group-hover:hover:bg-[#00DCB3]/20">
-                <FaBriefcase fontSize={30} color="#00DCB3" />
-              </a>
-            </Link>
-          </Tooltip>
+            {/* ...menu items */}
+            <Menu.Label>Settings</Menu.Label>
+
+            <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 hover:bg-[#00DCB3] hover:text-white">
+              <Link href={'/admin/editor-portal/admin/county-settings'}>
+                <a>Manage County</a>
+              </Link>
+            </Menu.Item>
+            <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 hover:bg-[#00DCB3] hover:text-white">
+              <Link href={'/admin/editor-portal/admin/district-settings'}>
+                <a>Manage District</a>
+              </Link>
+            </Menu.Item>
+            <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 hover:bg-[#00DCB3] hover:text-white">
+              <Link href={'/admin/editor-portal/admin/section-settings'}>
+                <a>Manage Section</a>
+              </Link>
+            </Menu.Item>
+          </Menu>
           <Tooltip
             label={
               <p className="w-24 text-center font-semibold text-white">Users</p>
@@ -166,24 +197,17 @@ const AdminSidebar = ({
                   className="flex w-full items-center space-x-4 rounded-lg p-2 group-hover:hover:bg-[#00DCB3]/20"
                 >
                   <FaPowerOff fontSize={30} fontWeight={100} color="#00DCB3" />
-                  <span
-                    className={`hidden text-xl text-[#00DCB3] group-hover:block`}
-                  >
-                    Settings
-                  </span>
                 </UnstyledButton>
               }
             >
-              {/* ...menu items */}
-              <Menu.Label>Application</Menu.Label>
-
-              <Menu.Item>
+              <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 hover:bg-[#00DCB3] hover:text-white">
                 <Link href={'/auth/profile'}>
                   <a>Profile</a>
                 </Link>
               </Menu.Item>
               <Divider />
               <Menu.Item
+                className="flex w-full items-center space-x-4 rounded-lg p-2 hover:bg-[#00DCB3] hover:text-white"
                 icon={<FaSignOutAlt fontSize={14} />}
                 onClick={handleLogout}
               >
@@ -260,13 +284,16 @@ const AdminSidebar = ({
             <div className="ml-2 space-y-4">
               <Divider color="#00DCB3" />
 
-                <UnstyledButton type="button" onClick={handleLogout} className="flex items-center space-x-2">
-                  <FaPowerOff fontSize={40} fontWeight={100} color="#00DCB3" />
+              <UnstyledButton
+                type="button"
+                onClick={handleLogout}
+                className="flex items-center space-x-2"
+              >
+                <FaPowerOff fontSize={40} fontWeight={100} color="#00DCB3" />
                 <span className="w-32 rounded-md bg-[#00DCB3] px-2 py-1 text-center text-lg font-semibold capitalize text-white">
                   Sign Out
                 </span>
-                </UnstyledButton>
-
+              </UnstyledButton>
             </div>
           </aside>
         </Drawer>

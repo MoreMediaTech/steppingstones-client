@@ -1,4 +1,4 @@
-import { DistrictDataProps, SectionProps, SubSectionProps, SubSubSectionProps } from '../../lib/types';
+import { DistrictDataProps, EconomicDataWidgetProps, SectionProps, SubSectionProps, SubSubSectionProps } from '../../lib/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { RootState } from 'app/store'
@@ -11,6 +11,7 @@ interface IEditorState {
   section: Partial<SectionProps>
   subSection: Partial<SubSectionProps>
   subSubSection: Partial<SubSubSectionProps>
+  economicData: Partial<EconomicDataWidgetProps>
   message: string
   error: Error | null
 }
@@ -49,6 +50,15 @@ export const initialState: IEditorState = {
     title: '',
     content: '',
   },
+  economicData: {
+    id: '',
+    title: '',
+    stats: 0,
+    description: '',
+    link: '',
+    createdAt: '',
+    updatedAt: '',
+  },
   message: '',
   error: { message: 'An Error occurred' },
 }
@@ -74,6 +84,9 @@ const editorSlice = createSlice({
     },
     setSubSubSection: (state, { payload }: PayloadAction<SubSubSectionProps>) => {
       state.subSubSection = payload
+    },
+    setEconomicData: (state, { payload }: PayloadAction<EconomicDataWidgetProps>) => {
+      state.economicData = payload
     },
     setError: (state, { payload }: PayloadAction<AxiosError | Error>) => {
       state.error = payload

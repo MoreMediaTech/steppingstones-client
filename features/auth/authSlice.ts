@@ -3,6 +3,7 @@ import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 
 import { AppThunk, RootState } from '../../app/store'
 import { Error, AuthState, CurrentUser } from '@lib/types'
+import { HYDRATE } from 'next-redux-wrapper'
 
 const token =
   typeof window !== 'undefined' ? localStorage.getItem('token') : null
@@ -36,6 +37,13 @@ export const authSlice = createSlice({
       state.error = payload
     }
   },
+  extraReducers: {
+    [HYDRATE]: (state, action) => {
+      if (action.payload) {
+        state = action.payload
+      }
+    }
+  }
 })
 
 export const { setCredentials, resetCredentials, setError } = authSlice.actions

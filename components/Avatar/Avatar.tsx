@@ -1,19 +1,26 @@
-import Image from "next/image"
+import Image from 'next/image'
 import steppingstonesapplogo from '../../public/steppingstonesapplogo.png'
 
-const Avatar = ({ imageUrl, classes }: { imageUrl: string, classes?: string}) => {
+const Avatar = ({
+  imageUrl,
+  classes,
+  imgSize,
+}: {
+  imageUrl: string
+  classes?: string
+  imgSize: string
+}) => {
   return (
     <div
-      className={`${classes} relative flex h-16 w-20 items-center justify-center rounded-md border border-[#3A0B99] bg-white text-xl font-semibold text-white md:h-20 md:w-24`}
+      className={`${classes} relative flex items-center justify-center rounded-lg border border-[#3A0B99] bg-white p-4 text-xl font-semibold text-white `}
     >
-
-          <Image
-            src={!!imageUrl ? imageUrl : steppingstonesapplogo}
-            alt={"User image or logo"}
-            layout="fill"
-            objectFit="cover"
-            className="rounded-md"
-          />
+      <Image
+        src={!!imageUrl ? imageUrl : steppingstonesapplogo}
+        alt={'User image or logo'}
+        layout="fill"
+        objectFit="cover"
+        className={`rounded-lg ${imgSize}`}
+      />
     </div>
   )
 }

@@ -210,6 +210,53 @@ const editorApi = editorApiSlice.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
     }),
+    createEconomicDataWidget: builder.mutation({
+      query: (data) => ({
+        url: 'editor/economic-data',
+        method: 'POST',
+        body: { ...data },
+      }),
+      invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
+    }),
+    updateEconomicDataWidgetById: builder.mutation({
+      query: (data) => ({
+        url: `editor/economic-data/${data.id}`,
+        method: 'PUT',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    getEconomicDataWidgets: builder.mutation({
+      query: (id: string) => ({
+        url: 'editor/economic-data',
+        method: 'POST',
+
+      }),
+    }),
+    getEconomicDataWidgetById: builder.query({
+      query: (id: string) => ({
+        url: `editor/economic-data/${id}`,
+      }),
+      providesTags: (result, error, arg) => [{ type: 'Editor', id: arg }],
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const result = await queryFulfilled
+          dispatch(setEconomicDataWidget(result.data))
+        } catch (error) {
+          if (error instanceof Error) {
+            dispatch(setError({ message: error.message }))
+          }
+          dispatch(setError({ message: 'Unable to get County objects' }))
+        }
+      }
+    }),
+    deleteEconomicDataWidgetById: builder.mutation({
+      query: (id: string) => ({
+        url: `editor/economic-data/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
+    }),
     updateOrCreateDistrictWhyInvestIn: builder.mutation({
       query: (data) => ({
         url: `editor/why-invest`,
@@ -324,4 +371,12 @@ export const {
   useGetSubSubSectionByIdQuery,
   useUpdateSubSubSectionByIdMutation,
   useDeleteSubSubSectionByIdMutation,
+  useCreateEconomicDataWidgetMutation,
+  useGetEconomicDataWidgetByIdQuery,
+  useUpdateEconomicDataWidgetByIdMutation,
+  useDeleteEconomicDataWidgetByIdMutation,
 } = editorApi
+function setEconomicDataWidget(data: any): any {
+  throw new Error('Function not implemented.')
+}
+

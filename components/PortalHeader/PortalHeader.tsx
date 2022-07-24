@@ -45,7 +45,11 @@ const PortalHeader = ({ user, title, subTitle, data }: IPortalHeaderProps) => {
         <div className="flex flex-col items-center justify-between md:flex-row">
           <div className="mb-2">
             <Group>
-              <Avatar imageUrl={data?.logoIcon as string} />
+              <Avatar
+                imageUrl={data?.logoIcon as string}
+                classes="md:h-14 md:w-14"
+                imgSize='h-10 w-10'
+              />
               <div style={{ flex: 1 }}>
                 <h1 className="text-lg font-semibold text-[#00dcb3] sm:text-[1.2rem] md:text-[1.6rem]">
                   {user ? ` Welcome back ${user?.name?.split(' ')[0]}` : title}

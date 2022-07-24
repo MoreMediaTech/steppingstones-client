@@ -70,11 +70,11 @@ const ContentFormComponent = ({
             minLength: {
               value: 2,
               message:
-                'Please enter a District name with at least 2 characters',
+                'Please enter a title with at least 2 characters',
             },
             pattern: {
-              value: /^[a-zA-Z0-9!@#$%^&*()._ -]+$/,
-              message: 'Please enter a valid District name',
+              value: /^[a-zA-Z0-9!@#$%?:/^&*()._ -]+$/,
+              message: 'Please enter a valid title name',
             },
           })}
         />
@@ -99,9 +99,6 @@ const ContentFormComponent = ({
           </Button>
         </div>
         <div className="flex w-full items-center md:w-2/5">
-          <div className="w-full text-xl text-gray-400">
-            <p>Save and preview</p>
-          </div>
           <Button
             type="submit"
             loading={isLoading}

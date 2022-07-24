@@ -1,3 +1,4 @@
+
 import type { ReactNode } from 'react'
 import type { NextRouter } from 'next/router'
 
@@ -123,6 +124,7 @@ export type EditorFormDataProps = {
   imageUrl?: string | FileList | ArrayBuffer 
   imageFile: FileList
   content: string
+  isLive: boolean
 }
 export interface IContentDrawerSubNavData {
   title: string
@@ -154,6 +156,7 @@ export type SectionProps = {
   content?: string
   imageUrl?: string
   isSubSection?: boolean
+  isLive?: boolean
   subSection?: SubSectionProps[]
 }
 export type SubSectionProps = {
@@ -163,6 +166,7 @@ export type SubSectionProps = {
   content?: string
   imageUrl?: string
   isSubSubSection?: boolean
+  isLive?: boolean
   subSection?: SubSubSectionProps[]
 }
 export type SubSubSectionProps = {
@@ -171,18 +175,19 @@ export type SubSubSectionProps = {
   title?: string
   content?: string
   imageUrl?: string
+  isLive?: boolean
 }
 
-export type EconomicDataProps = {
-   workingAgePopulation: number
-  labourDemand: number
-  noOfRetailShops: number
-  unemploymentRate: number
-  employmentInvestmentLand: number
-  numOfRegisteredCompanies: number
-  numOfBusinessParks: number
-  averageHousingCost: number
-  averageWageEarnings: number
+export type EconomicDataWidgetProps = {
+  id: string
+  title: string
+  stats: string
+  descriptionLine1: string
+  descriptionLine2: string
+  linkName: string
+  linkUrl: string
+  createdAt: string
+  updatedAt: string
 }
 
 export type DistrictDataProps = {
