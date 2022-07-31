@@ -156,8 +156,8 @@ const CountyTable = ({
                 <div className="flex items-center justify-start space-x-2">
                   <div className="relative h-10 w-10 rounded-full border p-1">
                     <Image
-                      src={district.county.logoIcon ?? steppingstonesapplogo}
-                      alt={district.county.name}
+                      src={district.county?.logoIcon ?? steppingstonesapplogo}
+                      alt={district.county?.name}
                       layout="fill"
                       objectFit="cover"
                     />
@@ -181,7 +181,7 @@ const CountyTable = ({
                 <div className="flex items-center justify-center rounded-lg bg-lime-400 text-lg text-white shadow-lg">
                   <p>
                     {format(
-                      new Date(district.createdAt),
+                      new Date(district?.createdAt as string),
                       'MM/dd/yyyy HH:mm:ss',
                       {
                         locale: enGB,
@@ -194,7 +194,7 @@ const CountyTable = ({
                 <div className="flex items-center justify-center rounded-lg bg-lime-400 text-lg text-white shadow-lg">
                   <p>
                     {format(
-                      new Date(district.updatedAt),
+                      new Date(district?.updatedAt as string),
                       'MM/dd/yyyy HH:mm:ss',
                       {
                         locale: enGB,

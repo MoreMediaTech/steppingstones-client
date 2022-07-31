@@ -168,7 +168,7 @@ const SectionsTable = ({
                 <div className="flex items-center justify-center rounded-lg bg-lime-400 text-lg text-white shadow-lg">
                   <p>
                     {format(
-                      new Date(section?.createdAt),
+                      new Date(section?.createdAt as string),
                       'MM/dd/yyyy HH:mm:ss',
                       {
                         locale: enGB,
@@ -181,7 +181,7 @@ const SectionsTable = ({
                 <div className="flex items-center justify-center rounded-lg bg-lime-400 text-lg text-white shadow-lg">
                   <p>
                     {format(
-                      new Date(section?.updatedAt),
+                      new Date(section?.updatedAt as string),
                       'MM/dd/yyyy HH:mm:ss',
                       {
                         locale: enGB,
