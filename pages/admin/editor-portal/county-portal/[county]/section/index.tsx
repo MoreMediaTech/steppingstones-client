@@ -19,7 +19,7 @@ import { NEXT_URL } from '@config/index'
 import Button from '@components/Button'
 import { wrapper } from 'app/store'
 import SectionContainer from '@components/CountyDistrictSections/SectionContainer'
-import { showNotification } from '@mantine/notifications'
+
 
 const Section = ({
   county,
@@ -42,7 +42,6 @@ const Section = ({
   } = useGetSectionByIdQuery(sectionId, { refetchOnMountOrArgChange: true })
 
   const [openAddSectionModal, setAddOpenSectionModal] = useState<boolean>(false)
-  const [checked, setChecked] = useState<boolean>(sectionData?.isLive)
   const [createSubSection, { isLoading: isLoadingCreate }] =
     useCreateSubSectionMutation()
   const [updateSectionById, { isLoading }] = useUpdateSectionByIdMutation()
@@ -100,14 +99,18 @@ const Section = ({
             ) : (
               <section className="w-full overflow-auto py-2 px-2 md:px-4">
                 <div className="container mx-auto flex justify-end px-2 md:px-4">
-                  {sectionData?.isSubSection && sectionData.isLive ? (
-                    <h1 className="rounded-xl bg-[#5E17EB] px-2 py-1 text-xl font-semibold text-white">
-                      Live
-                    </h1>
-                  ) : (
-                    <h1 className="rounded-xl bg-red-500 px-2 py-1 text-xl font-semibold text-white">
-                      Not Live
-                    </h1>
+                  {sectionData?.isSubSection && (
+                    <>
+                      {sectionData?.isLive ? (
+                        <h1 className="rounded-xl bg-[#5E17EB] px-2 py-1 text-xl font-semibold text-white">
+                          Live
+                        </h1>
+                      ) : (
+                        <h1 className="rounded-xl bg-red-500 px-2 py-1 text-xl font-semibold text-white">
+                          Not Live
+                        </h1>
+                      )}
+                    </>
                   )}
                 </div>
                 {sectionData?.isSubSection ? (

@@ -37,6 +37,7 @@ const NewsSection = ({ id }: { id: string }) => {
   } = useForm<Partial<EditorFormDataProps>>({
     defaultValues: {
       title: countyData?.news?.title,
+      isLive: countyData?.news?.isLive,
     },
   })
   
@@ -54,6 +55,7 @@ const NewsSection = ({ id }: { id: string }) => {
           title: data.title,
           content: value,
           countyId: id,
+          isLive: data.isLive,
           id: countyData?.news?.id,
         }
         await updateOrCreateCountyNews(formData).unwrap()
@@ -81,7 +83,16 @@ const NewsSection = ({ id }: { id: string }) => {
           </div>
         ) : (
           <Paper shadow="lg" p="md" radius="md" withBorder className="w-full">
-            <div className="flex w-full justify-end">
+            <div className="flex w-full items-center justify-between">
+              {countyData?.news?.isLive ? (
+                <div className="rounded-xl bg-[#5E17EB] px-2 py-1 text-xl font-semibold text-white">
+                  <h1>Live</h1>
+                </div>
+              ) : (
+                <div className="rounded-xl bg-red-500 px-2 py-1 text-xl font-semibold text-white">
+                  <h1>Not Live</h1>
+                </div>
+              )}
               <UnstyledButton
                 type="button"
                 onClick={() => setIsEdit(!isEdit)}

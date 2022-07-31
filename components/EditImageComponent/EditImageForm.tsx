@@ -49,10 +49,9 @@ const EditImageComponent = ({
       <div className="flex w-full flex-col items-center justify-center bg-slate-50 p-3 lg:flex-row  ">
         <div className="flex h-full w-full cursor-pointer items-center justify-center border-2 border-gray-200 p-2">
           <div className="flex h-full w-full cursor-pointer flex-col border-4 border-dashed hover:border-gray-300 hover:bg-gray-100">
-            {isLoading && (
+            {isLoading ? (
               <Spinner message="Uploading..." classes="w-12 h-12" />
-            )}
-            {!preview ? (
+            ) : !preview ? (
               <label htmlFor="main-image" className="cursor-pointer">
                 <div className="flex h-full flex-col items-center justify-center px-6 py-8">
                   <div className="flex flex-col items-center justify-center ">
@@ -79,7 +78,7 @@ const EditImageComponent = ({
               <div className="flex items-center justify-center">
                 <Image
                   src={preview as string}
-                  alt="Image of salon client"
+                  alt="Image preview"
                   className="rounded-t-lg"
                   width={400}
                   height={400}

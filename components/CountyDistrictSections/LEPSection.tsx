@@ -39,6 +39,7 @@ const LEPSection = ({ id }: { id: string }) => {
   } = useForm<Partial<EditorFormDataProps>>({
     defaultValues: {
       title: countyData?.lep?.title,
+      isLive: countyData?.lep?.isLive,
     },
   })
   
@@ -55,6 +56,7 @@ const LEPSection = ({ id }: { id: string }) => {
           title: data.title,
           content: value,
           countyId: id,
+          isLive: data.isLive,
           id: countyData?.lep?.id,
         }
         await updateOrCreateCountyLEP(formData).unwrap()
@@ -79,7 +81,16 @@ const LEPSection = ({ id }: { id: string }) => {
           </div>
         ) : (
           <Paper shadow="lg" p="md" radius="md" withBorder className="w-full">
-            <div className="flex w-full justify-end">
+            <div className="flex w-full items-center justify-between">
+              {countyData?.lep?.isLive ? (
+                <div className="rounded-xl bg-[#5E17EB] px-2 py-1 text-xl font-semibold text-white">
+                  <h1>Live</h1>
+                </div>
+              ) : (
+                <div className="rounded-xl bg-red-500 px-2 py-1 text-xl font-semibold text-white">
+                  <h1>Not Live</h1>
+                </div>
+              )}
               <UnstyledButton
                 type="button"
                 onClick={() => setIsEdit(!isEdit)}

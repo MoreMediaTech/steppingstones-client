@@ -1,4 +1,4 @@
-import { Button, Divider, Indicator, Textarea, TextInput } from '@mantine/core'
+import { Button, Divider, Indicator, Textarea, TextInput, Checkbox } from '@mantine/core'
 import {
   FieldError,
   SubmitHandler,
@@ -51,7 +51,13 @@ const ContentFormComponent = ({
 }: IContentFormComponent) => {
 
   return (
-    <form className="space-y-8" onSubmit={handleSubmit(submitHandler)}>
+    <form className="space-y-8 my-4" onSubmit={handleSubmit(submitHandler)}>
+      <div className="flex w-full flex-row items-center">
+        <label htmlFor="title" className="mr-2 md:mr-0 md:w-1/5">
+          Is Section Live<span className="ml-1 text-red-500">*</span>
+        </label>
+        <Checkbox id="isLive" aria-label="isLive" {...register('isLive')} />
+      </div>
       <div className="p-2 font-semibold">
         <h1>Content</h1>
       </div>
@@ -69,8 +75,7 @@ const ContentFormComponent = ({
             required: true,
             minLength: {
               value: 2,
-              message:
-                'Please enter a title with at least 2 characters',
+              message: 'Please enter a title with at least 2 characters',
             },
             pattern: {
               value: /^[a-zA-Z0-9!@#$%?:/^&*()._ -]+$/,

@@ -17,10 +17,15 @@ const Messages = () => {
         showForRole={'SS_EDITOR'}
         userRole={user?.role as string}
       >
-        <PortalHeader user={user as CurrentUser} />
+        <PortalHeader
+          user={user as CurrentUser}
+          imgUrl={user?.imageUrl}
+          title={`${user?.name}`}
+          subTitle="View enquires"
+        />
         <section className="overflow-y-auto">
-          <h1 className='text-xl font-semibold px-4'>Messages</h1>
-          <MessagesSection  />
+          <h1 className="px-4 text-2xl font-bold">Enquires</h1>
+          <MessagesSection />
         </section>
       </ComponentShield>
     </AdminLayout>

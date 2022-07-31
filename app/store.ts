@@ -43,7 +43,7 @@ export const rootReducer: Reducer<RootState> = (
  if (action.type === HYDRATE) {
    const nextState = {
      ...state, // use previous state
-     ...action.payload, // apply delta from hydration
+     ...action.payload, // apply data from hydration
    }
    return nextState
  } else {

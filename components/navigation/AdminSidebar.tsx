@@ -149,19 +149,19 @@ const AdminSidebar = ({
             }
           >
             {/* ...menu items */}
-            <Menu.Label>Settings</Menu.Label>
+            <Menu.Label>Admin Settings</Menu.Label>
 
-            <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 hover:bg-[#00DCB3] hover:text-white">
+            <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 text-center font-semibold hover:bg-[#00DCB3] hover:text-white">
               <Link href={'/admin/editor-portal/admin/county-settings'}>
                 <a>Manage County</a>
               </Link>
             </Menu.Item>
-            <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 hover:bg-[#00DCB3] hover:text-white">
+            <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 text-center font-semibold hover:bg-[#00DCB3] hover:text-white">
               <Link href={'/admin/editor-portal/admin/district-settings'}>
                 <a>Manage District</a>
               </Link>
             </Menu.Item>
-            <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 hover:bg-[#00DCB3] hover:text-white">
+            <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 text-center font-semibold hover:bg-[#00DCB3] hover:text-white">
               <Link href={'/admin/editor-portal/admin/section-settings'}>
                 <a>Manage Section</a>
               </Link>
@@ -200,18 +200,18 @@ const AdminSidebar = ({
                 </UnstyledButton>
               }
             >
-              <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 hover:bg-[#00DCB3] hover:text-white">
+              <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 text-center font-semibold hover:bg-[#00DCB3] hover:text-white">
                 <Link href={'/auth/profile'}>
                   <a>Profile</a>
                 </Link>
               </Menu.Item>
               <Divider />
               <Menu.Item
-                className="flex w-full items-center space-x-4 rounded-lg p-2 hover:bg-[#00DCB3] hover:text-white"
+                className="flex w-full items-center space-x-4 rounded-lg p-2 text-center font-semibold hover:bg-[#00DCB3] hover:text-white"
                 icon={<FaSignOutAlt fontSize={14} />}
                 onClick={handleLogout}
               >
-                <span className="text-gray-900">Logout</span>
+                <p>Logout</p>
               </Menu.Item>
             </Menu>
           </div>

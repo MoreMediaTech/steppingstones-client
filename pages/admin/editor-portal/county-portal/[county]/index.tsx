@@ -28,6 +28,7 @@ import Button from '@components/Button'
 type DistrictProps = {
   id: string
   name: string
+  isLive: boolean
 }
 
 const County = ({ county, countyId }: { county: string; countyId: string }) => {
@@ -44,6 +45,7 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
     isError: isErrorCounty,
     refetch: refetchCounty,
   } = useGetCountyByIdQuery(countyId, { refetchOnMountOrArgChange: true })
+
 
   const [updateCounty, { isLoading }] = useUpdateCountyMutation()
   const [createSection, { isLoading: isLoadingCreateSection }] = useCreateSectionMutation()
@@ -103,7 +105,7 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
       >
         <section className="h-screen overflow-auto">
           <PortalHeader
-            title={`${countyData?.name} Portal`}
+            title={`${countyData?.name} Portal` ?? 'County Portal'}
             subTitle="Please select district from the menu below"
             data={countyData}
           />
@@ -128,7 +130,7 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
                   className="md:w-full"
                   onClick={() => setAddOpenSectionModal((o) => !o)}
                 >
-                  Add Section
+                  Add County Section
                 </Button>
                 <Button
                   type="button"
@@ -136,7 +138,7 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
                   className="md:w-full "
                   onClick={() => setOpened((o) => !o)}
                 >
-                  Add District
+                  Add LA
                 </Button>
               </div>
             </div>
@@ -233,8 +235,12 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
                               <button
                                 key={district?.id}
                                 type="button"
-                                className="flex w-full  cursor-pointer items-center justify-center rounded-xl bg-[#5E17EB] py-6 px-4 text-lg font-semibold text-white 
-                    drop-shadow-lg transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:text-xl "
+                                className={`${
+                                  (!!district?.isLive as boolean)
+                                    ? 'bg-[#5E17EB] hover:bg-[#3A0B99]'
+                                    : 'bg-red-500 hover:bg-red-700'
+                                } flex w-full  cursor-pointer items-center justify-center rounded-xl py-2 px-2 text-lg font-semibold text-white shadow-lg 
+                    transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100  md:py-6 `}
                                 onClick={() =>
                                   router.replace({
                                     pathname: `${NEXT_URL}/admin/editor-portal/county-portal/district`,
@@ -258,7 +264,7 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
                                 key={`${section?.id}`}
                                 type="button"
                                 className={`${
-                                  !!section?.isLive as boolean
+                                  (!!section?.isLive as boolean)
                                     ? 'bg-[#5E17EB] hover:bg-[#3A0B99]'
                                     : 'bg-red-500 hover:bg-red-700'
                                 } flex w-full  cursor-pointer items-center justify-center rounded-xl py-2 px-2 text-lg font-semibold text-white shadow-lg 

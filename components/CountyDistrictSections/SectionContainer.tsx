@@ -38,7 +38,7 @@ const SectionContainer = ({
 
   useEffect(() => {
     // reset the form when the county data is changed/updated
-    reset({ title: sectionData?.title })
+    reset({ title: sectionData?.title, isLive: sectionData?.isLive })
     setValue(sectionData?.content as string)
   }, [sectionData])
 
@@ -74,11 +74,15 @@ const SectionContainer = ({
           </div>
         ) : (
           <Paper shadow="lg" p="md" radius="md" withBorder className="w-full">
-            <div className="flex w-full items-center justify-between">
+            <div className="flex w-full items-center justify-between mb-4">
               {sectionData?.isLive ? (
-                <h1 className="text-[#5E17EB] text-xl font-semibold">Live</h1>
+                <div className="rounded-xl bg-[#5E17EB] px-2 py-1 text-xl font-semibold text-white">
+                  <h1>Live</h1>
+                </div>
               ) : (
-                <h1 className="text-red-500 text-xl font-semibold">Not Live</h1>
+                <div className="rounded-xl bg-red-500 px-2 py-1 text-xl font-semibold text-white">
+                  <h1>Not Live</h1>
+                </div>
               )}
               <UnstyledButton
                 type="button"

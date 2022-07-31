@@ -12,7 +12,7 @@ import PortalSection from '@components/PortalSection'
 
 const Dashboard = () => {
   const router = useRouter()
-   
+
   const { data: user, isLoading } = useGetUserQuery()
   return (
     <AdminLayout title="Counties - Editor Dashboard">
@@ -22,9 +22,13 @@ const Dashboard = () => {
         showForRole={'SS_EDITOR'}
         userRole={user?.role ?? ''}
       >
-        <PortalHeader user={user as CurrentUser} />
+        <PortalHeader
+          user={user as CurrentUser}
+          title={`Welcome ${user?.name}`}
+          subTitle="Please select from the menu below"
+          imgUrl={user?.imageUrl}
+        />
         <PortalSection />
-        
       </ComponentShield>
     </AdminLayout>
   )
@@ -43,7 +47,6 @@ export const getServerSideProps: GetServerSideProps = async (
     context.res.end()
   }
 
- 
   return {
     props: {},
   }

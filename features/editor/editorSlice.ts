@@ -1,4 +1,4 @@
-import { DistrictDataProps, EconomicDataWidgetProps, SectionProps, SubSectionProps, SubSubSectionProps } from '../../lib/types';
+import { DistrictDataProps, DistrictSectionProps, EconomicDataWidgetProps, SectionProps, SubSectionProps, SubSubSectionProps } from '../../lib/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { RootState } from 'app/store'
@@ -11,6 +11,7 @@ interface IEditorState {
   section: Partial<SectionProps>
   subSection: Partial<SubSectionProps>
   subSubSection: Partial<SubSubSectionProps>
+  districtSection: Partial<DistrictSectionProps>
   economicData: Partial<EconomicDataWidgetProps>
   message: string
   error: Error | null
@@ -25,7 +26,7 @@ export const initialState: IEditorState = {
     logoIcon: '',
   },
   county: {
-     id: '',
+    id: '',
     name: '',
     imageUrl: '',
     logoIcon: '',
@@ -49,6 +50,15 @@ export const initialState: IEditorState = {
     name: '',
     title: '',
     content: '',
+  },
+  districtSection: {
+    id: '',
+    name: '',
+    title: '',
+    content: '',
+    imageUrl: '',
+    isEconomicData: false,
+    economicDataWidgets: [],
   },
   economicData: {
     id: '',
@@ -87,6 +97,9 @@ const editorSlice = createSlice({
     setSubSubSection: (state, { payload }: PayloadAction<SubSubSectionProps>) => {
       state.subSubSection = payload
     },
+    setDistrictSection: (state, { payload }: PayloadAction<DistrictSectionProps>) => {
+      state.districtSection = payload
+    },
     setEconomicData: (state, { payload }: PayloadAction<EconomicDataWidgetProps>) => {
       state.economicData = payload
     },
@@ -97,7 +110,17 @@ const editorSlice = createSlice({
   },
 })
 
-export const { setCounties, setCounty, setDistrict, setSection, setSubSection, setSubSubSection, setError, clearState } =
-  editorSlice.actions
+export const {
+  setCounties,
+  setCounty,
+  setDistrict,
+  setSection,
+  setSubSection,
+  setSubSubSection,
+  setError,
+  clearState,
+  setDistrictSection,
+  setEconomicData,
+} = editorSlice.actions
 export const editorSelector = (state: RootState) => state.editor
 export default editorSlice.reducer

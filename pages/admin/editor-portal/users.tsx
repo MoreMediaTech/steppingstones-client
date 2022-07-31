@@ -18,34 +18,44 @@ const Users = () => {
   const [opened, setOpened] = useState(false)
   return (
     <>
-    <AdminLayout title="Admin Users">
-      <ComponentShield
-        RBAC
-        showForRole={'SS_EDITOR'}
-        userRole={user?.role as string}
-      >
-        <PortalHeader user={user as CurrentUser} />
-        {user?.isSuperAdmin && (
-          <section className="container mx-auto px-4 py-2">
-            <div className="flex justify-end">
-              <Button
-                type="button"
-                color="primary"
-                className="md:w-1/4"
-                onClick={() => setOpened((o) => !o)}
-              >
-                Create Admin
-              </Button>
-            </div>
+      <AdminLayout title="Admin Users">
+        <ComponentShield
+          RBAC
+          showForRole={'SS_EDITOR'}
+          userRole={user?.role as string}
+        >
+          <PortalHeader
+            user={user as CurrentUser}
+            imgUrl={user?.imageUrl}
+            title={`${user?.name}`}
+            subTitle="Manage application users"
+          />
+          {user?.isSuperAdmin && (
+            <section className="container mx-auto px-4 py-2">
+              <div className="flex justify-end">
+                <Button
+                  type="button"
+                  color="primary"
+                  className="md:w-1/4"
+                  onClick={() => setOpened((o) => !o)}
+                >
+                  Create Admin
+                </Button>
+              </div>
+            </section>
+          )}
+          <section className="overflow-y-auto ">
+            <h1 className="px-2 text-xl font-semibold">Users</h1>
+            <AdminUsersSection />
           </section>
-        )}
-        <section className="overflow-y-auto ">
-          <h1 className="text-xl font-semibold px-2">Users</h1>
-          <AdminUsersSection />
-        </section>
-      </ComponentShield>
-    </AdminLayout>
-    <CreateAdminModal opened={opened} setOpened={setOpened} user={user as CurrentUser} refetch={refetch} />
+        </ComponentShield>
+      </AdminLayout>
+      <CreateAdminModal
+        opened={opened}
+        setOpened={setOpened}
+        user={user as CurrentUser}
+        refetch={refetch}
+      />
     </>
   )
 }

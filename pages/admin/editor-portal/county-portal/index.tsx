@@ -26,7 +26,7 @@ const County = () => {
     isError: isErrorCounties,
     refetch: refetchCounties,
   } = useGetCountiesQuery()
-  // console.log("🚀 ~ file: index.tsx ~ line 35 ~ County ~ counties", counties)
+
 
   const totalCountyButtonSlides = Math.ceil(counties?.length! / 12)
 

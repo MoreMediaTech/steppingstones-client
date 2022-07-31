@@ -4,7 +4,6 @@ import { Loader } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 
 import {
-  useGetDistrictByIdQuery,
   useCreateEconomicDataWidgetMutation,
   useUpdateEconomicDataWidgetByIdMutation,
 } from 'features/editor/editorApiSlice'
@@ -15,26 +14,25 @@ import EconomicDataModal from './EconomicDataModal'
 const EconomicDataSection = ({
   id,
   opened,
-  setOpened,
   type,
+  isLoadingSection,
+  economicDataWidgets,
+  setOpened,
   setType,
+  refetch,
 }: {
   id: string
   opened: boolean
   type: 'create' | 'edit'
+  isLoadingSection: boolean
+  economicDataWidgets: EconomicDataWidgetProps[]
   setType: React.Dispatch<React.SetStateAction<'create' | 'edit'>>
   setOpened: React.Dispatch<React.SetStateAction<boolean>>
+  refetch: () => void
 }) => {
   const [economicData, setEconomicData] = useState<
     EconomicDataWidgetProps | undefined
   >(undefined)
-
-  const {
-    data: districtData,
-    isLoading: isLoadingDistrict,
-    isError: isErrorDistrict,
-    refetch: refetchDistrict,
-  } = useGetDistrictByIdQuery(id, { refetchOnMountOrArgChange: true })
 
   const [createEconomicDataWidget, { isLoading: isLoadingCreate }] =
     useCreateEconomicDataWidgetMutation()
@@ -45,8 +43,10 @@ const EconomicDataSection = ({
   let defaultValues = {
     title: type === 'edit' ? (economicData?.title as string) : '',
     stats: type === 'edit' ? (economicData?.stats as string) : '',
-    descriptionLine1: type === 'edit' ? (economicData?.descriptionLine1 as string) : '',
-    descriptionLine2: type === 'edit' ? (economicData?.descriptionLine2 as string) : '',
+    descriptionLine1:
+      type === 'edit' ? (economicData?.descriptionLine1 as string) : '',
+    descriptionLine2:
+      type === 'edit' ? (economicData?.descriptionLine2 as string) : '',
     linkName: type === 'edit' ? (economicData?.linkName as string) : '',
     linkUrl: type === 'edit' ? (economicData?.linkUrl as string) : '',
   }
@@ -72,7 +72,7 @@ const EconomicDataSection = ({
         try {
           const formData = {
             ...data,
-            economicDataId: districtData?.economicData?.id,
+            districtSectionId: id,
             id: economicData?.id,
           }
           if (type === 'create') {
@@ -81,7 +81,7 @@ const EconomicDataSection = ({
           if (type === 'edit') {
             await updateEconomicDataWidgetById(formData).unwrap()
           }
-          refetchDistrict()
+          refetch()
           setOpened(false)
         } catch (error) {
           showNotification({
@@ -91,20 +91,20 @@ const EconomicDataSection = ({
           })
         }
       },
-      [districtData?.economicData, economicData, type]
+      [id, economicData, type]
     )
 
   return (
     <>
       <section className="relative h-auto w-full flex-grow px-2 py-2  md:py-8 md:px-8">
         <section className="container">
-          {isLoadingDistrict ? (
+          {isLoadingSection ? (
             <div className="flex h-[700px] items-center justify-center">
               <Loader size="xl" variant="bars" />
             </div>
           ) : (
-            <div className="grid w-full  grid-cols-3 gap-4 text-xl">
-              {districtData?.economicData?.economicDataWidgets?.map(
+            <div className="grid w-full grid-cols-1 gap-4  text-xl sm:grid-cols-2 lg:grid-cols-3">
+              {economicDataWidgets?.map(
                 (economicData: EconomicDataWidgetProps) => (
                   <EconomicDataWidget
                     key={economicData.id}
@@ -113,7 +113,7 @@ const EconomicDataSection = ({
                     setType={setType}
                     type={type}
                     setOpened={setOpened}
-                    refetch={refetchDistrict}
+                    refetch={refetch}
                   />
                 )
               )}

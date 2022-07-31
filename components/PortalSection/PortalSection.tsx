@@ -20,8 +20,8 @@ const links: ILinks[] = [
     icon: <GiPortal fontSize={44} />,
   },
   {
-    title: 'Revenues',
-    path: 'revenues',
+    title: 'Revenue',
+    path: 'revenue',
     icon: <FaMoneyBillWave fontSize={44} />,
   },
   {

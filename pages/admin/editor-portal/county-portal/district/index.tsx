@@ -7,21 +7,22 @@ import Image from 'next/image'
 import { UnstyledButton, Loader } from '@mantine/core'
 
 import { ComponentShield } from '@components/NextShield'
-import Spinner from '@components/spinner'
 import PortalHeader from '@components/PortalHeader'
 import { AdminLayout } from 'layout'
 import { setError } from 'features/upload/uploadSlice'
-import { EditImageProps } from '@lib/types'
+import { DistrictSectionProps, EditImageProps } from '@lib/types'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
 import {
   useGetDistrictByIdQuery,
   useUpdateDistrictByIdMutation,
+  useCreateDistrictSectionMutation,
 } from 'features/editor/editorApiSlice'
 import { useAppDispatch } from 'app/hooks'
 import { districtPages } from 'data'
 import { NEXT_URL } from '@config/index'
 import EditImageComponent from '@components/EditImageComponent'
 import Button from '@components/Button'
+import { CreateLASectionForm } from '@components/forms'
 
 const District = ({
   district,
@@ -33,6 +34,8 @@ const District = ({
   const router = useRouter()
   const dispatch = useAppDispatch()
   const [opened, setOpened] = useState<boolean>(false)
+    const [openAddLASectionModal, setAddOpenLASectionModal] =
+      useState<boolean>(false)
   const [isEdit, setIsEdit] = useState<boolean>(false)
   const [preview, setPreview] = useState<string | ArrayBuffer | null>(null)
   const { data: user } = useGetUserQuery()
@@ -44,7 +47,9 @@ const District = ({
     refetch: refetchDistrict,
   } = useGetDistrictByIdQuery(districtId, { refetchOnMountOrArgChange: true })
 
+
   const [updateDistrictById, { isLoading }] = useUpdateDistrictByIdMutation()
+  const [createDistrictSection, { isLoading: isLoadingCreateLASection }] = useCreateDistrictSectionMutation()
 
   const {
     handleSubmit,
@@ -128,6 +133,14 @@ const District = ({
               >
                 Go Back
               </Button>
+              <Button
+                type="button"
+                color="primary"
+                className="md:w-1/4"
+                onClick={() => setAddOpenLASectionModal((o) => !o)}
+              >
+                Add LA Section
+              </Button>
             </div>
           </section>
           {isLoadingDistrict ? (
@@ -173,27 +186,30 @@ const District = ({
                   <div className="cols-span-3 w-full">
                     <div className="w-full py-8">
                       <div className="grid grid-cols-2 gap-y-8 gap-x-20">
-                        {districtPages.map((pages, index) => (
-                          <button
-                            key={`${pages.title}-${index}`}
-                            type="button"
-                            className="flex w-full  cursor-pointer items-center justify-center rounded-xl bg-[#5E17EB] py-6 px-4 text-lg font-semibold text-white 
-                    drop-shadow-lg transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:text-xl lg:text-2xl"
-                            onClick={() =>
-                              router.replace({
-                                pathname: `${NEXT_URL}${pages.path}`,
-                                query: {
-                                  county: router.query.county,
-                                  countyId: router.query.countyId,
-                                  district: districtData?.name,
-                                  districtId: districtData?.id,
-                                },
-                              })
-                            }
-                          >
-                            {pages.title}
-                          </button>
-                        ))}
+                        {districtData?.districtSections?.map(
+                          (section: DistrictSectionProps) => (
+                            <button
+                              key={`${section.id}`}
+                              type="button"
+                              className={`flex w-full
+                             cursor-pointer items-center  justify-center rounded-xl bg-[#5E17EB] py-2 px-2 text-lg font-semibold text-white shadow-lg transition 
+                    delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99]  md:py-6 `}
+                              onClick={() =>
+                                router.push({
+                                  pathname: `${NEXT_URL}/admin/editor-portal/county-portal/district/${section.id}`,
+                                  query: {
+                                    county: router.query.county,
+                                    countyId: router.query.countyId,
+                                    district: districtData?.name,
+                                    districtId: districtData?.id,
+                                  },
+                                })
+                              }
+                            >
+                              {section.name}
+                            </button>
+                          )
+                        )}
                       </div>
                     </div>
                   </div>
@@ -202,6 +218,14 @@ const District = ({
             </section>
           )}
         </section>
+        <CreateLASectionForm
+          opened={openAddLASectionModal}
+          setOpened={setAddOpenLASectionModal}
+          isLoading={isLoadingCreateLASection}
+          createSection={createDistrictSection}
+          refetch={refetchDistrict}
+          id={districtData?.id}
+        />
       </ComponentShield>
     </AdminLayout>
   )

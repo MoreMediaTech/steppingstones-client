@@ -1,13 +1,12 @@
+import { AdminLayout } from 'layout'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 
-import { AdminLayout } from 'layout'
 import { ComponentShield } from '@components/NextShield'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
 import PortalHeader from '@components/PortalHeader'
 import { CurrentUser } from '@lib/types'
-import { CountySettings } from '@components/SettingsSection'
 
-const CountySettingsPage = () => {
+const Advertisements = () => {
   const { data: user } = useGetUserQuery()
   return (
     <AdminLayout title="Meetings">
@@ -16,17 +15,14 @@ const CountySettingsPage = () => {
         showForRole={'SS_EDITOR'}
         userRole={user?.role as string}
       >
-        <section className="h-screen overflow-auto">
-          <PortalHeader
-            user={user as CurrentUser}
-            imgUrl={user?.imageUrl}
-            title={`${user?.name}`}
-            subTitle="Manage counties"
-          />
-          <section className="overflow-y-auto">
-            <h1 className="px-4 text-2xl font-bold">County Setting</h1>
-            <CountySettings />
-          </section>
+        <PortalHeader
+          user={user as CurrentUser}
+          imgUrl={user?.imageUrl}
+          title={`${user?.name}`}
+          subTitle="Manage Adverts"
+        />
+        <section className="overflow-y-auto">
+          <h1 className="px-4 text-2xl font-bold">Advertisements</h1>
         </section>
       </ComponentShield>
     </AdminLayout>
@@ -52,4 +48,4 @@ export const getServerSideProps: GetServerSideProps = async (
   }
 }
 
-export default CountySettingsPage
+export default Advertisements

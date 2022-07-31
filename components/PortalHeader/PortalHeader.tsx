@@ -3,18 +3,17 @@ import { Burger, Group, Text, TextInput } from '@mantine/core'
 import { IoIosSearch } from 'react-icons/io'
 import { CurrentUser, CountyDataProps, DistrictDataProps } from '@lib/types'
 import ContentDrawer from '@components/navigation/ContentDrawer/ContentDrawer'
-import Image from 'next/image'
-import steppingstonesapplogo from '../../public/steppingstonesapplogo.png'
 import Avatar from '@components/Avatar'
 
 interface IPortalHeaderProps {
   user?: CurrentUser
   title?: string
   subTitle?: string
+  imgUrl?: string
   data?: CountyDataProps | DistrictDataProps
 }
 
-const PortalHeader = ({ user, title, subTitle, data }: IPortalHeaderProps) => {
+const PortalHeader = ({ user, title, subTitle, data, imgUrl }: IPortalHeaderProps) => {
   const [opened, setOpened] = useState(false)
   const [pos, setPos] = useState<string>('top')
   const initials = user?.name
@@ -46,17 +45,17 @@ const PortalHeader = ({ user, title, subTitle, data }: IPortalHeaderProps) => {
           <div className="mb-2">
             <Group>
               <Avatar
-                imageUrl={data?.logoIcon as string}
+                imageUrl={data ? data?.logoIcon as string : imgUrl as string}
                 classes="md:h-14 md:w-14"
                 imgSize='h-10 w-10'
               />
               <div style={{ flex: 1 }}>
                 <h1 className="text-lg font-semibold text-[#00dcb3] sm:text-[1.2rem] md:text-[1.6rem]">
-                  {user ? ` Welcome back ${user?.name?.split(' ')[0]}` : title}
+                  { title}
                 </h1>
 
                 <h3 className="text-sm font-semibold text-[#3A0B99] md:text-base">
-                  {user ? 'Please select from the menu below' : subTitle}
+                  { subTitle}
                 </h3>
               </div>
             </Group>

@@ -24,15 +24,15 @@ const EconomicDataWidget = ({
   const [deleteEconomicDataWidgetById, { isLoading }] =
     useDeleteEconomicDataWidgetByIdMutation()
   return (
-    <div className="flex flex-col space-y-2">
+    <div className="flex flex-col space-y-2 bg-white p-2 rounded-lg shadow-lg">
       <div className="relative">
-        <div className=" w-full justify-center  rounded-2xl border border-[#3A0B99] bg-[#3A0B99] ">
-          <div className="flex flex-col items-center space-y-8 p-4 font-semibold text-white">
+        <div className=" w-full rounded-2xl border border-[#3A0B99] bg-[#3A0B99] shadow-lg ">
+          <div className="flex flex-col items-center justify-center  space-y-8 p-4 text-sm font-semibold text-center text-white md:text-base lg:text-lg">
             <h1>{economicData?.title}</h1>
             <p>
               {`${economicData?.stats}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
             </p>
-            <div className='text-center'>
+            <div className="text-center">
               <p>{economicData?.descriptionLine1}</p>
               <p>{economicData?.descriptionLine2}</p>
             </div>

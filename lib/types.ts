@@ -1,4 +1,3 @@
-
 import type { ReactNode } from 'react'
 import type { NextRouter } from 'next/router'
 
@@ -19,6 +18,8 @@ export interface IFormData {
   imageUrl: string
   acceptContactRequest: boolean
   organisation: string
+  published: boolean
+  isLive: boolean
 }
 
 export interface MessageProps {
@@ -158,7 +159,22 @@ export type SectionProps = {
   isSubSection?: boolean
   isLive?: boolean
   subSection?: SubSectionProps[]
+  createdAt?: string
+  updatedAt?: string
+  county?: CountyDataProps
 }
+
+export type DistrictSectionProps = {
+  id: string
+  name: string
+  title?: string
+  content?: string
+  imageUrl?: string
+  isEconomicData?: boolean
+  isLive?: boolean
+  economicDataWidgets: EconomicDataWidgetProps[]
+}
+
 export type SubSectionProps = {
   id: string
   name: string
@@ -169,6 +185,7 @@ export type SubSectionProps = {
   isLive?: boolean
   subSection?: SubSubSectionProps[]
 }
+
 export type SubSubSectionProps = {
   id: string
   name: string
@@ -193,8 +210,13 @@ export type EconomicDataWidgetProps = {
 export type DistrictDataProps = {
   id: string
   name: string
-  imageUrl: string
-  logoIcon: string
+  imageUrl?: string
+  logoIcon?: string
+  isLive: boolean
+  county?: CountyDataProps
+  districtSections?: DistrictSectionProps[]
+  createdAt?: string
+  updatedAt?: string
 }
 export type CountyDataProps = {
   id: string
@@ -203,6 +225,9 @@ export type CountyDataProps = {
   logoIcon: string
   published: boolean
   viewCount: number
+  isLive: boolean
+  createdAt: string
+  updatedAt: string
 }
 export type IEmailFormData = {
   from: string

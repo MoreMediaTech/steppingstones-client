@@ -1,7 +1,7 @@
 import { FaEdit, FaTrash, FaCheck, FaTimes } from 'react-icons/fa'
 import { CurrentUser } from '@lib/types'
 import { Button } from '@mantine/core'
-import UpdateAdminUserModal from './UpdateAdminUserModal'
+
 
 const AdminUsersTable = ({
   users,
@@ -16,9 +16,10 @@ const AdminUsersTable = ({
   setUser: React.Dispatch<React.SetStateAction<CurrentUser | null>>
   refetch: () => void
 }) => {
+  
   return (
     <>
-      <section className="relative md:w-full  shadow-md sm:rounded-lg">
+      <section className="relative shadow-md  sm:rounded-lg md:w-full">
         <div className="p-4">
           <label htmlFor="table-search" className="sr-only">
             Search
@@ -41,7 +42,7 @@ const AdminUsersTable = ({
             <input
               type="text"
               id="table-search"
-              className="block md:w-80 rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500  "
+              className="block rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 md:w-80  "
               placeholder="Search for items"
             />
           </div>
@@ -148,7 +149,7 @@ const AdminUsersTable = ({
                       onClick={() => {
                         setUser(user)
                         setOpen(true)
-                    }}
+                      }}
                     >
                       Edit
                     </Button>

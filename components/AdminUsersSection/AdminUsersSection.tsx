@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Loader } from '@mantine/core'
 
 import AdminUsersTable from './AdminUsersTable'
 import { useGetUsersQuery } from 'features/user/usersApiSlice'
@@ -17,8 +18,8 @@ const AdminUsersSection = () => {
 
   if (isLoading) {
     return (
-      <div className="item-center flex h-[700px] justify-center">
-        <Spinner classes="h-24 w-24" message="loading messages..." />
+      <div className="flex h-[700px] items-center justify-center">
+        <Loader size="xl" variant="bars" />
       </div>
     )
   }

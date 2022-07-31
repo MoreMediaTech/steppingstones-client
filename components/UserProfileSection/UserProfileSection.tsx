@@ -20,8 +20,8 @@ const UserProfileSection = () => {
         <section className="grid grid-cols-1 gap-4 lg:grid-cols-3">
           <section className="w-full space-y-4 lg:col-span-1">
             <div className="flex w-full items-center space-x-6 rounded-md bg-white  p-6 shadow-xl">
-              <div className="mr-2 w-20 rounded-full">
-                <Avatar imageUrl={user?.imageUrl as string} classes="rounded-lg bg-white" />
+              <div className="mr-2 rounded-full">
+                <Avatar imageUrl={user?.imageUrl as string} classes="rounded-lg bg-white w-24 h-24" />
               </div>
               <div className="space-y-1">
                 <div>

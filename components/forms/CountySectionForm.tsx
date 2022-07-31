@@ -45,14 +45,10 @@ const CountySectionForm = ({
   return (
     <form className="space-y-8" onSubmit={handleSubmit(submitHandler)}>
       <div className="flex w-full flex-row items-center">
-        <label htmlFor="title" className="md:w-1/5 mr-2 md:mr-0">
+        <label htmlFor="title" className="mr-2 md:mr-0 md:w-1/5">
           Is Section Live<span className="ml-1 text-red-500">*</span>
         </label>
-        <Checkbox
-          id="isLive"
-          aria-label="isLive"
-          {...register('isLive')}
-        />
+        <Checkbox id="isLive" aria-label="isLive" {...register('isLive')} />
       </div>
       <Divider />
       <div className="p-2 font-semibold">
@@ -90,7 +86,7 @@ const CountySectionForm = ({
       </div>
       <Divider />
       <div className="my-4 flex w-full items-center justify-between ">
-        <div>
+        <div className="md:w-1/5">
           <Button
             type="button"
             fullWidth
@@ -100,10 +96,7 @@ const CountySectionForm = ({
             Cancel
           </Button>
         </div>
-        <div className="flex w-full items-center md:w-2/5">
-          <div className="w-full text-xl text-gray-400">
-            <p>Save and preview</p>
-          </div>
+        <div className="md:w-1/5">
           <Button
             type="submit"
             loading={isLoading}
