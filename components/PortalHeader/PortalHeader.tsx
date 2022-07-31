@@ -13,7 +13,13 @@ interface IPortalHeaderProps {
   data?: CountyDataProps | DistrictDataProps
 }
 
-const PortalHeader = ({ user, title, subTitle, data, imgUrl }: IPortalHeaderProps) => {
+const PortalHeader = ({
+  user,
+  title,
+  subTitle,
+  data,
+  imgUrl,
+}: IPortalHeaderProps) => {
   const [opened, setOpened] = useState(false)
   const [pos, setPos] = useState<string>('top')
   const initials = user?.name
@@ -45,30 +51,33 @@ const PortalHeader = ({ user, title, subTitle, data, imgUrl }: IPortalHeaderProp
           <div className="mb-2">
             <Group>
               <Avatar
-                imageUrl={data ? data?.logoIcon as string : imgUrl as string}
+                imageUrl={
+                  data ? (data?.logoIcon as string) : (imgUrl as string)
+                }
                 classes="md:h-14 md:w-14"
-                imgSize='h-10 w-10'
+                imgSize="h-10 w-10"
               />
               <div style={{ flex: 1 }}>
                 <h1 className="text-lg font-semibold text-[#00dcb3] sm:text-[1.2rem] md:text-[1.6rem]">
-                  { title}
+                  {title}
                 </h1>
 
                 <h3 className="text-sm font-semibold text-[#3A0B99] md:text-base">
-                  { subTitle}
+                  {subTitle}
                 </h3>
               </div>
             </Group>
           </div>
           <div className="flex w-full items-center space-x-4 md:w-96">
-            <TextInput
-              aria-label="search-input"
-              placeholder="Search"
-              icon={<IoIosSearch fontSize={30} fontWeight={500} />}
-              size="lg"
-              radius="md"
-              className="w-full rounded-xl  bg-transparent shadow-xl"
-            />
+            <div className=" flex w-full items-center gap-2 rounded-lg border border-gray-300 bg-gray-50 p-1 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500">
+              <input
+                aria-label="search-input"
+                placeholder="Search"
+                type="search"
+                className="form-input w-full border-none bg-transparent px-2 py-2 focus:border-0 focus:ring-0 focus:ring-transparent"
+              />
+              <IoIosSearch fontSize={30} fontWeight={500} />
+            </div>
             <div className={!!data ? 'display: flex' : 'hidden'}>
               {!!data && (
                 <Burger

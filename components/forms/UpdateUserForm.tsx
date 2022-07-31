@@ -80,8 +80,8 @@ const UpdateUserForm = ({
 
   return (
     <form
-      aria-label="general-information-form"
-      data-testid="general-information-form"
+      aria-label="update-user-form"
+      data-testid="update-user-form"
       onSubmit={handleSubmit(submitHandler)}
       className="grid grid-cols-1 gap-x-4 gap-y-6  bg-transparent md:grid-cols-2"
     >

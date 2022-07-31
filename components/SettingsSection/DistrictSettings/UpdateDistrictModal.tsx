@@ -1,18 +1,20 @@
 import React from 'react'
 import { Modal } from '@mantine/core'
-import { DistrictDataProps } from '@lib/types'
+import { DistrictDataProps, SectionProps } from '@lib/types'
 import { UpdateDistrictForm } from '@components/forms'
 
 
 const UpdateDistrictModal = ({
   open,
   refetch,
-  district,
+  data,
   handleModalClose,
+  type,
 }: {
+  type: string
   open: boolean
   refetch: () => void
-  district: DistrictDataProps
+  data: DistrictDataProps | SectionProps
   handleModalClose: () => void
 }) => {
   return (
@@ -27,8 +29,9 @@ const UpdateDistrictModal = ({
     >
       <UpdateDistrictForm
         refetch={refetch}
-        district={district}
+        dataParams={data}
         handleModalClose={handleModalClose}
+        type={type}
       />
     </Modal>
   )

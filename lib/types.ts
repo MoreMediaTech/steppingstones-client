@@ -59,6 +59,41 @@ export enum VISIBLE_OPTIONS {
   BY_COOKIE_VALUE = 'byCookieValue',
 }
 
+export enum Status {
+  LIVE = 'LIVE',
+  ONHOLD = 'ONHOLD',
+  CLOSED = 'CLOSED',
+  HIDDEN = 'HIDDEN',
+}
+
+export enum PartnerType {
+  NONE ='NONE',
+  PARTNER = 'PARTNER',
+  LEAD_PARTNER = 'LEAD_PARTNER',
+  SENIOR_CONTACT = 'SENIOR_CONTACT',
+}
+
+export enum ValueCategory {
+  NONE = 'NONE',
+  CREATIVE_DIGITAL = 'CREATIVE DIGITAL',
+  DIGITAL= 'DIGITAL',
+  EMPLOYMENT = 'EMPLOYMENT',
+  FINANCIAL = 'FINANCIAL',
+  GLOBAL_TRADING = 'GLOBAL TRADING',
+  GREEN_ENERGY = 'GREEN ENERGY',
+  INNOVATION = 'INNOVATION',
+  MARKETING = 'MARKETING',
+  MENTAL_HEALTH = 'MENTAL HEALTH',
+  NETWORKING = 'NETWORKING',
+  SECTOR_GROWTH = 'SECTOR GROWTH',
+  STARTUP = 'STARTUP',
+  STEM_SECTORS = 'STEM SECTORS',
+  TALENT = 'TALENT',
+  TRADE_ASSOCIATIONS = 'TRADE ASSOCIATIONS',
+  TRAINING = 'TRAINING',
+  VISITOR_ECONOMY = 'VISITOR ECONOMY',
+}
+
 export interface CookieConsentProps {
   location: OPTIONS
   visible: VISIBLE_OPTIONS
@@ -278,6 +313,30 @@ export interface CurrentUser {
   district?: string
   emailVerified?: boolean
   acceptTermsAndConditions?: boolean
+}
+
+export type PartnerData = {
+  id?: string
+  name: string
+  email: string
+  organisation: string
+  description: string
+  category: string
+  businessType: string
+  website: string
+  isLive?: boolean
+  isHidden?: boolean
+  isApproved?: boolean
+  status?: Status
+  areaOfOperation: AreasOfOperation
+  valueCategory: ValueCategory
+  partnerType: PartnerType
+  projectsResponsibleFor: string
+  closingDate: Date
+  isEmail: boolean
+  position: string
+  createdAt: string
+  updatedAt: string
 }
 
 export interface AuthState {

@@ -100,9 +100,6 @@ const CountyTable = ({
               published
             </th>
             <th scope="col" className="px-6 py-3">
-              Created At
-            </th>
-            <th scope="col" className="px-6 py-3">
               Updated At
             </th>
             <th scope="col" className="px-6 py-3">
@@ -156,15 +153,6 @@ const CountyTable = ({
               <td className="px-2 py-1 text-center">
                 <div className="flex items-center justify-center rounded-lg bg-lime-400 text-lg text-white shadow-lg">
                   <p>
-                    {format(new Date(county.createdAt), 'MM/dd/yyyy HH:mm:ss', {
-                      locale: enGB,
-                    })}
-                  </p>
-                </div>
-              </td>
-              <td className="px-2 py-1 text-center">
-                <div className="flex items-center justify-center rounded-lg bg-lime-400 text-lg text-white shadow-lg">
-                  <p>
                     {format(new Date(county.updatedAt), 'MM/dd/yyyy HH:mm:ss', {
                       locale: enGB,
                     })}
@@ -203,6 +191,7 @@ const CountyTable = ({
                     data={county}
                     deleteHandler={deleteHandler}
                     setOpenModal={setOpenModal}
+                    isLoading={isLoading}
                   />
                 </div>
               </td>

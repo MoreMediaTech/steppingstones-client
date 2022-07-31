@@ -43,32 +43,29 @@ export const faqItems = [
   },
 ]
 
-export const districtPages = [
-  {
-    title: 'Why Invest In',
-    path: '/admin/editor-portal/county-portal/district/why-invest-in',
-  },
-  {
-    title: 'Economic Data',
-    path: '/admin/editor-portal/county-portal/district/economic-data',
-  },
-  {
-    title: 'Business Parks',
-    path: '/admin/editor-portal/county-portal/district/business-parks',
-  },
-  {
-    title: 'Council Services',
-    path: '/admin/editor-portal/county-portal/district/council-services',
-  },
-  {
-    title: 'Local News',
-    path: '/admin/editor-portal/county-portal/district/local-news',
-  },
-  {
-    title: 'Council Grants',
-    path: '/admin/editor-portal/county-portal/district/council-grants',
-  },
+
+export const VALUE_CATEGORIES = [
+  'NONE',
+  'CREATIVE DIGITAL',
+  'DIGITAL',
+  'EMPLOYMENT',
+  'FINANCIAL',
+  'GLOBAL TRADING',
+  'GREEN ENERGY',
+  'INNOVATION',
+  'MARKETING',
+  'MENTAL HEALTH',
+  'NETWORKING',
+  'SECTOR GROWTH',
+  'STARTUP',
+  'STEM SECTORS',
+  'TALENT',
+  'TRADE ASSOCIATIONS',
+  'TRAINING',
+  'VISITOR ECONOMY',
 ]
+
+export const PARTNER_TYPE = ['NONE', 'PARTNER', 'LEAD_PARTNER', 'SENIOR_CONTACT']
 
 export const counties = [
   'East Lothian',

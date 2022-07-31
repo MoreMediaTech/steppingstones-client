@@ -39,7 +39,7 @@ const Section = ({
     isLoading: isLoadingSection,
     isError: isErrorSection,
     refetch: refetchSection,
-  } = useGetSectionByIdQuery(sectionId, { refetchOnMountOrArgChange: true })
+  } = useGetSectionByIdQuery(sectionId)
 
   const [openAddSectionModal, setAddOpenSectionModal] = useState<boolean>(false)
   const [createSubSection, { isLoading: isLoadingCreate }] =

@@ -15,6 +15,7 @@ import CreateLASectionForm from './CreateLASectionForm'
 import UpdateSectionForm from './UpdateSectionForm'
 import UpdateDistrictForm from './UpdateDistrictForm'
 import UpdateCountyForm from './UpdateCountyForm'
+import PartnerDirectoryForm from './PartnerDirectoryForm'
 
 export {
   SignUpForm,
@@ -34,4 +35,5 @@ export {
   UpdateSectionForm,
   UpdateDistrictForm,
   UpdateCountyForm,
+  PartnerDirectoryForm,
 }

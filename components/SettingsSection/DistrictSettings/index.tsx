@@ -10,6 +10,7 @@ const DistrictSettings = () => {
    const [open, setOpen] = useState<boolean>(false)
    const [district, setDistrict] = useState<DistrictDataProps | null>(null)
    const [searchValue, setSearchValue] = useState<string>('')
+   const [type, setType] = useState<'District' | 'DistrictSection'>('District')
 
    const { data: districtData, isLoading: isLoadingDistricts, isError: isErrorDistricts, refetch: refetchDistricts} = useGetDistrictsQuery()
 
@@ -42,13 +43,16 @@ const DistrictSettings = () => {
         searchValue={searchValue}
         setSearchValue={setSearchValue}
         refetch={refetchDistricts}
+        type={type}
+        setType={setType}
       />
       <UpdateDistrictModal
         key={district?.id}
         open={open}
         handleModalClose={handleModalClose}
         refetch={refetchDistricts}
-        district={district as DistrictDataProps}
+        data={district as DistrictDataProps}
+        type={type}
       />
     </>
   )

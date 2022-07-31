@@ -3,11 +3,13 @@ import { Modal, Button, Divider } from '@mantine/core'
 const HandleDeleteModal = ({
   open,
   data,
+  isLoading,
   deleteHandler,
   setOpenModal,
 }: {
   open: boolean
   data: any
+  isLoading: boolean
   deleteHandler: (id: string) => void
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
@@ -40,6 +42,7 @@ const HandleDeleteModal = ({
             type="button"
             variant="outline"
             color="red"
+            loading={isLoading}
             className="font-medium  hover:bg-red-500 hover:text-white "
             onClick={() => deleteHandler(data?.id)}
           >

@@ -47,6 +47,7 @@ const SectionsTable = ({
       })
     }
   }, [])
+  
   return (
     <section className=" relative  overflow-auto shadow-md sm:rounded-lg md:w-full">
       <div className="p-4">
@@ -101,9 +102,6 @@ const SectionsTable = ({
             </th>
             <th scope="col" className="px-6 py-3">
               live
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Created At
             </th>
             <th scope="col" className="px-6 py-3">
               Updated At
@@ -168,19 +166,6 @@ const SectionsTable = ({
                 <div className="flex items-center justify-center rounded-lg bg-lime-400 text-lg text-white shadow-lg">
                   <p>
                     {format(
-                      new Date(section?.createdAt as string),
-                      'MM/dd/yyyy HH:mm:ss',
-                      {
-                        locale: enGB,
-                      }
-                    )}
-                  </p>
-                </div>
-              </td>
-              <td className="px-2 py-1 text-center">
-                <div className="flex items-center justify-center rounded-lg bg-lime-400 text-lg text-white shadow-lg">
-                  <p>
-                    {format(
                       new Date(section?.updatedAt as string),
                       'MM/dd/yyyy HH:mm:ss',
                       {
@@ -222,6 +207,7 @@ const SectionsTable = ({
                     data={section}
                     deleteHandler={deleteHandler}
                     setOpenModal={setOpenModal}
+                    isLoading={isLoading}
                   />
                 </div>
               </td>

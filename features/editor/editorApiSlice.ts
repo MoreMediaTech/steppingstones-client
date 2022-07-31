@@ -61,7 +61,7 @@ const editorApi = editorApiSlice.injectEndpoints({
         url: `editor/county/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags:  [{ type: 'Editor', id: 'LIST' }],
+      invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
     }),
     createDistrict: builder.mutation({
       query: (data) => ({
@@ -119,7 +119,7 @@ const editorApi = editorApiSlice.injectEndpoints({
         url: `editor/district/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags:  [{ type: 'Editor', id: 'LIST' }],
+      invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
     }),
     createSection: builder.mutation({
       query: (data) => ({
@@ -292,6 +292,24 @@ const editorApi = editorApiSlice.injectEndpoints({
         }
       },
     }),
+    getDistrictSectionsByDistrictId: builder.query<SectionProps[], string>({
+      query: (districtId: string) => ({
+        url: `editor/district-sections/${districtId}`,
+      }),
+      providesTags:(result) =>
+        result
+          ? [
+              ...result?.map(
+                (section) =>
+                  ({
+                    type: 'Editor',
+                    id: section?.id,
+                  } as const)
+              ),
+              { type: 'Editor', id: 'LIST' },
+            ]
+          : [{ type: 'Editor', id: 'LIST' }],
+    }),
     deleteDistrictSectionById: builder.mutation({
       query: (id: string) => ({
         url: `editor/district-section/${id}`,
@@ -402,6 +420,7 @@ export const {
   useDeleteSubSubSectionByIdMutation,
   useCreateDistrictSectionMutation,
   useGetDistrictSectionByIdQuery,
+  useGetDistrictSectionsByDistrictIdQuery,
   useUpdateDistrictSectionByIdMutation,
   useDeleteDistrictSectionByIdMutation,
   useCreateEconomicDataWidgetMutation,
