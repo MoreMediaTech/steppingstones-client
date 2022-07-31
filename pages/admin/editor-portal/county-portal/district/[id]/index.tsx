@@ -93,14 +93,18 @@ const DistrictSection = ({ id, district }: { id: string; district: string; }) =>
             ) : (
               <section className="w-full overflow-auto py-2 px-2 md:px-4">
                 <div className="container mx-auto flex justify-end px-2 md:px-4">
-                  {laSectionData?.isEconomicData && laSectionData.isLive ? (
-                    <h1 className="rounded-xl bg-[#5E17EB] px-2 py-1 text-xl font-semibold text-white">
-                      Live
-                    </h1>
-                  ) : (
-                    <h1 className="rounded-xl bg-red-500 px-2 py-1 text-xl font-semibold text-white">
-                      Not Live
-                    </h1>
+                  {laSectionData?.isEconomicData && (
+                    <>
+                      {laSectionData.isLive ? (
+                        <h1 className="rounded-xl bg-[#5E17EB] px-2 py-1 text-xl font-semibold text-white">
+                          Live
+                        </h1>
+                      ) : (
+                        <h1 className="rounded-xl bg-red-500 px-2 py-1 text-xl font-semibold text-white">
+                          Not Live
+                        </h1>
+                      )}
+                    </>
                   )}
                 </div>
                 {laSectionData?.isEconomicData ? (
