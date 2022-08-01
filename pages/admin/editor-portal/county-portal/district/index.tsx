@@ -18,7 +18,6 @@ import {
   useCreateDistrictSectionMutation,
 } from 'features/editor/editorApiSlice'
 import { useAppDispatch } from 'app/hooks'
-import { districtPages } from 'data'
 import { NEXT_URL } from '@config/index'
 import EditImageComponent from '@components/EditImageComponent'
 import Button from '@components/Button'
