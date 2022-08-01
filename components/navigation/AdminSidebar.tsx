@@ -71,7 +71,7 @@ const AdminSidebar = ({
         <Navbar.Section grow className="flex flex-col space-y-14 px-2">
           <Tooltip
             label={
-              <p className="w-24 text-center font-semibold text-white">
+              <p className="w-36 text-center font-semibold text-white">
                 Portal Home
               </p>
             }
@@ -94,7 +94,7 @@ const AdminSidebar = ({
             </Link> */}
           <Tooltip
             label={
-              <p className="w-24 text-center font-semibold text-white">
+              <p className="w-36 text-center font-semibold text-white">
                 Messages
               </p>
             }
@@ -129,8 +129,8 @@ const AdminSidebar = ({
             control={
               <Tooltip
                 label={
-                  <p className="w-24 text-center font-semibold text-white">
-                    Admin
+                  <p className="w-36 text-center font-semibold text-white">
+                    Content Management
                   </p>
                 }
                 closeDelay={500}
@@ -174,7 +174,7 @@ const AdminSidebar = ({
           </Menu>
           <Tooltip
             label={
-              <p className="w-24 text-center font-semibold text-white">Users</p>
+              <p className="w-36 text-center font-semibold text-white">Users</p>
             }
             closeDelay={500}
             tooltipId="users"

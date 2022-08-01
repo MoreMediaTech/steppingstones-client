@@ -44,11 +44,15 @@ const CountySectionForm = ({
 }: IEconomicDataForm) => {
   return (
     <form className="space-y-8" onSubmit={handleSubmit(submitHandler)}>
-      <div className="flex w-full flex-row items-center">
-        <label htmlFor="title" className="mr-2 md:mr-0 md:w-1/5">
-          Is Section Live<span className="ml-1 text-red-500">*</span>
+      <div className="flex w-full flex-row items-center ">
+        <label className=" text-sm font-semibold text-gray-900 w-1/4">
+          Is Section Live? <span className="text-red-500">*</span>
         </label>
-        <Checkbox id="isLive" aria-label="isLive" {...register('isLive')} />
+        <input
+          type="checkbox"
+          {...register('isLive')}
+          className="form-checkbox h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-transparent"
+        />
       </div>
       <Divider />
       <div className="p-2 font-semibold">

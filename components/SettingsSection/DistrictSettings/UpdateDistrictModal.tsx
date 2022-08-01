@@ -25,7 +25,7 @@ const UpdateDistrictModal = ({
       size="lg"
       opened={open}
       onClose={handleModalClose}
-      title="Update User"
+      title={type === 'District' ? 'Update District' : 'Update District Section'}
     >
       <UpdateDistrictForm
         refetch={refetch}

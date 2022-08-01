@@ -121,12 +121,16 @@ const CreateSectionForm = ({
             </span>
           )}
         </div>
-        <Checkbox
-          id="subSection"
-          aria-label="Sub Section"
-          label="Require Subsections"
-          {...register('isSubSection')}
-        />
+        <div className="flex w-full items-center space-x-4 sm:mt-8">
+          <input
+            type="checkbox"
+            {...register('isSubSection')}
+            className="form-checkbox h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-transparent"
+          />
+          <label className="my-2 text-sm font-semibold text-gray-900">
+            Require Subsection 
+          </label>
+        </div>
         <div className="w-full">
           <Button
             type="submit"

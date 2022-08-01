@@ -9,7 +9,7 @@ import steppingstonesapplogo from '../../../public/steppingstonesapplogo.png'
 import { DistrictDataProps } from '@lib/types'
 import { useDeleteDistrictByIdMutation } from 'features/editor/editorApiSlice'
 import { showNotification } from '@mantine/notifications'
-import HandleDeleteModal from '../HandleDeleteModal'
+import HandleDeleteModal from '../../HandleDeleteModal/HandleDeleteModal'
 import DistrictSectionsTable from './DistrictSectionsTable'
 
 const CountyTable = ({

@@ -91,8 +91,15 @@ const UpdateDistrictForm = ({
           </span>
         )}
       </div>
-      <div className="my-4 w-full">
-        <Checkbox label="Is Live" {...register('isLive')} />
+      <div className="flex w-full items-center space-x-4 sm:my-8">
+        <input
+          type="checkbox"
+          {...register('isLive')}
+          className="form-checkbox h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-transparent"
+        />
+        <label className="my-2 text-sm font-semibold text-gray-900">
+          Is Live?
+        </label>
       </div>
       <div className="w-full">
         <Button

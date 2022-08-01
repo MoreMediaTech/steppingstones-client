@@ -8,29 +8,29 @@ import { CurrentUser } from '@lib/types'
 import PartnerDirectorySection from '@components/PartnerDirectory'
 
 const PartnerDirectory = () => {
-   const { data: user } = useGetUserQuery()
-   return (
-     <AdminLayout title="Meetings">
-       <ComponentShield
-         RBAC
-         showForRole={'SS_EDITOR'}
-         userRole={user?.role as string}
-       >
-         <section className="h-screen overflow-auto">
-           <PortalHeader
-             user={user as CurrentUser}
-             imgUrl={user?.imageUrl}
-             title={`${user?.name}`}
-             subTitle="Manage Sections"
-           />
-           <section className="overflow-y-auto py-2 h-full">
-             <h1 className="px-4 text-2xl font-bold">Partner Directory</h1>
+  const { data: user } = useGetUserQuery()
+  return (
+    <AdminLayout title="Meetings">
+      <ComponentShield
+        RBAC
+        showForRole={'SS_EDITOR'}
+        userRole={user?.role as string}
+      >
+        <section className="h-screen overflow-auto">
+          <PortalHeader
+            user={user as CurrentUser}
+            imgUrl={user?.imageUrl}
+            title={`${user?.name}`}
+            subTitle="Partner Directory"
+          />
+          <section className="container mx-auto space-y-2">
+            <h1 className="text-2xl font-bold">Partner Directory</h1>
             <PartnerDirectorySection />
-           </section>
-         </section>
-       </ComponentShield>
-     </AdminLayout>
-   )
+          </section>
+        </section>
+      </ComponentShield>
+    </AdminLayout>
+  )
 }
 
 export const getServerSideProps: GetServerSideProps = async (

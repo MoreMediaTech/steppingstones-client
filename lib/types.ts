@@ -20,6 +20,24 @@ export interface IFormData {
   organisation: string
   published: boolean
   isLive: boolean
+  id?: string
+  partner?: string
+  description: string
+  category: string
+  businessType: string
+  website: string
+  isHidden?: boolean
+  isApproved?: boolean
+  status?: Status
+  areaOfOperation: AreasOfOperation
+  valueCategory: ValueCategory
+  partnerType: PartnerType
+  projectsResponsibleFor: string
+  closingDate: Date
+  isEmail: boolean
+  position: string
+  createdAt: string
+  updatedAt: string
 }
 
 export interface MessageProps {
@@ -319,7 +337,15 @@ export type PartnerData = {
   id?: string
   name: string
   email: string
-  organisation: string
+  organisation?: {
+    id: string
+    name: string
+  }
+  partner?: {
+    id: string
+    name: string
+    email: string
+  }
   description: string
   category: string
   businessType: string

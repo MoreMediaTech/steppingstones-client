@@ -1,21 +1,16 @@
-import { Button, Divider, Indicator, Textarea, TextInput, Checkbox } from '@mantine/core'
+import { Button, Divider, TextInput } from '@mantine/core'
 import {
   FieldError,
   SubmitHandler,
   UseFormHandleSubmit,
   UseFormRegister,
 } from 'react-hook-form'
-import { MdCloudUpload } from 'react-icons/md'
-import Image from 'next/image'
 import dynamic from 'next/dynamic'
 
 import { EditorFormDataProps } from '@lib/types'
-import { clearState } from 'features/upload/uploadSlice'
-import { useAppDispatch, useAppSelector } from 'app/hooks'
 const RichTextEditor = dynamic(() => import('@components/RichText'), {
   ssr: false,
 })
-
 
 interface IContentFormComponent {
   submitHandler: SubmitHandler<EditorFormDataProps>
@@ -27,9 +22,7 @@ interface IContentFormComponent {
   preview: string | ArrayBuffer | null
   setValue: React.Dispatch<React.SetStateAction<string>>
   setIsEdit: React.Dispatch<React.SetStateAction<boolean>>
-  setPreview: React.Dispatch<
-    React.SetStateAction<string | ArrayBuffer | null>
-  >
+  setPreview: React.Dispatch<React.SetStateAction<string | ArrayBuffer | null>>
   isLoading: boolean
   register: UseFormRegister<EditorFormDataProps>
   handleSubmit: UseFormHandleSubmit<EditorFormDataProps>
@@ -42,21 +35,21 @@ const ContentFormComponent = ({
   isLoading,
   register,
   value,
-  preview,
   setValue,
   handleSubmit,
   setIsEdit,
-  handleChange,
-  setPreview,
 }: IContentFormComponent) => {
-
   return (
-    <form className="space-y-8 my-4" onSubmit={handleSubmit(submitHandler)}>
-      <div className="flex w-full flex-row items-center">
-        <label htmlFor="title" className="mr-2 md:mr-0 md:w-1/5">
-          Is Section Live<span className="ml-1 text-red-500">*</span>
+    <form className="my-4 space-y-8" onSubmit={handleSubmit(submitHandler)}>
+      <div className="flex w-full flex-row items-center ">
+        <label className=" w-1/4 text-sm font-semibold text-gray-900">
+          Is Section Live? <span className="text-red-500">*</span>
         </label>
-        <Checkbox id="isLive" aria-label="isLive" {...register('isLive')} />
+        <input
+          type="checkbox"
+          {...register('isLive')}
+          className="form-checkbox h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-transparent"
+        />
       </div>
       <div className="p-2 font-semibold">
         <h1>Content</h1>

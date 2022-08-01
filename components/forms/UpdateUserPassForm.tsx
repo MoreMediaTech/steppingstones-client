@@ -78,7 +78,7 @@ const UpdateUserPassForm = ({
             },
           })}
           variant="unstyled"
-          className="w-full rounded-md border-2 border-gray-200 bg-white"
+          className="w-full rounded-md border-2 border-gray-200 bg-white !focus:outline-none !focus:ring-transparent"
         />
         {errors.password && (
           <span className="text-center text-sm text-red-500">

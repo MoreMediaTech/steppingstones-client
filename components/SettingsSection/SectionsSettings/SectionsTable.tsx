@@ -9,7 +9,7 @@ import steppingstonesapplogo from '../../../public/steppingstonesapplogo.png'
 import { SectionProps } from '@lib/types'
 import { useDeleteSectionByIdMutation } from 'features/editor/editorApiSlice'
 import { showNotification } from '@mantine/notifications'
-import HandleDeleteModal from '../HandleDeleteModal'
+import HandleDeleteModal from '../../HandleDeleteModal/HandleDeleteModal'
 
 const SectionsTable = ({
   sectionsData,
@@ -87,7 +87,7 @@ const SectionsTable = ({
                 <input
                   id="checkbox-all-search"
                   type="checkbox"
-                  className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
+                  className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 "
                 />
                 <label htmlFor="checkbox-all-search" className="sr-only">
                   checkbox

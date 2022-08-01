@@ -2,19 +2,25 @@ import { useCallback, useEffect, useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { showNotification } from '@mantine/notifications'
 
-import { PartnerData, PartnerType, ValueCategory } from '@lib/types'
+import { PartnerData, PartnerType, ValueCategory, IFormData } from '@lib/types'
 import { PartnerDirectoryForm } from '@components/forms'
 import {
   useCreatePartnerDataMutation,
-  useGetAllPartnerDataQuery,
+  useGetAllPartnersDataQuery,
 } from 'features/partner/partnerApiSlice'
+import PartnerDirectoryTable from './PartnerDirectoryTable'
 
 const PartnerDirectorySection = () => {
+  const [open, setOpen] = useState<boolean>(false)
+  const [searchValue, setSearchValue] = useState<string>('')
+  const [partner, setPartner] = useState<PartnerData | null>(null)
   const {
     data,
     isLoading: isLoadingPartnerData,
     error,
-  } = useGetAllPartnerDataQuery()
+    refetch,
+  } = useGetAllPartnersDataQuery()
+
   const [createPartnerData, { isLoading }] = useCreatePartnerDataMutation()
 
   const defaultValues = {
@@ -33,27 +39,26 @@ const PartnerDirectorySection = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<Partial<PartnerData>>({
+  } = useForm<IFormData>({
     defaultValues: { ...defaultValues },
   })
 
-  const submitHandler: SubmitHandler<Partial<PartnerData>> = useCallback(
-    async (data) => {
-      const newData = {
-        ...data,
-      }
-      try {
-        console.log(newData)
-      } catch (error) {
-        showNotification({
-          message: 'Something went wrong! Please try again',
-          autoClose: 3000,
-          color: 'red',
-        })
-      }
-    },
-    []
-  )
+  const submitHandler: SubmitHandler<IFormData> = useCallback(async (data) => {
+    const newData = {
+      ...data,
+    }
+    try {
+      const response = await createPartnerData(newData).unwrap()
+      reset()
+      refetch()
+    } catch (error) {
+      showNotification({
+        message: 'Something went wrong! Please try again',
+        autoClose: 3000,
+        color: 'red',
+      })
+    }
+  }, [])
   return (
     <>
       <PartnerDirectoryForm
@@ -63,6 +68,15 @@ const PartnerDirectorySection = () => {
         submitHandler={submitHandler}
         isLoading={isLoading}
       />
+      
+        <PartnerDirectoryTable
+          setOpen={setOpen}
+          refetch={refetch}
+          partnerData={data as PartnerData[]}
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          setPartner={setPartner}
+        />
     </>
   )
 }

@@ -22,7 +22,7 @@ const UpdateSectionModal = ({
       size="lg"
       opened={open}
       onClose={handleModalClose}
-      title="Update User"
+      title="Update Section"
     >
         <UpdateSectionForm refetch={refetch} section={section} handleModalClose={handleModalClose} />
     </Modal>

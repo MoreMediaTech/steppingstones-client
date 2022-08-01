@@ -86,8 +86,15 @@ const UpdateCountyForm = ({
           </span>
         )}
       </div>
-      <div className='my-4 w-full'>
-        <Checkbox label="Published" {...register('published')} />
+      <div className="flex w-full items-center space-x-4 sm:my-4">
+        <input
+          type="checkbox"
+          {...register('published')}
+          className="form-checkbox h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-transparent"
+        />
+        <label className="my-2 text-sm font-semibold text-gray-900">
+          Published?
+        </label>
       </div>
       <div className="w-full">
         <Button

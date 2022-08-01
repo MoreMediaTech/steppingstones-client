@@ -23,7 +23,7 @@ const UpdateCountyModal = ({
       size="lg"
       opened={open}
       onClose={handleModalClose}
-      title="Update User"
+      title="Update County"
     >
       <UpdateCountyForm
         refetch={refetch}

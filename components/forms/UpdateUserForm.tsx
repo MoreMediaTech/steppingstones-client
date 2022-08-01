@@ -85,45 +85,49 @@ const UpdateUserForm = ({
       onSubmit={handleSubmit(submitHandler)}
       className="grid grid-cols-1 gap-x-4 gap-y-6  bg-transparent md:grid-cols-2"
     >
-      <div>
-        <TextInput
+      <div className="w-full space-y-2">
+        <label className="my-2 text-sm font-semibold text-gray-900">Name</label>
+        <input
           id="name"
-          aria-label="name"
-          placeholder="Your Full Name"
-          label={<p className="font-normal text-gray-700 ">Name</p>}
+          aria-label="partner-name"
+          placeholder="Enter a full name"
           type="text"
           {...register('name', {
+            required: true,
             minLength: {
               value: 2,
               message: 'Please enter a name with at least 2 characters',
             },
             pattern: {
-              value: /^[A-Za-z -]+$/,
+              value: /^[a-zA-Z0-9!@#$%^&*()._ -]+$/,
               message: 'Please enter a valid name',
             },
           })}
-          className="focus:shadow-outline w-full appearance-none rounded-md focus:outline-none"
+          className="form-input block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
         />
         {errors.name && (
           <span className="text-center text-sm text-red-500">
-            {errors.name?.message || 'Your full name is required'}
+            {errors.name.message || 'A valid name is required'}
           </span>
         )}
       </div>
-      <div>
-        <TextInput
+      <div className="w-full space-y-2">
+        <label className="my-2 text-sm font-semibold text-gray-900">
+          Email <span className="text-red-500">*</span>
+        </label>
+        <input
           id="email"
           aria-label="Email"
           placeholder="Email"
           type="email"
-          label={<p className="font-normal text-gray-700 ">Email</p>}
           {...register('email', {
+            required: true,
             pattern: {
               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
               message: 'Invalid email address',
             },
           })}
-          className="focus:shadow-outline w-full appearance-none rounded-md focus:outline-none"
+          className="form-input block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
         />
         {errors.email && (
           <span className="text-center text-sm text-red-500">
@@ -131,13 +135,15 @@ const UpdateUserForm = ({
           </span>
         )}
       </div>
-      <div>
-        <TextInput
+      <div className="w-full space-y-2">
+        <label className="my-2 text-sm font-semibold text-gray-900">
+          Contact Number
+        </label>
+        <input
           id="contactNumber"
           aria-label="contact-number"
           placeholder="Your Contact Number"
           type="tel"
-          label={<p className="font-normal text-gray-700 ">Contact Number</p>}
           {...register('contactNumber', {
             pattern: {
               value: /^[0-9]{11}$/,
@@ -149,7 +155,7 @@ const UpdateUserForm = ({
             },
             maxLength: 11,
           })}
-          className="focus:shadow-outline w-full appearance-none rounded-md focus:outline-none"
+          className="form-input block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
         />
         {errors.contactNumber && (
           <span className="text-center text-sm text-red-500">
@@ -157,20 +163,23 @@ const UpdateUserForm = ({
           </span>
         )}
       </div>
-      <div>
-        <TextInput
+
+      <div className="w-full space-y-2">
+        <label className="my-2 text-sm font-semibold text-gray-900">
+          Your PostCode <span className="text-red-500">*</span>
+        </label>
+        <input
           id="postCode"
           aria-label="post-code"
           placeholder="Your Post Code"
           type="text"
-          label={<p className="font-normal text-gray-700 ">Zip/Postal Code</p>}
           {...register('postCode', {
             pattern: {
               value: /^[A-Za-z]{1,2}[0-9]{1,2} ?[0-9][A-Za-z]{2}$/i,
               message: 'Please enter a valid post code',
             },
           })}
-          className="focus:shadow-outline w-full appearance-none rounded-md focus:outline-none"
+          className="form-input block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
         />
         {errors.postCode && (
           <span className="text-center text-sm text-red-500">
@@ -178,20 +187,23 @@ const UpdateUserForm = ({
           </span>
         )}
       </div>
-      <div>
-        <TextInput
+
+      <div className="w-full space-y-2">
+        <label className="my-2 text-sm font-semibold text-gray-900">
+          District
+        </label>
+        <input
           id="district"
           aria-label="district"
           placeholder="Your District"
           type="text"
-          label={<p className="font-normal text-gray-700 ">District</p>}
           {...register('district', {
             pattern: {
               value: /^[A-Za-z -]+$/,
               message: 'Please enter a valid district',
             },
           })}
-          className="focus:shadow-outline w-full appearance-none rounded-md focus:outline-none"
+          className="form-input block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
         />
         {errors.district && (
           <span className="text-center text-sm text-red-500">
@@ -199,20 +211,23 @@ const UpdateUserForm = ({
           </span>
         )}
       </div>
-      <div>
-        <TextInput
+
+      <div className="w-full space-y-2">
+        <label className="my-2 text-sm font-semibold text-gray-900">
+          County <span className="text-red-500">*</span>
+        </label>
+        <input
           id="county"
           aria-label="county"
           placeholder="Your County"
           type="text"
-          label={<p className="font-normal text-gray-700 ">County</p>}
           {...register('county', {
             pattern: {
               value: /^[A-Za-z -]+$/,
               message: 'Please enter a valid County',
             },
           })}
-          className="focus:shadow-outline w-full appearance-none rounded-md focus:outline-none"
+          className="form-input block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
         />
         {errors.county && (
           <span className="text-center text-sm text-red-500">
@@ -220,29 +235,32 @@ const UpdateUserForm = ({
           </span>
         )}
       </div>
-      <div>
-        <TextInput
+
+      <div className="w-full space-y-2">
+        <label className="my-2 text-sm font-semibold text-gray-900">
+          Organisation <span className="text-red-500">*</span>
+        </label>
+        <input
           id="organisation"
           aria-label="organisation"
           placeholder="Your Organisation"
           type="text"
-          label={<p className="font-normal text-gray-700 ">Organisation</p>}
           {...register('organisation', {
             pattern: {
               value: /^[A-Za-z -]+$/,
               message: 'Please enter a valid Organisation',
             },
           })}
-          className="focus:shadow-outline w-full appearance-none rounded-md focus:outline-none"
+          className="form-input block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
         />
-        {errors.organisation && (
+        {errors.email && (
           <span className="text-center text-sm text-red-500">
-            {errors.organisation?.message || 'Your Organisation is required'}
+            {errors.email?.message || 'Your email is required'}
           </span>
         )}
       </div>
       <div>
-        <label htmlFor="role" className="block mb-1">
+        <label htmlFor="role" className="mb-1 block">
           <p className="font-normal text-gray-700 ">Role</p>
         </label>
         <select
@@ -256,10 +274,7 @@ const UpdateUserForm = ({
         >
           {roles?.map((itemValue, index) => {
             return (
-              <option
-                key={`${index} + ${itemValue}`}
-                value={itemValue}
-              >
+              <option key={`${index} + ${itemValue}`} value={itemValue}>
                 {itemValue}
               </option>
             )
@@ -271,14 +286,38 @@ const UpdateUserForm = ({
           </span>
         )}
       </div>
-      <div>
-        <Checkbox label="Admin" {...register('isAdmin')} />
+      <div className="flex w-full items-center space-x-4 ">
+        <input
+        disabled
+          type="checkbox"
+          {...register('isAdmin')}
+          className="form-checkbox h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-transparent"
+        />
+        <label className="my-2 text-sm font-semibold text-gray-900">
+          Admin
+        </label>
       </div>
-      <div>
-        <Checkbox disabled label="Email Verified" {...register('emailVerified')} />
+      <div className="flex w-full items-center space-x-4 ">
+        <input
+          disabled
+          type="checkbox"
+          {...register('emailVerified')}
+          className="form-checkbox h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-transparent"
+        />
+        <label className="my-2 text-sm font-semibold text-gray-900">
+          Email Verified
+        </label>
       </div>
-      <div>
-        <Checkbox disabled label="Accepted Terms and Conditions" {...register('acceptTermsAndConditions')} />
+      
+      <div className="flex w-full items-center space-x-4 ">
+        <input
+          type="checkbox"
+          {...register('acceptTermsAndConditions')}
+          className="form-checkbox h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-transparent"
+        />
+        <label className="my-2 text-sm font-semibold text-gray-900">
+          Accepted Terms and Conditions
+        </label>
       </div>
       <div></div>
       <div>

@@ -1,23 +1,22 @@
 import React from 'react'
-import { Button, Checkbox, Select, TextInput } from '@mantine/core'
+import { Button } from '@mantine/core'
 import {
   DeepRequired,
-  FieldError,
   FieldErrorsImpl,
   SubmitHandler,
   UseFormHandleSubmit,
   UseFormRegister,
 } from 'react-hook-form'
 
-import { PartnerData, ValueCategory } from '@lib/types'
+import { PartnerData, ValueCategory, IFormData } from '@lib/types'
 import { PARTNER_TYPE, VALUE_CATEGORIES } from 'data'
 
 interface IPartnerDirectoryFormProps {
-  errors: FieldErrorsImpl<DeepRequired<Partial<PartnerData>>>
+  errors: FieldErrorsImpl<DeepRequired<IFormData>>
   isLoading: boolean
-  submitHandler: SubmitHandler<Partial<PartnerData>>
-  register: UseFormRegister<Partial<PartnerData>>
-  handleSubmit: UseFormHandleSubmit<Partial<PartnerData>>
+  submitHandler: SubmitHandler<IFormData>
+  register: UseFormRegister<IFormData>
+  handleSubmit: UseFormHandleSubmit<IFormData>
   handleChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 

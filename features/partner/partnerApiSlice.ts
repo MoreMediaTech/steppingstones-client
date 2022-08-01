@@ -1,20 +1,20 @@
-import { PartnerData } from '@lib/types'
+import { PartnerData, IFormData } from '@lib/types'
 import { partnerApiSlice } from 'app/api/apiSlice'
 
 export const partnerApi = partnerApiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getPartnerById: builder.query<PartnerData, string>({
       query: (id: string) => ({
-        url: `/partners/${id}`,
+        url: `partners/${id}`,
       }),
       providesTags: [{ type: 'Partner' }],
     }),
     createPartnerData: builder.mutation<
       { success: boolean; message: string },
-      PartnerData
+      IFormData
     >({
       query: (data) => ({
-        url: `/partners`,
+        url: `partners/`,
         method: 'POST',
         body: { ...data },
       }),
@@ -25,7 +25,7 @@ export const partnerApi = partnerApiSlice.injectEndpoints({
       PartnerData
     >({
       query: (data) => ({
-        url: `/partners/${data.id}`,
+        url: `partners/${data.id}`,
         method: 'PUT',
         body: { ...data },
       }),
@@ -38,14 +38,32 @@ export const partnerApi = partnerApiSlice.injectEndpoints({
       string
     >({
       query: (id: string) => ({
-        url: `/partners/${id}`,
+        url: `partners/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: [{ type: 'Partner', id: 'List' }],
     }),
-    getAllPartnerData: builder.query<PartnerData[], void>({
+    getAllPartnersData: builder.query<PartnerData[], void>({
       query: () => ({
-        url: `/partners`,
+        url: `partners/`,
+      }),
+      providesTags: (result) =>
+        result
+          ? [
+              ...result?.map(
+                (partnerData) =>
+                  ({
+                    type: 'Partner' as const,
+                    id: partnerData?.id,
+                  } as const)
+              ),
+              { type: 'Partner', id: 'LIST' },
+            ]
+          : [{ type: 'Partner', id: 'LIST' }],
+    }),
+    getAllPartnerData: builder.query<PartnerData[], string>({
+      query: (id: string) => ({
+        url: `partners/all/${id}`,
       }),
       providesTags: (result) =>
         result
@@ -62,6 +80,7 @@ export const partnerApi = partnerApiSlice.injectEndpoints({
           : [{ type: 'Partner', id: 'LIST' }],
     }),
   }),
+  overrideExisting: true,
 })
 
 export const {
@@ -69,5 +88,6 @@ export const {
   useCreatePartnerDataMutation,
   useUpdatePartnerDataMutation,
   useDeletePartnerDataMutation,
+  useGetAllPartnersDataQuery,
   useGetAllPartnerDataQuery,
 } = partnerApi
