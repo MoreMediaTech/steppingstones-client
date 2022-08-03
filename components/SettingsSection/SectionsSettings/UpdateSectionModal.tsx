@@ -1,17 +1,19 @@
 import React from 'react'
 import { Modal } from '@mantine/core'
-import { SectionProps } from '@lib/types'
+import { SectionProps, SubSectionProps } from '@lib/types'
 import { UpdateSectionForm } from '@components/forms'
 
 const UpdateSectionModal = ({
   open,
+  type,
+  data,
   refetch,
-  section,
   handleModalClose,
 }: {
+  type?: 'Section' | 'SubSection'
+  data?: SubSectionProps | SectionProps
   open: boolean
   refetch: () => void
-  section: SectionProps
   handleModalClose: () => void
 }) => {
   return (
@@ -19,12 +21,12 @@ const UpdateSectionModal = ({
       overlayColor="rgba(0, 0, 0, 0.5)"
       overlayOpacity={0.55}
       overlayBlur={3}
-      size="lg"
+      size="80%"
       opened={open}
       onClose={handleModalClose}
-      title="Update Section"
+      title={type === 'Section' ? "Update Section" : 'Update Sub Section'}
     >
-        <UpdateSectionForm refetch={refetch} section={section} handleModalClose={handleModalClose} />
+        <UpdateSectionForm refetch={refetch} data={data} handleModalClose={handleModalClose} type={type} />
     </Modal>
   )
 }

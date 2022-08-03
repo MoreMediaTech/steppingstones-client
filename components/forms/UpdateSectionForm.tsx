@@ -1,23 +1,26 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { SectionProps, IFormData } from '@lib/types'
+import { SectionProps, IFormData, SubSectionProps } from '@lib/types'
 import { Button, Checkbox, TextInput } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import { useUpdateSectionByIdMutation } from 'features/editor/editorApiSlice'
+import { useUpdateSectionByIdMutation, useUpdateSubSectionByIdMutation } from 'features/editor/editorApiSlice'
 
 const UpdateSectionForm = ({
+  data,
+  type,
   refetch,
-  section,
   handleModalClose,
 }: {
+  type?: 'Section' | 'SubSection'
+  data?: SubSectionProps | SectionProps
   refetch: () => void
-  section?: SectionProps
   handleModalClose?: () => void
 }) => {
   const [updateSectionById, { isLoading }] = useUpdateSectionByIdMutation()
+  const [updateSubSectionById, { isLoading: isLoadingSubSection }] = useUpdateSubSectionByIdMutation()
   const defaultValues = {
-    name: section?.name ? (section?.name as string) : '',
-    isLive: section?.isLive ? (section?.isLive as boolean) : false,
+    name: data?.name ? (data?.name as string) : '',
+    isLive: data?.isLive ? (data?.isLive as boolean) : false,
   }
 
   const {
@@ -37,13 +40,25 @@ const UpdateSectionForm = ({
   const submitHandler: SubmitHandler<Partial<IFormData>> = useCallback(
     async (data) => {
       const newData = {
-        id: section?.id as string,
+        id: data?.id as string,
         ...data,
       }
+      let response;
       try {
-        await updateSectionById(newData as SectionProps).unwrap()
+        if (type === 'Section') {
+          response = await updateSectionById(newData as SectionProps).unwrap()
+        }
+        if(type === 'SubSection') {
+          response = await updateSubSectionById(newData as SubSectionProps).unwrap()
+        }
+
         refetch()
         handleModalClose!()
+        showNotification({
+          message: response.message,
+          color: 'green',
+          autoClose: 3000,
+        })
       } catch (error) {
         showNotification({
           message: 'Something went wrong! Please try again',
@@ -82,14 +97,14 @@ const UpdateSectionForm = ({
           </span>
         )}
       </div>
-      <div className="flex w-full items-center space-x-4 sm:mt-8">
+      <div className="flex w-full items-center space-x-4 sm:my-4">
         <input
           type="checkbox"
           {...register('isLive')}
           className="form-checkbox h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-transparent"
         />
         <label className="my-2 text-sm font-semibold text-gray-900">
-          Is Live?
+          Is Section Live?
         </label>
       </div>
       <div className="w-full">

@@ -237,6 +237,8 @@ export type SubSectionProps = {
   isSubSubSection?: boolean
   isLive?: boolean
   subSection?: SubSubSectionProps[]
+  createdAt?: string
+  updatedAt?: string
 }
 
 export type SubSubSectionProps = {

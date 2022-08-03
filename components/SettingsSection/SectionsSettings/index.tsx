@@ -10,6 +10,7 @@ const SectionsSettings = () => {
   const [open, setOpen] = useState<boolean>(false)
   const [section, setSection] = useState<SectionProps | null>(null)
   const [searchValue, setSearchValue] = useState<string>('')
+  const [type, setType] = useState<'Section' | 'SubSection'>('Section')
 
   const {
     data: sectionData,
@@ -48,13 +49,15 @@ const SectionsSettings = () => {
         searchValue={searchValue}
         setSearchValue={setSearchValue}
         refetch={refetchSections}
+        type={type}
+        setType={setType}
       />
       <UpdateSectionModal
         key={section?.id}
         open={open}
         handleModalClose={handleModalClose}
         refetch={refetchSections}
-        section={section as SectionProps}
+        data={section as SectionProps}
       />
     </>
   )

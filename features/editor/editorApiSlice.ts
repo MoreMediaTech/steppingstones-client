@@ -1,10 +1,31 @@
-import { CountyDataProps, DistrictDataProps, SectionProps } from '@lib/types'
+import {
+  CountyDataProps,
+  DistrictDataProps,
+  DistrictSectionProps,
+  EconomicDataWidgetProps,
+  SectionProps,
+  SubSectionProps,
+  SubSubSectionProps,
+} from '@lib/types'
 import { editorApiSlice } from 'app/api/apiSlice'
-import { setCounties, setCounty, setDistrict, setError, setSection, setSubSection, setSubSubSection, setEconomicData, setDistrictSection } from './editorSlice'
+import {
+  setCounties,
+  setCounty,
+  setDistrict,
+  setError,
+  setSection,
+  setSubSection,
+  setSubSubSection,
+  setEconomicData,
+  setDistrictSection,
+} from './editorSlice'
 
 const editorApi = editorApiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    createCounty: builder.mutation({
+    createCounty: builder.mutation<
+      { success: boolean; message: string },
+      CountyDataProps
+    >({
       query: (data) => ({
         url: 'editor/county',
         method: 'POST',
@@ -12,7 +33,10 @@ const editorApi = editorApiSlice.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
     }),
-    updateCounty: builder.mutation({
+    updateCounty: builder.mutation<
+      { success: boolean; message: string },
+      CountyDataProps
+    >({
       query: (data) => ({
         url: `editor/county/${data.id}`,
         method: 'PUT',
@@ -20,7 +44,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
     }),
-    getCountyById: builder.query({
+    getCountyById: builder.query<CountyDataProps, string>({
       query: (id: string) => ({
         url: `editor/county/${id}`,
       }),
@@ -56,14 +80,20 @@ const editorApi = editorApiSlice.injectEndpoints({
             ]
           : [{ type: 'Editor', id: 'LIST' }],
     }),
-    removeCounty: builder.mutation<void, string>({
+    removeCounty: builder.mutation<
+      { success: boolean; message: string },
+      string
+    >({
       query: (id: string) => ({
         url: `editor/county/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
     }),
-    createDistrict: builder.mutation({
+    createDistrict: builder.mutation<
+      { success: boolean; message: string },
+      DistrictDataProps
+    >({
       query: (data) => ({
         url: 'editor/district',
         method: 'POST',
@@ -89,7 +119,7 @@ const editorApi = editorApiSlice.injectEndpoints({
             ]
           : [{ type: 'Editor', id: 'LIST' }],
     }),
-    getDistrictById: builder.query({
+    getDistrictById: builder.query<DistrictDataProps, string>({
       query: (id) => ({
         url: `editor/district/${id}`,
       }),
@@ -106,7 +136,10 @@ const editorApi = editorApiSlice.injectEndpoints({
         }
       },
     }),
-    updateDistrictById: builder.mutation({
+    updateDistrictById: builder.mutation<
+      { success: boolean; message: string },
+      DistrictDataProps
+    >({
       query: (data) => ({
         url: `editor/district/${data.id}`,
         method: 'PUT',
@@ -114,14 +147,20 @@ const editorApi = editorApiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
     }),
-    deleteDistrictById: builder.mutation<void, string>({
+    deleteDistrictById: builder.mutation<
+      { success: boolean; message: string },
+      string
+    >({
       query: (id: string) => ({
         url: `editor/district/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
     }),
-    createSection: builder.mutation({
+    createSection: builder.mutation<
+      { success: boolean; message: string },
+      SectionProps
+    >({
       query: (data) => ({
         url: 'editor/section',
         method: 'POST',
@@ -147,7 +186,10 @@ const editorApi = editorApiSlice.injectEndpoints({
             ]
           : [{ type: 'Editor', id: 'LIST' }],
     }),
-    updateSectionById: builder.mutation({
+    updateSectionById: builder.mutation<
+      { success: boolean; message: string },
+      SectionProps
+    >({
       query: (data) => ({
         url: `editor/section/${data.id}`,
         method: 'PUT',
@@ -155,7 +197,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
     }),
-    getSectionById: builder.query({
+    getSectionById: builder.query<SectionProps, string>({
       query: (id: string) => ({
         url: `editor/section/${id}`,
       }),
@@ -172,14 +214,20 @@ const editorApi = editorApiSlice.injectEndpoints({
         }
       },
     }),
-    deleteSectionById: builder.mutation({
+    deleteSectionById: builder.mutation<
+      { success: boolean; message: string },
+      string
+    >({
       query: (id: string) => ({
         url: `editor/section/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
     }),
-    createSubSection: builder.mutation({
+    createSubSection: builder.mutation<
+      { success: boolean; message: string },
+      SubSectionProps
+    >({
       query: (data) => ({
         url: 'editor/subsection',
         method: 'POST',
@@ -187,7 +235,10 @@ const editorApi = editorApiSlice.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
     }),
-    updateSubSectionById: builder.mutation({
+    updateSubSectionById: builder.mutation<
+      { success: boolean; message: string },
+      SubSectionProps
+    >({
       query: (data) => ({
         url: `editor/subsection/${data.id}`,
         method: 'PUT',
@@ -195,7 +246,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
     }),
-    getSubSectionById: builder.query({
+    getSubSectionById: builder.query<SubSectionProps, string>({
       query: (id: string) => ({
         url: `editor/subsection/${id}`,
       }),
@@ -212,14 +263,38 @@ const editorApi = editorApiSlice.injectEndpoints({
         }
       },
     }),
-    deleteSubSectionById: builder.mutation({
+    getSubSectionsBySectionId: builder.query<SubSectionProps[], string>({
+      query: (sectionId: string) => ({
+        url: `editor/sub-subsections/${sectionId}`,
+      }),
+      providesTags: (result) =>
+        result
+          ? [
+              ...result?.map(
+                (subSection) =>
+                  ({
+                    type: 'Editor',
+                    id: subSection?.id,
+                  } as const)
+              ),
+              { type: 'Editor', id: 'LIST' },
+            ]
+          : [{ type: 'Editor', id: 'LIST' }],
+    }),
+    deleteSubSectionById: builder.mutation<
+      { success: boolean; message: string },
+      string
+    >({
       query: (id: string) => ({
         url: `editor/subsection/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
     }),
-    createSubSubSection: builder.mutation({
+    createSubSubSection: builder.mutation<
+      { success: boolean; message: string },
+      SubSubSectionProps
+    >({
       query: (data) => ({
         url: 'editor/sub-subsection',
         method: 'POST',
@@ -227,7 +302,10 @@ const editorApi = editorApiSlice.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
     }),
-    updateSubSubSectionById: builder.mutation({
+    updateSubSubSectionById: builder.mutation<
+      { success: boolean; message: string },
+      SubSubSectionProps
+    >({
       query: (data) => ({
         url: `editor/sub-subsection/${data.id}`,
         method: 'PUT',
@@ -235,7 +313,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
     }),
-    getSubSubSectionById: builder.query({
+    getSubSubSectionById: builder.query<SubSubSectionProps, string>({
       query: (id: string) => ({
         url: `editor/sub-subsection/${id}`,
       }),
@@ -252,14 +330,20 @@ const editorApi = editorApiSlice.injectEndpoints({
         }
       },
     }),
-    deleteSubSubSectionById: builder.mutation({
+    deleteSubSubSectionById: builder.mutation<
+      { success: boolean; message: string },
+      string
+    >({
       query: (id: string) => ({
         url: `editor/sub-subsection/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
     }),
-    createDistrictSection: builder.mutation({
+    createDistrictSection: builder.mutation<
+      { success: boolean; message: string },
+      DistrictSectionProps
+    >({
       query: (data) => ({
         url: 'editor/district-section',
         method: 'POST',
@@ -267,7 +351,10 @@ const editorApi = editorApiSlice.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
     }),
-    updateDistrictSectionById: builder.mutation({
+    updateDistrictSectionById: builder.mutation<
+      { success: boolean; message: string },
+      DistrictSectionProps
+    >({
       query: (data) => ({
         url: `editor/district-section/${data.id}`,
         method: 'PUT',
@@ -275,7 +362,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
     }),
-    getDistrictSectionById: builder.query({
+    getDistrictSectionById: builder.query<DistrictSectionProps, string>({
       query: (id: string) => ({
         url: `editor/district-section/${id}`,
       }),
@@ -292,11 +379,14 @@ const editorApi = editorApiSlice.injectEndpoints({
         }
       },
     }),
-    getDistrictSectionsByDistrictId: builder.query<SectionProps[], string>({
+    getDistrictSectionsByDistrictId: builder.query<
+      DistrictSectionProps[],
+      string
+    >({
       query: (districtId: string) => ({
         url: `editor/district-sections/${districtId}`,
       }),
-      providesTags:(result) =>
+      providesTags: (result) =>
         result
           ? [
               ...result?.map(
@@ -310,14 +400,20 @@ const editorApi = editorApiSlice.injectEndpoints({
             ]
           : [{ type: 'Editor', id: 'LIST' }],
     }),
-    deleteDistrictSectionById: builder.mutation({
+    deleteDistrictSectionById: builder.mutation<
+      { success: boolean; message: string },
+      string
+    >({
       query: (id: string) => ({
         url: `editor/district-section/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
     }),
-    createEconomicDataWidget: builder.mutation({
+    createEconomicDataWidget: builder.mutation<
+      { success: boolean; message: string },
+      EconomicDataWidgetProps
+    >({
       query: (data) => ({
         url: 'editor/economic-data',
         method: 'POST',
@@ -325,7 +421,10 @@ const editorApi = editorApiSlice.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
     }),
-    updateEconomicDataWidgetById: builder.mutation({
+    updateEconomicDataWidgetById: builder.mutation<
+      { success: boolean; message: string },
+      EconomicDataWidgetProps
+    >({
       query: (data) => ({
         url: `editor/economic-data/${data.id}`,
         method: 'PUT',
@@ -333,13 +432,13 @@ const editorApi = editorApiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
     }),
-    getEconomicDataWidgets: builder.mutation({
-      query: (id: string) => ({
+    getEconomicDataWidgets: builder.mutation<EconomicDataWidgetProps[], void>({
+      query: () => ({
         url: 'editor/economic-data',
         method: 'POST',
       }),
     }),
-    getEconomicDataWidgetById: builder.query({
+    getEconomicDataWidgetById: builder.query<EconomicDataWidgetProps, string>({
       query: (id: string) => ({
         url: `editor/economic-data/${id}`,
       }),
@@ -356,7 +455,10 @@ const editorApi = editorApiSlice.injectEndpoints({
         }
       },
     }),
-    deleteEconomicDataWidgetById: builder.mutation({
+    deleteEconomicDataWidgetById: builder.mutation<
+      { success: boolean; message: string },
+      string
+    >({
       query: (id: string) => ({
         url: `editor/economic-data/${id}`,
         method: 'DELETE',
@@ -412,6 +514,7 @@ export const {
   useDeleteSectionByIdMutation,
   useCreateSubSectionMutation,
   useGetSubSectionByIdQuery,
+  useGetSubSectionsBySectionIdQuery,
   useUpdateSubSectionByIdMutation,
   useDeleteSubSectionByIdMutation,
   useCreateSubSubSectionMutation,
