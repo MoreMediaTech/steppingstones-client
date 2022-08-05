@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { DistrictDataProps, IFormData, SectionProps } from '@lib/types'
+import { DistrictDataProps, DistrictSectionProps, IFormData, SectionProps } from '@lib/types'
 import { Button, Checkbox, TextInput } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { useUpdateDistrictByIdMutation, useUpdateDistrictSectionByIdMutation } from 'features/editor/editorApiSlice'
@@ -49,7 +49,7 @@ const UpdateDistrictForm = ({
           await updateDistrictById(newData as DistrictDataProps).unwrap()
         }
         if(type === 'DistrictSection'){
-          await updateDistrictSectionById(newData as SectionProps).unwrap()
+          await updateDistrictSectionById(newData as DistrictSectionProps).unwrap()
         }
         refetch()
         handleModalClose!()
@@ -69,25 +69,25 @@ const UpdateDistrictForm = ({
       <div className="my-4 w-full">
         <TextInput
           id="name"
-          aria-label="county-name"
-          placeholder="Enter a County Name"
+          aria-label="district-name"
+          placeholder="Enter a District Name"
           type="text"
           {...register('name', {
             required: true,
             minLength: {
               value: 2,
-              message: 'Please enter a County name with at least 2 characters',
+              message: 'Please enter a District name with at least 2 characters',
             },
             pattern: {
               value: /^[a-zA-Z0-9!@#$%^&*()._ -]+$/,
-              message: 'Please enter a valid County name',
+              message: 'Please enter a valid District name',
             },
           })}
           className="focus:shadow-outline w-full appearance-none rounded-md focus:outline-none"
         />
         {errors.name && (
           <span className="text-center text-sm text-red-500">
-            {errors.name?.message || 'A valid County name is required'}
+            {errors.name?.message || 'A valid District name is required'}
           </span>
         )}
       </div>

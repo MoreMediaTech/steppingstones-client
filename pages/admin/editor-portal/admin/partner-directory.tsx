@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 
 import { AdminLayout } from 'layout'
@@ -6,9 +7,15 @@ import { useGetUserQuery } from 'features/user/usersApiSlice'
 import PortalHeader from '@components/PortalHeader'
 import { CurrentUser } from '@lib/types'
 import PartnerDirectorySection from '@components/PartnerDirectory'
+import Button from '@components/Button'
+import { useAppDispatch } from 'app/hooks'
+import { setType, setPartnerData } from 'features/partner/partnerSlice'
 
 const PartnerDirectory = () => {
+  const dispatch = useAppDispatch()
   const { data: user } = useGetUserQuery()
+  const [isPartnerDirectoryModalOpen, setIsPartnerDirectoryModalOpen] =
+    useState<boolean>(false)
   return (
     <AdminLayout title="Meetings">
       <ComponentShield
@@ -23,9 +30,25 @@ const PartnerDirectory = () => {
             title={`${user?.name}`}
             subTitle="Partner Directory"
           />
-          <section className="container mx-auto space-y-2">
-            <h1 className="text-2xl font-bold">Partner Directory</h1>
-            <PartnerDirectorySection />
+          <section className="container mx-auto space-y-4">
+            <div className="flex flex-col justify-start gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-0">
+              <span className="text-2xl font-bold">Partner Directory</span>
+              <Button
+                type="button"
+                color="primary"
+                className="md:w-1/4"
+                onClick={() => {
+                  setIsPartnerDirectoryModalOpen(true)
+                  dispatch(setType('Create'))
+                }}
+              >
+                Add LA Section
+              </Button>
+            </div>
+            <PartnerDirectorySection
+              isPartnerDirectoryModalOpen={isPartnerDirectoryModalOpen}
+              setIsPartnerDirectoryModalOpen={setIsPartnerDirectoryModalOpen}
+            />
           </section>
         </section>
       </ComponentShield>

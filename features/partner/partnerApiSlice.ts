@@ -22,7 +22,7 @@ export const partnerApi = partnerApiSlice.injectEndpoints({
     }),
     updatePartnerData: builder.mutation<
       { success: boolean; message: string },
-      PartnerData
+      IFormData
     >({
       query: (data) => ({
         url: `partners/${data.id}`,

@@ -7,23 +7,27 @@ import { Button } from '@mantine/core'
 import { FaCheck, FaEdit, FaTimes, FaTrash } from 'react-icons/fa'
 import { format } from 'date-fns'
 import { enGB } from 'date-fns/locale'
+import { useAppDispatch } from 'app/hooks'
+import { setPartnerData, setType } from 'features/partner/partnerSlice'
 
 const PartnerDirectoryTable = ({
   partnerData,
   setOpen,
-  setPartner,
   searchValue,
   setSearchValue,
   refetch,
+  handleSearch,
+  handleSelected
 }: {
   searchValue: string
   partnerData: PartnerData[]
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
-  setPartner: React.Dispatch<React.SetStateAction<PartnerData | null>>
   setSearchValue: React.Dispatch<React.SetStateAction<string>>
   refetch: () => void
+  handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void
+  handleSelected: (e: React.ChangeEvent<HTMLInputElement>) => void
 }) => {
-
+  const dispatch = useAppDispatch()
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [deletePartnerData, { isLoading }] = useDeletePartnerDataMutation()
 
@@ -67,10 +71,9 @@ const PartnerDirectoryTable = ({
           <input
             type="text"
             id="table-search"
-            value={searchValue}
             className="block rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 md:w-80  "
             placeholder="Search for items"
-            onChange={(e) => setSearchValue(e.target.value)}
+            onChange={handleSearch}
           />
         </div>
       </div>
@@ -118,13 +121,20 @@ const PartnerDirectoryTable = ({
               <tr
                 key={partner.id}
                 className="border-b bg-white hover:bg-gray-50"
+                onClick={() => {
+                  dispatch(setPartnerData(partner))
+                  dispatch(setType('Update'))
+                  setOpen(true)
+                }}
               >
                 <td className="w-4 p-4">
                   <div className="flex items-center">
                     <input
                       id="checkbox-table-search-1"
                       type="checkbox"
+                      value={partner?.id}
                       className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 "
+                      onChange={handleSelected}
                     />
                     <label
                       htmlFor="checkbox-table-search-1"
@@ -169,27 +179,11 @@ const PartnerDirectoryTable = ({
                 </td>
                 <td
                   scope="row"
-                  className="whitespace-nowrap text-wrap overflow-hidden truncate px-6 py-4 text-left text-sm font-medium text-gray-900"
+                  className="text-wrap overflow-hidden truncate whitespace-nowrap px-6 py-4 text-left text-sm font-medium text-gray-900"
                 >
                   <p>{partner?.partner?.email}</p>
                 </td>
 
-                {/* <td
-                scope="row"
-                className="px-6 py-4 text-left text-sm font-medium text-gray-900"
-              >
-                <div className="flex items-center justify-center rounded-lg bg-lime-400 text-lg text-white shadow-lg">
-                  <p>
-                    {format(
-                      new Date(partner.updatedAt),
-                      'MM/dd/yyyy HH:mm:ss',
-                      {
-                        locale: enGB,
-                      }
-                    )}
-                  </p>
-                </div>
-              </td> */}
                 <td className="px-6 py-4 text-right">
                   <div className="flex items-center justify-center gap-2">
                     <Button
@@ -199,7 +193,8 @@ const PartnerDirectoryTable = ({
                       leftIcon={<FaEdit fontSize={14} />}
                       className="font-medium text-blue-600  "
                       onClick={() => {
-                        setPartner(partner)
+                        dispatch(setPartnerData(partner))
+                        dispatch(setType('Update'))
                         setOpen(true)
                       }}
                     >

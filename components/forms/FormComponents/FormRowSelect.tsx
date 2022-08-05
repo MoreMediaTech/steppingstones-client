@@ -1,74 +1,48 @@
 import React from 'react'
-import { FieldError } from 'react-hook-form'
-import { AiOutlineRight } from 'react-icons/ai'
 
 export type Ref = HTMLSelectElement
 
 type SelectProps = {
-  title: string
+  title?: string
   type: string
   list: string[]
-  opened: boolean
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
-  errors: { county?: FieldError | undefined }
+  label: string
 }
 
 const FormRowSelect: React.FunctionComponent<
   SelectProps & React.RefAttributes<HTMLSelectElement>
 > = React.forwardRef<Ref, SelectProps>(
   (
-    { list, errors, title, type, opened, setOpen, ...props }: SelectProps,
+    { list, label, title, type, ...props }: SelectProps,
     ref
   ) => (
     <>
-      <div
-        className="flex w-full items-center rounded-md border-2 border-gray-200 p-2"
-        onClick={() => setOpen(() => !opened)}
-      >
-        <label htmlFor="jobType" className="mb-2 block text-base font-bold ">
-          {title}
+      <div className="w-full space-y-2">
+        <label
+          htmlFor={type}
+          className="my-2 text-sm font-semibold text-gray-900"
+        >
+          {label} <span className="text-red-500">*</span>
         </label>
         <select
-          className="w-full appearance-none bg-white px-3 py-2 leading-tight text-gray-900 focus:outline-none focus:ring-0  dark:bg-white"
+          className="form-select block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 "
           id={`${type}`}
           ref={ref}
           aria-label={`${type}-input`}
           aria-errormessage={`${type}-error`}
           name={`${type}`}
           aria-invalid="true"
-          onClick={() => setOpen(() => !opened)}
           {...props}
         >
           {list?.map((itemValue, index) => {
             return (
-              <option
-                key={`${index} + ${itemValue}`}
-                value={itemValue}
-                onChange={() => setOpen(() => !opened)}
-              >
+              <option key={`${index} + ${itemValue}`} value={itemValue}>
                 {itemValue}
               </option>
             )
           })}
         </select>
-        <span
-          className={`${
-            opened
-              ? 'rotate-90 transition-all duration-150 ease-in-out '
-              : 'rotate-0 transition-all duration-150 ease-in-out'
-          }`}
-        >
-          <AiOutlineRight fontSize={18} />
-        </span>
       </div>
-      {errors.county && (
-        <div
-          id={`${type}-error`}
-          className="text-gray-800 dark:text-yellow-500"
-        >
-          <p>{errors.county?.message}</p>
-        </div>
-      )}
     </>
   )
 )

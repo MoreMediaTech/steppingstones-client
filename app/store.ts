@@ -36,7 +36,7 @@ const reducers = {
 
 const combinedReducer = combineReducers<typeof reducers>(reducers)
 
-export const rootReducer: Reducer<RootState> = (
+export const rootReducer: Reducer<any, AnyAction> = (
   state,
   action: AnyAction
 ) => {
@@ -69,7 +69,7 @@ setupListeners(store.dispatch)
 const makeStore = () => store
 export type AppStore = ReturnType<typeof makeStore>
 export type AppDispatch = typeof store.dispatch
-export type RootState = ReturnType<typeof combinedReducer>
+export type RootState = ReturnType<typeof rootReducer>
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,

@@ -55,7 +55,7 @@ const UpdateSectionForm = ({
         refetch()
         handleModalClose!()
         showNotification({
-          message: response.message,
+          message: response?.message ?? 'Section updated successfully',
           color: 'green',
           autoClose: 3000,
         })

@@ -34,7 +34,7 @@ const Button = forwardRef<Ref, ButtonProps>(
       type={type}
       className={`${colors[color as keyof Colors]} ${className} ${
         disabled ? 'cursor-not-allowed opacity-60' : ''
-      }   flex items-center justify-center rounded px-4 py-2 font-medium shadow transition duration-200 ease-in focus:outline-none`}
+      }   flex items-center justify-center rounded px-4 py-2 font-medium shadow transition text-xs sm:text-sm  duration-200 ease-in focus:outline-none`}
       {...props}
     >
       {children}

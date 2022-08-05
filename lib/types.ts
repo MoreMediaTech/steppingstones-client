@@ -264,10 +264,10 @@ export type EconomicDataWidgetProps = {
 
 export type DistrictDataProps = {
   id: string
-  name: string
+  name?: string
   imageUrl?: string
   logoIcon?: string
-  isLive: boolean
+  isLive?: boolean
   county?: CountyDataProps
   districtSections?: DistrictSectionProps[]
   createdAt?: string
@@ -374,22 +374,11 @@ export interface AuthState {
   error: Error | undefined
 }
 
-export type PartnerDataProps = {
-  id?: string
-  title: string
-  organisation: string
-  description: string
-  category: string
-  businessType: string
-  website: string
-  isLive?: boolean
-  isHidden?: boolean
-  isApproved?: boolean
-  status?: string
-  areaOfOperation: AreasOfOperation
-}
+
 export interface IPartnerState {
-  partnerData: PartnerDataProps[]
+  partnersData: PartnerData[]
+  partnerData: PartnerData | null
+  type: string
   message: string
   error: Error | undefined
 }

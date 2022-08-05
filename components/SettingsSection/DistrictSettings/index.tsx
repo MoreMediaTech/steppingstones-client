@@ -19,6 +19,43 @@ const DistrictSettings = () => {
       setDistrict(null)
     }
 
+      // const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+      //   if (!e.target.value) setSearchResults(data as PartnerData[])
+
+      //   const resultsArray = data?.filter(
+      //     (partner: PartnerData) =>
+      //       partner?.partner?.name
+      //         .toLowerCase()
+      //         .includes(e.target.value.toLowerCase()) ||
+      //       partner?.partner?.email
+      //         .toLowerCase()
+      //         .includes(e.target.value.toLowerCase()) ||
+      //       partner?.organisation?.name
+      //         .toLowerCase()
+      //         .includes(e.target.value.toLowerCase()) ||
+      //       partner?.valueCategory
+      //         .toLowerCase()
+      //         .includes(e.target.value.toLowerCase()) ||
+      //       partner?.position
+      //         ?.toLowerCase()
+      //         .includes(e.target.value.toLowerCase())
+      //   )
+
+      //   setSearchResults(resultsArray as PartnerData[])
+      // }
+
+      // const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+      //   if (!e.target.checked) {
+      //     setChecked(false)
+      //     setSelectedPartnersId([])
+      //   }
+      //   const { value } = e.target
+      //   setChecked(true)
+      //   setSelectedPartnersId((partnerId) => [
+      //     ...new Set([...partnerId, value]),
+      //   ])
+      // }
+
      if (isErrorDistricts) {
        return (
          <div className="flex h-[700px] items-center justify-center text-xl font-bold text-red-500">

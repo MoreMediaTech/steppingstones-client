@@ -154,7 +154,7 @@ const District = ({
                     {districtData?.imageUrl !== null && !isEdit ? (
                       <div className="flex flex-col items-center space-y-2">
                         <Image
-                          src={districtData?.imageUrl}
+                          src={districtData?.imageUrl as string}
                           alt={districtData?.name}
                           width={500}
                           height={800}
@@ -223,7 +223,7 @@ const District = ({
           isLoading={isLoadingCreateLASection}
           createSection={createDistrictSection}
           refetch={refetchDistrict}
-          id={districtData?.id}
+          id={districtData?.id as string}
         />
       </ComponentShield>
     </AdminLayout>

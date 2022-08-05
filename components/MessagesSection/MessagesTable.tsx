@@ -13,7 +13,7 @@ const MessagesTable = ({ messages }: { messages: MessageProps[] }) => {
       setSelectedMessage(selectedMessage.filter((itemId) => itemId !== value))
     }
   }
-  console.log(selectedMessage)
+
 
   return (
     <section className=" relative  w-full  shadow-md sm:rounded-lg">
