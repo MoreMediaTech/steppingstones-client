@@ -6,11 +6,10 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { Loader } from '@mantine/core'
 
 import { ComponentShield } from '@components/NextShield'
-import Spinner from '@components/spinner'
 import PortalHeader from '@components/PortalHeader'
 
 import { AdminLayout } from 'layout'
-import { EditImageProps, IContentDrawerSubNavData, SectionProps } from '@lib/types'
+import { CountyDataProps, DistrictDataProps, EditImageProps, IContentDrawerSubNavData, SectionProps } from '@lib/types'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
 import {
   useGetCountyByIdQuery,
@@ -25,11 +24,7 @@ import { showNotification } from '@mantine/notifications'
 import { contentDrawerSubNavData } from '@components/navigation/ContentDrawer/ContentDrawerData'
 import Button from '@components/Button'
 
-type DistrictProps = {
-  id: string
-  name: string
-  isLive: boolean
-}
+
 
 const County = ({ county, countyId }: { county: string; countyId: string }) => {
   const router = useRouter()
@@ -79,8 +74,8 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
     }
   }
 
-  const submitHandler: SubmitHandler<EditImageProps> = async (data) => {
-    const updatedData = { id: countyId, imageFile: preview }
+  const submitHandler: SubmitHandler<EditImageProps> = async () => {
+    const updatedData  = { id: countyId, imageFile: preview }
 
     try {
       await updateCounty(updatedData).unwrap()
@@ -231,7 +226,7 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
                       <div className="w-full space-y-4 py-8">
                         <div className="grid grid-cols-2 gap-y-4 gap-x-10 md:gap-x-20">
                           {countyData?.districts?.map(
-                            (district: DistrictProps) => (
+                            (district: DistrictDataProps) => (
                               <button
                                 key={district?.id}
                                 type="button"
@@ -297,7 +292,7 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
           opened={opened}
           setOpened={setOpened}
           countyId={countyId}
-          county={countyData?.name}
+          county={countyData?.name as string}
           refetch={refetchCounty}
         />
         <CreateSectionForm
@@ -306,7 +301,7 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
           isLoading={isLoadingCreateSection}
           createSection={createSection}
           refetch={refetchCounty}
-          id={countyData?.id}
+          id={countyData?.id as string}
         />
       </ComponentShield>
     </AdminLayout>

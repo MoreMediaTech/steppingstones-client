@@ -7,7 +7,7 @@ import { Checkbox, Loader, Switch } from '@mantine/core'
 import { ComponentShield } from '@components/NextShield'
 import PortalHeader from '@components/PortalHeader'
 import { AdminLayout } from 'layout'
-import { SubSectionProps } from '@lib/types'
+import { SectionProps, SubSectionProps } from '@lib/types'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
 import {
   useGetSectionByIdQuery,
@@ -169,7 +169,7 @@ const Section = ({
                 ) : (
                   <SectionContainer
                     isLoadingSection={isLoadingSection}
-                    sectionData={sectionData}
+                    sectionData={sectionData as SectionProps}
                     refetch={refetchSection}
                     updateSectionById={updateSectionById}
                     isLoading={isLoading}
@@ -184,7 +184,7 @@ const Section = ({
             isLoading={isLoadingCreate}
             createSection={createSubSection}
             refetch={refetchSection}
-            id={sectionData?.id}
+            id={sectionData?.id as string}
           />
         </ComponentShield>
       </AdminLayout>

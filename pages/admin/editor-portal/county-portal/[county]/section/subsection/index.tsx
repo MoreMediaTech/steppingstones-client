@@ -8,7 +8,7 @@ import { ComponentShield } from '@components/NextShield'
 import PortalHeader from '@components/PortalHeader'
 
 import { AdminLayout } from 'layout'
-import { SubSubSectionProps } from '@lib/types'
+import { SubSectionProps, SubSubSectionProps } from '@lib/types'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
 import {
   useGetSubSectionByIdQuery,
@@ -64,7 +64,7 @@ const SubSection = ({
             <PortalHeader
               title={`${subSectionData?.name ?? 'Section'}`}
               subTitle={
-                subSectionData?.isSubSection
+                subSectionData?.isSubSubSection
                   ? 'Please select from the menu below'
                   : 'Review or edit the content below'
               }
@@ -160,7 +160,7 @@ const SubSection = ({
                 ) : (
                   <SectionContainer
                     isLoadingSection={isLoadingSubSection}
-                    sectionData={subSectionData}
+                    sectionData={subSectionData as SubSectionProps}
                     refetch={refetchSubSection}
                     isLoading={isLoading}
                     updateSectionById={updateSubSectionById}
@@ -175,7 +175,7 @@ const SubSection = ({
             isLoading={isLoadingCreate}
             createSection={createSubSubSection}
             refetch={refetchSubSection}
-            id={subSectionData?.id}
+            id={subSectionData?.id as string}
           />
         </ComponentShield>
       </AdminLayout>

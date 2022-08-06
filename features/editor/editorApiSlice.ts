@@ -35,7 +35,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     updateCounty: builder.mutation<
       { success: boolean; message: string },
-      CountyDataProps
+      Partial<CountyDataProps>
     >({
       query: (data) => ({
         url: `editor/county/${data.id}`,

@@ -211,7 +211,7 @@ export type SectionProps = {
   imageUrl?: string
   isSubSection?: boolean
   isLive?: boolean
-  subSection?: SubSectionProps[]
+  subsections?: SubSectionProps[]
   createdAt?: string
   updatedAt?: string
   county?: CountyDataProps
@@ -238,7 +238,7 @@ export type SubSectionProps = {
   imageUrl?: string
   isSubSubSection?: boolean
   isLive?: boolean
-  subSection?: SubSubSectionProps[]
+  subSubSections?: SubSubSectionProps[]
   createdAt?: string
   updatedAt?: string
 }
@@ -276,7 +276,7 @@ export type DistrictDataProps = {
   updatedAt?: string
 }
 export type CountyDataProps = {
-  id: string
+  id?: string
   name: string
   imageUrl: string
   logoIcon: string
@@ -313,8 +313,11 @@ export type CountyDataProps = {
     updatedAt: string
     imageUrl: string
   }
+  districts: DistrictDataProps[]
+  sections: SectionProps[]
   createdAt: string
   updatedAt: string
+  imageFile?: string | ArrayBuffer | null
 }
 export type IEmailFormData = {
   from: string

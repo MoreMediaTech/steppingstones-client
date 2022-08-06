@@ -15,6 +15,7 @@ import { NEXT_URL } from '@config/index'
 import Button from '@components/Button'
 import { wrapper } from 'app/store'
 import { SectionContainer } from '@components/CountyDistrictSections'
+import { SubSubSectionProps } from '@lib/types'
 
 
 const SubSubSection = ({
@@ -82,7 +83,7 @@ const SubSubSection = ({
               <section className="w-full overflow-auto py-2 px-2 md:px-4">
                 <SectionContainer
                   isLoadingSection={isLoadingSubSubSection}
-                  sectionData={subSubSectionData}
+                  sectionData={subSubSectionData as SubSubSectionProps}
                   refetch={refetchSubSection}
                   isLoading={isLoading}
                   updateSectionById={updateSubSubSectionById}
