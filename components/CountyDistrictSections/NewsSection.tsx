@@ -25,7 +25,7 @@ const NewsSection = ({ id }: { id: string }) => {
   } = useGetCountyByIdQuery(id, { refetchOnMountOrArgChange: true })
   const [updateOrCreateCountyNews, { isLoading }] = useUpdateOrCreateCountyNewsMutation()
 
-  const [value, setValue] = useState<string>(countyData?.news?.content)
+  const [value, setValue] = useState<string>(countyData?.news?.content as string)
   const [isEdit, setIsEdit] = useState<boolean>(false)
 
   
@@ -44,7 +44,7 @@ const NewsSection = ({ id }: { id: string }) => {
   useEffect(() => {
     // reset the form when the county data is changed/updated
     reset({ title: countyData?.news?.title })
-    setValue(countyData?.news?.content)
+    setValue(countyData?.news?.content as string)
   }, [countyData])
 
   const submitHandler: SubmitHandler<Partial<EditorFormDataProps>> = useCallback(

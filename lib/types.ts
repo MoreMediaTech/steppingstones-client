@@ -283,6 +283,36 @@ export type CountyDataProps = {
   published: boolean
   viewCount: number
   isLive: boolean
+  welcome: {
+    id: string
+    name: string
+    title: string
+    content: string
+    isLive: boolean
+    createdAt: string
+    updatedAt: string
+    imageUrl: string
+  }
+  lep: {
+    id: string
+    name: string
+    title: string
+    content: string
+    isLive: boolean
+    createdAt: string
+    updatedAt: string
+    imageUrl: string
+  }
+  news: {
+    id: string
+    name: string
+    title: string
+    content: string
+    isLive: boolean
+    createdAt: string
+    updatedAt: string
+    imageUrl: string
+  }
   createdAt: string
   updatedAt: string
 }

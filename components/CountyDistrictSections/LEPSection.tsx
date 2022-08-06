@@ -27,7 +27,7 @@ const LEPSection = ({ id }: { id: string }) => {
   } = useGetCountyByIdQuery(id, { refetchOnMountOrArgChange: true })
   const [updateOrCreateCountyLEP, { isLoading }] =  useUpdateOrCreateCountyLEPMutation()
 
-  const [value, setValue] = useState<string>(countyData?.lep?.content)
+  const [value, setValue] = useState<string>(countyData?.lep?.content as string)
   const [isEdit, setIsEdit] = useState<boolean>(false)
 
   
@@ -46,7 +46,7 @@ const LEPSection = ({ id }: { id: string }) => {
   useEffect(() => {
     // reset the form when the county data is changed/updated
     reset({ title: countyData?.lep?.title })
-    setValue(countyData?.lep?.content)
+    setValue(countyData?.lep?.content as string)
   }, [countyData])
   
   const submitHandler: SubmitHandler<Partial<EditorFormDataProps>> =
