@@ -7,7 +7,7 @@ import { Checkbox, Loader, Switch } from '@mantine/core'
 import { ComponentShield } from '@components/NextShield'
 import PortalHeader from '@components/PortalHeader'
 import { AdminLayout } from 'layout'
-import { SubSectionProps } from '@lib/types'
+import { DistrictSectionProps, SubSectionProps } from '@lib/types'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
 import {
   useGetDistrictSectionByIdQuery,
@@ -33,7 +33,7 @@ const DistrictSection = ({ id, district }: { id: string; district: string; }) =>
   } = useGetDistrictSectionByIdQuery(id, { refetchOnMountOrArgChange: true })
 
   const [openAddSectionModal, setAddOpenSectionModal] = useState<boolean>(false)
-  const [checked, setChecked] = useState<boolean>(laSectionData?.isLive)
+  const [checked, setChecked] = useState<boolean>(laSectionData?.isLive as boolean)
   const [opened, setOpened] = useState(false)
   const [type, setType] = useState<'create' | 'edit'>('create')
   const [createSubSection, { isLoading: isLoadingCreate }] =
@@ -123,7 +123,7 @@ const DistrictSection = ({ id, district }: { id: string; district: string; }) =>
                 ) : (
                   <SectionContainer
                     isLoadingSection={isLoadingSection}
-                    sectionData={laSectionData}
+                    sectionData={laSectionData as DistrictSectionProps}
                     refetch={refetchSection}
                     updateSectionById={updateDistrictSectionById}
                     isLoading={isLoading}
@@ -138,7 +138,7 @@ const DistrictSection = ({ id, district }: { id: string; district: string; }) =>
             isLoading={isLoadingCreate}
             createSection={createSubSection}
             refetch={refetchSection}
-            id={laSectionData?.id}
+            id={laSectionData?.id as string}
           />
         </ComponentShield>
       </AdminLayout>
