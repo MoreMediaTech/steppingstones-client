@@ -16,7 +16,7 @@ import {
 import { EconomicDataWidgetProps } from '@lib/types'
 
 interface IEconomicDataFormProps {
-  submitHandler: SubmitHandler<Partial<EconomicDataWidgetProps>>
+  submitHandler: SubmitHandler<EconomicDataWidgetProps>
   errors?: {
     title: FieldError | undefined
     stats: FieldError | undefined
@@ -25,8 +25,8 @@ interface IEconomicDataFormProps {
   }
   setOpened: React.Dispatch<React.SetStateAction<boolean>>
   isLoading: boolean
-  register: UseFormRegister<Partial<EconomicDataWidgetProps>>
-  handleSubmit: UseFormHandleSubmit<Partial<EconomicDataWidgetProps>>
+  register: UseFormRegister<EconomicDataWidgetProps>
+  handleSubmit: UseFormHandleSubmit<EconomicDataWidgetProps>
 }
 
 const EconomicDataForm = ({

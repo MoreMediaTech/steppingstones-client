@@ -8,13 +8,13 @@ import {
 import EconomicDataForm from './EconomicDataForm'
 
 interface IEconomicDataFormProps {
-  submitHandler: SubmitHandler<Partial<EconomicDataWidgetProps>>
+  submitHandler: SubmitHandler<EconomicDataWidgetProps>
   setOpened: React.Dispatch<React.SetStateAction<boolean>>
   isLoading: boolean
   opened: boolean
   title: string
-  register: UseFormRegister<Partial<EconomicDataWidgetProps>>
-  handleSubmit: UseFormHandleSubmit<Partial<EconomicDataWidgetProps>>
+  register: UseFormRegister<EconomicDataWidgetProps>
+  handleSubmit: UseFormHandleSubmit<EconomicDataWidgetProps>
 }
 
 const EconomicDataModal = ({

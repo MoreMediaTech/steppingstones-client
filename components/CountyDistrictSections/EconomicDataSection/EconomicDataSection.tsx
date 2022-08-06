@@ -60,13 +60,13 @@ const EconomicDataSection = ({
     register,
     reset,
     formState: { errors },
-  } = useForm<Partial<EconomicDataWidgetProps>>({
+  } = useForm<EconomicDataWidgetProps>({
     defaultValues: {
       ...defaultValues,
     },
   })
 
-  const submitHandler: SubmitHandler<Partial<EconomicDataWidgetProps>> =
+  const submitHandler: SubmitHandler<EconomicDataWidgetProps> =
     useCallback(
       async (data) => {
         try {
@@ -76,10 +76,10 @@ const EconomicDataSection = ({
             id: economicData?.id,
           }
           if (type === 'create') {
-            await createEconomicDataWidget(formData).unwrap()
+            await createEconomicDataWidget(formData as EconomicDataWidgetProps).unwrap()
           }
           if (type === 'edit') {
-            await updateEconomicDataWidgetById(formData).unwrap()
+            await updateEconomicDataWidgetById(formData as EconomicDataWidgetProps).unwrap()
           }
           refetch()
           setOpened(false)
