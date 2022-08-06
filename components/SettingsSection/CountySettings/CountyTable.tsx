@@ -15,16 +15,16 @@ const CountyTable = ({
   countyData,
   setOpen,
   setCounty,
-  searchValue,
-  setSearchValue,
   refetch,
+  handleSearch,
+  handleSelect,
 }: {
-  searchValue: string
   countyData: CountyDataProps[]
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   setCounty: React.Dispatch<React.SetStateAction<CountyDataProps | null>>
-  setSearchValue: React.Dispatch<React.SetStateAction<string>>
     refetch: () => void
+    handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void
+    handleSelect: (e: React.ChangeEvent<HTMLInputElement>) => void
 }) => {
     const [openModal, setOpenModal] = useState<boolean>(false)
     const [removeCounty, { isLoading }] = useRemoveCountyMutation()
@@ -71,10 +71,9 @@ const CountyTable = ({
           <input
             type="text"
             id="table-search"
-            value={searchValue}
             className="block rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 md:w-80  "
             placeholder="Search for items"
-            onChange={(e) => setSearchValue(e.target.value)}
+            onChange={handleSearch}
           />
         </div>
       </div>
@@ -82,7 +81,7 @@ const CountyTable = ({
         <thead className="bg-gray-50 text-xs uppercase text-gray-700">
           <tr>
             <th scope="col" className="p-4">
-              <div className="flex items-center">
+              {/* <div className="flex items-center">
                 <input
                   id="checkbox-all-search"
                   type="checkbox"
@@ -91,7 +90,7 @@ const CountyTable = ({
                 <label htmlFor="checkbox-all-search" className="sr-only">
                   checkbox
                 </label>
-              </div>
+              </div> */}
             </th>
             <th scope="col" className="px-6 py-3 text-left">
               county name
@@ -116,6 +115,8 @@ const CountyTable = ({
                     id="checkbox-table-search-1"
                     type="checkbox"
                     className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 "
+                    value={county.id}
+                    onChange={handleSelect}
                   />
                   <label htmlFor="checkbox-table-search-1" className="sr-only">
                     checkbox

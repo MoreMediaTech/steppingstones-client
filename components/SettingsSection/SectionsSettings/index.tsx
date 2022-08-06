@@ -7,67 +7,55 @@ import SectionsTable from './SectionsTable'
 import UpdateSectionModal from './UpdateSectionModal'
 
 const SectionsSettings = () => {
-  const [open, setOpen] = useState<boolean>(false)
-  const [section, setSection] = useState<SectionProps | null>(null)
-  const [searchValue, setSearchValue] = useState<string>('')
-  const [type, setType] = useState<'Section' | 'SubSection'>('Section')
-
   const {
     data: sectionData,
     isLoading: isLoadingSections,
     isError: isErrorSections,
     refetch: refetchSections,
   } = useGetSectionsQuery()
+  const [open, setOpen] = useState<boolean>(false)
+  const [section, setSection] = useState<SectionProps | null>(null)
+  const [searchResults, setSearchResults] = useState<SectionProps[]>([])
+  const [checked, setChecked] = useState<boolean>(false)
+  const [selectedSectionId, setSelectedSectionId] = useState<string[]>([])
 
-   const handleModalClose = () => {
-     setOpen(false)
-     setSection(null)
-   }
+  const [type, setType] = useState<'Section' | 'SubSection'>('Section')
 
+  const handleModalClose = () => {
+    setOpen(false)
+    setSection(null)
+  }
 
-    //  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //    if (!e.target.value) setSearchResults(data as PartnerData[])
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.value) setSearchResults(sectionData as SectionProps[])
 
-    //    const resultsArray = data?.filter(
-    //      (partner: PartnerData) =>
-    //        partner?.partner?.name
-    //          .toLowerCase()
-    //          .includes(e.target.value.toLowerCase()) ||
-    //        partner?.partner?.email
-    //          .toLowerCase()
-    //          .includes(e.target.value.toLowerCase()) ||
-    //        partner?.organisation?.name
-    //          .toLowerCase()
-    //          .includes(e.target.value.toLowerCase()) ||
-    //        partner?.valueCategory
-    //          .toLowerCase()
-    //          .includes(e.target.value.toLowerCase()) ||
-    //        partner?.position
-    //          ?.toLowerCase()
-    //          .includes(e.target.value.toLowerCase())
-    //    )
+    const resultsArray = sectionData?.filter((section: SectionProps) =>
+      section?.name.toLowerCase().includes(e.target.value.toLowerCase())
+    )
 
-    //    setSearchResults(resultsArray as PartnerData[])
-    //  }
+    setSearchResults(resultsArray as SectionProps[])
+  }
 
-    //  const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //    if (!e.target.checked) {
-    //      setChecked(false)
-    //      setSelectedPartnersId([])
-    //    }
-    //    const { value } = e.target
-    //    setChecked(true)
-    //    setSelectedPartnersId((partnerId) => [...new Set([...partnerId, value])])
-    //  }
-
-
-    if (isErrorSections) {
-      return (
-        <div className="flex h-[700px] items-center justify-center text-xl font-bold text-red-500">
-          <h1>Error loading Sections...</h1>
-        </div>
+  const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target
+    if (!e.target.checked) {
+      setChecked(false)
+      setSelectedSectionId((sectionId) =>
+        sectionId.filter((id) => id !== value)
       )
+    } else {
+      setChecked(true)
+      setSelectedSectionId((sectionId) => [...new Set([...sectionId, value])])
     }
+  }
+
+  if (isErrorSections) {
+    return (
+      <div className="flex h-[700px] items-center justify-center text-xl font-bold text-red-500">
+        <h1>Error loading Sections...</h1>
+      </div>
+    )
+  }
 
   if (isLoadingSections) {
     return (
@@ -80,14 +68,18 @@ const SectionsSettings = () => {
   return (
     <>
       <SectionsTable
-        sectionsData={sectionData as SectionProps[]}
+        sectionsData={
+          searchResults.length > 0
+            ? (searchResults as SectionProps[])
+            : (sectionData as SectionProps[])
+        }
         setOpen={setOpen}
         setSection={setSection}
-        searchValue={searchValue}
-        setSearchValue={setSearchValue}
         refetch={refetchSections}
         type={type}
         setType={setType}
+        handleSearch={handleSearch}
+        handleSelect={handleSelect}
       />
       <UpdateSectionModal
         key={section?.id}

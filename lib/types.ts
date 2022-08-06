@@ -226,6 +226,8 @@ export type DistrictSectionProps = {
   isEconomicData?: boolean
   isLive?: boolean
   economicDataWidgets: EconomicDataWidgetProps[]
+  createdAt?: string
+  updatedAt?: string
 }
 
 export type SubSectionProps = {
@@ -263,7 +265,7 @@ export type EconomicDataWidgetProps = {
 }
 
 export type DistrictDataProps = {
-  id: string
+  id?: string
   name?: string
   imageUrl?: string
   logoIcon?: string

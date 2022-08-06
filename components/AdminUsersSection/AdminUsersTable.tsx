@@ -9,11 +9,15 @@ const AdminUsersTable = ({
   setOpen,
   setUser,
   refetch,
+  handleSearch,
+  handleSelect,
 }: {
   users: CurrentUser[]
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   setUser: React.Dispatch<React.SetStateAction<CurrentUser | null>>
+  handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void
+  handleSelect: (e: React.ChangeEvent<HTMLInputElement>) => void
   refetch: () => void
 }) => {
   
@@ -42,8 +46,9 @@ const AdminUsersTable = ({
             <input
               type="text"
               id="table-search"
-              className="block rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 md:w-80  "
+              className="form-input block rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 md:w-80  "
               placeholder="Search for items"
+              onChange={handleSearch}
             />
           </div>
         </div>
@@ -51,7 +56,7 @@ const AdminUsersTable = ({
           <thead className="bg-gray-50 text-xs uppercase text-gray-700 ">
             <tr>
               <th scope="col" className="p-4">
-                <div className="flex items-center">
+                {/* <div className="flex items-center">
                   <input
                     id="checkbox-all-search"
                     type="checkbox"
@@ -60,7 +65,7 @@ const AdminUsersTable = ({
                   <label htmlFor="checkbox-all-search" className="sr-only">
                     checkbox
                   </label>
-                </div>
+                </div> */}
               </th>
               <th scope="col" className="px-6 py-3 text-left">
                 name
@@ -93,7 +98,9 @@ const AdminUsersTable = ({
                     <input
                       id="checkbox-table-search-1"
                       type="checkbox"
-                      className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 "
+                      value={user.id}
+                      className="form-checkbox h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 "
+                      onChange={handleSelect}
                     />
                     <label
                       htmlFor="checkbox-table-search-1"

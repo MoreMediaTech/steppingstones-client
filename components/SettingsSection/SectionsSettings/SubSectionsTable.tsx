@@ -5,7 +5,7 @@ import { format } from 'date-fns'
 import { enGB } from 'date-fns/locale'
 import { Modal } from '@mantine/core'
 
-import {  SubSectionProps } from '@lib/types'
+import { SubSectionProps } from '@lib/types'
 import {
   useDeleteSubSectionByIdMutation,
   useGetSubSectionsBySectionIdQuery,
@@ -33,12 +33,14 @@ const SubSectionsTable = ({
   handleModalClose: () => void
   refetch: () => void
 }) => {
-  const [searchValue, setSearchValue] = useState<string>('')
+  const { data: subSectionData, isLoading: isLoadingSubSections } =
+    useGetSubSectionsBySectionIdQuery(sectionId)
   const [open, setOpen] = useState<boolean>(false)
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [subSection, setSubSection] = useState<SubSectionProps | null>(null)
-
-  const { data: subSectionData, isLoading: isLoadingSubSections } = useGetSubSectionsBySectionIdQuery(sectionId)
+  const [searchResults, setSearchResults] = useState<SubSectionProps[]>([])
+  const [checked, setChecked] = useState<boolean>(false)
+  const [selectedSectionId, setSelectedSectionId] = useState<string[]>([])
 
   const [deleteSubSectionById, { isLoading }] =
     useDeleteSubSectionByIdMutation()
@@ -47,6 +49,31 @@ const SubSectionsTable = ({
     setOpen(false)
     setSubSection(null)
   }
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.value) setSearchResults(subSectionData as SubSectionProps[])
+
+    const resultsArray = subSectionData?.filter((section: SubSectionProps) =>
+      section?.name.toLowerCase().includes(e.target.value.toLowerCase())
+    )
+
+    setSearchResults(resultsArray as SubSectionProps[])
+  }
+
+  const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target
+    if (!e.target.checked) {
+      setChecked(false)
+      setSelectedSectionId((sectionId) =>
+        sectionId.filter((id) => id !== value)
+      )
+    } else {
+      setChecked(true)
+      setSelectedSectionId((sectionId) => [...new Set([...sectionId, value])])
+    }
+  }
+
+  const data = searchResults.length > 0 ? searchResults : subSectionData
 
   const deleteHandler = useCallback(async (id: string) => {
     try {
@@ -80,11 +107,11 @@ const SubSectionsTable = ({
         centered
       >
         {isLoadingSubSections ? (
-          <div className="flex h-[300px] items-center justify-center">
+          <div className="flex min-h-[300px] items-center justify-center">
             <Loader size="xl" variant="bars" />
           </div>
         ) : (
-          <section className=" relative  overflow-y-auto md:w-full">
+          <section className=" relative h-[500px] min-h-[500px] overflow-y-auto scroll-smooth sm:h-[700px] md:w-full">
             <div className="p-4">
               <label htmlFor="table-search" className="sr-only">
                 Search
@@ -107,10 +134,9 @@ const SubSectionsTable = ({
                 <input
                   type="text"
                   id="table-search"
-                  value={searchValue}
                   className="block rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 md:w-80  "
                   placeholder="Search for items"
-                  onChange={(e) => setSearchValue(e.target.value)}
+                  onChange={handleSearch}
                 />
               </div>
             </div>
@@ -119,7 +145,7 @@ const SubSectionsTable = ({
                 <thead className="bg-gray-50 text-xs uppercase text-gray-700">
                   <tr>
                     <th scope="col" className="p-4">
-                      <div className="flex items-center">
+                      {/* <div className="flex items-center">
                         <input
                           id="checkbox-all-search"
                           type="checkbox"
@@ -131,7 +157,7 @@ const SubSectionsTable = ({
                         >
                           checkbox
                         </label>
-                      </div>
+                      </div> */}
                     </th>
                     <th scope="col" className="px-6 py-3 text-left">
                       district name
@@ -151,7 +177,7 @@ const SubSectionsTable = ({
                   </tr>
                 </thead>
                 <tbody>
-                  {subSectionData?.map((section: SubSectionProps) => (
+                  {data?.map((section: SubSectionProps) => (
                     <tr
                       key={section.id}
                       className="border-b bg-white hover:bg-gray-50"
@@ -162,6 +188,8 @@ const SubSectionsTable = ({
                             id="checkbox-table-search-1"
                             type="checkbox"
                             className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 "
+                            value={section.id}
+                            onChange={handleSelect}
                           />
                           <label
                             htmlFor="checkbox-table-search-1"

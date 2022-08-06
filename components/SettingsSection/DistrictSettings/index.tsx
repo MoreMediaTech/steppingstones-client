@@ -7,81 +7,79 @@ import DistrictTable from './DistrictTable'
 import UpdateDistrictModal from './UpdateDistrictModal'
 
 const DistrictSettings = () => {
-   const [open, setOpen] = useState<boolean>(false)
-   const [district, setDistrict] = useState<DistrictDataProps | null>(null)
-   const [searchValue, setSearchValue] = useState<string>('')
-   const [type, setType] = useState<'District' | 'DistrictSection'>('District')
+  const {
+    data: districtData,
+    isLoading: isLoadingDistricts,
+    isError: isErrorDistricts,
+    refetch: refetchDistricts,
+  } = useGetDistrictsQuery()
+  const [open, setOpen] = useState<boolean>(false)
+  const [district, setDistrict] = useState<DistrictDataProps | null>(null)
+  const [type, setType] = useState<'District' | 'DistrictSection'>('District')
+  const [checked, setChecked] = useState<boolean>(false)
+  const [searchResults, setSearchResults] = useState<DistrictDataProps[]>([])
+  const [selectedDistrictId, setSelectedDistrictId] = useState<string[]>([])
 
-   const { data: districtData, isLoading: isLoadingDistricts, isError: isErrorDistricts, refetch: refetchDistricts} = useGetDistrictsQuery()
+  const handleModalClose = () => {
+    setOpen(false)
+    setDistrict(null)
+  }
 
-    const handleModalClose = () => {
-      setOpen(false)
-      setDistrict(null)
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.value) setSearchResults(districtData as DistrictDataProps[])
+
+    const resultsArray = districtData?.filter(
+      (district: DistrictDataProps) =>
+        district?.name?.toLowerCase().includes(e.target.value.toLowerCase()) ||
+        district?.county?.name
+          .toLowerCase()
+          .includes(e.target.value.toLowerCase())
+    )
+
+    setSearchResults(resultsArray as DistrictDataProps[])
+  }
+
+  const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target
+    if (!e.target.checked) {
+      setChecked(false)
+      setSelectedDistrictId(districtId => districtId.filter(id => id !== value))
+    } else {
+      setChecked(true)
+      setSelectedDistrictId((partnerId) => [...new Set([...partnerId, value])])
     }
+  }
 
-      // const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-      //   if (!e.target.value) setSearchResults(data as PartnerData[])
+  if (isErrorDistricts) {
+    return (
+      <div className="flex h-[700px] items-center justify-center text-xl font-bold text-red-500">
+        <h1>Error loading Districts...</h1>
+      </div>
+    )
+  }
 
-      //   const resultsArray = data?.filter(
-      //     (partner: PartnerData) =>
-      //       partner?.partner?.name
-      //         .toLowerCase()
-      //         .includes(e.target.value.toLowerCase()) ||
-      //       partner?.partner?.email
-      //         .toLowerCase()
-      //         .includes(e.target.value.toLowerCase()) ||
-      //       partner?.organisation?.name
-      //         .toLowerCase()
-      //         .includes(e.target.value.toLowerCase()) ||
-      //       partner?.valueCategory
-      //         .toLowerCase()
-      //         .includes(e.target.value.toLowerCase()) ||
-      //       partner?.position
-      //         ?.toLowerCase()
-      //         .includes(e.target.value.toLowerCase())
-      //   )
-
-      //   setSearchResults(resultsArray as PartnerData[])
-      // }
-
-      // const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-      //   if (!e.target.checked) {
-      //     setChecked(false)
-      //     setSelectedPartnersId([])
-      //   }
-      //   const { value } = e.target
-      //   setChecked(true)
-      //   setSelectedPartnersId((partnerId) => [
-      //     ...new Set([...partnerId, value]),
-      //   ])
-      // }
-
-     if (isErrorDistricts) {
-       return (
-         <div className="flex h-[700px] items-center justify-center text-xl font-bold text-red-500">
-           <h1>Error loading Districts...</h1>
-         </div>
-       )
-     }
-
-   if (isLoadingDistricts) {
-     return (
-       <div className="flex h-[700px] items-center justify-center">
-         <Loader size="xl" variant="bars" />
-       </div>
-     )
-   }
+  if (isLoadingDistricts) {
+    return (
+      <div className="flex h-[700px] items-center justify-center">
+        <Loader size="xl" variant="bars" />
+      </div>
+    )
+  }
   return (
     <>
       <DistrictTable
-        districtData={districtData as DistrictDataProps[]}
+        districtData={
+          searchResults.length > 0
+            ? searchResults
+            : (districtData as DistrictDataProps[])
+        }
         setOpen={setOpen}
         setDistrict={setDistrict}
-        searchValue={searchValue}
-        setSearchValue={setSearchValue}
         refetch={refetchDistricts}
         type={type}
         setType={setType}
+        handleSearch={handleSearch}
+        handleSelect={handleSelect}
       />
       <UpdateDistrictModal
         key={district?.id}

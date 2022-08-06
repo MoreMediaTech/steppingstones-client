@@ -36,14 +36,10 @@ const PartnerDirectorySection = ({
     refetch,
   } = useGetAllPartnersDataQuery()
   const [searchValue, setSearchValue] = useState<string>('')
-  const [searchResults, setSearchResults] = useState<PartnerData[]>(
-    data as PartnerData[]
-  )
+  const [searchResults, setSearchResults] = useState<PartnerData[]>([])
   const [selectedPartnersId, setSelectedPartnersId] = useState<string[]>([])
- 
   const [checked, setChecked] = useState<boolean>(false)
   const { partnerData, type } = useAppSelector(partnerSelector)
-
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.value) setSearchResults(data as PartnerData[])
@@ -69,13 +65,13 @@ const PartnerDirectorySection = ({
   }
 
   const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if(!e.target.checked) {
+    if (!e.target.checked) {
       setChecked(false)
       setSelectedPartnersId([])
     }
     const { value } = e.target
     setChecked(true)
-    setSelectedPartnersId(partnerId => [...new Set([...partnerId, value])])
+    setSelectedPartnersId((partnerId) => [...new Set([...partnerId, value])])
   }
 
   const [createPartnerData, { isLoading }] = useCreatePartnerDataMutation()
@@ -165,7 +161,11 @@ const PartnerDirectorySection = ({
       <PartnerDirectoryTable
         setOpen={setIsPartnerDirectoryModalOpen}
         refetch={refetch}
-        partnerData={searchResults as PartnerData[]}
+        partnerData={
+          searchResults.length > 0
+            ? (searchResults as PartnerData[])
+            : (data as PartnerData[])
+        }
         searchValue={searchValue}
         setSearchValue={setSearchValue}
         handleSearch={handleSearch}

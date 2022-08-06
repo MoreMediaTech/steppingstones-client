@@ -26,11 +26,12 @@ const EnquiryForm = () => {
     recaptchaRef?.current?.reset()
     const message = {
       from: data.from,
-      to: 'enquires@steppingstonesapp.com',
+      to: 'enquiries@steppingstonesapp.com',
       subject: data.subject,
       company: data.company,
       html: enquiryEmailTemplate(data.subject, data.message),
-      token
+      token,
+      message: data.message,
     }
     try {
       await sendEnquiry(message).unwrap()

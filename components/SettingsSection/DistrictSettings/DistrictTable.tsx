@@ -12,25 +12,27 @@ import { showNotification } from '@mantine/notifications'
 import HandleDeleteModal from '../../HandleDeleteModal/HandleDeleteModal'
 import DistrictSectionsTable from './DistrictSectionsTable'
 
+interface IDistrictTableProps {
+  type: string
+  districtData: DistrictDataProps[]
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setDistrict: React.Dispatch<React.SetStateAction<DistrictDataProps | null>>
+  refetch: () => void
+  setType: React.Dispatch<React.SetStateAction<'District' | 'DistrictSection'>>
+  handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void
+  handleSelect: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
+
 const CountyTable = ({
   districtData,
-  searchValue,
   type,
   setType,
   setOpen,
   setDistrict,
-  setSearchValue,
   refetch,
-}: {
-  searchValue: string
-  districtData: DistrictDataProps[]
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
-  setDistrict: React.Dispatch<React.SetStateAction<DistrictDataProps | null>>
-  setSearchValue: React.Dispatch<React.SetStateAction<string>>
-  refetch: () => void
-  type: string
-  setType: React.Dispatch<React.SetStateAction<'District' | 'DistrictSection'>>
-}) => {
+  handleSearch,
+  handleSelect,
+}: IDistrictTableProps) => {
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [openLASectionModal, setOpenLASectionModal] = useState<boolean>(false)
   const [laData, setLAData] = useState<DistrictDataProps | null>(null)
@@ -84,10 +86,9 @@ const CountyTable = ({
             <input
               type="text"
               id="table-search"
-              value={searchValue}
               className="block rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 md:w-80  "
               placeholder="Search for items"
-              onChange={(e) => setSearchValue(e.target.value)}
+              onChange={handleSearch}
             />
           </div>
         </div>
@@ -95,7 +96,7 @@ const CountyTable = ({
           <thead className="bg-gray-50 text-xs uppercase text-gray-700">
             <tr>
               <th scope="col" className="p-4">
-                <div className="flex items-center">
+                {/* <div className="flex items-center">
                   <input
                     id="checkbox-all-search"
                     type="checkbox"
@@ -104,15 +105,15 @@ const CountyTable = ({
                   <label htmlFor="checkbox-all-search" className="sr-only">
                     checkbox
                   </label>
-                </div>
+                </div> */}
               </th>
               <th scope="col" className="px-6 py-3 text-left">
-                district name
+                LA name
               </th>
               <th scope="col" className="px-6 py-3 text-left">
                 county name
               </th>
-              <th scope="col" className="px-6 py-3 text-left">
+              <th scope="col" className="px-6 py-3 ">
                 LA Sections
               </th>
               <th scope="col" className="px-6 py-3">
@@ -139,6 +140,8 @@ const CountyTable = ({
                       id="checkbox-table-search-1"
                       type="checkbox"
                       className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 "
+                      value={district.id}
+                      onChange={handleSelect}
                     />
                     <label
                       htmlFor="checkbox-table-search-1"

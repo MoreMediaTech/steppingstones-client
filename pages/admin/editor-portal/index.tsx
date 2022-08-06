@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import { useRouter } from 'next/router'
+import { Loader } from '@mantine/core'
 
 import { ComponentShield } from '@components/NextShield'
 import { AdminLayout } from 'layout'
@@ -16,7 +17,6 @@ const Dashboard = () => {
   const { data: user, isLoading } = useGetUserQuery()
   return (
     <AdminLayout title="Counties - Editor Dashboard">
-      {isLoading && <Spinner classes="w-24 h-24" message="Loading..." />}
       <ComponentShield
         RBAC
         showForRole={'SS_EDITOR'}
@@ -28,7 +28,13 @@ const Dashboard = () => {
           subTitle="Please select from the menu below"
           imgUrl={user?.imageUrl}
         />
-        <PortalSection />
+        {isLoading ? (
+          <div className="flex h-[700px] items-center justify-center">
+            <Loader size="xl" variant="bars" />
+          </div>
+        ) : (
+          <PortalSection />
+        )}
       </ComponentShield>
     </AdminLayout>
   )

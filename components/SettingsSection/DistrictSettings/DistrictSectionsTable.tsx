@@ -5,7 +5,7 @@ import { format } from 'date-fns'
 import { enGB } from 'date-fns/locale'
 import { Modal } from '@mantine/core'
 
-import { SectionProps } from '@lib/types'
+import { DistrictSectionProps } from '@lib/types'
 import {
   useDeleteDistrictSectionByIdMutation,
   useGetDistrictSectionsByDistrictIdQuery,
@@ -33,17 +33,20 @@ const DistrictSectionsTable = ({
   handleModalClose: () => void
   refetch: () => void
 }) => {
-
-  const [searchValue, setSearchValue] = useState<string>('')
-  const [open, setOpen] = useState<boolean>(false)
-  const [openModal, setOpenModal] = useState<boolean>(false)
-  const [laSection, setLASection] = useState<SectionProps | null>(null)
   const districtId = laSectionId
   const {
     data: districtSectionData,
     isLoading: isLoadingDistrictSections,
     isError: isErrorDistrictSections,
   } = useGetDistrictSectionsByDistrictIdQuery(districtId)
+
+  const [searchValue, setSearchValue] = useState<string>('')
+  const [open, setOpen] = useState<boolean>(false)
+  const [openModal, setOpenModal] = useState<boolean>(false)
+  const [laSection, setLASection] = useState<DistrictSectionProps | null>(null)
+  const [checked, setChecked] = useState<boolean>(false)
+  const [searchResults, setSearchResults] = useState<DistrictSectionProps[]>([])
+  const [selectedLADistrictId, setSelectedLADistrictId] = useState<string[]>([])
 
   const [deleteDistrictSectionById, { isLoading }] =
     useDeleteDistrictSectionByIdMutation()
@@ -52,6 +55,32 @@ const DistrictSectionsTable = ({
     setOpen(false)
     setLASection(null)
   }
+
+    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (!e.target.value) setSearchResults(districtSectionData as DistrictSectionProps[])
+
+      const resultsArray = districtSectionData?.filter(
+        (laSection: DistrictSectionProps) =>
+          laSection?.name?.toLowerCase().includes(e.target.value.toLowerCase())
+      )
+
+      setSearchResults(resultsArray as DistrictSectionProps[])
+    }
+
+    const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { value } = e.target
+      if (!e.target.checked) {
+        setChecked(false)
+        setSelectedLADistrictId((districtLAId) =>
+          districtLAId.filter((id) => id !== value)
+        )
+      } else {
+        setChecked(true)
+        setSelectedLADistrictId((districtLAId) => [
+          ...new Set([...districtLAId, value]),
+        ])
+      }
+    }
 
   const deleteHandler = useCallback(async (id: string) => {
     try {
@@ -71,6 +100,7 @@ const DistrictSectionsTable = ({
       })
     }
   }, [])
+  const data = searchResults.length > 0 ? searchResults : districtSectionData;
 
   return (
     <>
@@ -89,7 +119,7 @@ const DistrictSectionsTable = ({
             <Loader size="xl" variant="bars" />
           </div>
         ) : (
-          <section className=" relative  overflow-auto shadow-md sm:rounded-lg md:w-full">
+          <section className=" relative  overflow-auto  md:w-full">
             <div className="p-4">
               <label htmlFor="table-search" className="sr-only">
                 Search
@@ -112,18 +142,17 @@ const DistrictSectionsTable = ({
                 <input
                   type="text"
                   id="table-search"
-                  value={searchValue}
                   className="block rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 md:w-80  "
                   placeholder="Search for items"
-                  onChange={(e) => setSearchValue(e.target.value)}
+                  onChange={handleSearch}
                 />
               </div>
             </div>
             <table className="relative table w-full overflow-auto overflow-x-auto text-center text-sm text-gray-500">
-              <thead className="bg-gray-50 text-xs uppercase text-gray-700">
+              <thead className="bg-gray-100 text-xs uppercase text-gray-700">
                 <tr>
                   <th scope="col" className="p-4">
-                    <div className="flex items-center">
+                    {/* <div className="flex items-center">
                       <input
                         id="checkbox-all-search"
                         type="checkbox"
@@ -132,10 +161,10 @@ const DistrictSectionsTable = ({
                       <label htmlFor="checkbox-all-search" className="sr-only">
                         checkbox
                       </label>
-                    </div>
+                    </div> */}
                   </th>
                   <th scope="col" className="px-6 py-3 text-left">
-                    district name
+                    LA Section name
                   </th>
                   <th scope="col" className="px-6 py-3">
                     live
@@ -149,7 +178,7 @@ const DistrictSectionsTable = ({
                 </tr>
               </thead>
               <tbody className="overflow-auto">
-                {districtSectionData?.map((section: SectionProps) => (
+                {data?.map((section: DistrictSectionProps) => (
                   <tr
                     key={section.id}
                     className="border-b bg-white hover:bg-gray-50"
@@ -159,7 +188,9 @@ const DistrictSectionsTable = ({
                         <input
                           id="checkbox-table-search-1"
                           type="checkbox"
+                          value={section.id}
                           className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 "
+                          onChange={handleSelect}
                         />
                         <label
                           htmlFor="checkbox-table-search-1"
@@ -251,7 +282,7 @@ const DistrictSectionsTable = ({
         open={open}
         handleModalClose={handleUpdateModalClose}
         refetch={refetch}
-        data={laSection as SectionProps}
+        data={laSection as DistrictSectionProps}
         type={type}
       />
     </>

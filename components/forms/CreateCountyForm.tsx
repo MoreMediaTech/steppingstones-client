@@ -8,6 +8,7 @@ import { IoMdCloseCircleOutline } from 'react-icons/io'
 
 import { useCreateCountyMutation } from 'features/editor/editorApiSlice'
 import { NEXT_URL } from '@config/index'
+import { CountyDataProps } from '@lib/types'
 
 type FormDataProps = {
   name: string
@@ -41,7 +42,7 @@ const CreateDirectoryForm = ({
   const submitHandler: SubmitHandler<FormDataProps> = useCallback(
     async (data) => {
       try {
-        await createCounty(data).unwrap()
+        await createCounty(data as CountyDataProps).unwrap()
         handleClose()
         router.replace(`${NEXT_URL}/admin/editor-portal/county-portal`)
       } catch (error) {

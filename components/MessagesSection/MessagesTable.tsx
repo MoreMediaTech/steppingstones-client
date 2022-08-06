@@ -1,19 +1,13 @@
 import { useState } from 'react'
 import { MessageProps } from '@lib/types'
 
-const MessagesTable = ({ messages }: { messages: MessageProps[] }) => {
-  const [selectedMessage, setSelectedMessage] = useState<string[]>([])
-  const [checked, setChecked] = useState<boolean>(false)
-  const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target
-    if (e.target.checked) {
-      setChecked(true)
-      setSelectedMessage((messageId) => [...messageId, value])
-    } else {
-      setSelectedMessage(selectedMessage.filter((itemId) => itemId !== value))
-    }
-  }
+interface IMessagesTableProps {
+  messages: MessageProps[]
+  handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void
+  handleSelect: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
 
+const MessagesTable = ({ messages, handleSearch, handleSelect }: IMessagesTableProps) => {
 
   return (
     <section className=" relative  w-full  shadow-md sm:rounded-lg">
@@ -41,6 +35,7 @@ const MessagesTable = ({ messages }: { messages: MessageProps[] }) => {
             id="table-search"
             className="block w-80 rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500  "
             placeholder="Search for items"
+            onChange={handleSearch}
           />
         </div>
       </div>

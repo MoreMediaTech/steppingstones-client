@@ -7,64 +7,52 @@ import CountyTable from './CountyTable'
 import UpdateCountyModal from './UpdateCountyModal'
 
 const CountySettings = () => {
-  const [open, setOpen] = useState<boolean>(false)
-  const [county, setCounty] = useState<CountyDataProps | null>(null)
-  const [searchValue, setSearchValue] = useState<string>('')
   const {
     data: counties,
     isLoading: isLoadingCounties,
     isError: isErrorCounties,
     refetch: refetchCounties,
   } = useGetCountiesQuery()
+  const [open, setOpen] = useState<boolean>(false)
+  const [county, setCounty] = useState<CountyDataProps | null>(null)
+  const [searchResults, setSearchResults] = useState<CountyDataProps[]>([])
+  const [selectedCountyId, setSelectedCountyId] = useState<string[]>([])
+  const [checked, setChecked] = useState<boolean>(false)
 
   const handleModalClose = () => {
     setOpen(false)
     setCounty(null)
   }
 
-    // const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //   if (!e.target.value) setSearchResults(data as PartnerData[])
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.value) setSearchResults(counties as CountyDataProps[])
 
-    //   const resultsArray = data?.filter(
-    //     (partner: PartnerData) =>
-    //       partner?.partner?.name
-    //         .toLowerCase()
-    //         .includes(e.target.value.toLowerCase()) ||
-    //       partner?.partner?.email
-    //         .toLowerCase()
-    //         .includes(e.target.value.toLowerCase()) ||
-    //       partner?.organisation?.name
-    //         .toLowerCase()
-    //         .includes(e.target.value.toLowerCase()) ||
-    //       partner?.valueCategory
-    //         .toLowerCase()
-    //         .includes(e.target.value.toLowerCase()) ||
-    //       partner?.position
-    //         ?.toLowerCase()
-    //         .includes(e.target.value.toLowerCase())
-    //   )
+    const resultsArray = counties?.filter((county: CountyDataProps) =>
+      county?.name.toLowerCase().includes(e.target.value.toLowerCase())
+    )
 
-    //   setSearchResults(resultsArray as PartnerData[])
-    // }
+    setSearchResults(resultsArray as CountyDataProps[])
+  }
 
-    // const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //   if (!e.target.checked) {
-    //     setChecked(false)
-    //     setSelectedPartnersId([])
-    //   }
-    //   const { value } = e.target
-    //   setChecked(true)
-    //   setSelectedPartnersId((partnerId) => [...new Set([...partnerId, value])])
-    // }
+  const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target
+    if (!e.target.checked) {
+      setChecked(false)
+      setSelectedCountyId((countyId) => countyId.filter((id) => id !== value))
+    } else {
+      setChecked(true)
+      setSelectedCountyId((countyId) => [...new Set([...countyId, value])])
+    }
+  }
 
-  if(isErrorCounties) {
+  if (isErrorCounties) {
     return (
-      <div className="flex h-[700px] items-center justify-center text-xl text-red-500 font-bold">
+      <div className="flex h-[700px] items-center justify-center text-xl font-bold text-red-500">
         <h1>Error loading counties...</h1>
       </div>
     )
   }
-  
+
   if (isLoadingCounties) {
     return (
       <div className="flex h-[700px] items-center justify-center">
@@ -76,12 +64,16 @@ const CountySettings = () => {
   return (
     <>
       <CountyTable
-        countyData={counties as CountyDataProps[]}
+        countyData={
+          searchResults.length > 0
+            ? searchResults
+            : (counties as CountyDataProps[])
+        }
         setOpen={setOpen}
         setCounty={setCounty}
-        searchValue={searchValue}
-        setSearchValue={setSearchValue}
         refetch={refetchCounties}
+        handleSearch={handleSearch}
+        handleSelect={handleSelect}
       />
       <UpdateCountyModal
         key={county?.id}
