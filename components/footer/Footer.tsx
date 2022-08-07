@@ -1,12 +1,13 @@
-import Image from 'next/image';
+import Image from 'next/image'
+import Link from 'next/link'
 
 import { FaTwitter } from 'react-icons/fa'
 import steppinstonesapplogo from '../../public/android-chrome-512x512.png'
 
 const Footer = () => {
-    const year = new Date().getFullYear()
+  const year = new Date().getFullYear()
   return (
-    <footer className="bottom-0 left-0 mb-0 w-full border-t border-indigo-100 py-4 bg-slate-50">
+    <footer className="bottom-0 left-0 mb-0 w-full border-t border-indigo-100 bg-slate-50 py-4">
       <div className="container mx-auto space-y-4">
         <div className="flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
           <div>
@@ -32,11 +33,24 @@ const Footer = () => {
             </a>
           </div>
         </div>
-        <div className="flex h-24 w-full items-center justify-center border-t text-center">
-          <p className="text-xs sm:text-sm">
-            Stepping Stones App<sup>&copy;</sup> is the copyright and product of{' '}
-            <span>More Media International</span> {year}{' '}
-          </p>
+        <div className="flex flex-col sm:flex-row sm:w-full items-center sm:h-24 justify-between border-t text-center gap-4 py-4 sm:py-0">
+          <div>
+            <p className="text-xs sm:text-sm">
+              Stepping Stones App<sup>&copy;</sup> is the copyright and product
+              of <span>More Media International</span> {year}{' '}
+            </p>
+          </div>
+          <div className='flex flex-col sm:flex-row items-center gap-2 sm:gap-3'>
+            <Link href="/privacy-policy">
+              <a className="text-xs sm:text-sm underline cursor-pointer">Privacy Policy</a>
+            </Link>
+            <Link href="/cookie-policy">
+              <a className="text-xs sm:text-sm underline cursor-pointer">Cookie Policy</a>
+            </Link>
+            <Link href="/site-disclaimer">
+              <a className="text-xs sm:text-sm underline cursor-pointer">Site Disclaimer</a>
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

@@ -178,9 +178,9 @@ const Navbar = () => {
               </ul>
             </nav>
 
-            <div className="hidden flex-1 items-center justify-end space-x-4 lg:flex">
+            <div className="hidden flex-1 items-center justify-end md:flex">
               <Link href={'/enquire'}>
-                <a className="rounded-lg bg-[#5E17EB] px-5 py-2 text-lg font-medium text-white">
+                <a className="rounded-lg bg-[#5E17EB] px-4 py-1 text-lg font-medium text-white">
                   Enquire
                 </a>
               </Link>

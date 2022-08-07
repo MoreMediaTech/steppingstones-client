@@ -8,6 +8,7 @@ import ReCAPTCHA from 'react-google-recaptcha'
 import { IEmailFormData } from '@lib/types'
 import { useSendEnquiryMutation } from 'features/email/emailApiSlice'
 import { enquiryEmailTemplate } from '@lib/emailTemplates'
+import FormInput from './FormComponents/FormInput'
 
 const EnquiryForm = () => {
   const router = useRouter()
@@ -63,14 +64,9 @@ const EnquiryForm = () => {
           our email address
         </a>
       </p>
-      <TextInput
-        id="from"
+      <FormInput
+        label="From"
         aria-label="from"
-        label={
-          <p className="mt-4 font-light text-gray-500 ">
-            From <span className="text-red-500">*</span>
-          </p>
-        }
         placeholder="Please enter an email address"
         type="email"
         {...register('from', {
@@ -80,21 +76,12 @@ const EnquiryForm = () => {
             message: 'Invalid email address',
           },
         })}
-        className="focus:shadow-outline w-full appearance-none rounded-md focus:outline-none"
+        errors={errors?.from}
       />
-      {errors.from && (
-        <span className="text-center text-sm text-red-500">
-          {errors.from?.message || 'Your email is required'}
-        </span>
-      )}
-      <TextInput
-        id="company"
+
+      <FormInput
         aria-label="company"
-        label={
-          <p className="mt-2 font-light text-gray-500 ">
-            Company <span className="text-red-500">*</span>
-          </p>
-        }
+        label="Company"
         placeholder="Your Company"
         type="text"
         {...register('company', {
@@ -108,23 +95,14 @@ const EnquiryForm = () => {
             message: 'Please enter a valid company',
           },
         })}
-        className="focus:shadow-outline w-full appearance-none rounded-md focus:outline-none"
+        errors={errors?.company}
       />
-      {errors.company && (
-        <span className="text-center text-sm text-red-500">
-          {errors.company?.message || 'A company is required'}
-        </span>
-      )}
-      <TextInput
-        id="subject"
+
+      <FormInput
         aria-label="subject"
         placeholder="Subject"
         type="text"
-        label={
-          <p className="mt-2 font-light text-gray-500 ">
-            Subject <span className="text-red-500">*</span>
-          </p>
-        }
+        label="Subject"
         {...register('subject', {
           required: true,
           minLength: {
@@ -136,13 +114,9 @@ const EnquiryForm = () => {
             message: 'Please enter a valid subject',
           },
         })}
-        className="focus:shadow-outline w-full appearance-none rounded-md focus:outline-none"
+        errors={errors?.subject}
       />
-      {errors.subject && (
-        <span className="text-center text-sm text-red-500">
-          {errors.subject?.message || 'A subject is required'}
-        </span>
-      )}
+
       <Textarea
         placeholder="Message"
         label={
@@ -151,6 +125,7 @@ const EnquiryForm = () => {
           </p>
         }
         autosize
+        radius="md"
         minRows={3}
         {...register('message', {
           required: true,

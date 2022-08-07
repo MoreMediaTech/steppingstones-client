@@ -15,7 +15,7 @@ function Error({ statusCode }: ErrorProps) {
     }, [])
   return (
     <MainLayout title={`${statusCode} error on server`}>
-      <section className="h-screen">
+      <section className="h-screen mt-14">
         <div className="flex items-center justify-center">
           <Image
             src={'/android-chrome-512x512.png'}

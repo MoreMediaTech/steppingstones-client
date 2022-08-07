@@ -16,7 +16,7 @@ function NotFoundPage() {
   }, [])
   return (
     <MainLayout title="Page Not Found">
-      <section className="h-screen overflow-hidden bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-200">
+      <section className="h-screen mt-14 overflow-hidden bg-white text-gray-900 ">
         <div className="mt-20 flex flex-col items-center">
           <Image
             src={'/android-chrome-512x512.png'}
