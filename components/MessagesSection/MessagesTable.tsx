@@ -7,8 +7,11 @@ interface IMessagesTableProps {
   handleSelect: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-const MessagesTable = ({ messages, handleSearch, handleSelect }: IMessagesTableProps) => {
-
+const MessagesTable = ({
+  messages,
+  handleSearch,
+  handleSelect,
+}: IMessagesTableProps) => {
   return (
     <section className=" relative  w-full  shadow-md sm:rounded-lg">
       <div className="p-4">
@@ -39,49 +42,57 @@ const MessagesTable = ({ messages, handleSearch, handleSelect }: IMessagesTableP
           />
         </div>
       </div>
-      <table className="relative w-full overflow-x-auto text-center text-sm text-gray-500 ">
-        <tbody>
-          {messages?.map((message: MessageProps) => (
-            <tr key={message.id} className="border-b bg-white hover:bg-gray-50">
-              <td className="w-4 p-4">
-                <div className="flex items-center">
-                  <input
-                    id="checkbox-table-search-1"
-                    type="checkbox"
-                    value={message?.id}
-                    className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 "
-                    onChange={handleSelect}
-                  />
-                  <label htmlFor="checkbox-table-search-1" className="sr-only">
-                    checkbox
-                  </label>
-                </div>
-              </td>
-              <td
-                scope="row"
-                className="whitespace-nowrap px-6 py-4 text-left font-medium text-gray-900"
+      <div className="overflow-x-auto">
+        <table className="relative w-full overflow-x-auto text-center text-sm text-gray-500 ">
+          <tbody>
+            {messages?.map((message: MessageProps) => (
+              <tr
+                key={message.id}
+                className="border-b bg-white hover:bg-gray-50"
               >
-                <div>{message?.from}</div>
-              </td>
-              <td className="px-6 py-4">
-                <div>
-                  <p className="text-left text-base font-semibold text-gray-900 md:text-lg">
-                    {message?.subject}
-                  </p>
-                  <p className="whitespace-no-wrop text-left text-xs md:text-sm">
-                    {message?.message}
-                  </p>
-                </div>
-              </td>
-              <td className="hidden px-6 py-4 md:block">
-                <div className="flex items-end">
-                  {new Date(message?.createdAt).toUTCString()}
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                <td className="w-4 p-4">
+                  <div className="flex items-center">
+                    <input
+                      id="checkbox-table-search-1"
+                      type="checkbox"
+                      value={message?.id}
+                      className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 "
+                      onChange={handleSelect}
+                    />
+                    <label
+                      htmlFor="checkbox-table-search-1"
+                      className="sr-only"
+                    >
+                      checkbox
+                    </label>
+                  </div>
+                </td>
+                <td
+                  scope="row"
+                  className="whitespace-nowrap px-6 py-4 text-left font-medium text-gray-900"
+                >
+                  <div>{message?.from}</div>
+                </td>
+                <td className="whitespace-nowrap px-6 py-4">
+                  <div>
+                    <p className="text-left text-base font-semibold text-gray-900 md:text-lg">
+                      {message?.subject}
+                    </p>
+                    <p className="whitespace-wrap text-ellipsis text-left text-xs md:text-sm">
+                      {message?.message}
+                    </p>
+                  </div>
+                </td>
+                <td className="mt-4 hidden  px-6 py-4 md:flex">
+                  <div className="flex flex-grow items-center justify-center">
+                    {new Date(message?.createdAt).toUTCString()}
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </section>
   )
 }

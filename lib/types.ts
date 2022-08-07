@@ -49,6 +49,8 @@ export interface MessageProps {
   html: string
   message: string
   createdAt: string
+  updatedAt: string
+  isRead: boolean
 }
 
 export enum ROLE {

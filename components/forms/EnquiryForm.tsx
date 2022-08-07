@@ -1,4 +1,4 @@
-import {  useRef } from 'react'
+import { useRef } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import { showNotification } from '@mantine/notifications'
@@ -11,8 +11,7 @@ import { enquiryEmailTemplate } from '@lib/emailTemplates'
 
 const EnquiryForm = () => {
   const router = useRouter()
-  const [sendEnquiry, { isLoading }] =
-    useSendEnquiryMutation()
+  const [sendEnquiry, { isLoading }] = useSendEnquiryMutation()
   const {
     register,
     handleSubmit,
@@ -36,12 +35,17 @@ const EnquiryForm = () => {
     try {
       await sendEnquiry(message).unwrap()
       reset()
+      showNotification({
+        message: 'Enquiry Sent',
+        autoClose: 5000,
+        color: 'green',
+      })
     } catch (error) {
-     showNotification({
+      showNotification({
         message: 'Unable to send enquiry',
         autoClose: 3000,
         color: 'red',
-     })
+      })
     }
   }
   return (
@@ -155,7 +159,7 @@ const EnquiryForm = () => {
             message: 'Please enter a message ',
           },
           pattern: {
-            value: /^[A-Za-z -]+$/,
+            value: /^[a-zA-Z0-9!@#$%^&*()._ -]+$/,
             message: 'Please enter a valid message',
           },
         })}
@@ -178,8 +182,8 @@ const EnquiryForm = () => {
           fullWidth
           size="md"
           variant="outline"
-          className="w-full rounded-md px-4 text-center font-semibold hover:text-white shadow-md transition delay-150 duration-300 
-                ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99]  md:text-xl "
+          className="w-full rounded-md px-4 text-center font-semibold shadow-md transition delay-150 duration-300 ease-in-out 
+                hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] hover:text-white  md:text-xl "
         >
           {isLoading ? 'Sending...' : 'Send'}
         </Button>

@@ -28,7 +28,7 @@ const ContentPreview = ({ content }: ContentPreviewProps) => {
         )}
         {(content?.content) && (
           <div className={styles.ql_snow}>
-            <div className="ql-editor">{parse(content?.content as string)}</div>
+            <div className={styles.ql_editor}>{parse(content?.content as string)}</div>
           </div>
         )}
       </div>

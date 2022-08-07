@@ -19,10 +19,11 @@ import {
   FaPowerOff,
   FaSignOutAlt,
 } from 'react-icons/fa'
-
-import { useGetUserQuery } from 'features/user/usersApiSlice'
 import Link from 'next/link'
 import Image from 'next/image'
+
+import { useGetAllMailQuery } from 'features/email/emailApiSlice'
+import { MessageProps } from '@lib/types'
 
 const AdminSidebar = ({
   show,
@@ -35,15 +36,20 @@ const AdminSidebar = ({
   isOpen?: boolean
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
-  const { data: currentUser } = useGetUserQuery()
-  const [opened, setOpened] = useState(false)
-  const title = opened ? 'Close navigation' : 'Open navigation'
-  const initials = currentUser?.name
-    ?.split(' ')
-    ?.map((n) => n[0])
-    ?.join('')
+  let arg: void;
+   const { data: messages } = useGetAllMailQuery(arg, { pollingInterval: 60000 })
+   const [opened, setOpened] = useState(false)
 
-  const width = isOpen ? '288' : '100'
+   // filter all unread messages
+   const unreadMessages = messages?.filter((message: MessageProps) => message.isRead === false)
+
+  const title = opened ? 'Close navigation' : 'Open navigation'
+  // const initials = currentUser?.name
+  //   ?.split(' ')
+  //   ?.map((n) => n[0])
+  //   ?.join('')
+
+  // const width = isOpen ? '288' : '100'
   return (
     <header className="relative bg-slate-50">
       <div className=" mb-2  p-2 md:hidden ">
@@ -108,7 +114,7 @@ const AdminSidebar = ({
               <a className="relative flex items-center justify-start space-x-4 rounded-lg p-2 group-hover:hover:bg-[#00DCB3]/20">
                 <Indicator
                   inline
-                  label={1}
+                  label={unreadMessages?.length}
                   size={20}
                   offset={7}
                   position="top-start"
@@ -308,3 +314,5 @@ const AdminSidebar = ({
 }
 
 export default AdminSidebar
+
+

@@ -4,7 +4,7 @@ import { Loader } from '@mantine/core'
 import { useGetAllMailQuery } from 'features/email/emailApiSlice'
 import MessagesTable from './MessagesTable'
 import { MessageProps } from '@lib/types'
-import Spinner from '@components/spinner'
+
 
 const MessagesSection = () => {
   const { data: messages, isLoading } = useGetAllMailQuery()
