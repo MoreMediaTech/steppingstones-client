@@ -31,7 +31,7 @@ const Users = () => {
             subTitle="Manage application users"
           />
           {user?.isSuperAdmin && (
-            <section className="container mx-auto px-4 py-2">
+            <section className="px-2 sm:px-4 py-2">
               <div className="flex justify-end">
                 <Button
                   type="button"
@@ -44,7 +44,7 @@ const Users = () => {
               </div>
             </section>
           )}
-          <section className="overflow-y-auto ">
+          <section className="px-2 sm:px-4 overflow-y-auto ">
             <h1 className="px-2 text-xl font-semibold">Users</h1>
             <AdminUsersSection />
           </section>

@@ -30,7 +30,7 @@ const PartnerDirectory = () => {
             title={`${user?.name}`}
             subTitle="Partner Directory"
           />
-          <section className="container mx-auto space-y-4">
+          <section className="px-2 sm:px-4 mx-auto space-y-4">
             <div className="flex flex-col justify-start gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-0">
               <span className="text-2xl font-bold">Partner Directory</span>
               <Button

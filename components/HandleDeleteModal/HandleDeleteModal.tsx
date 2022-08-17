@@ -10,7 +10,8 @@ const HandleDeleteModal = ({
   open: boolean
   data: any
   isLoading: boolean
-  deleteHandler: (id: string) => void
+  type?: string
+  deleteHandler: (id: string, type?:string) => void
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
   return (
@@ -44,7 +45,7 @@ const HandleDeleteModal = ({
             color="red"
             loading={isLoading}
             className="font-medium  hover:bg-red-500 hover:text-white "
-            onClick={() => deleteHandler(data?.id)}
+            onClick={() => deleteHandler(data?.id, data?.type)}
           >
             Delete
           </Button>

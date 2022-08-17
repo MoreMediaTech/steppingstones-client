@@ -28,7 +28,7 @@ const FormCheckbox: React.FunctionComponent<
         id={`${title}`}
         ref={ref}
         name={`${type}`}
-        type={type}
+        type='checkbox'
         aria-invalid="true"
         {...props}
       />

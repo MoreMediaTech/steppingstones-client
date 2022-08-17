@@ -4,6 +4,8 @@ import {
   DistrictSectionProps,
   EconomicDataWidgetProps,
   SectionProps,
+  SourceDataProps,
+  SourceDirectoryDataProps,
   SubSectionProps,
   SubSubSectionProps,
 } from '@lib/types'
@@ -432,11 +434,23 @@ const editorApi = editorApiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
     }),
-    getEconomicDataWidgets: builder.mutation<EconomicDataWidgetProps[], void>({
+    getEconomicDataWidgets: builder.query<EconomicDataWidgetProps[], void>({
       query: () => ({
         url: 'editor/economic-data',
-        method: 'POST',
       }),
+      providesTags: (result) =>
+        result
+          ? [
+              ...result?.map(
+                (item) =>
+                  ({
+                    type: 'Editor',
+                    id: item?.id,
+                  } as const)
+              ),
+              { type: 'Editor', id: 'LIST' },
+            ]
+          : [{ type: 'Editor', id: 'LIST' }],
     }),
     getEconomicDataWidgetById: builder.query<EconomicDataWidgetProps, string>({
       query: (id: string) => ({
@@ -489,6 +503,57 @@ const editorApi = editorApiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
     }),
+    createSDData: builder.mutation<
+      { success: boolean; message: boolean },
+      SourceDataProps
+    >({
+      query: (data) => ({
+        url: `editor/source-directory`,
+        method: 'POST',
+        body: { ...data },
+      }),
+      invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
+    }),
+    getAllSDDataByType: builder.query<SourceDataProps[], string>({
+      query: (type) => ({
+        url: `editor/source-directory/${type}`,
+      }),
+      providesTags: (result) => 
+        result
+          ? [
+              ...result?.map(
+                (item) =>
+                  ({
+                    type: 'Editor',
+                    id: item?.id,
+                  } as const)
+              ),
+              { type: 'Editor', id: 'LIST' },
+            ]
+          : [{ type: 'Editor', id: 'LIST' }],
+    }),
+    updateSDData: builder.mutation<
+      { success: boolean; message: boolean },
+      SourceDirectoryDataProps
+    >({
+      query: (data) => ({
+        url: `editor/source-directory/${data.type}`,
+        method: 'PATCH',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: arg.id }],
+    }),
+    deleteSDData: builder.mutation<
+      { success: boolean; message: boolean },
+      Partial<SourceDirectoryDataProps>
+    >({
+      query: (data) => ({
+        url: `editor/source-directory/${data.type}`,
+        method: 'DELETE',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: 'LIST' }],
+    }),
   }),
   overrideExisting: true,
 })
@@ -530,4 +595,8 @@ export const {
   useGetEconomicDataWidgetByIdQuery,
   useUpdateEconomicDataWidgetByIdMutation,
   useDeleteEconomicDataWidgetByIdMutation,
+  useGetAllSDDataByTypeQuery,
+  useCreateSDDataMutation,
+  useUpdateSDDataMutation,
+  useDeleteSDDataMutation,
 } = editorApi

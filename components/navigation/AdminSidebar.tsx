@@ -177,6 +177,11 @@ const AdminSidebar = ({
                 <a>Partner Directory</a>
               </Link>
             </Menu.Item>
+            <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 text-center font-semibold hover:bg-[#00DCB3] hover:text-white">
+              <Link href={'/admin/editor-portal/admin/source-directory'}>
+                <a>Source Directory</a>
+              </Link>
+            </Menu.Item>
           </Menu>
           <Tooltip
             label={

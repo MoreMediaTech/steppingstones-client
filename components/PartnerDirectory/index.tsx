@@ -3,7 +3,6 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { showNotification } from '@mantine/notifications'
 
 import { PartnerData, PartnerType, ValueCategory, IFormData } from '@lib/types'
-import { PartnerDirectoryForm } from '@components/forms'
 import {
   useCreatePartnerDataMutation,
   useGetAllPartnersDataQuery,
@@ -35,7 +34,6 @@ const PartnerDirectorySection = ({
     error,
     refetch,
   } = useGetAllPartnersDataQuery()
-  const [searchValue, setSearchValue] = useState<string>('')
   const [searchResults, setSearchResults] = useState<PartnerData[]>([])
   const [selectedPartnersId, setSelectedPartnersId] = useState<string[]>([])
   const [checked, setChecked] = useState<boolean>(false)
@@ -58,7 +56,12 @@ const PartnerDirectorySection = ({
         partner?.valueCategory
           .toLowerCase()
           .includes(e.target.value.toLowerCase()) ||
-        partner?.position?.toLowerCase().includes(e.target.value.toLowerCase())
+        partner?.position
+          ?.toLowerCase()
+          .includes(e.target.value.toLowerCase()) ||
+        partner?.projectsResponsibleFor
+          ?.toLowerCase()
+          .includes(e.target.value.toLowerCase())
     )
 
     setSearchResults(resultsArray as PartnerData[])
@@ -166,8 +169,6 @@ const PartnerDirectorySection = ({
             ? (searchResults as PartnerData[])
             : (data as PartnerData[])
         }
-        searchValue={searchValue}
-        setSearchValue={setSearchValue}
         handleSearch={handleSearch}
         handleSelected={handleSelect}
       />

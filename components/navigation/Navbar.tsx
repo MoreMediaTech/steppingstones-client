@@ -10,12 +10,14 @@ import { useLogoutMutation } from 'features/auth/authApiSlice'
 import { NEXT_URL } from '@config/index'
 import UserButton from '@components/UserButton'
 import { AppLogo } from './AppLogo'
+import styles from 'constants/styles'
 
 const Navbar = () => {
   const router = useRouter()
   const { data: currentUser } = useGetUserQuery()
   const [logout] = useLogoutMutation()
   const [pos, setPos] = useState<string>('top')
+  const [active, setActive] = useState<string>('about')
   const [opened, setOpened] = useState<boolean>(false)
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const title = opened ? 'Close navigation' : 'Open navigation'
@@ -53,104 +55,246 @@ const Navbar = () => {
     ?.join('')
 
   return (
-    <header
-      className={`top-0 z-10 flex w-full flex-wrap items-center justify-between  ${
+    <nav
+      className={`top-0 z-10  flex w-full px-2 py-2 sm:px-16 ${
         pos === 'top'
           ? 'absolute bg-slate-50'
           : 'shadow-b-2xl fixed bg-slate-50'
       }`}
     >
-      <div className="mx-auto w-full max-w-screen-xl p-2">
-        <div className="flex items-center justify-between space-x-4 lg:space-x-10">
-          <AppLogo scrollToTop={scrollToTop} />
-          <div className="flex items-center justify-center gap-4">
-            <nav className="hidden text-sm font-medium lg:flex">
-              <ul className="flex items-center space-x-8 text-sm font-medium">
-                <li>
-                  {router.pathname === '/' ? (
-                    <a
-                      className="text-lg font-semibold text-[#5E17EB]"
-                      href="#about"
-                    >
+      <div className="container mx-auto flex max-w-screen-xl items-center">
+        <AppLogo scrollToTop={scrollToTop} />
+        <ul className="hidden list-none items-center justify-end gap-6 sm:flex">
+          <li>
+            {router.pathname === '/' ? (
+              <a
+                className={` cursor-pointer font-poppins text-[16px] font-normal text-primary`}
+                onClick={() => setActive('#about')}
+                href="#about"
+              >
+                About
+              </a>
+            ) : (
+              <Link href={'/#about'}>
+                <a
+                  className={` cursor-pointer font-poppins text-[16px] font-normal text-primary`}
+                  onClick={() => setActive('#about')}
+                >
+                  About
+                </a>
+              </Link>
+            )}
+          </li>
+          <li>
+            {router.pathname === '/' ? (
+              <a
+                className={` cursor-pointer font-poppins text-[16px] font-normal text-primary`}
+                onClick={() => setActive('#features')}
+                href="#features"
+              >
+                Features
+              </a>
+            ) : (
+              <Link href={'/#features'}>
+                <a
+                  className={` cursor-pointer font-poppins text-[16px] font-normal text-primary`}
+                  onClick={() => setActive(router.pathname)}
+                >
+                  Features
+                </a>
+              </Link>
+            )}
+          </li>
+          <li>
+            {router.pathname === '/' ? (
+              <a
+                className={` cursor-pointer font-poppins text-[16px] font-normal text-primary`}
+                onClick={() => setActive('#faqs')}
+                href="#faqs"
+              >
+                FAQs
+              </a>
+            ) : (
+              <Link href={'/#faqs'}>
+                <a
+                  className={` cursor-pointer font-poppins text-[16px] font-normal text-primary`}
+                  onClick={() => setActive('#faqs')}
+                >
+                  FAQs
+                </a>
+              </Link>
+            )}
+          </li>
+
+          {currentUser ? (
+            <li>
+              <Group position="center">
+                <Menu
+                  withArrow
+                  placement="center"
+                  control={
+                    <UserButton
+                      name={currentUser?.name ?? ''}
+                      email={currentUser?.email ?? ''}
+                      initials={initials}
+                      show
+                    />
+                  }
+                >
+                  {/* ...menu items */}
+                  <Menu.Label>Application</Menu.Label>
+                  {currentUser.role !== 'PARTNER' ? (
+                    <Menu.Item>
+                      <Link href={'/admin/editor-portal'}>
+                        <a className="text-[#5E17EB]">Portal</a>
+                      </Link>
+                    </Menu.Item>
+                  ) : (
+                    <Menu.Item>
+                      <Link href={'/admin/partner-portal'}>
+                        <a className="text-[#5E17EB]">Portal</a>
+                      </Link>
+                    </Menu.Item>
+                  )}
+                  <Divider />
+                  <Link href={'/auth/profile'}>
+                    <Menu.Item>
+                      <a className="text-[#5E17EB]">Profile</a>
+                    </Menu.Item>
+                  </Link>
+                  <Divider />
+                  <Menu.Item
+                    icon={<FaSignOutAlt fontSize={14} color="#5E17EB" />}
+                    onClick={() => {
+                      handleLogout()
+                    }}
+                  >
+                    <span className="text-[#5E17EB]">Logout</span>
+                  </Menu.Item>
+                </Menu>
+              </Group>
+            </li>
+          ) : (
+            <li
+              className={` cursor-pointer font-poppins text-[16px] font-normal `}
+              onClick={() => setActive('login')}
+            >
+              <Link href={'/auth/login'}>
+                <a className={`flex items-center gap-1 text-primary`}>
+                  <FaSignInAlt fontSize={18} />
+                  <span>Login</span>
+                </a>
+              </Link>
+            </li>
+          )}
+          <li className="hidden flex-1 items-center sm:flex ">
+            <Link href={'/enquire'}>
+              <a
+                className={`rounded-lg bg-[#5E17EB] px-4 py-1 text-lg font-medium text-dimWhite
+                `}
+                onClick={() => setActive('enquire')}
+              >
+                Enquire
+              </a>
+            </Link>
+          </li>
+        </ul>
+
+        {/* Mobile Navigation */}
+        <div className="flex flex-1 items-center justify-end sm:hidden">
+          <Burger
+            opened={opened}
+            onClick={() => setOpened((o) => !o)}
+            title={title}
+            color="#00dcb3"
+          />
+
+          <div
+            className={`${
+              !opened ? 'hidden' : 'flex'
+            } sidebar absolute top-14 right-0 mx-4 my-2 min-w-[140px] rounded-md bg-slate-50 p-6 shadow-md`}
+          >
+            <ul className="flex flex-1 list-none flex-col items-start justify-end space-y-2">
+              <li>
+                {router.pathname === '/' ? (
+                  <a
+                    className="mb-4 cursor-pointer font-poppins text-[16px] font-medium text-[#5E17EB]"
+                    href="#about"
+                  >
+                    About
+                  </a>
+                ) : (
+                  <Link href={'/#about'}>
+                    <a className="mb-4 cursor-pointer font-poppins text-[16px] font-medium text-[#5E17EB]">
                       About
                     </a>
-                  ) : (
-                    <Link href={'/#about'}>
-                      <a className="text-lg font-semibold text-[#5E17EB]">
-                        About
-                      </a>
-                    </Link>
-                  )}
-                </li>
-                <li>
-                  {router.pathname === '/' ? (
-                    <a
-                      className="text-lg font-semibold text-[#5E17EB]"
-                      href="#features"
-                    >
+                  </Link>
+                )}
+              </li>
+              <li>
+                {router.pathname === '/' ? (
+                  <a
+                    className="mb-4 cursor-pointer font-poppins text-[16px] font-medium text-[#5E17EB]"
+                    href="#features"
+                  >
+                    Features
+                  </a>
+                ) : (
+                  <Link href={'/#features'}>
+                    <a className="mb-4 cursor-pointer font-poppins text-[16px] font-medium text-[#5E17EB]">
                       Features
                     </a>
-                  ) : (
-                    <Link href={'/#features'}>
-                      <a className="text-lg font-semibold text-[#5E17EB]">
-                        Features
-                      </a>
-                    </Link>
-                  )}
-                </li>
-                <li>
-                  {router.pathname === '/' ? (
-                    <a
-                      className="text-lg font-semibold text-[#5E17EB]"
-                      href="#faqs"
-                    >
+                  </Link>
+                )}
+              </li>
+              <li>
+                {router.pathname === '/' ? (
+                  <a
+                    className="mb-4 cursor-pointer font-poppins text-[16px] font-medium text-[#5E17EB]"
+                    href="#faqs"
+                  >
+                    FAQs
+                  </a>
+                ) : (
+                  <Link href={'/#faqs'}>
+                    <a className="mb-4 cursor-pointer font-poppins text-[16px] font-medium text-[#5E17EB]">
                       FAQs
                     </a>
-                  ) : (
-                    <Link href={'/#faqs'}>
-                      <a className="text-lg font-semibold text-[#5E17EB]">
-                        FAQs
-                      </a>
-                    </Link>
-                  )}
-                </li>
+                  </Link>
+                )}
+              </li>
 
-                {currentUser ? (
-                  <li>
-                    <Group position="center">
-                      <Menu
-                        withArrow
-                        placement="center"
-                        control={
-                          <UserButton
-                            name={currentUser?.name ?? ''}
-                            email={currentUser?.email ?? ''}
-                            initials={initials}
-                            show
-                          />
-                        }
-                      >
-                        {/* ...menu items */}
+              {currentUser ? (
+                <li className="mb-4 cursor-pointer font-poppins text-[16px] font-medium">
+                  <Group position="center">
+                    <UserButton
+                      name={currentUser?.name ?? ''}
+                      email={currentUser.email ?? ''}
+                      initials={initials}
+                      onClick={() => setIsOpen((o) => !o)}
+                    />
+                    <Collapse in={isOpen}>
+                      <Menu>
                         <Menu.Label>Application</Menu.Label>
                         {currentUser.role !== 'PARTNER' ? (
                           <Menu.Item>
                             <Link href={'/admin/editor-portal'}>
-                              <a>Portal</a>
+                              <a className="text-[#5E17EB]">Portal</a>
                             </Link>
                           </Menu.Item>
                         ) : (
                           <Menu.Item>
                             <Link href={'/admin/partner-portal'}>
-                              <a>Portal</a>
+                              <a className="text-[#5E17EB]">Portal</a>
                             </Link>
                           </Menu.Item>
                         )}
                         <Divider />
-                        <Link href={'/auth/profile'}>
-                          <Menu.Item>
-                            <a>Profile</a>
-                          </Menu.Item>
-                        </Link>
+                        <Menu.Item>
+                          <Link href={'/auth/profile'}>
+                            <a className="text-[#5E17EB]">Profile</a>
+                          </Link>
+                        </Menu.Item>
                         <Divider />
                         <Menu.Item
                           icon={<FaSignOutAlt fontSize={14} />}
@@ -161,176 +305,31 @@ const Navbar = () => {
                           <span className="text-[#5E17EB]">Logout</span>
                         </Menu.Item>
                       </Menu>
-                    </Group>
-                  </li>
-                ) : (
-                  <>
-                    <li>
-                      <Link href={'/auth/login'}>
-                        <a className="flex items-center gap-1 text-lg font-semibold text-[#5E17EB]">
-                          <FaSignInAlt fontSize={18} />
-                          <span>Login</span>
-                        </a>
-                      </Link>
-                    </li>
-                  </>
-                )}
-              </ul>
-            </nav>
-
-            <div className="hidden flex-1 items-center justify-end md:flex">
-              <Link href={'/enquire'}>
-                <a className="rounded-lg bg-[#5E17EB] px-4 py-1 text-lg font-medium text-white">
-                  Enquire
-                </a>
-              </Link>
-            </div>
-          </div>
-
-          {/* Mobile Navigation */}
-          <div className="lg:hidden">
-            <Burger
-              opened={opened}
-              onClick={() => setOpened((o) => !o)}
-              title={title}
-              color="#00dcb3"
-            />
-            <Drawer
-              opened={opened}
-              title={
-                <div>
-                  <AppLogo scrollToTop={scrollToTop} />
-                </div>
-              }
-              onClose={() => setOpened(false)}
-              padding="xl"
-              size="lg"
-              position="right"
-            >
-              <div className="flex flex-col gap-4 space-y-8 py-4 px-2">
-                <nav className="flex flex-col space-y-8 text-sm font-medium">
-                  <ul className="flex flex-col space-y-12 text-sm font-medium">
-                    <li>
-                      {router.pathname === '/' ? (
-                        <a
-                          className="text-2xl font-semibold text-[#5E17EB]"
-                          href="#about"
-                        >
-                          About
-                        </a>
-                      ) : (
-                        <Link href={'/#about'}>
-                          <a className="text-2xl font-semibold text-[#5E17EB]">
-                            About
-                          </a>
-                        </Link>
-                      )}
-                    </li>
-                    <li>
-                      {router.pathname === '/' ? (
-                        <a
-                          className="text-2xl font-semibold text-[#5E17EB]"
-                          href="#features"
-                        >
-                          Features
-                        </a>
-                      ) : (
-                        <Link href={'/#features'}>
-                          <a className="text-2xl font-semibold text-[#5E17EB]">
-                            Features
-                          </a>
-                        </Link>
-                      )}
-                    </li>
-                    <li>
-                      {router.pathname === '/' ? (
-                        <a
-                          className="text-2xl font-semibold text-[#5E17EB]"
-                          href="#faqs"
-                        >
-                          FAQs
-                        </a>
-                      ) : (
-                        <Link href={'/#faqs'}>
-                          <a className="text-2xl font-semibold text-[#5E17EB]">
-                            FAQs
-                          </a>
-                        </Link>
-                      )}
-                    </li>
-
-                    {currentUser ? (
-                      <li>
-                        <Group position="center">
-                          <UserButton
-                            name={currentUser?.name ?? ''}
-                            email={currentUser.email ?? ''}
-                            initials={initials}
-                            onClick={() => setIsOpen((o) => !o)}
-                          />
-                          <Collapse in={isOpen}>
-                            <Menu>
-                              <Menu.Label>Application</Menu.Label>
-                              {currentUser.role !== 'PARTNER' ? (
-                                <Menu.Item>
-                                  <Link href={'/admin/editor-portal'}>
-                                    <a>Portal</a>
-                                  </Link>
-                                </Menu.Item>
-                              ) : (
-                                <Menu.Item>
-                                  <Link href={'/admin/partner-portal'}>
-                                    <a>Portal</a>
-                                  </Link>
-                                </Menu.Item>
-                              )}
-                              <Divider />
-                              <Menu.Item>
-                                <Link href={'/auth/profile'}>
-                                  <a>Profile</a>
-                                </Link>
-                              </Menu.Item>
-                              <Divider />
-                              <Menu.Item
-                                icon={<FaSignOutAlt fontSize={14} />}
-                                onClick={() => {
-                                  handleLogout()
-                                }}
-                              >
-                                <span className="text-[#5E17EB]">Logout</span>
-                              </Menu.Item>
-                            </Menu>
-                          </Collapse>
-                        </Group>
-                      </li>
-                    ) : (
-                      <>
-                        <li>
-                          <Link href={'/auth/login'}>
-                            <a className="flex items-center gap-1 text-2xl font-semibold text-[#5E17EB]">
-                              <FaSignInAlt fontSize={24} />
-                              <span>Login</span>
-                            </a>
-                          </Link>
-                        </li>
-                      </>
-                    )}
-                  </ul>
-                </nav>
-
-                <div className="flex-1 items-center justify-end lg:flex">
-                  <Link href={'/enquire'}>
-                    <a className="rounded-lg bg-[#5E17EB] px-6 py-4 text-xl font-medium text-white">
-                      Enquire
+                    </Collapse>
+                  </Group>
+                </li>
+              ) : (
+                <li className="mb-4 cursor-pointer font-poppins text-[16px] font-medium">
+                  <Link href={'/auth/login'}>
+                    <a className="flex items-center gap-1 text-[#5E17EB]">
+                      <FaSignInAlt fontSize={20} />
+                      <span>Login</span>
                     </a>
                   </Link>
-                </div>
-              </div>
-            </Drawer>
+                </li>
+              )}
+              <li className="mb-0 cursor-pointer font-poppins text-[16px] font-medium">
+                <Link href={'/enquire'}>
+                  <a className="rounded-lg bg-[#5E17EB] px-6 py-2  font-medium text-white">
+                    Enquire
+                  </a>
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
-    </header>
+    </nav>
   )
 }
 

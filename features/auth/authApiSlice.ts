@@ -1,6 +1,7 @@
 import { resetCredentials, setCredentials } from 'features/auth/authSlice';
 import { apiSlice } from "app/api/apiSlice";
 import { usersApiSlice } from "features/user/usersApiSlice";
+import { CurrentUser } from '@lib/types';
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -48,6 +49,13 @@ export const authApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Auth', id: 'LIST' }],
     }),
+    verifyEmail: builder.mutation<{success: boolean, message: string}, Partial<CurrentUser>>({
+      query: (data) => ({
+        url: 'auth/verify-email',
+        method: 'POST',
+        body: { ...data },
+      }),
+    }),
     logout: builder.mutation<void, void>({
       query: () => ({
         url: 'auth/logout',
@@ -66,4 +74,4 @@ export const authApi = apiSlice.injectEndpoints({
   overrideExisting: true,
 })
 
-export const { useLoginMutation, useRegisterPartnerMutation, useLogoutMutation, useRequestPasswordResetMutation, useResetPasswordMutation } = authApi;
+export const { useLoginMutation, useRegisterPartnerMutation, useLogoutMutation, useRequestPasswordResetMutation, useResetPasswordMutation, useVerifyEmailMutation } = authApi;

@@ -11,16 +11,16 @@ export const AppLogo = ({ scrollToTop }: { scrollToTop: () => void }) => (
         <Image
           src={'/steppingstonesapplogo.png'}
           alt="Stepping Stones logo"
-         height={55}
-          width={55}
+         height={50}
+          width={50}
         />
       </div>
       <div className="-ml-6 flex flex-col">
-        <h1 className="md:text-xl font-bold uppercase text-[#5E17EB] text-lg">
-          Stepping Stones
+        <h1 className="md:text-lg font-bold font-poppins capitalize text-[#5E17EB] text-lg">
+          SteppingStones
         </h1>
-        <h3 className="text-[#00DCB3] text-xs md:text-sm capitalize">
-          Business resource solutions
+        <h3 className="text-[#00DCB3] font-poppins text-xs capitalize">
+          Solutions for Businesses
         </h3>
       </div>
     </Group>

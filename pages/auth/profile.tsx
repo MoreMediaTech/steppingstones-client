@@ -8,7 +8,7 @@ const Profile = () => {
   
   return (
     <MainLayout title="Profile">
-      <section className="overflow-auto">
+      <section className="px-2 sm:px-4 overflow-auto">
         <UserProfileSection />
       </section>
     </MainLayout>

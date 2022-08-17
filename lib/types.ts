@@ -53,6 +53,29 @@ export interface MessageProps {
   isRead: boolean
 }
 
+export type SourceDataProps = {
+  id?: string
+  category: string;
+  description: string;
+  webLink: string
+  canEmail: boolean
+  createdAt?: string
+  updatedAt?: string
+}
+
+export interface SourceDirectoryDataProps extends SourceDataProps {
+  type: SourceDirectoryType | string
+  bsiId?: string
+  isId?: string
+  euId?: string
+}
+
+export enum SourceDirectoryType {
+  BSI = 'BSI',
+  IS = 'IS',
+  EU = 'EU',
+}
+
 export enum ROLE {
   PARTNER = 'PARTNER',
   COUNTY_EDITOR = 'COUNTY_EDITOR',

@@ -1,76 +1,42 @@
-import { DistrictDataProps, DistrictSectionProps, EconomicDataWidgetProps, SectionProps, SubSectionProps, SubSubSectionProps } from '../../lib/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
+
+import {
+  DistrictDataProps,
+  DistrictSectionProps,
+  EconomicDataWidgetProps,
+  SectionProps,
+  SubSectionProps,
+  SubSubSectionProps,
+  SourceDataProps,
+} from '../../lib/types'
 import { RootState } from 'app/store'
 import { CountyDataProps, Error } from '@lib/types'
 
 interface IEditorState {
-  counties: Partial<CountyDataProps[]>
-  district: Partial<DistrictDataProps>
-  county: Partial<CountyDataProps>
-  section: Partial<SectionProps>
-  subSection: Partial<SubSectionProps>
-  subSubSection: Partial<SubSubSectionProps>
-  districtSection: Partial<DistrictSectionProps>
-  economicData: Partial<EconomicDataWidgetProps>
+  counties: Partial<CountyDataProps[]> | null
+  district: Partial<DistrictDataProps> | null
+  county: Partial<CountyDataProps> | null
+  section: Partial<SectionProps> | null
+  subSection: Partial<SubSectionProps> | null
+  subSubSection: Partial<SubSubSectionProps> | null
+  districtSection: Partial<DistrictSectionProps> | null
+  economicData: Partial<EconomicDataWidgetProps> | null 
+  sdData: Partial<SourceDataProps> | null
   message: string
   error: Error | null
 }
 
 export const initialState: IEditorState = {
   counties: [],
-  district: {
-    id: '',
-    name: '',
-    imageUrl: '',
-    logoIcon: '',
-  },
-  county: {
-    id: '',
-    name: '',
-    imageUrl: '',
-    logoIcon: '',
-  },
-  section: {
-    id: '',
-    name: '',
-    title: '',
-    content: '',
-    isSubSection: false,
-  },
-  subSection: {
-    id: '',
-    name: '',
-    title: '',
-    content: '',
-    isSubSubSection: false,
-  },
-  subSubSection: {
-    id: '',
-    name: '',
-    title: '',
-    content: '',
-  },
-  districtSection: {
-    id: '',
-    name: '',
-    title: '',
-    content: '',
-    imageUrl: '',
-    isEconomicData: false,
-    economicDataWidgets: [],
-  },
-  economicData: {
-    id: '',
-    title: '',
-    stats: '',
-    descriptionLine1: '',
-    descriptionLine2: '',
-    linkName: '',
-    linkUrl: '',
-    createdAt: '',
-    updatedAt: '',
-  },
+  district: null,
+  county: null,
+  section: null,
+  subSection: null,
+  subSubSection: null,
+  districtSection: null,
+  economicData: null,
+  sdData: null,
   message: '',
   error: { message: 'An Error occurred' },
 }
@@ -94,16 +60,28 @@ const editorSlice = createSlice({
     setSubSection: (state, { payload }: PayloadAction<SubSectionProps>) => {
       state.subSection = payload
     },
-    setSubSubSection: (state, { payload }: PayloadAction<SubSubSectionProps>) => {
+    setSubSubSection: (
+      state,
+      { payload }: PayloadAction<SubSubSectionProps>
+    ) => {
       state.subSubSection = payload
     },
-    setDistrictSection: (state, { payload }: PayloadAction<DistrictSectionProps>) => {
+    setDistrictSection: (
+      state,
+      { payload }: PayloadAction<DistrictSectionProps>
+    ) => {
       state.districtSection = payload
     },
-    setEconomicData: (state, { payload }: PayloadAction<EconomicDataWidgetProps>) => {
+    setEconomicData: (
+      state,
+      { payload }: PayloadAction<EconomicDataWidgetProps>
+    ) => {
       state.economicData = payload
     },
-    setError: (state, { payload }: PayloadAction<AxiosError | Error>) => {
+    setSDData: (state, { payload }: PayloadAction<SourceDataProps | null>) => {
+      state.sdData = payload
+    },
+    setError: (state, { payload }: PayloadAction<Error>) => {
       state.error = payload
     },
     clearState: (state) => initialState,
@@ -121,6 +99,7 @@ export const {
   clearState,
   setDistrictSection,
   setEconomicData,
+  setSDData,
 } = editorSlice.actions
 export const editorSelector = (state: RootState) => state.editor
 export default editorSlice.reducer

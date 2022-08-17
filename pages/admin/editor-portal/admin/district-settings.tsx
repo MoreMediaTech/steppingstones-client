@@ -5,7 +5,7 @@ import { ComponentShield } from '@components/NextShield'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
 import PortalHeader from '@components/PortalHeader'
 import { CurrentUser } from '@lib/types'
-import { DistrictSettings } from '@components/SettingsSection'
+import { DistrictSettings } from '@components/SettingsSections'
 
 const DistrictSettingsPage = () => {
   const { data: user } = useGetUserQuery()
@@ -23,7 +23,7 @@ const DistrictSettingsPage = () => {
             title={`${user?.name}`}
             subTitle="Manage District Settings"
           />
-          <section className="overflow-y-auto">
+          <section className="px-2 sm:px-4 overflow-y-auto">
             <h1 className="px-4 text-2xl font-bold">District Setting</h1>
             <DistrictSettings />
           </section>

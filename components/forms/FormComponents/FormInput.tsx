@@ -26,16 +26,16 @@ const FormInput: React.FunctionComponent<
       </label>
       <input
         className="form-input block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-        id={`${type}`}
+        id={`${title}`}
         ref={ref}
-        name={`${type}`}
+        name={`${title}`}
         type={type}
         aria-invalid="true"
         {...props}
       />
       {errors && (
         <span className="text-center text-sm text-red-500">
-          {errors.message || 'A valid position is required'}
+          {errors.message || `A valid ${title} is required`}
         </span>
       )}
     </div>

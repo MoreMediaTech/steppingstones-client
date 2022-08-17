@@ -5,12 +5,12 @@ import { ComponentShield } from '@components/NextShield'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
 import PortalHeader from '@components/PortalHeader'
 import { CurrentUser } from '@lib/types'
-import { SectionsSettings } from '@components/SettingsSections'
+import SourceDirectory from '@components/SourceDirectory'
 
-const SectionSettingsPage = () => {
-  const { data: user } = useGetUserQuery()
+const SourceDirectoryPage = () => {
+    const { data: user } = useGetUserQuery()
   return (
-    <AdminLayout title="Section Settings">
+    <AdminLayout title="Source Directory">
       <ComponentShield
         RBAC
         showForRole={'SS_EDITOR'}
@@ -21,12 +21,12 @@ const SectionSettingsPage = () => {
             user={user as CurrentUser}
             imgUrl={user?.imageUrl}
             title={`${user?.name}`}
-            subTitle="Manage Sections"
+            subTitle="Source Directory"
           />
-          <section className="px-2 sm:px-4 overflow-y-auto">
-            <h1 className="px-4 text-2xl font-bold">Section Settings</h1>
-            <SectionsSettings />
-          </section>
+           <section className="px-2 sm:px-4 mx-auto overflow-y-auto w-full">
+            <h1 className="text-lg sm:text-2xl font-bold">Source Directory</h1>
+            <SourceDirectory />
+           </section>
         </section>
       </ComponentShield>
     </AdminLayout>
@@ -52,4 +52,4 @@ export const getServerSideProps: GetServerSideProps = async (
   }
 }
 
-export default SectionSettingsPage
+export default SourceDirectoryPage

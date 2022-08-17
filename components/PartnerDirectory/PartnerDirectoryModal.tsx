@@ -35,7 +35,7 @@ const PartnerDirectoryModal = ({
       opened={open}
       onClose={handleModalClose}
       title={
-        type === 'Create' ? 'Create Partner Data' : 'Update Create Partner Data'
+        type === 'Create' ? 'Create Partner Data' : 'Update Partner Data'
       }
     >
       <PartnerDirectoryForm

@@ -49,14 +49,6 @@ const SectionsSettings = () => {
     }
   }
 
-  if (isErrorSections) {
-    return (
-      <div className="flex h-[700px] items-center justify-center text-xl font-bold text-red-500">
-        <h1>Error loading Sections...</h1>
-      </div>
-    )
-  }
-
   if (isLoadingSections) {
     return (
       <div className="flex h-[700px] items-center justify-center">

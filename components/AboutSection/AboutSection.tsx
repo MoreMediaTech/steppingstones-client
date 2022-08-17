@@ -1,5 +1,9 @@
-import Image from 'next/image'
 import React from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+
+import Button from '@components/Button'
+
 
 const AboutSection = () => {
   return (
@@ -37,13 +41,13 @@ const AboutSection = () => {
               businesses need.
             </p>
             <div className="flex w-full justify-center md:justify-end">
-              <button
+              <Button
                 type="button"
-                className="rounded-md bg-[#5E17EB] px-4 py-2 text-center font-semibold text-white shadow-xl transition delay-150 duration-300 
-                ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:w-1/4 md:text-xl lg:text-2xl"
+                color='primary'
+                onClick={() => null}
               >
                 See Demo
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -63,13 +67,15 @@ const AboutSection = () => {
               or contact us for partnership inquiries.
             </p>
             <div className="flex w-full justify-center md:justify-start">
-              <button
+              <Button
                 type="button"
-                className="rounded-md bg-[#5E17EB] px-4 py-2 text-center font-semibold text-white shadow-xl transition delay-150 duration-300 
-                ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:w-1/4 md:text-xl lg:text-2xl"
+                color="primary"
+                onClick={() => null}
               >
-                Sign Up
-              </button>
+                <Link href="#heroSection">
+                  <a>Sign Up</a>
+                </Link>
+              </Button>
             </div>
           </div>
         </div>
