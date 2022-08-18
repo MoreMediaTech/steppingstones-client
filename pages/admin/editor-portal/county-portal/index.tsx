@@ -64,7 +64,7 @@ const County = () => {
             <div className="flex justify-between">
               <Button
                 type="button"
-                color="primary"
+                color="outline"
                 className="md:w-1/4 "
                 onClick={() => {
                   router.back()
@@ -75,7 +75,7 @@ const County = () => {
 
               <Button
                 type="button"
-                color="primary"
+                color="outline"
                 className="md:w-1/4 "
                 onClick={() => setOpened((o) => !o)}
               >
@@ -91,10 +91,10 @@ const County = () => {
               </div>
             ) : (
               <>
-                <div className="h-full">
+                <div className="flex h-full items-center justify-center">
                   <button
                     type="button"
-                    className="h-full bg-white/30 px-2 text-[#5E17EB] shadow-lg backdrop-blur-sm transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110"
+                    className="h-20 bg-white/30 px-2 text-[#5E17EB] shadow-lg backdrop-blur-sm transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110"
                     onClick={goToPreviousPage}
                   >
                     <MdOutlineArrowLeft fontSize={40} />
@@ -104,10 +104,10 @@ const County = () => {
                   {getPaginatedData()?.map(
                     (county: CountyDataProps, index: number) => {
                       return (
-                        <div
+                        <Button
                           key={`${index}-${county.name}`}
-                          className="flex w-full  cursor-pointer items-center justify-center rounded-xl bg-[#5E17EB] py-6 px-4 text-lg font-semibold text-white 
-                    shadow-lg transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:text-xl lg:text-2xl"
+                          type="button"
+                          color="primary"
                           onClick={() =>
                             router.replace({
                               pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county.name}`,
@@ -119,15 +119,15 @@ const County = () => {
                           }
                         >
                           <h1>{county.name}</h1>
-                        </div>
+                        </Button>
                       )
                     }
                   )}
                 </div>
-                <div className="h-full">
+                <div className="flex h-full items-center justify-center">
                   <button
                     type="button"
-                    className="h-full bg-white/30 px-2 text-[#5E17EB] shadow-lg backdrop-blur-sm transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 "
+                    className="h-20 bg-white/30 px-2 text-[#5E17EB] shadow-lg backdrop-blur-sm transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 "
                     onClick={goToNextPage}
                   >
                     <MdOutlineArrowRight fontSize={44} />

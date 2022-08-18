@@ -3,20 +3,21 @@ import React, { forwardRef, HTMLProps, ReactNode } from 'react'
 export type Ref = HTMLButtonElement
 
 interface Colors {
-    primary: string;
-    outline: string;
-    success: string;
-    danger: string;
-    dark: string;
-    warning: string;
-    indigo: string;
-    yellow: string;
-    gray: string;
+  primaryFilled: string
+  primaryOutline: string
+  success: string
+  danger: string
+  dark: string
+  warning: string
+  indigo: string
+  yellow: string
+  gray: string
 }
 
 type ButtonProps = {
   disabled?: boolean
   className?: string
+  isLive?: boolean
   color: string
   type: 'submit' | 'button'
   children?: ReactNode
@@ -24,28 +25,45 @@ type ButtonProps = {
   onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
 
-const Button = forwardRef<Ref, ButtonProps>(
+const PortalButton = forwardRef<Ref, ButtonProps>(
   (
-    { children, disabled, className, type, color, ...props }: ButtonProps,
+    {
+      children,
+      disabled,
+      isLive,
+      className,
+      type,
+      color,
+      ...props
+    }: ButtonProps,
     ref
   ) => (
-    <button
-      ref={ref}
-      disabled={disabled}
-      type={type}
+    <div
       className={`${colors[color as keyof Colors]} ${className} ${
         disabled ? 'cursor-not-allowed opacity-60' : ''
-      }   flex items-center justify-center rounded px-4 py-2 font-medium shadow transition text-xs sm:text-sm  duration-200 ease-in focus:outline-none`}
-      {...props}
+      }  relative flex cursor-pointer items-center justify-center rounded text-xs font-medium shadow transition duration-200  ease-in focus:outline-none sm:text-sm`}
     >
-      {children}
-    </button>
+      <button
+        ref={ref}
+        disabled={disabled}
+        type={type}
+        {...props}
+        className="px-4 py-4"
+      >
+        {children}
+      </button>
+      <span
+        className={`${
+          isLive ? 'bg-green-500' : 'bg-red-500'
+        } absolute top-1 right-1 z-10 h-2 w-2 rounded-full`}
+      ></span>
+    </div>
   )
 )
 
 const colors: Colors = {
-  primary: `border-primary border-2 text-white bg-primary active:bg-primary active:text-white hover:bg-secondary hover:text-white hover:-translate-y-1 hover:scale-100`,
-  outline: `border-primary border-2 text-primary active:bg-primary active:text-white hover:bg-secondary hover:text-white hover:-translate-y-1 hover:scale-100`,
+  primaryFilled: `border-primary bg-primary border-2 text-white active:bg-primary active:text-white hover:bg-secondary hover:text-white hover:-translate-y-1 hover:scale-100`,
+  primaryOutline: `border-primary border-2 text-primary active:bg-primary active:text-white hover:bg-secondary hover:text-white hover:-translate-y-1 hover:scale-100`,
   success: `border-tertiary border-2 text-tertiary active:bg-tertiary active:text-white hover:bg-[#2796b2] hover:text-white hover:-translate-y-1 hover:scale-100`,
   danger: `border-red-600 border text-red-600 active:bg-red-600 active:text-white`,
   dark: `border-black border text-gray-900 active:bg-black active:text-white hover:bg-black hover:text-white`,
@@ -55,6 +73,6 @@ const colors: Colors = {
   yellow: `border-yellow-500 border text-yellow-500 active:bg-yellow-500 active:text-white text-center hover:bg-yellow-500 hover:text-white`,
 }
 
-Button.displayName = 'Button'
+PortalButton.displayName = 'PortalButton'
 
-export default Button
+export default PortalButton

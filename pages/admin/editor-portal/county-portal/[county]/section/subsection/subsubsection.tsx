@@ -1,10 +1,12 @@
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import { useRouter } from 'next/router'
-import Image from 'next/image'
 import { Loader } from '@mantine/core'
 
 import { ComponentShield } from '@components/NextShield'
 import PortalHeader from '@components/PortalHeader'
+import Button from '@components/Button'
+import { SectionContainer } from '@components/CountyDistrictSections'
+
 import { AdminLayout } from 'layout'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
 import {
@@ -12,9 +14,7 @@ import {
   useUpdateSubSubSectionByIdMutation,
 } from 'features/editor/editorApiSlice'
 import { NEXT_URL } from '@config/index'
-import Button from '@components/Button'
 import { wrapper } from 'app/store'
-import { SectionContainer } from '@components/CountyDistrictSections'
 import { SubSubSectionProps } from '@lib/types'
 
 
@@ -62,7 +62,7 @@ const SubSubSection = ({
               <div className="flex justify-between">
                 <Button
                   type="button"
-                  color="primary"
+                  color="outline"
                   className=" md:w-1/4 "
                   onClick={() => {
                     router.replace({

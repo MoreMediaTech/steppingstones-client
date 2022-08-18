@@ -30,7 +30,7 @@ const SearchForm = ({
             list={types}
           />
          <div></div>
-         <Button color='primary' className='h-12 sm:mt-8' type='button' onClick={handleModalOpen}>Add SD Data</Button>
+         <Button color='outline' className='h-12 sm:mt-8' type='button' onClick={handleModalOpen}>Add SD Data</Button>
         </div>
       </div>
   )

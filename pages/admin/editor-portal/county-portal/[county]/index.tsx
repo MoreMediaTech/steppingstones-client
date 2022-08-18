@@ -1,28 +1,26 @@
 import { useState } from 'react'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import { useRouter } from 'next/router'
-import Image from 'next/image'
-import { useForm, SubmitHandler } from 'react-hook-form'
+import dynamic from 'next/dynamic'
 import { Loader } from '@mantine/core'
+
+
 
 import { ComponentShield } from '@components/NextShield'
 import PortalHeader from '@components/PortalHeader'
+import { AddDistrictForm, CreateSectionForm } from '@components/forms'
+import Button from '@components/Button'
 
 import { AdminLayout } from 'layout'
-import { CountyDataProps, DistrictDataProps, EditImageProps, IContentDrawerSubNavData, SectionProps } from '@lib/types'
+import { DistrictDataProps, SectionProps } from '@lib/types'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
 import {
   useGetCountyByIdQuery,
-  useUpdateCountyMutation,
   useCreateSectionMutation,
 } from 'features/editor/editorApiSlice'
-import { AddDistrictForm, CreateSectionForm } from '@components/forms'
 import { NEXT_URL } from '@config/index'
-import EditImageComponent from '@components/EditImageComponent'
-import { UnstyledButton } from '@mantine/core'
-import { showNotification } from '@mantine/notifications'
-import { contentDrawerSubNavData } from '@components/navigation/ContentDrawer/ContentDrawerData'
-import Button from '@components/Button'
+import PortalButton from '@components/PortalButton'
+const Map = dynamic(() => import('@components/Map'), { ssr: false })
 
 
 
@@ -30,8 +28,6 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
   const router = useRouter()
   const [opened, setOpened] = useState<boolean>(false)
   const [openAddSectionModal, setAddOpenSectionModal] = useState<boolean>(false)
-  const [isEdit, setIsEdit] = useState<boolean>(false)
-  const [preview, setPreview] = useState<string | ArrayBuffer | null>(null)
 
   const { data: user } = useGetUserQuery()
   const {
@@ -41,55 +37,8 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
     refetch: refetchCounty,
   } = useGetCountyByIdQuery(countyId, { refetchOnMountOrArgChange: true })
 
-
-  const [updateCounty, { isLoading }] = useUpdateCountyMutation()
   const [createSection, { isLoading: isLoadingCreateSection }] = useCreateSectionMutation()
-
-  const {
-    handleSubmit,
-    register,
-    reset,
-    formState: { errors },
-  } = useForm<EditImageProps>()
-
-  const convertFileToBase64 = (file: File) => {
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.onloadend = () => {
-      setPreview(reader.result)
-    }
-    reader.onerror = () => {
-      showNotification({
-        message: 'Error converting file to base64',
-        color: 'red',
-      })
-    }
-  }
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault()
-    const file = e.target.files?.[0]
-    if (file) {
-      convertFileToBase64(file)
-    }
-  }
-
-  const submitHandler: SubmitHandler<EditImageProps> = async () => {
-    const updatedData  = { id: countyId, imageFile: preview }
-
-    try {
-      await updateCounty(updatedData).unwrap()
-      refetchCounty()
-      setIsEdit(false)
-      setPreview(null)
-    } catch (error) {
-      showNotification({
-        message: 'Error updating county image',
-        autoClose: 3000,
-        color: 'red',
-      })
-    }
-  }
+  const districts = countyData?.districts.map((district) => district.name)
 
   return (
     <AdminLayout title={`${countyData?.name} - Editor Dashboard`}>
@@ -104,11 +53,11 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
             subTitle="Please select district from the menu below"
             data={countyData}
           />
-          <section className="container mx-auto px-4 py-2">
+          <section className="px-2 sm:px-4 py-2">
             <div className="flex justify-between">
               <Button
                 type="button"
-                color="primary"
+                color="outline"
                 className=" md:w-1/4 "
                 onClick={() => {
                   router.replace({
@@ -121,7 +70,7 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
               <div className="flex items-center gap-2 md:w-1/3">
                 <Button
                   type="button"
-                  color="primary"
+                  color="outline"
                   className="md:w-full"
                   onClick={() => setAddOpenSectionModal((o) => !o)}
                 >
@@ -129,7 +78,7 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
                 </Button>
                 <Button
                   type="button"
-                  color="primary"
+                  color="outline"
                   className="md:w-full "
                   onClick={() => setOpened((o) => !o)}
                 >
@@ -143,50 +92,19 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
               <Loader size="xl" variant="bars" />
             </div>
           ) : (
-            <section className="container mx-auto w-full overflow-auto py-24 px-2 md:px-4">
+            <section className=" w-full overflow-auto py-24 px-2 md:px-4">
               {countyData && (
-                <div className="flex h-full w-full flex-col gap-8 md:flex-row">
-                  <div className="cols-span-1 w-full  space-y-2 md:w-2/5">
-                    {countyData?.imageUrl !== null && !isEdit ? (
-                      <>
-                        <div className="relative flex h-[650px] w-full flex-col space-y-2 ">
-                          <Image
-                            src={countyData?.imageUrl}
-                            alt={countyData?.name}
-                            objectFit="contain"
-                            layout="fill"
-                          />
-                        </div>
-                        <UnstyledButton
-                          type="button"
-                          onClick={() => setIsEdit(true)}
-                          className="w-full rounded-md bg-[#5E17EB] px-4 py-2 text-center font-semibold text-white shadow-xl transition delay-150 
-                        duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:text-xl"
-                        >
-                          click to edit image
-                        </UnstyledButton>
-                      </>
-                    ) : (
-                      <EditImageComponent
-                        register={register}
-                        handleSubmit={handleSubmit}
-                        submitHandler={submitHandler}
-                        isLoading={isLoading}
-                        errors={errors}
-                        setIsEdit={setIsEdit}
-                        preview={preview}
-                        setPreview={setPreview}
-                        handleChange={handleChange}
-                      />
-                    )}
+                <div className="grid h-full w-full grid-cols-1 gap-8 md:grid-cols-4">
+                  <div className='md:col-span-2 h-full bg-white p-2 shadow-md rounded'>
+                    <Map location={`${county}, UK`} districtsArray={districts as string[]} />
                   </div>
-                  <div className="h-full w-full md:w-3/4">
+                  <div className="h-full w-full md:col-span-2">
                     <div className="flex flex-col">
-                      <div className="flex w-full items-center justify-between space-x-6">
-                        <button
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                        <PortalButton
                           type="button"
-                          className="flex w-full  cursor-pointer items-center justify-center rounded-xl bg-[#5E17EB] py-4 px-4 text-lg font-semibold text-white shadow-xl 
-                    transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:py-6 md:text-xl "
+                          color="primaryFilled"
+                          isLive={countyData.welcome?.isLive}
                           onClick={() => {
                             router.replace({
                               pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}/welcome`,
@@ -195,11 +113,11 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
                           }}
                         >
                           Welcome
-                        </button>
-                        <button
+                        </PortalButton>
+                        <PortalButton
                           type="button"
-                          className="flex w-full  cursor-pointer items-center justify-center rounded-xl bg-[#5E17EB] py-4 px-4 text-lg font-semibold text-white drop-shadow-lg 
-                    transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:py-6 md:text-xl "
+                          color="primaryFilled"
+                          isLive={countyData.lep?.isLive}
                           onClick={() => {
                             router.replace({
                               pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}/lep`,
@@ -208,11 +126,11 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
                           }}
                         >
                           LEP
-                        </button>
-                        <button
+                        </PortalButton>
+                        <PortalButton
                           type="button"
-                          className="flex w-full  cursor-pointer items-center justify-center rounded-xl bg-[#5E17EB] py-4 px-4 text-lg font-semibold text-white drop-shadow-lg 
-                    transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] md:py-6 md:text-xl "
+                          color="primaryFilled"
+                          isLive={countyData.news?.isLive}
                           onClick={() => {
                             router.replace({
                               pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}/news`,
@@ -221,21 +139,17 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
                           }}
                         >
                           NEWS
-                        </button>
+                        </PortalButton>
                       </div>
                       <div className="w-full space-y-4 py-8">
-                        <div className="grid grid-cols-2 gap-y-4 gap-x-10 md:gap-x-20">
+                        <div className="grid grid-cols-2 gap-y-4 gap-x-10 ">
                           {countyData?.districts?.map(
                             (district: DistrictDataProps) => (
-                              <button
+                              <PortalButton
                                 key={district?.id}
                                 type="button"
-                                className={`${
-                                  (!!district?.isLive as boolean)
-                                    ? 'bg-[#5E17EB] hover:bg-[#3A0B99]'
-                                    : 'bg-red-500 hover:bg-red-700'
-                                } flex w-full  cursor-pointer items-center justify-center rounded-xl py-2 px-2 text-lg font-semibold text-white shadow-lg 
-                    transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100  md:py-6 `}
+                                color='primaryFilled'
+                                isLive={district?.isLive}
                                 onClick={() =>
                                   router.replace({
                                     pathname: `${NEXT_URL}/admin/editor-portal/county-portal/district`,
@@ -248,22 +162,18 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
                                 }
                               >
                                 {district?.name}
-                              </button>
+                              </PortalButton>
                             )
                           )}
                         </div>
                         <div className="grid grid-cols-3 gap-y-4 gap-x-4">
                           {countyData?.sections?.map(
                             (section: SectionProps) => (
-                              <button
+                              <PortalButton
                                 key={`${section?.id}`}
                                 type="button"
-                                className={`${
-                                  (!!section?.isLive as boolean)
-                                    ? 'bg-[#5E17EB] hover:bg-[#3A0B99]'
-                                    : 'bg-red-500 hover:bg-red-700'
-                                } flex w-full  cursor-pointer items-center justify-center rounded-xl py-2 px-2 text-lg font-semibold text-white shadow-lg 
-                    transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100  md:py-6 `}
+                                color='primaryFilled'
+                                isLive={section?.isLive}
                                 onClick={() =>
                                   router.replace({
                                     pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}/section`,
@@ -276,7 +186,7 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
                                 }
                               >
                                 {section?.name}
-                              </button>
+                              </PortalButton>
                             )
                           )}
                         </div>

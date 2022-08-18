@@ -1,26 +1,25 @@
-import { useEffect, useState } from 'react'
+import {  useState } from 'react'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import { useRouter } from 'next/router'
-import Image from 'next/image'
-import { Checkbox, Loader, Switch } from '@mantine/core'
+import { Loader } from '@mantine/core'
 
 import { ComponentShield } from '@components/NextShield'
 import PortalHeader from '@components/PortalHeader'
+import SectionContainer from '@components/CountyDistrictSections/SectionContainer'
+import { EconomicDataSection } from '@components/CountyDistrictSections'
+import { CreateSectionForm } from '@components/forms'
+
 import { AdminLayout } from 'layout'
-import { DistrictSectionProps, SubSectionProps } from '@lib/types'
+import { DistrictSectionProps } from '@lib/types'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
 import {
   useGetDistrictSectionByIdQuery,
   useCreateSubSectionMutation,
   useUpdateDistrictSectionByIdMutation,
 } from 'features/editor/editorApiSlice'
-import { CreateSectionForm } from '@components/forms'
 import { NEXT_URL } from '@config/index'
 import Button from '@components/Button'
 import { wrapper } from 'app/store'
-import SectionContainer from '@components/CountyDistrictSections/SectionContainer'
-import { showNotification } from '@mantine/notifications'
-import { EconomicDataSection } from '@components/CountyDistrictSections'
 
 const DistrictSection = ({ id, district }: { id: string; district: string; }) => {
   const router = useRouter()
@@ -59,7 +58,7 @@ const DistrictSection = ({ id, district }: { id: string; district: string; }) =>
               <div className="flex justify-between">
                 <Button
                   type="button"
-                  color="primary"
+                  color="outline"
                   className=" md:w-1/4 "
                   onClick={() => {
                     router.push({
@@ -74,7 +73,7 @@ const DistrictSection = ({ id, district }: { id: string; district: string; }) =>
                 {laSectionData?.isEconomicData && (
                   <Button
                     type="button"
-                    color="primary"
+                    color="outline"
                     className="md:w-1/4 "
                     onClick={() => {
                       setOpened(true)

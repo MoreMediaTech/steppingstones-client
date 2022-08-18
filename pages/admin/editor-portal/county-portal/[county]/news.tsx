@@ -34,7 +34,7 @@ const News = ({ county, countyId }: { county: string; countyId: string }) => {
               <div className="flex justify-between">
                 <Button
                   type="button"
-                  color='primary'
+                  color='outline'
                   className="md:w-1/4"
                   onClick={() => {
                     router.replace({

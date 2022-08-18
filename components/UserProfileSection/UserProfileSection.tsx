@@ -10,7 +10,7 @@ import EditImageModal from '@components/EditImageComponent/EditImageModal'
 import { CurrentUser } from '@lib/types'
 import { useVerifyEmailMutation } from 'features/auth/authApiSlice'
 import { showNotification } from '@mantine/notifications'
-import { AnyAaaaRecord } from 'dns'
+
 
 const UserProfileSection = () => {
   const [opened, setOpened] = useState<boolean>(false)

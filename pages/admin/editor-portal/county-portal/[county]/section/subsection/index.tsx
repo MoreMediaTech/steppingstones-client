@@ -3,9 +3,14 @@ import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import { Loader } from '@mantine/core'
+import dynamic from 'next/dynamic'
 
+import SectionContainer from '@components/CountyDistrictSections/SectionContainer'
 import { ComponentShield } from '@components/NextShield'
 import PortalHeader from '@components/PortalHeader'
+import { CreateSectionForm } from '@components/forms'
+import Button from '@components/Button'
+
 
 import { AdminLayout } from 'layout'
 import { SubSectionProps, SubSubSectionProps } from '@lib/types'
@@ -15,11 +20,10 @@ import {
   useCreateSubSubSectionMutation,
   useUpdateSubSectionByIdMutation,
 } from 'features/editor/editorApiSlice'
-import { CreateSectionForm } from '@components/forms'
 import { NEXT_URL } from '@config/index'
-import Button from '@components/Button'
 import { wrapper } from 'app/store'
-import SectionContainer from '@components/CountyDistrictSections/SectionContainer'
+import PortalButton from '@components/PortalButton'
+const Map = dynamic(() => import('@components/Map'), { ssr: false })
 
 const SubSection = ({
   county,
@@ -74,7 +78,7 @@ const SubSection = ({
               <div className="flex justify-between">
                 <Button
                   type="button"
-                  color="primary"
+                  color="outline"
                   className=" md:w-1/4 "
                   onClick={() => {
                     router.replace({
@@ -89,7 +93,7 @@ const SubSection = ({
                 {subSectionData?.isSubSubSection && (
                   <Button
                     type="button"
-                    color="primary"
+                    color="outline"
                     className="md:w-1/4"
                     onClick={() => setAddOpenSectionModal((o) => !o)}
                   >
@@ -107,18 +111,9 @@ const SubSection = ({
                 {subSectionData?.isSubSubSection ? (
                   <section className="container mx-auto w-full overflow-auto py-24 px-2 md:px-4">
                     {subSectionData && (
-                      <div className="flex h-full w-full flex-col gap-8 md:flex-row">
-                        <div className="cols-span-1 h-full w-full  md:w-2/5">
-                          {imageUrl !== null && (
-                            <div className="flex flex-col space-y-2">
-                              {/* <Image
-                              src={imageUrl}
-                              alt={sectionData?.name}
-                              width={500}
-                              height={720}
-                            /> */}
-                            </div>
-                          )}
+                      <div className="grid h-full w-full grid-cols-1 gap-8 md:grid-cols-4">
+                        <div className="h-full rounded bg-white p-2 shadow-md md:col-span-2">
+                          <Map location={`${county}, UK`} />
                         </div>
                         <div className="h-full w-full md:w-3/4">
                           <div className="flex flex-col">
@@ -126,15 +121,10 @@ const SubSection = ({
                               <div className="grid grid-cols-2 gap-y-4 gap-x-4">
                                 {subSectionData?.subSubSections?.map(
                                   (subSection: SubSubSectionProps) => (
-                                    <button
+                                    <PortalButton
                                       key={`${subSection.id}`}
                                       type="button"
-                                      className={`${
-                                        (!!subSection?.isLive as boolean)
-                                          ? 'bg-[#5E17EB] hover:bg-[#3A0B99]'
-                                          : 'bg-red-500 hover:bg-red-700'
-                                      } flex w-full  cursor-pointer items-center justify-center rounded-xl py-2 px-2 text-lg font-semibold text-white shadow-lg 
-                    transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100  md:py-6 `}
+                                      color='primaryFilled'
                                       onClick={() =>
                                         router.replace({
                                           pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}/section/subsection/subsubsection`,
@@ -147,7 +137,7 @@ const SubSection = ({
                                       }
                                     >
                                       {subSection?.name}
-                                    </button>
+                                    </PortalButton>
                                   )
                                 )}
                               </div>
