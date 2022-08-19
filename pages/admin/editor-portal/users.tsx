@@ -35,7 +35,7 @@ const Users = () => {
               <div className="flex justify-end">
                 <Button
                   type="button"
-                  color="primary"
+                  color="outline"
                   className="md:w-1/4"
                   onClick={() => setOpened((o) => !o)}
                 >

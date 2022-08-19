@@ -59,17 +59,17 @@ const Map = ({
     setRegion({ lat, lng })
   }
 
-
   useEffect(() => {
-    handleSelect(location)
-  }, [location])
+    if (isLoaded) {
+      handleSelect(location)
+    }
+  }, [location, isLoaded])
 
   const onLoad = React.useCallback((map: any) => (mapRef.current = map), [])
-//   const districts = React.useMemo(
-//     () => generateDistrictsCords(districtsArray as string[]),
-//     [districtsArray]
-//   )
-
+  //   const districts = React.useMemo(
+  //     () => generateDistrictsCords(districtsArray as string[]),
+  //     [districtsArray]
+  //   )
 
   if (!isLoaded) {
     return (
@@ -155,15 +155,15 @@ const farOptions = {
   strokeColor: '#FF5252',
   fillColor: '#FF5252',
 }
-  const generateDistrictsCords = (districts: string[]) => {
-    const _districts: Array<LatLngLiteral> = []
-    districts?.forEach(async (district) => {
-      const results = await getGeocode({ address: `${district}, UK` })
-      const { lat, lng } = await getLatLng(results[0])
-      _districts.push({ lat: lat, lng: lng })
-    })
-    console.log(_districts)
-    return _districts
-  }
+const generateDistrictsCords = (districts: string[]) => {
+  const _districts: Array<LatLngLiteral> = []
+  districts?.forEach(async (district) => {
+    const results = await getGeocode({ address: `${district}, UK` })
+    const { lat, lng } = await getLatLng(results[0])
+    _districts.push({ lat: lat, lng: lng })
+  })
+  console.log(_districts)
+  return _districts
+}
 
 export default Map

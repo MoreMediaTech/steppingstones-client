@@ -35,7 +35,7 @@ const PartnerDirectory = () => {
               <span className="text-2xl font-bold">Partner Directory</span>
               <Button
                 type="button"
-                color="primary"
+                color="outline"
                 className="md:w-1/4"
                 onClick={() => {
                   setIsPartnerDirectoryModalOpen(true)

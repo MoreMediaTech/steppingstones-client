@@ -108,6 +108,7 @@ const County = () => {
                           key={`${index}-${county.name}`}
                           type="button"
                           color="primary"
+                          className='!py-4'
                           onClick={() =>
                             router.replace({
                               pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county.name}`,
