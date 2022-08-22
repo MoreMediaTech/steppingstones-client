@@ -53,9 +53,6 @@ const PartnerDirectorySection = ({
         partner?.organisation?.name
           .toLowerCase()
           .includes(e.target.value.toLowerCase()) ||
-        partner?.valueCategory
-          .toLowerCase()
-          .includes(e.target.value.toLowerCase()) ||
         partner?.position
           ?.toLowerCase()
           .includes(e.target.value.toLowerCase()) ||
@@ -101,8 +98,6 @@ const PartnerDirectorySection = ({
         name: '',
         email: '',
         organisation: '',
-        valueCategory: ValueCategory.NONE,
-        partnerType: PartnerType.NONE,
         position: '',
         projectsResponsibleFor: '',
         closingDate: new Date(),
@@ -114,8 +109,6 @@ const PartnerDirectorySection = ({
         name: partnerData?.partner?.name,
         email: partnerData?.partner?.email,
         organisation: partnerData?.organisation?.name,
-        valueCategory: partnerData?.valueCategory,
-        partnerType: partnerData?.partnerType,
         position: partnerData?.position,
         projectsResponsibleFor: partnerData?.projectsResponsibleFor,
         closingDate: new Date(partnerData?.closingDate as Date),

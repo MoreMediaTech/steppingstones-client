@@ -122,7 +122,7 @@ const Section = ({
                         <div className="h-full rounded bg-white p-2 shadow-md md:col-span-2">
                           <Map location={`${county}, UK`} />
                         </div>
-                        <div className="h-full w-full">
+                        <div className="md:col-span-2 h-full w-full">
                               <div className="grid grid-cols-2 gap-4">
                                 {sectionData?.subsections?.map(
                                   (section: SubSectionProps) => (

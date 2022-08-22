@@ -97,19 +97,6 @@ const PartnerDirectoryForm = ({
           errors={errors.organisation}
         />
 
-        <FormRowSelect
-          label="Value Category"
-          list={VALUE_CATEGORIES}
-          type="valueCategory"
-          {...register('valueCategory')}
-        />
-        <FormRowSelect
-          label="Partner Type"
-          list={PARTNER_TYPE}
-          type="partnerType"
-          {...register('partnerType')}
-        />
-
         <FormInput
           label="Position"
           aria-label="position-input"
