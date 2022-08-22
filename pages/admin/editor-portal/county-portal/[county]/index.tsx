@@ -92,7 +92,7 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
               <Loader size="xl" variant="bars" />
             </div>
           ) : (
-            <section className=" w-full overflow-auto py-24 px-2 md:px-4">
+            <section className=" w-full overflow-auto py-24 min-h-[500px] px-2 md:px-4">
               {countyData && (
                 <div className="grid h-full w-full grid-cols-1 gap-8 md:grid-cols-4">
                   <div className='md:col-span-2 h-full bg-white p-2 shadow-md rounded'>

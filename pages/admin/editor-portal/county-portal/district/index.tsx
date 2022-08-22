@@ -86,7 +86,7 @@ const District = ({
               <Loader size="xl" variant="bars" />
             </div>
           ) : (
-            <section className="h-[700px] w-full py-24 px-2 md:px-4">
+            <section className="min-h-[500px] w-full py-24 px-2 md:px-4">
               {districtData && (
                 <section className="grid h-full w-full grid-cols-1 gap-8 md:grid-cols-4">
                   <div className="h-full rounded bg-white p-2 shadow-md md:col-span-2">

@@ -109,15 +109,13 @@ const SubSection = ({
             ) : (
               <section className="w-full overflow-auto py-2 px-2 md:px-4">
                 {subSectionData?.isSubSubSection ? (
-                  <section className="container mx-auto w-full overflow-auto py-24 px-2 md:px-4">
+                  <section className="container mx-auto w-full overflow-auto min-h-[500px]  py-24 px-2 md:px-4">
                     {subSectionData && (
                       <div className="grid h-full w-full grid-cols-1 gap-8 md:grid-cols-4">
                         <div className="h-full rounded bg-white p-2 shadow-md md:col-span-2">
                           <Map location={`${county}, UK`} />
                         </div>
-                        <div className="h-full w-full md:w-3/4">
-                          <div className="flex flex-col">
-                            <div className="w-full space-y-4 py-8">
+                        <div className="h-full w-full md:col-span-2">
                               <div className="grid grid-cols-2 gap-y-4 gap-x-4">
                                 {subSectionData?.subSubSections?.map(
                                   (subSection: SubSubSectionProps) => (
@@ -141,8 +139,6 @@ const SubSection = ({
                                   )
                                 )}
                               </div>
-                            </div>
-                          </div>
                         </div>
                       </div>
                     )}
