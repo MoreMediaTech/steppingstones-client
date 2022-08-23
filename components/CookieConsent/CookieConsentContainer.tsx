@@ -50,7 +50,7 @@ const CookieConsentContainer = ({
         </p>
         <Accordion multiple>
           <Accordion.Item
-            label={
+            value={
               <p className="text-sm md:text-lg">Strictly necessary cookies</p>
             }
             className="bg-gray-50"
