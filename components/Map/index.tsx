@@ -14,7 +14,6 @@ import { getGeocode, getLatLng } from 'use-places-autocomplete'
 import Places from './Places'
 
 type LatLngLiteral = google.maps.LatLngLiteral
-type DirectionsResult = google.maps.DirectionsResult
 type MapOptions = google.maps.MapOptions
 
 type Libraries = (
@@ -80,7 +79,7 @@ const Map = ({
   }
 
   return (
-    <div className="flex h-full w-full flex-col">
+    <div className="flex h-full w-full flex-col min-h-[500px]">
       <div className="bg-white p-1 text-gray-900">
         <Places
           setRegion={(position) => {

@@ -39,7 +39,7 @@ const links: ILinks[] = [
 
 const PortalSection = () => {
   return (
-    <section className="relative container mx-auto  overflow-auto max-w-screen-xl md:py-8 w-full">
+    <section className="relative md:px-20 mx-auto overflow-auto max-w-screen-xl md:py-8 w-full">
       <div className="grid w-full grid-cols-1 gap-4 overflow-auto  py-4 md:grid-cols-3 md:gap-8 ">
         {links.map((link, index) => (
           <div key={`${link}-${index}`}>

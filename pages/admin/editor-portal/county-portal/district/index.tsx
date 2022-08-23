@@ -49,7 +49,7 @@ const District = ({
         showForRole={'SS_EDITOR'}
         userRole={user?.role as string}
       >
-        <section className="h-screen">
+        <section className="md:h-screen bg-slate-50 py-4 md:py-0">
           <PortalHeader
             title={`${district}`}
             subTitle="Please select Area you want to review"
@@ -86,14 +86,14 @@ const District = ({
               <Loader size="xl" variant="bars" />
             </div>
           ) : (
-            <section className="h-[700px] w-full py-24 px-2 md:px-4">
+            <section className="md:h-[700px] w-full py-4  md:py-24 px-2 md:px-4">
               {districtData && (
                 <section className="grid h-full w-full grid-cols-1 gap-8 md:grid-cols-4">
                   <div className="h-full rounded bg-white p-2 shadow-md md:col-span-2">
                     <Map location={`${district}, UK`} />
                   </div>
-                  <div className="w-full md:col-span-2">
-                    <div className="grid w-full grid-cols-2 gap-y-2 gap-x-2">
+                  <div className="w-full md:col-span-2 mb-2">
+                    <div className="grid w-full grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-2">
                       {districtData?.districtSections?.map(
                         (section: DistrictSectionProps) => (
                           <PortalButton

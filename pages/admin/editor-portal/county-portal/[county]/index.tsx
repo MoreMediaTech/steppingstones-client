@@ -74,7 +74,7 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
                   className="md:w-full"
                   onClick={() => setAddOpenSectionModal((o) => !o)}
                 >
-                  Add County Section
+                  Add Section
                 </Button>
                 <Button
                   type="button"
@@ -92,7 +92,7 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
               <Loader size="xl" variant="bars" />
             </div>
           ) : (
-            <section className=" w-full overflow-auto py-24 px-2 md:px-4">
+            <section className=" w-full overflow-auto py-4 md:py-24 px-2 md:px-4">
               {countyData && (
                 <div className="grid h-full w-full grid-cols-1 gap-8 md:grid-cols-4">
                   <div className='md:col-span-2 h-full bg-white p-2 shadow-md rounded'>
@@ -166,7 +166,7 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
                             )
                           )}
                         </div>
-                        <div className="grid grid-cols-3 gap-y-4 gap-x-4">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-y-4 gap-x-4">
                           {countyData?.sections?.map(
                             (section: SectionProps) => (
                               <PortalButton

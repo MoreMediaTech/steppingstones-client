@@ -129,48 +129,47 @@ const Navbar = () => {
           {currentUser ? (
             <li>
               <Group position="center">
-                <Menu
-                  withArrow
-                  placement="center"
-                  control={
+                <Menu withArrow position="bottom-start">
+                  <Menu.Target>
                     <UserButton
                       name={currentUser?.name ?? ''}
                       email={currentUser?.email ?? ''}
                       initials={initials}
                       show
                     />
-                  }
-                >
+                  </Menu.Target>
                   {/* ...menu items */}
-                  <Menu.Label>Application</Menu.Label>
-                  {currentUser.role !== 'PARTNER' ? (
-                    <Menu.Item>
-                      <Link href={'/admin/editor-portal'}>
-                        <a className="text-[#5E17EB]">Portal</a>
-                      </Link>
+                  <Menu.Dropdown>
+                    <Menu.Label>Application</Menu.Label>
+                    {currentUser.role !== 'PARTNER' ? (
+                      <Menu.Item>
+                        <Link href={'/admin/editor-portal'}>
+                          <a className="text-[#5E17EB]">Portal</a>
+                        </Link>
+                      </Menu.Item>
+                    ) : (
+                      <Menu.Item>
+                        <Link href={'/admin/partner-portal'}>
+                          <a className="text-[#5E17EB]">Portal</a>
+                        </Link>
+                      </Menu.Item>
+                    )}
+                    <Divider />
+                    <Link href={'/auth/profile'}>
+                      <Menu.Item>
+                        <a className="text-[#5E17EB]">Profile</a>
+                      </Menu.Item>
+                    </Link>
+                    <Divider />
+                    <Menu.Item
+                      icon={<FaSignOutAlt fontSize={14} color="#5E17EB" />}
+                      onClick={() => {
+                        handleLogout()
+                      }}
+                    >
+                      <span className="text-[#5E17EB]">Logout</span>
                     </Menu.Item>
-                  ) : (
-                    <Menu.Item>
-                      <Link href={'/admin/partner-portal'}>
-                        <a className="text-[#5E17EB]">Portal</a>
-                      </Link>
-                    </Menu.Item>
-                  )}
-                  <Divider />
-                  <Link href={'/auth/profile'}>
-                    <Menu.Item>
-                      <a className="text-[#5E17EB]">Profile</a>
-                    </Menu.Item>
-                  </Link>
-                  <Divider />
-                  <Menu.Item
-                    icon={<FaSignOutAlt fontSize={14} color="#5E17EB" />}
-                    onClick={() => {
-                      handleLogout()
-                    }}
-                  >
-                    <span className="text-[#5E17EB]">Logout</span>
-                  </Menu.Item>
+                  </Menu.Dropdown>
                 </Menu>
               </Group>
             </li>

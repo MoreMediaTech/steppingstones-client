@@ -1,7 +1,7 @@
 import { Group, UnstyledButton } from "@mantine/core";
 import Image from "next/image";
 
-export const AppLogo = ({ scrollToTop }: { scrollToTop: () => void }) => (
+export const AppLogo = ({ scrollToTop }: { scrollToTop?: () => void }) => (
   <UnstyledButton
     className="flex cursor-pointer items-center lg:w-0 lg:flex-1"
     onClick={scrollToTop}

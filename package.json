@@ -7,9 +7,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@mantine/core": "^4.2.1",
-    "@mantine/hooks": "^4.2.1",
-    "@mantine/next": "^4.2.1",
+    "@emotion/react": "^11.10.0",
+    "@emotion/server": "^11.10.0",
+    "@mantine/core": "^5.2.3",
+    "@mantine/hooks": "^5.2.3",
+    "@mantine/next": "^5.2.3",
     "@mantine/notifications": "^4.2.2",
     "@mantine/rte": "^4.2.2",
     "@react-google-maps/api": "^2.12.1",

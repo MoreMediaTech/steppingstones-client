@@ -9,6 +9,8 @@ import {
   Menu,
   Tooltip,
   Aside,
+  NavLink,
+  Group,
 } from '@mantine/core'
 import { BiHomeCircle } from 'react-icons/bi'
 import { MdOutlineCreateNewFolder } from 'react-icons/md'
@@ -21,9 +23,11 @@ import {
 } from 'react-icons/fa'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 
 import { useGetAllMailQuery } from 'features/email/emailApiSlice'
 import { MessageProps } from '@lib/types'
+import { AppLogo } from './AppLogo'
 
 const AdminSidebar = ({
   show,
@@ -36,12 +40,15 @@ const AdminSidebar = ({
   isOpen?: boolean
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
-  let arg: void;
-   const { data: messages } = useGetAllMailQuery(arg, { pollingInterval: 60000 })
-   const [opened, setOpened] = useState(false)
+  let arg: void
+  const { data: messages } = useGetAllMailQuery(arg, { pollingInterval: 60000 })
+  const [opened, setOpened] = useState(false)
+  const router = useRouter()
 
-   // filter all unread messages
-   const unreadMessages = messages?.filter((message: MessageProps) => message.isRead === false)
+  // filter all unread messages
+  const unreadMessages = messages?.filter(
+    (message: MessageProps) => message.isRead === false
+  )
 
   const title = opened ? 'Close navigation' : 'Open navigation'
   // const initials = currentUser?.name
@@ -52,7 +59,8 @@ const AdminSidebar = ({
   // const width = isOpen ? '288' : '100'
   return (
     <header className="relative bg-slate-50">
-      <div className=" mb-2  p-2 md:hidden ">
+      <div className=" mb-2  flex items-center justify-between px-4 py-2 md:hidden ">
+        <AppLogo />
         <Burger
           opened={opened}
           aria-label={title}
@@ -82,7 +90,6 @@ const AdminSidebar = ({
               </p>
             }
             closeDelay={500}
-            tooltipId="portal-home"
             color="teal"
             position="right"
             withArrow
@@ -105,7 +112,6 @@ const AdminSidebar = ({
               </p>
             }
             closeDelay={500}
-            tooltipId="messages"
             color="teal"
             position="right"
             withArrow
@@ -126,69 +132,65 @@ const AdminSidebar = ({
               </a>
             </Link>
           </Tooltip>
-
-          <Menu
-            withArrow
-            position="right"
-            placement="end"
-            className=""
-            control={
-              <Tooltip
-                label={
-                  <p className="w-36 text-center font-semibold text-white">
-                    Content Management
-                  </p>
-                }
-                closeDelay={500}
-                tooltipId="portal-home"
-                color="teal"
-                position="right"
-                withArrow
-              >
-                <UnstyledButton
-                  type="button"
-                  className="flex w-full items-center space-x-4 rounded-lg p-2"
+          <Group position="center">
+            <Menu withArrow position="right" shadow="md" width={200}>
+              {/* ...menu items */}
+              <Menu.Target>
+                <Tooltip
+                  label={
+                    <p className="w-full text-center font-semibold text-white">
+                      Content Management
+                    </p>
+                  }
+                  closeDelay={500}
+                  color="teal"
+                  position="right"
+                  withArrow
                 >
-                  <FaBriefcase fontSize={30} color="#00DCB3" />
-                </UnstyledButton>
-              </Tooltip>
-            }
-          >
-            {/* ...menu items */}
-            <Menu.Label>Admin Settings</Menu.Label>
+                  <UnstyledButton
+                    type="button"
+                    className="flex w-full items-center space-x-4 rounded-lg p-2"
+                  >
+                    <FaBriefcase fontSize={30} color="#00DCB3" />
+                  </UnstyledButton>
+                </Tooltip>
+              </Menu.Target>
+              <Menu.Dropdown>
+                <Menu.Label>Content Settings</Menu.Label>
 
-            <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 text-center font-semibold hover:bg-[#00DCB3] hover:text-white">
-              <Link href={'/admin/editor-portal/admin/county-settings'}>
-                <a>Manage County</a>
-              </Link>
-            </Menu.Item>
-            <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 text-center font-semibold hover:bg-[#00DCB3] hover:text-white">
-              <Link href={'/admin/editor-portal/admin/district-settings'}>
-                <a>Manage District</a>
-              </Link>
-            </Menu.Item>
-            <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 text-center font-semibold hover:bg-[#00DCB3] hover:text-white">
-              <Link href={'/admin/editor-portal/admin/section-settings'}>
-                <a>Manage Section</a>
-              </Link>
-            </Menu.Item>
-            <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 text-center font-semibold hover:bg-[#00DCB3] hover:text-white">
-              <Link href={'/admin/editor-portal/admin/partner-directory'}>
-                <a>Partner Directory</a>
-              </Link>
-            </Menu.Item>
-            <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 text-center font-semibold hover:bg-[#00DCB3] hover:text-white">
-              <Link href={'/admin/editor-portal/admin/source-directory'}>
-                <a>Source Directory</a>
-              </Link>
-            </Menu.Item>
-          </Menu>
+                <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 font-semibold hover:bg-[#00DCB3] hover:text-white">
+                  <Link href={'/admin/editor-portal/admin/county-settings'}>
+                    <a>Manage County</a>
+                  </Link>
+                </Menu.Item>
+                <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 font-semibold hover:bg-[#00DCB3] hover:text-white">
+                  <Link href={'/admin/editor-portal/admin/district-settings'}>
+                    <a>Manage District</a>
+                  </Link>
+                </Menu.Item>
+                <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 font-semibold hover:bg-[#00DCB3] hover:text-white">
+                  <Link href={'/admin/editor-portal/admin/section-settings'}>
+                    <a>Manage Section</a>
+                  </Link>
+                </Menu.Item>
+                <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 font-semibold hover:bg-[#00DCB3] hover:text-white">
+                  <Link href={'/admin/editor-portal/admin/partner-directory'}>
+                    <a>Partner Directory</a>
+                  </Link>
+                </Menu.Item>
+                <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 font-semibold hover:bg-[#00DCB3] hover:text-white">
+                  <Link href={'/admin/editor-portal/admin/source-directory'}>
+                    <a>Source Directory</a>
+                  </Link>
+                </Menu.Item>
+              </Menu.Dropdown>
+            </Menu>
+          </Group>
           <Tooltip
             label={
               <p className="w-36 text-center font-semibold text-white">Users</p>
             }
             closeDelay={500}
-            tooltipId="users"
             color="teal"
             position="right"
             withArrow
@@ -203,32 +205,30 @@ const AdminSidebar = ({
         <Divider color="green" />
         <Navbar.Section className="w-full space-y-14 px-2">
           <div className="flex w-full items-center justify-start py-6">
-            <Menu
-              withArrow
-              position="right"
-              placement="end"
-              control={
+            <Menu withArrow position="right-end">
+              <Menu.Target>
                 <UnstyledButton
                   type="button"
                   className="flex w-full items-center space-x-4 rounded-lg p-2 group-hover:hover:bg-[#00DCB3]/20"
                 >
                   <FaPowerOff fontSize={30} fontWeight={100} color="#00DCB3" />
                 </UnstyledButton>
-              }
-            >
-              <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 text-center font-semibold hover:bg-[#00DCB3] hover:text-white">
-                <Link href={'/auth/profile'}>
-                  <a>Profile</a>
-                </Link>
-              </Menu.Item>
-              <Divider />
-              <Menu.Item
-                className="flex w-full items-center space-x-4 rounded-lg p-2 text-center font-semibold hover:bg-[#00DCB3] hover:text-white"
-                icon={<FaSignOutAlt fontSize={14} />}
-                onClick={handleLogout}
-              >
-                <p>Logout</p>
-              </Menu.Item>
+              </Menu.Target>
+              <Menu.Dropdown>
+                <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 text-center font-semibold hover:bg-[#00DCB3] hover:text-white">
+                  <Link href={'/auth/profile'}>
+                    <a>Profile</a>
+                  </Link>
+                </Menu.Item>
+                <Divider />
+                <Menu.Item
+                  className="flex w-full items-center space-x-4 rounded-lg p-2 text-center font-semibold hover:bg-[#00DCB3] hover:text-white"
+                  icon={<FaSignOutAlt fontSize={14} />}
+                  onClick={handleLogout}
+                >
+                  <p>Logout</p>
+                </Menu.Item>
+              </Menu.Dropdown>
             </Menu>
           </div>
         </Navbar.Section>
@@ -242,76 +242,175 @@ const AdminSidebar = ({
           closeButtonLabel="Close drawer"
           opened={opened}
           onClose={() => setOpened(false)}
-          padding="xl"
-          size="sm"
+          padding="lg"
+          size="lg"
           position="left"
-          title={
-            <div id="drawer-title" className="relative">
-              <Link href={'/'}>
-                <a>
-                  <Image
-                    src={'/android-chrome-512x512.png'}
-                    width={70}
-                    height={70}
-                  />
-                </a>
-              </Link>
-            </div>
-          }
+          className="flex h-full flex-col justify-between"
         >
-          <aside className="relative flex w-full flex-col justify-between space-y-96">
-            <div className="mb-4 ml-2 flex w-full flex-col space-y-12">
-              <Link href={'/admin/editor-portal'}>
-                <a className="flex w-full items-center space-x-2">
-                  <BiHomeCircle fontSize={40} color="#00DCB3" />
-                  <span className="w-32 rounded-md bg-[#00DCB3] px-2 py-1 text-center text-lg font-semibold capitalize text-white">
+          <div className="flex w-full flex-grow flex-col space-y-6">
+            <Link href={'/admin/editor-portal'} passHref>
+              <NavLink
+                component="a"
+                className="flex items-center"
+                label={
+                  <span className="w-32 rounded-md bg-transparent px-2 py-1 text-center text-lg font-semibold capitalize text-[#00DCB3]">
                     Portal Home
                   </span>
-                </a>
-              </Link>
+                }
+                icon={<BiHomeCircle fontSize={30} color="#00DCB3" />}
+                active={router.pathname === '/admin/editor-portal'}
+              />
+            </Link>
 
-              <Link href={'/admin/editor-portal/messages'}>
-                <a className="flex  items-center  space-x-2">
+            <Link href={'/admin/editor-portal/messages'} passHref>
+              <NavLink
+                component="a"
+                className="flex  items-center"
+                label={
+                  <span className="w-32 rounded-md bg-transparent px-2 py-1 text-center text-lg font-semibold capitalize text-[#00DCB3]">
+                    messages
+                  </span>
+                }
+                icon={
                   <Indicator
                     inline
-                    label={1}
+                    label={unreadMessages?.length}
                     size={20}
                     offset={7}
                     position="top-start"
                     color="red"
                     withBorder
                   >
-                    <FaRegEnvelope fontSize={40} color="#00DCB3" />
+                    <FaRegEnvelope fontSize={30} color="#00DCB3" />
                   </Indicator>
-                  <span className="w-32 rounded-md bg-[#00DCB3] px-2 py-1 text-center text-lg font-semibold capitalize text-white">
-                    messages
-                  </span>
-                </a>
+                }
+                active={router.pathname === '/admin/editor-portal/messages'}
+              />
+            </Link>
+            <NavLink
+              component="a"
+              className="flex items-center"
+              label={
+                <span className="w-32 whitespace-nowrap rounded-md bg-transparent px-2 py-1 text-center text-xl font-semibold capitalize text-[#00DCB3]">
+                  Content Management
+                </span>
+              }
+              icon={<FaUsers fontSize={35} color="#00DCB3" />}
+            >
+              <Link
+                href={'/admin/editor-portal/admin/county-settings'}
+                passHref
+              >
+                <NavLink
+                  component="a"
+                  label={
+                    <span className="w-32 whitespace-nowrap rounded-md bg-transparent px-2 py-1 text-center text-xl font-semibold capitalize text-[#00DCB3]">
+                      County Settings
+                    </span>
+                  }
+                  active={
+                    router.pathname ===
+                    '/admin/editor-portal/admin/county-settings'
+                  }
+                />
               </Link>
-              <Link href={'/admin/editor-portal/users'}>
-                <a className="flex items-center  space-x-2">
-                  <FaUsers fontSize={40} color="#00DCB3" />
-                  <span className="w-32 rounded-md bg-[#00DCB3] px-2 py-1 text-center text-lg font-semibold capitalize text-white">
+              <Link
+                href={'/admin/editor-portal/admin/district-settings'}
+                passHref
+              >
+                <NavLink
+                  component="a"
+                  label={
+                    <span className="w-32 whitespace-nowrap rounded-md bg-transparent px-2 py-1 text-center text-xl font-semibold capitalize text-[#00DCB3]">
+                      District Settings
+                    </span>
+                  }
+                  active={
+                    router.pathname ===
+                    '/admin/editor-portal/admin/district-settings'
+                  }
+                />
+              </Link>
+              <Link
+                href={'/admin/editor-portal/admin/section-settings'}
+                passHref
+              >
+                <NavLink
+                  component="a"
+                  label={
+                    <span className="w-32 whitespace-nowrap rounded-md bg-transparent px-2 py-1 text-center text-xl font-semibold capitalize text-[#00DCB3]">
+                      Section Settings
+                    </span>
+                  }
+                  active={
+                    router.pathname ===
+                    '/admin/editor-portal/admin/section-settings'
+                  }
+                />
+              </Link>
+              <Link
+                href={'/admin/editor-portal/admin/partner-directory'}
+                passHref
+              >
+                <NavLink
+                  component="a"
+                  label={
+                    <span className="w-32 whitespace-nowrap rounded-md bg-transparent px-2 py-1 text-center text-xl font-semibold capitalize text-[#00DCB3]">
+                      Partner Directory
+                    </span>
+                  }
+                  active={
+                    router.pathname ===
+                    '/admin/editor-portal/admin/partner-directory'
+                  }
+                />
+              </Link>
+              <Link
+                href={'/admin/editor-portal/admin/source-directory'}
+                passHref
+              >
+                <NavLink
+                  component="a"
+                  label={
+                    <span className="w-32 whitespace-nowrap  rounded-md bg-transparent px-2 py-1 text-center text-xl font-semibold capitalize text-[#00DCB3]">
+                      Source Directory
+                    </span>
+                  }
+                  active={
+                    router.pathname ===
+                    '/admin/editor-portal/admin/source-directory'
+                  }
+                />
+              </Link>
+            </NavLink>
+            <Link href={'/admin/editor-portal/users'} passHref>
+              <NavLink
+                component="a"
+                className="flex items-center"
+                label={
+                  <span className="w-32 rounded-md bg-transparent px-2 py-1 text-center text-xl font-semibold capitalize text-[#00DCB3]">
                     Users
                   </span>
-                </a>
-              </Link>
-            </div>
-            <div className="ml-2 space-y-4">
-              <Divider color="#00DCB3" />
+                }
+                icon={<FaUsers fontSize={35} color="#00DCB3" />}
+                active={router.pathname === '/admin/editor-portal/users'}
+              />
+            </Link>
+          </div>
+          <div className="-mt-10 space-y-4">
+            <Divider color="#00DCB3" />
 
-              <UnstyledButton
-                type="button"
-                onClick={handleLogout}
-                className="flex items-center space-x-2"
-              >
-                <FaPowerOff fontSize={40} fontWeight={100} color="#00DCB3" />
-                <span className="w-32 rounded-md bg-[#00DCB3] px-2 py-1 text-center text-lg font-semibold capitalize text-white">
-                  Sign Out
-                </span>
-              </UnstyledButton>
-            </div>
-          </aside>
+            <UnstyledButton
+              type="button"
+              onClick={handleLogout}
+              className="flex items-center gap-1 rounded-md bg-[#00DCB3] px-2 py-1"
+            >
+              <FaPowerOff fontSize={30} fontWeight={10} color="#fff" />
+              <span className="w-32 rounded-md bg-[#00DCB3]  text-center text-xl font-semibold capitalize text-white">
+                Sign Out
+              </span>
+            </UnstyledButton>
+          </div>
         </Drawer>
       </div>
     </header>
@@ -319,5 +418,3 @@ const AdminSidebar = ({
 }
 
 export default AdminSidebar
-
-

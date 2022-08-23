@@ -45,7 +45,7 @@ const PortalHeader = ({
   }, [])
 
   return (
-    <header className={` px-2 py-2 md:px-4 `}>
+    <header className={`py-2 px-4 `}>
       <div className="mx-auto py-2 md:px-4">
         <div className="flex flex-col items-start justify-between md:flex-row md:items-center">
           <div className="mb-2">
@@ -54,15 +54,15 @@ const PortalHeader = ({
                 imageUrl={
                   data ? (data?.logoIcon as string) : (imgUrl as string)
                 }
-                classes="md:h-10 h-14 md:w-10 w-14"
+                classes="md:h-10 h-12 md:w-10 w-12"
                 imgSize="md:h-10 h-14 md:w-10 w-14"
               />
               <div style={{ flex: 1 }}>
-                <h1 className="sm:text-base font-semibold text-[#00dcb3] text-[1.2rem]">
+                <h1 className="sm:text-base font-semibold text-[#00dcb3] text-[1rem]">
                   {title}
                 </h1>
 
-                <h3 className="sm:text-sm font-semibold text-[#3A0B99] text-base">
+                <h3 className="text-sm font-semibold text-[#3A0B99]">
                   {subTitle}
                 </h3>
               </div>
