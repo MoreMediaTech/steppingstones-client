@@ -20,6 +20,7 @@ import {
   FaBriefcase,
   FaPowerOff,
   FaSignOutAlt,
+  FaRegUser,
 } from 'react-icons/fa'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -205,7 +206,7 @@ const AdminSidebar = ({
         <Divider color="green" />
         <Navbar.Section className="w-full space-y-14 px-2">
           <div className="flex w-full items-center justify-start py-6">
-            <Menu withArrow position="right-end">
+            <Menu withArrow position="right" shadow="md" width={150}>
               <Menu.Target>
                 <UnstyledButton
                   type="button"
@@ -215,14 +216,17 @@ const AdminSidebar = ({
                 </UnstyledButton>
               </Menu.Target>
               <Menu.Dropdown>
-                <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 text-center font-semibold hover:bg-[#00DCB3] hover:text-white">
+                <Menu.Item 
+                className="flex w-full items-center  rounded-lg p-2  font-semibold hover:bg-[#00DCB3] hover:text-white" 
+                icon={<FaRegUser fontSize={14} />}
+                >
                   <Link href={'/auth/profile'}>
                     <a>Profile</a>
                   </Link>
                 </Menu.Item>
                 <Divider />
                 <Menu.Item
-                  className="flex w-full items-center space-x-4 rounded-lg p-2 text-center font-semibold hover:bg-[#00DCB3] hover:text-white"
+                  className="flex w-full items-center rounded-lg p-2  font-semibold hover:bg-[#00DCB3] hover:text-white"
                   icon={<FaSignOutAlt fontSize={14} />}
                   onClick={handleLogout}
                 >

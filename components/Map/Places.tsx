@@ -29,7 +29,17 @@ export default function Places({ setRegion, location }: PlacesProps) {
   const newData = status === 'OK' ? data.map((place) => place.description) : [`${location}`]
   return (
     <>
-      <Autocomplete value={value} defaultValue={location} onChange={setValue} data={newData} onItemSubmit={handleSelect}  />
+      <Autocomplete
+        value={value}
+        defaultValue={location}
+        onChange={setValue}
+        data={newData}
+        onItemSubmit={handleSelect}
+        placeholder="Search Map for Locality"
+        radius="md"
+        variant="filled"
+        className='rounded-md outline-none ring-0'
+      />
     </>
   )
 }

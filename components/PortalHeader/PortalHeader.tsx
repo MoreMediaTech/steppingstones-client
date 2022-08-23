@@ -69,16 +69,16 @@ const PortalHeader = ({
             </Group>
           </div>
           <div className="flex w-full items-center space-x-4 md:w-96">
-            <div className=" flex w-full items-center gap-2 rounded-lg border border-gray-300 bg-gray-50 p-1 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500">
+            <div className=" flex w-full items-center gap-2 rounded-lg border border-gray-300 bg-gray-50 px-2 py-1 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500">
               <input
                 aria-label="search-input"
                 placeholder="Search"
                 type="search"
-                className="form-input w-full border-none bg-transparent px-2 py-2 focus:border-0 focus:ring-0 focus:ring-transparent"
+                className="form-input w-full border-none bg-transparent focus:border-0 focus:ring-0 focus:ring-transparent"
               />
-              <IoIosSearch fontSize={30} fontWeight={500} />
+              <IoIosSearch fontSize={25} fontWeight={500} />
             </div>
-            <div className={!!data ? 'display: flex' : 'hidden'}>
+            {/* <div className={!!data ? 'display: flex' : 'hidden'}>
               {!!data && (
                 <Burger
                   opened={opened}
@@ -88,7 +88,7 @@ const PortalHeader = ({
                   color="#00dcb3"
                 />
               )}
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

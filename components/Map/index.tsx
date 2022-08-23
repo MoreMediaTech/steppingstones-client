@@ -45,7 +45,7 @@ const Map = ({
   )
   const options = React.useMemo<MapOptions>(
     () => ({
-      mapId: 'b181cac70f27f5e6',
+      mapId: 'b13ee47679c2d2a6',
       disableDefaultUI: true,
       clickableIcons: false,
     }),
@@ -136,14 +136,14 @@ const defaultOptions = {
 const closeOptions = {
   ...defaultOptions,
   zIndex: 3,
-  fillOpacity: 0.05,
+  fillOpacity: 0.2,
   strokeColor: '#8BC34A',
   fillColor: '#8BC34A',
 }
 const middleOptions = {
   ...defaultOptions,
   zIndex: 2,
-  fillOpacity: 0.05,
+  fillOpacity: 0.15,
   strokeColor: '#FBC02D',
   fillColor: '#FBC02D',
 }
