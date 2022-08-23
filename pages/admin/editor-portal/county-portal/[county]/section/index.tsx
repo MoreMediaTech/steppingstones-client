@@ -116,16 +116,14 @@ const Section = ({
                   )}
                 </div>
                 {sectionData?.isSubSection ? (
-                  <section className="container mx-auto w-full overflow-auto py-24 px-2 md:px-4">
+                  <section className="container mx-auto w-full overflow-auto py-24 min-h-[500px]  px-2 md:px-4">
                     {sectionData && (
                       <div className="grid h-full w-full grid-cols-1 gap-8 md:grid-cols-4">
                         <div className="h-full rounded bg-white p-2 shadow-md md:col-span-2">
                           <Map location={`${county}, UK`} />
                         </div>
-                        <div className="h-full w-full md:w-3/4">
-                          <div className="flex flex-col">
-                            <div className="w-full space-y-4 py-8">
-                              <div className="grid grid-cols-2 gap-y-4 gap-x-4">
+                        <div className="md:col-span-2 h-full w-full">
+                              <div className="grid grid-cols-2 gap-4">
                                 {sectionData?.subsections?.map(
                                   (section: SubSectionProps) => (
                                     <PortalButton
@@ -149,8 +147,6 @@ const Section = ({
                                   )
                                 )}
                               </div>
-                            </div>
-                          </div>
                         </div>
                       </div>
                     )}

@@ -86,6 +86,7 @@ const District = ({
               <Loader size="xl" variant="bars" />
             </div>
           ) : (
+
             <section className="md:h-[700px] w-full py-4  md:py-24 px-2 md:px-4">
               {districtData && (
                 <section className="grid h-full w-full grid-cols-1 gap-8 md:grid-cols-4">
