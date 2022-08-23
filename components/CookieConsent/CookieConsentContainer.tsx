@@ -50,9 +50,7 @@ const CookieConsentContainer = ({
         </p>
         <Accordion multiple>
           <Accordion.Item
-            value={
-              <p className="text-sm md:text-lg">Strictly necessary cookies</p>
-            }
+            value="Strictly necessary cookies"
             className="bg-gray-50"
           >
             <div className="flex justify-between gap-4 text-justify">
@@ -72,11 +70,7 @@ const CookieConsentContainer = ({
             </div>
           </Accordion.Item>
           <Accordion.Item
-            label={
-              <p className="text-sm md:text-lg">
-                Performance and analytics cookies
-              </p>
-            }
+            value="Performance and analytics cookies"
             className=" bg-gray-50"
           >
             <div className="flex justify-between gap-4 text-justify">
