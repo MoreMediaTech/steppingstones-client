@@ -27,15 +27,12 @@ const Map = dynamic(() => import('@components/Map'), { ssr: false })
 
 const SubSection = ({
   county,
-  subSection,
   subSectionId,
-  imageUrl,
 }: {
   county: string
   section: string
   subSection: string
   subSectionId: string
-  imageUrl: string
 }) => {
   const router = useRouter()
   const [openAddSectionModal, setAddOpenSectionModal] = useState<boolean>(false)
@@ -182,7 +179,7 @@ export const getServerSideProps: GetServerSideProps =
         context.res.end()
       }
 
-      const imageUrl = store.getState().editor.county.imageUrl
+      
       return {
         props: {
           county,
@@ -190,7 +187,6 @@ export const getServerSideProps: GetServerSideProps =
           section,
           sectionId,
           subSectionId,
-          imageUrl,
         },
       }
     }
