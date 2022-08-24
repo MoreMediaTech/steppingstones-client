@@ -15,13 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       <Provider store={store}>
         <NotificationsProvider position="top-right">
-          <AnimatePresence
-            mode="wait"
-            initial={false}
-            onExitComplete={() => window.scrollTo(0, 0)}
-          >
-            <Component {...pageProps} />
-          </AnimatePresence>
+          <Component {...pageProps} />
         </NotificationsProvider>
       </Provider>
       <CookieConsentComponent />
