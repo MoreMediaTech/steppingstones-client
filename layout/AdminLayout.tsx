@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
-import{ motion }from 'framer-motion'
 
 import { useLogoutMutation } from 'features/auth/authApiSlice'
 import { AdminSidebar } from '@components/navigation'
@@ -95,15 +94,12 @@ const AdminLayout = ({
         isOpen={isOpen}
         setIsOpen={setIsOpen}
       />
-      <motion.main
-        variants={variants} // Pass the variant object into Framer Motion
-        initial="initial" // Set the initial state to variants.hidden
-        animate="animate" // Animated state to variants.enter
+      <main
         className={`md:ml-30
         relative w-full bg-slate-50`}
       >
         {children}
-      </motion.main>
+      </main>
     </div>
   )
 }
