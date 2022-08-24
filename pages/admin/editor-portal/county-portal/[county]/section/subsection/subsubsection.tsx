@@ -110,7 +110,6 @@ export const getServerSideProps: GetServerSideProps =
         context.res.end()
       }
 
-      const imageUrl = store.getState().editor.county.imageUrl
       return {
         props: {
           county,

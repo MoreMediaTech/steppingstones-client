@@ -6,21 +6,21 @@ import { showNotification } from '@mantine/notifications'
 import { useUpdateSectionByIdMutation, useUpdateSubSectionByIdMutation } from 'features/editor/editorApiSlice'
 
 const UpdateSectionForm = ({
-  data,
+  sectionData,
   type,
   refetch,
   handleModalClose,
 }: {
   type?: 'Section' | 'SubSection'
-  data?: SubSectionProps | SectionProps
+  sectionData?: SubSectionProps | SectionProps
   refetch: () => void
   handleModalClose?: () => void
 }) => {
   const [updateSectionById, { isLoading }] = useUpdateSectionByIdMutation()
   const [updateSubSectionById, { isLoading: isLoadingSubSection }] = useUpdateSubSectionByIdMutation()
   const defaultValues = {
-    name: data?.name ? (data?.name as string) : '',
-    isLive: data?.isLive ? (data?.isLive as boolean) : false,
+    name: sectionData?.name ? (sectionData?.name as string) : '',
+    isLive: sectionData?.isLive ? (sectionData?.isLive as boolean) : false,
   }
 
   const {
@@ -39,19 +39,14 @@ const UpdateSectionForm = ({
 
   const submitHandler: SubmitHandler<Partial<IFormData>> = useCallback(
     async (data) => {
-      const newData = {
-        id: data?.id as string,
-        ...data,
-      }
+      const newData = { id: sectionData?.id, ...data }
       let response;
       try {
         if (type === 'Section') {
           response = await updateSectionById(newData as SectionProps).unwrap()
-        }
-        if(type === 'SubSection') {
+        } else if(type === 'SubSection') {
           response = await updateSubSectionById(newData as SubSectionProps).unwrap()
         }
-
         refetch()
         handleModalClose!()
         showNotification({
