@@ -26,7 +26,7 @@ const UpdateSectionModal = ({
       onClose={handleModalClose}
       title={type === 'Section' ? "Update Section" : 'Update Sub Section'}
     >
-        <UpdateSectionForm refetch={refetch} data={data} handleModalClose={handleModalClose} type={type} />
+        <UpdateSectionForm refetch={refetch} sectionData={data} handleModalClose={handleModalClose} type={type} />
     </Modal>
   )
 }
