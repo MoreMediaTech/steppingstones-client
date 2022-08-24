@@ -15,10 +15,19 @@ interface ILayout extends Children {
 }
 
 const variants = {
-  hidden: { opacity: 0, x: -200, y: 0 },
-  enter: { opacity: 1, x: 0, y: 0 },
-  exit: { opacity: 0, x: 0, y: -100 },
+  initial: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+  },
 }
+
+// {
+//   hidden: { opacity: 0, x: -200, y: 0 },
+//   enter: { opacity: 1, x: 0, y: 0 },
+//   exit: { opacity: 0, x: 0, y: -100 },
+// }
 
 const AdminLayout = ({
   title,
@@ -88,10 +97,8 @@ const AdminLayout = ({
       />
       <motion.main
         variants={variants} // Pass the variant object into Framer Motion
-        initial="hidden" // Set the initial state to variants.hidden
-        animate="enter" // Animated state to variants.enter
-        exit="exit" // Exit state (used later) to variants.exit
-        transition={{ type: 'linear' }} // Set the transition to linear
+        initial="initial" // Set the initial state to variants.hidden
+        animate="animate" // Animated state to variants.enter
         className={`md:ml-30
         relative w-full bg-slate-50`}
       >
