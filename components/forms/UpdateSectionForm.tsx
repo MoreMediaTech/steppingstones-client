@@ -39,17 +39,14 @@ const UpdateSectionForm = ({
 
   const submitHandler: SubmitHandler<Partial<IFormData>> = useCallback(
     async (data) => {
-      const newData = {
-        id: data?.id as string,
-        ...data,
-      }
+
       let response;
       try {
         if (type === 'Section') {
-          response = await updateSectionById(newData as SectionProps).unwrap()
+          response = await updateSectionById(data as SectionProps).unwrap()
         }
         if(type === 'SubSection') {
-          response = await updateSubSectionById(newData as SubSectionProps).unwrap()
+          response = await updateSubSectionById(data as SubSectionProps).unwrap()
         }
 
         refetch()
