@@ -33,7 +33,7 @@ const SubSectionsTable = ({
   handleModalClose: () => void
   refetch: () => void
 }) => {
-  const { data: subSectionData, isLoading: isLoadingSubSections } =
+  const { data: subSectionData, isLoading: isLoadingSubSections, refetch: refetchSubSection } =
     useGetSubSectionsBySectionIdQuery(sectionId)
   const [open, setOpen] = useState<boolean>(false)
   const [openModal, setOpenModal] = useState<boolean>(false)
@@ -78,7 +78,7 @@ const SubSectionsTable = ({
   const deleteHandler = useCallback(async (id: string) => {
     try {
       await deleteSubSectionById(id).unwrap()
-      refetch()
+      refetchSubSection()
       setOpenModal(false)
       showNotification({
         message: 'Section deleted successfully',
@@ -177,7 +177,7 @@ const SubSectionsTable = ({
                   </tr>
                 </thead>
                 <tbody>
-                  {data?.map((section: SubSectionProps) => (
+                  {subSectionData?.map((section: SubSectionProps) => (
                     <tr
                       key={section.id}
                       className="border-b bg-white hover:bg-gray-50"
@@ -291,7 +291,7 @@ const SubSectionsTable = ({
           key={subSection?.id}
           open={open}
           handleModalClose={handleUpdateModalClose}
-          refetch={refetch}
+          refetch={refetchSubSection}
           data={subSection as SubSectionProps}
           type={type}
         />

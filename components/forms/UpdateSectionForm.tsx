@@ -44,11 +44,9 @@ const UpdateSectionForm = ({
       try {
         if (type === 'Section') {
           response = await updateSectionById(newData as SectionProps).unwrap()
-        }
-        if(type === 'SubSection') {
+        } else if(type === 'SubSection') {
           response = await updateSubSectionById(newData as SubSectionProps).unwrap()
         }
-
         refetch()
         handleModalClose!()
         showNotification({
