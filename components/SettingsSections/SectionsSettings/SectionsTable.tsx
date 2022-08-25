@@ -4,11 +4,13 @@ import { Button } from '@mantine/core'
 import Image from 'next/image'
 import { format } from 'date-fns'
 import { enGB } from 'date-fns/locale'
+import { showNotification } from '@mantine/notifications'
 
 import steppingstonesapplogo from '../../../public/steppingstonesapplogo.png'
 import { SectionProps } from '@lib/types'
 import { useDeleteSectionByIdMutation } from 'features/editor/editorApiSlice'
-import { showNotification } from '@mantine/notifications'
+import { useAppDispatch, useAppSelector } from 'app/hooks'
+import { setSectionType } from 'features/editor/editorSlice'
 import HandleDeleteModal from '../../HandleDeleteModal/HandleDeleteModal'
 import SubSectionsTable from './SubSectionsTable'
 
@@ -32,6 +34,7 @@ const SectionsTable = ({
   handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void
   handleSelect: (e: React.ChangeEvent<HTMLInputElement>) => void
 }) => {
+  const dispatch = useAppDispatch()
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [sectionData, setSectionData] = useState<SectionProps | null>(null)
   const [openSubSectionModal, setOpenSubSectionModal] = useState<boolean>(false)
@@ -42,7 +45,7 @@ const SectionsTable = ({
     setSectionData(null)
   }
 
-  const deleteHandler = useCallback(async (id: string) => {
+  const deleteHandler = useCallback(async (id: string, type?: string) => {
     try {
       const response  = await deleteSectionById(id).unwrap()
       refetch()
@@ -199,6 +202,7 @@ const SectionsTable = ({
                           onClick={() => {
                             setOpenSubSectionModal(true)
                             setSectionData(section)
+                            setType('SubSection')
                           }}
                         >
                           View
@@ -239,6 +243,7 @@ const SectionsTable = ({
                         onClick={() => {
                           setSection(section)
                           setOpen(true)
+                          dispatch(setSectionType('Section'))
                         }}
                       >
                         Edit
@@ -251,17 +256,13 @@ const SectionsTable = ({
                         color="red"
                         leftIcon={<FaTrash fontSize={14} />}
                         className="font-medium  hover:bg-red-500 hover:text-white "
-                        onClick={() => setOpenModal(true)}
+                        onClick={() => {
+                          setOpenModal(true)
+                          setSectionData(section)
+                        }}
                       >
                         Delete
                       </Button>
-                      <HandleDeleteModal
-                        open={openModal}
-                        data={section}
-                        deleteHandler={deleteHandler}
-                        setOpenModal={setOpenModal}
-                        isLoading={isLoading}
-                      />
                     </div>
                   </td>
                 </tr>
@@ -278,8 +279,15 @@ const SectionsTable = ({
           handleModalClose={handleModalClose}
           refetch={refetch}
           sectionName={sectionData?.name as string}
-          type={type}
-          setType={setType}
+        />
+      )}
+      {openModal && (
+        <HandleDeleteModal
+          open={openModal}
+          data={sectionData}
+          deleteHandler={deleteHandler}
+          setOpenModal={setOpenModal}
+          isLoading={isLoading}
         />
       )}
     </>

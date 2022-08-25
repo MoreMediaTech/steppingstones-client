@@ -24,6 +24,7 @@ interface IEditorState {
   economicData: Partial<EconomicDataWidgetProps> | null 
   sdData: Partial<SourceDataProps> | null
   message: string
+  sectionType: string
   error: Error | null
 }
 
@@ -37,6 +38,7 @@ export const initialState: IEditorState = {
   districtSection: null,
   economicData: null,
   sdData: null,
+  sectionType: 'Section',
   message: '',
   error: { message: 'An Error occurred' },
 }
@@ -81,6 +83,9 @@ const editorSlice = createSlice({
     setSDData: (state, { payload }: PayloadAction<SourceDataProps | null>) => {
       state.sdData = payload
     },
+    setSectionType: (state, { payload }: PayloadAction<'Section' | 'SubSection'>) => {
+      state.sectionType = payload
+    },
     setError: (state, { payload }: PayloadAction<Error>) => {
       state.error = payload
     },
@@ -100,6 +105,7 @@ export const {
   setDistrictSection,
   setEconomicData,
   setSDData,
+  setSectionType,
 } = editorSlice.actions
 export const editorSelector = (state: RootState) => state.editor
 export default editorSlice.reducer

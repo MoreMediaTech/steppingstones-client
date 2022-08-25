@@ -1,5 +1,6 @@
 import Document, {
   DocumentContext,
+  DocumentInitialProps,
   Head,
   Html,
   Main,
@@ -22,5 +23,17 @@ export default class _Document extends Document {
         <ServerStyles html={initialProps.html} server={stylesServer}  key='styles'/>,
       ],
     }
+  }
+
+  render() {
+   return (
+     <Html>
+       <Head />
+       <body>
+         <Main />
+         <NextScript />
+       </body>
+     </Html>
+   )
   }
 }

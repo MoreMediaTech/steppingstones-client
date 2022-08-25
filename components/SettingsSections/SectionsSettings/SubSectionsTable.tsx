@@ -4,19 +4,20 @@ import { Button, Loader } from '@mantine/core'
 import { format } from 'date-fns'
 import { enGB } from 'date-fns/locale'
 import { Modal } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 
 import { SubSectionProps } from '@lib/types'
 import {
   useDeleteSubSectionByIdMutation,
   useGetSubSectionsBySectionIdQuery,
 } from 'features/editor/editorApiSlice'
-import { showNotification } from '@mantine/notifications'
+import { useAppDispatch, useAppSelector } from 'app/hooks'
+import { setSectionType, editorSelector } from 'features/editor/editorSlice'
 import HandleDeleteModal from '../../HandleDeleteModal/HandleDeleteModal'
 import UpdateSectionModal from './UpdateSectionModal'
 
 const SubSectionsTable = ({
-  type,
-  setType,
+
   sectionName,
   sectionId,
   openSubSectionModal,
@@ -25,23 +26,24 @@ const SubSectionsTable = ({
   refetch,
 }: {
   sectionName: string
-  type: 'Section' | 'SubSection'
   sectionId: string
   openSubSectionModal: boolean
   setOpenSubSectionModal: React.Dispatch<React.SetStateAction<boolean>>
-  setType: React.Dispatch<React.SetStateAction<'Section' | 'SubSection'>>
   handleModalClose: () => void
   refetch: () => void
 }) => {
-  const { data: subSectionData, isLoading: isLoadingSubSections, refetch: refetchSubSection } =
-    useGetSubSectionsBySectionIdQuery(sectionId)
+  const dispatch = useAppDispatch()
   const [open, setOpen] = useState<boolean>(false)
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [subSection, setSubSection] = useState<SubSectionProps | null>(null)
   const [searchResults, setSearchResults] = useState<SubSectionProps[]>([])
   const [checked, setChecked] = useState<boolean>(false)
   const [selectedSectionId, setSelectedSectionId] = useState<string[]>([])
-
+ 
+  const { sectionType } = useAppSelector(editorSelector)
+  const { data: subSectionData, isLoading: isLoadingSubSections, refetch: refetchSubSection } =
+    useGetSubSectionsBySectionIdQuery(sectionId)
+  
   const [deleteSubSectionById, { isLoading }] =
     useDeleteSubSectionByIdMutation()
 
@@ -253,7 +255,7 @@ const SubSectionsTable = ({
                             onClick={() => {
                               setSubSection(section)
                               setOpen(true)
-                              setType('SubSection')
+                              dispatch(setSectionType('SubSection'))
                             }}
                           >
                             Edit
@@ -265,17 +267,13 @@ const SubSectionsTable = ({
                             color="red"
                             leftIcon={<FaTrash fontSize={14} />}
                             className="text-xs  font-medium hover:bg-red-500 hover:text-white sm:text-base"
-                            onClick={() => setOpenModal(true)}
+                            onClick={() => {
+                              setOpenModal(true)
+                              setSubSection(section)
+                            }}
                           >
                             Delete
                           </Button>
-                          <HandleDeleteModal
-                            open={openModal}
-                            data={section}
-                            deleteHandler={deleteHandler}
-                            setOpenModal={setOpenModal}
-                            isLoading={isLoading}
-                          />
                         </div>
                       </td>
                     </tr>
@@ -293,7 +291,16 @@ const SubSectionsTable = ({
           handleModalClose={handleUpdateModalClose}
           refetch={refetchSubSection}
           data={subSection as SubSectionProps}
-          type={type}
+          type={sectionType}
+        />
+      )}
+      {openModal && (
+        <HandleDeleteModal
+          open={openModal}
+          data={subSection as SubSectionProps}
+          deleteHandler={deleteHandler}
+          setOpenModal={setOpenModal}
+          isLoading={isLoading}
         />
       )}
     </>

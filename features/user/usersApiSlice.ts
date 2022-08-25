@@ -1,11 +1,21 @@
+import { createEntityAdapter, createSelector } from '@reduxjs/toolkit'
 import { apiSlice } from 'app/api/apiSlice'
 import { setCredentials, setError } from 'features/auth/authSlice'
 import { CurrentUser } from '@lib/types'
 
+export const usersAdapter = createEntityAdapter<CurrentUser>({})
+
+const initialState = usersAdapter.getInitialState({})
+
 export const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getUser: builder.query<CurrentUser, void>({
-      query: () => '/users/getMe',
+      query: () => ({
+        url: '/users/getMe',
+        validateStatus: (response: any, result: any) => {
+          return response.status === 200 && !result.isError
+        },
+      }),
       providesTags: (result, error, arg) => [{ type: 'User', id: result?.id }],
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
@@ -22,7 +32,12 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       },
     }),
     getUsers: builder.query<CurrentUser[], void>({
-      query: () => '/users',
+      query: () => ({
+        url: '/users',
+        validateStatus: (response: any, result: any) => {
+          return response.status === 200 && !result.isError
+        },
+      }),
       providesTags: (result, error, arg) =>
         result
           ? result.map((user) => ({ type: 'User', id: user.id }))
@@ -58,7 +73,9 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         method: 'PUT',
         body: { ...user },
       }),
-      invalidatesTags: (result, error, arg) => [{ type: 'User', id: result?.id }],
+      invalidatesTags: (result, error, arg) => [
+        { type: 'User', id: result?.id },
+      ],
     }),
   }),
   overrideExisting: true,
@@ -72,3 +89,9 @@ export const {
   useUpdateUserMutation,
   useResetCredentialsMutation,
 } = usersApiSlice
+
+// returns the query result for the current user
+export const selectUserResult = usersApiSlice.endpoints.getUser.select()
+
+// creates memoized selector for the current user
+const selectUserData = createSelector(selectUserResult, (result) => result.data)

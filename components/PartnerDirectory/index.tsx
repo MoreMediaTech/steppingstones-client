@@ -101,7 +101,6 @@ const PartnerDirectorySection = ({
         position: '',
         projectsResponsibleFor: '',
         closingDate: new Date(),
-        isEmail: false,
       })
     }
     if (type === 'Update') {
@@ -112,7 +111,6 @@ const PartnerDirectorySection = ({
         position: partnerData?.position,
         projectsResponsibleFor: partnerData?.projectsResponsibleFor,
         closingDate: new Date(partnerData?.closingDate as Date),
-        isEmail: partnerData?.isEmail,
       })
     }
   }, [type])

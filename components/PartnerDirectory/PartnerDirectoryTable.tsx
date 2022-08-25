@@ -46,7 +46,7 @@ const PartnerDirectoryTable = ({
     }
   }, [])
   return (
-    <section className="relative my-8 bg-white px-2 shadow-md sm:rounded-lg md:w-full">
+    <section className="relative bg-white px-2 shadow-md sm:rounded-lg md:px-4 space-y-2">
       <div className="p-4 ">
         <label htmlFor="table-search" className="sr-only" />
         <div className="relative mt-1">
@@ -73,17 +73,19 @@ const PartnerDirectoryTable = ({
           />
         </div>
       </div>
-      <div className="relative overflow-x-auto">
-        <table className="table w-full  text-left text-gray-500">
+      <div className="relative overflow-x-auto md:p-4">
+        <table className="table text-left text-gray-500">
           <thead className="bg-gray-100 text-xs uppercase text-gray-700">
             <tr>
-              <th scope="col" className="p-4">
-              </th>
+              <th scope="col" className="p-4"></th>
               <th scope="col" className="px-6 py-3 text-left">
                 Organisation
               </th>
               <th scope="col" className="px-6 py-3">
                 Project
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Closing Date
               </th>
               <th scope="col" className="px-6 py-3">
                 full name
@@ -99,7 +101,7 @@ const PartnerDirectoryTable = ({
               </th>
             </tr>
           </thead>
-          <tbody className="overflow-auto">
+          <tbody>
             {partnerData?.map((partner: PartnerData) => (
               <tr
                 key={partner.id}
@@ -141,6 +143,22 @@ const PartnerDirectoryTable = ({
                   className="whitespace-nowrap px-6 py-4 text-left text-sm font-medium text-gray-900"
                 >
                   <p>{partner?.projectsResponsibleFor}</p>
+                </td>
+                <td
+                  scope="row"
+                  className="whitespace-nowrap px-6 py-4 text-left text-sm font-medium text-gray-900"
+                >
+                  <div className="flex items-center justify-center rounded-lg bg-lime-400 text-lg px-1 text-white shadow-lg">
+                    <p>
+                      {format(
+                        new Date(partner?.closingDate),
+                        'MM/dd/yyyy HH:mm:ss',
+                        {
+                          locale: enGB,
+                        }
+                      )}
+                    </p>
+                  </div>
                 </td>
                 <td
                   scope="row"

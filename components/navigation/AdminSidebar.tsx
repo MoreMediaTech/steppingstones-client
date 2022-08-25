@@ -29,6 +29,7 @@ import { useRouter } from 'next/router'
 import { useGetAllMailQuery } from 'features/email/emailApiSlice'
 import { MessageProps } from '@lib/types'
 import { AppLogo } from './AppLogo'
+import Accordion from '@components/Accordion'
 
 const AdminSidebar = ({
   show,
@@ -101,11 +102,6 @@ const AdminSidebar = ({
               </a>
             </Link>
           </Tooltip>
-          {/* <Link href={'/admin/editor-portal'}>
-              <a className="flex items-center justify-center py-12">
-                <MdOutlineCreateNewFolder fontSize={30} color="#00DCB3" />
-              </a>
-            </Link> */}
           <Tooltip
             label={
               <p className="w-36 text-center font-semibold text-white">
@@ -204,8 +200,8 @@ const AdminSidebar = ({
           </Tooltip>
         </Navbar.Section>
         <Divider color="green" />
-        <Navbar.Section className="w-full space-y-14 px-2">
-          <div className="flex w-full items-center justify-start py-6">
+        <Navbar.Section className="w-full px-2">
+          <div className="flex w-full items-center justify-start py-2">
             <Menu withArrow position="right" shadow="md" width={150}>
               <Menu.Target>
                 <UnstyledButton
@@ -216,9 +212,9 @@ const AdminSidebar = ({
                 </UnstyledButton>
               </Menu.Target>
               <Menu.Dropdown>
-                <Menu.Item 
-                className="flex w-full items-center  rounded-lg p-2  font-semibold hover:bg-[#00DCB3] hover:text-white" 
-                icon={<FaRegUser fontSize={14} />}
+                <Menu.Item
+                  className="flex w-full items-center  rounded-lg p-2  font-semibold hover:bg-[#00DCB3] hover:text-white"
+                  icon={<FaRegUser fontSize={14} />}
                 >
                   <Link href={'/auth/profile'}>
                     <a>Profile</a>
@@ -252,153 +248,81 @@ const AdminSidebar = ({
           className="flex h-full flex-col justify-between"
         >
           <div className="flex w-full flex-grow flex-col space-y-6">
-            <Link href={'/admin/editor-portal'} passHref>
-              <NavLink
-                component="a"
-                className="flex items-center"
-                label={
-                  <span className="w-32 rounded-md bg-transparent px-2 py-1 text-center text-lg font-semibold capitalize text-[#00DCB3]">
-                    Portal Home
-                  </span>
-                }
-                icon={<BiHomeCircle fontSize={30} color="#00DCB3" />}
-                active={router.pathname === '/admin/editor-portal'}
-              />
+            <Link href={'/admin/editor-portal'}>
+              <a className="flex items-center">
+                <BiHomeCircle fontSize={30} color="#00DCB3" />
+                <span className="w-32 rounded-md bg-transparent px-2 py-1 text-center text-lg font-semibold capitalize text-[#00DCB3]">
+                  Portal Home
+                </span>
+              </a>
             </Link>
 
             <Link href={'/admin/editor-portal/messages'} passHref>
-              <NavLink
-                component="a"
-                className="flex  items-center"
-                label={
-                  <span className="w-32 rounded-md bg-transparent px-2 py-1 text-center text-lg font-semibold capitalize text-[#00DCB3]">
-                    messages
-                  </span>
-                }
-                icon={
-                  <Indicator
-                    inline
-                    label={unreadMessages?.length}
-                    size={20}
-                    offset={7}
-                    position="top-start"
-                    color="red"
-                    withBorder
-                  >
-                    <FaRegEnvelope fontSize={30} color="#00DCB3" />
-                  </Indicator>
-                }
-                active={router.pathname === '/admin/editor-portal/messages'}
-              />
-            </Link>
-            <NavLink
-              component="a"
-              className="flex items-center"
-              label={
-                <span className="w-32 whitespace-nowrap rounded-md bg-transparent px-2 py-1 text-center text-xl font-semibold capitalize text-[#00DCB3]">
-                  Content Management
+              <a className="flex  items-center">
+                <Indicator
+                  inline
+                  label={unreadMessages?.length}
+                  size={20}
+                  offset={7}
+                  position="top-start"
+                  color="red"
+                  withBorder
+                >
+                  <FaRegEnvelope fontSize={30} color="#00DCB3" />
+                </Indicator>
+                <span className="w-32 rounded-md bg-transparent px-2 py-1 text-center text-lg font-semibold capitalize text-[#00DCB3]">
+                  messages
                 </span>
-              }
-              icon={<FaUsers fontSize={35} color="#00DCB3" />}
-            >
-              <Link
-                href={'/admin/editor-portal/admin/county-settings'}
-                passHref
-              >
-                <NavLink
-                  component="a"
-                  label={
-                    <span className="w-32 whitespace-nowrap rounded-md bg-transparent px-2 py-1 text-center text-xl font-semibold capitalize text-[#00DCB3]">
-                      County Settings
-                    </span>
-                  }
-                  active={
-                    router.pathname ===
-                    '/admin/editor-portal/admin/county-settings'
-                  }
-                />
-              </Link>
-              <Link
-                href={'/admin/editor-portal/admin/district-settings'}
-                passHref
-              >
-                <NavLink
-                  component="a"
-                  label={
-                    <span className="w-32 whitespace-nowrap rounded-md bg-transparent px-2 py-1 text-center text-xl font-semibold capitalize text-[#00DCB3]">
-                      District Settings
-                    </span>
-                  }
-                  active={
-                    router.pathname ===
-                    '/admin/editor-portal/admin/district-settings'
-                  }
-                />
-              </Link>
-              <Link
-                href={'/admin/editor-portal/admin/section-settings'}
-                passHref
-              >
-                <NavLink
-                  component="a"
-                  label={
-                    <span className="w-32 whitespace-nowrap rounded-md bg-transparent px-2 py-1 text-center text-xl font-semibold capitalize text-[#00DCB3]">
-                      Section Settings
-                    </span>
-                  }
-                  active={
-                    router.pathname ===
-                    '/admin/editor-portal/admin/section-settings'
-                  }
-                />
-              </Link>
-              <Link
-                href={'/admin/editor-portal/admin/partner-directory'}
-                passHref
-              >
-                <NavLink
-                  component="a"
-                  label={
-                    <span className="w-32 whitespace-nowrap rounded-md bg-transparent px-2 py-1 text-center text-xl font-semibold capitalize text-[#00DCB3]">
-                      Partner Directory
-                    </span>
-                  }
-                  active={
-                    router.pathname ===
-                    '/admin/editor-portal/admin/partner-directory'
-                  }
-                />
-              </Link>
-              <Link
-                href={'/admin/editor-portal/admin/source-directory'}
-                passHref
-              >
-                <NavLink
-                  component="a"
-                  label={
-                    <span className="w-32 whitespace-nowrap  rounded-md bg-transparent px-2 py-1 text-center text-xl font-semibold capitalize text-[#00DCB3]">
-                      Source Directory
-                    </span>
-                  }
-                  active={
-                    router.pathname ===
-                    '/admin/editor-portal/admin/source-directory'
-                  }
-                />
-              </Link>
-            </NavLink>
-            <Link href={'/admin/editor-portal/users'} passHref>
-              <NavLink
-                component="a"
-                className="flex items-center"
-                label={
-                  <span className="w-32 rounded-md bg-transparent px-2 py-1 text-center text-xl font-semibold capitalize text-[#00DCB3]">
-                    Users
+              </a>
+            </Link>
+            <Accordion
+              title={
+                <div className="flex items-center">
+                  <FaUsers fontSize={35} color="#00DCB3" />
+                  <span className="w-32 whitespace-nowrap rounded-md bg-transparent px-2 py-1 text-center text-xl font-semibold capitalize text-[#00DCB3]">
+                    Content Management
                   </span>
-                }
-                icon={<FaUsers fontSize={35} color="#00DCB3" />}
-                active={router.pathname === '/admin/editor-portal/users'}
-              />
+                </div>
+              }
+            >
+              <div className="flex flex-col gap-y-1 px-4">
+                <Link
+                  href={'/admin/editor-portal/admin/county-settings'}
+                  passHref
+                >
+                  <a className="w-32 whitespace-nowrap rounded-md bg-transparent px-2 py-1 text-center text-xl font-semibold capitalize text-[#00DCB3] active:text-white active:bg-[#00DCB3]">
+                    County Settings
+                  </a>
+                </Link>
+                <Link href={'/admin/editor-portal/admin/district-settings'}>
+                  <a className="w-32 whitespace-nowrap rounded-md bg-transparent px-2 py-1 text-center text-xl font-semibold capitalize text-[#00DCB3]">
+                    District Settings
+                  </a>
+                </Link>
+                <Link href={'/admin/editor-portal/admin/section-settings'}>
+                  <a className="w-32 whitespace-nowrap rounded-md bg-transparent px-2 py-1 text-center text-xl font-semibold capitalize text-[#00DCB3]">
+                    Section Settings
+                  </a>
+                </Link>
+                <Link href={'/admin/editor-portal/admin/partner-directory'}>
+                  <a className="w-32 whitespace-nowrap rounded-md bg-transparent px-2 py-1 text-center text-xl font-semibold capitalize text-[#00DCB3]">
+                    Partner Directory
+                  </a>
+                </Link>
+                <Link href={'/admin/editor-portal/admin/source-directory'}>
+                  <a className="w-32 whitespace-nowrap rounded-md bg-transparent px-2 py-1 text-center text-xl font-semibold capitalize text-[#00DCB3]">
+                    Source Directory
+                  </a>
+                </Link>
+              </div>
+            </Accordion>
+            <Link href={'/admin/editor-portal/users'}>
+              <a className="flex items-center">
+                <FaUsers fontSize={35} color="#00DCB3" />
+                <span className="w-32 rounded-md bg-transparent px-2 py-1 text-center text-xl font-semibold capitalize text-[#00DCB3]">
+                  Users
+                </span>
+              </a>
             </Link>
           </div>
           <div className="-mt-10 space-y-4">

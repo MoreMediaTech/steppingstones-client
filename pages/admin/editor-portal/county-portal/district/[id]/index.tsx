@@ -54,7 +54,7 @@ const DistrictSection = ({ id, district }: { id: string; district: string; }) =>
               subTitle="Review or edit the content below"
               data={laSectionData}
             />
-            <section className="container mx-auto px-4 py-2">
+            <section className="px-2 sm:px-4 py-2">
               <div className="flex justify-between">
                 <Button
                   type="button"
@@ -91,7 +91,7 @@ const DistrictSection = ({ id, district }: { id: string; district: string; }) =>
               </div>
             ) : (
               <section className="w-full overflow-auto py-2 px-2 md:px-4">
-                <div className="container mx-auto flex justify-end px-2 md:px-4">
+                <div className="flex justify-end px-2 md:px-4">
                   {laSectionData?.isEconomicData && (
                     <>
                       {laSectionData.isLive ? (
@@ -107,7 +107,7 @@ const DistrictSection = ({ id, district }: { id: string; district: string; }) =>
                   )}
                 </div>
                 {laSectionData?.isEconomicData ? (
-                  <section className="container mx-auto w-full overflow-auto py-24 px-2 md:px-4">
+                  <section className="w-full overflow-auto py-24 px-2 md:px-4">
                     <EconomicDataSection
                       id={laSectionData?.id}
                       opened={opened}
@@ -145,24 +145,23 @@ const DistrictSection = ({ id, district }: { id: string; district: string; }) =>
   )
 }
 
-export const getServerSideProps: GetServerSideProps =
-  wrapper.getServerSideProps(
-    (store) => async (context: GetServerSidePropsContext) => {
-      const { req } = context
-      const cookies = req.cookies.ss_refresh_token
-      const { district, districtId } = context.query
-      if (!cookies) {
-        context.res.writeHead(302, { Location: NEXT_URL })
-        context.res.end()
-      }
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const { req } = context
+  const cookies = req.cookies.ss_refresh_token
+  const { district, districtId } = context.query
+  if (!cookies) {
+    context.res.writeHead(302, { Location: NEXT_URL })
+    context.res.end()
+  }
 
-      return {
-        props: {
-          district,
-          id: context?.params?.id,
-        },
-      }
-    }
-  )
+  return {
+    props: {
+      district,
+      id: context?.params?.id,
+    },
+  }
+}
 
 export default DistrictSection

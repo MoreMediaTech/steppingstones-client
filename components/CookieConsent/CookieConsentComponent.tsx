@@ -19,7 +19,7 @@ import CookieConsentContainer from './CookieConsentContainer'
      secure: cookieSecurity,
    }
 
-   Cookies.set(cookieName, JSON.stringify(cookieValue), cookieOptions)
+   Cookies.set(cookieName, JSON.stringify(cookieValue))
  }
 
 const CookieConsentComponent = () => {

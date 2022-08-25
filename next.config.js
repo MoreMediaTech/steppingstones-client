@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
   reactStrictMode: true,
-  newNextLinkBehavior: true,
   async rewrites() {
     return [
       {

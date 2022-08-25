@@ -17,7 +17,7 @@ const PartnerDirectory = () => {
   const [isPartnerDirectoryModalOpen, setIsPartnerDirectoryModalOpen] =
     useState<boolean>(false)
   return (
-    <AdminLayout title="Meetings">
+    <AdminLayout title="Admin | Partner-Directory">
       <ComponentShield
         RBAC
         showForRole={'SS_EDITOR'}
@@ -30,19 +30,19 @@ const PartnerDirectory = () => {
             title={`${user?.name}`}
             subTitle="Partner Directory"
           />
-          <section className="px-2 sm:px-4 mx-auto space-y-4">
-            <div className="flex flex-col justify-start gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-0">
-              <span className="text-2xl font-bold">Partner Directory</span>
+          <section className="px-2 sm:px-4 space-y-4 w-full">
+            <div className="flex flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between ">
+              <span className="text-lg sm:text-2xl font-bold">Partner Directory</span>
               <Button
                 type="button"
                 color="outline"
-                className="md:w-1/4"
+                className="w-50 md:w-1/4"
                 onClick={() => {
                   setIsPartnerDirectoryModalOpen(true)
                   dispatch(setType('Create'))
                 }}
               >
-                Add LA Section
+                Add Partner
               </Button>
             </div>
             <PartnerDirectorySection

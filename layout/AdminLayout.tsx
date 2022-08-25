@@ -51,7 +51,7 @@ const AdminLayout = ({
       data-testid="layout"
     >
       <Head>
-        <title>{title} | Stepping Stones</title>
+        <title>{`${title} | Stepping Stones`}</title>
         <link rel="icon" href="/favicon.ico" />
         <link
           rel="apple-touch-icon"

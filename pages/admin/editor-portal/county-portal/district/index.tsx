@@ -101,6 +101,7 @@ const District = ({
                             key={`${section.id}`}
                             type="button"
                             color='primaryFilled'
+                            isLive={section.isLive}
                             onClick={() =>
                               router.push({
                                 pathname: `${NEXT_URL}/admin/editor-portal/county-portal/district/${section.id}`,

@@ -23,7 +23,7 @@ function MainLayout({ title, description, children }: ILayout): JSX.Element {
       className="relative flex flex-col justify-between h-screen"
     >
       <Head>
-        <title>{title} | Stepping Stones App</title>
+        <title>{`${title} | Stepping Stones App`}</title>
         <link rel="icon" href="/favicon.ico" />
         <link
           rel="apple-touch-icon"

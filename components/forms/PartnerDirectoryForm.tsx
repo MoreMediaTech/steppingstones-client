@@ -36,7 +36,7 @@ const PartnerDirectoryForm = ({
       aria-label="update-user-form"
       data-testid="update-user-form"
       onSubmit={handleSubmit(submitHandler)}
-      className="container mx-auto space-y-4  bg-white  "
+      className="container mx-auto space-y-6  bg-white"
     >
       <div className="grid grid-cols-1 gap-x-4 gap-y-6  bg-transparent sm:grid-cols-2 md:grid-cols-3">
         <FormInput
@@ -146,13 +146,6 @@ const PartnerDirectoryForm = ({
           errors={errors.closingDate}
         />
 
-        <FormCheckbox
-          label="Select For Emailing"
-          title="isEmail"
-          type="checkbox"
-          classes="sm:mt-8"
-          {...register('isEmail')}
-        />
       </div>
       <div className="grid grid-cols-1 gap-x-4 gap-y-6  bg-transparent sm:grid-cols-2 md:grid-cols-3">
         <Button type="submit" loading={isLoading} variant="outline">
