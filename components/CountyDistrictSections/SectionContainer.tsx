@@ -66,14 +66,14 @@ const SectionContainer = ({
       [value, sectionData]
     )
   return (
-    <section className="relative w-full flex-grow px-2 py-2  md:py-8 md:px-8">
-      <section className="container mx-auto">
+    <section className="relative w-full flex-grow px-2 py-2  md:py-8 md:px-4">
+      <section>
         {isLoadingSection ? (
           <div className="flex h-[700px] items-center justify-center">
             <Loader size="xl" variant="bars" />
           </div>
         ) : (
-          <Paper shadow="lg" p="md" radius="md" withBorder className="w-full">
+          <Paper shadow="sm" p="md" radius="md" withBorder className="w-full">
             <div className="flex w-full items-center justify-between mb-4">
               {sectionData?.isLive ? (
                 <div className="rounded-xl bg-[#5E17EB] px-2 py-1 text-xl font-semibold text-white">

@@ -29,6 +29,7 @@ const baseQuery: BaseQueryFn<
   prepareHeaders: (headers, api) => {
     const { auth } = api.getState() as RootState
     const token = auth.token
+    console.log("🚀 ~ file: apiSlice.ts ~ line 32 ~ token", token)
     if (token) {
       headers.set('authorization', `Bearer ${token}`)
     }

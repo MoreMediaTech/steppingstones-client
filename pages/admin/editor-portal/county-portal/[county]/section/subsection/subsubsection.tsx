@@ -97,27 +97,26 @@ const SubSubSection = ({
   )
 }
 
-export const getServerSideProps: GetServerSideProps =
-  wrapper.getServerSideProps(
-    (store) => async (context: GetServerSidePropsContext) => {
-      const { req } = context
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const { req } = context
 
-      const cookies = req.cookies.ss_refresh_token
-      const { county, subSubSection, subSubSectionId } =
-        context.query
-      if (!cookies) {
-        context.res.writeHead(302, { Location: NEXT_URL })
-        context.res.end()
-      }
+  const cookies = req.cookies.ss_refresh_token
+  const { county, subSubSection, subSubSectionId } = context.query
+  if (!cookies) {
+    context.res.writeHead(302, { Location: NEXT_URL })
+    context.res.end()
+  }
 
-      return {
-        props: {
-          county,
-          subSubSection,
-          subSubSectionId,
-        },
-      }
-    }
-  )
+  return {
+    props: {
+      county,
+      subSubSection,
+      subSubSectionId,
+    },
+  }
+}
+
 
 export default SubSubSection

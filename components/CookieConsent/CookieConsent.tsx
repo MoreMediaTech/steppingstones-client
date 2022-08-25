@@ -25,7 +25,7 @@ export const getCookieConsentValue = (name = defaultCookieConsentName) => {
  * Remove the cookie on browser in order to allow user to change their consent
  * @param {*} name optional name of the cookie
  */
-export const resetCookieConsentValue = (name = defaultCookieConsentName) => {
+export const resetCookieConsentValue = (name: string = defaultCookieConsentName) => {
   Cookies.remove(name)
 }
 

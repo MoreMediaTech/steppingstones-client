@@ -204,17 +204,6 @@ const editorApi = editorApiSlice.injectEndpoints({
         url: `editor/section/${id}`,
       }),
       providesTags: (result, error, arg) => [{ type: 'Editor', id: arg }],
-      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-        try {
-          const result = await queryFulfilled
-          dispatch(setSection(result.data))
-        } catch (error) {
-          if (error instanceof Error) {
-            dispatch(setError({ message: error.message }))
-          }
-          dispatch(setError({ message: 'Unable to get County objects' }))
-        }
-      },
     }),
     deleteSectionById: builder.mutation<
       { success: boolean; message: string },
@@ -253,17 +242,6 @@ const editorApi = editorApiSlice.injectEndpoints({
         url: `editor/subsection/${id}`,
       }),
       providesTags: (result, error, arg) => [{ type: 'Editor', id: arg }],
-      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-        try {
-          const result = await queryFulfilled
-          dispatch(setSubSection(result.data))
-        } catch (error) {
-          if (error instanceof Error) {
-            dispatch(setError({ message: error.message }))
-          }
-          dispatch(setError({ message: 'Unable to get County objects' }))
-        }
-      },
     }),
     getSubSectionsBySectionId: builder.query<SubSectionProps[], string>({
       query: (sectionId: string) => ({

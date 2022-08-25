@@ -66,7 +66,7 @@ const Section = ({
               }
               data={sectionData}
             />
-            <section className="container mx-auto px-4 py-2">
+            <section className="px-2 py-2 sm:px-4">
               <div className="flex justify-between">
                 <Button
                   type="button"
@@ -100,7 +100,7 @@ const Section = ({
               </div>
             ) : (
               <section className="w-full overflow-auto py-2 px-2 md:px-4">
-                <div className="container mx-auto flex justify-end px-2 md:px-4">
+                <div className="flex justify-end px-2 md:px-4">
                   {sectionData?.isSubSection && (
                     <>
                       {sectionData?.isLive ? (
@@ -116,37 +116,37 @@ const Section = ({
                   )}
                 </div>
                 {sectionData?.isSubSection ? (
-                  <section className="container mx-auto w-full overflow-auto py-24 min-h-[500px]  px-2 md:px-4">
+                  <section className="min-h-[500px] w-full overflow-auto py-2 md:py-24  px-2 md:px-4">
                     {sectionData && (
                       <div className="grid h-full w-full grid-cols-1 gap-8 md:grid-cols-4">
                         <div className="h-full rounded bg-white p-2 shadow-md md:col-span-2">
                           <Map location={`${county}, UK`} />
                         </div>
-                        <div className="md:col-span-2 h-full w-full">
-                              <div className="grid grid-cols-2 gap-4">
-                                {sectionData?.subsections?.map(
-                                  (section: SubSectionProps) => (
-                                    <PortalButton
-                                      key={`${section.id}`}
-                                      type="button"
-                                      color='primaryFilled'
-                                      isLive={section?.isLive}
-                                      onClick={() =>
-                                        router.replace({
-                                          pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}/section/subsection`,
-                                          query: {
-                                            ...router.query,
-                                            subSection: section.name,
-                                            subSectionId: section.id,
-                                          },
-                                        })
-                                      }
-                                    >
-                                      {section?.name}
-                                    </PortalButton>
-                                  )
-                                )}
-                              </div>
+                        <div className="h-full w-full md:col-span-2">
+                          <div className="grid grid-cols-2 gap-4">
+                            {sectionData?.subsections?.map(
+                              (section: SubSectionProps) => (
+                                <PortalButton
+                                  key={`${section.id}`}
+                                  type="button"
+                                  color="primaryFilled"
+                                  isLive={section?.isLive}
+                                  onClick={() =>
+                                    router.replace({
+                                      pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}/section/subsection`,
+                                      query: {
+                                        ...router.query,
+                                        subSection: section.name,
+                                        subSectionId: section.id,
+                                      },
+                                    })
+                                  }
+                                >
+                                  {section?.name}
+                                </PortalButton>
+                              )
+                            )}
+                          </div>
                         </div>
                       </div>
                     )}
@@ -177,25 +177,25 @@ const Section = ({
   )
 }
 
-export const getServerSideProps: GetServerSideProps =
-  wrapper.getServerSideProps(
-    (store) => async (context: GetServerSidePropsContext) => {
-      const { req } = context
-      const cookies = req.cookies.ss_refresh_token
-      const { sectionId, county, countyId } = context.query
-      if (!cookies) {
-        context.res.writeHead(302, { Location: NEXT_URL })
-        context.res.end()
-      }
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const { req } = context
+  const cookies = req.cookies.ss_refresh_token
+  const { sectionId, county, countyId } = context.query
+  if (!cookies) {
+    context.res.writeHead(302, { Location: NEXT_URL })
+    context.res.end()
+  }
 
-      return {
-        props: {
-          county,
-          sectionId,
-          countyId,
-        },
-      }
-    }
-  )
+  return {
+    props: {
+      county,
+      sectionId,
+      countyId,
+    },
+  }
+}
+  
 
 export default Section
