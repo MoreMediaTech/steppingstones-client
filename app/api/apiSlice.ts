@@ -62,7 +62,7 @@ const baseQueryWithReAuth: BaseQueryFn = async (
       // store new token
       localStorage.setItem('token', refreshResult?.data?.token as string)
       api.dispatch(
-        setCredentials({ token: refreshResult?.data?.token as string, currentUser: user })
+        setCredentials({ token: refreshResult?.data?.token as string })
       )
       // retry original request
       result = await baseQuery(args, api, extraOptions)

@@ -62,8 +62,8 @@ const Navbar = () => {
     <nav
       className={`top-0 z-10  flex w-full px-2 py-2 sm:px-16 ${
         pos === 'top'
-          ? 'absolute bg-primary-light-100 dark:bg-primary-dark-800'
-          : 'shadow-b-2xl fixed bg-primary-light-100 dark:bg-primary-dark-800'
+          ? 'absolute bg-primary-light-50 dark:bg-primary-dark-800'
+          : 'shadow-b-2xl fixed bg-primary-light-50 dark:bg-primary-dark-800'
       }`}
     >
       <div className="container mx-auto flex max-w-screen-xl items-center">
@@ -231,8 +231,8 @@ const Navbar = () => {
                   fontSize={18}
                   className={`${
                     router.asPath === '/' && pos === 'top'
-                      ? 'text-gray-200'
-                      : 'text-gray-900 dark:text-gray-200'
+                      ? 'text-primary-dark-100 dark:text-primary-light-100'
+                      : 'text-primary-dark-100 dark:text-primary-light-100'
                   } font-bold `}
                 />
               )}

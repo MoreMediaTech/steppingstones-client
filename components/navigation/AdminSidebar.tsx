@@ -60,7 +60,7 @@ const AdminSidebar = ({
 
   // const width = isOpen ? '288' : '100'
   return (
-    <header className="relative bg-slate-50">
+    <header className="relative bg-primary-light-100 dark:bg-primary-dark-800 h-screen">
       <div className=" mb-2  flex items-center justify-between px-4 py-2 md:hidden ">
         <AppLogo />
         <Burger
@@ -72,8 +72,9 @@ const AdminSidebar = ({
         />
       </div>
 
-      <Navbar p="sm" className="w-30 hidden flex-col space-y-8 md:flex">
-        <Navbar.Section mt="xs">
+      <aside
+        className="w-30 py-2 px-1 hidden h-full flex-col space-y-8 bg-primary-light-100 dark:bg-primary-dark-700 md:flex"
+      >
           <Link href={'/'}>
             <a>
               <Image
@@ -83,11 +84,10 @@ const AdminSidebar = ({
               />
             </a>
           </Link>
-        </Navbar.Section>
-        <Navbar.Section grow className="flex flex-col space-y-14 px-2">
+        <div className="flex flex-grow flex-col space-y-14 px-2">
           <Tooltip
             label={
-              <p className="w-36 text-center font-semibold text-white">
+              <p className="w-36 text-center font-semibold text-primary-light-100">
                 Portal Home
               </p>
             }
@@ -104,7 +104,7 @@ const AdminSidebar = ({
           </Tooltip>
           <Tooltip
             label={
-              <p className="w-36 text-center font-semibold text-white">
+              <p className="w-36 text-center font-semibold text-primary-light-100">
                 Messages
               </p>
             }
@@ -135,7 +135,7 @@ const AdminSidebar = ({
               <Menu.Target>
                 <Tooltip
                   label={
-                    <p className="w-full text-center font-semibold text-white">
+                    <p className="w-full text-center font-semibold text-primary-light-100">
                       Content Management
                     </p>
                   }
@@ -155,27 +155,27 @@ const AdminSidebar = ({
               <Menu.Dropdown>
                 <Menu.Label>Content Settings</Menu.Label>
 
-                <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 font-semibold hover:bg-[#00DCB3] hover:text-white">
+                <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 font-semibold hover:bg-[#00DCB3] hover:text-primary-light-100">
                   <Link href={'/admin/editor-portal/admin/county-settings'}>
                     <a>Manage County</a>
                   </Link>
                 </Menu.Item>
-                <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 font-semibold hover:bg-[#00DCB3] hover:text-white">
+                <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 font-semibold hover:bg-[#00DCB3] hover:text-primary-light-100">
                   <Link href={'/admin/editor-portal/admin/district-settings'}>
                     <a>Manage District</a>
                   </Link>
                 </Menu.Item>
-                <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 font-semibold hover:bg-[#00DCB3] hover:text-white">
+                <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 font-semibold hover:bg-[#00DCB3] hover:text-primary-light-100">
                   <Link href={'/admin/editor-portal/admin/section-settings'}>
                     <a>Manage Section</a>
                   </Link>
                 </Menu.Item>
-                <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 font-semibold hover:bg-[#00DCB3] hover:text-white">
+                <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 font-semibold hover:bg-[#00DCB3] hover:text-primary-light-100">
                   <Link href={'/admin/editor-portal/admin/partner-directory'}>
                     <a>Partner Directory</a>
                   </Link>
                 </Menu.Item>
-                <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 font-semibold hover:bg-[#00DCB3] hover:text-white">
+                <Menu.Item className="flex w-full items-center space-x-4 rounded-lg p-2 font-semibold hover:bg-[#00DCB3] hover:text-primary-light-100">
                   <Link href={'/admin/editor-portal/admin/source-directory'}>
                     <a>Source Directory</a>
                   </Link>
@@ -185,7 +185,9 @@ const AdminSidebar = ({
           </Group>
           <Tooltip
             label={
-              <p className="w-36 text-center font-semibold text-white">Users</p>
+              <p className="w-36 text-center font-semibold text-primary-light-100">
+                Users
+              </p>
             }
             closeDelay={500}
             color="teal"
@@ -198,9 +200,9 @@ const AdminSidebar = ({
               </a>
             </Link>
           </Tooltip>
-        </Navbar.Section>
+        </div>
         <Divider color="green" />
-        <Navbar.Section className="w-full px-2">
+        <div className="w-full px-2">
           <div className="flex w-full items-center justify-start py-2">
             <Menu withArrow position="right" shadow="md" width={150}>
               <Menu.Target>
@@ -213,7 +215,7 @@ const AdminSidebar = ({
               </Menu.Target>
               <Menu.Dropdown>
                 <Menu.Item
-                  className="flex w-full items-center  rounded-lg p-2  font-semibold hover:bg-[#00DCB3] hover:text-white"
+                  className="flex w-full items-center  rounded-lg p-2  font-semibold hover:bg-[#00DCB3] hover:text-primary-light-100"
                   icon={<FaRegUser fontSize={14} />}
                 >
                   <Link href={'/auth/profile'}>
@@ -222,7 +224,7 @@ const AdminSidebar = ({
                 </Menu.Item>
                 <Divider />
                 <Menu.Item
-                  className="flex w-full items-center rounded-lg p-2  font-semibold hover:bg-[#00DCB3] hover:text-white"
+                  className="flex w-full items-center rounded-lg p-2  font-semibold hover:bg-[#00DCB3] hover:text-primary-light-100"
                   icon={<FaSignOutAlt fontSize={14} />}
                   onClick={handleLogout}
                 >
@@ -231,8 +233,8 @@ const AdminSidebar = ({
               </Menu.Dropdown>
             </Menu>
           </div>
-        </Navbar.Section>
-      </Navbar>
+        </div>
+      </aside>
 
       {/* Mobile navigation */}
       <div className="md:hidden">
@@ -290,7 +292,7 @@ const AdminSidebar = ({
                   href={'/admin/editor-portal/admin/county-settings'}
                   passHref
                 >
-                  <a className="w-32 whitespace-nowrap rounded-md bg-transparent px-2 py-1 text-center text-xl font-semibold capitalize text-[#00DCB3] active:text-white active:bg-[#00DCB3]">
+                  <a className="w-32 whitespace-nowrap rounded-md bg-transparent px-2 py-1 text-center text-xl font-semibold capitalize text-[#00DCB3] active:bg-[#00DCB3] active:text-white">
                     County Settings
                   </a>
                 </Link>

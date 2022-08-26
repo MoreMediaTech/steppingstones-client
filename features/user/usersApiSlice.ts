@@ -22,7 +22,6 @@ export const usersApiSlice = apiSlice.injectEndpoints({
           const result = await queryFulfilled
           dispatch(
             setCredentials({
-              currentUser: result.data,
               token: JSON.parse(localStorage.getItem('token') as string),
             })
           )

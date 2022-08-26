@@ -428,7 +428,6 @@ export type PartnerData = {
 }
 
 export interface AuthState {
-  currentUser: CurrentUser | null
   message: string
   token: string | null
   error: Error | undefined

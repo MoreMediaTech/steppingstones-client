@@ -44,8 +44,8 @@ const Button = forwardRef<Ref, ButtonProps>(
 )
 
 const colors: Colors = {
-  primary: `border-primary border-2 text-white bg-primary active:bg-primary active:text-white hover:bg-secondary hover:text-white hover:-translate-y-1 hover:scale-100`,
-  outline: `border-primary border-2 text-primary active:bg-primary active:text-white hover:bg-secondary hover:text-white hover:-translate-y-1 hover:scale-100`,
+  primary: `border-primary-dark-100 border-2 text-primary-light-100 bg-primary-dark-100 active:bg-primary-dark-100 active:text-primary-light-100 hover:bg-primary-dark-100  hover:text-primary-light-100 hover:-translate-y-1 hover:scale-100`,
+  outline: `border-primary-dark-100 dark:border-primary-light-100 border-2 text-primary-dark-100 dark:text-primary-light-100 active:bg-primary-dark-100 active:text-white hover:bg-primary-dark-100 hover:text-primary-light-100 hover:-translate-y-1 hover:scale-100`,
   success: `border-tertiary border-2 text-tertiary active:bg-tertiary active:text-white hover:bg-[#2796b2] hover:text-white hover:-translate-y-1 hover:scale-100`,
   danger: `border-red-600 border text-red-600 active:bg-red-600 active:text-white`,
   dark: `border-black border text-gray-900 active:bg-black active:text-white hover:bg-black hover:text-white`,

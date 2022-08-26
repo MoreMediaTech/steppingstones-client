@@ -9,7 +9,6 @@ const token =
   typeof window !== 'undefined' ? localStorage.getItem('token') : null
 
 export const initialState: AuthState = {
-  currentUser: null,
   message: '',
   token: token,
   error: { message: '' },
@@ -22,14 +21,12 @@ export const authSlice = createSlice({
     setCredentials: (
       state,
       {
-        payload: { currentUser, token },
-      }: PayloadAction<{ currentUser: Partial<CurrentUser>; token: string }>
+        payload: { token },
+      }: PayloadAction<{ token: string }>
     ) => {
-      state.currentUser = currentUser
       state.token = token
     },
     resetCredentials: (state) => {
-      state.currentUser = null
       state.token = null
       state.message = ''
     },
@@ -48,6 +45,6 @@ export const authSlice = createSlice({
 
 export const { setCredentials, resetCredentials, setError } = authSlice.actions
 
-export const authSelector = (state: RootState) => state.auth
+export const selectCurrentToken = (state: RootState) => state.auth.token
 
 export default authSlice.reducer

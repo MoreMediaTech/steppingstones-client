@@ -20,7 +20,8 @@ module.exports = {
           900: '#090217',
         },
         'primary-light': {
-          100: '#f9f8fc',
+          50: '#f9f8fc',
+          100: '#efe8fd',
           200: '#dfd1fb',
           300: '#cfb9f9',
           400: '#bfa2f7',

@@ -11,10 +11,12 @@ import { useLoginMutation } from 'features/auth/authApiSlice'
 import { NEXT_URL } from '@config/index'
 import { AuthState, IFormData } from '@lib/types'
 import FormInput from './FormComponents/FormInput'
+import { useAppDispatch } from 'app/hooks'
+import { setCredentials } from 'features/auth/authSlice'
 
 const LoginForm = () => {
   const router = useRouter()
-
+  const dispatch = useAppDispatch()
   const [login, { isLoading, isError, error: loginError }] = useLoginMutation()
   const {
     register,
@@ -33,7 +35,8 @@ const LoginForm = () => {
         password: data.password,
         token
       }).unwrap()
-      localStorage.setItem('token', responseData.token)
+      dispatch(setCredentials({ token: responseData.token }))
+      // localStorage.setItem('token', responseData.token)
       router.replace(`${NEXT_URL}/admin/editor-portal`)
       reset()
     } catch (error) {

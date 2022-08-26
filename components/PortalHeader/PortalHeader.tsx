@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react'
-import { Burger, Group, Text, TextInput } from '@mantine/core'
+import { Group, } from '@mantine/core'
 import { IoIosSearch } from 'react-icons/io'
+import { useTheme } from 'next-themes'
+import { FiMoon, FiSun } from 'react-icons/fi'
+import { useRouter } from 'next/router'
 import { CurrentUser, CountyDataProps, DistrictDataProps } from '@lib/types'
 import ContentDrawer from '@components/navigation/ContentDrawer/ContentDrawer'
 import Avatar from '@components/Avatar'
@@ -20,6 +23,8 @@ const PortalHeader = ({
   data,
   imgUrl,
 }: IPortalHeaderProps) => {
+  const router = useRouter()
+  const { theme, setTheme, resolvedTheme } = useTheme()
   const [opened, setOpened] = useState(false)
   const [pos, setPos] = useState<string>('top')
   const initials = user?.name
@@ -45,7 +50,7 @@ const PortalHeader = ({
   }, [])
 
   return (
-    <header className={`py-2 px-4 `}>
+    <header className={`py-2 px-4 drop-shadow-md bg-primary-light-100 dark:bg-primary-dark-700`}>
       <div className="mx-auto py-2 md:px-4">
         <div className="flex flex-col items-start justify-between md:flex-row md:items-center">
           <div className="mb-2">
@@ -58,7 +63,7 @@ const PortalHeader = ({
                 imgSize="md:h-10 h-14 md:w-10 w-14"
               />
               <div style={{ flex: 1 }}>
-                <h1 className="sm:text-base font-semibold text-[#00dcb3] text-[1rem]">
+                <h1 className="text-[1rem] font-semibold text-[#00dcb3] sm:text-base">
                   {title}
                 </h1>
 
@@ -69,6 +74,35 @@ const PortalHeader = ({
             </Group>
           </div>
           <div className="flex w-full items-center space-x-4 md:w-96">
+          <div className="m-0 flex list-none px-1 ">
+            <button
+              type="button"
+              aria-label="toggle-theme-button"
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              className={`focus:ring-none ml-4 flex cursor-pointer list-none  p-1 font-medium focus:border-transparent focus:outline-none md:block lg:ml-0 lg:mb-0 lg:p-1 lg:px-1`}
+            >
+              {resolvedTheme === 'light' ? (
+                <FiSun
+                  fontSize={18}
+                  className={`${
+                    router.asPath === '/' && pos === 'top'
+                      ? 'text-primary-dark-100 dark:text-primary-light-100'
+                      : 'text-primary-dark-100 dark:text-primary-light-100'
+                  } font-bold `}
+                />
+              ) : (
+                <FiMoon
+                  fontSize={18}
+                  className={`${
+                    router.asPath === '/' && pos === 'top'
+                      ? 'text-primary-dark-100 dark:text-primary-light-100'
+                      : 'text-primary-dark-100 dark:text-primary-light-100'
+                  } font-bold `}
+                />
+              )}
+              <span hidden>toggle theme</span>
+            </button>
+          </div>
             <div className=" flex w-full items-center gap-2 rounded-lg border border-gray-300 bg-gray-50 px-2 py-1 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500">
               <input
                 aria-label="search-input"

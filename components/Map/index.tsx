@@ -79,8 +79,8 @@ const Map = ({
   }
 
   return (
-    <div className="flex h-full w-full flex-col min-h-[500px]">
-      <div className="bg-white p-1 text-gray-900">
+    <div className="flex h-full min-h-[500px] w-full flex-col bg-primary-light-50 dark:bg-primary-dark-700">
+      <div className=" p-1 text-gray-900 dark:text-primary-light-100">
         <Places
           setRegion={(position) => {
             setRegion(position)

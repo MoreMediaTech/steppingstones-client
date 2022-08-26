@@ -1,6 +1,5 @@
-import { resetCredentials, setCredentials } from 'features/auth/authSlice';
-import { apiSlice } from "app/api/apiSlice";
-import { usersApiSlice } from "features/user/usersApiSlice";
+import { resetCredentials, setCredentials, setError } from 'features/auth/authSlice';
+import { apiSlice, editorApiSlice } from "app/api/apiSlice";
 import { CurrentUser } from '@lib/types';
 
 export const authApi = apiSlice.injectEndpoints({
@@ -13,12 +12,10 @@ export const authApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Auth', id: 'LIST' }],
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
-        await dispatch(usersApiSlice.endpoints.getUser.initiate())
         try {
           const { data } = await queryFulfilled
            dispatch(
              setCredentials({
-               currentUser: data.user,
                token: data.token,
              })
            )
@@ -65,8 +62,12 @@ export const authApi = apiSlice.injectEndpoints({
         try {
           await queryFulfilled
           dispatch(resetCredentials())
-          dispatch(usersApiSlice.util.resetApiState())
-        } catch (error) {}
+          dispatch(apiSlice.util.resetApiState())
+          dispatch(editorApiSlice.util.resetApiState())
+        } catch (error) {
+          console.log(error)
+          dispatch(setError({ message: error.message }))
+        }
       },
       invalidatesTags: [{ type: 'Auth', id: 'LIST' }],
     }),

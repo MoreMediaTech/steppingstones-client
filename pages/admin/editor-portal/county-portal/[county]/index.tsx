@@ -53,7 +53,7 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
             subTitle="Please select district from the menu below"
             data={countyData}
           />
-          <section className="px-2 sm:px-4 py-2">
+          <section className="px-2 py-2 sm:px-4 mt-4">
             <div className="flex justify-between">
               <Button
                 type="button"
@@ -92,15 +92,18 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
               <Loader size="xl" variant="bars" />
             </div>
           ) : (
-            <section className=" w-full overflow-auto py-4 md:py-24 px-2 md:px-4">
+            <section className=" w-full overflow-auto py-4 px-2 md:py-24 md:px-4">
               {countyData && (
                 <div className="grid h-full w-full grid-cols-1 gap-8 md:grid-cols-4">
-                  <div className='md:col-span-2 h-full bg-white p-2 shadow-md rounded'>
-                    <Map location={`${county}, UK`} districtsArray={districts as string[]} />
+                  <div className="h-full rounded bg-primary-light-50 p-2 shadow-md dark:bg-primary-dark-600 md:col-span-2">
+                    <Map
+                      location={`${county}, UK`}
+                      districtsArray={districts as string[]}
+                    />
                   </div>
                   <div className="h-full w-full md:col-span-2">
                     <div className="flex flex-col">
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                      <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
                         <PortalButton
                           type="button"
                           color="primaryFilled"
@@ -148,7 +151,7 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
                               <PortalButton
                                 key={district?.id}
                                 type="button"
-                                color='primaryFilled'
+                                color="primaryFilled"
                                 isLive={district?.isLive}
                                 onClick={() =>
                                   router.replace({
@@ -166,13 +169,13 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
                             )
                           )}
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-y-4 gap-x-4">
+                        <div className="grid grid-cols-1 gap-y-4 gap-x-4 md:grid-cols-3">
                           {countyData?.sections?.map(
                             (section: SectionProps) => (
                               <PortalButton
                                 key={`${section?.id}`}
                                 type="button"
-                                color='primaryFilled'
+                                color="primaryFilled"
                                 isLive={section?.isLive}
                                 onClick={() =>
                                   router.replace({
