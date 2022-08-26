@@ -7,16 +7,16 @@ import Button from '@components/Button'
 
 const AboutSection = () => {
   return (
-    <section id="about" className="space-y-8 bg-slate-50 pt-24 pb-4">
+    <section id="about" className="space-y-8 pt-24 pb-4">
       <div className="space-y-4">
-        <h1 className="text-center text-4xl font-medium text-[#5E17EB]">
+        <h1 className="text-center text-4xl font-medium text-primary-dark-100 dark:text-primary-light-600">
           About
         </h1>
         <h3 className="text-center text-xl font-bold text-[#00DCB3]">
           Information that fits your business needs.
         </h3>
       </div>
-      <div className="container mx-auto grid grid-cols-1 gap-4 md:gap-6 md:grid-cols-2">
+      <div className="container mx-auto grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
         <div className="relative h-72 w-full md:h-80 ">
           <Image
             src={'/about_section_img1.1.png'}
@@ -29,7 +29,7 @@ const AboutSection = () => {
         </div>
         <div className="md:items-left flex items-center p-2 text-justify">
           <div className="space-y-2">
-            <h3 className="text-center text-lg font-medium text-[#5E17EB] md:text-left">
+            <h3 className="text-center text-lg font-medium text-primary-dark-100 dark:text-primary-light-600 md:text-left">
               What is the app all about?
             </h3>
             <p>
@@ -41,11 +41,7 @@ const AboutSection = () => {
               businesses need.
             </p>
             <div className="flex w-full justify-center md:justify-end">
-              <Button
-                type="button"
-                color='primary'
-                onClick={() => null}
-              >
+              <Button type="button" color="primary" onClick={() => null}>
                 See Demo
               </Button>
             </div>
@@ -53,7 +49,7 @@ const AboutSection = () => {
         </div>
         <div className="md:items-left  order-3 flex items-center p-2 text-justify md:order-none">
           <div className="space-y-2">
-            <h3 className="text-center text-lg font-medium text-[#5E17EB] md:text-left">
+            <h3 className="text-center text-lg font-medium text-primary-dark-100 dark:text-primary-light-600 md:text-left">
               Why now?
             </h3>
             <p>
@@ -62,16 +58,12 @@ const AboutSection = () => {
               sector partners to promote, coordinate and deliver a wide range of
               free and partially free business support based on local needs.
             </p>
-            <p className="font-semibold text-indigo-900">
+            <p className="font-semibold text-primary-dark-100 dark:text-primary-light-600">
               Interested in keeping in touch? Sign up for a special invitation
               or contact us for partnership inquiries.
             </p>
             <div className="flex w-full justify-center md:justify-start">
-              <Button
-                type="button"
-                color="primary"
-                onClick={() => null}
-              >
+              <Button type="button" color="primary" onClick={() => null}>
                 <Link href="#heroSection">
                   <a>Sign Up</a>
                 </Link>

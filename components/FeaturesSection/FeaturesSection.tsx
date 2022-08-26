@@ -2,9 +2,9 @@ import React from 'react'
 
 const FeaturesSection = () => {
   return (
-    <section id="features" className="space-y-8 bg-slate-50 pt-24 pb-8">
+    <section id="features" className="space-y-8 pt-24 pb-8">
       <div className="space-y-4">
-        <h1 className="text-center text-4xl font-medium text-[#5E17EB]">
+        <h1 className="text-center text-4xl font-medium text-primary-dark-100">
           Features
         </h1>
         <h3 className="font-base text-center text-xl text-[#00DCB3]">

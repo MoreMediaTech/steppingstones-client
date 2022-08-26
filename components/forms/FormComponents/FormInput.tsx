@@ -10,22 +10,24 @@ type FormInputProps = {
   type: string
   label: string
   placeholder?: string
+  labelStyles?: string
+  inputStyles?: string
   errors: Merge<FieldError, FieldErrorsImpl<DeepRequired<IFormData>>> | undefined
 }
 
 const FormInput: React.FunctionComponent<
   FormInputProps & React.RefAttributes<HTMLInputElement>
 > = React.forwardRef<Ref, FormInputProps>(
-  ({ label, title, type, errors, ...props }: FormInputProps, ref) => (
+  ({ label, title, type, errors, labelStyles, inputStyles, ...props }: FormInputProps, ref) => (
     <div className="w-full space-y-2">
       <label
         htmlFor={type}
-        className="my-2 text-sm font-semibold text-gray-900"
+        className={`my-2 text-sm font-semibold text-gray-900 ${labelStyles}`}
       >
         {label} <span className="text-red-500">*</span>
       </label>
       <input
-        className="form-input block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+        className={`form-input block w-full rounded-lg border border-gray-300 bg-gray-100 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 ${inputStyles}`}
         id={`${title}`}
         ref={ref}
         name={`${title}`}

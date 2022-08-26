@@ -13,7 +13,7 @@ const variants = {
 const Login = () => {
   return (
     <MainLayout title="Login">
-      <section className="relative h-screen w-full bg-white">
+      <section className="relative h-screen w-full">
         <div className="absolute top-0 h-full w-full bg-cover bg-center">
           <div className="relative h-full w-full">
             <Image
@@ -49,7 +49,7 @@ const Login = () => {
               </div>
               <h1 className="flex items-center gap-2 text-4xl">
                 <FaSignInAlt fontSize={40} color="#00DCB3" />
-                <span className="text-[#5E17EB]">Sign In</span>
+                <span className="text-primary-dark-100">Sign In</span>
               </h1>
               <LoginForm />
             </motion.div>

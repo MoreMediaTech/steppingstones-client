@@ -4,7 +4,9 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Burger, Drawer, Group, Menu, Divider, Collapse } from '@mantine/core'
 import { FaRegUser, FaSignInAlt, FaSignOutAlt, FaUser } from 'react-icons/fa'
+import { FiMoon, FiSun } from 'react-icons/fi'
 import { MdBusiness } from 'react-icons/md'
+import { useTheme } from 'next-themes'
 
 import { useGetUserQuery } from 'features/user/usersApiSlice'
 import { useLogoutMutation } from 'features/auth/authApiSlice'
@@ -15,6 +17,7 @@ import styles from 'constants/styles'
 
 const Navbar = () => {
   const router = useRouter()
+  const { theme, setTheme, resolvedTheme } = useTheme()
   const { data: currentUser } = useGetUserQuery()
   const [logout] = useLogoutMutation()
   const [pos, setPos] = useState<string>('top')
@@ -59,8 +62,8 @@ const Navbar = () => {
     <nav
       className={`top-0 z-10  flex w-full px-2 py-2 sm:px-16 ${
         pos === 'top'
-          ? 'absolute bg-slate-50'
-          : 'shadow-b-2xl fixed bg-slate-50'
+          ? 'absolute bg-primary-light-100 dark:bg-primary-dark-800'
+          : 'shadow-b-2xl fixed bg-primary-light-100 dark:bg-primary-dark-800'
       }`}
     >
       <div className="container mx-auto flex max-w-screen-xl items-center">
@@ -69,7 +72,7 @@ const Navbar = () => {
           <li>
             {router.pathname === '/' ? (
               <a
-                className={` cursor-pointer font-poppins text-[16px] font-normal text-primary`}
+                className={` cursor-pointer font-poppins text-[16px] font-normal text-primary-dark-100 dark:text-primary-light-100`}
                 onClick={() => setActive('#about')}
                 href="#about"
               >
@@ -78,7 +81,7 @@ const Navbar = () => {
             ) : (
               <Link href={'/#about'}>
                 <a
-                  className={` cursor-pointer font-poppins text-[16px] font-normal text-primary`}
+                  className={` cursor-pointer font-poppins text-[16px] font-normal text-primary-dark-100 dark:text-primary-light-100`}
                   onClick={() => setActive('#about')}
                 >
                   About
@@ -89,7 +92,7 @@ const Navbar = () => {
           <li>
             {router.pathname === '/' ? (
               <a
-                className={` cursor-pointer font-poppins text-[16px] font-normal text-primary`}
+                className={` cursor-pointer font-poppins text-[16px] font-normal text-primary-dark-100 dark:text-primary-light-100`}
                 onClick={() => setActive('#features')}
                 href="#features"
               >
@@ -98,7 +101,7 @@ const Navbar = () => {
             ) : (
               <Link href={'/#features'}>
                 <a
-                  className={` cursor-pointer font-poppins text-[16px] font-normal text-primary`}
+                  className={` cursor-pointer font-poppins text-[16px] font-normal text-primary-dark-100 dark:text-primary-light-100`}
                   onClick={() => setActive(router.pathname)}
                 >
                   Features
@@ -109,7 +112,7 @@ const Navbar = () => {
           <li>
             {router.pathname === '/' ? (
               <a
-                className={` cursor-pointer font-poppins text-[16px] font-normal text-primary`}
+                className={` cursor-pointer font-poppins text-[16px] font-normal text-primary-dark-100 dark:text-primary-light-100`}
                 onClick={() => setActive('#faqs')}
                 href="#faqs"
               >
@@ -118,7 +121,7 @@ const Navbar = () => {
             ) : (
               <Link href={'/#faqs'}>
                 <a
-                  className={` cursor-pointer font-poppins text-[16px] font-normal text-primary`}
+                  className={` cursor-pointer font-poppins text-[16px] font-normal text-primary-dark-100 dark:text-primary-light-100`}
                   onClick={() => setActive('#faqs')}
                 >
                   FAQs
@@ -142,14 +145,18 @@ const Navbar = () => {
                   {/* ...menu items */}
                   <Menu.Dropdown>
                     <Menu.Label>
-                      <span className="text-[#5E17EB] flex item-center justify-center">Application</span>
+                      <span className="item-center flex justify-center text-primary-dark-100 dark:text-primary-light-100">
+                        Application
+                      </span>
                     </Menu.Label>
                     {currentUser.role !== 'PARTNER' ? (
                       <Menu.Item
                         icon={<MdBusiness fontSize={14} color="#5E17EB" />}
                       >
                         <Link href={'/admin/editor-portal'}>
-                          <a className="text-[#5E17EB]">Portal</a>
+                          <a className="text-primary-dark-100 dark:text-primary-light-100">
+                            Portal
+                          </a>
                         </Link>
                       </Menu.Item>
                     ) : (
@@ -157,18 +164,22 @@ const Navbar = () => {
                         icon={<MdBusiness fontSize={14} color="#5E17EB" />}
                       >
                         <Link href={'/admin/partner-portal'}>
-                          <a className="text-[#5E17EB]">Portal</a>
+                          <a className="text-primary-dark-100 dark:text-primary-light-100">
+                            Portal
+                          </a>
                         </Link>
                       </Menu.Item>
                     )}
                     <Divider />
-                    <Link href={'/auth/profile'}>
-                      <Menu.Item
-                        icon={<FaRegUser fontSize={14} color="#5E17EB" />}
-                      >
-                        <a className="text-[#5E17EB]">Profile</a>
-                      </Menu.Item>
-                    </Link>
+                    <Menu.Item
+                      icon={<FaRegUser fontSize={14} color="#5E17EB" />}
+                    >
+                      <Link href={'/auth/profile'}>
+                        <a className="text-primary-dark-100 dark:text-primary-light-100">
+                          Profile
+                        </a>
+                      </Link>
+                    </Menu.Item>
                     <Divider />
                     <Menu.Item
                       icon={<FaSignOutAlt fontSize={14} color="#5E17EB" />}
@@ -176,7 +187,9 @@ const Navbar = () => {
                         handleLogout()
                       }}
                     >
-                      <span className="text-[#5E17EB]">Logout</span>
+                      <span className="text-primary-dark-100 dark:text-primary-light-100">
+                        Logout
+                      </span>
                     </Menu.Item>
                   </Menu.Dropdown>
                 </Menu>
@@ -188,17 +201,48 @@ const Navbar = () => {
               onClick={() => setActive('login')}
             >
               <Link href={'/auth/login'}>
-                <a className={`flex items-center gap-1 text-primary`}>
+                <a
+                  className={`flex items-center gap-1 text-primary-dark-100 dark:text-primary-light-100`}
+                >
                   <FaSignInAlt fontSize={18} />
                   <span>Login</span>
                 </a>
               </Link>
             </li>
           )}
-          <li className="hidden flex-1 items-center sm:flex ">
+          <li className="m-0 flex list-none px-1 ">
+            <button
+              type="button"
+              aria-label="toggle-theme-button"
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              className={`focus:ring-none ml-4 flex cursor-pointer list-none  p-1 font-medium focus:border-transparent focus:outline-none md:block lg:ml-0 lg:mb-0 lg:p-1 lg:px-1`}
+            >
+              {resolvedTheme === 'light' ? (
+                <FiSun
+                  fontSize={18}
+                  className={`${
+                    router.asPath === '/' && pos === 'top'
+                      ? 'text-primary-dark-100 dark:text-primary-light-100'
+                      : 'text-primary-dark-100 dark:text-primary-light-100'
+                  } font-bold `}
+                />
+              ) : (
+                <FiMoon
+                  fontSize={18}
+                  className={`${
+                    router.asPath === '/' && pos === 'top'
+                      ? 'text-gray-200'
+                      : 'text-gray-900 dark:text-gray-200'
+                  } font-bold `}
+                />
+              )}
+              <span hidden>toggle theme</span>
+            </button>
+          </li>
+          <li className="hidden flex-1 items-center md:flex ">
             <Link href={'/enquire'}>
               <a
-                className={`rounded-lg bg-[#5E17EB] px-4 py-1 text-lg font-medium text-dimWhite
+                className={`rounded-lg bg-[#5E17EB] px-4 py-1 text-lg font-medium text-primary-light-100
                 `}
                 onClick={() => setActive('enquire')}
               >

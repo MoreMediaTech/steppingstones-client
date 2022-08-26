@@ -52,15 +52,18 @@ const EnquiryForm = () => {
   return (
     <form
       onSubmit={handleSubmit(handleSendEmail)}
-      className="flex flex-col space-y-2 rounded-lg bg-white px-8 py-8 shadow-2xl "
+      className="flex flex-col space-y-2 rounded-lg bg-primary-light-100 px-8 py-8 shadow-2xl "
     >
-      <h1 className="mb-4 text-2xl font-bold text-[#5E17EB]">
+      <h1 className="mb-4 text-2xl font-bold text-primary-dark-100">
         Leave a message
       </h1>
-      <p className="text-justify font-normal text-[#00DCB3]">
+      <p className="text-justify font-normal text-tertiary">
         Fill the form and we will respond as soon as we can. Alternatively, you
         can reach out to us at{' '}
-        <a href="mailto:admin@steppingstonesapp.com" className="text-[#5E17EB]">
+        <a
+          href="mailto:admin@steppingstonesapp.com"
+          className="text-primary-dark-100"
+        >
           our email address
         </a>
       </p>
@@ -120,7 +123,7 @@ const EnquiryForm = () => {
       <Textarea
         placeholder="Message"
         label={
-          <p className="mt-2 font-light text-gray-500 ">
+          <p className="mt-2 font-bold text-gray-900 ">
             Message <span className="text-red-500">*</span>
           </p>
         }
@@ -138,7 +141,7 @@ const EnquiryForm = () => {
             message: 'Please enter a valid message',
           },
         })}
-        className="focus:shadow-outline w-full appearance-none rounded-md focus:outline-none"
+        className="focus:shadow-outline w-full appearance-none rounded-md focus:outline-none bg-primary-light-100"
       />
       {errors.message && (
         <span className="text-center text-sm text-red-500">
@@ -157,8 +160,8 @@ const EnquiryForm = () => {
           fullWidth
           size="md"
           variant="outline"
-          className="w-full rounded-md px-4 text-center font-semibold shadow-md transition delay-150 duration-300 ease-in-out 
-                hover:-translate-y-1 hover:scale-100 hover:bg-[#3A0B99] hover:text-white  md:text-xl "
+          className="w-full rounded-md border-primary-dark-100 px-4 text-center font-semibold text-primary-dark-100 shadow-md transition delay-150 duration-300 ease-in-out 
+                hover:-translate-y-1 hover:scale-100 hover:bg-primary-dark-100 hover:text-primary-light-100  md:text-xl "
         >
           {isLoading ? 'Sending...' : 'Send'}
         </Button>

@@ -10,6 +10,7 @@ import Link from 'next/link'
 import { useLoginMutation } from 'features/auth/authApiSlice'
 import { NEXT_URL } from '@config/index'
 import { AuthState, IFormData } from '@lib/types'
+import FormInput from './FormComponents/FormInput'
 
 const LoginForm = () => {
   const router = useRouter()
@@ -68,15 +69,11 @@ const LoginForm = () => {
       onSubmit={handleSubmit(handleLogin)}
       className="flex w-full max-w-screen-sm flex-col items-center space-y-2 px-2"
     >
-      <TextInput
-        id="email"
+      <FormInput
+        title="email"
         aria-label="Email"
         placeholder="Email"
-        label={
-          <p className="mt-8 font-light text-white ">
-            Username<span className="text-red-500">*</span>
-          </p>
-        }
+        label="Username"
         type="email"
         {...register('email', {
           required: true,
@@ -85,7 +82,8 @@ const LoginForm = () => {
             message: 'Invalid email address',
           },
         })}
-        className="focus:shadow-outline w-full appearance-none rounded-md focus:outline-none"
+        errors={errors.email}
+        labelStyles="!text-white"
       />
       {errors.email && (
         <span className="text-center text-sm text-red-500">
@@ -97,7 +95,7 @@ const LoginForm = () => {
         id="password"
         aria-label="password"
         label={
-          <p className="mt-2 font-light text-white ">
+          <p className="mt-2 font-semibold text-white ">
             Password <span className="text-red-500">*</span>
           </p>
         }

@@ -40,10 +40,12 @@ const SourceDirectory = () => {
   useEffect(() => {
     const subscribe = watch((data) => {
       const { type } = data
+      console.log("🚀 ~ file: index.tsx ~ line 43 ~ subscribe ~ type", type)
       setSdDataType(type as string)
+      refetch()
     })
     return () => subscribe.unsubscribe()
-  }, [watch])
+  }, [watch, sourceData, refetch])
 
   // const handleCategoryChange = useCallback(
   //   (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,17 +69,17 @@ const SourceDirectory = () => {
     if (!e.target.value) setSearchResults(sourceData as SourceDataProps[])
 
     const resultsArray = sourceData?.filter(
-      (partner: SourceDataProps) =>
-        partner?.description
+      (source: SourceDataProps) =>
+        source?.description
           .toLowerCase()
           .includes(e.target.value.toLowerCase()) ||
-        partner?.category.toLowerCase().includes(e.target.value.toLowerCase())
+        source?.category.toLowerCase().includes(e.target.value.toLowerCase())
     )
 
     setSearchResults(resultsArray as SourceDataProps[])
-  }, [])
+  }, [sourceData])
 
-  const handleSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.checked) {
       setChecked(false)
       setSelectedSDId([])
@@ -85,7 +87,7 @@ const SourceDirectory = () => {
     const { value } = e.target
     setChecked(true)
     setSelectedSDId((partnerId) => [...new Set([...partnerId, value])])
-  }, [])
+  }
 
     const handleModalClose = () => {
       dispatch(setSDData(null))
