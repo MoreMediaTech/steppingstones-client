@@ -13,6 +13,11 @@ import {
 import { showNotification } from '@mantine/notifications'
 import HandleDeleteModal from '../../HandleDeleteModal/HandleDeleteModal'
 import UpdateDistrictModal from './UpdateDistrictModal'
+import { useAppSelector, useAppDispatch } from '../../../app/hooks'
+import {
+  editorSelector,
+  setDistrictSection,
+} from '../../../features/editor/editorSlice'
 
 const DistrictSectionsTable = ({
   type,
@@ -39,21 +44,19 @@ const DistrictSectionsTable = ({
     isLoading: isLoadingDistrictSections,
     isError: isErrorDistrictSections,
   } = useGetDistrictSectionsByDistrictIdQuery(districtId)
-
-  const [searchValue, setSearchValue] = useState<string>('')
+  const dispatch = useAppDispatch()
   const [open, setOpen] = useState<boolean>(false)
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [laSection, setLASection] = useState<DistrictSectionProps | null>(null)
-  const [checked, setChecked] = useState<boolean>(false)
   const [searchResults, setSearchResults] = useState<DistrictSectionProps[]>([])
-  const [selectedLADistrictId, setSelectedLADistrictId] = useState<string[]>([])
+  const { districtSection } = useAppSelector(editorSelector)
 
   const [deleteDistrictSectionById, { isLoading }] =
     useDeleteDistrictSectionByIdMutation()
 
   const handleUpdateModalClose = () => {
     setOpen(false)
-    setLASection(null)
+    dispatch(setDistrictSection(null))
   }
 
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,26 +70,13 @@ const DistrictSectionsTable = ({
       setSearchResults(resultsArray as DistrictSectionProps[])
     }
 
-    const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const { value } = e.target
-      if (!e.target.checked) {
-        setChecked(false)
-        setSelectedLADistrictId((districtLAId) =>
-          districtLAId.filter((id) => id !== value)
-        )
-      } else {
-        setChecked(true)
-        setSelectedLADistrictId((districtLAId) => [
-          ...new Set([...districtLAId, value]),
-        ])
-      }
-    }
 
   const deleteHandler = useCallback(async (id: string) => {
     try {
       await deleteDistrictSectionById(id).unwrap()
       refetch()
       setOpenModal(false)
+      dispatch(setDistrictSection(null))
       showNotification({
         message: 'Section deleted successfully',
         color: 'green',
@@ -151,18 +141,6 @@ const DistrictSectionsTable = ({
             <table className="relative table w-full overflow-auto overflow-x-auto text-center text-sm text-gray-500">
               <thead className="bg-gray-100 text-xs uppercase text-gray-700">
                 <tr>
-                  <th scope="col" className="p-4">
-                    {/* <div className="flex items-center">
-                      <input
-                        id="checkbox-all-search"
-                        type="checkbox"
-                        className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 "
-                      />
-                      <label htmlFor="checkbox-all-search" className="sr-only">
-                        checkbox
-                      </label>
-                    </div> */}
-                  </th>
                   <th scope="col" className="px-6 py-3 text-left">
                     LA Section name
                   </th>
@@ -183,23 +161,6 @@ const DistrictSectionsTable = ({
                     key={section.id}
                     className="border-b bg-white hover:bg-gray-50"
                   >
-                    <td className="w-4 p-4">
-                      <div className="flex items-center">
-                        <input
-                          id="checkbox-table-search-1"
-                          type="checkbox"
-                          value={section.id}
-                          className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 "
-                          onChange={handleSelect}
-                        />
-                        <label
-                          htmlFor="checkbox-table-search-1"
-                          className="sr-only"
-                        >
-                          checkbox
-                        </label>
-                      </div>
-                    </td>
                     <td
                       scope="row"
                       className="whitespace-nowrap px-6 py-4 text-left font-medium text-gray-900"
@@ -243,7 +204,7 @@ const DistrictSectionsTable = ({
                           leftIcon={<FaEdit fontSize={14} />}
                           className="text-xs font-medium  text-blue-600 sm:text-base"
                           onClick={() => {
-                            setLASection(section)
+                            dispatch(setDistrictSection(section))
                             setOpen(true)
                             setType('DistrictSection')
                           }}
@@ -257,17 +218,13 @@ const DistrictSectionsTable = ({
                           color="red"
                           leftIcon={<FaTrash fontSize={14} />}
                           className="text-xs  font-medium hover:bg-red-500 hover:text-white sm:text-base"
-                          onClick={() => setOpenModal(true)}
+                          onClick={() => {
+                            setOpenModal(true)
+                            dispatch(setDistrictSection(section))
+                          }}
                         >
                           Delete
                         </Button>
-                        <HandleDeleteModal
-                          open={openModal}
-                          data={section}
-                          deleteHandler={deleteHandler}
-                          setOpenModal={setOpenModal}
-                          isLoading={isLoading}
-                        />
                       </div>
                     </td>
                   </tr>
@@ -282,9 +239,18 @@ const DistrictSectionsTable = ({
         open={open}
         handleModalClose={handleUpdateModalClose}
         refetch={refetch}
-        data={laSection as DistrictSectionProps}
+        data={districtSection as DistrictSectionProps}
         type={type}
       />
+      {openModal && (
+        <HandleDeleteModal
+          open={openModal}
+          data={districtSection}
+          deleteHandler={deleteHandler}
+          setOpenModal={setOpenModal}
+          isLoading={isLoading}
+        />
+      )}
     </>
   )
 }

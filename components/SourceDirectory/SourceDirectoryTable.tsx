@@ -14,21 +14,27 @@ import { setSDData } from 'features/editor/editorSlice'
 interface ISourceDirectoryTableProps {
   data: SourceDataProps[]
   action: 'CREATE' | 'UPDATE'
+  checked: boolean
+  selectedSDId: string[]
   setAction: React.Dispatch<React.SetStateAction<'CREATE' | 'UPDATE'>>
   setOpenUpdateModal: React.Dispatch<React.SetStateAction<boolean>>
   refetch: () => void
   handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void
   handleSelected: (e: React.ChangeEvent<HTMLInputElement>) => void
+  handleDeleteMany: () => void
 }
 
 const SourceDirectoryTable = ({
   data,
   action,
+  checked,
+  selectedSDId,
   setAction,
   refetch,
   handleSearch,
   handleSelected,
   setOpenUpdateModal,
+  handleDeleteMany, 
 }: ISourceDirectoryTableProps) => {
   const dispatch = useAppDispatch()
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false)
@@ -56,9 +62,10 @@ const SourceDirectoryTable = ({
       })
     }
   }, [])
+
   return (
-    <section className="relative my-8 bg-white px-2  md:w-full">
-      <div className="p-4 ">
+    <section className="relative my-8 bg-primary-light-50 px-2 dark:bg-primary-dark-600 dark:text-primary-light-100  md:w-full">
+      <div className="flex items-center gap-2 py-2">
         <label htmlFor="table-search" className="sr-only" />
         <div className="relative mt-1">
           <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -78,28 +85,24 @@ const SourceDirectoryTable = ({
           <input
             type="text"
             id="table-search"
-            className="block rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 w-full md:w-80  "
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 md:w-80  "
             placeholder="Search by description or category"
             onChange={handleSearch}
           />
         </div>
+        <div className="mt-2">
+          {checked && selectedSDId.length > 0 && (
+            <button type="button" onClick={handleDeleteMany}>
+              <FaTrash fontSize={20} className="text-red-500" />
+            </button>
+          )}
+        </div>
       </div>
       <div className="relative overflow-x-auto">
-        <table className="table w-full  text-left text-gray-500">
-          <thead className="bg-gray-100 text-xs uppercase text-gray-700">
+        <table className="table w-full bg-primary-light-50 text-left text-gray-500  dark:bg-primary-dark-600 dark:text-primary-light-100">
+          <thead className="bg-gray-100 text-xs uppercase text-gray-700 dark:bg-primary-dark-500 dark:text-primary-light-200">
             <tr>
-              <th scope="col" className="p-4">
-                <div className="flex items-center">
-                  <input
-                    id="checkbox-all-search"
-                    type="checkbox"
-                    className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 "
-                  />
-                  <label htmlFor="checkbox-all-search" className="sr-only">
-                    checkbox
-                  </label>
-                </div>
-              </th>
+              <th scope="col" className="p-4"></th>
               <th scope="col" className="px-6 py-3 text-left">
                 Description
               </th>
@@ -109,7 +112,10 @@ const SourceDirectoryTable = ({
               <th scope="col" className="px-6 py-3">
                 category
               </th>
-              <th scope="col" className="whitespace-nowrap text-center px-6 py-3">
+              <th
+                scope="col"
+                className="whitespace-nowrap px-6 py-3 text-center"
+              >
                 Email Alerts
               </th>
               <th scope="col" className="px-6 py-3">
@@ -119,13 +125,16 @@ const SourceDirectoryTable = ({
           </thead>
           <tbody className="overflow-auto">
             {data?.map((item: SourceDataProps) => (
-              <tr key={item.id} className="border-b bg-white hover:bg-gray-50">
+              <tr
+                key={item.id}
+                className="group group border-b hover:bg-gray-100 dark:hover:bg-primary-light-500"
+              >
                 <td className="w-4 p-4">
                   <div className="flex items-center">
                     <input
                       id="checkbox-table-search-1"
                       type="checkbox"
-                      value={item?.id}
+                      value={item.id}
                       className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 "
                       onChange={handleSelected}
                     />
@@ -139,7 +148,7 @@ const SourceDirectoryTable = ({
                 </td>
                 <td
                   scope="row"
-                  className="whitespace-nowrap px-6 py-4 text-left text-sm font-medium text-gray-900"
+                  className="whitespace-nowrap px-6 py-4 text-left text-sm font-medium "
                 >
                   <div className="flex items-center justify-start space-x-2">
                     <p>{item?.description}</p>
@@ -148,26 +157,26 @@ const SourceDirectoryTable = ({
 
                 <td
                   scope="row"
-                  className="whitespace-nowrap px-6 py-4 text-left text-sm font-medium text-gray-900"
+                  className="whitespace-nowrap px-6 py-4 text-left text-sm font-medium "
                 >
                   <a
                     href={item?.webLink}
                     rel="noreferrer"
                     target="_blank"
-                    className="text-primary hover:underline"
+                    className="text-primary-dark-100 hover:underline dark:text-primary-light-300 dark:group-hover:text-primary-dark-100"
                   >
                     {item?.webLink}
                   </a>
                 </td>
                 <td
                   scope="row"
-                  className="whitespace-nowrap px-6 py-4 text-left text-sm font-medium text-gray-900"
+                  className="whitespace-nowrap px-6 py-4 text-left text-sm font-medium "
                 >
                   <p>{item?.category}</p>
                 </td>
                 <td
                   scope="row"
-                  className="whitespace-nowrap px-6 py-4 text-center text-sm font-medium text-gray-900"
+                  className="whitespace-nowrap px-6 py-4 text-center text-sm font-medium "
                 >
                   <div className="items-cent flex justify-center">
                     <span>
@@ -187,7 +196,7 @@ const SourceDirectoryTable = ({
                       disabled={false}
                       variant="outline"
                       leftIcon={<FaEdit fontSize={14} />}
-                      className="font-medium text-blue-600  "
+                      className="font-medium text-blue-600 hover:bg-blue-600 hover:text-white group-hover:bg-blue-600 group-hover:text-white"
                       onClick={() => {
                         dispatch(setSDData(item))
                         setOpenUpdateModal(true)
@@ -203,7 +212,7 @@ const SourceDirectoryTable = ({
                       variant="outline"
                       color="red"
                       leftIcon={<FaTrash fontSize={14} />}
-                      className="font-medium  hover:bg-red-500 hover:text-white "
+                      className="font-medium  hover:bg-red-500 hover:text-white group-hover:bg-red-500 group-hover:text-white"
                       onClick={() => setOpenDeleteModal(true)}
                     >
                       Delete

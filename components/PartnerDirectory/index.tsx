@@ -7,6 +7,7 @@ import {
   useCreatePartnerDataMutation,
   useGetAllPartnersDataQuery,
   useUpdatePartnerDataMutation,
+  useDeleteManyPartnerDataMutation,
 } from 'features/partner/partnerApiSlice'
 import PartnerDirectoryTable from './PartnerDirectoryTable'
 import PartnerDirectoryModal from './PartnerDirectoryModal'
@@ -39,6 +40,20 @@ const PartnerDirectorySection = ({
   const [checked, setChecked] = useState<boolean>(false)
   const { partnerData, type } = useAppSelector(partnerSelector)
 
+  const [createPartnerData, { isLoading }] = useCreatePartnerDataMutation()
+  const [updatePartnerData, { isLoading: isLoadingUpdate }] =
+    useUpdatePartnerDataMutation()
+  const [deleteManyPartnerData, { isLoading: isDeleting }] =
+    useDeleteManyPartnerDataMutation()
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<IFormData>()
+
+  // function that handles the search/filter of the partner data
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.value) setSearchResults(data as PartnerData[])
 
@@ -64,26 +79,18 @@ const PartnerDirectorySection = ({
     setSearchResults(resultsArray as PartnerData[])
   }
 
+  // function that handles the selection of the checkbox for the partners table
+  // and adds the id to the array of selected partners in setSelectedPartnersId
   const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.checked) {
       setChecked(false)
       setSelectedPartnersId([])
+    } else {
+      const { value } = e.target
+      setChecked(true)
+      setSelectedPartnersId((partnerId) => [...new Set([...partnerId, value])])
     }
-    const { value } = e.target
-    setChecked(true)
-    setSelectedPartnersId((partnerId) => [...new Set([...partnerId, value])])
   }
-
-  const [createPartnerData, { isLoading }] = useCreatePartnerDataMutation()
-  const [updatePartnerData, { isLoading: isLoadingUpdate }] =
-    useUpdatePartnerDataMutation()
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<IFormData>()
 
   const handleModalClose = () => {
     dispatch(setPartnerData(null))
@@ -92,6 +99,7 @@ const PartnerDirectorySection = ({
     reset()
   }
 
+  // if type is create reset the form else if type is update fill the form with the partner data
   useEffect(() => {
     if (type === 'Create') {
       reset({
@@ -115,19 +123,22 @@ const PartnerDirectorySection = ({
     }
   }, [type])
 
+  // function that handles the creation of a new partner or updates an existing partner
   const submitHandler: SubmitHandler<IFormData> = useCallback(async (data) => {
+    console.log({type, data})
     const newData = {
+      id: partnerData?.id,
       ...data,
     }
     let response
     try {
       if (type === 'Create') {
-        response = await createPartnerData(newData).unwrap()
+        response = await createPartnerData(data).unwrap()
       }
       if (type === 'Update') {
         response = await updatePartnerData(newData).unwrap()
       }
-      reset()
+      handleModalClose()
       refetch()
       showNotification({
         message: response?.message,
@@ -141,7 +152,30 @@ const PartnerDirectorySection = ({
         color: 'red',
       })
     }
-  }, [])
+  }, [type])
+
+  // Function to delete the selected partners
+  const handleDeleteMany = useCallback(async () => {
+    try {
+      const response = await deleteManyPartnerData(selectedPartnersId).unwrap()
+      if (response.success) {
+        showNotification({
+          message: 'Successfully deleted Partner Directory entries',
+          color: 'success',
+          autoClose: 3000,
+        })
+        refetch()
+        setChecked(false)
+        setSelectedPartnersId([])
+      }
+    } catch (error) {
+      showNotification({
+        message: 'Error deleting Partner Directory Data',
+        color: 'error',
+        autoClose: 3000,
+      })
+    }
+  }, [checked, selectedPartnersId])
 
   if (isLoadingPartnerData) {
     return (
@@ -153,8 +187,10 @@ const PartnerDirectorySection = ({
   return (
     <>
       <PartnerDirectoryTable
+        checked={checked}
         setOpen={setIsPartnerDirectoryModalOpen}
         refetch={refetch}
+        selectedPartnersId={selectedPartnersId}
         partnerData={
           searchResults.length > 0
             ? (searchResults as PartnerData[])
@@ -162,6 +198,7 @@ const PartnerDirectorySection = ({
         }
         handleSearch={handleSearch}
         handleSelected={handleSelect}
+        handleDeleteMany={handleDeleteMany}
       />
 
       {isPartnerDirectoryModalOpen && (

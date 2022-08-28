@@ -3,7 +3,10 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { showNotification } from '@mantine/notifications'
 import { Loader } from '@mantine/core'
 
-import { useGetAllSDDataByTypeQuery } from 'features/editor/editorApiSlice'
+import {
+  useGetAllSDDataByTypeQuery,
+  useDeleteManySDDataMutation,
+} from 'features/editor/editorApiSlice'
 import { useAppSelector, useAppDispatch } from 'app/hooks'
 import { editorSelector, setSDData } from 'features/editor/editorSlice'
 import SourceDirectoryTable from './SourceDirectoryTable'
@@ -16,7 +19,7 @@ export interface IFormDataProps extends SourceDataProps {
   type: SourceDirectoryType | string
 }
 
-const SourceDirectory = () => {
+const SourceDirectory: React.FC = () => {
   const dispatch = useAppDispatch()
   const [sdDataType, setSdDataType] = useState<string>('BSI')
   const [searchResults, setSearchResults] = useState<SourceDataProps[]>([])
@@ -30,6 +33,8 @@ const SourceDirectory = () => {
     error,
     refetch,
   } = useGetAllSDDataByTypeQuery(sdDataType)
+  const [deleteManySDData, { isLoading: isLoadingDeleteMany }] =
+    useDeleteManySDDataMutation()
 
   const { sdData } = useAppSelector(editorSelector)
 
@@ -40,7 +45,7 @@ const SourceDirectory = () => {
   useEffect(() => {
     const subscribe = watch((data) => {
       const { type } = data
-      console.log("🚀 ~ file: index.tsx ~ line 43 ~ subscribe ~ type", type)
+      console.log('🚀 ~ file: index.tsx ~ line 43 ~ subscribe ~ type', type)
       setSdDataType(type as string)
       refetch()
     })
@@ -65,40 +70,70 @@ const SourceDirectory = () => {
   //   [watch]
   // )
 
-  const handleSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.value) setSearchResults(sourceData as SourceDataProps[])
+  const handleSearch = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (!e.target.value) setSearchResults(sourceData as SourceDataProps[])
 
-    const resultsArray = sourceData?.filter(
-      (source: SourceDataProps) =>
-        source?.description
-          .toLowerCase()
-          .includes(e.target.value.toLowerCase()) ||
-        source?.category.toLowerCase().includes(e.target.value.toLowerCase())
-    )
+      const resultsArray = sourceData?.filter(
+        (source: SourceDataProps) =>
+          source?.description
+            .toLowerCase()
+            .includes(e.target.value.toLowerCase()) ||
+          source?.category.toLowerCase().includes(e.target.value.toLowerCase())
+      )
 
-    setSearchResults(resultsArray as SourceDataProps[])
-  }, [sourceData])
+      setSearchResults(resultsArray as SourceDataProps[])
+    },
+    [sourceData]
+  )
 
   const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.checked) {
       setChecked(false)
       setSelectedSDId([])
+    } else {
+      const { value } = e.target
+      setChecked(true)
+      setSelectedSDId((partnerId) => [...new Set([...partnerId, value])])
     }
-    const { value } = e.target
-    setChecked(true)
-    setSelectedSDId((partnerId) => [...new Set([...partnerId, value])])
   }
 
-    const handleModalClose = () => {
-      dispatch(setSDData(null))
-      setOpenUpdateModal(false)
-      setAction('CREATE')
-    }
-    const handleModalOpen = () => {
-      setOpenUpdateModal(true)
-      setAction('CREATE')
-    }
+  const handleModalClose = () => {
+    dispatch(setSDData(null))
+    setOpenUpdateModal(false)
+    setAction('CREATE')
+  }
+  const handleModalOpen = () => {
+    setOpenUpdateModal(true)
+    setAction('CREATE')
+  }
 
+  const handleDeleteMany = useCallback(async () => {
+    try {
+      const response = await deleteManySDData({
+        ids: selectedSDId,
+        type: sdDataType,
+      }).unwrap()
+      if (response.success) {
+        showNotification({
+          message: 'Successfully deleted',
+          color: 'success',
+          autoClose: 3000,
+        })
+        refetch()
+        setChecked(false)
+        setSelectedSDId([])
+      }
+    } catch (error) {
+      showNotification({
+        message: 'Error deleting Source Directory Data',
+        color: 'error',
+        autoClose: 3000,
+      })
+    }
+  }, [checked, selectedSDId])
+
+  
   return (
     <>
       {isLoading ? (
@@ -106,7 +141,7 @@ const SourceDirectory = () => {
           <Loader size="xl" variant="bars" />
         </div>
       ) : (
-        <section className="relative mx-auto  my-8   bg-white px-2 py-1 shadow-md sm:rounded-lg md:w-full">
+        <section className="relative mx-auto  my-8   bg-primary-light-50 px-2 py-1 shadow-md dark:bg-primary-dark-600 dark:text-primary-light-100 sm:rounded-lg md:w-full">
           <SearchForm
             register={register}
             types={['BSI', 'IS', 'EU']}
@@ -119,11 +154,14 @@ const SourceDirectory = () => {
                 : (sourceData as SourceDataProps[])
             }
             action={action}
+            checked={checked}
+            selectedSDId={selectedSDId}
             setAction={setAction}
             handleSearch={handleSearch}
             handleSelected={handleSelect}
             refetch={refetch}
             setOpenUpdateModal={setOpenUpdateModal}
+            handleDeleteMany={handleDeleteMany}
           />
         </section>
       )}

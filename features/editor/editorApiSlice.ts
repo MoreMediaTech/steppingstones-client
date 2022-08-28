@@ -92,6 +92,17 @@ const editorApi = editorApiSlice.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
     }),
+    removeManyCounties: builder.mutation<
+      { success: boolean; message: string },
+      string[]
+    >({
+      query: (ids: string[]) => ({
+        url: `editor/delete-counties`,
+        method: 'DELETE',
+        body: { ids },
+      }),
+      invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
+    }),
     createDistrict: builder.mutation<
       { success: boolean; message: string },
       DistrictDataProps
@@ -159,6 +170,17 @@ const editorApi = editorApiSlice.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
     }),
+    deleteManyDistricts: builder.mutation<
+      { success: boolean; message: string },
+      string[]
+    >({
+      query: (ids: string[]) => ({
+        url: `editor/delete-districts`,
+        method: 'DELETE',
+        body: { ids },
+      }),
+      invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
+    }),
     createSection: builder.mutation<
       { success: boolean; message: string },
       SectionProps
@@ -212,6 +234,17 @@ const editorApi = editorApiSlice.injectEndpoints({
       query: (id: string) => ({
         url: `editor/section/${id}`,
         method: 'DELETE',
+      }),
+      invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
+    }),
+    deleteManySections: builder.mutation<
+      { success: boolean; message: string },
+      string[]
+    >({
+      query: (ids: string[]) => ({
+        url: `editor/delete-sections`,
+        method: 'DELETE',
+        body: { ids },
       }),
       invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
     }),
@@ -271,6 +304,17 @@ const editorApi = editorApiSlice.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
     }),
+    deleteManySubSections: builder.mutation<
+      { success: boolean; message: string },
+      string[]
+    >({
+      query: (ids: string[]) => ({
+        url: `editor/delete-subsections`,
+        method: 'DELETE',
+        body: { ids },
+      }),
+      invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
+    }),
     createSubSubSection: builder.mutation<
       { success: boolean; message: string },
       SubSubSectionProps
@@ -317,6 +361,17 @@ const editorApi = editorApiSlice.injectEndpoints({
       query: (id: string) => ({
         url: `editor/sub-subsection/${id}`,
         method: 'DELETE',
+      }),
+      invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
+    }),
+    deleteManySubSubSections: builder.mutation<
+      { success: boolean; message: string },
+      string[]
+    >({
+      query: (ids: string[]) => ({
+        url: `editor/delete-sub-subsections`,
+        method: 'DELETE',
+        body: { ids },
       }),
       invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
     }),
@@ -390,6 +445,17 @@ const editorApi = editorApiSlice.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
     }),
+    deleteManyDistrictSections: builder.mutation<
+      { success: boolean; message: string },
+      string[]
+    >({
+      query: (ids: string[]) => ({
+        url: `editor/delete-district-sections`,
+        method: 'DELETE',
+        body: { ids },
+      }),
+      invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
+    }),
     createEconomicDataWidget: builder.mutation<
       { success: boolean; message: string },
       EconomicDataWidgetProps
@@ -454,6 +520,17 @@ const editorApi = editorApiSlice.injectEndpoints({
       query: (id: string) => ({
         url: `editor/economic-data/${id}`,
         method: 'DELETE',
+      }),
+      invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
+    }),
+    deleteManyEconomicDataWidgets: builder.mutation<
+      { success: boolean; message: string },
+      string[]
+    >({
+      query: (ids: string[]) => ({
+        url: `editor/delete-ed-widgets`,
+        method: 'DELETE',
+        body: { ids },
       }),
       invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
     }),
@@ -532,6 +609,17 @@ const editorApi = editorApiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: 'LIST' }],
     }),
+    deleteManySDData: builder.mutation<
+      { success: boolean; message: boolean },
+      Partial<SourceDirectoryDataProps>
+    >({
+      query: (data) => ({
+        url: `editor/delete-source-directories/${data.type}`,
+        method: 'DELETE',
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: 'LIST' }],
+    }),
   }),
   overrideExisting: true,
 })
@@ -542,11 +630,13 @@ export const {
   useGetCountyByIdQuery,
   useUpdateCountyMutation,
   useRemoveCountyMutation,
+  useRemoveManyCountiesMutation,
   useCreateDistrictMutation,
   useGetDistrictsQuery,
   useGetDistrictByIdQuery,
   useUpdateDistrictByIdMutation,
   useDeleteDistrictByIdMutation,
+  useDeleteManyDistrictsMutation,
   useUpdateOrCreateCountyWelcomeMutation,
   useUpdateOrCreateCountyNewsMutation,
   useUpdateOrCreateCountyLEPMutation,
@@ -555,26 +645,32 @@ export const {
   useGetSectionByIdQuery,
   useUpdateSectionByIdMutation,
   useDeleteSectionByIdMutation,
+  useDeleteManySectionsMutation,
   useCreateSubSectionMutation,
   useGetSubSectionByIdQuery,
   useGetSubSectionsBySectionIdQuery,
   useUpdateSubSectionByIdMutation,
   useDeleteSubSectionByIdMutation,
+  useDeleteManySubSectionsMutation,
   useCreateSubSubSectionMutation,
   useGetSubSubSectionByIdQuery,
   useUpdateSubSubSectionByIdMutation,
   useDeleteSubSubSectionByIdMutation,
+  useDeleteManySubSubSectionsMutation,
   useCreateDistrictSectionMutation,
   useGetDistrictSectionByIdQuery,
   useGetDistrictSectionsByDistrictIdQuery,
   useUpdateDistrictSectionByIdMutation,
   useDeleteDistrictSectionByIdMutation,
+  useDeleteManyDistrictSectionsMutation,
   useCreateEconomicDataWidgetMutation,
   useGetEconomicDataWidgetByIdQuery,
   useUpdateEconomicDataWidgetByIdMutation,
   useDeleteEconomicDataWidgetByIdMutation,
+  useDeleteManyEconomicDataWidgetsMutation,
   useGetAllSDDataByTypeQuery,
   useCreateSDDataMutation,
   useUpdateSDDataMutation,
   useDeleteSDDataMutation,
+  useDeleteManySDDataMutation,
 } = editorApi

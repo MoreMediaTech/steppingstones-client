@@ -67,7 +67,7 @@ const PortalHeader = ({
                   {title}
                 </h1>
 
-                <h3 className="text-sm font-semibold text-[#3A0B99]">
+                <h3 className="text-sm font-semibold text-primary-dark-100 dark:text-primary-light-700">
                   {subTitle}
                 </h3>
               </div>

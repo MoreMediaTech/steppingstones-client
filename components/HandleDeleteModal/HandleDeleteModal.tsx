@@ -14,6 +14,7 @@ const HandleDeleteModal = ({
   deleteHandler: (id: string, type?:string) => void
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
+
   return (
     <Modal
       centered

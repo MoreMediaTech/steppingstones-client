@@ -23,7 +23,7 @@ const DistrictSettingsPage = () => {
             title={`${user?.name}`}
             subTitle="Manage District Settings"
           />
-          <section className="px-2 sm:px-4 overflow-y-auto">
+          <section className="mx-auto mt-2 md:mt-4 overflow-y-auto px-2 sm:px-4 md:max-w-screen-xl space-y-4">
             <h1 className="px-4 text-2xl font-bold">District Setting</h1>
             <DistrictSettings />
           </section>

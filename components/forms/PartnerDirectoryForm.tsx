@@ -8,11 +8,11 @@ import {
   UseFormRegister,
 } from 'react-hook-form'
 
-import { PartnerData, ValueCategory, IFormData } from '@lib/types'
-import { PARTNER_TYPE, VALUE_CATEGORIES } from 'data'
-import FormRowSelect from './FormComponents/FormRowSelect'
+import { IFormData } from '@lib/types'
+import { useAppSelector, useAppDispatch } from 'app/hooks'
 import FormInput from './FormComponents/FormInput'
-import FormCheckbox from './FormComponents/FormCheckBox'
+import { partnerSelector } from 'features/partner/partnerSlice'
+
 
 interface IPartnerDirectoryFormProps {
   errors: FieldErrorsImpl<DeepRequired<IFormData>>
@@ -30,7 +30,7 @@ const PartnerDirectoryForm = ({
   register,
   submitHandler,
 }: IPartnerDirectoryFormProps) => {
-
+  const {  type } = useAppSelector(partnerSelector)
   return (
     <form
       aria-label="update-user-form"
@@ -149,7 +149,7 @@ const PartnerDirectoryForm = ({
       </div>
       <div className="grid grid-cols-1 gap-x-4 gap-y-6  bg-transparent sm:grid-cols-2 md:grid-cols-3">
         <Button type="submit" loading={isLoading} variant="outline">
-          {isLoading ? 'Adding Partner.....' : 'Add Partner'}
+          {isLoading ? 'Submitting.....' : 'Submit'}
         </Button>
       </div>
     </form>

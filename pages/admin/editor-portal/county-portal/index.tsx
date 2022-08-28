@@ -60,7 +60,7 @@ const County = () => {
             title="UK Counties"
             subTitle="Please select from the menu below"
           />
-          <section className="container mx-auto px-4 py-2">
+          <section className="container mx-auto max-w-screen-xl p-4">
             <div className="flex justify-between">
               <Button
                 type="button"
@@ -94,7 +94,7 @@ const County = () => {
                 <div className="flex h-full items-center justify-center">
                   <button
                     type="button"
-                    className="h-20 bg-white/30 px-2 text-[#5E17EB] shadow-lg backdrop-blur-sm transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110"
+                    className="h-20 bg-primary-light-50 px-2 text-primary-dark-200 shadow-lg backdrop-blur-sm transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110"
                     onClick={goToPreviousPage}
                   >
                     <MdOutlineArrowLeft fontSize={40} />
@@ -108,7 +108,7 @@ const County = () => {
                           key={`${index}-${county.name}`}
                           type="button"
                           color="primary"
-                          className='!py-4'
+                          className="!py-4"
                           onClick={() =>
                             router.replace({
                               pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county.name}`,
@@ -128,7 +128,7 @@ const County = () => {
                 <div className="flex h-full items-center justify-center">
                   <button
                     type="button"
-                    className="h-20 bg-white/30 px-2 text-[#5E17EB] shadow-lg backdrop-blur-sm transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 "
+                    className="h-20 bg-primary-light-50 px-2 text-primary-dark-200 shadow-lg backdrop-blur-sm transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 "
                     onClick={goToNextPage}
                   >
                     <MdOutlineArrowRight fontSize={44} />

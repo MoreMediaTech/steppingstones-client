@@ -1,5 +1,6 @@
 import React from 'react'
 import { Modal } from '@mantine/core'
+import { useTheme } from 'next-themes'
 
 import SourceDirectoryForm from '@components/forms/SourceDirectoryForm'
 import { IFormDataProps } from '.'
@@ -19,6 +20,8 @@ const SourceDirectoryUpdateModal = ({
   refetch: () => void
   handleModalClose: () => void
 }) => {
+  const { theme } = useTheme()
+  
   return (
     <Modal
       overlayColor="rgba(0, 0, 0, 0.5)"

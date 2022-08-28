@@ -6,7 +6,6 @@ import { useRouter } from 'next/router'
 import { ComponentShield } from '@components/NextShield'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
 import AdminUsersSection from '@components/AdminUsersSection'
-import Spinner from '@components/spinner'
 import PortalHeader from '@components/PortalHeader'
 import { AdminLayout } from 'layout'
 import { CurrentUser } from '@lib/types'
@@ -30,9 +29,10 @@ const Users = () => {
             title={`${user?.name}`}
             subTitle="Manage application users"
           />
-          {user?.isSuperAdmin && (
-            <section className="px-2 sm:px-4 py-2 mt-4">
-              <div className="flex justify-end">
+          <section className="mx-auto max-w-screen-xl overflow-y-auto px-2 sm:px-4 space-y-4">
+            <div className="flex items-center justify-between py-2">
+              <h1 className="px-2 text-xl font-semibold md:text-2xl">Users</h1>
+              {user?.isSuperAdmin && (
                 <Button
                   type="button"
                   color="outline"
@@ -41,11 +41,8 @@ const Users = () => {
                 >
                   Create Admin
                 </Button>
-              </div>
-            </section>
-          )}
-          <section className="px-2 sm:px-4 overflow-y-auto ">
-            <h1 className="px-2 text-xl md:text-2xl font-semibold">Users</h1>
+              )}
+            </div>
             <AdminUsersSection />
           </section>
         </ComponentShield>

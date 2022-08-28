@@ -27,8 +27,10 @@ const CountySettingsPage = () => {
             title={`${user?.name}`}
             subTitle="Manage counties"
           />
-          <section className={`px-2 sm:px-4 overflow-hidden overflow-y-auto`}>
-            <h1 className="text-2xl font-bold font-poppins">County Setting</h1>
+          <section
+            className={`mx-auto mt-2 overflow-hidden space-y-4 overflow-y-auto px-2 sm:px-4 md:max-w-screen-xl`}
+          >
+            <h1 className="font-poppins text-2xl font-bold">County Setting</h1>
             <CountySettings />
           </section>
         </section>

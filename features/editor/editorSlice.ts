@@ -50,33 +50,33 @@ const editorSlice = createSlice({
     setCounties: (state, { payload }: PayloadAction<CountyDataProps[]>) => {
       state.counties = payload
     },
-    setCounty: (state, { payload }: PayloadAction<CountyDataProps>) => {
+    setCounty: (state, { payload }: PayloadAction<CountyDataProps | null>) => {
       state.county = payload
     },
-    setDistrict: (state, { payload }: PayloadAction<DistrictDataProps>) => {
+    setDistrict: (state, { payload }: PayloadAction<DistrictDataProps | null>) => {
       state.district = payload
     },
-    setSection: (state, { payload }: PayloadAction<SectionProps>) => {
+    setSection: (state, { payload }: PayloadAction<SectionProps | null>) => {
       state.section = payload
     },
-    setSubSection: (state, { payload }: PayloadAction<SubSectionProps>) => {
+    setSubSection: (state, { payload }: PayloadAction<SubSectionProps | null>) => {
       state.subSection = payload
     },
     setSubSubSection: (
       state,
-      { payload }: PayloadAction<SubSubSectionProps>
+      { payload }: PayloadAction<SubSubSectionProps | null>
     ) => {
       state.subSubSection = payload
     },
     setDistrictSection: (
       state,
-      { payload }: PayloadAction<DistrictSectionProps>
+      { payload }: PayloadAction<DistrictSectionProps | null>
     ) => {
       state.districtSection = payload
     },
     setEconomicData: (
       state,
-      { payload }: PayloadAction<EconomicDataWidgetProps>
+      { payload }: PayloadAction<EconomicDataWidgetProps | null>
     ) => {
       state.economicData = payload
     },

@@ -5,6 +5,8 @@ import { useGetCountiesQuery } from 'features/editor/editorApiSlice'
 import { CountyDataProps } from '@lib/types'
 import CountyTable from './CountyTable'
 import UpdateCountyModal from './UpdateCountyModal'
+import { useAppDispatch, useAppSelector } from 'app/hooks'
+import { editorSelector, setCounty } from 'features/editor/editorSlice'
 
 const CountySettings = () => {
   const {
@@ -13,15 +15,14 @@ const CountySettings = () => {
     isError: isErrorCounties,
     refetch: refetchCounties,
   } = useGetCountiesQuery()
+  const dispatch = useAppDispatch()
   const [open, setOpen] = useState<boolean>(false)
-  const [county, setCounty] = useState<CountyDataProps | null>(null)
   const [searchResults, setSearchResults] = useState<CountyDataProps[]>([])
-  const [selectedCountyId, setSelectedCountyId] = useState<string[]>([])
-  const [checked, setChecked] = useState<boolean>(false)
+  const { county } = useAppSelector(editorSelector)
 
   const handleModalClose = () => {
     setOpen(false)
-    setCounty(null)
+    dispatch(setCounty(null))
   }
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,16 +35,6 @@ const CountySettings = () => {
     setSearchResults(resultsArray as CountyDataProps[])
   }
 
-  const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target
-    if (!e.target.checked) {
-      setChecked(false)
-      setSelectedCountyId((countyId) => countyId.filter((id) => id !== value))
-    } else {
-      setChecked(true)
-      setSelectedCountyId((countyId) => [...new Set([...countyId, value])])
-    }
-  }
 
   if (isErrorCounties) {
     return (
@@ -70,10 +61,8 @@ const CountySettings = () => {
             : (counties as CountyDataProps[])
         }
         setOpen={setOpen}
-        setCounty={setCounty}
         refetch={refetchCounties}
         handleSearch={handleSearch}
-        handleSelect={handleSelect}
       />
       <UpdateCountyModal
         key={county?.id}

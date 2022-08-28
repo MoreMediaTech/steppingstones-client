@@ -57,7 +57,6 @@ const SourceDirectoryForm = ({
 
   const submitHandler: SubmitHandler<IFormDataProps> = useCallback(
     async (data) => {
-      console.log(data)
       try {
         let response
         if (action === 'CREATE') {

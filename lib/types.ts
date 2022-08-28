@@ -68,6 +68,7 @@ export interface SourceDirectoryDataProps extends SourceDataProps {
   bsiId?: string
   isId?: string
   euId?: string
+  ids?: string[]
 }
 
 export enum SourceDirectoryType {

@@ -10,19 +10,27 @@ import { enGB } from 'date-fns/locale'
 import { useAppDispatch } from 'app/hooks'
 import { setPartnerData, setType } from 'features/partner/partnerSlice'
 
-const PartnerDirectoryTable = ({
-  partnerData,
-  setOpen,
-  refetch,
-  handleSearch,
-  handleSelected
-}: {
+interface PartnerDirectoryTableProps {
   partnerData: PartnerData[]
+  checked: boolean
+  selectedPartnersId: string[]
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   refetch: () => void
   handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void
   handleSelected: (e: React.ChangeEvent<HTMLInputElement>) => void
-}) => {
+  handleDeleteMany: () => void
+}
+
+const PartnerDirectoryTable = ({
+  partnerData,
+  checked,
+  selectedPartnersId,
+  setOpen,
+  refetch,
+  handleSearch,
+  handleSelected,
+  handleDeleteMany,
+}: PartnerDirectoryTableProps) => {
   const dispatch = useAppDispatch()
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [deletePartnerData, { isLoading }] = useDeletePartnerDataMutation()
@@ -46,8 +54,8 @@ const PartnerDirectoryTable = ({
     }
   }, [])
   return (
-    <section className="relative bg-white px-2 shadow-md sm:rounded-lg md:px-4 space-y-2">
-      <div className="p-4 ">
+    <section className="relative space-y-2 bg-primary-light-50 px-2 shadow-md dark:bg-primary-dark-600 sm:rounded-lg md:px-4">
+      <div className="flex items-center gap-6 p-4">
         <label htmlFor="table-search" className="sr-only" />
         <div className="relative mt-1">
           <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -72,10 +80,17 @@ const PartnerDirectoryTable = ({
             onChange={handleSearch}
           />
         </div>
+        <div className="mt-2">
+          {checked && selectedPartnersId.length > 0 && (
+            <button type="button" onClick={handleDeleteMany}>
+              <FaTrash fontSize={20} className="text-red-500" />
+            </button>
+          )}
+        </div>
       </div>
       <div className="relative overflow-x-auto md:p-4">
-        <table className="table text-left text-gray-500">
-          <thead className="bg-gray-100 text-xs uppercase text-gray-700">
+        <table className="table bg-primary-light-50 text-left text-gray-500 dark:bg-primary-dark-600 dark:text-primary-light-100">
+          <thead className="bg-gray-100 text-xs uppercase text-gray-700 dark:bg-primary-dark-500 dark:text-primary-light-200">
             <tr>
               <th scope="col" className="p-4"></th>
               <th scope="col" className="px-6 py-3 text-left">
@@ -105,12 +120,7 @@ const PartnerDirectoryTable = ({
             {partnerData?.map((partner: PartnerData) => (
               <tr
                 key={partner.id}
-                className="border-b bg-white hover:bg-gray-50"
-                onClick={() => {
-                  dispatch(setPartnerData(partner))
-                  dispatch(setType('Update'))
-                  setOpen(true)
-                }}
+                className="group border-b hover:bg-gray-100  dark:hover:bg-primary-light-500"
               >
                 <td className="w-4 p-4">
                   <div className="flex items-center">
@@ -131,7 +141,7 @@ const PartnerDirectoryTable = ({
                 </td>
                 <td
                   scope="row"
-                  className="whitespace-nowrap px-6 py-4 text-left text-sm font-medium text-gray-900"
+                  className="whitespace-nowrap px-6 py-4 text-left text-sm font-medium"
                 >
                   <div className="flex items-center justify-start space-x-2">
                     <p>{partner?.organisation?.name}</p>
@@ -140,15 +150,15 @@ const PartnerDirectoryTable = ({
 
                 <td
                   scope="row"
-                  className="whitespace-nowrap px-6 py-4 text-left text-sm font-medium text-gray-900"
+                  className="whitespace-nowrap px-6 py-4 text-left text-sm font-medium"
                 >
                   <p>{partner?.projectsResponsibleFor}</p>
                 </td>
                 <td
                   scope="row"
-                  className="whitespace-nowrap px-6 py-4 text-left text-sm font-medium text-gray-900"
+                  className="whitespace-nowrap px-6 py-4 text-left text-sm font-medium"
                 >
-                  <div className="flex items-center justify-center rounded-lg bg-lime-400 text-lg px-1 text-white shadow-lg">
+                  <div className="flex items-center justify-center rounded-lg bg-primary-dark-200 px-1 text-lg text-white shadow-lg">
                     <p>
                       {format(
                         new Date(partner?.closingDate),
@@ -162,21 +172,23 @@ const PartnerDirectoryTable = ({
                 </td>
                 <td
                   scope="row"
-                  className="whitespace-nowrap px-6 py-4 text-left text-sm font-medium text-gray-900"
+                  className="whitespace-nowrap px-6 py-4 text-left text-sm font-medium"
                 >
                   <p>{partner?.partner?.name}</p>
                 </td>
                 <td
                   scope="row"
-                  className="whitespace-nowrap px-6 py-4 text-left text-sm font-medium text-gray-900"
+                  className="whitespace-nowrap px-6 py-4 text-left text-sm font-medium"
                 >
                   <p>{partner?.position}</p>
                 </td>
                 <td
                   scope="row"
-                  className="text-wrap overflow-hidden truncate whitespace-nowrap px-6 py-4 text-left text-sm font-medium text-gray-900"
+                  className="text-wrap overflow-hidden truncate whitespace-nowrap px-6 py-4 text-left text-sm font-medium hover:underline dark:text-primary-light-300 dark:group-hover:text-primary-dark-100"
                 >
-                  <p>{partner?.partner?.email}</p>
+                  <a href={`mailto:${partner?.partner?.email}`}>
+                    {partner?.partner?.email}
+                  </a>
                 </td>
 
                 <td className="px-6 py-4 text-right">
@@ -186,7 +198,7 @@ const PartnerDirectoryTable = ({
                       disabled={false}
                       variant="outline"
                       leftIcon={<FaEdit fontSize={14} />}
-                      className="font-medium text-blue-600  "
+                      className="font-medium text-blue-600 hover:bg-blue-600 hover:text-white group-hover:bg-blue-600 group-hover:text-white "
                       onClick={() => {
                         dispatch(setPartnerData(partner))
                         dispatch(setType('Update'))
@@ -202,7 +214,7 @@ const PartnerDirectoryTable = ({
                       variant="outline"
                       color="red"
                       leftIcon={<FaTrash fontSize={14} />}
-                      className="font-medium  hover:bg-red-500 hover:text-white "
+                      className="font-medium  hover:bg-red-500 group-hover:bg-red-500 hover:text-white group-hover:text-white"
                       onClick={() => setOpenModal(true)}
                     >
                       Delete

@@ -95,7 +95,7 @@ const AdminUsersTable = ({
               {users?.map((user: CurrentUser) => (
                 <tr
                   key={user.id}
-                  className="border-b  hover:bg-gray-100 dark:hover:bg-primary-light-500"
+                  className="border-b group hover:bg-gray-100 dark:hover:bg-primary-light-500"
                 >
                   <td className="w-4 p-4">
                     <div className="flex items-center">
@@ -156,7 +156,7 @@ const AdminUsersTable = ({
                         disabled={false}
                         variant="outline"
                         leftIcon={<FaEdit fontSize={14} />}
-                        className="font-medium text-blue-600  "
+                        className="font-medium text-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white group-hover:bg-blue-600 group-hover:text-white "
                         onClick={() => {
                           setUser(user)
                           setOpen(true)

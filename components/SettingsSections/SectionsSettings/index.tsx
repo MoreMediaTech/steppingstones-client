@@ -1,7 +1,11 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { Loader } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 
-import { useGetSectionsQuery } from 'features/editor/editorApiSlice'
+import {
+  useGetSectionsQuery,
+  useDeleteManySectionsMutation,
+} from 'features/editor/editorApiSlice'
 import { SectionProps } from '@lib/types'
 import SectionsTable from './SectionsTable'
 import UpdateSectionModal from './UpdateSectionModal'
@@ -16,10 +20,12 @@ const SectionsSettings = () => {
   const [open, setOpen] = useState<boolean>(false)
   const [section, setSection] = useState<SectionProps | null>(null)
   const [searchResults, setSearchResults] = useState<SectionProps[]>([])
-  const [checked, setChecked] = useState<boolean>(false)
-  const [selectedSectionId, setSelectedSectionId] = useState<string[]>([])
-
   const [type, setType] = useState<'Section' | 'SubSection'>('Section')
+  const [checked, setChecked] = useState<boolean>(false)
+  const [selectedSectionIds, setSelectedSectionIds] = useState<string[]>([])
+
+  const [deleteManySections, { isLoading: isDeleting }] = useDeleteManySectionsMutation()
+
 
   const handleModalClose = () => {
     setOpen(false)
@@ -40,14 +46,36 @@ const SectionsSettings = () => {
     const { value } = e.target
     if (!e.target.checked) {
       setChecked(false)
-      setSelectedSectionId((sectionId) =>
+      setSelectedSectionIds((sectionId) =>
         sectionId.filter((id) => id !== value)
       )
     } else {
       setChecked(true)
-      setSelectedSectionId((sectionId) => [...new Set([...sectionId, value])])
+      setSelectedSectionIds((sectionId) => [...new Set([...sectionId, value])])
     }
   }
+
+  const handleDeleteMany = useCallback(async () => {
+    try {
+      const response = await deleteManySections(selectedSectionIds).unwrap()
+      if (response.success) {
+        showNotification({
+          message: 'Successfully deleted Partner Directory entries',
+          color: 'success',
+          autoClose: 3000,
+        })
+        refetchSections()
+        setChecked(false)
+        setSelectedSectionIds([])
+      }
+    } catch (error) {
+      showNotification({
+        message: 'Error deleting Partner Directory Data',
+        color: 'error',
+        autoClose: 3000,
+      })
+    }
+  } , [checked, selectedSectionIds])
 
   if (isLoadingSections) {
     return (
@@ -69,9 +97,12 @@ const SectionsSettings = () => {
         setSection={setSection}
         refetch={refetchSections}
         type={type}
+        checked={checked}
         setType={setType}
         handleSearch={handleSearch}
         handleSelect={handleSelect}
+        handleDeleteMany={handleDeleteMany}
+        selectedSectionIds={selectedSectionIds}
       />
       <UpdateSectionModal
         key={section?.id}

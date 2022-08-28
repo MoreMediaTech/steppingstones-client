@@ -5,7 +5,7 @@ export const partnerApi = partnerApiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getPartnerById: builder.query<PartnerData, string>({
       query: (id: string) => ({
-        url: `partners/${id}`,
+        url: `partners/directory/${id}`,
       }),
       providesTags: [{ type: 'Partner' }],
     }),
@@ -14,7 +14,7 @@ export const partnerApi = partnerApiSlice.injectEndpoints({
       IFormData
     >({
       query: (data) => ({
-        url: `partners/`,
+        url: `partners/directory`,
         method: 'POST',
         body: { ...data },
       }),
@@ -25,7 +25,7 @@ export const partnerApi = partnerApiSlice.injectEndpoints({
       IFormData
     >({
       query: (data) => ({
-        url: `partners/${data.id}`,
+        url: `partners/directory/${data.id}`,
         method: 'PUT',
         body: { ...data },
       }),
@@ -38,14 +38,25 @@ export const partnerApi = partnerApiSlice.injectEndpoints({
       string
     >({
       query: (id: string) => ({
-        url: `partners/${id}`,
+        url: `partners/directory/${id}`,
         method: 'DELETE',
+      }),
+      invalidatesTags: [{ type: 'Partner', id: 'List' }],
+    }),
+    deleteManyPartnerData: builder.mutation<
+      { success: boolean; message: string },
+      string[]
+    >({
+      query: (ids: string[]) => ({
+        url: `partners/delete-directories`,
+        method: 'DELETE',
+        body: { ids },
       }),
       invalidatesTags: [{ type: 'Partner', id: 'List' }],
     }),
     getAllPartnersData: builder.query<PartnerData[], void>({
       query: () => ({
-        url: `partners/`,
+        url: `partners/directory`,
       }),
       providesTags: (result) =>
         result
@@ -90,4 +101,5 @@ export const {
   useDeletePartnerDataMutation,
   useGetAllPartnersDataQuery,
   useGetAllPartnerDataQuery,
+  useDeleteManyPartnerDataMutation,
 } = partnerApi

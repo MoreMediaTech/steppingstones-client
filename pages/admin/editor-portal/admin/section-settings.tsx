@@ -23,7 +23,7 @@ const SectionSettingsPage = () => {
             title={`${user?.name}`}
             subTitle="Manage Sections"
           />
-          <section className="px-2 sm:px-4 overflow-y-auto">
+          <section className="overflow-y-auto px-2 sm:px-4 md:max-w-screen-xl mt-2 mx-auto space-y-4">
             <h1 className="px-4 text-2xl font-bold">Section Settings</h1>
             <SectionsSettings />
           </section>

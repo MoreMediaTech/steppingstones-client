@@ -60,7 +60,7 @@ const AdminSidebar = ({
 
   // const width = isOpen ? '288' : '100'
   return (
-    <header className="relative bg-primary-light-100 dark:bg-primary-dark-800 h-screen">
+    <header className="relative bg-primary-light-100 dark:bg-primary-dark-700 md:h-screen">
       <div className=" mb-2  flex items-center justify-between px-4 py-2 md:hidden ">
         <AppLogo />
         <Burger
@@ -73,7 +73,7 @@ const AdminSidebar = ({
       </div>
 
       <aside
-        className="w-30 py-2 px-1 hidden h-full flex-col space-y-8 bg-primary-light-100 dark:bg-primary-dark-700 md:flex"
+        className="w-30 py-2 px-1 hidden md:h-full flex-col space-y-8 bg-primary-light-100 dark:bg-primary-dark-700 md:flex"
       >
           <Link href={'/'}>
             <a>

@@ -14,26 +14,33 @@ import { setSectionType } from 'features/editor/editorSlice'
 import HandleDeleteModal from '../../HandleDeleteModal/HandleDeleteModal'
 import SubSectionsTable from './SubSectionsTable'
 
-const SectionsTable = ({
-  sectionsData,
-  type,
-  setType,
-  setOpen,
-  setSection,
-
-  refetch,
-  handleSearch,
-  handleSelect,
-}: {
+interface ISectionsTableProps {
   type: 'Section' | 'SubSection'
   sectionsData: SectionProps[]
+  checked: boolean
+  selectedSectionIds: string[]
   setType: React.Dispatch<React.SetStateAction<'Section' | 'SubSection'>>
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   setSection: React.Dispatch<React.SetStateAction<SectionProps | null>>
   refetch: () => void
   handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void
   handleSelect: (e: React.ChangeEvent<HTMLInputElement>) => void
-}) => {
+  handleDeleteMany: () => void
+}
+
+const SectionsTable = ({
+  sectionsData,
+  type,
+  setType,
+  setOpen,
+  setSection,
+  checked,
+  refetch,
+  handleSearch,
+  handleSelect,
+  handleDeleteMany,
+  selectedSectionIds,
+}: ISectionsTableProps) => {
   const dispatch = useAppDispatch()
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [sectionData, setSectionData] = useState<SectionProps | null>(null)
@@ -66,8 +73,8 @@ const SectionsTable = ({
 
   return (
     <>
-      <section className=" relative overflow-y-auto shadow-md sm:rounded-lg md:w-full">
-        <div className="p-4">
+      <section className=" relative space-y-2 bg-primary-light-50 px-2 shadow-md dark:bg-primary-dark-600 sm:rounded-lg ">
+        <div className="flex items-center gap-2 p-4">
           <label htmlFor="table-search" className="sr-only">
             Search
           </label>
@@ -94,23 +101,19 @@ const SectionsTable = ({
               onChange={handleSearch}
             />
           </div>
+          <div className="mt-2">
+            {checked && selectedSectionIds.length > 0 && (
+              <button type="button" onClick={handleDeleteMany}>
+                <FaTrash fontSize={20} className="text-red-500" />
+              </button>
+            )}
+          </div>
         </div>
         <div className="overflow-x-auto">
-          <table className="relative table w-full  text-center text-sm text-gray-500">
-            <thead className="bg-gray-100 text-xs uppercase text-gray-700">
+          <table className="table w-full bg-primary-light-50 text-left text-gray-500 dark:bg-primary-dark-600 dark:text-primary-light-100">
+            <thead className="bg-gray-100 text-xs uppercase text-gray-700 dark:bg-primary-dark-500 dark:text-primary-light-200">
               <tr>
-                <th scope="col" className="p-4">
-                  {/* <div className="flex items-center">
-                    <input
-                      id="checkbox-all-search"
-                      type="checkbox"
-                      className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 "
-                    />
-                    <label htmlFor="checkbox-all-search" className="sr-only">
-                      checkbox
-                    </label>
-                  </div> */}
-                </th>
+                <th scope="col" className="p-4"></th>
                 <th
                   scope="col"
                   className="whitespace-nowrap px-6 py-3 text-left"
@@ -141,7 +144,7 @@ const SectionsTable = ({
               {sectionsData?.map((section: SectionProps) => (
                 <tr
                   key={section.id}
-                  className="border-b bg-white hover:bg-gray-50"
+                  className="group border-b hover:bg-gray-100 dark:hover:bg-primary-light-500"
                 >
                   <td className="w-4 p-4">
                     <div className="flex items-center">
@@ -162,7 +165,7 @@ const SectionsTable = ({
                   </td>
                   <td
                     scope="row"
-                    className="whitespace-nowrap px-6 py-4 text-left font-medium text-gray-900"
+                    className="whitespace-nowrap px-6 py-4 text-left font-medium "
                   >
                     <div className="flex items-center justify-start text-xl font-semibold">
                       <p>{section?.name}</p>
@@ -170,7 +173,7 @@ const SectionsTable = ({
                   </td>
                   <td
                     scope="row"
-                    className="whitespace-nowrap px-6 py-4 text-left font-medium text-gray-900"
+                    className="whitespace-nowrap px-6 py-4 text-left font-medium "
                   >
                     <div className="flex items-center justify-start space-x-2">
                       <div className="relative h-10 w-10 rounded-full border p-1">
@@ -190,7 +193,7 @@ const SectionsTable = ({
                   </td>
                   <td
                     scope="row"
-                    className="whitespace-nowrap px-6 py-4 text-left font-medium text-gray-900"
+                    className="whitespace-nowrap px-6 py-4 text-left font-medium "
                   >
                     {section.isSubSection && (
                       <div className="flex items-center justify-center gap-2">
@@ -198,7 +201,7 @@ const SectionsTable = ({
                           type="button"
                           disabled={false}
                           variant="outline"
-                          className="text-xs font-medium text-blue-600 sm:text-base "
+                          className="text-xs font-medium text-blue-600 hover:bg-blue-600 hover:text-white group-hover:bg-blue-600 group-hover:text-white sm:text-base "
                           onClick={() => {
                             setOpenSubSectionModal(true)
                             setSectionData(section)
@@ -220,7 +223,7 @@ const SectionsTable = ({
                     </div>
                   </td>
                   <td className="whitespace-nowrap px-2 py-1 text-center">
-                    <div className="flex items-center justify-center rounded-lg bg-lime-400 text-lg text-white shadow-lg">
+                    <div className="flex items-center justify-center rounded-lg bg-primary-dark-200 text-lg text-white shadow-lg">
                       <p>
                         {format(
                           new Date(section?.updatedAt as string),
@@ -239,7 +242,7 @@ const SectionsTable = ({
                         disabled={false}
                         variant="outline"
                         leftIcon={<FaEdit fontSize={14} />}
-                        className="font-medium text-blue-600  "
+                        className="font-medium text-blue-600 hover:bg-blue-600 hover:text-white group-hover:bg-blue-600 group-hover:text-white"
                         onClick={() => {
                           setSection(section)
                           setOpen(true)
@@ -255,7 +258,7 @@ const SectionsTable = ({
                         variant="outline"
                         color="red"
                         leftIcon={<FaTrash fontSize={14} />}
-                        className="font-medium  hover:bg-red-500 hover:text-white "
+                        className="font-medium  hover:bg-red-500 hover:text-white group-hover:bg-red-500 group-hover:text-white"
                         onClick={() => {
                           setOpenModal(true)
                           setSectionData(section)

@@ -12,15 +12,12 @@ type SelectProps = {
 const FormRowSelect: React.FunctionComponent<
   SelectProps & React.RefAttributes<HTMLSelectElement>
 > = React.forwardRef<Ref, SelectProps>(
-  (
-    { list, label, title, type, ...props }: SelectProps,
-    ref
-  ) => (
+  ({ list, label, title, type, ...props }: SelectProps, ref) => (
     <>
       <div className="w-full space-y-2">
         <label
           htmlFor={type}
-          className="my-2 text-sm font-semibold text-gray-900"
+          className="my-2 text-sm font-semibold text-gray-900 dark:text-primary-light-100"
         >
           {label} <span className="text-red-500">*</span>
         </label>

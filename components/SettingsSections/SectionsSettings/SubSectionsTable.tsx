@@ -10,6 +10,7 @@ import { SubSectionProps } from '@lib/types'
 import {
   useDeleteSubSectionByIdMutation,
   useGetSubSectionsBySectionIdQuery,
+  useDeleteManySubSectionsMutation,
 } from 'features/editor/editorApiSlice'
 import { useAppDispatch, useAppSelector } from 'app/hooks'
 import { setSectionType, editorSelector } from 'features/editor/editorSlice'
@@ -17,7 +18,6 @@ import HandleDeleteModal from '../../HandleDeleteModal/HandleDeleteModal'
 import UpdateSectionModal from './UpdateSectionModal'
 
 const SubSectionsTable = ({
-
   sectionName,
   sectionId,
   openSubSectionModal,
@@ -38,14 +38,20 @@ const SubSectionsTable = ({
   const [subSection, setSubSection] = useState<SubSectionProps | null>(null)
   const [searchResults, setSearchResults] = useState<SubSectionProps[]>([])
   const [checked, setChecked] = useState<boolean>(false)
-  const [selectedSectionId, setSelectedSectionId] = useState<string[]>([])
- 
+  const [selectedSectionIds, setSelectedSectionIds] = useState<string[]>([])
+
   const { sectionType } = useAppSelector(editorSelector)
-  const { data: subSectionData, isLoading: isLoadingSubSections, refetch: refetchSubSection } =
-    useGetSubSectionsBySectionIdQuery(sectionId)
-  
+  const {
+    data: subSectionData,
+    isLoading: isLoadingSubSections,
+    refetch: refetchSubSection,
+  } = useGetSubSectionsBySectionIdQuery(sectionId)
+
   const [deleteSubSectionById, { isLoading }] =
     useDeleteSubSectionByIdMutation()
+
+  const [deleteManySubSections, { isLoading: isDeletingManySections }] =
+    useDeleteManySubSectionsMutation()
 
   const handleUpdateModalClose = () => {
     setOpen(false)
@@ -66,12 +72,12 @@ const SubSectionsTable = ({
     const { value } = e.target
     if (!e.target.checked) {
       setChecked(false)
-      setSelectedSectionId((sectionId) =>
+      setSelectedSectionIds((sectionId) =>
         sectionId.filter((id) => id !== value)
       )
     } else {
       setChecked(true)
-      setSelectedSectionId((sectionId) => [...new Set([...sectionId, value])])
+      setSelectedSectionIds((sectionId) => [...new Set([...sectionId, value])])
     }
   }
 
@@ -96,6 +102,28 @@ const SubSectionsTable = ({
     }
   }, [])
 
+  const handleDeleteMany = useCallback(async () => {
+    try {
+      const response = await deleteManySubSections(selectedSectionIds).unwrap()
+      if (response.success) {
+        showNotification({
+          message: 'Successfully deleted Partner Directory entries',
+          color: 'success',
+          autoClose: 3000,
+        })
+        refetchSubSection()
+        setChecked(false)
+        setSelectedSectionIds([])
+      }
+    } catch (error) {
+      showNotification({
+        message: 'Error deleting Partner Directory Data',
+        color: 'error',
+        autoClose: 3000,
+      })
+    }
+  }, [checked, selectedSectionIds])
+
   return (
     <>
       <Modal
@@ -114,7 +142,7 @@ const SubSectionsTable = ({
           </div>
         ) : (
           <section className=" relative h-[500px] min-h-[500px] overflow-y-auto scroll-smooth sm:h-[700px] md:w-full">
-            <div className="p-4">
+            <div className="flex items-center gap-2 p-4">
               <label htmlFor="table-search" className="sr-only">
                 Search
               </label>
@@ -141,25 +169,19 @@ const SubSectionsTable = ({
                   onChange={handleSearch}
                 />
               </div>
+              <div className="mt-2">
+                {(selectedSectionIds.length > 0) && (
+                  <button type="button" onClick={handleDeleteMany}>
+                    <FaTrash fontSize={20} className="text-red-500" />
+                  </button>
+                )}
+              </div>
             </div>
             <div className="overflow-x-auto">
               <table className="relative table w-full  text-center text-sm text-gray-500">
                 <thead className="bg-gray-50 text-xs uppercase text-gray-700">
                   <tr>
                     <th scope="col" className="p-4">
-                      {/* <div className="flex items-center">
-                        <input
-                          id="checkbox-all-search"
-                          type="checkbox"
-                          className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 "
-                        />
-                        <label
-                          htmlFor="checkbox-all-search"
-                          className="sr-only"
-                        >
-                          checkbox
-                        </label>
-                      </div> */}
                     </th>
                     <th scope="col" className="px-6 py-3 text-left">
                       Section name

@@ -5,6 +5,8 @@ import { useGetDistrictsQuery } from 'features/editor/editorApiSlice'
 import { DistrictDataProps } from '@lib/types'
 import DistrictTable from './DistrictTable'
 import UpdateDistrictModal from './UpdateDistrictModal'
+import { useAppSelector, useAppDispatch } from '../../../app/hooks'
+import { editorSelector, setDistrict } from '../../../features/editor/editorSlice'
 
 const DistrictSettings = () => {
   const {
@@ -13,16 +15,16 @@ const DistrictSettings = () => {
     isError: isErrorDistricts,
     refetch: refetchDistricts,
   } = useGetDistrictsQuery()
+  const dispatch = useAppDispatch()
   const [open, setOpen] = useState<boolean>(false)
-  const [district, setDistrict] = useState<DistrictDataProps | null>(null)
   const [type, setType] = useState<'District' | 'DistrictSection'>('District')
-  const [checked, setChecked] = useState<boolean>(false)
+
   const [searchResults, setSearchResults] = useState<DistrictDataProps[]>([])
-  const [selectedDistrictId, setSelectedDistrictId] = useState<string[]>([])
+  const { district } = useAppSelector(editorSelector)
 
   const handleModalClose = () => {
     setOpen(false)
-    setDistrict(null)
+    dispatch(setDistrict(null))
   }
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,16 +41,6 @@ const DistrictSettings = () => {
     setSearchResults(resultsArray as DistrictDataProps[])
   }
 
-  const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target
-    if (!e.target.checked) {
-      setChecked(false)
-      setSelectedDistrictId(districtId => districtId.filter(id => id !== value))
-    } else {
-      setChecked(true)
-      setSelectedDistrictId((partnerId) => [...new Set([...partnerId, value])])
-    }
-  }
 
   if (isErrorDistricts) {
     return (
@@ -74,12 +66,10 @@ const DistrictSettings = () => {
             : (districtData as DistrictDataProps[])
         }
         setOpen={setOpen}
-        setDistrict={setDistrict}
         refetch={refetchDistricts}
         type={type}
         setType={setType}
         handleSearch={handleSearch}
-        handleSelect={handleSelect}
       />
       <UpdateDistrictModal
         key={district?.id}

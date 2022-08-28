@@ -11,16 +11,16 @@ import { useDeleteDistrictByIdMutation } from 'features/editor/editorApiSlice'
 import { showNotification } from '@mantine/notifications'
 import HandleDeleteModal from '../../HandleDeleteModal/HandleDeleteModal'
 import DistrictSectionsTable from './DistrictSectionsTable'
+import { useAppSelector, useAppDispatch } from '../../../app/hooks'
+import { editorSelector, setDistrict } from '../../../features/editor/editorSlice'
 
 interface IDistrictTableProps {
   type: string
   districtData: DistrictDataProps[]
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
-  setDistrict: React.Dispatch<React.SetStateAction<DistrictDataProps | null>>
   refetch: () => void
   setType: React.Dispatch<React.SetStateAction<'District' | 'DistrictSection'>>
   handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void
-  handleSelect: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const CountyTable = ({
@@ -28,15 +28,15 @@ const CountyTable = ({
   type,
   setType,
   setOpen,
-  setDistrict,
   refetch,
   handleSearch,
-  handleSelect,
 }: IDistrictTableProps) => {
+  const dispatch = useAppDispatch()
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [openLASectionModal, setOpenLASectionModal] = useState<boolean>(false)
   const [laData, setLAData] = useState<DistrictDataProps | null>(null)
   const [deleteDistrictById, { isLoading }] = useDeleteDistrictByIdMutation()
+  const { district: selectedDistrictData } = useAppSelector(editorSelector)
 
   const handleModalClose = () => {
     setOpenLASectionModal(false)
@@ -63,7 +63,7 @@ const CountyTable = ({
   }, [])
   return (
     <>
-      <section className=" relative  overflow-auto shadow-md sm:rounded-lg md:w-full">
+      <section className=" relative space-y-2 bg-primary-light-50 px-2 shadow-md dark:bg-primary-dark-600 sm:rounded-lg">
         <div className="p-4">
           <label htmlFor="table-search" className="sr-only">
             Search
@@ -92,183 +92,154 @@ const CountyTable = ({
             />
           </div>
         </div>
-        <table className="relative table w-full overflow-auto overflow-x-auto text-center text-sm text-gray-500">
-          <thead className="bg-gray-50 text-xs uppercase text-gray-700">
-            <tr>
-              <th scope="col" className="p-4">
-                {/* <div className="flex items-center">
-                  <input
-                    id="checkbox-all-search"
-                    type="checkbox"
-                    className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
-                  />
-                  <label htmlFor="checkbox-all-search" className="sr-only">
-                    checkbox
-                  </label>
-                </div> */}
-              </th>
-              <th scope="col" className="px-6 py-3 text-left">
-                LA name
-              </th>
-              <th scope="col" className="px-6 py-3 text-left">
-                county name
-              </th>
-              <th scope="col" className="px-6 py-3 ">
-                LA Sections
-              </th>
-              <th scope="col" className="px-6 py-3">
-                live
-              </th>
+        <div className="overflow-x-auto">
+          <table className="relative table w-full bg-primary-light-50 text-left text-gray-500 dark:bg-primary-dark-600 dark:text-primary-light-100">
+            <thead className="bg-gray-100 text-xs uppercase text-gray-700 dark:bg-primary-dark-500 dark:text-primary-light-200">
+              <tr>
+                <th scope="col" className="px-6 py-3 text-left">
+                  LA name
+                </th>
+                <th scope="col" className="px-6 py-3 text-left">
+                  county name
+                </th>
+                <th scope="col" className="px-6 py-3 ">
+                  LA Sections
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  live
+                </th>
 
-              <th scope="col" className="px-6 py-3">
-                Updated At
-              </th>
-              <th scope="col" className="px-6 py-3">
-                <span className="sr-only">Edit</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody className="overflow-auto">
-            {districtData?.map((district: DistrictDataProps) => (
-              <tr
-                key={district.id}
-                className="border-b bg-white hover:bg-gray-50"
-              >
-                <td className="w-4 p-4">
-                  <div className="flex items-center">
-                    <input
-                      id="checkbox-table-search-1"
-                      type="checkbox"
-                      className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 "
-                      value={district.id}
-                      onChange={handleSelect}
-                    />
-                    <label
-                      htmlFor="checkbox-table-search-1"
-                      className="sr-only"
-                    >
-                      checkbox
-                    </label>
-                  </div>
-                </td>
-                <td
-                  scope="row"
-                  className="whitespace-nowrap px-6 py-4 text-left font-medium text-gray-900"
-                >
-                  <div className="flex items-center justify-start space-x-2">
-                    <div className="relative h-10 w-10 overflow-hidden rounded-full border-2 border-[#5E17EB] p-1">
-                      <Image
-                        src={district.logoIcon ?? steppingstonesapplogo}
-                        alt={district.name}
-                        layout="fill"
-                        objectFit="cover"
-                      />
-                    </div>
-                    <div className="text-xs font-semibold sm:text-base ">
-                      <p>{district?.name}</p>
-                    </div>
-                  </div>
-                </td>
-                <td
-                  scope="row"
-                  className="whitespace-nowrap px-6 py-4 text-left font-medium text-gray-900"
-                >
-                  <div className="flex items-center justify-start space-x-2">
-                    <div className="relative h-10 w-10 overflow-hidden rounded-full border-2 border-[#5E17EB] p-1">
-                      <Image
-                        src={district.county?.logoIcon ?? steppingstonesapplogo}
-                        alt={district.county?.name}
-                        layout="fill"
-                        objectFit="cover"
-                      />
-                    </div>
-                    <div className="text-xs font-semibold sm:text-base">
-                      <p>{district.county?.name}</p>
-                    </div>
-                  </div>
-                </td>
-                <td
-                  scope="row"
-                  className="whitespace-nowrap px-6 py-4 text-left font-medium text-gray-900"
-                >
-                  <div className="flex items-center justify-center gap-2">
-                    <Button
-                      type="button"
-                      disabled={false}
-                      variant="outline"
-                      className="text-xs font-medium text-blue-600 sm:text-base "
-                      onClick={() => {
-                        setOpenLASectionModal(true)
-                        setLAData(district)
-                      }}
-                    >
-                      View
-                    </Button>
-                  </div>
-                </td>
-
-                <td className="px-6 py-4 text-center ">
-                  <div className="flex items-center justify-center">
-                    {district?.isLive ? (
-                      <FaCheck className="text-green-400" />
-                    ) : (
-                      <FaTimes className="text-red-500" />
-                    )}
-                  </div>
-                </td>
-
-                <td className="px-2 py-1 text-center">
-                  <div className="flex items-center justify-center rounded-lg bg-lime-400 text-xs text-white shadow-lg sm:text-sm">
-                    <p>
-                      {format(
-                        new Date(district?.updatedAt as string),
-                        'MM/dd/yyyy HH:mm:ss',
-                        {
-                          locale: enGB,
-                        }
-                      )}
-                    </p>
-                  </div>
-                </td>
-                <td className="px-6 py-4 text-right">
-                  <div className="flex items-center justify-center gap-2">
-                    <Button
-                      type="button"
-                      disabled={false}
-                      variant="outline"
-                      leftIcon={<FaEdit fontSize={14} />}
-                      className="text-xs font-medium  text-blue-600 sm:text-base"
-                      onClick={() => {
-                        setDistrict(district)
-                        setOpen(true)
-                      }}
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      type="button"
-                      disabled={false}
-                      variant="outline"
-                      color="red"
-                      leftIcon={<FaTrash fontSize={14} />}
-                      className="text-xs  font-medium hover:bg-red-500 hover:text-white sm:text-base"
-                      onClick={() => setOpenModal(true)}
-                    >
-                      Delete
-                    </Button>
-                    <HandleDeleteModal
-                      open={openModal}
-                      data={district}
-                      deleteHandler={deleteHandler}
-                      setOpenModal={setOpenModal}
-                      isLoading={isLoading}
-                    />
-                  </div>
-                </td>
+                <th scope="col" className="px-6 py-3">
+                  Updated At
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  <span className="sr-only">Edit</span>
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="overflow-auto">
+              {districtData?.map((district: DistrictDataProps) => (
+                <tr
+                  key={district.id}
+                  className="border-b  hover:bg-gray-100 dark:hover:bg-primary-light-500"
+                >
+                  <td
+                    scope="row"
+                    className="whitespace-nowrap px-6 py-4 text-left font-medium "
+                  >
+                    <div className="flex items-center justify-start space-x-2">
+                      <div className="relative h-10 w-10 overflow-hidden rounded-full border-2 border-primary-dark-200 p-1">
+                        <Image
+                          src={district.logoIcon ?? steppingstonesapplogo}
+                          alt={district.name}
+                          layout="fill"
+                          objectFit="cover"
+                        />
+                      </div>
+                      <div className="text-xs font-semibold sm:text-base ">
+                        <p>{district?.name}</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td
+                    scope="row"
+                    className="whitespace-nowrap px-6 py-4 text-left font-medium "
+                  >
+                    <div className="flex items-center justify-start space-x-2">
+                      <div className="relative h-10 w-10 overflow-hidden rounded-full border-2 border-[#5E17EB] p-1">
+                        <Image
+                          src={
+                            district.county?.logoIcon ?? steppingstonesapplogo
+                          }
+                          alt={district.county?.name}
+                          layout="fill"
+                          objectFit="cover"
+                        />
+                      </div>
+                      <div className="text-xs font-semibold sm:text-base">
+                        <p>{district.county?.name}</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td
+                    scope="row"
+                    className="whitespace-nowrap px-6 py-4 text-left font-medium "
+                  >
+                    <div className="flex items-center justify-center gap-2">
+                      <Button
+                        type="button"
+                        disabled={false}
+                        variant="outline"
+                        className="text-xs font-medium text-blue-600 hover:bg-blue-600 hover:text-white sm:text-base "
+                        onClick={() => {
+                          setOpenLASectionModal(true)
+                          setLAData(district)
+                        }}
+                      >
+                        View
+                      </Button>
+                    </div>
+                  </td>
+
+                  <td className="px-6 py-4 text-center ">
+                    <div className="flex items-center justify-center">
+                      {district?.isLive ? (
+                        <FaCheck className="text-green-400" />
+                      ) : (
+                        <FaTimes className="text-red-500" />
+                      )}
+                    </div>
+                  </td>
+
+                  <td className="px-2 py-1 text-center">
+                    <div className="flex items-center justify-center rounded-lg bg-primary-dark-200 text-xs text-white shadow-lg sm:text-sm">
+                      <p>
+                        {format(
+                          new Date(district?.updatedAt as string),
+                          'MM/dd/yyyy HH:mm:ss',
+                          {
+                            locale: enGB,
+                          }
+                        )}
+                      </p>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 text-right">
+                    <div className="flex items-center justify-center gap-2">
+                      <Button
+                        type="button"
+                        disabled={false}
+                        variant="outline"
+                        leftIcon={<FaEdit fontSize={14} />}
+                        className="text-xs font-medium  text-blue-600 sm:text-base hover:bg-blue-600 hover:text-white"
+                        onClick={() => {
+                          dispatch(setDistrict(district))
+                          setOpen(true)
+                        }}
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        type="button"
+                        disabled={false}
+                        variant="outline"
+                        color="red"
+                        leftIcon={<FaTrash fontSize={14} />}
+                        className="text-xs  font-medium hover:bg-red-500 hover:text-white sm:text-base"
+                        onClick={() => {
+                          setOpenModal(true)
+                          dispatch(setDistrict(district))
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </section>
       {openLASectionModal && (
         <DistrictSectionsTable
@@ -280,6 +251,15 @@ const CountyTable = ({
           laName={laData?.name as string}
           type={type}
           setType={setType}
+        />
+      )}
+      {openModal && (
+        <HandleDeleteModal
+          open={openModal}
+          data={selectedDistrictData}
+          deleteHandler={deleteHandler}
+          setOpenModal={setOpenModal}
+          isLoading={isLoading}
         />
       )}
     </>

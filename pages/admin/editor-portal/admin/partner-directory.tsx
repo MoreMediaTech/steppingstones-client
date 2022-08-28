@@ -23,14 +23,14 @@ const PartnerDirectory = () => {
         showForRole={'SS_EDITOR'}
         userRole={user?.role as string}
       >
-        <section className="h-screen overflow-auto">
+        <section className="md:h-screen overflow-auto">
           <PortalHeader
             user={user as CurrentUser}
             imgUrl={user?.imageUrl}
             title={`${user?.name}`}
             subTitle="Partner Directory"
           />
-          <section className="px-2 sm:px-4 space-y-4 w-full">
+          <section className="px-2 sm:px-4 space-y-4 w-full md:max-w-screen-xl mt-2 mx-auto">
             <div className="flex flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between ">
               <span className="text-lg sm:text-2xl font-bold">Partner Directory</span>
               <Button

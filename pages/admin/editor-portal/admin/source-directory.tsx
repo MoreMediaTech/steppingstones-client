@@ -16,14 +16,14 @@ const SourceDirectoryPage = () => {
         showForRole={'SS_EDITOR'}
         userRole={user?.role as string}
       >
-        <section className="h-screen overflow-auto">
+        <section className="h-screen">
           <PortalHeader
             user={user as CurrentUser}
             imgUrl={user?.imageUrl}
             title={`${user?.name}`}
             subTitle="Source Directory"
           />
-           <section className="px-2 sm:px-4 mx-auto overflow-y-auto w-full">
+           <section className="px-2 sm:px-4 mx-auto md:max-w-screen-xl overflow-y-auto w-full mt-2">
             <h1 className="text-lg sm:text-2xl font-bold">Source Directory</h1>
             <SourceDirectory />
            </section>
