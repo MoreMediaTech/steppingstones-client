@@ -21,9 +21,8 @@ import {
   useUpdateSubSectionByIdMutation,
 } from 'features/editor/editorApiSlice'
 import { NEXT_URL } from '@config/index'
-import { wrapper } from 'app/store'
 import PortalButton from '@components/PortalButton'
-const Map = dynamic(() => import('@components/Map'), { ssr: false })
+
 
 const SubSection = ({
   county,
@@ -108,35 +107,28 @@ const SubSection = ({
                 {subSectionData?.isSubSubSection ? (
                   <section className="min-h-[500px] w-full overflow-auto  py-24 px-2 md:px-4">
                     {subSectionData && (
-                      <div className="grid h-full w-full grid-cols-1 gap-8 md:grid-cols-4">
-                        <div className="h-full rounded bg-white p-2 shadow-md md:col-span-2">
-                          <Map location={`${county}, UK`} />
-                        </div>
-                        <div className="h-full w-full md:col-span-2">
-                          <div className="grid grid-cols-2 gap-y-4 gap-x-4">
-                            {subSectionData?.subSubSections?.map(
-                              (subSection: SubSubSectionProps) => (
-                                <PortalButton
-                                  key={`${subSection.id}`}
-                                  type="button"
-                                  color="primaryFilled"
-                                  onClick={() =>
-                                    router.replace({
-                                      pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}/section/subsection/subsubsection`,
-                                      query: {
-                                        ...router.query,
-                                        subSubSection: subSection?.name,
-                                        subSubSectionId: subSection?.id,
-                                      },
-                                    })
-                                  }
-                                >
-                                  {subSection?.name}
-                                </PortalButton>
-                              )
-                            )}
-                          </div>
-                        </div>
+                      <div className="container mx-auto grid max-w-screen-lg grid-cols-2 gap-4">
+                        {subSectionData?.subSubSections?.map(
+                          (subSection: SubSubSectionProps) => (
+                            <PortalButton
+                              key={`${subSection.id}`}
+                              type="button"
+                              color="primaryFilled"
+                              onClick={() =>
+                                router.replace({
+                                  pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}/section/subsection/subsubsection`,
+                                  query: {
+                                    ...router.query,
+                                    subSubSection: subSection?.name,
+                                    subSubSectionId: subSection?.id,
+                                  },
+                                })
+                              }
+                            >
+                              {subSection?.name}
+                            </PortalButton>
+                          )
+                        )}
                       </div>
                     )}
                   </section>

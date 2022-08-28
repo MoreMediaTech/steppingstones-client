@@ -156,7 +156,7 @@ const AdminUsersTable = ({
                         disabled={false}
                         variant="outline"
                         leftIcon={<FaEdit fontSize={14} />}
-                        className="font-medium text-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white group-hover:bg-blue-600 group-hover:text-white "
+                        className="font-medium text-blue-600 hover:bg-blue-600 hover:text-white group-hover:bg-blue-600 group-hover:text-white "
                         onClick={() => {
                           setUser(user)
                           setOpen(true)

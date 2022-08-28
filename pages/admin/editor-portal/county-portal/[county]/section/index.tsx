@@ -17,10 +17,8 @@ import {
 import { CreateSectionForm } from '@components/forms'
 import { NEXT_URL } from '@config/index'
 import Button from '@components/Button'
-import { wrapper } from 'app/store'
 import SectionContainer from '@components/CountyDistrictSections/SectionContainer'
 import PortalButton from '@components/PortalButton'
-const Map = dynamic(() => import('@components/Map'), { ssr: false })
 
 
 const Section = ({
@@ -116,38 +114,31 @@ const Section = ({
                   )}
                 </div>
                 {sectionData?.isSubSection ? (
-                  <section className="min-h-[500px] w-full overflow-auto py-2 md:py-24  px-2 md:px-4">
+                  <section className="min-h-[500px] w-full overflow-auto py-2 px-2  md:py-24 md:px-4">
                     {sectionData && (
-                      <div className="grid h-full w-full grid-cols-1 gap-8 md:grid-cols-4">
-                        <div className="h-full rounded bg-white p-2 shadow-md md:col-span-2">
-                          <Map location={`${county}, UK`} />
-                        </div>
-                        <div className="h-full w-full md:col-span-2">
-                          <div className="grid grid-cols-2 gap-4">
-                            {sectionData?.subsections?.map(
-                              (section: SubSectionProps) => (
-                                <PortalButton
-                                  key={`${section.id}`}
-                                  type="button"
-                                  color="primaryFilled"
-                                  isLive={section?.isLive}
-                                  onClick={() =>
-                                    router.replace({
-                                      pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}/section/subsection`,
-                                      query: {
-                                        ...router.query,
-                                        subSection: section.name,
-                                        subSectionId: section.id,
-                                      },
-                                    })
-                                  }
-                                >
-                                  {section?.name}
-                                </PortalButton>
-                              )
-                            )}
-                          </div>
-                        </div>
+                      <div className="container mx-auto grid max-w-screen-lg grid-cols-2 gap-4">
+                        {sectionData?.subsections?.map(
+                          (section: SubSectionProps) => (
+                            <PortalButton
+                              key={`${section.id}`}
+                              type="button"
+                              color="primaryFilled"
+                              isLive={section?.isLive}
+                              onClick={() =>
+                                router.replace({
+                                  pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}/section/subsection`,
+                                  query: {
+                                    ...router.query,
+                                    subSection: section.name,
+                                    subSectionId: section.id,
+                                  },
+                                })
+                              }
+                            >
+                              {section?.name}
+                            </PortalButton>
+                          )
+                        )}
                       </div>
                     )}
                   </section>
