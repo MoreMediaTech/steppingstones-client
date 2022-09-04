@@ -16,6 +16,7 @@
     "@mantine/rte": "^4.2.2",
     "@react-google-maps/api": "^2.12.1",
     "@reduxjs/toolkit": "^1.8.5",
+    "@tailwindcss/line-clamp": "^0.4.2",
     "ag-grid-community": "^28.0.2",
     "ag-grid-react": "^28.0.0",
     "axios": "^0.27.2",
@@ -39,8 +40,10 @@
     "react-icons": "^4.3.1",
     "react-quill": "^2.0.0",
     "react-redux": "^8.0.1",
+    "react-to-print": "^2.14.7",
     "set-cookie-parser": "^2.4.8",
     "sharp": "^0.30.6",
+    "tailwind-scrollbar-hide": "^1.1.7",
     "universal-cookie": "^4.0.4",
     "use-places-autocomplete": "^4.0.0"
   },

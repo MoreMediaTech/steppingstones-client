@@ -1,12 +1,21 @@
-import { IEmailFormData } from '../../lib/types'
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
-import { AxiosError } from 'axios'
 import { AppThunk, RootState, AppDispatch } from 'app/store'
+import { IEmailFormData, MessageProps } from '../../lib/types'
 
-export const initialState = {
-  emailMessages: [],
+export interface EmailState {
+  enquiries: MessageProps[]
+  enquiry: MessageProps | null
+  message: string
+  reply: boolean
+  error: Error
+}
+
+export const initialState: EmailState = {
+  enquiries: [],
+  enquiry: null,
   message: '',
-  error: { message: 'An Error occurred' },
+  reply: false,
+  error: { name: '', message: 'An Error occurred' },
 }
 
 
@@ -14,12 +23,13 @@ export const emailSlice = createSlice({
   name: 'email',
   initialState,
   reducers: {
-    setEmailMessages: (state, { payload }: PayloadAction<[]>) => {
-      state.emailMessages = payload
+    setReply: (state, { payload }: PayloadAction<{enquiry: MessageProps | null, reply: boolean}>) => {
+      state.enquiry = payload.enquiry
+      state.reply = payload.reply
     },
   },
 })
 
-export const { setEmailMessages } = emailSlice.actions
+export const { setReply } = emailSlice.actions
 export const emailSelector = (state: RootState) => state.email
 export default emailSlice.reducer

@@ -98,35 +98,14 @@ const SourceDirectoryForm = ({
             label="Category"
             title="category"
             type="text"
-            {...register('category', {
-              required: true,
-              minLength: {
-                value: 2,
-                message: 'Please enter a category with at least 2 characters',
-              },
-              pattern: {
-                value: /^[a-zA-Z0-9!@#$%-^&*()._ -]+$/,
-                message: 'Please enter a valid category',
-              },
-            })}
+            {...register('category')}
             errors={errors?.category}
           />
           <FormInput
             label="Description"
             type="text"
             title="description"
-            {...register('description', {
-              required: true,
-              minLength: {
-                value: 3,
-                message:
-                  'Please enter a description with at least 3 characters',
-              },
-              pattern: {
-                value: /^[a-zA-Z0-9!@#$%-^&*()._ -]+$/,
-                message: 'Please enter a valid description',
-              },
-            })}
+            {...register('description')}
             errors={errors?.description}
           />
           <FormInput
@@ -134,7 +113,6 @@ const SourceDirectoryForm = ({
             type="text"
             title="web-link"
             {...register('webLink', {
-              required: true,
               pattern: {
                 value:
                   /^[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/,

@@ -1,16 +1,19 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { Loader } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 
 import { useGetAllMailQuery } from 'features/email/emailApiSlice'
 import MessagesTable from './MessagesTable'
 import { MessageProps } from '@lib/types'
-
+import { useDeleteManyMailMutation } from 'features/email/emailApiSlice'
 
 const MessagesSection = () => {
-  const { data: messages, isLoading } = useGetAllMailQuery()
+  const { data: messages, isLoading, refetch } = useGetAllMailQuery()
   const [searchResults, setSearchResults] = useState<MessageProps[]>([])
   const [selectedMessageId, setSelectedMessageId] = useState<string[]>([])
   const [checked, setChecked] = useState<boolean>(false)
+  const [deleteManyMail, { isLoading: isDeleting }] =
+    useDeleteManyMailMutation()
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.value) setSearchResults(messages as MessageProps[])
@@ -38,6 +41,28 @@ const MessagesSection = () => {
     }
   }
 
+  const handleDeleteMany = useCallback(async () => {
+    try {
+      const response = await deleteManyMail(selectedMessageId).unwrap()
+      if (response.success) {
+        showNotification({
+          message: 'Successfully deleted Enquiries',
+          color: 'success',
+          autoClose: 3000,
+        })
+        refetch()
+        setChecked(false)
+        setSelectedMessageId([])
+      }
+    } catch (error) {
+      showNotification({
+        message: 'Error deleting Enquiries',
+        color: 'error',
+        autoClose: 3000,
+      })
+    }
+  }, [checked, selectedMessageId])
+
   if (isLoading) {
     return (
       <div className="flex h-[700px] items-center justify-center">
@@ -46,15 +71,18 @@ const MessagesSection = () => {
     )
   }
   return (
-    <section className="w-full bg-slate-50">
+    <section className="w-full ">
       <MessagesTable
         messages={
           searchResults.length > 0
             ? searchResults
             : (messages as MessageProps[])
         }
+        checked={checked}
+        selectedMessageId={selectedMessageId}
         handleSearch={handleSearch}
         handleSelect={handleSelect}
+        handleDeleteMany={handleDeleteMany}
       />
     </section>
   )

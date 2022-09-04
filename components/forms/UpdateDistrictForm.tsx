@@ -72,17 +72,7 @@ const UpdateDistrictForm = ({
           aria-label="district-name"
           placeholder="Enter a District Name"
           type="text"
-          {...register('name', {
-            required: true,
-            minLength: {
-              value: 2,
-              message: 'Please enter a District name with at least 2 characters',
-            },
-            pattern: {
-              value: /^[a-zA-Z0-9!@#$%^&*()._ -]+$/,
-              message: 'Please enter a valid District name',
-            },
-          })}
+          {...register('name')}
           className="focus:shadow-outline w-full appearance-none rounded-md focus:outline-none"
         />
         {errors.name && (

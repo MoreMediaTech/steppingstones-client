@@ -14,11 +14,11 @@ export const authApi = apiSlice.injectEndpoints({
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled
-           dispatch(
-             setCredentials({
-               token: data.token,
-             })
-           )
+          dispatch(
+            setCredentials({
+              token: data.token,
+            })
+          )
         } catch (error) {}
       },
     }),
@@ -46,12 +46,31 @@ export const authApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Auth', id: 'LIST' }],
     }),
-    verifyEmail: builder.mutation<{success: boolean, message: string}, Partial<CurrentUser>>({
+    verifyEmail: builder.mutation<
+      { success: boolean; message: string },
+      Partial<CurrentUser>
+    >({
       query: (data) => ({
         url: 'auth/verify-email',
         method: 'POST',
         body: { ...data },
       }),
+    }),
+    refresh: builder.mutation<{ token: string}, void>({
+      query: () => ({
+        url: 'auth/refresh',
+        method: 'GET',
+      }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled
+          console.log(data)
+          const { token } = data
+          dispatch(setCredentials({ token }))
+        } catch (err) {
+          console.log(err)
+        }
+      },
     }),
     logout: builder.mutation<void, void>({
       query: () => ({
@@ -75,4 +94,12 @@ export const authApi = apiSlice.injectEndpoints({
   overrideExisting: true,
 })
 
-export const { useLoginMutation, useRegisterPartnerMutation, useLogoutMutation, useRequestPasswordResetMutation, useResetPasswordMutation, useVerifyEmailMutation } = authApi;
+export const {
+  useLoginMutation,
+  useRegisterPartnerMutation,
+  useLogoutMutation,
+  useRequestPasswordResetMutation,
+  useResetPasswordMutation,
+  useRefreshMutation,
+  useVerifyEmailMutation,
+} = authApi

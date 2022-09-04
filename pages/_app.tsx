@@ -9,6 +9,7 @@ import { store, wrapper } from 'app/store'
 import 'react-quill/dist/quill.snow.css'
 import '../styles/globals.css'
 import CookieConsentComponent from '@components/CookieConsent'
+import PersistLogin from 'features/auth/PersistLogin'
 
 
 function MyApp({ Component, pageProps, router }: AppProps) {
@@ -17,6 +18,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
       <Provider store={store}>
         <NotificationsProvider position="top-right">
           <ThemeProvider attribute='class'>
+            {/* <PersistLogin /> */}
             <motion.div
               key={router.route}
               initial="initial"

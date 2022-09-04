@@ -1,9 +1,10 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, MouseEventHandler } from 'react'
 import { FaEdit, FaTrash, FaCheck, FaTimes } from 'react-icons/fa'
 import { Button } from '@mantine/core'
 import Image from 'next/image'
 import { format } from 'date-fns'
 import { enGB } from 'date-fns/locale'
+import { BiChevronDownSquare, BiChevronUpSquare } from 'react-icons/bi'
 
 import steppingstonesapplogo from '../../../public/steppingstonesapplogo.png'
 import { DistrictDataProps } from '@lib/types'
@@ -12,7 +13,11 @@ import { showNotification } from '@mantine/notifications'
 import HandleDeleteModal from '../../HandleDeleteModal/HandleDeleteModal'
 import DistrictSectionsTable from './DistrictSectionsTable'
 import { useAppSelector, useAppDispatch } from '../../../app/hooks'
-import { editorSelector, setDistrict } from '../../../features/editor/editorSlice'
+import {
+  editorSelector,
+  setDistrict,
+} from '../../../features/editor/editorSlice'
+import useWindowSize from 'hooks/useWindowSize'
 
 interface IDistrictTableProps {
   type: string
@@ -21,6 +26,54 @@ interface IDistrictTableProps {
   refetch: () => void
   setType: React.Dispatch<React.SetStateAction<'District' | 'DistrictSection'>>
   handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
+
+type SortKeys = keyof DistrictDataProps
+
+type SortOrder = 'asc' | 'desc'
+
+function sortData({
+  tableData,
+  sortKey,
+  reverse,
+}: {
+  tableData: DistrictDataProps[]
+  sortKey: SortKeys
+  reverse: boolean
+}) {
+  if (!sortKey) return tableData
+
+  const sortedData = [...tableData].sort((a, b) => {
+    return a[sortKey]! > b[sortKey]! ? 1 : -1
+  })
+
+  if (reverse) {
+    return sortedData.reverse()
+  }
+
+  return tableData
+}
+
+function SortButton({
+  sortOrder,
+  columnKey,
+  sortKey,
+  onClick,
+}: {
+  sortOrder: SortOrder
+  columnKey: SortKeys
+  sortKey: SortKeys
+  onClick: MouseEventHandler<HTMLButtonElement>
+}) {
+  return (
+    <button type="button" onClick={onClick}>
+      {sortKey === columnKey && sortOrder === 'desc' ? (
+        <BiChevronDownSquare fontSize={15} />
+      ) : (
+        <BiChevronUpSquare fontSize={15} />
+      )}
+    </button>
+  )
 }
 
 const CountyTable = ({
@@ -35,8 +88,38 @@ const CountyTable = ({
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [openLASectionModal, setOpenLASectionModal] = useState<boolean>(false)
   const [laData, setLAData] = useState<DistrictDataProps | null>(null)
+  const [sortKey, setSortKey] = useState<SortKeys>('name')
+  const [sortOrder, setSortOrder] = useState<SortOrder>('asc')
   const [deleteDistrictById, { isLoading }] = useDeleteDistrictByIdMutation()
   const { district: selectedDistrictData } = useAppSelector(editorSelector)
+  const [windowSize] = useWindowSize()
+
+  const headers: { key: SortKeys; label: string }[] = [
+    { key: 'name', label: 'LA name' },
+    { key: 'county', label: 'county name' },
+    { key: 'districtSections', label: 'LA Sections' },
+    { key: 'isLive', label: 'live' },
+    { key: 'updatedAt', label: 'updated at' },
+  ]
+
+  const sortedData = useCallback(
+    () =>
+      sortData({
+        tableData: districtData,
+        sortKey,
+        reverse: sortOrder === 'desc',
+      }),
+    [districtData, sortKey, sortOrder]
+  )
+
+  function changeSort(key: SortKeys) {
+    if (key === sortKey) {
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
+    } else {
+      setSortKey(key)
+      setSortOrder('desc')
+    }
+  }
 
   const handleModalClose = () => {
     setOpenLASectionModal(false)
@@ -92,36 +175,50 @@ const CountyTable = ({
             />
           </div>
         </div>
-        <div className="overflow-x-auto">
+        <div
+          className="overflow-x-auto"
+          style={{
+            height: windowSize.innerHeight - 300,
+            scrollbarWidth: 'none',
+          }}
+        >
           <table className="relative table w-full bg-primary-light-50 text-left text-gray-500 dark:bg-primary-dark-600 dark:text-primary-light-100">
             <thead className="bg-gray-100 text-xs uppercase text-gray-700 dark:bg-primary-dark-500 dark:text-primary-light-200">
               <tr>
-                <th scope="col" className="px-6 py-3 text-left">
-                  LA name
-                </th>
-                <th scope="col" className="px-6 py-3 text-left">
-                  county name
-                </th>
-                <th scope="col" className="px-6 py-3 ">
-                  LA Sections
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  live
-                </th>
-
-                <th scope="col" className="px-6 py-3">
-                  Updated At
-                </th>
+                {headers.map((header) => {
+                  if (header.key === 'districtSections') {
+                    return (
+                      <th key={header.key} className="px-6 py-3">
+                        <div className="flex flex-row items-center justify-center gap-1">
+                          <span>{header.label}</span>{' '}
+                        </div>
+                      </th>
+                    )
+                  } else {
+                    return (
+                      <th key={header.key} className="px-6 py-3">
+                        <div className="flex flex-row items-center justify-center gap-1">
+                          <span>{header.label}</span>{' '}
+                          <SortButton
+                            {...{ sortOrder, sortKey }}
+                            columnKey={header.key}
+                            onClick={() => changeSort(header.key)}
+                          />
+                        </div>
+                      </th>
+                    )
+                  }
+                })}
                 <th scope="col" className="px-6 py-3">
                   <span className="sr-only">Edit</span>
                 </th>
               </tr>
             </thead>
             <tbody className="overflow-auto">
-              {districtData?.map((district: DistrictDataProps) => (
+              {sortedData().map((district: DistrictDataProps) => (
                 <tr
                   key={district.id}
-                  className="border-b  hover:bg-gray-100 dark:hover:bg-primary-light-500"
+                  className="border-b group hover:bg-gray-100 dark:hover:bg-primary-light-500"
                 >
                   <td
                     scope="row"
@@ -170,7 +267,7 @@ const CountyTable = ({
                         type="button"
                         disabled={false}
                         variant="outline"
-                        className="text-xs font-medium text-blue-600 hover:bg-blue-600 hover:text-white sm:text-base "
+                        className="text-xs font-medium text-blue-600 group-hover:bg-blue-600 group-hover:text-white sm:text-base "
                         onClick={() => {
                           setOpenLASectionModal(true)
                           setLAData(district)
@@ -211,7 +308,7 @@ const CountyTable = ({
                         disabled={false}
                         variant="outline"
                         leftIcon={<FaEdit fontSize={14} />}
-                        className="text-xs font-medium  text-blue-600 sm:text-base hover:bg-blue-600 hover:text-white"
+                        className="text-xs font-medium  text-blue-600 group-hover:bg-blue-600 group-hover:text-white sm:text-base"
                         onClick={() => {
                           dispatch(setDistrict(district))
                           setOpen(true)
@@ -225,7 +322,7 @@ const CountyTable = ({
                         variant="outline"
                         color="red"
                         leftIcon={<FaTrash fontSize={14} />}
-                        className="text-xs  font-medium hover:bg-red-500 hover:text-white sm:text-base"
+                        className="text-xs  font-medium group-hover:bg-red-500 group-hover:text-white sm:text-base"
                         onClick={() => {
                           setOpenModal(true)
                           dispatch(setDistrict(district))

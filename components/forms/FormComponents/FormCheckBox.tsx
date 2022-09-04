@@ -19,7 +19,9 @@ type FormInputProps = {
 }
 
 const FormCheckbox: React.FunctionComponent<
-  FormInputProps & React.RefAttributes<HTMLInputElement>
+  FormInputProps &
+    React.RefAttributes<HTMLInputElement> &
+    React.HTMLProps<HTMLInputElement>
 > = React.forwardRef<Ref, FormInputProps>(
   ({ label, title, type, errors, classes, ...props }: FormInputProps, ref) => (
     <div className={`flex w-full items-center space-x-4 ${classes}`}>
@@ -28,15 +30,15 @@ const FormCheckbox: React.FunctionComponent<
         id={`${title}`}
         ref={ref}
         name={`${type}`}
-        type='checkbox'
+        type="checkbox"
         aria-invalid="true"
         {...props}
       />
       <label
         htmlFor={title}
-        className="my-2 text-sm font-semibold text-gray-900"
+        className="my-2 text-sm font-semibold text-gray-900 dark:text-gray-300"
       >
-        {label} <span className="text-red-500">*</span>
+        {label}
       </label>
     </div>
   )

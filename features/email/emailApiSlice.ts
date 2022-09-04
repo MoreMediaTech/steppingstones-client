@@ -51,6 +51,17 @@ export const emailApi = emailApiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Email', id: arg }],
     }),
+    deleteManyMail: builder.mutation<
+      { message: string; success: true },
+      string[]
+    >({
+      query: (ids: string[]) => ({
+        url: `email/delete-many`,
+        method: 'DELETE',
+        body: { ids },
+      }),
+      invalidatesTags: [{ type: 'Email', id: 'LIST' }],
+    }),
   }),
 })
 
@@ -60,4 +71,5 @@ export const {
   useGetMessageByIdQuery,
   useDeleteMailByIdMutation,
   useSendEmailMutation,
+  useDeleteManyMailMutation,
 } = emailApi

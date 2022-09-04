@@ -107,11 +107,7 @@ const CreateSectionForm = ({
                 value: 2,
                 message:
                   'Please enter a Section name with at least 2 characters',
-              },
-              pattern: {
-                value: /^[a-zA-Z0-9!@#$+?%^&*()._ -]+$/,
-                message: 'Please enter a valid Section name',
-              },
+              }
             })}
             className="focus:shadow-outline w-full appearance-none rounded-md focus:outline-none"
           />

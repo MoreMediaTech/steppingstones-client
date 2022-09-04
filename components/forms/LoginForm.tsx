@@ -9,10 +9,12 @@ import Link from 'next/link'
 
 import { useLoginMutation } from 'features/auth/authApiSlice'
 import { NEXT_URL } from '@config/index'
-import { AuthState, IFormData } from '@lib/types'
+import { IFormData } from '@lib/types'
 import FormInput from './FormComponents/FormInput'
 import { useAppDispatch } from 'app/hooks'
 import { setCredentials } from 'features/auth/authSlice'
+import usePersist from '@hooks/usePersist'
+import FormCheckbox from './FormComponents/FormCheckBox'
 
 const LoginForm = () => {
   const router = useRouter()
@@ -24,16 +26,17 @@ const LoginForm = () => {
     reset,
     formState: { errors },
   } = useForm<Partial<IFormData>>()
-    const recaptchaRef = useRef<ReCAPTCHA | null>(null)
+  const recaptchaRef = useRef<ReCAPTCHA | null>(null)
+  const [persist, setPersist] = usePersist()
 
   const handleLogin: SubmitHandler<Partial<IFormData>> = async (data) => {
-        const token = await recaptchaRef.current?.executeAsync()
-        recaptchaRef?.current?.reset()
+    const token = await recaptchaRef.current?.executeAsync()
+    recaptchaRef?.current?.reset()
     try {
       const responseData = await login({
         email: data.email,
         password: data.password,
-        token
+        token,
       }).unwrap()
       dispatch(setCredentials({ token: responseData.token }))
       // localStorage.setItem('token', responseData.token)
@@ -67,6 +70,11 @@ const LoginForm = () => {
       }
     }
   }
+
+  const handleToggle = () =>
+    setPersist((prev: boolean) => !prev) as React.Dispatch<
+      React.SetStateAction<boolean>
+    >
   return (
     <form
       onSubmit={handleSubmit(handleLogin)}
@@ -121,6 +129,18 @@ const LoginForm = () => {
         })}
         className="w-full "
       />
+      {errors.password && (
+        <span className="text-center text-sm text-red-500">
+          {errors.password?.message || 'A password is required'}
+        </span>
+      )}
+      <FormCheckbox
+        type="persist"
+        title="persist"
+        label="Trust this device"
+        onChange={handleToggle}
+        checked={persist}
+      />
       <div className="mb-4 place-self-start">
         <Link href={'/auth/forgot-password'}>
           <a className="cursor-pointer  text-sm text-[#00DCB3]">
@@ -128,11 +148,7 @@ const LoginForm = () => {
           </a>
         </Link>
       </div>
-      {errors.password && (
-        <span className="text-center text-sm text-red-500">
-          {errors.password?.message || 'A password is required'}
-        </span>
-      )}
+
       <ReCAPTCHA
         ref={recaptchaRef}
         size="invisible"

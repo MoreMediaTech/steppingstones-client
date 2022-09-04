@@ -1,9 +1,9 @@
-import React, { useCallback, useState } from 'react'
+import React, { MouseEventHandler, useCallback, useState, useRef, HTMLProps, ReactInstance } from 'react'
 import { showNotification } from '@mantine/notifications'
 import { Button } from '@mantine/core'
 import { FaCheck, FaEdit, FaTimes, FaTrash } from 'react-icons/fa'
-import { format } from 'date-fns'
-import { enGB } from 'date-fns/locale'
+import { BsPrinterFill } from 'react-icons/bs'
+import { BiChevronDownSquare, BiChevronUpSquare } from 'react-icons/bi'
 
 import HandleDeleteModal from '@components/HandleDeleteModal'
 import { SourceDataProps } from '@lib/types'
@@ -24,6 +24,55 @@ interface ISourceDirectoryTableProps {
   handleDeleteMany: () => void
 }
 
+
+type SortKeys = keyof SourceDataProps
+
+type SortOrder = 'asc' | 'desc'
+
+function sortData({
+  tableData,
+  sortKey,
+  reverse,
+}: {
+  tableData: SourceDataProps[]
+  sortKey: SortKeys
+  reverse: boolean
+}) {
+  if (!sortKey) return tableData
+
+  const sortedData = [...tableData].sort((a, b) => {
+    return a[sortKey]! > b[sortKey]! ? 1 : -1
+  })
+
+  if (reverse) {
+    return sortedData.reverse()
+  }
+
+  return tableData
+}
+
+function SortButton({
+  sortOrder,
+  columnKey,
+  sortKey,
+  onClick,
+}: {
+  sortOrder: SortOrder
+  columnKey: SortKeys
+  sortKey: SortKeys
+  onClick: MouseEventHandler<HTMLButtonElement>
+}) {
+  return (
+    <button type="button" onClick={onClick}>
+      {sortKey === columnKey && sortOrder === 'desc' ? (
+        <BiChevronDownSquare fontSize={15} />
+      ) : (
+        <BiChevronUpSquare fontSize={15} />
+      )}
+    </button>
+  )
+}
+
 const SourceDirectoryTable = ({
   data,
   action,
@@ -34,11 +83,50 @@ const SourceDirectoryTable = ({
   handleSearch,
   handleSelected,
   setOpenUpdateModal,
-  handleDeleteMany, 
+  handleDeleteMany,
 }: ISourceDirectoryTableProps) => {
   const dispatch = useAppDispatch()
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false)
+  const [sortKey, setSortKey] = useState<SortKeys>('description')
+  const [sortOrder, setSortOrder] = useState<SortOrder>('asc')
   const [deleteSDData, { isLoading }] = useDeleteSDDataMutation()
+  const printableArea = useRef<HTMLDivElement>(null)
+  const print = useCallback(() => {
+    if (printableArea.current) {
+      const printWindow = window.open('', 'PRINT', 'height=800,width=800')
+      printWindow?.document.write(printableArea.current.innerHTML)
+      printWindow?.document.close()
+      printWindow?.focus()
+      printWindow?.print()
+      printWindow?.close()
+    }
+  }, [printableArea])
+
+  const headers: { key: SortKeys; label: string }[] = [
+    { key: 'description', label: 'description' },
+    { key: 'webLink', label: 'Web-Link' },
+    { key: 'category', label: 'category' },
+    { key: 'canEmail', label: 'email alerts' },
+  ]
+
+  const sortedData = useCallback(
+    () =>
+      sortData({
+        tableData: data,
+        sortKey,
+        reverse: sortOrder === 'desc',
+      }),
+    [data, sortKey, sortOrder]
+  )
+
+  function changeSort(key: SortKeys) {
+    if (key === sortKey) {
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
+    } else {
+      setSortKey(key)
+      setSortOrder('desc')
+    }
+  }
 
   const deleteHandler = useCallback(async (id: string, type?: string) => {
     const newData = {
@@ -64,10 +152,10 @@ const SourceDirectoryTable = ({
   }, [])
 
   return (
-    <section className="relative my-8 bg-primary-light-50 px-2 dark:bg-primary-dark-600 dark:text-primary-light-100  md:w-full">
-      <div className="flex items-center gap-2 py-2">
-        <label htmlFor="table-search" className="sr-only" />
-        <div className="relative mt-1">
+    <section className="relative my-2 bg-primary-light-50 px-2 dark:bg-primary-dark-600 dark:text-primary-light-100  md:w-full">
+      <div className="my-2 flex items-center gap-2 py-2">
+        <div className="relative mt-1 w-full">
+          <label htmlFor="table-search" className="sr-only" />
           <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
             <svg
               className="h-5 w-5 text-gray-500 "
@@ -90,41 +178,70 @@ const SourceDirectoryTable = ({
             onChange={handleSearch}
           />
         </div>
-        <div className="mt-2">
+        <div className="mt-3">
           {checked && selectedSDId.length > 0 && (
             <button type="button" onClick={handleDeleteMany}>
-              <FaTrash fontSize={20} className="text-red-500" />
+              <FaTrash fontSize={30} className="text-red-500" />
             </button>
           )}
         </div>
+        <div className="mt-3">
+          <button type="button" onClick={print}>
+            <BsPrinterFill fontSize={40} className="text-tertiary" />
+          </button>
+        </div>
       </div>
-      <div className="relative overflow-x-auto">
+      <div
+        ref={printableArea}
+        className={`relative overflow-x-auto`}
+        style={{ height: window.innerHeight - 500 }}
+      >
         <table className="table w-full bg-primary-light-50 text-left text-gray-500  dark:bg-primary-dark-600 dark:text-primary-light-100">
           <thead className="bg-gray-100 text-xs uppercase text-gray-700 dark:bg-primary-dark-500 dark:text-primary-light-200">
             <tr>
               <th scope="col" className="p-4"></th>
-              <th scope="col" className="px-6 py-3 text-left">
-                Description
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Web-Link
-              </th>
-              <th scope="col" className="px-6 py-3">
-                category
-              </th>
-              <th
-                scope="col"
-                className="whitespace-nowrap px-6 py-3 text-center"
-              >
-                Email Alerts
-              </th>
+              {headers.map((header) => {
+                if (header.key === 'canEmail') {
+                  return (
+                    <th
+                      key={header.key}
+                      className="whitespace-nowrap px-6 py-3"
+                    >
+                      <div className="flex flex-row items-center justify-center gap-1">
+                        <span>{header.label}</span>{' '}
+                        <SortButton
+                          {...{ sortOrder, sortKey }}
+                          columnKey={header.key}
+                          onClick={() => changeSort(header.key)}
+                        />
+                      </div>
+                    </th>
+                  )
+                } else {
+                  return (
+                    <th
+                      key={header.key}
+                      className="whitespace-nowrap px-6 py-3"
+                    >
+                      <div className="flex flex-row justify-start gap-1 text-left">
+                        <span>{header.label}</span>{' '}
+                        <SortButton
+                          {...{ sortOrder, sortKey }}
+                          columnKey={header.key}
+                          onClick={() => changeSort(header.key)}
+                        />
+                      </div>
+                    </th>
+                  )
+                }
+              })}
               <th scope="col" className="px-6 py-3">
                 <span className="sr-only">Edit/Delete</span>
               </th>
             </tr>
           </thead>
-          <tbody className="overflow-auto">
-            {data?.map((item: SourceDataProps) => (
+          <tbody className={`overflow-auto`}>
+            {sortedData().map((item: SourceDataProps) => (
               <tr
                 key={item.id}
                 className="group group border-b hover:bg-gray-100 dark:hover:bg-primary-light-500"

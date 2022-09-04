@@ -45,17 +45,7 @@ const PartnerDirectoryForm = ({
           aria-errormessage="name-error"
           placeholder="Enter a full name"
           type="text"
-          {...register('name', {
-            required: true,
-            minLength: {
-              value: 2,
-              message: 'Please enter a name with at least 2 characters',
-            },
-            pattern: {
-              value: /^[a-zA-Z0-9!@#$%^&*()._ -]+$/,
-              message: 'Please enter a valid name',
-            },
-          })}
+          {...register('name')}
           errors={errors.name}
         />
 
@@ -66,7 +56,6 @@ const PartnerDirectoryForm = ({
           placeholder="Email"
           type="text"
           {...register('email', {
-            required: true,
             pattern: {
               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
               message:
@@ -82,18 +71,7 @@ const PartnerDirectoryForm = ({
           aria-errormessage="organisation-error"
           placeholder="Organisation"
           type="text"
-          {...register('organisation', {
-            required: true,
-            minLength: {
-              value: 2,
-              message:
-                'Please enter an organisation name with at least 2 characters',
-            },
-            pattern: {
-              value: /^[a-zA-Z0-9!@#$%^&*()._ -]+$/,
-              message: 'Please enter a valid organisation name',
-            },
-          })}
+          {...register('organisation')}
           errors={errors.organisation}
         />
 
@@ -103,17 +81,7 @@ const PartnerDirectoryForm = ({
           aria-errormessage="position-error"
           placeholder="Position"
           type="text"
-          {...register('position', {
-            required: true,
-            minLength: {
-              value: 2,
-              message: 'Please enter a position with at least 2 characters',
-            },
-            pattern: {
-              value: /^[a-zA-Z0-9!@#$%^&*()._ -]+$/,
-              message: 'Please enter a valid position',
-            },
-          })}
+          {...register('position')}
           errors={errors.position}
         />
 
@@ -123,17 +91,7 @@ const PartnerDirectoryForm = ({
           aria-errormessage="project-error"
           placeholder="Projects"
           type="text"
-          {...register('projectsResponsibleFor', {
-            required: true,
-            minLength: {
-              value: 2,
-              message: 'Please enter a project with at least 2 characters',
-            },
-            pattern: {
-              value: /^[a-zA-Z0-9!@#$%^&*()._ -]+$/,
-              message: 'Please enter a valid project',
-            },
-          })}
+          {...register('projectsResponsibleFor')}
           errors={errors.projectsResponsibleFor}
         />
         <FormInput

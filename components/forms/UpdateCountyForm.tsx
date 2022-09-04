@@ -67,17 +67,7 @@ const UpdateCountyForm = ({
           aria-label="county-name"
           placeholder="Enter a County Name"
           type="text"
-          {...register('name', {
-            required: true,
-            minLength: {
-              value: 2,
-              message: 'Please enter a County name with at least 2 characters',
-            },
-            pattern: {
-              value: /^[a-zA-Z0-9!@#$%^&*()._ -]+$/,
-              message: 'Please enter a valid County name',
-            },
-          })}
+          {...register('name')}
           className="focus:shadow-outline w-full appearance-none rounded-md focus:outline-none"
         />
         {errors.name && (

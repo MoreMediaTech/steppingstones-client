@@ -17,6 +17,12 @@ interface RefreshResult {
   meta?: FetchBaseQueryMeta | undefined
 }
 
+function checkIsError(obj: unknown): obj is Error{
+  return (
+    typeof obj === 'object' && obj !== null && 'data' in obj && 'status' in obj
+  )
+}
+
 const baseQuery: BaseQueryFn<
   string | FetchArgs,
   any,
@@ -66,6 +72,13 @@ const baseQueryWithReAuth: BaseQueryFn = async (
       )
       // retry original request
       result = await baseQuery(args, api, extraOptions)
+    } else {
+      if(refreshResult?.error?.status === 403){
+        if (checkIsError(refreshResult?.error?.data)) {
+          refreshResult.error.data.message =
+            'You Session has expired. Please login again. '
+        }
+      }
     }
   } 
   return result

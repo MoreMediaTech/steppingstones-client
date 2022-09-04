@@ -1,9 +1,15 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, {
+  useState,
+  useCallback,
+  useEffect,
+  MouseEventHandler,
+} from 'react'
 import { FaEdit, FaTrash, FaCheck, FaTimes } from 'react-icons/fa'
 import { Button } from '@mantine/core'
 import Image from 'next/image'
 import { format } from 'date-fns'
 import { enGB } from 'date-fns/locale'
+import { BiChevronUpSquare, BiChevronDownSquare } from 'react-icons/bi'
 
 import steppingstonesapplogo from '../../../public/steppingstonesapplogo.png'
 import { CountyDataProps } from '@lib/types'
@@ -12,17 +18,62 @@ import { showNotification } from '@mantine/notifications'
 import HandleDeleteModal from '../../HandleDeleteModal/HandleDeleteModal'
 import { useAppDispatch, useAppSelector } from 'app/hooks'
 import { editorSelector, setCounty } from 'features/editor/editorSlice'
-
-function getWindowSize() {
-  const { innerWidth, innerHeight } = window
-  return { innerWidth, innerHeight }
-}
+import useWindowSize from 'hooks/useWindowSize'
 
 interface CountyTableProps {
   countyData: CountyDataProps[]
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   refetch: () => void
   handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
+
+type SortKeys = keyof CountyDataProps
+
+type SortOrder = 'asc' | 'desc'
+
+function sortData({
+  tableData,
+  sortKey,
+  reverse,
+}: {
+  tableData: CountyDataProps[]
+  sortKey: SortKeys
+  reverse: boolean
+}) {
+  if (!sortKey) return tableData
+
+  const sortedData = [...tableData].sort((a, b) => {
+    return a[sortKey]! > b[sortKey]! ? 1 : -1
+  })
+
+  if (reverse) {
+    return sortedData.reverse()
+  }
+
+  return tableData
+}
+
+
+function SortButton({
+  sortOrder,
+  columnKey,
+  sortKey,
+  onClick,
+}: {
+  sortOrder: SortOrder
+  columnKey: SortKeys
+  sortKey: SortKeys
+  onClick: MouseEventHandler<HTMLButtonElement>
+}) {
+  return (
+    <button type="button" onClick={onClick}>
+      {sortKey === columnKey && sortOrder === 'desc' ? (
+        <BiChevronDownSquare fontSize={15} />
+      ) : (
+        <BiChevronUpSquare fontSize={15} />
+      )}
+    </button>
+  )
 }
 
 const CountyTable = ({
@@ -33,21 +84,36 @@ const CountyTable = ({
 }: CountyTableProps) => {
   const dispatch = useAppDispatch()
   const [openModal, setOpenModal] = useState<boolean>(false)
-  const [windowSize, setWindowSize] = useState(getWindowSize())
-
+  const [sortKey, setSortKey] = useState<SortKeys>('name')
+  const [sortOrder, setSortOrder] = useState<SortOrder>('asc')
   const [removeCounty, { isLoading }] = useRemoveCountyMutation()
   const { county } = useAppSelector(editorSelector)
+  const [windowSize] = useWindowSize()
 
-  useEffect(() => {
-    function handleWindowResize() {
-      setWindowSize(getWindowSize())
-    }
-    window.addEventListener('resize', handleWindowResize)
+  const headers: { key: SortKeys, label: string }[] = [
+    { key: 'name', label: 'county name' },
+    { key: 'published', label: 'published' },
+    { key: 'updatedAt', label: 'updated at' },
+  ]
 
-    return () => {
-      window.removeEventListener('resize', handleWindowResize)
+  const sortedData = useCallback(
+    () =>
+      sortData({
+        tableData: countyData,
+        sortKey,
+        reverse: sortOrder === 'desc',
+      }),
+    [countyData, sortKey, sortOrder]
+  )
+
+  function changeSort(key: SortKeys) {
+    if (key === sortKey) {
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
+    } else {
+      setSortKey(key)
+      setSortOrder('desc')
     }
-  }, [])
+  }
 
   const deleteHandler = useCallback(async (id: string) => {
     try {
@@ -67,6 +133,7 @@ const CountyTable = ({
       })
     }
   }, [])
+
   return (
     <>
       <section
@@ -103,7 +170,7 @@ const CountyTable = ({
         <div
           className="relative w-full overflow-auto py-2"
           style={{
-            height: windowSize.innerHeight - 200,
+            height: windowSize.innerHeight - 300,
             scrollbarWidth: 'none',
           }}
         >
@@ -112,22 +179,25 @@ const CountyTable = ({
           >
             <thead className="bg-gray-100 text-xs uppercase text-gray-700 dark:bg-primary-dark-500 dark:text-primary-light-200">
               <tr>
-                <th scope="col" className="px-6 py-3 text-left">
-                  county name
-                </th>
-                <th scope="col" className="px-6 py-3 text-center">
-                  published
-                </th>
-                <th scope="col" className="px-6 py-3 text-center">
-                  Updated At
-                </th>
+                {headers.map((header) => (
+                  <th key={header.key} className="px-6 py-3">
+                    <div className="flex flex-row items-center gap-1 justify-center">
+                      <span>{header.label}</span>{' '}
+                      <SortButton
+                        {...{ sortOrder, sortKey }}
+                        columnKey={header.key}
+                        onClick={() => changeSort(header.key)}
+                      />
+                    </div>
+                  </th>
+                ))}
                 <th scope="col" className="px-6 py-3">
                   <span className="sr-only">Edit</span>
                 </th>
               </tr>
             </thead>
             <tbody className={`relative overflow-auto`}>
-              {countyData?.map((county: CountyDataProps) => (
+              {sortedData()?.map((county: CountyDataProps) => (
                 <tr
                   key={county.id}
                   className="group border-b hover:bg-gray-100 dark:hover:bg-primary-light-500"
@@ -195,7 +265,7 @@ const CountyTable = ({
                         variant="outline"
                         color="red"
                         leftIcon={<FaTrash fontSize={14} />}
-                        className="font-medium  hover:bg-red-500 group-hover:bg-red-500 hover:text-white group-hover:text-white"
+                        className="font-medium  hover:bg-red-500 hover:text-white group-hover:bg-red-500 group-hover:text-white"
                         onClick={() => {
                           setOpenModal(true)
                           dispatch(setCounty(county))

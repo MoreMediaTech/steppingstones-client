@@ -76,16 +76,16 @@ const NewsSection = ({ id }: { id: string }) => {
 
   return (
     <section className="relative h-auto w-full flex-grow px-2 py-2  md:py-8 md:px-8">
-      <section className="container">
+      <section className="w-full rounded-md bg-primary-light-50 p-4 shadow-lg dark:bg-primary-dark-500">
         {isLoadingCounty ? (
           <div className="flex h-[700px] items-center justify-center">
             <Loader size="xl" variant="bars" />
           </div>
         ) : (
-          <Paper shadow="lg" p="md" radius="md" withBorder className="w-full">
+          <div className="w-full">
             <div className="flex w-full items-center justify-between">
               {countyData?.news?.isLive ? (
-                <div className="rounded-xl bg-[#5E17EB] px-2 py-1 text-xl font-semibold text-white">
+                <div className="rounded-xl bg-primary-dark-100 px-2 py-1 text-xl font-semibold text-white">
                   <h1>Live</h1>
                 </div>
               ) : (
@@ -98,7 +98,7 @@ const NewsSection = ({ id }: { id: string }) => {
                 onClick={() => setIsEdit(!isEdit)}
                 className=""
               >
-                <BiEdit fontSize={44} />
+                <BiEdit fontSize={44} className="text-gray-900 dark:text-primary-light-100"/>
               </UnstyledButton>
             </div>
             {!isEdit && countyData?.news ? (
@@ -115,7 +115,7 @@ const NewsSection = ({ id }: { id: string }) => {
                 setIsEdit={setIsEdit}
               />
             )}
-          </Paper>
+          </div>
         )}
       </section>
     </section>

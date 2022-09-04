@@ -1,24 +1,33 @@
-import { useState } from 'react'
+import { useRouter } from 'next/router'
 import { MessageProps } from '@lib/types'
+import { FaTrash } from 'react-icons/fa'
 
 interface IMessagesTableProps {
   messages: MessageProps[]
+  checked: boolean
+  selectedMessageId: string[]
   handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void
   handleSelect: (e: React.ChangeEvent<HTMLInputElement>) => void
+  handleDeleteMany: () => void
 }
 
 const MessagesTable = ({
   messages,
+  checked,
+  selectedMessageId,
   handleSearch,
   handleSelect,
+  handleDeleteMany,
 }: IMessagesTableProps) => {
+  const router = useRouter()
+
   return (
     <section className=" relative  w-full  shadow-md sm:rounded-lg">
-      <div className="p-4">
-        <label htmlFor="table-search" className="sr-only">
-          Search
-        </label>
+      <div className="flex items-center gap-2 p-4">
         <div className="relative mt-1">
+          <label htmlFor="table-search" className="sr-only">
+            Search
+          </label>
           <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
             <svg
               className="h-5 w-5 text-gray-500 "
@@ -41,6 +50,22 @@ const MessagesTable = ({
             onChange={handleSearch}
           />
         </div>
+        <div className="mt-2 flex items-center gap-2">
+          <button
+            type="button"
+            
+            onClick={handleDeleteMany}
+          >
+            <FaTrash
+              fontSize={30}
+              className={
+                selectedMessageId.length > 0
+                  ? 'text-red-500'
+                  : 'text-gray-400'
+              }
+            />
+          </button>
+        </div>
       </div>
       <div className="overflow-x-auto">
         <table className="relative w-full overflow-x-auto text-center text-sm text-gray-500 ">
@@ -48,7 +73,7 @@ const MessagesTable = ({
             {messages?.map((message: MessageProps) => (
               <tr
                 key={message.id}
-                className="border-b bg-white hover:bg-gray-50"
+                className="border-b bg-white hover:cursor-pointer hover:bg-gray-50"
               >
                 <td className="w-4 p-4">
                   <div className="flex items-center">
@@ -71,10 +96,12 @@ const MessagesTable = ({
                   scope="row"
                   className="whitespace-nowrap px-6 py-4 text-left font-medium text-gray-900"
                 >
-                  <div>{message?.from}</div>
-                </td>
-                <td className="whitespace-nowrap px-6 py-4">
-                  <div>
+                  <div
+                    onClick={() =>
+                      router.push(`/admin/editor-portal/messages/${message.id}`)
+                    }
+                  >
+                    <p>{message?.from}</p>
                     <p className="text-left text-base font-semibold text-gray-900 md:text-lg">
                       {message?.subject}
                     </p>

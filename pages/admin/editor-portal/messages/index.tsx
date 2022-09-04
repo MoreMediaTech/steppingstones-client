@@ -5,7 +5,7 @@ import { ComponentShield } from '@components/NextShield'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
 import PortalHeader from '@components/PortalHeader'
 import { CurrentUser } from '@lib/types'
-import MessagesSection from '@components/MessagesSection'
+import { MessagesSection } from '@components/MessagesSection'
 
 
 const Messages = () => {
@@ -17,15 +17,18 @@ const Messages = () => {
         showForRole={'SS_EDITOR'}
         userRole={user?.role as string}
       >
+        <section className='md:h-screen overflow-auto'>
+
         <PortalHeader
           user={user as CurrentUser}
           imgUrl={user?.imageUrl}
           title={`${user?.name}`}
           subTitle="View enquires"
         />
-        <section className="overflow-y-auto">
+        <section className="overflow-y-auto my-2 space-y-2">
           <h1 className="px-4 text-2xl font-bold">Enquires</h1>
           <MessagesSection />
+        </section>
         </section>
       </ComponentShield>
     </AdminLayout>

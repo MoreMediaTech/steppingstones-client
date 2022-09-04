@@ -1,10 +1,12 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, MouseEventHandler } from 'react'
 import { FaEdit, FaTrash, FaCheck, FaTimes } from 'react-icons/fa'
 import { Button } from '@mantine/core'
 import Image from 'next/image'
 import { format } from 'date-fns'
 import { enGB } from 'date-fns/locale'
 import { showNotification } from '@mantine/notifications'
+import { BiChevronDownSquare, BiChevronUpSquare } from 'react-icons/bi'
+import { BsPrinterFill } from 'react-icons/bs'
 
 import steppingstonesapplogo from '../../../public/steppingstonesapplogo.png'
 import { SectionProps } from '@lib/types'
@@ -13,6 +15,7 @@ import { useAppDispatch, useAppSelector } from 'app/hooks'
 import { setSectionType } from 'features/editor/editorSlice'
 import HandleDeleteModal from '../../HandleDeleteModal/HandleDeleteModal'
 import SubSectionsTable from './SubSectionsTable'
+import useWindowSize from 'hooks/useWindowSize'
 
 interface ISectionsTableProps {
   type: 'Section' | 'SubSection'
@@ -26,6 +29,54 @@ interface ISectionsTableProps {
   handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void
   handleSelect: (e: React.ChangeEvent<HTMLInputElement>) => void
   handleDeleteMany: () => void
+}
+
+type SortKeys = keyof SectionProps
+
+type SortOrder = 'asc' | 'desc'
+
+function sortData({
+  tableData,
+  sortKey,
+  reverse,
+}: {
+  tableData: SectionProps[]
+  sortKey: SortKeys
+  reverse: boolean
+}) {
+  if (!sortKey) return tableData
+
+  const sortedData = [...tableData].sort((a, b) => {
+    return a[sortKey]! > b[sortKey]! ? 1 : -1
+  })
+
+  if (reverse) {
+    return sortedData.reverse()
+  }
+
+  return tableData
+}
+
+function SortButton({
+  sortOrder,
+  columnKey,
+  sortKey,
+  onClick,
+}: {
+  sortOrder: SortOrder
+  columnKey: SortKeys
+  sortKey: SortKeys
+  onClick: MouseEventHandler<HTMLButtonElement>
+}) {
+  return (
+    <button type="button" onClick={onClick}>
+      {sortKey === columnKey && sortOrder === 'desc' ? (
+        <BiChevronDownSquare fontSize={15} />
+      ) : (
+        <BiChevronUpSquare fontSize={15} />
+      )}
+    </button>
+  )
 }
 
 const SectionsTable = ({
@@ -45,7 +96,45 @@ const SectionsTable = ({
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [sectionData, setSectionData] = useState<SectionProps | null>(null)
   const [openSubSectionModal, setOpenSubSectionModal] = useState<boolean>(false)
+   const [sortKey, setSortKey] = useState<SortKeys>('name')
+   const [sortOrder, setSortOrder] = useState<SortOrder>('asc')
   const [deleteSectionById, { isLoading }] = useDeleteSectionByIdMutation()
+    const [windowSize] = useWindowSize()
+
+      const headers: { key: SortKeys; label: string }[] = [
+        { key: 'name', label: 'section name' },
+        { key: 'county', label: 'county name' },
+        { key: 'subsections', label: 'Sub-Sections' },
+        { key: 'isLive', label: 'live' },
+        { key: 'updatedAt', label: 'updated at' },
+      ]
+
+      const sortedData = useCallback(
+        () =>
+          sortData({
+            tableData: sectionsData,
+            sortKey,
+            reverse: sortOrder === 'desc',
+          }),
+        [sectionsData, sortKey, sortOrder]
+      )
+
+      function changeSort(key: SortKeys) {
+        if (key === sortKey) {
+          setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
+        } else {
+          setSortKey(key)
+          setSortOrder('desc')
+        }
+      }
+
+    const handlePrint = () => {
+      const printContents = document.getElementById('printableArea')?.innerHTML
+      const originalContents = document.body.innerHTML
+      document.body.innerHTML = printContents!
+      window.print()
+      document.body.innerHTML = originalContents
+    }
 
   const handleModalClose = () => {
     setOpenSubSectionModal(false)
@@ -108,40 +197,55 @@ const SectionsTable = ({
               </button>
             )}
           </div>
+          <div className="mt-2">
+            <button type="button" onClick={handlePrint}>
+              <BsPrinterFill fontSize={30} className="text-tertiary" />
+            </button>
+          </div>
         </div>
-        <div className="overflow-x-auto">
+        <div
+          className="overflow-x-auto"
+          id="printableArea"
+          style={{
+            height: windowSize.innerHeight - 300,
+            scrollbarWidth: 'none',
+          }}
+        >
           <table className="table w-full bg-primary-light-50 text-left text-gray-500 dark:bg-primary-dark-600 dark:text-primary-light-100">
             <thead className="bg-gray-100 text-xs uppercase text-gray-700 dark:bg-primary-dark-500 dark:text-primary-light-200">
               <tr>
                 <th scope="col" className="p-4"></th>
-                <th
-                  scope="col"
-                  className="whitespace-nowrap px-6 py-3 text-left"
-                >
-                  section name
-                </th>
-                <th
-                  scope="col"
-                  className="whitespace-nowrap px-6 py-3 text-left"
-                >
-                  county name
-                </th>
-                <th scope="col" className="whitespace-nowrap px-6 py-3">
-                  Sub-Sections
-                </th>
-                <th scope="col" className="whitespace-nowrap px-6 py-3">
-                  live
-                </th>
-                <th scope="col" className="whitespace-nowrap px-6 py-3">
-                  Updated At
-                </th>
+                {headers.map((header) => {
+                  if (header.key === 'subsections') {
+                    return (
+                      <th key={header.key} className="px-6 py-3">
+                        <div className="flex flex-row items-center justify-center gap-1">
+                          <span>{header.label}</span>{' '}
+                        </div>
+                      </th>
+                    )
+                  } else {
+                    return (
+                      <th key={header.key} className="px-6 py-3">
+                        <div className="flex flex-row items-center justify-center gap-1">
+                          <span>{header.label}</span>{' '}
+                          <SortButton
+                            {...{ sortOrder, sortKey }}
+                            columnKey={header.key}
+                            onClick={() => changeSort(header.key)}
+                          />
+                        </div>
+                      </th>
+                    )
+                  }
+                })}
                 <th scope="col" className="whitespace-nowrap px-6 py-3">
                   <span className="sr-only">Edit</span>
                 </th>
               </tr>
             </thead>
             <tbody>
-              {sectionsData?.map((section: SectionProps) => (
+              {sortedData().map((section: SectionProps) => (
                 <tr
                   key={section.id}
                   className="group border-b hover:bg-gray-100 dark:hover:bg-primary-light-500"

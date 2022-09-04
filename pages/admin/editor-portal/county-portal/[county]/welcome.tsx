@@ -28,7 +28,7 @@ const Welcome = ({
         showForRole={'SS_EDITOR'}
         userRole={user?.role as string}
       >
-        <section className="h-screen overflow-auto bg-slate-50">
+        <section className="h-screen overflow-auto ">
           <section className="sticky w-full">
             <PortalHeader
               title={`${county}`}

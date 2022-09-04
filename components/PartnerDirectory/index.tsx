@@ -92,11 +92,23 @@ const PartnerDirectorySection = ({
     }
   }
 
+  // function that handles the close of the updateCountyModal and resets the partnerData state
   const handleModalClose = () => {
     dispatch(setPartnerData(null))
     dispatch(setType('Create'))
     setIsPartnerDirectoryModalOpen(false)
     reset()
+  }
+
+  // function that handles the search/filter of the closingDate in the partner data
+  const handleFilterByDate = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target
+    const resultsArray = data?.filter(
+      (partner: PartnerData) =>{
+        return partner?.closingDate === value
+      }
+    )
+    setSearchResults(resultsArray as PartnerData[])
   }
 
   // if type is create reset the form else if type is update fill the form with the partner data
@@ -199,6 +211,7 @@ const PartnerDirectorySection = ({
         handleSearch={handleSearch}
         handleSelected={handleSelect}
         handleDeleteMany={handleDeleteMany}
+        handleFilterByDate={handleFilterByDate}
       />
 
       {isPartnerDirectoryModalOpen && (

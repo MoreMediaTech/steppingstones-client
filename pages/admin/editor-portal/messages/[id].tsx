@@ -3,20 +3,27 @@ import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import { AdminLayout } from 'layout'
 import { ComponentShield } from '@components/NextShield'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
+import { MessagePreviewSection } from '@components/MessagesSection'
+import PortalHeader from '@components/PortalHeader'
+import { CurrentUser } from '@lib/types'
 
-const Message = () => {
-    const { data: user, refetch } = useGetUserQuery()
+const Message = ({ messageId }: { messageId: string }) => {
+  const { data: user, refetch } = useGetUserQuery()
   return (
     <AdminLayout title="Message">
-        <ComponentShield
+      <ComponentShield
         RBAC
         showForRole={'SS_EDITOR'}
         userRole={user?.role as string}
       >
+        <PortalHeader
+          user={user as CurrentUser}
+          imgUrl={user?.imageUrl}
+          title={`${user?.name}`}
+          subTitle=""
+        />
 
-      <section className="overflow-y-auto bg-slate-50">
-        <h1>Messages</h1>
-      </section>
+        <MessagePreviewSection messageId={messageId} />
       </ComponentShield>
     </AdminLayout>
   )
@@ -36,8 +43,9 @@ export const getServerSideProps: GetServerSideProps = async (
   }
 
   return {
-    // props: { user: user as SessionProps },
-    props: {},
+    props: {
+      messageId: context?.params?.id,
+    },
   }
 }
 

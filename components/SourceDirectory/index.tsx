@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import { useForm, SubmitHandler } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { showNotification } from '@mantine/notifications'
 import { Loader } from '@mantine/core'
 
@@ -12,8 +12,8 @@ import { editorSelector, setSDData } from 'features/editor/editorSlice'
 import SourceDirectoryTable from './SourceDirectoryTable'
 import { SourceDataProps, SourceDirectoryType } from '@lib/types'
 import SearchForm from './SearchForm'
-import SourceDirectoryForm from '@components/forms/SourceDirectoryForm'
 import SourceDirectoryUpdateModal from './SourceDirectoryUpdateModal'
+import useWindowSize from 'hooks/useWindowSize'
 
 export interface IFormDataProps extends SourceDataProps {
   type: SourceDirectoryType | string
@@ -27,6 +27,7 @@ const SourceDirectory: React.FC = () => {
   const [checked, setChecked] = useState<boolean>(false)
   const [openUpdateModal, setOpenUpdateModal] = useState<boolean>(false)
   const [action, setAction] = useState<'CREATE' | 'UPDATE'>('CREATE')
+  const [windowSize] = useWindowSize()
   const {
     data: sourceData,
     isLoading,
@@ -38,37 +39,16 @@ const SourceDirectory: React.FC = () => {
 
   const { sdData } = useAppSelector(editorSelector)
 
-  // const categories = sourceData?.map((item: SourceDataProps) => item.category)
-
   const { register, watch } = useForm<IFormDataProps>()
 
   useEffect(() => {
     const subscribe = watch((data) => {
       const { type } = data
-      console.log('🚀 ~ file: index.tsx ~ line 43 ~ subscribe ~ type', type)
       setSdDataType(type as string)
       refetch()
     })
     return () => subscribe.unsubscribe()
   }, [watch, sourceData, refetch])
-
-  // const handleCategoryChange = useCallback(
-  //   (e: React.ChangeEvent<HTMLInputElement>) => {
-  //     e.preventDefault()
-  //     const category = watch('category')
-  //     console.log(category)
-  //     if (category === 'all') {
-  //       setSearchResults([])
-  //     } else {
-  //       setSearchResults(
-  //         sourceData?.filter(
-  //           (item) => item.category === category
-  //         ) as SourceDataProps[]
-  //       )
-  //     }
-  //   },
-  //   [watch]
-  // )
 
   const handleSearch = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -133,20 +113,21 @@ const SourceDirectory: React.FC = () => {
     }
   }, [checked, selectedSDId])
 
-  
   return (
     <>
-      {isLoading ? (
-        <div className="flex h-[700px] items-center justify-center">
-          <Loader size="xl" variant="bars" />
-        </div>
-      ) : (
-        <section className="relative mx-auto  my-8   bg-primary-light-50 px-2 py-1 shadow-md dark:bg-primary-dark-600 dark:text-primary-light-100 sm:rounded-lg md:w-full">
-          <SearchForm
-            register={register}
-            types={['BSI', 'IS', 'EU']}
-            handleModalOpen={handleModalOpen}
-          />
+        <SearchForm
+          register={register}
+          types={['BSI', 'IS', 'EU']}
+          handleModalOpen={handleModalOpen}
+        />
+        {isLoading ? (
+          <div className="flex h-[700px] items-center justify-center">
+            <Loader size="xl" variant="bars" />
+          </div>
+        ) : (
+            <section
+              className="relative mx-2 md:mx-auto bg-primary-light-50 px-1 md:px-4 py-1 shadow-md dark:bg-primary-dark-600 dark:text-primary-light-100 md:w-full"
+            >
           <SourceDirectoryTable
             data={
               searchResults?.length > 0
@@ -163,8 +144,8 @@ const SourceDirectory: React.FC = () => {
             setOpenUpdateModal={setOpenUpdateModal}
             handleDeleteMany={handleDeleteMany}
           />
-        </section>
-      )}
+      </section>
+        )}
       <SourceDirectoryUpdateModal
         action={action}
         open={openUpdateModal}

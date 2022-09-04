@@ -1,5 +1,10 @@
-import type { ReactNode } from 'react'
+import type { JSXElementConstructor, ReactElement, ReactNode } from 'react'
 import type { NextRouter } from 'next/router'
+
+export interface OutletProps {
+  context?: ReactElement<any, string | JSXElementConstructor<any>> | null | undefined
+}
+
 
 export interface IFormData {
   name: string
@@ -421,7 +426,7 @@ export type PartnerData = {
   valueCategory: ValueCategory
   partnerType: PartnerType
   projectsResponsibleFor: string
-  closingDate: Date
+  closingDate: string
   isEmail: boolean
   position: string
   createdAt: string

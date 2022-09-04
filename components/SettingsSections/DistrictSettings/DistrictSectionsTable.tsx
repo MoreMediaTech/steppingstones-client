@@ -51,6 +51,7 @@ const DistrictSectionsTable = ({
   const [searchResults, setSearchResults] = useState<DistrictSectionProps[]>([])
   const { districtSection } = useAppSelector(editorSelector)
 
+
   const [deleteDistrictSectionById, { isLoading }] =
     useDeleteDistrictSectionByIdMutation()
 
