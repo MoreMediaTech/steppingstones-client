@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 
@@ -36,7 +35,6 @@ const AdminLayout = ({
 }: ILayout): JSX.Element => {
   const router = useRouter()
   const [logout] = useLogoutMutation()
-  const [isOpen, setIsOpen] = useState(false)
  
   const handleLogout = async () => {
     logout()
@@ -91,8 +89,6 @@ const AdminLayout = ({
       </Head>
       <AdminSidebar
         handleLogout={handleLogout}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
       />
       <main
         className={`md:ml-30
