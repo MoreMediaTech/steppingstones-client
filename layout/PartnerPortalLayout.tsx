@@ -94,7 +94,7 @@ const PartnerPortalLayout = ({ title, description, children }: ILayout) => {
          navbarOffsetBreakpoint="md"
          asideOffsetBreakpoint="sm"
          fixed
-         navbar={<AdminSidebar show setIsOpen={setIsOpen} />}
+         navbar={<AdminSidebar />}
          header={
            <AdminNavbar
              opened={opened}
