@@ -2,13 +2,13 @@ import React, { useCallback, useState } from 'react'
 import { Loader } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 
-import { useGetAllMailQuery } from 'features/email/emailApiSlice'
+import { useGetAllInAppEnquiryMsgQuery, useDeleteManyMailMutation } from 'features/messages/messagesApiSlice'
 import MessagesTable from './MessagesTable'
 import { MessageProps } from '@lib/types'
-import { useDeleteManyMailMutation } from 'features/email/emailApiSlice'
+
 
 const MessagesSection = () => {
-  const { data: messages, isLoading, refetch } = useGetAllMailQuery()
+  const { data: messages, isLoading, refetch } = useGetAllInAppEnquiryMsgQuery()
   const [searchResults, setSearchResults] = useState<MessageProps[]>([])
   const [selectedMessageId, setSelectedMessageId] = useState<string[]>([])
   const [checked, setChecked] = useState<boolean>(false)

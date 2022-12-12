@@ -19,10 +19,11 @@ import {
 } from 'features/editor/editorApiSlice'
 import { NEXT_URL } from '@config/index'
 import Button from '@components/Button'
-import { wrapper } from 'app/store'
+import useHasMounted from '@hooks/useHasMounted'
 
 const DistrictSection = ({ id, district }: { id: string; district: string; }) => {
   const router = useRouter()
+  const hasMounted = useHasMounted()
   const { data: user } = useGetUserQuery()
   const {
     data: laSectionData,
@@ -40,7 +41,7 @@ const DistrictSection = ({ id, district }: { id: string; district: string; }) =>
   const [updateDistrictSectionById, { isLoading }] =
     useUpdateDistrictSectionByIdMutation()
 
-  return (
+  return hasMounted && (
     <>
       <AdminLayout>
         <ComponentShield

@@ -16,6 +16,7 @@ import {
 import { NEXT_URL } from '@config/index'
 import { wrapper } from 'app/store'
 import { SubSubSectionProps } from '@lib/types'
+import useHasMounted from '@hooks/useHasMounted'
 
 
 const SubSubSection = ({
@@ -30,7 +31,7 @@ const SubSubSection = ({
   imageUrl: string
 }) => {
   const router = useRouter()
-
+  const hasMounted = useHasMounted()
   const { data: user } = useGetUserQuery()
   const {
     data: subSubSectionData,
@@ -44,7 +45,7 @@ const SubSubSection = ({
   const [updateSubSubSectionById, { isLoading }] =
     useUpdateSubSubSectionByIdMutation()
 
-  return (
+  return hasMounted && (
     <>
       <AdminLayout>
         <ComponentShield

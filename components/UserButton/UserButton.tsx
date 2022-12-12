@@ -2,34 +2,41 @@ import { forwardRef } from 'react'
 import { FaChevronRight } from 'react-icons/fa'
 import { Group, Avatar, Text, UnstyledButton } from '@mantine/core'
 
+
 interface UserButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   image?: string
   name: string
   email: string
   initials?: string
   show?: boolean
+  theme?: string
   icon?: React.ReactNode
 }
 
 const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
   (
-    { image, name, email, icon, initials, show, ...others }: UserButtonProps,
+    {
+      image,
+      name,
+      email,
+      icon,
+      initials,
+      show,
+      theme,
+      ...others
+    }: UserButtonProps,
     ref
   ) => (
     <UnstyledButton
       ref={ref}
-      sx={(theme) => ({
+      sx={() => ({
         display: 'block',
         width: '100%',
-        padding: theme.spacing.md,
-        color:
-          theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+        padding: '10px 15px',
+        color: theme === 'dark' ? '#5515d4' : '#f9f8fc',
 
         '&:hover': {
-          backgroundColor:
-            theme.colorScheme === 'dark'
-              ? theme.colors.dark[8]
-              : theme.colors.gray[0],
+          backgroundColor: theme === 'dark' ? '#5E17EB' : '#cfb9f9',
         },
       })}
       {...others}
@@ -49,7 +56,7 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
           </Text>
         </div>
 
-        {show && (icon || <FaChevronRight fontSize={16} />)}
+        {show && (icon || <FaChevronRight fontSize={16} color="#5E17EB" />)}
       </Group>
     </UnstyledButton>
   )

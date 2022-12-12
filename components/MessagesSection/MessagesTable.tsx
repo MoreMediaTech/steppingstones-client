@@ -1,6 +1,10 @@
+import React from 'react'
 import { useRouter } from 'next/router'
 import { MessageProps } from '@lib/types'
 import { FaTrash } from 'react-icons/fa'
+
+// redux
+import { useUpdateMsgStatusByIdMutation } from 'features/messages/messagesApiSlice'
 
 interface IMessagesTableProps {
   messages: MessageProps[]
@@ -20,7 +24,25 @@ const MessagesTable = ({
   handleDeleteMany,
 }: IMessagesTableProps) => {
   const router = useRouter()
+  const [updateMsgStatusById] = useUpdateMsgStatusByIdMutation()
 
+  const handleUpdateIsRead = React.useCallback(
+    async (message: MessageProps) => {
+
+      try {
+        if (!message.isRead) {
+          await updateMsgStatusById({
+            id: message.id,
+            isRead: true,
+            isArchived: false,
+          }).unwrap()
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    []
+  )
   return (
     <section className=" relative  w-full  shadow-md sm:rounded-lg">
       <div className="flex items-center gap-2 p-4">
@@ -51,17 +73,11 @@ const MessagesTable = ({
           />
         </div>
         <div className="mt-2 flex items-center gap-2">
-          <button
-            type="button"
-            
-            onClick={handleDeleteMany}
-          >
+          <button type="button" onClick={handleDeleteMany}>
             <FaTrash
               fontSize={30}
               className={
-                selectedMessageId.length > 0
-                  ? 'text-red-500'
-                  : 'text-gray-400'
+                selectedMessageId.length > 0 ? 'text-red-500' : 'text-gray-400'
               }
             />
           </button>
@@ -97,15 +113,32 @@ const MessagesTable = ({
                   className="whitespace-nowrap px-6 py-4 text-left font-medium text-gray-900"
                 >
                   <div
-                    onClick={() =>
+                    onClick={() => {
                       router.push(`/admin/editor-portal/messages/${message.id}`)
-                    }
+                      handleUpdateIsRead(message)
+                    }}
                   >
-                    <p>{message?.from}</p>
-                    <p className="text-left text-base font-semibold text-gray-900 md:text-lg">
+                    <p
+                      className={`${
+                        message.isRead ? 'text-gray-500' : 'text-gray-700'
+                      }`}
+                    >
+                      {message?.from}
+                    </p>
+                    <p
+                      className={`${
+                        message.isRead
+                          ? 'font-medium text-gray-400'
+                          : 'font-semibold text-gray-900'
+                      }text-left text-base md:text-lg`}
+                    >
                       {message?.subject}
                     </p>
-                    <p className="whitespace-wrap text-ellipsis text-left text-xs md:text-sm">
+                    <p
+                      className={`${
+                        message.isRead ? 'text-gray-500' : 'text-gray-700'
+                      } whitespace-wrap text-ellipsis text-left text-xs md:text-sm`}
+                    >
                       {message?.message}
                     </p>
                   </div>

@@ -5,7 +5,7 @@ import { FaTimes } from 'react-icons/fa'
 import FormInput from '@components/forms/FormComponents/FormInput'
 import { MessageProps } from '@lib/types'
 import { useAppSelector, useAppDispatch} from 'app/hooks'
-import { emailSelector, setReply } from 'features/email/emailSlice'
+import { messagesSelector, setReply } from 'features/messages/messagesSlice'
 
 type FormInputs = {
     from: string
@@ -15,7 +15,7 @@ type FormInputs = {
 
 const MessageReplyForm = () => {
     const dispatch = useAppDispatch()
-    const {enquiry, reply} = useAppSelector(emailSelector)
+    const {enquiry, reply} = useAppSelector(messagesSelector)
     const { register, handleSubmit, reset, formState: { errors } } = useForm<FormInputs>(
         { defaultValues: { from: enquiry?.from, subject: enquiry?.subject, message: '' } }
     );

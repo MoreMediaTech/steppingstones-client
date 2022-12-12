@@ -13,6 +13,7 @@ import { useResetPasswordMutation } from 'features/auth/authApiSlice'
 import Spinner from '@components/spinner';
 import { ChangePasswordForm } from '@components/forms';
 import { IFormData } from '@lib/types';
+import useHasMounted from '@hooks/useHasMounted';
 
 export type Inputs = {
   password: string

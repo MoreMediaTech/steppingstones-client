@@ -10,12 +10,12 @@ import {
 import { createWrapper, HYDRATE } from 'next-redux-wrapper'
 import authReducer from 'features/auth/authSlice'
 import partnerReducer from 'features/partner/partnerSlice'
-import emailReducer from 'features/email/emailSlice'
+import messagesReducer from 'features/messages/messagesSlice'
 import editorReducer from 'features/editor/editorSlice'
 import uploadReducer from 'features/upload/uploadSlice'
 import {
   apiSlice,
-  emailApiSlice,
+  messagesApiSlice,
   partnerApiSlice,
   editorApiSlice,
   uploadApiSlice,
@@ -23,13 +23,13 @@ import {
 
 const reducers = {
   [apiSlice.reducerPath]: apiSlice.reducer,
-  [emailApiSlice.reducerPath]: emailApiSlice.reducer,
+  [messagesApiSlice.reducerPath]: messagesApiSlice.reducer,
   [partnerApiSlice.reducerPath]: partnerApiSlice.reducer,
   [editorApiSlice.reducerPath]: editorApiSlice.reducer,
   [uploadApiSlice.reducerPath]: uploadApiSlice.reducer,
   auth: authReducer,
   partner: partnerReducer,
-  email: emailReducer,
+  messages: messagesReducer,
   editor: editorReducer,
   upload: uploadReducer,
 }
@@ -56,7 +56,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([
       apiSlice.middleware,
-      emailApiSlice.middleware,
+      messagesApiSlice.middleware,
       partnerApiSlice.middleware,
       editorApiSlice.middleware,
       uploadApiSlice.middleware,

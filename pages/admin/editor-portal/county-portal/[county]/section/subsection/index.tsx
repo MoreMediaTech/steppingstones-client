@@ -22,7 +22,7 @@ import {
 } from 'features/editor/editorApiSlice'
 import { NEXT_URL } from '@config/index'
 import PortalButton from '@components/PortalButton'
-
+import useHasMounted from '@hooks/useHasMounted'
 
 const SubSection = ({
   county,
@@ -34,6 +34,7 @@ const SubSection = ({
   subSectionId: string
 }) => {
   const router = useRouter()
+  const hasMounted = useHasMounted()
   const [openAddSectionModal, setAddOpenSectionModal] = useState<boolean>(false)
 
   const { data: user } = useGetUserQuery()
@@ -52,7 +53,7 @@ const SubSection = ({
   const [updateSubSectionById, { isLoading }] =
     useUpdateSubSectionByIdMutation()
 
-  return (
+  return hasMounted && (
     <>
       <AdminLayout>
         <ComponentShield

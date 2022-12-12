@@ -6,11 +6,14 @@ import { useGetUserQuery } from 'features/user/usersApiSlice'
 import PortalHeader from '@components/PortalHeader'
 import { CurrentUser } from '@lib/types'
 import { MessagesSection } from '@components/MessagesSection'
+import useHasMounted from '@hooks/useHasMounted'
 
 
 const Messages = () => {
+  const hasMounted = useHasMounted()
   const { data: user, refetch } = useGetUserQuery()
-  return (
+  
+  return hasMounted && (
     <AdminLayout title="Messages">
       <ComponentShield
         RBAC

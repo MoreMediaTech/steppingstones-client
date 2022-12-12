@@ -19,8 +19,8 @@ export const initialState: EmailState = {
 }
 
 
-export const emailSlice = createSlice({
-  name: 'email',
+export const messagesSlice = createSlice({
+  name: 'messages',
   initialState,
   reducers: {
     setReply: (state, { payload }: PayloadAction<{enquiry: MessageProps | null, reply: boolean}>) => {
@@ -30,6 +30,6 @@ export const emailSlice = createSlice({
   },
 })
 
-export const { setReply } = emailSlice.actions
-export const emailSelector = (state: RootState) => state.email
-export default emailSlice.reducer
+export const { setReply } = messagesSlice.actions
+export const messagesSelector = (state: RootState) => state.messages
+export default messagesSlice.reducer

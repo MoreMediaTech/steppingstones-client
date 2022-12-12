@@ -224,6 +224,9 @@ const editorApi = editorApiSlice.injectEndpoints({
     getSectionById: builder.query<SectionProps, string>({
       query: (id: string) => ({
         url: `editor/section/${id}`,
+        validateStatus: (response: any, result: any) => {
+          return response.status === 200 && !result.isError
+        },
       }),
       providesTags: (result, error, arg) => [{ type: 'Editor', id: arg }],
     }),
@@ -573,7 +576,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       query: (type) => ({
         url: `editor/source-directory/${type}`,
       }),
-      providesTags: (result) => 
+      providesTags: (result) =>
         result
           ? [
               ...result?.map(

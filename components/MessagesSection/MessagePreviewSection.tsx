@@ -8,12 +8,12 @@ import { IoArrowUndoSharp } from 'react-icons/io5'
 import {
   useGetMessageByIdQuery,
   useDeleteMailByIdMutation,
-} from 'features/email/emailApiSlice'
+} from 'features/messages/messagesApiSlice'
 import { Loader } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import useWindowSize from '@hooks/useWindowSize'
 import { useAppDispatch, useAppSelector } from 'app/hooks'
-import { setReply, emailSelector } from 'features/email/emailSlice'
+import { setReply, messagesSelector } from 'features/messages/messagesSlice'
 import { MessageProps } from '@lib/types'
 import MessageReplyForm from './MessageReplyForm'
 
@@ -21,7 +21,7 @@ const MessagePreviewSection = ({ messageId }: { messageId: string }) => {
   const router = useRouter()
   const dispatch = useAppDispatch()
   const { data: message, isLoading,  refetch } = useGetMessageByIdQuery(messageId)
-  const {reply} = useAppSelector(emailSelector)
+  const {reply} = useAppSelector(messagesSelector)
   const [deleteMailById] =
     useDeleteMailByIdMutation()
   const [windowSize] = useWindowSize()

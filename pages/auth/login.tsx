@@ -4,6 +4,7 @@ import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { FaSignInAlt } from 'react-icons/fa'
+import useHasMounted from '@hooks/useHasMounted'
 
 const variants = {
   hidden: { opacity: 0 },
@@ -11,7 +12,8 @@ const variants = {
 }
 
 const Login = () => {
-  return (
+  const hasMounted = useHasMounted()
+  return hasMounted && (
     <MainLayout title="Login">
       <section className="relative h-screen w-full">
         <div className="absolute top-0 h-full w-full bg-cover bg-center">

@@ -43,7 +43,12 @@ export const usersApiSlice = apiSlice.injectEndpoints({
           : [{ type: 'User', id: 'LIST' }],
     }),
     getUserById: builder.query<CurrentUser, string>({
-      query: (id) => `/users/${id}`,
+      query: (id) => ({
+        url: `/users/${id}`,
+        validateStatus: (response: any, result: any) => {
+          return response.status === 200 && !result.isError
+        },
+      }),
       providesTags: (result, error, arg) => [{ type: 'User', id: result?.id }],
     }),
     createUser: builder.mutation<CurrentUser, CurrentUser>({

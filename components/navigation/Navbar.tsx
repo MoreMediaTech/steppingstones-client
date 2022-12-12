@@ -66,7 +66,7 @@ const Navbar = () => {
           : 'shadow-b-2xl fixed bg-primary-light-50 dark:bg-primary-dark-800'
       }`}
     >
-      <div className="container mx-auto flex max-w-screen-xl items-center">
+      <div className="container mx-auto flex max-w-screen-xl items-center justify-between">
         <AppLogo scrollToTop={scrollToTop} />
         <ul className="hidden list-none items-center justify-end gap-6 sm:flex">
           <li>
@@ -145,18 +145,14 @@ const Navbar = () => {
                   {/* ...menu items */}
                   <Menu.Dropdown>
                     <Menu.Label>
-                      <span className="item-center flex justify-center text-primary-dark-100 dark:text-primary-light-100">
-                        Application
-                      </span>
+                      <span className="item-center flex justify-center text-primary-dark-100 "></span>
                     </Menu.Label>
                     {currentUser.role !== 'PARTNER' ? (
                       <Menu.Item
                         icon={<MdBusiness fontSize={14} color="#5E17EB" />}
                       >
                         <Link href={'/admin/editor-portal'}>
-                          <a className="text-primary-dark-100 dark:text-primary-light-100">
-                            Portal
-                          </a>
+                          <a className="text-primary-dark-100 ">Portal</a>
                         </Link>
                       </Menu.Item>
                     ) : (
@@ -164,9 +160,7 @@ const Navbar = () => {
                         icon={<MdBusiness fontSize={14} color="#5E17EB" />}
                       >
                         <Link href={'/admin/partner-portal'}>
-                          <a className="text-primary-dark-100 dark:text-primary-light-100">
-                            Portal
-                          </a>
+                          <a className="text-primary-dark-100 ">Portal</a>
                         </Link>
                       </Menu.Item>
                     )}
@@ -175,9 +169,7 @@ const Navbar = () => {
                       icon={<FaRegUser fontSize={14} color="#5E17EB" />}
                     >
                       <Link href={'/auth/profile'}>
-                        <a className="text-primary-dark-100 dark:text-primary-light-100">
-                          Profile
-                        </a>
+                        <a className="text-primary-dark-100 ">Profile</a>
                       </Link>
                     </Menu.Item>
                     <Divider />
@@ -187,9 +179,7 @@ const Navbar = () => {
                         handleLogout()
                       }}
                     >
-                      <span className="text-primary-dark-100 dark:text-primary-light-100">
-                        Logout
-                      </span>
+                      <span className="text-primary-dark-100 ">Logout</span>
                     </Menu.Item>
                   </Menu.Dropdown>
                 </Menu>
@@ -210,12 +200,12 @@ const Navbar = () => {
               </Link>
             </li>
           )}
-          <li className="m-0 flex list-none px-1 ">
+          <li className="m-0 flex list-none ">
             <button
               type="button"
               aria-label="toggle-theme-button"
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className={`focus:ring-none ml-4 flex cursor-pointer list-none  p-1 font-medium focus:border-transparent focus:outline-none md:block lg:ml-0 lg:mb-0 lg:p-1 lg:px-1`}
+              className={`focus:ring-none flex cursor-pointer list-none  p-1 font-medium focus:border-transparent focus:outline-none md:block lg:ml-0 lg:mb-0 lg:p-1 lg:px-1`}
             >
               {resolvedTheme === 'light' ? (
                 <FiSun

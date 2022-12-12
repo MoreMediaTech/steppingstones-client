@@ -7,15 +7,14 @@ import { ComponentShield } from '@components/NextShield'
 import { AdminLayout } from 'layout'
 import { CurrentUser } from '@lib/types'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
-import Spinner from '@components/spinner'
 import PortalHeader from '@components/PortalHeader'
 import PortalSection from '@components/PortalSection'
+import useHasMounted from '@hooks/useHasMounted'
 
 const Dashboard = () => {
-  const router = useRouter()
-
+  const hasMounted = useHasMounted()
   const { data: user, isLoading } = useGetUserQuery()
-  return (
+  return hasMounted && (
     <AdminLayout title="Counties - Editor Dashboard">
       <ComponentShield
         RBAC

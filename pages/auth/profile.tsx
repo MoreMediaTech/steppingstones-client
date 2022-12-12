@@ -3,15 +3,18 @@ import { SessionProps } from '@lib/types'
 import { ComponentShield } from '@components/NextShield'
 import { AdminLayout, MainLayout } from 'layout'
 import UserProfileSection from '@components/UserProfileSection'
+import useHasMounted from '@hooks/useHasMounted'
 
 const Profile = () => {
-  
+  const hasMounted = useHasMounted()
   return (
-    <MainLayout title="Profile">
-      <section className="px-2 sm:px-4 overflow-auto">
-        <UserProfileSection />
-      </section>
-    </MainLayout>
+    hasMounted && (
+      <MainLayout title="Profile">
+        <section className="overflow-auto px-2 sm:px-4">
+          <UserProfileSection />
+        </section>
+      </MainLayout>
+    )
   )
 }
 
@@ -28,10 +31,8 @@ export const getServerSideProps: GetServerSideProps = async (
     context.res.end()
   }
 
-  // const user = await getUser(cookies)
-
   return {
-    // props: { user: user as SessionProps },
+
     props: {}
   }
 }

@@ -5,10 +5,12 @@ import { ComponentShield } from '@components/NextShield'
 import { useGetUserQuery } from 'features/user/usersApiSlice'
 import PortalHeader from '@components/PortalHeader'
 import { CurrentUser } from '@lib/types'
+import useHasMounted from '@hooks/useHasMounted'
 
 const Feedback = () => {
+  const hasMounted = useHasMounted()
   const { data: user, refetch } = useGetUserQuery()
-  return (
+  return hasMounted && (
     <AdminLayout title="Meetings">
       <ComponentShield
         RBAC

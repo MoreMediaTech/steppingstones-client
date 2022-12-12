@@ -6,7 +6,7 @@ import { Button, Textarea, TextInput } from '@mantine/core'
 import ReCAPTCHA from 'react-google-recaptcha'
 
 import { IEmailFormData } from '@lib/types'
-import { useSendEnquiryMutation } from 'features/email/emailApiSlice'
+import { useSendEnquiryMutation } from 'features/messages/messagesApiSlice'
 import { enquiryEmailTemplate } from '@lib/emailTemplates'
 import FormInput from './FormComponents/FormInput'
 

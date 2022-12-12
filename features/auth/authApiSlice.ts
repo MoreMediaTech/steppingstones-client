@@ -27,6 +27,9 @@ export const authApi = apiSlice.injectEndpoints({
         url: 'auth/register',
         method: 'POST',
         body: { ...data },
+        validateStatus: (response: any, result: any) => {
+          return response.status === 200 && !result.isError
+        }
       }),
       invalidatesTags: [{ type: 'Auth', id: 'LIST' }],
     }),

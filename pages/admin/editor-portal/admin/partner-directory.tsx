@@ -10,13 +10,17 @@ import PartnerDirectorySection from '@components/PartnerDirectory'
 import Button from '@components/Button'
 import { useAppDispatch } from 'app/hooks'
 import { setType, setPartnerData } from 'features/partner/partnerSlice'
+import useHasMounted from '@hooks/useHasMounted'
 
 const PartnerDirectory = () => {
   const dispatch = useAppDispatch()
+  const hasMounted = useHasMounted()
   const { data: user } = useGetUserQuery()
   const [isPartnerDirectoryModalOpen, setIsPartnerDirectoryModalOpen] =
     useState<boolean>(false)
-  return (
+
+
+  return hasMounted && (
     <AdminLayout title="Admin | Partner-Directory">
       <ComponentShield
         RBAC

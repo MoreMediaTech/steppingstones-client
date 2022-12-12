@@ -2,9 +2,11 @@ import { EnquiryForm } from '@components/forms'
 import { Badge } from '@mantine/core'
 import { MainLayout } from 'layout'
 import Image from 'next/image'
+import useHasMounted from '@hooks/useHasMounted'
 
 const ContactUs = () => {
-  return (
+  const hasMounted = useHasMounted()
+  return hasMounted && (
     <MainLayout title="Enquire">
       <section className="flex flex-grow mb-96 md:mb-4 mt-14 w-full min-h-screen">
         <div className="relative h-[600px] w-full bg-cover bg-center bg-no-repeat">

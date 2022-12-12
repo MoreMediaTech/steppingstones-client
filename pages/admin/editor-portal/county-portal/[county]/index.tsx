@@ -20,12 +20,14 @@ import {
 } from 'features/editor/editorApiSlice'
 import { NEXT_URL } from '@config/index'
 import PortalButton from '@components/PortalButton'
+import useHasMounted from '@hooks/useHasMounted'
 const Map = dynamic(() => import('@components/Map'), { ssr: false })
 
 
 
 const County = ({ county, countyId }: { county: string; countyId: string }) => {
   const router = useRouter()
+  const hasMounted = useHasMounted()
   const [opened, setOpened] = useState<boolean>(false)
   const [openAddSectionModal, setAddOpenSectionModal] = useState<boolean>(false)
 
@@ -40,7 +42,7 @@ const County = ({ county, countyId }: { county: string; countyId: string }) => {
   const [createSection, { isLoading: isLoadingCreateSection }] = useCreateSectionMutation()
   const districts = countyData?.districts.map((district) => district.name)
 
-  return (
+  return hasMounted && (
     <AdminLayout title={`${countyData?.name} - Editor Dashboard`}>
       <ComponentShield
         RBAC

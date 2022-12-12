@@ -19,6 +19,7 @@ import { NEXT_URL } from '@config/index'
 import Button from '@components/Button'
 import SectionContainer from '@components/CountyDistrictSections/SectionContainer'
 import PortalButton from '@components/PortalButton'
+import useHasMounted from '@hooks/useHasMounted'
 
 
 const Section = ({
@@ -33,6 +34,7 @@ const Section = ({
   imageUrl: string
 }) => {
   const router = useRouter()
+  const hasMounted = useHasMounted()
   const { data: user } = useGetUserQuery()
   const {
     data: sectionData,
@@ -46,7 +48,7 @@ const Section = ({
     useCreateSubSectionMutation()
   const [updateSectionById, { isLoading }] = useUpdateSectionByIdMutation()
 
-  return (
+  return hasMounted && (
     <>
       <AdminLayout>
         <ComponentShield

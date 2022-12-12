@@ -11,11 +11,13 @@ import { AdminLayout } from 'layout'
 import { CurrentUser } from '@lib/types'
 import CreateAdminModal from '@components/AdminUsersSection/CreateAdminModal'
 import Button from '@components/Button'
+import useHasMounted from '@hooks/useHasMounted'
 
 const Users = () => {
+  const hasMounted = useHasMounted();
   const { data: user, refetch } = useGetUserQuery()
   const [opened, setOpened] = useState(false)
-  return (
+  return hasMounted && (
     <>
       <AdminLayout title="Admin Users">
         <ComponentShield

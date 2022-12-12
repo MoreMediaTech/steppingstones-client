@@ -6,10 +6,12 @@ import { useGetUserQuery } from 'features/user/usersApiSlice'
 import PortalHeader from '@components/PortalHeader'
 import { CurrentUser } from '@lib/types'
 import SourceDirectory from '@components/SourceDirectory'
+import useHasMounted from '@hooks/useHasMounted'
 
 const SourceDirectoryPage = () => {
+  const hasMounted = useHasMounted()
     const { data: user } = useGetUserQuery()
-  return (
+  return hasMounted && (
     <AdminLayout title="Source Directory">
       <ComponentShield
         RBAC

@@ -124,11 +124,11 @@ export const editorApiSlice = createApi({
   endpoints: (builder) => ({}),
 })
 
-export const emailApiSlice = createApi({
-  reducerPath: 'emailApi',
+export const messagesApiSlice = createApi({
+  reducerPath: 'messagesApi',
   baseQuery: baseQueryWithReAuth,
   keepUnusedDataFor: 300,
-  tagTypes: ['Email'],
+  tagTypes: ['Messages'],
   refetchOnMountOrArgChange: true,
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {

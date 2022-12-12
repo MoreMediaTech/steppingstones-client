@@ -9,14 +9,16 @@ import { useGetUserQuery } from 'features/user/usersApiSlice'
 import { NEXT_URL } from '@config/index'
 import { NewsSection } from '@components/CountyDistrictSections'
 import Button from '@components/Button'
+import useHasMounted from '@hooks/useHasMounted'
 
 
 const News = ({ county, countyId }: { county: string; countyId: string }) => {
   const router = useRouter()
+  const hasMounted = useHasMounted()
   const { data: user } = useGetUserQuery()
 
 
-  return (
+  return hasMounted && (
     <AdminLayout title="Editor Dashboard">
       <ComponentShield
         RBAC

@@ -17,6 +17,7 @@ import {
 } from 'features/editor/editorApiSlice'
 import { NEXT_URL } from '@config/index'
 import PortalButton from '@components/PortalButton'
+import useHasMounted from '@hooks/useHasMounted'
 const Map = dynamic(() => import('@components/Map'), { ssr: false })
 
 const District = ({
@@ -27,6 +28,7 @@ const District = ({
   districtId: string
 }) => {
   const router = useRouter()
+  const hasMounted = useHasMounted()
   const [opened, setOpened] = useState<boolean>(false)
     const [openAddLASectionModal, setAddOpenLASectionModal] =
       useState<boolean>(false)
@@ -42,7 +44,7 @@ const District = ({
   const [createDistrictSection, { isLoading: isLoadingCreateLASection }] = useCreateDistrictSectionMutation()
 
 
-  return (
+  return hasMounted && (
     <AdminLayout title={`${district} District - Editor Dashboard`}>
       <ComponentShield
         RBAC

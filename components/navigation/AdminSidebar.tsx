@@ -2,14 +2,11 @@ import React, { useState } from 'react'
 import {
   UnstyledButton,
   Divider,
-  Navbar,
   Burger,
   Drawer,
   Indicator,
   Menu,
   Tooltip,
-  Aside,
-  NavLink,
   Group,
 } from '@mantine/core'
 import { BiHomeCircle } from 'react-icons/bi'
@@ -26,24 +23,16 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
-import { useGetAllMailQuery } from 'features/email/emailApiSlice'
+import { useGetAllInAppEnquiryMsgQuery } from 'features/messages/messagesApiSlice'
 import { MessageProps } from '@lib/types'
 import { AppLogo } from './AppLogo'
 import Accordion from '@components/Accordion'
 
-const AdminSidebar = ({
-  show,
-  handleLogout,
-  setIsOpen,
-  isOpen,
-}: {
-  show?: boolean
-  handleLogout?: () => void
-  isOpen?: boolean
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
-}) => {
+const AdminSidebar = ({ handleLogout }: { handleLogout?: () => void }) => {
   let arg: void
-  const { data: messages } = useGetAllMailQuery(arg, { pollingInterval: 60000 })
+  const { data: messages } = useGetAllInAppEnquiryMsgQuery(arg, {
+    pollingInterval: 60000,
+  })
   const [opened, setOpened] = useState(false)
   const router = useRouter()
 
@@ -53,12 +42,7 @@ const AdminSidebar = ({
   )
 
   const title = opened ? 'Close navigation' : 'Open navigation'
-  // const initials = currentUser?.name
-  //   ?.split(' ')
-  //   ?.map((n) => n[0])
-  //   ?.join('')
 
-  // const width = isOpen ? '288' : '100'
   return (
     <header className="relative bg-primary-light-100 dark:bg-primary-dark-700 md:h-screen">
       <div className=" mb-2  flex items-center justify-between px-4 py-2 md:hidden ">
@@ -72,18 +56,12 @@ const AdminSidebar = ({
         />
       </div>
 
-      <aside
-        className="w-30 py-2 px-1 hidden md:h-full flex-col space-y-8 bg-primary-light-100 dark:bg-primary-dark-700 md:flex"
-      >
-          <Link href={'/'}>
-            <a>
-              <Image
-                src={'/android-chrome-512x512.png'}
-                width={70}
-                height={70}
-              />
-            </a>
-          </Link>
+      <aside className="w-30 hidden flex-col space-y-8 bg-primary-light-100 py-2 px-1 dark:bg-primary-dark-700 md:flex md:h-full">
+        <Link href={'/'}>
+          <a>
+            <Image src={'/android-chrome-512x512.png'} width={70} height={70} />
+          </a>
+        </Link>
         <div className="flex flex-grow flex-col space-y-14 px-2">
           <Tooltip
             label={
@@ -247,9 +225,9 @@ const AdminSidebar = ({
           padding="lg"
           size="lg"
           position="left"
-          className="flex h-full flex-col justify-between"
+          className="flex h-screen flex-col"
         >
-          <div className="flex w-full flex-grow flex-col space-y-6">
+          <div className="flex w-full  flex-grow flex-col space-y-6">
             <Link href={'/admin/editor-portal'}>
               <a className="flex items-center">
                 <BiHomeCircle fontSize={30} color="#00DCB3" />
@@ -327,7 +305,7 @@ const AdminSidebar = ({
               </a>
             </Link>
           </div>
-          <div className="-mt-10 space-y-4">
+          <div className="absolute bottom-0 left-0 mb-4 w-full space-y-4 px-2">
             <Divider color="#00DCB3" />
 
             <UnstyledButton

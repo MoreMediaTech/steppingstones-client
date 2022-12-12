@@ -1,8 +1,11 @@
 import { MainLayout } from 'layout'
 import Link from 'next/link'
+import useHasMounted from '@hooks/useHasMounted'
 
 const PrivacyPolicy = () => {
-  return (
+  const hasMounted = useHasMounted()
+
+  return hasMounted && (
     <MainLayout title="Privacy Policy">
       <section className="relative mt-24 bg-slate-50 py-4 md:py-8">
         <section className="md:container mx-4 md:mx-auto md:max-w-screen-md space-y-4 py-4 md:py-8 text-sm text-justify font-thin">

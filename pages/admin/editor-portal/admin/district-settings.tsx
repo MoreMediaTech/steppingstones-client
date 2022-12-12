@@ -6,10 +6,13 @@ import { useGetUserQuery } from 'features/user/usersApiSlice'
 import PortalHeader from '@components/PortalHeader'
 import { CurrentUser } from '@lib/types'
 import { DistrictSettings } from '@components/SettingsSections'
+import useHasMounted from '@hooks/useHasMounted'
 
 const DistrictSettingsPage = () => {
+  const hasMounted = useHasMounted()
   const { data: user } = useGetUserQuery()
-  return (
+
+  return hasMounted && (
     <AdminLayout title="Meetings">
       <ComponentShield
         RBAC

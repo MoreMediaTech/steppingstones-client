@@ -9,6 +9,7 @@ import { RequestPasswordResetForm } from '@components/forms'
 import { useRequestPasswordResetMutation } from 'features/auth/authApiSlice'
 import { validateEmail } from '@lib/emailVerification'
 import { IFormData } from '@lib/types'
+import useHasMounted from '@hooks/useHasMounted'
 
 export type Inputs = {
   email: string
@@ -22,6 +23,7 @@ const ForgotPassword = () => {
     formState: { errors },
   } = useForm<Partial<IFormData>>()
   const router = useRouter()
+  const hasMounted = useHasMounted()
   const [requestPasswordReset, { isLoading, isError, isSuccess, error }] =
     useRequestPasswordResetMutation()
 
@@ -67,7 +69,8 @@ const ForgotPassword = () => {
         }
       }
   }, [])
-  return (
+
+  return hasMounted && (
     <MainLayout title="Forgot Password">
       <section className="bg-white py-10 text-gray-900 ">
         <div className="mx-auto my-10 max-w-screen-sm">

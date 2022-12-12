@@ -14,8 +14,10 @@ import { NEXT_URL } from '@config/index'
 import { CreateCountyForm } from '@components/forms'
 import { useGetCountiesQuery } from 'features/editor/editorApiSlice'
 import Button from '@components/Button'
+import useHasMounted from '@hooks/useHasMounted'
 
 const County = () => {
+  const hasMounted = useHasMounted()
   const router = useRouter()
   const [opened, setOpened] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
@@ -48,7 +50,7 @@ const County = () => {
     return counties?.slice(startIndex, endIndex)
   }
 
-  return (
+  return hasMounted && (
     <AdminLayout title="Editor Dashboard">
       <ComponentShield
         RBAC

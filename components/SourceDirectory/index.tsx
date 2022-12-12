@@ -34,6 +34,7 @@ const SourceDirectory: React.FC = () => {
     error,
     refetch,
   } = useGetAllSDDataByTypeQuery(sdDataType)
+    console.log("🚀 ~ file: index.tsx ~ line 37 ~ sourceData", sourceData)
   const [deleteManySDData, { isLoading: isLoadingDeleteMany }] =
     useDeleteManySDDataMutation()
 
