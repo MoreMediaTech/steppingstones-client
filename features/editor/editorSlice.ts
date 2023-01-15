@@ -10,7 +10,7 @@ import {
   SubSubSectionProps,
   SourceDataProps,
 } from '../../lib/types'
-import { RootState } from 'app/store'
+import { RootState } from 'state/store'
 import { CountyDataProps, Error } from '@lib/types'
 
 interface IEditorState {
@@ -21,7 +21,7 @@ interface IEditorState {
   subSection: Partial<SubSectionProps> | null
   subSubSection: Partial<SubSubSectionProps> | null
   districtSection: Partial<DistrictSectionProps> | null
-  economicData: Partial<EconomicDataWidgetProps> | null 
+  economicData: Partial<EconomicDataWidgetProps> | null
   sdData: Partial<SourceDataProps> | null
   message: string
   sectionType: string
@@ -53,13 +53,19 @@ const editorSlice = createSlice({
     setCounty: (state, { payload }: PayloadAction<CountyDataProps | null>) => {
       state.county = payload
     },
-    setDistrict: (state, { payload }: PayloadAction<DistrictDataProps | null>) => {
+    setDistrict: (
+      state,
+      { payload }: PayloadAction<DistrictDataProps | null>
+    ) => {
       state.district = payload
     },
     setSection: (state, { payload }: PayloadAction<SectionProps | null>) => {
       state.section = payload
     },
-    setSubSection: (state, { payload }: PayloadAction<SubSectionProps | null>) => {
+    setSubSection: (
+      state,
+      { payload }: PayloadAction<SubSectionProps | null>
+    ) => {
       state.subSection = payload
     },
     setSubSubSection: (
@@ -83,7 +89,10 @@ const editorSlice = createSlice({
     setSDData: (state, { payload }: PayloadAction<SourceDataProps | null>) => {
       state.sdData = payload
     },
-    setSectionType: (state, { payload }: PayloadAction<'Section' | 'SubSection'>) => {
+    setSectionType: (
+      state,
+      { payload }: PayloadAction<'Section' | 'SubSection'>
+    ) => {
       state.sectionType = payload
     },
     setError: (state, { payload }: PayloadAction<Error>) => {

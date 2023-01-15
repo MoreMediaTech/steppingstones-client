@@ -20,7 +20,7 @@ const ContentPreview = ({ content }: ContentPreviewProps) => {
           <div className="w-full">
             <Image
               src={content?.imageUrl}
-              alt={content?.title}
+              alt={content?.title as string}
               width={900}
               height={400}
             />

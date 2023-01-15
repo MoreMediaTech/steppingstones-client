@@ -16,7 +16,7 @@ import { CountyDataProps } from '@lib/types'
 import { useRemoveCountyMutation } from 'features/editor/editorApiSlice'
 import { showNotification } from '@mantine/notifications'
 import HandleDeleteModal from '../../HandleDeleteModal/HandleDeleteModal'
-import { useAppDispatch, useAppSelector } from 'app/hooks'
+import { useAppDispatch, useAppSelector } from 'state/hooks'
 import { editorSelector, setCounty } from 'features/editor/editorSlice'
 import useWindowSize from 'hooks/useWindowSize'
 
@@ -52,7 +52,6 @@ function sortData({
 
   return tableData
 }
-
 
 function SortButton({
   sortOrder,
@@ -90,7 +89,7 @@ const CountyTable = ({
   const { county } = useAppSelector(editorSelector)
   const [windowSize] = useWindowSize()
 
-  const headers: { key: SortKeys, label: string }[] = [
+  const headers: { key: SortKeys; label: string }[] = [
     { key: 'name', label: 'county name' },
     { key: 'published', label: 'published' },
     { key: 'updatedAt', label: 'updated at' },
@@ -181,7 +180,7 @@ const CountyTable = ({
               <tr>
                 {headers.map((header) => (
                   <th key={header.key} className="px-6 py-3">
-                    <div className="flex flex-row items-center gap-1 justify-center">
+                    <div className="flex flex-row items-center justify-center gap-1">
                       <span>{header.label}</span>{' '}
                       <SortButton
                         {...{ sortOrder, sortKey }}
@@ -211,8 +210,6 @@ const CountyTable = ({
                         <Image
                           src={county.logoIcon ?? steppingstonesapplogo}
                           alt={county.name}
-                          layout="fill"
-                          objectFit="cover"
                         />
                       </div>
                       <div className="text-xl font-semibold">

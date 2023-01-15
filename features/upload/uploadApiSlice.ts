@@ -1,9 +1,9 @@
-import { uploadApiSlice } from "app/api/apiSlice";
-import { AxiosError } from "axios";
-import { setError, setImageUrl } from "./uploadSlice";
+import { uploadApiSlice } from 'state/api/apiSlice'
+import { AxiosError } from 'axios'
+import { setError, setImageUrl } from './uploadSlice'
 
 type Image = {
-    imageUrl: string
+  imageUrl: string
 }
 
 const uploadApi = uploadApiSlice.injectEndpoints({
@@ -26,13 +26,10 @@ const uploadApi = uploadApiSlice.injectEndpoints({
           }
           dispatch(setError({ message: 'Unable to upload file' }))
         }
-      }
+      },
     }),
   }),
   overrideExisting: false,
 })
 
-
-export const { useUploadFileMutation } = uploadApi;
-
-
+export const { useUploadFileMutation } = uploadApi

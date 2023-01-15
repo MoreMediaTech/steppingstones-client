@@ -10,7 +10,7 @@ import { enGB } from 'date-fns/locale'
 import { BiChevronDownSquare, BiChevronUpSquare } from 'react-icons/bi'
 import { BsPrinterFill } from 'react-icons/bs'
 
-import { useAppDispatch } from 'app/hooks'
+import { useAppDispatch } from 'state/hooks'
 import { setPartnerData, setType } from 'features/partner/partnerSlice'
 import FormInput from '@components/forms/FormComponents/FormInput'
 import useWindowSize from 'hooks/useWindowSize'

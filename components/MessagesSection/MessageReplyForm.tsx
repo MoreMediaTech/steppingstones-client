@@ -4,34 +4,43 @@ import { FaTimes } from 'react-icons/fa'
 
 import FormInput from '@components/forms/FormComponents/FormInput'
 import { MessageProps } from '@lib/types'
-import { useAppSelector, useAppDispatch} from 'app/hooks'
+import { useAppSelector, useAppDispatch } from 'state/hooks'
 import { messagesSelector, setReply } from 'features/messages/messagesSlice'
 
 type FormInputs = {
-    from: string
-    subject: string
-    message: string
+  from: string
+  subject: string
+  message: string
 }
 
 const MessageReplyForm = () => {
-    const dispatch = useAppDispatch()
-    const {enquiry, reply} = useAppSelector(messagesSelector)
-    const { register, handleSubmit, reset, formState: { errors } } = useForm<FormInputs>(
-        { defaultValues: { from: enquiry?.from, subject: enquiry?.subject, message: '' } }
-    );
+  const dispatch = useAppDispatch()
+  const { enquiry, reply } = useAppSelector(messagesSelector)
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormInputs>({
+    defaultValues: {
+      from: enquiry?.from,
+      subject: enquiry?.subject,
+      message: '',
+    },
+  })
 
-    useEffect(() => {
-        reset({ from: enquiry?.from, subject: enquiry?.subject, message: '' })
-    }, [reply])
+  useEffect(() => {
+    reset({ from: enquiry?.from, subject: enquiry?.subject, message: '' })
+  }, [reply])
 
-    const handleClose = useCallback(() => {
-        dispatch(setReply({enquiry: null, reply: false}))
-    }, [])
+  const handleClose = useCallback(() => {
+    dispatch(setReply({ enquiry: null, reply: false }))
+  }, [])
 
-    const onSubmit: SubmitHandler<FormInputs> = useCallback((data) => {
-        console.log(data)
-        dispatch(setReply({enquiry: null, reply: false}))
-    }, [])
+  const onSubmit: SubmitHandler<FormInputs> = useCallback((data) => {
+    console.log(data)
+    dispatch(setReply({ enquiry: null, reply: false }))
+  }, [])
   return (
     <div className="w-full border-t border-primary-dark-100 p-2">
       <div className="flex w-full items-center justify-end p-1">

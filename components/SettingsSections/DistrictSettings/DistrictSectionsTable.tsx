@@ -13,7 +13,7 @@ import {
 import { showNotification } from '@mantine/notifications'
 import HandleDeleteModal from '../../HandleDeleteModal/HandleDeleteModal'
 import UpdateDistrictModal from './UpdateDistrictModal'
-import { useAppSelector, useAppDispatch } from '../../../app/hooks'
+import { useAppSelector, useAppDispatch } from '../../../state/hooks'
 import {
   editorSelector,
   setDistrictSection,
@@ -51,7 +51,6 @@ const DistrictSectionsTable = ({
   const [searchResults, setSearchResults] = useState<DistrictSectionProps[]>([])
   const { districtSection } = useAppSelector(editorSelector)
 
-
   const [deleteDistrictSectionById, { isLoading }] =
     useDeleteDistrictSectionByIdMutation()
 
@@ -60,17 +59,17 @@ const DistrictSectionsTable = ({
     dispatch(setDistrictSection(null))
   }
 
-    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (!e.target.value) setSearchResults(districtSectionData as DistrictSectionProps[])
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.value)
+      setSearchResults(districtSectionData as DistrictSectionProps[])
 
-      const resultsArray = districtSectionData?.filter(
-        (laSection: DistrictSectionProps) =>
-          laSection?.name?.toLowerCase().includes(e.target.value.toLowerCase())
-      )
+    const resultsArray = districtSectionData?.filter(
+      (laSection: DistrictSectionProps) =>
+        laSection?.name?.toLowerCase().includes(e.target.value.toLowerCase())
+    )
 
-      setSearchResults(resultsArray as DistrictSectionProps[])
-    }
-
+    setSearchResults(resultsArray as DistrictSectionProps[])
+  }
 
   const deleteHandler = useCallback(async (id: string) => {
     try {
@@ -91,7 +90,7 @@ const DistrictSectionsTable = ({
       })
     }
   }, [])
-  const data = searchResults.length > 0 ? searchResults : districtSectionData;
+  const data = searchResults.length > 0 ? searchResults : districtSectionData
 
   return (
     <>

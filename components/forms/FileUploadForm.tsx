@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from '@mantine/core'
-import { useAppDispatch, useAppSelector } from 'app/hooks'
+import { useAppDispatch, useAppSelector } from 'state/hooks'
 import {
   setPreviewSource,
   setError,
@@ -12,7 +12,7 @@ import Image from 'next/image'
 import { MdCloudUpload } from 'react-icons/md'
 
 const FileUploadForm = () => {
-  const {  previewSource, selectedFile } = useAppSelector(
+  const { previewSource, selectedFile } = useAppSelector(
     (state) => state.upload
   )
   const dispatch = useAppDispatch()
@@ -93,7 +93,6 @@ const FileUploadForm = () => {
                     accept="image/*"
                     aria-label="main-image"
                     className="w-full cursor-pointer opacity-0"
-  
                   />
                 </div>
               </div>

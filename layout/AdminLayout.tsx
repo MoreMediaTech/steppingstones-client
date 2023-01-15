@@ -1,3 +1,4 @@
+import React from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 
@@ -35,7 +36,7 @@ const AdminLayout = ({
 }: ILayout): JSX.Element => {
   const router = useRouter()
   const [logout] = useLogoutMutation()
- 
+
   const handleLogout = async () => {
     logout()
     localStorage.removeItem('token')
@@ -43,7 +44,7 @@ const AdminLayout = ({
   }
 
   return (
-    <div
+    <main
       className="flex flex-col md:flex-row"
       aria-label="layout"
       data-testid="layout"
@@ -90,13 +91,13 @@ const AdminLayout = ({
       <AdminSidebar
         handleLogout={handleLogout}
       />
-      <main
+      <section
         className={`md:ml-30
         relative w-full bg-primary-light-50 dark:bg-primary-dark-800`}
       >
         {children}
-      </main>
-    </div>
+      </section>
+    </main>
   )
 }
 

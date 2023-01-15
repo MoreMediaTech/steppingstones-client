@@ -1,5 +1,5 @@
 import { MessageProps } from '@lib/types'
-import { messagesApiSlice } from 'app/api/apiSlice'
+import { messagesApiSlice } from 'state/api/apiSlice'
 
 export const messagesApi = messagesApiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -47,7 +47,7 @@ export const messagesApi = messagesApiSlice.injectEndpoints({
     }),
     updateMsgStatusById: builder.mutation<
       { message: string; success: true },
-      {id: string; isRead: boolean; isArchived: boolean; }
+      { id: string; isRead: boolean; isArchived: boolean }
     >({
       query: (data) => ({
         url: `messages/status/${data.id}`,
@@ -77,6 +77,7 @@ export const messagesApi = messagesApiSlice.injectEndpoints({
       invalidatesTags: [{ type: 'Messages', id: 'LIST' }],
     }),
   }),
+  overrideExisting: true,
 })
 
 export const {

@@ -9,7 +9,7 @@ import {
   SubSectionProps,
   SubSubSectionProps,
 } from '@lib/types'
-import { editorApiSlice } from 'app/api/apiSlice'
+import { editorApiSlice } from 'state/api/apiSlice'
 import {
   setCounties,
   setCounty,

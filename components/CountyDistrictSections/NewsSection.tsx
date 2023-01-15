@@ -10,7 +10,7 @@ import {
   useGetCountyByIdQuery,
   useUpdateOrCreateCountyNewsMutation,
 } from 'features/editor/editorApiSlice'
-import { useAppDispatch } from 'app/hooks'
+import { useAppDispatch } from 'state/hooks'
 import { EditorFormDataProps } from '@lib/types'
 import ContentPreview from '@components/ContentPreview'
 import Spinner from '@components/spinner'
@@ -23,12 +23,14 @@ const NewsSection = ({ id }: { id: string }) => {
     isError: isErrorCounty,
     refetch: refetchCounty,
   } = useGetCountyByIdQuery(id, { refetchOnMountOrArgChange: true })
-  const [updateOrCreateCountyNews, { isLoading }] = useUpdateOrCreateCountyNewsMutation()
+  const [updateOrCreateCountyNews, { isLoading }] =
+    useUpdateOrCreateCountyNewsMutation()
 
-  const [value, setValue] = useState<string>(countyData?.news?.content as string)
+  const [value, setValue] = useState<string>(
+    countyData?.news?.content as string
+  )
   const [isEdit, setIsEdit] = useState<boolean>(false)
 
-  
   const {
     handleSubmit,
     register,
@@ -40,39 +42,38 @@ const NewsSection = ({ id }: { id: string }) => {
       isLive: countyData?.news?.isLive,
     },
   })
-  
+
   useEffect(() => {
     // reset the form when the county data is changed/updated
     reset({ title: countyData?.news?.title })
     setValue(countyData?.news?.content as string)
   }, [countyData])
 
-  const submitHandler: SubmitHandler<Partial<EditorFormDataProps>> = useCallback(
-    async (data) => {
-
-      try {
-        const formData = {
-          title: data.title,
-          content: value,
-          countyId: id,
-          isLive: data.isLive,
-          id: countyData?.news?.id,
+  const submitHandler: SubmitHandler<Partial<EditorFormDataProps>> =
+    useCallback(
+      async (data) => {
+        try {
+          const formData = {
+            title: data.title,
+            content: value,
+            countyId: id,
+            isLive: data.isLive,
+            id: countyData?.news?.id,
+          }
+          await updateOrCreateCountyNews(formData).unwrap()
+          refetchCounty()
+          setIsEdit(false)
+        } catch (error) {
+          dispatch(setError({ message: error.message }))
+          showNotification({
+            message: 'Error updating county content',
+            autoClose: 3000,
+            color: 'red',
+          })
         }
-        await updateOrCreateCountyNews(formData).unwrap()
-        refetchCounty()
-        setIsEdit(false)
-      } catch (error) {
-        dispatch(setError({ message: error.message }))
-        showNotification({
-          message: 'Error updating county content',
-          autoClose: 3000,
-          color: 'red'
-        })
-      }
-    },
-    [value]
-  )
-
+      },
+      [value]
+    )
 
   return (
     <section className="relative h-auto w-full flex-grow px-2 py-2  md:py-8 md:px-8">
@@ -98,7 +99,10 @@ const NewsSection = ({ id }: { id: string }) => {
                 onClick={() => setIsEdit(!isEdit)}
                 className=""
               >
-                <BiEdit fontSize={44} className="text-gray-900 dark:text-primary-light-100"/>
+                <BiEdit
+                  fontSize={44}
+                  className="text-gray-900 dark:text-primary-light-100"
+                />
               </UnstyledButton>
             </div>
             {!isEdit && countyData?.news ? (

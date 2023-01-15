@@ -21,8 +21,6 @@ const AboutSection = () => {
           <Image
             src={'/about_section_img1.1.png'}
             alt="Photo by Will Dunkley on Unsplash"
-            objectFit="cover"
-            layout="responsive"
             width={900}
             height={460}
           />
@@ -65,7 +63,7 @@ const AboutSection = () => {
             <div className="flex w-full justify-center md:justify-start">
               <Button type="button" color="primary" onClick={() => null}>
                 <Link href="#heroSection">
-                  <a>Sign Up</a>
+                  Sign Up
                 </Link>
               </Button>
             </div>
@@ -75,8 +73,7 @@ const AboutSection = () => {
           <Image
             src={'/about_section_img2.png'}
             alt="Photo by Tom Podmore on Unsplash"
-            objectFit="cover"
-            layout="responsive"
+
             width={900}
             height={460}
           />

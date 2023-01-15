@@ -12,7 +12,7 @@ import {
   useGetSubSectionsBySectionIdQuery,
   useDeleteManySubSectionsMutation,
 } from 'features/editor/editorApiSlice'
-import { useAppDispatch, useAppSelector } from 'app/hooks'
+import { useAppDispatch, useAppSelector } from 'state/hooks'
 import { setSectionType, editorSelector } from 'features/editor/editorSlice'
 import HandleDeleteModal from '../../HandleDeleteModal/HandleDeleteModal'
 import UpdateSectionModal from './UpdateSectionModal'
@@ -170,7 +170,7 @@ const SubSectionsTable = ({
                 />
               </div>
               <div className="mt-2">
-                {(selectedSectionIds.length > 0) && (
+                {selectedSectionIds.length > 0 && (
                   <button type="button" onClick={handleDeleteMany}>
                     <FaTrash fontSize={20} className="text-red-500" />
                   </button>
@@ -181,8 +181,7 @@ const SubSectionsTable = ({
               <table className="relative table w-full  text-center text-sm text-gray-500">
                 <thead className="bg-gray-50 text-xs uppercase text-gray-700">
                   <tr>
-                    <th scope="col" className="p-4">
-                    </th>
+                    <th scope="col" className="p-4"></th>
                     <th scope="col" className="px-6 py-3 text-left">
                       Section name
                     </th>

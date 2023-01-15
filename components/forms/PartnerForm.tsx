@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import dynamic from 'next/dynamic'
 
 import { IPartnerFormData } from '@lib/types'
-import { useAppDispatch, useAppSelector } from 'app/hooks'
+import { useAppDispatch, useAppSelector } from 'state/hooks'
 import { showNotification } from '@mantine/notifications'
 import { useRouter } from 'next/router'
 import {
@@ -18,7 +18,7 @@ import { MdOutlineError } from 'react-icons/md'
 
 import { NEXT_URL } from '@config/index'
 import { useCreatePartnerDataMutation } from 'features/partner/partnerApiSlice'
-import RichTextEditor  from '@components/RichText'
+import RichTextEditor from '@components/RichText'
 
 const areaOfOperation = [
   'STARTUP',
@@ -40,7 +40,8 @@ const PartnerForm = () => {
   } = useForm<IPartnerFormData>()
   const [value, onChange] = useState('')
   const dispatch = useAppDispatch()
-  const [createPartnerData,{ isError, error, isSuccess }] = useCreatePartnerDataMutation()
+  const [createPartnerData, { isError, error, isSuccess }] =
+    useCreatePartnerDataMutation()
 
   useEffect(() => {
     if (isError) {
@@ -63,19 +64,18 @@ const PartnerForm = () => {
       })
       router.replace(`${NEXT_URL}/admin/partner-portal`)
     }
-
-  }, [ isSuccess, isError, error])
+  }, [isSuccess, isError, error])
 
   const handleSignUp: SubmitHandler<IPartnerFormData> = async (data) => {}
 
   const handleImageUpload = async (file: File): Promise<string> => {
-      try {
-           const formData = new FormData()
-           formData.append('image', file)
-            return ''
-      } catch (error) {
-          return ''
-      }
+    try {
+      const formData = new FormData()
+      formData.append('image', file)
+      return ''
+    } catch (error) {
+      return ''
+    }
   }
   return (
     <form
@@ -137,10 +137,7 @@ const PartnerForm = () => {
           Please select a business type
         </span>
       )}
-      <RichTextEditor
-        value={value}
-        setValue={onChange}
-      />
+      <RichTextEditor value={value} setValue={onChange} />
     </form>
   )
 }

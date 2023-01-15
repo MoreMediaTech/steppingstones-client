@@ -14,10 +14,9 @@ import {
   useUpdateSubSubSectionByIdMutation,
 } from 'features/editor/editorApiSlice'
 import { NEXT_URL } from '@config/index'
-import { wrapper } from 'app/store'
+import { wrapper } from 'state/store'
 import { SubSubSectionProps } from '@lib/types'
 import useHasMounted from '@hooks/useHasMounted'
-
 
 const SubSubSection = ({
   county,
@@ -45,56 +44,58 @@ const SubSubSection = ({
   const [updateSubSubSectionById, { isLoading }] =
     useUpdateSubSubSectionByIdMutation()
 
-  return hasMounted && (
-    <>
-      <AdminLayout>
-        <ComponentShield
-          RBAC
-          showForRole={'SS_EDITOR'}
-          userRole={user?.role ?? ''}
-        >
-          <section className="h-screen overflow-auto">
-            <PortalHeader
-              title={`${subSubSectionData?.name ?? 'Section'}`}
-              subTitle={'Review or edit the content below'}
-              data={subSubSectionData}
-            />
-            <section className="container mx-auto px-4 py-2">
-              <div className="flex justify-between">
-                <Button
-                  type="button"
-                  color="outline"
-                  className=" md:w-1/4 "
-                  onClick={() => {
-                    router.replace({
-                      pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}/section/subsection`,
-                      query: { ...router.query },
-                    })
-                  }}
-                >
-                  Go Back
-                </Button>
-              </div>
-            </section>
-            {isLoadingSubSubSection ? (
-              <div className="flex h-[700px] items-center justify-center">
-                <Loader size="xl" variant="bars" />
-              </div>
-            ) : (
-              <section className="w-full overflow-auto py-2 px-2 md:px-4">
-                <SectionContainer
-                  isLoadingSection={isLoadingSubSubSection}
-                  sectionData={subSubSectionData as SubSubSectionProps}
-                  refetch={refetchSubSection}
-                  isLoading={isLoading}
-                  updateSectionById={updateSubSubSectionById}
-                />
+  return (
+    hasMounted && (
+      <>
+        <AdminLayout>
+          <ComponentShield
+            RBAC
+            showForRole={'SS_EDITOR'}
+            userRole={user?.role ?? ''}
+          >
+            <section className="h-screen overflow-auto">
+              <PortalHeader
+                title={`${subSubSectionData?.name ?? 'Section'}`}
+                subTitle={'Review or edit the content below'}
+                data={subSubSectionData}
+              />
+              <section className="container mx-auto px-4 py-2">
+                <div className="flex justify-between">
+                  <Button
+                    type="button"
+                    color="outline"
+                    className=" md:w-1/4 "
+                    onClick={() => {
+                      router.replace({
+                        pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}/section/subsection`,
+                        query: { ...router.query },
+                      })
+                    }}
+                  >
+                    Go Back
+                  </Button>
+                </div>
               </section>
-            )}
-          </section>
-        </ComponentShield>
-      </AdminLayout>
-    </>
+              {isLoadingSubSubSection ? (
+                <div className="flex h-[700px] items-center justify-center">
+                  <Loader size="xl" variant="bars" />
+                </div>
+              ) : (
+                <section className="w-full overflow-auto py-2 px-2 md:px-4">
+                  <SectionContainer
+                    isLoadingSection={isLoadingSubSubSection}
+                    sectionData={subSubSectionData as SubSubSectionProps}
+                    refetch={refetchSubSection}
+                    isLoading={isLoading}
+                    updateSectionById={updateSubSubSectionById}
+                  />
+                </section>
+              )}
+            </section>
+          </ComponentShield>
+        </AdminLayout>
+      </>
+    )
   )
 }
 
@@ -118,6 +119,5 @@ export const getServerSideProps: GetServerSideProps = async (
     },
   }
 }
-
 
 export default SubSubSection

@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { showNotification } from '@mantine/notifications'
 import { Button, Modal, TextInput, UnstyledButton } from '@mantine/core'

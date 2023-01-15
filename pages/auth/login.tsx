@@ -21,10 +21,9 @@ const Login = () => {
             <Image
               src={'/SS_Staircase.jpeg'}
               alt="Staircase image"
-              layout="fill"
-              objectFit="cover"
               quality={50}
               priority
+              fill
             />
             <div
               id="blackOverlay"

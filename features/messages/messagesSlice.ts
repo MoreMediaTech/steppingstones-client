@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
-import { AppThunk, RootState, AppDispatch } from 'app/store'
+import { AppThunk, RootState, AppDispatch } from 'state/store'
 import { IEmailFormData, MessageProps } from '../../lib/types'
 
 export interface EmailState {
@@ -18,12 +18,16 @@ export const initialState: EmailState = {
   error: { name: '', message: 'An Error occurred' },
 }
 
-
 export const messagesSlice = createSlice({
   name: 'messages',
   initialState,
   reducers: {
-    setReply: (state, { payload }: PayloadAction<{enquiry: MessageProps | null, reply: boolean}>) => {
+    setReply: (
+      state,
+      {
+        payload,
+      }: PayloadAction<{ enquiry: MessageProps | null; reply: boolean }>
+    ) => {
       state.enquiry = payload.enquiry
       state.reply = payload.reply
     },

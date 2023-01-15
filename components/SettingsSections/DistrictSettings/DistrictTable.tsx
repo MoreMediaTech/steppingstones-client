@@ -12,7 +12,7 @@ import { useDeleteDistrictByIdMutation } from 'features/editor/editorApiSlice'
 import { showNotification } from '@mantine/notifications'
 import HandleDeleteModal from '../../HandleDeleteModal/HandleDeleteModal'
 import DistrictSectionsTable from './DistrictSectionsTable'
-import { useAppSelector, useAppDispatch } from '../../../app/hooks'
+import { useAppSelector, useAppDispatch } from '../../../state/hooks'
 import {
   editorSelector,
   setDistrict,
@@ -218,7 +218,7 @@ const CountyTable = ({
               {sortedData().map((district: DistrictDataProps) => (
                 <tr
                   key={district.id}
-                  className="border-b group hover:bg-gray-100 dark:hover:bg-primary-light-500"
+                  className="group border-b hover:bg-gray-100 dark:hover:bg-primary-light-500"
                 >
                   <td
                     scope="row"
@@ -228,9 +228,7 @@ const CountyTable = ({
                       <div className="relative h-10 w-10 overflow-hidden rounded-full border-2 border-primary-dark-200 p-1">
                         <Image
                           src={district.logoIcon ?? steppingstonesapplogo}
-                          alt={district.name}
-                          layout="fill"
-                          objectFit="cover"
+                          alt={district.name as string}
                         />
                       </div>
                       <div className="text-xs font-semibold sm:text-base ">
@@ -248,9 +246,7 @@ const CountyTable = ({
                           src={
                             district.county?.logoIcon ?? steppingstonesapplogo
                           }
-                          alt={district.county?.name}
-                          layout="fill"
-                          objectFit="cover"
+                          alt={district.county?.name as string}
                         />
                       </div>
                       <div className="text-xs font-semibold sm:text-base">

@@ -39,13 +39,12 @@ const CookieConsentContainer = ({
           and change your settings. However, blocking some types of cookies may
           impact your experience of the site and the services we are able to
           offer.{' '}
-          <Link href={'/privacy-policy'}>
-            <a
-              className="text-gray-900 underline"
-              onClick={() => setOpened(false)}
-            >
-              Privacy Policy
-            </a>
+          <Link
+            href={'/privacy-policy'}
+            className="text-gray-900 underline"
+            onClick={() => setOpened(false)}
+          >
+            Privacy Policy
           </Link>
         </p>
         <Accordion multiple>

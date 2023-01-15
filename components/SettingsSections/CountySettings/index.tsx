@@ -5,7 +5,7 @@ import { useGetCountiesQuery } from 'features/editor/editorApiSlice'
 import { CountyDataProps } from '@lib/types'
 import CountyTable from './CountyTable'
 import UpdateCountyModal from './UpdateCountyModal'
-import { useAppDispatch, useAppSelector } from 'app/hooks'
+import { useAppDispatch, useAppSelector } from 'state/hooks'
 import { editorSelector, setCounty } from 'features/editor/editorSlice'
 
 const CountySettings = () => {
@@ -34,7 +34,6 @@ const CountySettings = () => {
 
     setSearchResults(resultsArray as CountyDataProps[])
   }
-
 
   if (isErrorCounties) {
     return (

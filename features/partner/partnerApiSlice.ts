@@ -1,5 +1,5 @@
 import { PartnerData, IFormData } from '@lib/types'
-import { partnerApiSlice } from 'app/api/apiSlice'
+import { partnerApiSlice } from 'state/api/apiSlice'
 
 export const partnerApi = partnerApiSlice.injectEndpoints({
   endpoints: (builder) => ({

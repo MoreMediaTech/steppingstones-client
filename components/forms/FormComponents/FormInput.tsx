@@ -1,5 +1,6 @@
 import React from 'react'
 import { appendErrors, DeepRequired, FieldError, FieldErrorsImpl, Merge } from 'react-hook-form'
+import { TextInput } from '@mantine/core'
 import { IFormData } from '@lib/types'
 
 
@@ -49,11 +50,11 @@ const FormInput: React.FunctionComponent<
         {label} <span className="text-red-500">*</span>
       </label>
       <div
-        className={`block w-full rounded-lg border border-gray-300 bg-gray-100  text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 ${inputStyles}`}
+        className={`block w-full rounded border border-gray-300 bg-gray-100  text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 ${inputStyles}`}
       >
         {prependComponent}
-        <input
-          className={`form-input w-full bg-transparent border-0 focus:ring-0`}
+        <TextInput
+          className={`form-input w-full bg-transparent border-0 focus:ring-0 bg-gray-100`}
           id={`${title}`}
           ref={ref}
           name={`${title}`}

@@ -10,7 +10,7 @@ import {
   useGetCountyByIdQuery,
   useUpdateOrCreateCountyWelcomeMutation,
 } from 'features/editor/editorApiSlice'
-import { useAppDispatch } from 'app/hooks'
+import { useAppDispatch } from 'state/hooks'
 import { EditorFormDataProps } from '@lib/types'
 import ContentPreview from '@components/ContentPreview'
 import Spinner from '@components/spinner'
@@ -23,9 +23,12 @@ const NewsSection = ({ id }: { id: string }) => {
     isError: isErrorCounty,
     refetch: refetchCounty,
   } = useGetCountyByIdQuery(id, { refetchOnMountOrArgChange: true })
-  const [updateOrCreateCountyWelcome, { isLoading }] = useUpdateOrCreateCountyWelcomeMutation()
+  const [updateOrCreateCountyWelcome, { isLoading }] =
+    useUpdateOrCreateCountyWelcomeMutation()
 
-  const [value, setValue] = useState<string>(countyData?.welcome?.content as string)
+  const [value, setValue] = useState<string>(
+    countyData?.welcome?.content as string
+  )
   const [isEdit, setIsEdit] = useState<boolean>(false)
 
   const {
@@ -47,29 +50,32 @@ const NewsSection = ({ id }: { id: string }) => {
   }, [countyData])
 
   const submitHandler: SubmitHandler<Partial<EditorFormDataProps>> =
-    useCallback(async (data) => {
-      try {
-        const formData = {
-          title: data.title,
-          content: value,
-          countyId: id,
-          isLive: data.isLive,
-          id: countyData?.welcome?.id,
+    useCallback(
+      async (data) => {
+        try {
+          const formData = {
+            title: data.title,
+            content: value,
+            countyId: id,
+            isLive: data.isLive,
+            id: countyData?.welcome?.id,
+          }
+
+          await updateOrCreateCountyWelcome(formData).unwrap()
+          refetchCounty()
+          setIsEdit(false)
+        } catch (error) {
+          dispatch(setError({ message: error.message }))
+          showNotification({
+            message: 'Something went wrong. Unable to update content',
+            autoClose: 3000,
+            color: 'red',
+          })
         }
-        
-        await updateOrCreateCountyWelcome(formData).unwrap()
-        refetchCounty()
-        setIsEdit(false)
-      } catch (error) {
-        dispatch(setError({ message: error.message }))
-        showNotification({
-          message: 'Something went wrong. Unable to update content',
-          autoClose: 3000,
-          color: 'red',
-        })
-      }
-    }, [value])
-    
+      },
+      [value]
+    )
+
   return (
     <section className="relative h-auto w-full flex-grow  p-2">
       <section className="w-full rounded-md bg-primary-light-50 p-4 shadow-lg dark:bg-primary-dark-500">

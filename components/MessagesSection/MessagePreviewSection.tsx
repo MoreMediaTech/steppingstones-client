@@ -12,7 +12,7 @@ import {
 import { Loader } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import useWindowSize from '@hooks/useWindowSize'
-import { useAppDispatch, useAppSelector } from 'app/hooks'
+import { useAppDispatch, useAppSelector } from 'state/hooks'
 import { setReply, messagesSelector } from 'features/messages/messagesSlice'
 import { MessageProps } from '@lib/types'
 import MessageReplyForm from './MessageReplyForm'
@@ -20,10 +20,13 @@ import MessageReplyForm from './MessageReplyForm'
 const MessagePreviewSection = ({ messageId }: { messageId: string }) => {
   const router = useRouter()
   const dispatch = useAppDispatch()
-  const { data: message, isLoading,  refetch } = useGetMessageByIdQuery(messageId)
-  const {reply} = useAppSelector(messagesSelector)
-  const [deleteMailById] =
-    useDeleteMailByIdMutation()
+  const {
+    data: message,
+    isLoading,
+    refetch,
+  } = useGetMessageByIdQuery(messageId)
+  const { reply } = useAppSelector(messagesSelector)
+  const [deleteMailById] = useDeleteMailByIdMutation()
   const [windowSize] = useWindowSize()
 
   const handleBack = () => {
@@ -31,10 +34,10 @@ const MessagePreviewSection = ({ messageId }: { messageId: string }) => {
   }
 
   const handleReply = () => {
-    dispatch(setReply({enquiry: message as MessageProps, reply: true}))
+    dispatch(setReply({ enquiry: message as MessageProps, reply: true }))
   }
 
-  const handleDelete = useCallback( async () => {
+  const handleDelete = useCallback(async () => {
     try {
       const response = await deleteMailById(messageId).unwrap()
       if (response.success) {
@@ -53,9 +56,9 @@ const MessagePreviewSection = ({ messageId }: { messageId: string }) => {
         autoClose: 3000,
       })
     }
-  },[])
+  }, [])
 
-  if(isLoading) {
+  if (isLoading) {
     return (
       <div className="flex h-[700px] items-center justify-center">
         <Loader size="xl" variant="bars" />
@@ -131,7 +134,9 @@ const MessagePreviewSection = ({ messageId }: { messageId: string }) => {
         </div>
         <div
           className={
-            reply ? 'block transition-opacity duration-300 ease-in-out' : 'hidden'
+            reply
+              ? 'block transition-opacity duration-300 ease-in-out'
+              : 'hidden'
           }
         >
           <MessageReplyForm />

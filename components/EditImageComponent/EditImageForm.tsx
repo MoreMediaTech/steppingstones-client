@@ -83,7 +83,6 @@ const EditImageComponent = ({
                   width={400}
                   height={400}
                   quality={50}
-                  objectFit="contain"
                 />
               </div>
             )}

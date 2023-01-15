@@ -36,13 +36,13 @@ const ContentDrawerItem = ({
     >
       <Link
         href={{
-          pathname: item.path && `${item.path}/${countyData.name}/${item.subPath}`,
+          pathname:
+            item.path && `${item.path}/${countyData.name}/${item.subPath}`,
           query: { county: `${countyData.name}`, countyId: `${countyData.id}` },
         }}
+        onClick={() => setOpened((o) => !o)}
       >
-        <a onClick={() => setOpened((o) => !o)}>
-          {item.title}
-        </a>
+       {item.title}
       </Link>
       <List withPadding listStyleType="disc" center icon={item.listIcon}>
         <Collapse
@@ -62,7 +62,7 @@ const ContentDrawerItem = ({
                     },
                   }}
                 >
-                  <a>{subItem.title}</a>
+                  {subItem.title}
                 </Link>
               </List.Item>
             )

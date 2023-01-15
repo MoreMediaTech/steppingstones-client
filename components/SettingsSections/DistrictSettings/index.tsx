@@ -5,8 +5,11 @@ import { useGetDistrictsQuery } from 'features/editor/editorApiSlice'
 import { DistrictDataProps } from '@lib/types'
 import DistrictTable from './DistrictTable'
 import UpdateDistrictModal from './UpdateDistrictModal'
-import { useAppSelector, useAppDispatch } from '../../../app/hooks'
-import { editorSelector, setDistrict } from '../../../features/editor/editorSlice'
+import { useAppSelector, useAppDispatch } from '../../../state/hooks'
+import {
+  editorSelector,
+  setDistrict,
+} from '../../../features/editor/editorSlice'
 
 const DistrictSettings = () => {
   const {
@@ -40,7 +43,6 @@ const DistrictSettings = () => {
 
     setSearchResults(resultsArray as DistrictDataProps[])
   }
-
 
   if (isErrorDistricts) {
     return (

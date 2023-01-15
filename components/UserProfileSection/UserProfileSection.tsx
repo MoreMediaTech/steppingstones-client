@@ -123,23 +123,23 @@ const UserProfileSection = () => {
         </section>
         <section className=" flex w-full flex-col items-center justify-between space-y-4 rounded-md bg-white p-6 shadow-xl md:flex-row md:space-y-0">
           <div className="flex flex-col items-center space-y-2 text-gray-400 md:flex-row md:space-y-0 md:space-x-4">
-            <Link href="#">
-              <a className=" hover:cursor-pointer hover:underline">
+            <Link href="#" className=" hover:cursor-pointer hover:underline">
+              
                 Terms and Conditions
-              </a>
+              
             </Link>
-            <Link href="#">
-              <a className=" hover:cursor-pointer hover:underline">
+            <Link href="#" className=" hover:cursor-pointer hover:underline">
+              
                 Privacy Policy
-              </a>
+              
             </Link>
-            <Link href="#">
-              <a className="hover:cursor-pointer hover:underline">
+            <Link href="#" className=" hover:cursor-pointer hover:underline">
+              
                 Cookie Policy
-              </a>
+              
             </Link>
-            <Link href="#">
-              <a className="hover:cursor-pointer hover:underline">Contact</a>
+            <Link href="#" className=" hover:cursor-pointer hover:underline">
+              Contact
             </Link>
           </div>
           <div className="flex items-center space-x-4 text-gray-400 md:flex-row">

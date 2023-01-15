@@ -1,10 +1,10 @@
-import { Children, useEffect } from "react";
-import { store } from "app/store";
-import { usersApiSlice } from "features/user/usersApiSlice";
-import { OutletProps } from "@lib/types";
+import { Children, useEffect } from 'react'
+import { store } from 'state/store'
+import { usersApiSlice } from 'features/user/usersApiSlice'
+import { OutletProps } from '@lib/types'
 
 interface IPrefetchProps {
-    children: React.ReactElement | React.ReactElement[]
+  children: React.ReactElement | React.ReactElement[]
 }
 
 const Prefetch = ({ children }: IPrefetchProps) => {

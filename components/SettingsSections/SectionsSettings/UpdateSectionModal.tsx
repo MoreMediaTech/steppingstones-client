@@ -3,7 +3,7 @@ import { Modal } from '@mantine/core'
 
 import { SectionProps, SubSectionProps } from '@lib/types'
 import { UpdateSectionForm } from '@components/forms'
-import { useAppSelector } from 'app/hooks'
+import { useAppSelector } from 'state/hooks'
 import { editorSelector } from 'features/editor/editorSlice'
 
 const UpdateSectionModal = ({

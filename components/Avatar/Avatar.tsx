@@ -17,9 +17,11 @@ const Avatar = ({
       <Image
         src={!!imageUrl ? imageUrl : steppingstonesapplogo}
         alt={'User image or logo'}
-        layout="fill"
-        objectFit="cover"
         className={`rounded-lg ${imgSize}`}
+        fill
+        style={{
+          objectFit: 'cover',
+        }}
       />
     </div>
   )

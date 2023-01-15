@@ -7,7 +7,7 @@ import {
   useGetAllSDDataByTypeQuery,
   useDeleteManySDDataMutation,
 } from 'features/editor/editorApiSlice'
-import { useAppSelector, useAppDispatch } from 'app/hooks'
+import { useAppSelector, useAppDispatch } from 'state/hooks'
 import { editorSelector, setSDData } from 'features/editor/editorSlice'
 import SourceDirectoryTable from './SourceDirectoryTable'
 import { SourceDataProps, SourceDirectoryType } from '@lib/types'
@@ -34,7 +34,7 @@ const SourceDirectory: React.FC = () => {
     error,
     refetch,
   } = useGetAllSDDataByTypeQuery(sdDataType)
-    console.log("🚀 ~ file: index.tsx ~ line 37 ~ sourceData", sourceData)
+  console.log('🚀 ~ file: index.tsx ~ line 37 ~ sourceData', sourceData)
   const [deleteManySDData, { isLoading: isLoadingDeleteMany }] =
     useDeleteManySDDataMutation()
 
@@ -116,19 +116,17 @@ const SourceDirectory: React.FC = () => {
 
   return (
     <>
-        <SearchForm
-          register={register}
-          types={['BSI', 'IS', 'EU']}
-          handleModalOpen={handleModalOpen}
-        />
-        {isLoading ? (
-          <div className="flex h-[700px] items-center justify-center">
-            <Loader size="xl" variant="bars" />
-          </div>
-        ) : (
-            <section
-              className="relative mx-2 md:mx-auto bg-primary-light-50 px-1 md:px-4 py-1 shadow-md dark:bg-primary-dark-600 dark:text-primary-light-100 md:w-full"
-            >
+      <SearchForm
+        register={register}
+        types={['BSI', 'IS', 'EU']}
+        handleModalOpen={handleModalOpen}
+      />
+      {isLoading ? (
+        <div className="flex h-[700px] items-center justify-center">
+          <Loader size="xl" variant="bars" />
+        </div>
+      ) : (
+        <section className="relative mx-2 bg-primary-light-50 px-1 py-1 shadow-md dark:bg-primary-dark-600 dark:text-primary-light-100 md:mx-auto md:w-full md:px-4">
           <SourceDirectoryTable
             data={
               searchResults?.length > 0
@@ -145,8 +143,8 @@ const SourceDirectory: React.FC = () => {
             setOpenUpdateModal={setOpenUpdateModal}
             handleDeleteMany={handleDeleteMany}
           />
-      </section>
-        )}
+        </section>
+      )}
       <SourceDirectoryUpdateModal
         action={action}
         open={openUpdateModal}

@@ -2,26 +2,24 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useRefreshMutation } from './authApiSlice'
 import usePersist from '@hooks/usePersist'
-import { useAppSelector } from 'app/hooks'
+import { useAppSelector } from 'state/hooks'
 import { selectCurrentToken } from './authSlice'
 import { OutletProps } from '@lib/types'
 
 interface Error {
-    data: {
-        message: string
-    }
-    status: number
+  data: {
+    message: string
+  }
+  status: number
 }
 
-function checkIsError(obj: unknown): obj is Error{
+function checkIsError(obj: unknown): obj is Error {
   return (
     typeof obj === 'object' && obj !== null && 'data' in obj && 'status' in obj
   )
 }
 
-declare function Outlet(props: OutletProps): React.ReactElement | null 
-
-
+declare function Outlet(props: OutletProps): React.ReactElement | null
 
 const PersistLogin = () => {
   const [persist] = usePersist()
@@ -72,8 +70,8 @@ const PersistLogin = () => {
     //persist: yes, token: no
     console.log('error')
     content = (
-      <p className="text-red-500 font-semibold text-lg text-center">
-        {checkIsError(error) && error.data?.message as string}
+      <p className="text-center text-lg font-semibold text-red-500">
+        {checkIsError(error) && (error.data?.message as string)}
         <Link href="/login">Please login again</Link>.
       </p>
     )

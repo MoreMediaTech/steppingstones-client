@@ -13,8 +13,7 @@ const ContactUs = () => {
           <div className="relative h-full w-full">
             <Image
               src={'/enquire_section_img.png'}
-              layout="fill"
-              objectFit="cover"
+              alt="Enquire section image"
               quality={50}
               priority
             />

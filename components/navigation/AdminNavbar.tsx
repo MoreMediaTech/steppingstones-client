@@ -14,6 +14,8 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { Dispatch, SetStateAction } from 'react'
 import { FaSignOutAlt } from 'react-icons/fa'
+import { useAppSelector, useAppDispatch } from 'state/hooks'
+import { globalSelector, setDrawerOpened } from 'features/global/globalSlice'
 
 interface IAdminNavbar {
   theme: MantineTheme
@@ -28,8 +30,11 @@ const AdminNavbar = ({
   setOpened,
   handleLogout,
 }: IAdminNavbar) => {
+  const dispatch = useAppDispatch()
+  const { drawerOpened } = useAppSelector(globalSelector)
   const router = useRouter()
   const [pos, setPos] = useState<string>('top')
+  const title = drawerOpened ? 'Close navigation' : 'Open navigation'
 
   // Check the top position of the navigation in the window
   useEffect(() => {
@@ -57,6 +62,15 @@ const AdminNavbar = ({
     >
       <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
         <div className="flex w-full items-center justify-between">
+           <div className=" flex items-center px-4 py-2  ">
+        <Burger
+          opened={drawerOpened}
+          aria-label={title}
+          onClick={() => dispatch(setDrawerOpened(!drawerOpened))}
+          title={title}
+          color="#00dcb3"
+        />
+      </div>
           <UnstyledButton
             onClick={() => {
               router.push('/')
@@ -66,6 +80,7 @@ const AdminNavbar = ({
               <div className="w-50 h-50 -mb-4">
                 <Image
                   src={'/SteppingStonesLogo2.png'}
+                  alt="Stepping Stones Logo"
                   width={80}
                   height={80}
                 />

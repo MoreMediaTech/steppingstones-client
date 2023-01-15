@@ -1,23 +1,30 @@
-import { createApi, fetchBaseQuery, BaseQueryFn, FetchArgs, FetchBaseQueryError, FetchBaseQueryMeta } from '@reduxjs/toolkit/query/react'
+import {
+  createApi,
+  fetchBaseQuery,
+  BaseQueryFn,
+  FetchArgs,
+  FetchBaseQueryError,
+  FetchBaseQueryMeta,
+} from '@reduxjs/toolkit/query/react'
 import { QueryReturnValue } from '@reduxjs/toolkit/dist/query/baseQueryTypes'
 import { HYDRATE } from 'next-redux-wrapper'
 
 import { setCredentials, resetCredentials } from 'features/auth/authSlice'
 import { CurrentUser } from '@lib/types'
 import { API_URL } from '@config/index'
-import { RootState } from 'app/store'
-
+import { RootState } from 'state/store'
 
 interface RefreshResult {
   error?: FetchBaseQueryError | undefined
-  data?:{
+  data?:
+    | {
         token: string
       }
     | undefined
   meta?: FetchBaseQueryMeta | undefined
 }
 
-function checkIsError(obj: unknown): obj is Error{
+function checkIsError(obj: unknown): obj is Error {
   return (
     typeof obj === 'object' && obj !== null && 'data' in obj && 'status' in obj
   )
@@ -35,7 +42,7 @@ const baseQuery: BaseQueryFn<
   prepareHeaders: (headers, api) => {
     const { auth } = api.getState() as RootState
     const token = auth.token
-  
+
     if (token) {
       headers.set('authorization', `Bearer ${token}`)
     }
@@ -50,9 +57,9 @@ const baseQueryWithReAuth: BaseQueryFn = async (
   extraOptions
 ) => {
   let result = await baseQuery(args, api, extraOptions)
-  if(result?.error?.status === 400) {
-     localStorage.removeItem('token')
-     api.dispatch(resetCredentials())
+  if (result?.error?.status === 400) {
+    localStorage.removeItem('token')
+    api.dispatch(resetCredentials())
     result = await baseQuery(args, api, extraOptions)
   }
   if (result?.error?.status === 401 || result?.error?.status === 403) {
@@ -73,14 +80,14 @@ const baseQueryWithReAuth: BaseQueryFn = async (
       // retry original request
       result = await baseQuery(args, api, extraOptions)
     } else {
-      if(refreshResult?.error?.status === 403){
+      if (refreshResult?.error?.status === 403) {
         if (checkIsError(refreshResult?.error?.data)) {
           refreshResult.error.data.message =
             'You Session has expired. Please login again. '
         }
       }
     }
-  } 
+  }
   return result
 }
 
@@ -96,7 +103,6 @@ export const apiSlice = createApi({
   },
   endpoints: (builder) => ({}),
 })
-
 
 export const partnerApiSlice = createApi({
   reducerPath: 'partnerApi',
@@ -143,6 +149,18 @@ export const uploadApiSlice = createApi({
   baseQuery: baseQueryWithReAuth,
   keepUnusedDataFor: 300,
   tagTypes: ['Upload'],
+  extractRehydrationInfo(action, { reducerPath }) {
+    if (action.type === HYDRATE) {
+      return action.payload[reducerPath]
+    }
+  },
+  endpoints: (builder) => ({}),
+})
+export const analyticsApiSlice = createApi({
+  reducerPath: 'analyticsApi',
+  baseQuery: baseQueryWithReAuth,
+  keepUnusedDataFor: 300,
+  tagTypes: ['Analytics'],
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
       return action.payload[reducerPath]

@@ -8,9 +8,9 @@ const HeroSection = () => {
         <div className="relative h-full w-full">
           <Image
             src={'/sohee-kim-NGeVlMIaFsg-unsplash.jpg'}
-            layout="fill"
-            objectFit="cover"
+            alt="image by Sohee Kim"
             quality={50}
+            fill
             priority
           />
           <div
@@ -23,11 +23,9 @@ const HeroSection = () => {
         <div className="   ">
           <Image
             src={'/ssapp_hero_section.png'}
-            alt="image by Sohee Kim"
+            alt="Hero section image"
             width={1000}
             height={1000}
-            objectFit="cover"
-            layout="responsive"
           />
         </div>
         <div className="flex flex-col items-center justify-center">

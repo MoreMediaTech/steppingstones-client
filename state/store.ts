@@ -13,12 +13,14 @@ import partnerReducer from 'features/partner/partnerSlice'
 import messagesReducer from 'features/messages/messagesSlice'
 import editorReducer from 'features/editor/editorSlice'
 import uploadReducer from 'features/upload/uploadSlice'
+import globalReducer from 'features/global/globalSlice'
 import {
   apiSlice,
   messagesApiSlice,
   partnerApiSlice,
   editorApiSlice,
   uploadApiSlice,
+  analyticsApiSlice
 } from './api/apiSlice'
 
 const reducers = {
@@ -27,11 +29,13 @@ const reducers = {
   [partnerApiSlice.reducerPath]: partnerApiSlice.reducer,
   [editorApiSlice.reducerPath]: editorApiSlice.reducer,
   [uploadApiSlice.reducerPath]: uploadApiSlice.reducer,
+  [analyticsApiSlice.reducerPath]: analyticsApiSlice.reducer,
   auth: authReducer,
   partner: partnerReducer,
   messages: messagesReducer,
   editor: editorReducer,
   upload: uploadReducer,
+  global: globalReducer,
 }
 
 const combinedReducer = combineReducers<typeof reducers>(reducers)
@@ -60,6 +64,7 @@ export const store = configureStore({
       partnerApiSlice.middleware,
       editorApiSlice.middleware,
       uploadApiSlice.middleware,
+      analyticsApiSlice.middleware
     ]),
   devTools: process.env.NODE_ENV !== 'production',
 })

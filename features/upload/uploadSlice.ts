@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
-import { RootState } from 'app/store'
+import { RootState } from 'state/store'
 import { Error } from '@lib/types'
 
 type InitialStateProps = {
@@ -35,7 +35,7 @@ const uploadSlice = createSlice({
     setSelectedFile: (state, { payload }: PayloadAction<File>) => {
       state.selectedFile = payload
     },
-    clearState: () =>  initialState,
+    clearState: () => initialState,
     setMessage: (state, { payload }: PayloadAction<string>) => {
       state.message = payload
     },

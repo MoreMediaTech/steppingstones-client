@@ -11,7 +11,7 @@ import { BsPrinterFill } from 'react-icons/bs'
 import steppingstonesapplogo from '../../../public/steppingstonesapplogo.png'
 import { SectionProps } from '@lib/types'
 import { useDeleteSectionByIdMutation } from 'features/editor/editorApiSlice'
-import { useAppDispatch, useAppSelector } from 'app/hooks'
+import { useAppDispatch, useAppSelector } from 'state/hooks'
 import { setSectionType } from 'features/editor/editorSlice'
 import HandleDeleteModal from '../../HandleDeleteModal/HandleDeleteModal'
 import SubSectionsTable from './SubSectionsTable'
@@ -96,45 +96,45 @@ const SectionsTable = ({
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [sectionData, setSectionData] = useState<SectionProps | null>(null)
   const [openSubSectionModal, setOpenSubSectionModal] = useState<boolean>(false)
-   const [sortKey, setSortKey] = useState<SortKeys>('name')
-   const [sortOrder, setSortOrder] = useState<SortOrder>('asc')
+  const [sortKey, setSortKey] = useState<SortKeys>('name')
+  const [sortOrder, setSortOrder] = useState<SortOrder>('asc')
   const [deleteSectionById, { isLoading }] = useDeleteSectionByIdMutation()
-    const [windowSize] = useWindowSize()
+  const [windowSize] = useWindowSize()
 
-      const headers: { key: SortKeys; label: string }[] = [
-        { key: 'name', label: 'section name' },
-        { key: 'county', label: 'county name' },
-        { key: 'subsections', label: 'Sub-Sections' },
-        { key: 'isLive', label: 'live' },
-        { key: 'updatedAt', label: 'updated at' },
-      ]
+  const headers: { key: SortKeys; label: string }[] = [
+    { key: 'name', label: 'section name' },
+    { key: 'county', label: 'county name' },
+    { key: 'subsections', label: 'Sub-Sections' },
+    { key: 'isLive', label: 'live' },
+    { key: 'updatedAt', label: 'updated at' },
+  ]
 
-      const sortedData = useCallback(
-        () =>
-          sortData({
-            tableData: sectionsData,
-            sortKey,
-            reverse: sortOrder === 'desc',
-          }),
-        [sectionsData, sortKey, sortOrder]
-      )
+  const sortedData = useCallback(
+    () =>
+      sortData({
+        tableData: sectionsData,
+        sortKey,
+        reverse: sortOrder === 'desc',
+      }),
+    [sectionsData, sortKey, sortOrder]
+  )
 
-      function changeSort(key: SortKeys) {
-        if (key === sortKey) {
-          setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
-        } else {
-          setSortKey(key)
-          setSortOrder('desc')
-        }
-      }
-
-    const handlePrint = () => {
-      const printContents = document.getElementById('printableArea')?.innerHTML
-      const originalContents = document.body.innerHTML
-      document.body.innerHTML = printContents!
-      window.print()
-      document.body.innerHTML = originalContents
+  function changeSort(key: SortKeys) {
+    if (key === sortKey) {
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
+    } else {
+      setSortKey(key)
+      setSortOrder('desc')
     }
+  }
+
+  const handlePrint = () => {
+    const printContents = document.getElementById('printableArea')?.innerHTML
+    const originalContents = document.body.innerHTML
+    document.body.innerHTML = printContents!
+    window.print()
+    document.body.innerHTML = originalContents
+  }
 
   const handleModalClose = () => {
     setOpenSubSectionModal(false)
@@ -143,11 +143,11 @@ const SectionsTable = ({
 
   const deleteHandler = useCallback(async (id: string, type?: string) => {
     try {
-      const response  = await deleteSectionById(id).unwrap()
+      const response = await deleteSectionById(id).unwrap()
       refetch()
       setOpenModal(false)
       showNotification({
-        message: response.message  ?? 'Section deleted successfully',
+        message: response.message ?? 'Section deleted successfully',
         color: 'green',
         autoClose: 3000,
       })
@@ -285,9 +285,7 @@ const SectionsTable = ({
                           src={
                             section?.county?.logoIcon ?? steppingstonesapplogo
                           }
-                          alt={section?.county?.name}
-                          layout="fill"
-                          objectFit="cover"
+                          alt={section?.county?.name as string}
                         />
                       </div>
                       <div className="text-xl font-semibold">

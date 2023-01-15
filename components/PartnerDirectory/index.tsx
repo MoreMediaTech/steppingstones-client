@@ -17,7 +17,7 @@ import {
   setPartnerData,
   setType,
 } from 'features/partner/partnerSlice'
-import { useAppSelector, useAppDispatch } from 'app/hooks'
+import { useAppSelector, useAppDispatch } from 'state/hooks'
 
 interface IPartnerDirectoryFormProps {
   isPartnerDirectoryModalOpen: boolean
@@ -103,11 +103,9 @@ const PartnerDirectorySection = ({
   // function that handles the search/filter of the closingDate in the partner data
   const handleFilterByDate = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
-    const resultsArray = data?.filter(
-      (partner: PartnerData) =>{
-        return partner?.closingDate === value
-      }
-    )
+    const resultsArray = data?.filter((partner: PartnerData) => {
+      return partner?.closingDate === value
+    })
     setSearchResults(resultsArray as PartnerData[])
   }
 
@@ -136,35 +134,38 @@ const PartnerDirectorySection = ({
   }, [type])
 
   // function that handles the creation of a new partner or updates an existing partner
-  const submitHandler: SubmitHandler<IFormData> = useCallback(async (data) => {
-    console.log({type, data})
-    const newData = {
-      id: partnerData?.id,
-      ...data,
-    }
-    let response
-    try {
-      if (type === 'Create') {
-        response = await createPartnerData(data).unwrap()
+  const submitHandler: SubmitHandler<IFormData> = useCallback(
+    async (data) => {
+      console.log({ type, data })
+      const newData = {
+        id: partnerData?.id,
+        ...data,
       }
-      if (type === 'Update') {
-        response = await updatePartnerData(newData).unwrap()
+      let response
+      try {
+        if (type === 'Create') {
+          response = await createPartnerData(data).unwrap()
+        }
+        if (type === 'Update') {
+          response = await updatePartnerData(newData).unwrap()
+        }
+        handleModalClose()
+        refetch()
+        showNotification({
+          message: response?.message,
+          color: 'green',
+          autoClose: 3000,
+        })
+      } catch (error) {
+        showNotification({
+          message: 'Something went wrong! Please try again',
+          autoClose: 3000,
+          color: 'red',
+        })
       }
-      handleModalClose()
-      refetch()
-      showNotification({
-        message: response?.message,
-        color: 'green',
-        autoClose: 3000,
-      })
-    } catch (error) {
-      showNotification({
-        message: 'Something went wrong! Please try again',
-        autoClose: 3000,
-        color: 'red',
-      })
-    }
-  }, [type])
+    },
+    [type]
+  )
 
   // Function to delete the selected partners
   const handleDeleteMany = useCallback(async () => {

@@ -1,11 +1,7 @@
 import Head from 'next/head'
 import { Navbar } from '@components/navigation';
-import { useRouter } from 'next/router';
 import Footer from '@components/footer';
-import {
-  AppShell,
-  useMantineTheme,
-} from '@mantine/core'
+
 
 interface ILayout {
   title?: string
@@ -14,8 +10,7 @@ interface ILayout {
 }
 
 function MainLayout({ title, description, children }: ILayout): JSX.Element {
-  const router = useRouter();
-    const theme = useMantineTheme()
+  
   return (
     <main
       aria-label="layout"

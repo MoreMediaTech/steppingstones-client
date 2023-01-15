@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useSelector } from 'react-redux'
 import { IFormData } from '@lib/types'
-import { useAppDispatch } from 'app/hooks'
+import { useAppDispatch } from 'state/hooks'
 import { showNotification } from '@mantine/notifications'
 import { useRouter } from 'next/router'
 import {
@@ -14,15 +14,15 @@ import {
 } from '@mantine/core'
 import Link from 'next/link'
 
-import { useRegisterPartnerMutation } from 'features/auth/authApiSlice';
+import { useRegisterPartnerMutation } from 'features/auth/authApiSlice'
 import { counties } from 'data'
-
 
 import { NEXT_URL } from '@config/index'
 
 const RegisterForm = () => {
   const router = useRouter()
-  const [registerUser, { isLoading, isSuccess, isError, error }] = useRegisterPartnerMutation()
+  const [registerUser, { isLoading, isSuccess, isError, error }] =
+    useRegisterPartnerMutation()
   const {
     register,
     handleSubmit,
@@ -59,7 +59,7 @@ const RegisterForm = () => {
     try {
       await registerUser(user).unwrap()
       reset()
-       router.replace(`${NEXT_URL}/auth/login`)
+      router.replace(`${NEXT_URL}/auth/login`)
     } catch (error) {
       if (!error?.response) {
         showNotification({
@@ -87,9 +87,8 @@ const RegisterForm = () => {
         })
       }
     }
-      
-    }
-    
+  }
+
   return (
     <form
       onSubmit={handleSubmit(handleSignUp)}
@@ -142,7 +141,7 @@ const RegisterForm = () => {
         })}
         className="focus:shadow-outline w-full appearance-none rounded-md focus:outline-none"
       />
-      {errors.name  && (
+      {errors.name && (
         <span className="text-center text-sm text-red-500">
           {errors.name?.message || 'Your full name is required'}
         </span>
@@ -230,7 +229,7 @@ const RegisterForm = () => {
         type="tel"
         {...register('contactNumber', {
           required: true,
-          pattern:{
+          pattern: {
             value: /^[0-9]{11}$/,
             message: 'Please enter a valid contact number',
           },
@@ -261,7 +260,7 @@ const RegisterForm = () => {
         })}
         className="focus:shadow-outline w-full appearance-none rounded-md focus:outline-none"
       />
-      {errors.postCode  && (
+      {errors.postCode && (
         <span className="text-center text-sm text-red-500">
           {errors.postCode?.message || 'Your post code is required'}
         </span>
@@ -290,11 +289,11 @@ const RegisterForm = () => {
           Terms and Conditions
         </h1>
         <p className="text-xs font-thin">
-          We want to let you know how Stepping Stones works and why we need
-          your registration details (all your personal registration details are
+          We want to let you know how Stepping Stones works and why we need your
+          registration details (all your personal registration details are
           listed above). Please see our{' '}
-          <Link href={'/terms-condition'}>
-            <a className="underline">terms and conditions</a>
+          <Link href={'/terms-condition'} className="underline">
+            terms and conditions
           </Link>
         </p>
         <Checkbox
@@ -318,8 +317,8 @@ const RegisterForm = () => {
           Under the new General Data Protection Regulation (GDPR) you are
           required to consent to your data (all your personal registration
           details are listed above) being stored and used to provide you with
-          Stepping Stones services. Stepping Stone will only use
-          this data for the purposes of:
+          Stepping Stones services. Stepping Stone will only use this data for
+          the purposes of:
         </p>
         <ul className="ml-2 list-disc space-y-1 text-justify text-xs font-thin">
           <li>

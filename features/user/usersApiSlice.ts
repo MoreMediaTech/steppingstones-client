@@ -1,5 +1,5 @@
 import { createEntityAdapter, createSelector } from '@reduxjs/toolkit'
-import { apiSlice } from 'app/api/apiSlice'
+import { apiSlice } from 'state/api/apiSlice'
 import { setCredentials, setError } from 'features/auth/authSlice'
 import { CurrentUser } from '@lib/types'
 

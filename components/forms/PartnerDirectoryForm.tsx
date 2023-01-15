@@ -9,10 +9,9 @@ import {
 } from 'react-hook-form'
 
 import { IFormData } from '@lib/types'
-import { useAppSelector, useAppDispatch } from 'app/hooks'
+import { useAppSelector, useAppDispatch } from 'state/hooks'
 import FormInput from './FormComponents/FormInput'
 import { partnerSelector } from 'features/partner/partnerSlice'
-
 
 interface IPartnerDirectoryFormProps {
   errors: FieldErrorsImpl<DeepRequired<IFormData>>
@@ -30,7 +29,7 @@ const PartnerDirectoryForm = ({
   register,
   submitHandler,
 }: IPartnerDirectoryFormProps) => {
-  const {  type } = useAppSelector(partnerSelector)
+  const { type } = useAppSelector(partnerSelector)
   return (
     <form
       aria-label="update-user-form"
@@ -103,7 +102,6 @@ const PartnerDirectoryForm = ({
           {...register('closingDate')}
           errors={errors.closingDate}
         />
-
       </div>
       <div className="grid grid-cols-1 gap-x-4 gap-y-6  bg-transparent sm:grid-cols-2 md:grid-cols-3">
         <Button type="submit" loading={isLoading} variant="outline">

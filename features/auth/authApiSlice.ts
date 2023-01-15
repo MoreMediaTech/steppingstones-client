@@ -1,6 +1,10 @@
-import { resetCredentials, setCredentials, setError } from 'features/auth/authSlice';
-import { apiSlice, editorApiSlice } from "app/api/apiSlice";
-import { CurrentUser } from '@lib/types';
+import {
+  resetCredentials,
+  setCredentials,
+  setError,
+} from 'features/auth/authSlice'
+import { apiSlice, editorApiSlice } from 'state/api/apiSlice'
+import { CurrentUser } from '@lib/types'
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -29,7 +33,7 @@ export const authApi = apiSlice.injectEndpoints({
         body: { ...data },
         validateStatus: (response: any, result: any) => {
           return response.status === 200 && !result.isError
-        }
+        },
       }),
       invalidatesTags: [{ type: 'Auth', id: 'LIST' }],
     }),
@@ -59,7 +63,7 @@ export const authApi = apiSlice.injectEndpoints({
         body: { ...data },
       }),
     }),
-    refresh: builder.mutation<{ token: string}, void>({
+    refresh: builder.mutation<{ token: string }, void>({
       query: () => ({
         url: 'auth/refresh',
         method: 'GET',

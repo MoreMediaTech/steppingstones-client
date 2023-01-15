@@ -79,13 +79,12 @@ const Navbar = () => {
                 About
               </a>
             ) : (
-              <Link href={'/#about'}>
-                <a
-                  className={` cursor-pointer font-poppins text-[16px] font-normal text-primary-dark-100 dark:text-primary-light-100`}
-                  onClick={() => setActive('#about')}
-                >
-                  About
-                </a>
+              <Link
+                href={'/#about'}
+                className={` cursor-pointer font-poppins text-[16px] font-normal text-primary-dark-100 dark:text-primary-light-100`}
+                onClick={() => setActive('#about')}
+              >
+                About
               </Link>
             )}
           </li>
@@ -99,13 +98,12 @@ const Navbar = () => {
                 Features
               </a>
             ) : (
-              <Link href={'/#features'}>
-                <a
-                  className={` cursor-pointer font-poppins text-[16px] font-normal text-primary-dark-100 dark:text-primary-light-100`}
-                  onClick={() => setActive(router.pathname)}
-                >
-                  Features
-                </a>
+              <Link
+                href={'/#features'}
+                className={` cursor-pointer font-poppins text-[16px] font-normal text-primary-dark-100 dark:text-primary-light-100`}
+                onClick={() => setActive(router.pathname)}
+              >
+                Features
               </Link>
             )}
           </li>
@@ -119,13 +117,12 @@ const Navbar = () => {
                 FAQs
               </a>
             ) : (
-              <Link href={'/#faqs'}>
-                <a
-                  className={` cursor-pointer font-poppins text-[16px] font-normal text-primary-dark-100 dark:text-primary-light-100`}
-                  onClick={() => setActive('#faqs')}
-                >
-                  FAQs
-                </a>
+              <Link
+                href={'/#faqs'}
+                className={` cursor-pointer font-poppins text-[16px] font-normal text-primary-dark-100 dark:text-primary-light-100`}
+                onClick={() => setActive('#faqs')}
+              >
+                FAQs
               </Link>
             )}
           </li>
@@ -151,16 +148,22 @@ const Navbar = () => {
                       <Menu.Item
                         icon={<MdBusiness fontSize={14} color="#5E17EB" />}
                       >
-                        <Link href={'/admin/editor-portal'}>
-                          <a className="text-primary-dark-100 ">Portal</a>
+                        <Link
+                          className="text-primary-dark-100 "
+                          href={'/admin/editor-portal'}
+                        >
+                          Portal
                         </Link>
                       </Menu.Item>
                     ) : (
                       <Menu.Item
                         icon={<MdBusiness fontSize={14} color="#5E17EB" />}
                       >
-                        <Link href={'/admin/partner-portal'}>
-                          <a className="text-primary-dark-100 ">Portal</a>
+                        <Link
+                          className="text-primary-dark-100 "
+                          href={'/admin/partner-portal'}
+                        >
+                          Portal
                         </Link>
                       </Menu.Item>
                     )}
@@ -168,8 +171,11 @@ const Navbar = () => {
                     <Menu.Item
                       icon={<FaRegUser fontSize={14} color="#5E17EB" />}
                     >
-                      <Link href={'/auth/profile'}>
-                        <a className="text-primary-dark-100 ">Profile</a>
+                      <Link
+                        className="text-primary-dark-100 "
+                        href={'/auth/profile'}
+                      >
+                        Profile
                       </Link>
                     </Menu.Item>
                     <Divider />
@@ -190,13 +196,12 @@ const Navbar = () => {
               className={` cursor-pointer font-poppins text-[16px] font-normal `}
               onClick={() => setActive('login')}
             >
-              <Link href={'/auth/login'}>
-                <a
-                  className={`flex items-center gap-1 text-primary-dark-100 dark:text-primary-light-100`}
-                >
-                  <FaSignInAlt fontSize={18} />
-                  <span>Login</span>
-                </a>
+              <Link
+                href={'/auth/login'}
+                className={`flex items-center gap-1 text-primary-dark-100 dark:text-primary-light-100`}
+              >
+                <FaSignInAlt fontSize={18} />
+                <span>Login</span>
               </Link>
             </li>
           )}
@@ -230,14 +235,13 @@ const Navbar = () => {
             </button>
           </li>
           <li className="hidden flex-1 items-center md:flex ">
-            <Link href={'/enquire'}>
-              <a
-                className={`rounded-lg bg-[#5E17EB] px-4 py-1 text-lg font-medium text-primary-light-100
+            <Link
+              href={'/enquire'}
+              className={`rounded-lg bg-[#5E17EB] px-4 py-1 text-lg font-medium text-primary-light-100
                 `}
-                onClick={() => setActive('enquire')}
-              >
-                Enquire
-              </a>
+              onClick={() => setActive('enquire')}
+            >
+              Enquire
             </Link>
           </li>
         </ul>
@@ -266,10 +270,11 @@ const Navbar = () => {
                     About
                   </a>
                 ) : (
-                  <Link href={'/#about'}>
-                    <a className="mb-4 cursor-pointer font-poppins text-[16px] font-medium text-[#5E17EB]">
-                      About
-                    </a>
+                  <Link
+                    className="mb-4 cursor-pointer font-poppins text-[16px] font-medium text-[#5E17EB]"
+                    href={'/#about'}
+                  >
+                    About
                   </Link>
                 )}
               </li>
@@ -282,10 +287,11 @@ const Navbar = () => {
                     Features
                   </a>
                 ) : (
-                  <Link href={'/#features'}>
-                    <a className="mb-4 cursor-pointer font-poppins text-[16px] font-medium text-[#5E17EB]">
-                      Features
-                    </a>
+                  <Link
+                    className="mb-4 cursor-pointer font-poppins text-[16px] font-medium text-[#5E17EB]"
+                    href={'/#features'}
+                  >
+                    Features
                   </Link>
                 )}
               </li>
@@ -298,10 +304,11 @@ const Navbar = () => {
                     FAQs
                   </a>
                 ) : (
-                  <Link href={'/#faqs'}>
-                    <a className="mb-4 cursor-pointer font-poppins text-[16px] font-medium text-[#5E17EB]">
-                      FAQs
-                    </a>
+                  <Link
+                    className="mb-4 cursor-pointer font-poppins text-[16px] font-medium text-[#5E17EB]"
+                    href={'/#faqs'}
+                  >
+                    FAQs
                   </Link>
                 )}
               </li>
@@ -320,21 +327,30 @@ const Navbar = () => {
                         <Menu.Label>Application</Menu.Label>
                         {currentUser.role !== 'PARTNER' ? (
                           <Menu.Item>
-                            <Link href={'/admin/editor-portal'}>
-                              <a className="text-[#5E17EB]">Portal</a>
+                            <Link
+                              href={'/admin/editor-portal'}
+                              className="text-[#5E17EB]"
+                            >
+                              Portal
                             </Link>
                           </Menu.Item>
                         ) : (
                           <Menu.Item>
-                            <Link href={'/admin/partner-portal'}>
-                              <a className="text-[#5E17EB]">Portal</a>
+                            <Link
+                              href={'/admin/partner-portal'}
+                              className="text-[#5E17EB]"
+                            >
+                              Portal
                             </Link>
                           </Menu.Item>
                         )}
                         <Divider />
                         <Menu.Item>
-                          <Link href={'/auth/profile'}>
-                            <a className="text-[#5E17EB]">Profile</a>
+                          <Link
+                            href={'/auth/profile'}
+                            className="text-[#5E17EB]"
+                          >
+                            Profile
                           </Link>
                         </Menu.Item>
                         <Divider />
@@ -352,19 +368,21 @@ const Navbar = () => {
                 </li>
               ) : (
                 <li className="mb-4 cursor-pointer font-poppins text-[16px] font-medium">
-                  <Link href={'/auth/login'}>
-                    <a className="flex items-center gap-1 text-[#5E17EB]">
-                      <FaSignInAlt fontSize={20} />
-                      <span>Login</span>
-                    </a>
+                  <Link
+                    href={'/auth/login'}
+                    className="flex items-center gap-1 text-[#5E17EB]"
+                  >
+                    <FaSignInAlt fontSize={20} />
+                    <span>Login</span>
                   </Link>
                 </li>
               )}
               <li className="mb-0 cursor-pointer font-poppins text-[16px] font-medium">
-                <Link href={'/enquire'}>
-                  <a className="rounded-lg bg-[#5E17EB] px-6 py-2  font-medium text-white">
-                    Enquire
-                  </a>
+                <Link
+                  href={'/enquire'}
+                  className="rounded-lg bg-[#5E17EB] px-6 py-2  font-medium text-white"
+                >
+                  Enquire
                 </Link>
               </li>
             </ul>

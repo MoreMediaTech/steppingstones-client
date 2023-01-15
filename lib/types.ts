@@ -527,3 +527,96 @@ export type NextShieldProps<
       RBAC: RoleAccess<PrivateRoutesList[number][]>
       userRole: string | undefined
     }
+
+    // create types for tokensDark and tokensLight
+export type TokensDark = { [key: string]: { [key: string]: string } }
+
+export type TokensLight = { [key: string]: { [key: string]: string } }
+
+export type T = keyof TokensDark
+
+export type PaletteMode = 'light' | 'dark'
+
+export interface CommonColors {
+  black: string
+  white: string
+}
+
+export type PaletteTonalOffset =
+  | number
+  | {
+      light: number
+      dark: number
+    }
+
+export interface TypeText {
+  primary: string
+  secondary: string
+  disabled: string
+}
+
+export interface TypeAction {
+  active: string
+  hover: string
+  hoverOpacity: number
+  selected: string
+  selectedOpacity: number
+  disabled: string
+  disabledOpacity: number
+  disabledBackground: string
+  focus: string
+  focusOpacity: number
+  activatedOpacity: number
+}
+
+export interface TypeBackground {
+  default: string
+  paper: string
+}
+
+export interface Color {
+  50: string
+  100: string
+  200: string
+  300: string
+  400: string
+  500: string
+  600: string
+  700: string
+  800: string
+  900: string
+  A100: string
+  A200: string
+  A400: string
+  A700: string
+}
+
+export type ColorPartial = Partial<Color>
+export interface SimplePaletteColorOptions extends ColorPartial {
+  light: string
+  main: string
+  dark: string
+  contrastText: string
+}
+
+export type PaletteColorOptions = SimplePaletteColorOptions 
+
+
+export interface PaletteOptions {
+  primary?: PaletteColorOptions
+  secondary?: PaletteColorOptions
+  error?: PaletteColorOptions
+  warning?: PaletteColorOptions
+  info?: PaletteColorOptions
+  success?: PaletteColorOptions
+  mode?: PaletteMode
+  tonalOffset?: PaletteTonalOffset
+  contrastThreshold?: number
+  common?: Partial<CommonColors>
+  grey?: ColorPartial
+  text?: Partial<TypeText>
+  divider?: string
+  action?: Partial<TypeAction>
+  background?: Partial<TypeBackground>
+  getContrastText?: (background: string) => string
+}

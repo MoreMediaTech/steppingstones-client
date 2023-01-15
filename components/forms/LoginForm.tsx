@@ -6,12 +6,11 @@ import { Button, PasswordInput, TextInput } from '@mantine/core'
 import ReCAPTCHA from 'react-google-recaptcha'
 import Link from 'next/link'
 
-
 import { useLoginMutation } from 'features/auth/authApiSlice'
 import { NEXT_URL } from '@config/index'
 import { IFormData } from '@lib/types'
 import FormInput from './FormComponents/FormInput'
-import { useAppDispatch } from 'app/hooks'
+import { useAppDispatch } from 'state/hooks'
 import { setCredentials } from 'features/auth/authSlice'
 import usePersist from '@hooks/usePersist'
 import FormCheckbox from './FormComponents/FormCheckBox'
@@ -142,10 +141,11 @@ const LoginForm = () => {
         checked={persist}
       />
       <div className="mb-4 place-self-start">
-        <Link href={'/auth/forgot-password'}>
-          <a className="cursor-pointer  text-sm text-[#00DCB3]">
-            Forgot Password?
-          </a>
+        <Link
+          href={'/auth/forgot-password'}
+          className="cursor-pointer  text-sm text-[#00DCB3]"
+        >
+          Forgot Password?
         </Link>
       </div>
 

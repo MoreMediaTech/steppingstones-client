@@ -1,15 +1,6 @@
-import {
-  createSlice,
-  PayloadAction,
-} from '@reduxjs/toolkit'
-import { AppThunk, RootState } from 'app/store'
-import {
-  Error,
-  IPartnerState,
-  PartnerData,
-} from '@lib/types'
-
-
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { AppThunk, RootState } from 'state/store'
+import { Error, IPartnerState, PartnerData } from '@lib/types'
 
 export const initialState: IPartnerState = {
   partnersData: [],
@@ -18,7 +9,6 @@ export const initialState: IPartnerState = {
   type: '',
   error: { message: 'An Error occurred' },
 }
-
 
 export const partnersSlice = createSlice({
   name: 'partner',
@@ -32,11 +22,12 @@ export const partnersSlice = createSlice({
     },
     setType: (state, action: PayloadAction<'Create' | 'Update'>) => {
       state.type = action.payload
-    }
+    },
   },
 })
 
-export const { setPartnerData, setPartnersData, setType } = partnersSlice.actions
+export const { setPartnerData, setPartnersData, setType } =
+  partnersSlice.actions
 export const partnerSelector = (state: RootState) => state.partner
 
 export default partnersSlice.reducer
