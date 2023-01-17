@@ -67,39 +67,49 @@ function RenderInsights() {
   if (isLoading) return <div>Loading...</div>
 
   return (
-    <div className='overflow-y-auto'>
-    <Container size="lg" px="xs">
-      <Box
-        sx={{
-          marginTop: '1rem',
-          marginLeft: '1rem',
-        }}
-      >
-        <Header
-          title="Insights"
-          order={2}
-          subtitle="See how your site is performing"
-        />
-      </Box>
-      <SimpleGrid cols={1}>
+    <div className="overflow-y-auto">
+      <Container size="lg" px="xs">
         <Box
           sx={{
-            marginTop: '0.5rem',
-            marginLeft: '0.5rem',
+            marginTop: '1rem',
+            marginLeft: '1rem',
           }}
         >
-          <SimpleGrid cols={2}>
-            {defaultStats(stats).map((item, index) => (
-              <StatsItem key={`stats-${index}`} {...item} />
-            ))}
-          </SimpleGrid>
+          <Header
+            title="Insights"
+            order={2}
+            subtitle="See how your site is performing"
+          />
         </Box>
-        <PerformanceChart data={performanceChartData} />
-      </SimpleGrid>
-      <SimpleGrid cols={2}>
-        <BreakdownChart data={analytics.topFiveViewedScreensByDay} />
-      </SimpleGrid>
-    </Container>
+        <SimpleGrid cols={1}>
+          <Box
+            sx={{
+              marginTop: '0.5rem',
+              marginLeft: '0.5rem',
+            }}
+          >
+            <SimpleGrid
+              cols={2}
+              breakpoints={[
+                { maxWidth: 980, cols: 1, spacing: 'md' },
+              ]}
+            >
+              {defaultStats(stats).map((item, index) => (
+                <StatsItem key={`stats-${index}`} {...item} />
+              ))}
+            </SimpleGrid>
+          </Box>
+          <PerformanceChart data={performanceChartData} />
+        </SimpleGrid>
+        <SimpleGrid
+          cols={2}
+          breakpoints={[
+            { maxWidth: 980, cols: 1, spacing: 'md' },
+          ]}
+        >
+          <BreakdownChart data={analytics.topFiveViewedScreensByDay} />
+        </SimpleGrid>
+      </Container>
     </div>
   )
 }
