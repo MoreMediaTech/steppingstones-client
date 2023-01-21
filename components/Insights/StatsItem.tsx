@@ -1,3 +1,4 @@
+import { Box, Flex, Grid } from '@mantine/core'
 import React from 'react'
 
 import Header from '../Header'
@@ -9,6 +10,7 @@ export type DefaultStatsProps = {
   textColor: string
   borderColor: string
   bcg: string
+  percentageInc?: number
 }
 
 function StatsItem({
@@ -18,17 +20,35 @@ function StatsItem({
   textColor,
   borderColor,
   bcg,
+  percentageInc,
 }: DefaultStatsProps) {
-  return <div
-      className={`p-2 bg-white $ dark:bg-gray-900 shadow-xl mt-5 mx-2 md:p-4 border-b-4 rounded-md ${borderColor}`}
+  return (
+    <Box
+      className={`$ mx-2 mt-5 rounded-md border-b-4 bg-white px-4 py-2 shadow-xl ${borderColor} ${bcg}`}
     >
-        <Header title={title} order={5} icon={icon} />
- <span
-          className={`inline-flex items-center justify-center p-2 ${textColor} rounded-md shadow-lg text-white w-12 h-12`}
+      <Header title={title} order={5} icon={icon} />
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+        }}
+      >
+        <Box
+          className={`inline-flex items-center justify-center p-2 ${textColor} h-12 w-12 rounded-md text-white shadow-lg`}
         >
           {count}
-        </span>
-    </div>
+        </Box>
+
+        {percentageInc ? (
+          <Box
+            className={`inline-flex items-center justify-center p-2 ${textColor} h-12 w-12 rounded-md text-white shadow-lg`}
+          >
+            {percentageInc}
+          </Box>
+        ) : null}
+      </Box>
+    </Box>
+  )
 }
 
 export default StatsItem

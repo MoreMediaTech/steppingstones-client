@@ -572,6 +572,7 @@ export interface TypeAction {
 export interface TypeBackground {
   default: string
   paper: string
+  alt: string
 }
 
 export interface Color {

@@ -8,7 +8,7 @@ type PerformanceChartProps = {
 
 function PerformanceChart({ data }: PerformanceChartProps) {
   return (
-    <Box sx={{ width: "100%", height: "325px"}}>
+    <Box sx={{ width: '100%', height: '325px' }}>
       <ResponsiveBar
         data={data}
         keys={['avgLoadTime']}
@@ -22,7 +22,7 @@ function PerformanceChart({ data }: PerformanceChartProps) {
             },
             legend: {
               text: {
-                fill: '#9e9ac8',
+                fill: '#00dcb3',
               },
             },
             ticks: {
@@ -34,8 +34,9 @@ function PerformanceChart({ data }: PerformanceChartProps) {
           },
           legends: {
             text: {
-              fill: '#9e9ac8',
+              fill: '#00dcb3',
             },
+            
           },
           tooltip: {
             container: {
@@ -51,7 +52,7 @@ function PerformanceChart({ data }: PerformanceChartProps) {
             padding: 0,
             stagger: false,
             background: 'inherit',
-            color: '#807dba',
+            color: '#00dcb3',
             rotation: -45,
             lineWidth: 6,
             spacing: 10,
@@ -70,8 +71,7 @@ function PerformanceChart({ data }: PerformanceChartProps) {
         padding={0.3}
         valueScale={{ type: 'linear' }}
         indexScale={{ type: 'band', round: true }}
-        colors={{ scheme: 'purples' }}
-        
+        colors={{ scheme: 'greens' }}
         borderColor={{
           from: 'color',
           modifiers: [['darker', 1.6]],
@@ -96,7 +96,7 @@ function PerformanceChart({ data }: PerformanceChartProps) {
         }}
         labelSkipWidth={12}
         labelSkipHeight={12}
-        labelTextColor="#bcbddc"
+        labelTextColor="#002c24"
         legends={[
           {
             dataFrom: 'keys',

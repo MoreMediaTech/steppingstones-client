@@ -118,6 +118,7 @@ export const themeSettings = (mode: PaletteMode) => {
             background: {
               default: tokensDark.primary[600],
               paper: tokensDark.primary[500],
+              alt: tokensDark.primary[700],
             },
           }
         : {
