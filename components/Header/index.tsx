@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Title, Group, TitleOrder } from '@mantine/core'
+import { Box, Title, Group, TitleOrder, ThemeIcon } from '@mantine/core'
 
 type Props = {
   title: string
@@ -20,12 +20,16 @@ function Header({ title, order, subOrder, subtitle, icon, bcg }: Props) {
           alignItems: 'center',
         }}
       >
-        <Title order={order}>{title}</Title>
+        <Title order={order} className="text-gray-800 dark:text-gray-100">
+          {title}
+        </Title>
         {icon ? (
           <Box
-            className={`flex items-center justify-center p-2 ${bcg} h-12 w-12 rounded-md shadow-lg`}
+            className={`flex items-center ${bcg} rounded-md shadow-lg`}
           >
-            {icon}
+            <ThemeIcon  radius="md" size="xl" color="violet">
+              {icon}
+            </ThemeIcon>
           </Box>
         ) : null}
       </Box>
