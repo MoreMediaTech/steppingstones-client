@@ -1,8 +1,12 @@
 import { useState } from 'react'
 import Cookies from 'js-cookie'
+
 import { OPTIONS, SAME_SITE_OPTIONS, VISIBLE_OPTIONS } from '@lib/types'
 import CookieConsent from './CookieConsent'
 import CookieConsentContainer from './CookieConsentContainer'
+
+import { useAppDispatch, useAppSelector } from 'state/hooks'
+import { setIsVisible, globalSelector } from 'features/global/globalSlice'
 
  function setCookie(
    cookieName: string,
@@ -23,8 +27,9 @@ import CookieConsentContainer from './CookieConsentContainer'
  }
 
 const CookieConsentComponent = () => {
+  const dispatch = useAppDispatch()
+  const { isVisible } = useAppSelector(globalSelector)
     const [opened, setOpened] = useState<boolean>(false)
-    const [isVisible, setIsVisible] = useState<boolean>(true)
     const [snCookies, setSNCookies] = useState<boolean>(false)
     const [pAndACookies, setPAndACookies] = useState<boolean>(false)
 
@@ -43,7 +48,7 @@ const CookieConsentComponent = () => {
         true,
         SAME_SITE_OPTIONS.LAX
       )
-      setIsVisible(false)
+      dispatch(setIsVisible(false))
     }
 
     /**
@@ -64,7 +69,7 @@ const CookieConsentComponent = () => {
       setOpened(false)
       setSNCookies(true)
       setPAndACookies(true)
-      setIsVisible(false)
+      dispatch(setIsVisible(false))
     }
 
     /**
@@ -79,7 +84,7 @@ const CookieConsentComponent = () => {
         true,
         SAME_SITE_OPTIONS.LAX
       )
-      setIsVisible(false)
+      dispatch(setIsVisible(false))
     }
 
     /**
@@ -97,7 +102,7 @@ const CookieConsentComponent = () => {
         true,
         SAME_SITE_OPTIONS.LAX
       )
-      setIsVisible(false)
+      dispatch(setIsVisible(false))
       setOpened(false)
     }
 
@@ -109,7 +114,6 @@ const CookieConsentComponent = () => {
         cookieName={COOKIE_NAME}
         visible={VISIBLE_OPTIONS.BY_COOKIE_VALUE}
         isVisible={isVisible}
-        setIsVisible={setIsVisible}
         ariaAcceptLabel="Accept cookies"
         ariaDeclineLabel="Decline cookies"
         disableStyles={true}

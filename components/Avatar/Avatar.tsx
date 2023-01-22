@@ -22,6 +22,7 @@ const Avatar = ({
         style={{
           objectFit: 'cover',
         }}
+        sizes="100%"
       />
     </div>
   )

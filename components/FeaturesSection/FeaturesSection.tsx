@@ -11,7 +11,7 @@ const FeaturesSection = () => {
           Practical support for business without information overload.
         </h3>
       </div>
-      <div className="container mx-auto grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div className="container mx-auto grid grid-cols-1 gap-4 sm:grid-cols-2 text-gray-800 dark:text-gray-200">
         <div className="space-y-4 p-2">
           <h3 className="font-semibold">Latest information</h3>
           <p className="font-thin">

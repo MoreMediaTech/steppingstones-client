@@ -30,7 +30,7 @@ const AboutSection = () => {
             <h3 className="text-center text-lg font-medium text-primary-dark-100 dark:text-primary-light-600 md:text-left">
               What is the app all about?
             </h3>
-            <p>
+            <p className="text-gray-800 dark:text-gray-200">
               Our app provides a single point of access to the often complicated
               landscape of national and local business support making it easier
               for businesses to gain the help and advice they need to thrive and
@@ -50,7 +50,7 @@ const AboutSection = () => {
             <h3 className="text-center text-lg font-medium text-primary-dark-100 dark:text-primary-light-600 md:text-left">
               Why now?
             </h3>
-            <p>
+            <p className="text-gray-800 dark:text-gray-200">
               We were inspired by Business Boost, Ashfield District Council
               Business Support Service that brought together public and private
               sector partners to promote, coordinate and deliver a wide range of
@@ -62,9 +62,7 @@ const AboutSection = () => {
             </p>
             <div className="flex w-full justify-center md:justify-start">
               <Button type="button" color="primary" onClick={() => null}>
-                <Link href="#heroSection">
-                  Sign Up
-                </Link>
+                <Link href="#heroSection">Sign Up</Link>
               </Button>
             </div>
           </div>
@@ -73,7 +71,6 @@ const AboutSection = () => {
           <Image
             src={'/about_section_img2.png'}
             alt="Photo by Tom Podmore on Unsplash"
-
             width={900}
             height={460}
           />

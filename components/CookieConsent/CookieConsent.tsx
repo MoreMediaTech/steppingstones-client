@@ -2,7 +2,8 @@ import { useEffect } from 'react'
 import Cookies from 'js-cookie'
 import { CookieConsentProps, OPTIONS } from '@lib/types'
 
-const defaultCookieConsentName = 'CookieConsent'
+import { useAppDispatch, useAppSelector } from 'state/hooks'
+import { setIsVisible, globalSelector } from 'features/global/globalSlice'
 
 /**
  * Returns the value of the consent cookie
@@ -10,14 +11,14 @@ const defaultCookieConsentName = 'CookieConsent'
  * to: https://web.dev/samesite-cookie-recipes/#handling-incompatible-clients
  * @param {*} name optional name of the cookie
  */
-export const getCookieConsentValue = (name = defaultCookieConsentName) => {
-  const cookieValue = Cookies.get(name)
+export const getCookieConsentValue = (name: string) => {
+  const cookieValue: string = Cookies.get(name) as string
 
   // if the cookieValue is undefined check for the legacy cookie
   if (cookieValue === undefined) {
     return Cookies.get(getLegacyCookieName(name))
   }
-  return cookieValue
+  return JSON.parse(cookieValue)
 }
 
 /**
@@ -25,7 +26,7 @@ export const getCookieConsentValue = (name = defaultCookieConsentName) => {
  * Remove the cookie on browser in order to allow user to change their consent
  * @param {*} name optional name of the cookie
  */
-export const resetCookieConsentValue = (name: string = defaultCookieConsentName) => {
+export const resetCookieConsentValue = (name: string) => {
   Cookies.remove(name)
 }
 
@@ -46,7 +47,6 @@ const CookieConsent = ({
   handleAccept,
   debug,
   isVisible,
-  setIsVisible,
   customContainerAttributes,
   enableDeclineButton,
   declineButtonClasses,
@@ -64,14 +64,15 @@ const CookieConsent = ({
   customContentAttributes,
   buttonWrapperClasses,
 }: Partial<CookieConsentProps>) => {
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     function watchScroll() {
       // if cookie undefined or debug
-      if (getCookieValue() === undefined || debug) {
-        setIsVisible!(true)
+      if (!getCookieValue() || getCookieValue() === undefined || debug) {
+        dispatch(setIsVisible(true))
       } else {
-        setIsVisible!(false)
+        dispatch(setIsVisible(false))
       }
     }
     watchScroll()
@@ -85,7 +86,8 @@ const CookieConsent = ({
    * to: https://web.dev/samesite-cookie-recipes/#handling-incompatible-clients
    */
   function getCookieValue() {
-    return getCookieConsentValue(cookieName)
+
+    return getCookieConsentValue(cookieName as string)
   }
 
   

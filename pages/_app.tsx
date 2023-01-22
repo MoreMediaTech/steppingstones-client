@@ -10,19 +10,27 @@ import { motion } from 'framer-motion'
 import { ThemeProvider, useTheme } from 'next-themes'
 import { MantineProvider, Container } from '@mantine/core'
 import { createTheme } from '@mui/material/styles'
+import dynamic from 'next/dynamic'
 
 import { store, wrapper } from 'state/store'
 import 'react-quill/dist/quill.snow.css'
 import '../styles/globals.css'
-import CookieConsentComponent from '@components/CookieConsent'
-import PersistLogin from 'features/auth/PersistLogin'
+
 import { mantineTheme } from 'constants/theme'
 import { themeSettings } from 'constants/styles'
 import { PaletteMode } from '@lib/types'
 
+const CookieConsentComponent = dynamic(
+  () => import('@components/CookieConsent'),
+  { ssr: false, loading: () => <div>loading...</div> }
+)
+
 function MyApp({ Component, pageProps, router }: AppProps) {
   const { theme: mode } = useTheme()
-   const theme = useMemo(() => createTheme(themeSettings(mode as PaletteMode)), [mode])
+  const theme = useMemo(
+    () => createTheme(themeSettings(mode as PaletteMode)),
+    [mode]
+  )
   return (
     <>
       <Provider store={store}>

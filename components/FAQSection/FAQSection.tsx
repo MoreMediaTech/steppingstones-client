@@ -16,7 +16,7 @@ const FAQSection = () => {
           </a>
         </h3>
       </div>
-      <div className="container mx-auto flex flex-col space-y-4 p-2">
+      <div className="container mx-auto flex flex-col space-y-4 p-2 text-gray-800 dark:text-gray-200">
         {faqItems.map((item) => (
           <FAQItem key={item.id} {...item} />
         ))}

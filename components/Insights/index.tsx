@@ -102,7 +102,7 @@ function RenderInsights() {
           color="violet"
           variant="outline"
           radius="xs"
-          defaultValue="gallery"
+          defaultValue="users"
           keepMounted={false}
         >
           <Tabs.List>
