@@ -183,7 +183,6 @@ const PartnerDirectoryTable = ({
             type="date"
             hidden
             onChange={handleFilterByDate}
-            inputStyles="dark:text-gray-900 dark:placeholder-gray-500 dark:bg-gray-300"
           />
         </div>
         <div className="mt-2 flex items-center gap-2">
