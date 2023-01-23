@@ -1,6 +1,6 @@
 import React from 'react'
 import { appendErrors, DeepRequired, FieldError, FieldErrorsImpl, Merge } from 'react-hook-form'
-import { TextInput } from '@mantine/core'
+import { CSSObject, TextInput } from '@mantine/core'
 import { IFormData } from '@lib/types'
 
 
@@ -11,8 +11,8 @@ type FormInputProps = {
   type: string
   label?: string
   placeholder?: string
-  labelStyles?: string
-  inputStyles?: string
+  labelStyles?: CSSObject
+  inputStyles?: CSSObject
   hidden?: boolean
   prependComponent?: React.ReactNode
   appendComponent?: React.ReactNode
@@ -42,33 +42,24 @@ const FormInput: React.FunctionComponent<
     ref
   ) => (
     <div className="w-full space-y-2">
-      <label
-        htmlFor={type}
-        hidden={hidden}
-        className={`my-2 text-sm font-semibold text-gray-900 ${labelStyles}`}
-      >
-        {label} <span className="text-red-500">*</span>
-      </label>
-      <div
-        className={`block w-full rounded border border-gray-300 bg-gray-100  text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 ${inputStyles}`}
-      >
-        {prependComponent}
         <TextInput
-          className={`form-input w-full bg-transparent border-0 focus:ring-0 bg-gray-100`}
+          className={`w-full`}
           id={`${title}`}
           ref={ref}
           name={`${title}`}
           type={type}
+          aria-label={`${label?.toLowerCase()}-input`}
           aria-invalid="true"
+          variant='default'
+          label={hidden ? label : undefined}
+          withAsterisk
+          radius="sm"
+          error={errors ? (errors.message || `A valid ${title} is required`) : undefined}
+          icon={prependComponent}
+          rightSection={appendComponent}
+          styles={{ label: labelStyles }}
           {...props}
         />
-        {appendComponent}
-      </div>
-      {errors && (
-        <span className="text-center text-sm text-red-500">
-          {errors.message || `A valid ${title} is required`}
-        </span>
-      )}
     </div>
   )
 )

@@ -12,23 +12,25 @@ const Message = ({ messageId }: { messageId: string }) => {
   const hasMounted = useHasMounted()
   const { data: user, refetch } = useGetUserQuery()
 
-  return hasMounted && (
-    <AdminLayout title="Message">
-      <ComponentShield
-        RBAC
-        showForRole={'SS_EDITOR'}
-        userRole={user?.role as string}
-      >
-        <PortalHeader
-          user={user as CurrentUser}
-          imgUrl={user?.imageUrl}
-          title={`${user?.name}`}
-          subTitle=""
-        />
+  return (
+    hasMounted && (
+      <AdminLayout title="Message">
+        <ComponentShield
+          RBAC
+          showForRole={'SS_EDITOR'}
+          userRole={user?.role as string}
+        >
+          <PortalHeader
+            user={user as CurrentUser}
+            imgUrl={user?.imageUrl}
+            title={`${user?.name}`}
+            subTitle=""
+          />
 
-        <MessagePreviewSection messageId={messageId} />
-      </ComponentShield>
-    </AdminLayout>
+          <MessagePreviewSection messageId={messageId} />
+        </ComponentShield>
+      </AdminLayout>
+    )
   )
 }
 

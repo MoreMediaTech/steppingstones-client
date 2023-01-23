@@ -1,4 +1,5 @@
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
+import { Box } from '@mantine/core'
 
 import { AdminLayout } from 'layout'
 import { ComponentShield } from '@components/NextShield'
@@ -7,32 +8,44 @@ import PortalHeader from '@components/PortalHeader'
 import { CurrentUser } from '@lib/types'
 import { SectionsSettings } from '@components/SettingsSections'
 import useHasMounted from '@hooks/useHasMounted'
+import Header from '@components/Header'
 
 const SectionSettingsPage = () => {
   const hasMounted = useHasMounted()
   const { data: user } = useGetUserQuery()
 
-  return hasMounted && (
-    <AdminLayout title="Section Settings">
-      <ComponentShield
-        RBAC
-        showForRole={'SS_EDITOR'}
-        userRole={user?.role as string}
-      >
-        <section className="h-screen overflow-auto">
-          <PortalHeader
-            user={user as CurrentUser}
-            imgUrl={user?.imageUrl}
-            title={`${user?.name}`}
-            subTitle="Manage Sections"
-          />
-          <section className="overflow-y-auto px-2 sm:px-4 md:max-w-screen-xl mt-2 mx-auto space-y-4">
-            <h1 className="px-4 text-2xl font-bold">Section Settings</h1>
-            <SectionsSettings />
+  return (
+    hasMounted && (
+      <AdminLayout title="Section Settings">
+        <ComponentShield
+          RBAC
+          showForRole={'SS_EDITOR'}
+          userRole={user?.role as string}
+        >
+          <section className="h-screen overflow-auto">
+            <PortalHeader
+              user={user as CurrentUser}
+              imgUrl={user?.imageUrl}
+              title={`${user?.name}`}
+              subTitle="Manage Sections"
+            />
+            <section className="mx-auto mt-2 space-y-4 overflow-y-auto px-2 sm:px-4 md:max-w-screen-xl">
+              <Box
+                sx={{
+                  marginTop: '1rem',
+                  marginLeft: '1rem',
+                  marginRight: '1rem',
+                  height: '100%',
+                }}
+              >
+                <Header title="Section Settings" order={2} />
+                <SectionsSettings />
+              </Box>
+            </section>
           </section>
-        </section>
-      </ComponentShield>
-    </AdminLayout>
+        </ComponentShield>
+      </AdminLayout>
+    )
   )
 }
 

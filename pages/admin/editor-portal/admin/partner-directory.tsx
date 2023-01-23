@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
+import { Box } from '@mantine/core'
 
 import { AdminLayout } from 'layout'
 import { ComponentShield } from '@components/NextShield'
@@ -11,6 +12,7 @@ import Button from '@components/Button'
 import { useAppDispatch } from 'state/hooks'
 import { setType, setPartnerData } from 'features/partner/partnerSlice'
 import useHasMounted from '@hooks/useHasMounted'
+import Header from '@components/Header'
 
 const PartnerDirectory = () => {
   const dispatch = useAppDispatch()
@@ -35,10 +37,16 @@ const PartnerDirectory = () => {
               subTitle="Partner Directory"
             />
             <section className="mx-auto mt-2 w-full space-y-4 px-2 sm:px-4 md:max-w-screen-xl">
+              <Box
+                sx={{
+                  marginTop: '1rem',
+                  marginLeft: '1rem',
+                  marginRight: '1rem',
+                  height: '100%',
+                }}
+              >
               <div className="flex flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between ">
-                <span className="text-lg font-bold sm:text-2xl">
-                  Partner Directory
-                </span>
+                <Header title="Partner Directory" order={2} />
                 <Button
                   type="button"
                   color="outline"
@@ -51,6 +59,7 @@ const PartnerDirectory = () => {
                   Add Partner
                 </Button>
               </div>
+                </Box>
               <PartnerDirectorySection
                 isPartnerDirectoryModalOpen={isPartnerDirectoryModalOpen}
                 setIsPartnerDirectoryModalOpen={setIsPartnerDirectoryModalOpen}

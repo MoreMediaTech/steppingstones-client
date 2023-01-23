@@ -92,7 +92,7 @@ const AdminLayout = ({
         handleLogout={handleLogout}
       />
       <section
-        className={`md:ml-30
+        className={`
         relative w-full bg-primary-light-50 dark:bg-primary-dark-800`}
       >
         {children}

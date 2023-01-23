@@ -93,7 +93,8 @@ const LoginForm = () => {
           },
         })}
         errors={errors.email}
-        labelStyles="!text-white"
+        labelStyles={{ color: 'white' }}
+        inputStyles={{ backgroundColor: 'white' }}
       />
       {errors.email && (
         <span className="text-center text-sm text-red-500">
@@ -104,11 +105,8 @@ const LoginForm = () => {
       <PasswordInput
         id="password"
         aria-label="password"
-        label={
-          <p className="mt-2 font-semibold text-white ">
-            Password <span className="text-red-500">*</span>
-          </p>
-        }
+        label="Password"
+        withAsterisk
         placeholder="Enter password"
         {...register('password', {
           required: true,
@@ -126,13 +124,12 @@ const LoginForm = () => {
               'Password must contain at least one uppercase letter, one number and one special character',
           },
         })}
+        variant="default"
         className="w-full "
+        styles={{ label: { color: 'white' }, input: { backgroundColor: 'white' } }}
+        error={errors.password ? (errors.password?.message || 'A password is required') : undefined}
       />
-      {errors.password && (
-        <span className="text-center text-sm text-red-500">
-          {errors.password?.message || 'A password is required'}
-        </span>
-      )}
+     
       <FormCheckbox
         type="persist"
         title="persist"

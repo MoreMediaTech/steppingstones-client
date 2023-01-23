@@ -9,6 +9,7 @@ import ContentDrawer from '@components/navigation/ContentDrawer/ContentDrawer'
 import Avatar from '@components/Avatar'
 import { useAppSelector, useAppDispatch } from 'state/hooks'
 import { globalSelector, setDrawerOpened } from 'features/global/globalSlice'
+import FormInput from '@components/forms/FormComponents/FormInput'
 
 interface IPortalHeaderProps {
   user?: CurrentUser
@@ -59,8 +60,8 @@ const PortalHeader = ({
     >
       <div className="mx-auto py-2 md:px-4">
         <div className="flex flex-col items-start justify-between md:flex-row md:items-center">
-          <div className="flex items-center gap-2 mb-2">
-            <div className="hidden md:flex items-center px-4 py-2  ">
+          <div className="mb-2 flex items-center gap-4">
+            <div className="hidden items-center px-4 py-2 md:flex  ">
               <Burger
                 opened={drawerOpened}
                 aria-label={drawerTitle}
@@ -87,9 +88,7 @@ const PortalHeader = ({
                 </h3>
               </div>
             </Group>
-          </div>
-          <div className="flex w-full items-center space-x-4 md:w-96">
-            <div className="m-0 flex list-none px-1 ">
+            <div className="m-0 md:hidden list-none px-1 flex ">
               <button
                 type="button"
                 aria-label="toggle-theme-button"
@@ -118,15 +117,46 @@ const PortalHeader = ({
                 <span hidden>toggle theme</span>
               </button>
             </div>
-            <div className=" flex w-full items-center gap-2 rounded-lg border border-gray-300 bg-gray-50 px-2 py-1 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500">
-              <input
-                aria-label="search-input"
-                placeholder="Search"
-                type="search"
-                className="form-input w-full border-none bg-transparent focus:border-0 focus:ring-0 focus:ring-transparent"
-              />
-              <IoIosSearch fontSize={25} fontWeight={500} />
+          </div>
+          <div className="flex w-full items-center md:w-96 md:space-x-4">
+            <div className="m-0 hidden list-none px-1 md:flex ">
+              <button
+                type="button"
+                aria-label="toggle-theme-button"
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                className={`focus:ring-none ml-4 flex cursor-pointer list-none  p-1 font-medium focus:border-transparent focus:outline-none md:block lg:ml-0 lg:mb-0 lg:p-1 lg:px-1`}
+              >
+                {resolvedTheme === 'light' ? (
+                  <FiSun
+                    fontSize={18}
+                    className={`${
+                      router.asPath === '/' && pos === 'top'
+                        ? 'text-primary-dark-100 dark:text-primary-light-100'
+                        : 'text-primary-dark-100 dark:text-primary-light-100'
+                    } font-bold `}
+                  />
+                ) : (
+                  <FiMoon
+                    fontSize={18}
+                    className={`${
+                      router.asPath === '/' && pos === 'top'
+                        ? 'text-primary-dark-100 dark:text-primary-light-100'
+                        : 'text-primary-dark-100 dark:text-primary-light-100'
+                    } font-bold `}
+                  />
+                )}
+                <span hidden>toggle theme</span>
+              </button>
             </div>
+            <FormInput
+              label="Search"
+              type="search"
+              name="search"
+              id="search"
+              placeholder="Search"
+              appendComponent={<IoIosSearch fontSize={25} fontWeight={500} />}
+            />
+
             {/* <div className={!!data ? 'display: flex' : 'hidden'}>
               {!!data && (
                 <Burger

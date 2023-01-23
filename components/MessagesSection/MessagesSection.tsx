@@ -71,7 +71,7 @@ const MessagesSection = () => {
     )
   }
   return (
-    <section className="w-full ">
+    <section className="h-full w-full dark:bg-primary-dark-800">
       <MessagesTable
         messages={
           searchResults.length > 0

@@ -44,8 +44,8 @@ const MessagesTable = ({
     []
   )
   return (
-    <section className=" relative  w-full  shadow-md sm:rounded-lg">
-      <div className="flex items-center gap-2 p-4">
+    <section className=" relative  w-full h-full  shadow-md sm:rounded-lg">
+      <div className="flex items-center gap-2 py-2 md:py-4">
         <div className="relative mt-1">
           <label htmlFor="table-search" className="sr-only">
             Search

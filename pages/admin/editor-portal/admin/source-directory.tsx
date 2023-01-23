@@ -1,4 +1,5 @@
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
+import { Box } from '@mantine/core'
 
 import { AdminLayout } from 'layout'
 import { ComponentShield } from '@components/NextShield'
@@ -7,31 +8,43 @@ import PortalHeader from '@components/PortalHeader'
 import { CurrentUser } from '@lib/types'
 import SourceDirectory from '@components/SourceDirectory'
 import useHasMounted from '@hooks/useHasMounted'
+import Header from '@components/Header'
 
 const SourceDirectoryPage = () => {
   const hasMounted = useHasMounted()
-    const { data: user } = useGetUserQuery()
-  return hasMounted && (
-    <AdminLayout title="Source Directory">
-      <ComponentShield
-        RBAC
-        showForRole={'SS_EDITOR'}
-        userRole={user?.role as string}
-      >
-        <section className="md:h-screen overflow-auto">
-          <PortalHeader
-            user={user as CurrentUser}
-            imgUrl={user?.imageUrl}
-            title={`${user?.name}`}
-            subTitle="Source Directory"
-          />
-           <section className="px-2 sm:px-4 mx-auto md:max-w-screen-xl overflow-y-auto w-full my-2">
-            <h1 className="text-lg sm:text-2xl font-bold">Source Directory</h1>
-            <SourceDirectory />
-           </section>
-        </section>
-      </ComponentShield>
-    </AdminLayout>
+  const { data: user } = useGetUserQuery()
+  return (
+    hasMounted && (
+      <AdminLayout title="Source Directory">
+        <ComponentShield
+          RBAC
+          showForRole={'SS_EDITOR'}
+          userRole={user?.role as string}
+        >
+          <section className="overflow-auto md:h-screen">
+            <PortalHeader
+              user={user as CurrentUser}
+              imgUrl={user?.imageUrl}
+              title={`${user?.name}`}
+              subTitle="Source Directory"
+            />
+            <section className="mx-auto my-2 w-full overflow-y-auto px-2 sm:px-4 md:max-w-screen-xl">
+              <Box
+                sx={{
+                  marginTop: '1rem',
+                  marginLeft: '1rem',
+                  marginRight: '1rem',
+                  height: '100%',
+                }}
+              >
+                <Header title="Source Directory" order={2} />
+                <SourceDirectory />
+              </Box>
+            </section>
+          </section>
+        </ComponentShield>
+      </AdminLayout>
+    )
   )
 }
 

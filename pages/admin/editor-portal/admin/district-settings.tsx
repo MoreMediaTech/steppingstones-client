@@ -1,4 +1,5 @@
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
+import { Box } from '@mantine/core'
 
 import { AdminLayout } from 'layout'
 import { ComponentShield } from '@components/NextShield'
@@ -7,6 +8,7 @@ import PortalHeader from '@components/PortalHeader'
 import { CurrentUser } from '@lib/types'
 import { DistrictSettings } from '@components/SettingsSections'
 import useHasMounted from '@hooks/useHasMounted'
+import Header from '@components/Header'
 
 const DistrictSettingsPage = () => {
   const hasMounted = useHasMounted()
@@ -27,8 +29,17 @@ const DistrictSettingsPage = () => {
             subTitle="Manage District Settings"
           />
           <section className="mx-auto mt-2 md:mt-4 overflow-y-auto px-2 sm:px-4 md:max-w-screen-xl space-y-4">
-            <h1 className="px-4 text-2xl font-bold">District Setting</h1>
+            <Box
+                sx={{
+                  marginTop: '1rem',
+                  marginLeft: '1rem',
+                  marginRight: '1rem',
+                  height: '100%',
+                }}
+              >
+                <Header title="District Setting" order={2} />
             <DistrictSettings />
+                </Box>
           </section>
         </section>
       </ComponentShield>
