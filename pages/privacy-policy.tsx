@@ -16,11 +16,11 @@ const PrivacyPolicy = () => {
             <h2 className="font-semibold">Last updated July 12, 2022</h2>
             <p>
               Thank you for choosing to be part of our community at Stepping
-              Stones App, a More Media Tech Service and will be known as
-              (“Stepping Stones“, “we“, “us“, “our“). We are committed to
-              protecting your personal information and your right to privacy. If
-              you have any questions or concerns about this privacy notice, or
-              our practices with regards to your personal information, please
+              Stones App, a Equilibrium Startup Lab LLC Service and will be
+              known as (“Stepping Stones“, “we“, “us“, “our“). We are committed
+              to protecting your personal information and your right to privacy.
+              If you have any questions or concerns about this privacy notice,
+              or our practices with regards to your personal information, please
               contact us at{' '}
               <a
                 href="mailto:support@steppingatonesapp.com"

@@ -42,10 +42,10 @@ const Footer = () => {
           <div>
             <p className="text-xs sm:text-sm">
               Stepping Stones App<sup>&copy;</sup> is the copyright and product
-              of <span>More Media International</span> {year}{' '}
+              of <span>Equilibrium Startup Lab LLC</span> {year}{' '}
             </p>
           </div>
-          <div className="flex items-center gap-2 flex-row sm:gap-3">
+          <div className="flex flex-row items-center gap-2 sm:gap-3">
             <Link
               className="cursor-pointer text-xs underline sm:text-sm"
               href="/privacy-policy"
