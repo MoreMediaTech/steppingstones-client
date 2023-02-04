@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Burger, Drawer, Group, Menu, Divider, Collapse } from '@mantine/core'
@@ -14,6 +13,7 @@ import { NEXT_URL } from '@config/index'
 import UserButton from '@components/UserButton'
 import { AppLogo } from './AppLogo'
 import styles from 'constants/styles'
+import { skipToken } from '@reduxjs/toolkit/dist/query'
 
 const Navbar = () => {
   const router = useRouter()

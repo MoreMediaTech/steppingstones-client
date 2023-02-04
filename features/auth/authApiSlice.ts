@@ -23,7 +23,10 @@ export const authApi = apiSlice.injectEndpoints({
               token: data.token,
             })
           )
-        } catch (error) {}
+        } catch (error) {
+          console.log(error)
+          dispatch(setError({ message: error.message }))
+        }
       },
     }),
     registerPartner: builder.mutation({
@@ -76,6 +79,7 @@ export const authApi = apiSlice.injectEndpoints({
           dispatch(setCredentials({ token }))
         } catch (err) {
           console.log(err)
+          dispatch(setError({ message: err.message }))
         }
       },
     }),

@@ -2,6 +2,10 @@ import React from 'react'
 import { useRouter } from 'next/router'
 import { MessageProps } from '@lib/types'
 import { FaTrash } from 'react-icons/fa'
+import { IoCreateSharp } from 'react-icons/io5'
+
+// component
+import CreateMessage from './CreateMessage'
 
 // redux
 import { useUpdateMsgStatusByIdMutation } from 'features/messages/messagesApiSlice'
@@ -25,6 +29,7 @@ const MessagesTable = ({
 }: IMessagesTableProps) => {
   const router = useRouter()
   const [updateMsgStatusById] = useUpdateMsgStatusByIdMutation()
+  const [opened, setOpened] = React.useState<boolean>(false)
 
   const handleUpdateIsRead = React.useCallback(
     async (message: MessageProps) => {
@@ -44,8 +49,9 @@ const MessagesTable = ({
     []
   )
   return (
+    <>
     <section className=" relative  w-full h-full  shadow-md sm:rounded-lg">
-      <div className="flex items-center gap-2 py-2 md:py-4">
+      <div className="flex flex-col md:flex-row md:items-center gap-2 py-2 md:py-4">
         <div className="relative mt-1">
           <label htmlFor="table-search" className="sr-only">
             Search
@@ -67,7 +73,7 @@ const MessagesTable = ({
           <input
             type="text"
             id="table-search"
-            className="block w-80 rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500  "
+            className="block w-full md:w-80 rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500  "
             placeholder="Search for items"
             onChange={handleSearch}
           />
@@ -80,6 +86,9 @@ const MessagesTable = ({
                 selectedMessageId.length > 0 ? 'text-red-500' : 'text-gray-400'
               }
             />
+          </button>
+          <button type="button" onClick={() => setOpened(o => !o)}>
+              <IoCreateSharp fontSize={34} className="text-gray-400"/>
           </button>
         </div>
       </div>
@@ -154,6 +163,8 @@ const MessagesTable = ({
         </table>
       </div>
     </section>
+    <CreateMessage opened={opened} setOpened={setOpened} />
+    </>
   )
 }
 

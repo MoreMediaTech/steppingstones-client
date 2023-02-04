@@ -7,7 +7,7 @@ import { MessageProps } from '@lib/types'
 import { useAppSelector, useAppDispatch } from 'state/hooks'
 import { messagesSelector, setReply } from 'features/messages/messagesSlice'
 
-type FormInputs = {
+export type FormInputs = {
   from: string
   subject: string
   message: string
