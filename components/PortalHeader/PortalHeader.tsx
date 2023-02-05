@@ -151,8 +151,7 @@ const PortalHeader = ({
             <FormInput
               label="Search"
               type="search"
-              name="search"
-              id="search"
+              aria-label="search"
               placeholder="Search"
               appendComponent={<IoIosSearch fontSize={25} fontWeight={500} />}
             />
