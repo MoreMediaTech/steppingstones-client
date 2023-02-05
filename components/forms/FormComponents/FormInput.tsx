@@ -10,6 +10,7 @@ import { CSSObject, TextInput } from '@mantine/core'
 import { IFormData } from '@lib/types'
 
 export type Ref = HTMLInputElement
+export type InputProps = React.ComponentPropsWithoutRef<'input'> 
 
 type FormInputProps<T extends unknown> = {
   title?: string
@@ -24,7 +25,7 @@ type FormInputProps<T extends unknown> = {
   errors?:
     | Merge<FieldError, FieldErrorsImpl<DeepRequired<IFormData>>>
     | undefined
-  props?: JSX.IntrinsicAttributes & React.RefAttributes<HTMLInputElement>
+  props?: InputProps
 }
 
 const FormInput = React.forwardRef(function FormInputInner<T extends unknown>(

@@ -93,6 +93,7 @@ const PartnerDirectoryTable = ({
   const [sortOrder, setSortOrder] = useState<SortOrder>('asc')
   const [windowSize] = useWindowSize()
   const printableArea = useRef<HTMLDivElement>(null)
+
   const handlePrint = useCallback(() => {
     if (printableArea.current) {
       const printWindow = window.open('', 'PRINT', 'height=800,width=800')
@@ -176,13 +177,14 @@ const PartnerDirectoryTable = ({
           />
         </div>
         <div className="col-span-1">
+          {/* Look into issue with onChange handler in FormInput component not being passed as props through forwardRef. */}
           <FormInput
             aria-label="closing-date-input"
             aria-errormessage="closing-date-error"
             placeholder="Filter by date"
             type="date"
             hidden
-            onChange={handleFilterByDate}
+            
           />
         </div>
         <div className="mt-2 flex items-center gap-2">
