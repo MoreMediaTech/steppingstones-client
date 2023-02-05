@@ -37,7 +37,7 @@ const MessagesTable = ({
       try {
         if (!message.isRead) {
           await updateMsgStatusById({
-            id: message.id,
+            id: message?.id as string,
             isRead: true,
             isArchived: false,
           }).unwrap()
@@ -154,7 +154,7 @@ const MessagesTable = ({
                 </td>
                 <td className="mt-4 hidden  px-6 py-4 md:flex">
                   <div className="flex flex-grow items-center justify-center">
-                    {new Date(message?.createdAt).toUTCString()}
+                    {new Date(message?.createdAt as string).toUTCString()}
                   </div>
                 </td>
               </tr>
