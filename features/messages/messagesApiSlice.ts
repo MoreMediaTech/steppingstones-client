@@ -22,9 +22,35 @@ export const messagesApi = messagesApiSlice.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Messages', id: 'LIST' }],
     }),
+    sendInAppMsg: builder.mutation<
+      { message: string; success: boolean },
+      MessageProps
+    >({
+      query: (data) => ({
+        url: 'messages/send-inapp-msg',
+        method: 'POST',
+        body: { ...data },
+      }),
+      invalidatesTags: [{ type: 'Messages', id: 'LIST' }],
+    }),
     getAllInAppEnquiryMsg: builder.query<MessageProps[], void>({
       query: () => ({
         url: 'messages/',
+      }),
+      providesTags: (result, error, arg) =>
+        result
+          ? [
+              ...result.map((email) => ({
+                type: 'Messages' as const,
+                id: email.id,
+              })),
+              { type: 'Messages', id: 'LIST' },
+            ]
+          : [{ type: 'Messages', id: 'LIST' }],
+    }),
+    getAllMsgSentByUser: builder.query<MessageProps[], void>({
+      query: () => ({
+        url: 'messages/sent-by-user',
       }),
       providesTags: (result, error, arg) =>
         result
@@ -83,9 +109,11 @@ export const messagesApi = messagesApiSlice.injectEndpoints({
 export const {
   useSendEnquiryMutation,
   useGetAllInAppEnquiryMsgQuery,
+  useGetAllMsgSentByUserQuery,
   useGetMessageByIdQuery,
   useDeleteMailByIdMutation,
   useSendEmailMutation,
+  useSendInAppMsgMutation,
   useDeleteManyMailMutation,
   useUpdateMsgStatusByIdMutation,
 } = messagesApi

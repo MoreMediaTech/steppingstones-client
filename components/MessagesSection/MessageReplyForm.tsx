@@ -8,9 +8,11 @@ import { useAppSelector, useAppDispatch } from 'state/hooks'
 import { messagesSelector, setReply } from 'features/messages/messagesSlice'
 
 export type FormInputs = {
+  to?: string
   from: string
   subject: string
   message: string
+  type?: 'external' | 'internal'
 }
 
 const MessageReplyForm = () => {

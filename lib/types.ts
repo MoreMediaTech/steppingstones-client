@@ -46,16 +46,16 @@ export interface IFormData {
 }
 
 export interface MessageProps {
-  id: string
+  id?: string
   from: string
-  to: string
+  to?: string
   subject: string
-  company: string
-  html: string
+  company?: string
+  html?: string
   message: string
-  createdAt: string
-  updatedAt: string
-  isRead: boolean
+  createdAt?: string
+  updatedAt?: string
+  isRead?: boolean
 }
 
 export type SourceDataProps = {

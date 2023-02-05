@@ -1,14 +1,25 @@
 import React, { useCallback, useState } from 'react'
-import { Loader } from '@mantine/core'
+import { Loader, Tabs, Text, Box } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
+import { MdEmail } from 'react-icons/md'
+import { SiMinutemailer } from 'react-icons/si'
+import { useMediaQuery } from '@mantine/hooks'
 
-import { useGetAllInAppEnquiryMsgQuery, useDeleteManyMailMutation } from 'features/messages/messagesApiSlice'
+import {
+  useGetAllInAppEnquiryMsgQuery,
+  useDeleteManyMailMutation,
+  useGetAllMsgSentByUserQuery,
+} from 'features/messages/messagesApiSlice'
 import MessagesTable from './MessagesTable'
 import { MessageProps } from '@lib/types'
 
-
 const MessagesSection = () => {
+  const matches = useMediaQuery('(max-width: 900px)', true, {
+    getInitialValueInEffect: false,
+  })
+
   const { data: messages, isLoading, refetch } = useGetAllInAppEnquiryMsgQuery()
+  const { data: sentMessages } = useGetAllMsgSentByUserQuery()
   const [searchResults, setSearchResults] = useState<MessageProps[]>([])
   const [selectedMessageId, setSelectedMessageId] = useState<string[]>([])
   const [checked, setChecked] = useState<boolean>(false)
@@ -72,18 +83,65 @@ const MessagesSection = () => {
   }
   return (
     <section className="h-full w-full dark:bg-primary-dark-800">
-      <MessagesTable
-        messages={
-          searchResults.length > 0
-            ? searchResults
-            : (messages as MessageProps[])
-        }
-        checked={checked}
-        selectedMessageId={selectedMessageId}
-        handleSearch={handleSearch}
-        handleSelect={handleSelect}
-        handleDeleteMany={handleDeleteMany}
-      />
+      <Tabs
+        color="violet"
+        variant="outline"
+        orientation={matches ? "horizontal" : "vertical"}
+        radius="xs"
+        defaultValue="inbox"
+        keepMounted={false}
+      >
+        <Tabs.List aria-label="messages">
+          <Tabs.Tab value="inbox" icon={<MdEmail fontSize={24} />}>
+            <Text fz="md" fw={500} className="text-gray-800 dark:text-gray-200">
+              Inbox
+            </Text>
+          </Tabs.Tab>
+          <Tabs.Tab value="sent" icon={<SiMinutemailer fontSize={24} />}>
+            <Text fz="md" fw={500} className="text-gray-800 dark:text-gray-200">
+              Sent
+            </Text>
+          </Tabs.Tab>
+        </Tabs.List>
+        <Tabs.Panel value="inbox" pt="xs">
+          <Box
+            sx={{
+              marginTop: '1rem',
+              marginLeft: '1rem',
+            }}
+          >
+            <MessagesTable
+              messages={
+                searchResults.length > 0
+                  ? searchResults
+                  : (messages as MessageProps[])
+              }
+              checked={checked}
+              selectedMessageId={selectedMessageId}
+              handleSearch={handleSearch}
+              handleSelect={handleSelect}
+              handleDeleteMany={handleDeleteMany}
+            />
+          </Box>
+        </Tabs.Panel>
+        <Tabs.Panel value="sent" pt="xs">
+          <Box
+            sx={{
+              marginTop: '1rem',
+              marginLeft: '1rem',
+            }}
+          >
+            <MessagesTable
+              messages={sentMessages as MessageProps[]}
+              checked={checked}
+              selectedMessageId={selectedMessageId}
+              handleSearch={handleSearch}
+              handleSelect={handleSelect}
+              handleDeleteMany={handleDeleteMany}
+            />
+          </Box>
+        </Tabs.Panel>
+      </Tabs>
     </section>
   )
 }

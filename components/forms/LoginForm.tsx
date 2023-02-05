@@ -2,20 +2,24 @@ import { useRef } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import { showNotification } from '@mantine/notifications'
-import { Button, PasswordInput, TextInput } from '@mantine/core'
+import { Button, PasswordInput } from '@mantine/core'
 import ReCAPTCHA from 'react-google-recaptcha'
 import Link from 'next/link'
 
 import { useLoginMutation } from 'features/auth/authApiSlice'
 import { NEXT_URL } from '@config/index'
-import { IFormData } from '@lib/types'
 import FormInput from './FormComponents/FormInput'
 import { useAppDispatch } from 'state/hooks'
 import { setCredentials } from 'features/auth/authSlice'
 import usePersist from '@hooks/usePersist'
 import FormCheckbox from './FormComponents/FormCheckBox'
 
-const LoginForm = () => {
+type LoginFormProps = {
+  email: string
+  password: string
+}
+
+const LoginForm: React.FC = (): JSX.Element => {
   const router = useRouter()
   const dispatch = useAppDispatch()
   const [login, { isLoading, isError, error: loginError }] = useLoginMutation()
@@ -24,11 +28,12 @@ const LoginForm = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<Partial<IFormData>>()
+  } = useForm<LoginFormProps>()
   const recaptchaRef = useRef<ReCAPTCHA | null>(null)
+  const formInputRef = useRef<HTMLInputElement | null>(null)
   const [persist, setPersist] = usePersist()
 
-  const handleLogin: SubmitHandler<Partial<IFormData>> = async (data) => {
+  const handleLogin: SubmitHandler<LoginFormProps> = async (data) => {
     const token = await recaptchaRef.current?.executeAsync()
     recaptchaRef?.current?.reset()
     try {
@@ -86,13 +91,12 @@ const LoginForm = () => {
         label="Username"
         type="email"
         {...register('email', {
-          required: true,
           pattern: {
             value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
             message: 'Invalid email address',
           },
         })}
-        errors={errors.email}
+        errors={errors.email }
         labelStyles={{ color: 'white' }}
         inputStyles={{ backgroundColor: 'white' }}
       />

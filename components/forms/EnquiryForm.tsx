@@ -57,7 +57,7 @@ const EnquiryForm = () => {
       <h1 className="mb-4 text-2xl font-bold text-primary-dark-100">
         Leave a message
       </h1>
-      <p className="text-justify font-normal text-tertiary">
+      <p className="text-tertiary text-justify font-normal">
         Fill the form and we will respond as soon as we can. Alternatively, you
         can reach out to us at{' '}
         <a
@@ -98,7 +98,7 @@ const EnquiryForm = () => {
             message: 'Please enter a valid company',
           },
         })}
-        errors={errors?.company}
+        errors={errors?.from}
       />
 
       <FormInput
@@ -141,7 +141,7 @@ const EnquiryForm = () => {
             message: 'Please enter a valid message',
           },
         })}
-        className="focus:shadow-outline w-full appearance-none rounded-md focus:outline-none bg-primary-light-100"
+        className="focus:shadow-outline w-full appearance-none rounded-md bg-primary-light-100 focus:outline-none"
       />
       {errors.message && (
         <span className="text-center text-sm text-red-500">

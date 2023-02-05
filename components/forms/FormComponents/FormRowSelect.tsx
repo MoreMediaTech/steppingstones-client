@@ -6,7 +6,7 @@ type SelectProps = {
   title?: string
   type: string
   list: string[]
-  label: string
+  label?: string
 }
 
 const FormRowSelect: React.FunctionComponent<
@@ -15,14 +15,16 @@ const FormRowSelect: React.FunctionComponent<
   ({ list, label, title, type, ...props }: SelectProps, ref) => (
     <>
       <div className="w-full space-y-2">
-        <label
-          htmlFor={type}
-          className="my-2 text-sm font-semibold text-gray-900 dark:text-primary-light-100"
-        >
-          {label} <span className="text-red-500">*</span>
-        </label>
+        {label ? (
+          <label
+            htmlFor={type}
+            className="my-2 text-sm font-semibold text-gray-900 dark:text-primary-light-100"
+          >
+            {label} <span className="text-red-500">*</span>
+          </label>
+        ) : null}
         <select
-          className="form-select block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 "
+          className="form-select block w-full rounded border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 "
           id={`${type}`}
           ref={ref}
           aria-label={`${type}-input`}

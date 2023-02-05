@@ -105,7 +105,7 @@ function RenderInsights() {
           defaultValue="users"
           keepMounted={false}
         >
-          <Tabs.List>
+          <Tabs.List aria-label="Insights Tabs">
             <Tabs.Tab
               value="users"
               icon={<FaUsers fontSize={24} color="#00dcb3" />}
