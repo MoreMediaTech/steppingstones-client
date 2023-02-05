@@ -152,7 +152,7 @@ const AdminSidebar = ({ handleLogout }: { handleLogout?: () => void }) => {
               return (
                 <Link
                   key={label}
-                  href={href}
+                  href={href as string}
                   className="relative flex space-x-4 rounded-lg  p-2 group-hover:hover:bg-[#00DCB3]/20"
                   onClick={() => dispatch(setDrawerOpened(false))}
                 >
@@ -176,7 +176,7 @@ const AdminSidebar = ({ handleLogout }: { handleLogout?: () => void }) => {
             return (
               <Link
                 key={label}
-                href={href}
+                href={href as string}
                 className="flex items-center justify-start space-x-2 px-2 group-hover:hover:bg-[#00DCB3]/20"
                 onClick={() => dispatch(setDrawerOpened(false))}
               >
