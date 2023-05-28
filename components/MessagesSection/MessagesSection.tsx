@@ -1,3 +1,4 @@
+'use client'
 import React, { useCallback, useState } from 'react'
 import { Loader, Tabs, Text, Box } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
@@ -9,7 +10,7 @@ import {
   useGetAllInAppEnquiryMsgQuery,
   useDeleteManyMailMutation,
   useGetAllMsgSentByUserQuery,
-} from 'features/messages/messagesApiSlice'
+} from 'app/global-state/features/messages/messagesApiSlice'
 import MessagesTable from './MessagesTable'
 import { MessageProps } from '@lib/types'
 
@@ -86,7 +87,7 @@ const MessagesSection = () => {
       <Tabs
         color="violet"
         variant="outline"
-        orientation={matches ? "horizontal" : "vertical"}
+        orientation={matches ? 'horizontal' : 'vertical'}
         radius="xs"
         defaultValue="inbox"
         keepMounted={false}

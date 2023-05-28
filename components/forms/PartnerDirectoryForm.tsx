@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import { Button } from '@mantine/core'
 import {
@@ -9,9 +10,9 @@ import {
 } from 'react-hook-form'
 
 import { IFormData } from '@lib/types'
-import { useAppSelector, useAppDispatch } from 'state/hooks'
+import { useAppSelector, useAppDispatch } from 'app/global-state/hooks'
 import FormInput from './FormComponents/FormInput'
-import { partnerSelector } from 'features/partner/partnerSlice'
+import { partnerSelector } from 'app/global-state/features/partner/partnerSlice'
 
 interface IPartnerDirectoryFormProps {
   errors: FieldErrorsImpl<DeepRequired<IFormData>>

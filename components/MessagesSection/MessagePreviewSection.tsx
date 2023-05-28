@@ -1,5 +1,6 @@
-import React, { useCallback, useState } from 'react'
-import { useRouter } from 'next/router'
+'use client'
+import React, { useCallback } from 'react'
+import { useRouter } from 'next/navigation'
 import { FaTrash } from 'react-icons/fa'
 import { AiOutlineArrowLeft } from 'react-icons/ai'
 import { format } from 'date-fns'
@@ -8,12 +9,15 @@ import { IoArrowUndoSharp } from 'react-icons/io5'
 import {
   useGetMessageByIdQuery,
   useDeleteMailByIdMutation,
-} from 'features/messages/messagesApiSlice'
+} from 'app/global-state/features/messages/messagesApiSlice'
 import { Loader } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import useWindowSize from '@hooks/useWindowSize'
-import { useAppDispatch, useAppSelector } from 'state/hooks'
-import { setReply, messagesSelector } from 'features/messages/messagesSlice'
+import { useAppDispatch, useAppSelector } from 'app/global-state/hooks'
+import {
+  setReply,
+  messagesSelector,
+} from 'app/global-state/features/messages/messagesSlice'
 import { MessageProps } from '@lib/types'
 import MessageReplyForm from './MessageReplyForm'
 

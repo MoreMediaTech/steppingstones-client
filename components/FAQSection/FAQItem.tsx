@@ -1,3 +1,4 @@
+'use client';
 import { useState } from 'react'
 import { AiOutlineRight } from 'react-icons/ai'
 import { Collapse } from '@mantine/core'
@@ -7,14 +8,14 @@ const FAQItem = (item: { id: number; question: string; answer: string }) => {
   return (
     <div
       key={`${item.id}`}
-      className="flex w-full flex-col space-y-4 rounded-md border border-gray-200 p-6"
+      className="flex w-full flex-col space-y-4 rounded-md border border-gray-300 p-6"
     >
       <button
         type="button"
         className="flex flex-row items-center justify-between"
         onClick={() => setOpen(() => !opened)}
       >
-        <h3>{item.question}</h3>
+        <h3 className="text-gray-700 dark:text-gray-100">{item.question}</h3>
         <span
           className={`${
             opened
@@ -26,7 +27,7 @@ const FAQItem = (item: { id: number; question: string; answer: string }) => {
         </span>
       </button>
       <Collapse in={opened} animateOpacity>
-        <p className="text-gray-300">{item.answer}</p>
+        <p className="text-gray-500 dark:text-gray-300">{item.answer}</p>
       </Collapse>
     </div>
   )

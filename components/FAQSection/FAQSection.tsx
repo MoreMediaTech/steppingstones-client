@@ -2,14 +2,13 @@ import { faqItems } from 'data'
 import FAQItem from './FAQItem'
 
 const FAQSection = () => {
-  
   return (
-    <section id="faqs" className=" space-y-4  pt-24 ">
+    <section id="faqs" className=" mx-auto  max-w-screen-md space-y-4 pt-24 ">
       <div className="space-y-4 px-2 md:px-0">
-        <h1 className="text-center text-3xl md:text-4xl font-medium text-primary-dark-100">
+        <h1 className="text-center text-3xl font-medium text-primary-dark-100 md:text-4xl">
           FAQs
         </h1>
-        <h3 className="font-base text-center md:text-xl text-[#00DCB3]">
+        <h3 className="font-base text-center text-[#00DCB3] md:text-xl">
           Find out what's in store. For more questions, email us at{' '}
           <a href="mailto: info@steppingatonesapp.com">
             info@steppingatonesapp.com

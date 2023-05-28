@@ -1,9 +1,13 @@
-import { useCallback, useEffect, useState } from 'react'
+'use client'
+import { useCallback, useEffect } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { SectionProps, IFormData, SubSectionProps } from '@lib/types'
 import { Button, Checkbox, TextInput } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import { useUpdateSectionByIdMutation, useUpdateSubSectionByIdMutation } from 'features/editor/editorApiSlice'
+import {
+  useUpdateSectionByIdMutation,
+  useUpdateSubSectionByIdMutation,
+} from 'app/global-state/features/editor/editorApiSlice'
 
 const UpdateSectionForm = ({
   sectionData,
@@ -17,7 +21,8 @@ const UpdateSectionForm = ({
   handleModalClose?: () => void
 }) => {
   const [updateSectionById, { isLoading }] = useUpdateSectionByIdMutation()
-  const [updateSubSectionById, { isLoading: isLoadingSubSection }] = useUpdateSubSectionByIdMutation()
+  const [updateSubSectionById, { isLoading: isLoadingSubSection }] =
+    useUpdateSubSectionByIdMutation()
   const defaultValues = {
     name: sectionData?.name ? (sectionData?.name as string) : '',
     isLive: sectionData?.isLive ? (sectionData?.isLive as boolean) : false,
@@ -40,12 +45,14 @@ const UpdateSectionForm = ({
   const submitHandler: SubmitHandler<Partial<IFormData>> = useCallback(
     async (data) => {
       const newData = { id: sectionData?.id, ...data }
-      let response;
+      let response
       try {
         if (type === 'Section') {
           response = await updateSectionById(newData as SectionProps).unwrap()
-        } else if(type === 'SubSection') {
-          response = await updateSubSectionById(newData as SubSectionProps).unwrap()
+        } else if (type === 'SubSection') {
+          response = await updateSubSectionById(
+            newData as SubSectionProps
+          ).unwrap()
         }
         refetch()
         handleModalClose!()

@@ -7,8 +7,8 @@ import steppinstonesapplogo from '../../public/android-chrome-512x512.png'
 const Footer = () => {
   const year = new Date().getFullYear()
   return (
-    <footer className="bottom-0 left-0 mb-0 w-full border-t border-indigo-100 bg-primary-light-100 py-4 text-gray-900 dark:bg-primary-dark-800 dark:text-primary-light-100">
-      <div className="container mx-auto space-y-4">
+    <footer className="bottom-0 left-0 mb-0 py-2 w-full border-t-2 border-slate-300  dark:text-primary-light-100">
+      <div className="container mx-auto max-w-screen-md space-y-2">
         <div className="flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
           <div>
             <Image
@@ -19,7 +19,7 @@ const Footer = () => {
             />
           </div>
           <div>
-            <nav className=" flex flex-col justify-between space-y-4 text-center text-sm  font-medium sm:flex-row sm:space-y-0 sm:space-x-24">
+            <nav className=" flex flex-col justify-between space-y-4 text-center text-sm  font-medium sm:flex-row sm:space-x-24 sm:space-y-0">
               <a className="font-semibold " href="#about">
                 About
               </a>
@@ -38,7 +38,7 @@ const Footer = () => {
             </a>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-between gap-4 border-t py-4 text-center sm:h-24 sm:w-full sm:flex-row sm:py-0">
+        <div className="flex flex-col items-center justify-between py-2 text-center sm:w-full  md:flex-row md:gap-4">
           <div>
             <p className="text-xs sm:text-sm">
               Stepping Stones App<sup>&copy;</sup> is the copyright and product

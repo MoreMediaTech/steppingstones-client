@@ -1,14 +1,18 @@
+'use client'
 import { useState, useEffect } from 'react'
 import { Group, Burger } from '@mantine/core'
 import { IoIosSearch } from 'react-icons/io'
 import { useTheme } from 'next-themes'
 import { FiMoon, FiSun } from 'react-icons/fi'
-import { useRouter } from 'next/router'
+import { useRouter, usePathname } from 'next/navigation'
 import { CurrentUser, CountyDataProps, DistrictDataProps } from '@lib/types'
 import ContentDrawer from '@components/navigation/ContentDrawer/ContentDrawer'
 import Avatar from '@components/Avatar'
-import { useAppSelector, useAppDispatch } from 'state/hooks'
-import { globalSelector, setDrawerOpened } from 'features/global/globalSlice'
+import { useAppSelector, useAppDispatch } from 'app/global-state/hooks'
+import {
+  globalSelector,
+  setDrawerOpened,
+} from 'app/global-state/features/global/globalSlice'
 import FormInput from '@components/forms/FormComponents/FormInput'
 
 interface IPortalHeaderProps {
@@ -27,6 +31,7 @@ const PortalHeader = ({
   imgUrl,
 }: IPortalHeaderProps) => {
   const router = useRouter()
+  const pathname = usePathname()
   const dispatch = useAppDispatch()
   const { drawerOpened } = useAppSelector(globalSelector)
   const { theme, setTheme, resolvedTheme } = useTheme()
@@ -56,7 +61,7 @@ const PortalHeader = ({
 
   return (
     <header
-      className={`bg-primary-light-100 py-2 px-4 drop-shadow-md dark:bg-primary-dark-700`}
+      className={`bg-primary-light-100 px-4 py-2 drop-shadow-md dark:bg-primary-dark-700`}
     >
       <div className="mx-auto py-2 md:px-4">
         <div className="flex flex-col items-start justify-between md:flex-row md:items-center">
@@ -88,18 +93,18 @@ const PortalHeader = ({
                 </h3>
               </div>
             </Group>
-            <div className="m-0 md:hidden list-none px-1 flex ">
+            <div className="m-0 flex list-none px-1 md:hidden ">
               <button
                 type="button"
                 aria-label="toggle-theme-button"
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className={`focus:ring-none ml-4 flex cursor-pointer list-none  p-1 font-medium focus:border-transparent focus:outline-none md:block lg:ml-0 lg:mb-0 lg:p-1 lg:px-1`}
+                className={`focus:ring-none ml-4 flex cursor-pointer list-none  p-1 font-medium focus:border-transparent focus:outline-none md:block lg:mb-0 lg:ml-0 lg:p-1 lg:px-1`}
               >
                 {resolvedTheme === 'light' ? (
                   <FiSun
                     fontSize={18}
                     className={`${
-                      router.asPath === '/' && pos === 'top'
+                      pathname === '/' && pos === 'top'
                         ? 'text-primary-dark-100 dark:text-primary-light-100'
                         : 'text-primary-dark-100 dark:text-primary-light-100'
                     } font-bold `}
@@ -108,7 +113,7 @@ const PortalHeader = ({
                   <FiMoon
                     fontSize={18}
                     className={`${
-                      router.asPath === '/' && pos === 'top'
+                      pathname === '/' && pos === 'top'
                         ? 'text-primary-dark-100 dark:text-primary-light-100'
                         : 'text-primary-dark-100 dark:text-primary-light-100'
                     } font-bold `}
@@ -124,13 +129,13 @@ const PortalHeader = ({
                 type="button"
                 aria-label="toggle-theme-button"
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className={`focus:ring-none ml-4 flex cursor-pointer list-none  p-1 font-medium focus:border-transparent focus:outline-none md:block lg:ml-0 lg:mb-0 lg:p-1 lg:px-1`}
+                className={`focus:ring-none ml-4 flex cursor-pointer list-none  p-1 font-medium focus:border-transparent focus:outline-none md:block lg:mb-0 lg:ml-0 lg:p-1 lg:px-1`}
               >
                 {resolvedTheme === 'light' ? (
                   <FiSun
                     fontSize={18}
                     className={`${
-                      router.asPath === '/' && pos === 'top'
+                      pathname === '/' && pos === 'top'
                         ? 'text-primary-dark-100 dark:text-primary-light-100'
                         : 'text-primary-dark-100 dark:text-primary-light-100'
                     } font-bold `}
@@ -139,7 +144,7 @@ const PortalHeader = ({
                   <FiMoon
                     fontSize={18}
                     className={`${
-                      router.asPath === '/' && pos === 'top'
+                      pathname === '/' && pos === 'top'
                         ? 'text-primary-dark-100 dark:text-primary-light-100'
                         : 'text-primary-dark-100 dark:text-primary-light-100'
                     } font-bold `}

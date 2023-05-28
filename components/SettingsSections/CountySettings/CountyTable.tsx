@@ -1,9 +1,5 @@
-import React, {
-  useState,
-  useCallback,
-  useEffect,
-  MouseEventHandler,
-} from 'react'
+'use client'
+import React, { useState, useCallback, MouseEventHandler } from 'react'
 import { FaEdit, FaTrash, FaCheck, FaTimes } from 'react-icons/fa'
 import { Button } from '@mantine/core'
 import Image from 'next/image'
@@ -13,11 +9,14 @@ import { BiChevronUpSquare, BiChevronDownSquare } from 'react-icons/bi'
 
 import steppingstonesapplogo from '../../../public/steppingstonesapplogo.png'
 import { CountyDataProps } from '@lib/types'
-import { useRemoveCountyMutation } from 'features/editor/editorApiSlice'
+import { useRemoveCountyMutation } from 'app/global-state/features/editor/editorApiSlice'
 import { showNotification } from '@mantine/notifications'
 import HandleDeleteModal from '../../HandleDeleteModal/HandleDeleteModal'
-import { useAppDispatch, useAppSelector } from 'state/hooks'
-import { editorSelector, setCounty } from 'features/editor/editorSlice'
+import { useAppDispatch, useAppSelector } from 'app/global-state/hooks'
+import {
+  editorSelector,
+  setCounty,
+} from 'app/global-state/features/editor/editorSlice'
 import useWindowSize from 'hooks/useWindowSize'
 
 interface CountyTableProps {

@@ -1,3 +1,4 @@
+'use client'
 import { useCallback, useEffect } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 
@@ -9,7 +10,7 @@ import FormCheckbox from './FormComponents/FormCheckBox'
 import {
   useCreateSDDataMutation,
   useUpdateSDDataMutation,
-} from 'features/editor/editorApiSlice'
+} from 'app/global-state/features/editor/editorApiSlice'
 import { showNotification } from '@mantine/notifications'
 import { SourceDirectoryType } from '@lib/types'
 
@@ -30,7 +31,7 @@ const SourceDirectoryForm = ({
 }: ISearchFormProps) => {
   const [createSDData, { isLoading: isCreating }] = useCreateSDDataMutation()
   const [updateSDData, { isLoading: isUpdating }] = useUpdateSDDataMutation()
-  
+
   const {
     register,
     handleSubmit,
@@ -62,7 +63,7 @@ const SourceDirectoryForm = ({
         if (action === 'CREATE') {
           response = await createSDData(data).unwrap()
         } else if (action === 'UPDATE') {
-          const updatedData = {id: currentSDData?.id, ...data}
+          const updatedData = { id: currentSDData?.id, ...data }
           response = await updateSDData(updatedData).unwrap()
         }
         refetch()

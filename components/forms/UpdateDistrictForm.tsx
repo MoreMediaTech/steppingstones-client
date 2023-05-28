@@ -1,9 +1,18 @@
-import { useCallback, useEffect, useState } from 'react'
+'use client'
+import { useCallback, useEffect } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { DistrictDataProps, DistrictSectionProps, IFormData, SectionProps } from '@lib/types'
-import { Button, Checkbox, TextInput } from '@mantine/core'
+import {
+  DistrictDataProps,
+  DistrictSectionProps,
+  IFormData,
+  SectionProps,
+} from '@lib/types'
+import { Button, TextInput } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import { useUpdateDistrictByIdMutation, useUpdateDistrictSectionByIdMutation } from 'features/editor/editorApiSlice'
+import {
+  useUpdateDistrictByIdMutation,
+  useUpdateDistrictSectionByIdMutation,
+} from 'app/global-state/features/editor/editorApiSlice'
 
 const UpdateDistrictForm = ({
   refetch,
@@ -17,7 +26,8 @@ const UpdateDistrictForm = ({
   handleModalClose?: () => void
 }) => {
   const [updateDistrictById, { isLoading }] = useUpdateDistrictByIdMutation()
-  const [updateDistrictSectionById, { isLoading: isLoadingLASection }] = useUpdateDistrictSectionByIdMutation()
+  const [updateDistrictSectionById, { isLoading: isLoadingLASection }] =
+    useUpdateDistrictSectionByIdMutation()
 
   const defaultValues = {
     name: dataParams?.name ? (dataParams?.name as string) : '',
@@ -48,8 +58,10 @@ const UpdateDistrictForm = ({
         if (type === 'District') {
           await updateDistrictById(newData as DistrictDataProps).unwrap()
         }
-        if(type === 'DistrictSection'){
-          await updateDistrictSectionById(newData as DistrictSectionProps).unwrap()
+        if (type === 'DistrictSection') {
+          await updateDistrictSectionById(
+            newData as DistrictSectionProps
+          ).unwrap()
         }
         refetch()
         handleModalClose!()

@@ -1,3 +1,4 @@
+'use client'
 import React, { useState, useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { showNotification } from '@mantine/notifications'
@@ -6,9 +7,12 @@ import { Loader } from '@mantine/core'
 import {
   useGetAllSDDataByTypeQuery,
   useDeleteManySDDataMutation,
-} from 'features/editor/editorApiSlice'
-import { useAppSelector, useAppDispatch } from 'state/hooks'
-import { editorSelector, setSDData } from 'features/editor/editorSlice'
+} from 'app/global-state/features/editor/editorApiSlice'
+import { useAppSelector, useAppDispatch } from 'app/global-state/hooks'
+import {
+  editorSelector,
+  setSDData,
+} from 'app/global-state/features/editor/editorSlice'
 import SourceDirectoryTable from './SourceDirectoryTable'
 import { SourceDataProps, SourceDirectoryType } from '@lib/types'
 import SearchForm from './SearchForm'

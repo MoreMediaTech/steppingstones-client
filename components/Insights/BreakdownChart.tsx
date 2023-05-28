@@ -1,3 +1,4 @@
+'use client';
 import React from 'react'
 import { ResponsivePie } from '@nivo/pie'
 import { themeSettings } from '../../constants/styles'

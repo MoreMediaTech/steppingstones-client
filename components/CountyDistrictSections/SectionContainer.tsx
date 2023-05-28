@@ -1,3 +1,4 @@
+'use client';
 import { useCallback, useState, useEffect } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { showNotification } from '@mantine/notifications'

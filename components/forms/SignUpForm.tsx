@@ -1,3 +1,4 @@
+'use client';
 import { IFormData } from '@lib/types'
 import React from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
@@ -28,7 +29,7 @@ const SignUpForm = () => {
   return (
     <form
       onSubmit={handleSubmit(handleSignUp)}
-      className="flex w-full flex-col items-center space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2"
+      className="flex w-full flex-col items-center space-y-2 md:flex-row md:space-y-0 md:space-x-2"
     >
       <div className="w-full rounded-md bg-gray-200 p-1">
         <label htmlFor="name"></label>

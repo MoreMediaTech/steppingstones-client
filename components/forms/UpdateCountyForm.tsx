@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useState } from 'react'
+'use client'
+import { useCallback, useEffect } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { CountyDataProps, IFormData } from '@lib/types'
-import { Button, Checkbox, TextInput } from '@mantine/core'
+import { Button, TextInput } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import { useUpdateCountyMutation } from 'features/editor/editorApiSlice'
+import { useUpdateCountyMutation } from 'app/global-state/features/editor/editorApiSlice'
 
 const UpdateCountyForm = ({
   refetch,
@@ -14,13 +15,12 @@ const UpdateCountyForm = ({
   county?: CountyDataProps
   handleModalClose?: () => void
 }) => {
-  const [updateCounty, {isLoading}] = useUpdateCountyMutation()
+  const [updateCounty, { isLoading }] = useUpdateCountyMutation()
   const defaultValues = {
     name: county?.name ? (county?.name as string) : '',
     published: county?.published ? (county?.published as boolean) : false,
     logoFile: county?.logoIcon ? (county?.logoIcon as string) : '',
   }
-
 
   const {
     register,
@@ -31,12 +31,10 @@ const UpdateCountyForm = ({
     defaultValues: { ...defaultValues },
   })
 
-
   useEffect(() => {
     // reset the form when the user changes
     reset({ ...defaultValues })
   }, [])
-
 
   const submitHandler: SubmitHandler<Partial<IFormData>> = useCallback(
     async (data) => {

@@ -2,7 +2,7 @@ import React from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 
-import { useLogoutMutation } from 'features/auth/authApiSlice'
+import { useLogoutMutation } from 'app/global-state/features/auth/authApiSlice'
 import { AdminSidebar } from '@components/navigation'
 import { NEXT_URL } from '@config/index'
 import { Children } from '@lib/types'
@@ -88,9 +88,7 @@ const AdminLayout = ({
         <meta name="theme-color" content="#000000" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <AdminSidebar
-        handleLogout={handleLogout}
-      />
+      <AdminSidebar handleLogout={handleLogout} />
       <section
         className={`
         relative w-full bg-primary-light-50 dark:bg-primary-dark-800`}

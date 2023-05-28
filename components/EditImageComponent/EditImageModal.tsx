@@ -1,9 +1,10 @@
-import { CurrentUser, EditImageProps, IFormData } from '@lib/types'
+'use client'
+import { CurrentUser, EditImageProps } from '@lib/types'
 import React, { useCallback, useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { Modal } from '@mantine/core'
 import EditImageComponent from './EditImageForm'
-import { useUpdateUserMutation } from 'features/user/usersApiSlice'
+import { useUpdateUserMutation } from 'app/global-state/features/user/usersApiSlice'
 import { showNotification } from '@mantine/notifications'
 
 const EditImageModal = ({
@@ -41,26 +42,25 @@ const EditImageModal = ({
     }
   }
 
-const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  e.preventDefault()
-  const file = e.target.files?.[0]
-  if (file) {
-    uploadFileHandler(file)
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    const file = e.target.files?.[0]
+    if (file) {
+      uploadFileHandler(file)
+    }
   }
-}
 
   const submitHandler: SubmitHandler<EditImageProps> = useCallback(
     async (data) => {
       const updatedImg = {
         id: user?.id,
-        imageFile: preview
+        imageFile: preview,
       }
       try {
         await updateUser(updatedImg).unwrap()
         setOpened(false)
         setPreview(null)
         refetch()
-        
       } catch (error) {
         showNotification({
           message: 'Something went wrong! Unable to upload Image',

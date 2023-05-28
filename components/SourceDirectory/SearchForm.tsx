@@ -1,10 +1,6 @@
-import {
-  UseFormRegister,
-  UseFormReset,
-  FieldErrorsImpl,
-  DeepRequired,
-} from 'react-hook-form'
-import { List } from '@mantine/core';
+'use client';
+import { UseFormRegister } from 'react-hook-form'
+import { List } from '@mantine/core'
 
 import FormRowSelect from '@components/forms/FormComponents/FormRowSelect'
 import { IFormDataProps } from '.'
@@ -16,11 +12,7 @@ interface ISearchFormProps {
   handleModalOpen: () => void
 }
 
-const SearchForm = ({
-  register,
-  types,
-  handleModalOpen,
-}: ISearchFormProps) => {
+const SearchForm = ({ register, types, handleModalOpen }: ISearchFormProps) => {
   return (
     <div className="relative mx-2  mt-5  bg-primary-light-50 p-2 font-poppins dark:bg-primary-dark-600 dark:text-primary-light-100 md:mx-auto md:p-4">
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">

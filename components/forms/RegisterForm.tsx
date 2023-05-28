@@ -1,10 +1,8 @@
-import { useState, useEffect } from 'react'
+'use client'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { useSelector } from 'react-redux'
 import { IFormData } from '@lib/types'
-import { useAppDispatch } from 'state/hooks'
 import { showNotification } from '@mantine/notifications'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import {
   Button,
   Checkbox,
@@ -14,7 +12,7 @@ import {
 } from '@mantine/core'
 import Link from 'next/link'
 
-import { useRegisterPartnerMutation } from 'features/auth/authApiSlice'
+import { useRegisterPartnerMutation } from 'app/global-state/features/auth/authApiSlice'
 import { counties } from 'data'
 
 import { NEXT_URL } from '@config/index'

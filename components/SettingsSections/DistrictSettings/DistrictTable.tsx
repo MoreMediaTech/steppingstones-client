@@ -1,3 +1,4 @@
+'use client'
 import React, { useState, useCallback, MouseEventHandler } from 'react'
 import { FaEdit, FaTrash, FaCheck, FaTimes } from 'react-icons/fa'
 import { Button } from '@mantine/core'
@@ -8,15 +9,15 @@ import { BiChevronDownSquare, BiChevronUpSquare } from 'react-icons/bi'
 
 import steppingstonesapplogo from '../../../public/steppingstonesapplogo.png'
 import { DistrictDataProps } from '@lib/types'
-import { useDeleteDistrictByIdMutation } from 'features/editor/editorApiSlice'
+import { useDeleteDistrictByIdMutation } from 'app/global-state/features/editor/editorApiSlice'
 import { showNotification } from '@mantine/notifications'
 import HandleDeleteModal from '../../HandleDeleteModal/HandleDeleteModal'
 import DistrictSectionsTable from './DistrictSectionsTable'
-import { useAppSelector, useAppDispatch } from '../../../state/hooks'
+import { useAppSelector, useAppDispatch } from '../../../app/global-state/hooks'
 import {
   editorSelector,
   setDistrict,
-} from '../../../features/editor/editorSlice'
+} from '../../../app/global-state/features/editor/editorSlice'
 import useWindowSize from 'hooks/useWindowSize'
 
 interface IDistrictTableProps {

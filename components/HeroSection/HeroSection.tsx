@@ -3,7 +3,10 @@ import Image from 'next/image'
 
 const HeroSection = () => {
   return (
-    <section id='heroSection' className="relative flex items-center justify-center p-4  md:h-[800px] mt-14 md:mt-0">
+    <section
+      id="hero"
+      className="relative mt-14 flex items-center justify-center  p-4 sm:h-[600px] md:h-[800px] md:mt-0"
+    >
       <div className="absolute h-full w-full bg-cover bg-center bg-no-repeat">
         <div className="relative h-full w-full">
           <Image
@@ -19,8 +22,8 @@ const HeroSection = () => {
           ></div>
         </div>
       </div>
-      <div className="relative grid grid-cols-1 sm:max-w-screen-xl sm:gap-12 sm:space-x-14 md:grid-cols-2 ">
-        <div className="   ">
+      <div className="relative grid grid-cols-1 sm:max-w-screen-md sm:grid-cols-2 sm:gap-12 sm:space-x-14 ">
+        <div className="relative">
           <Image
             src={'/ssapp_hero_section.png'}
             alt="Hero section image"

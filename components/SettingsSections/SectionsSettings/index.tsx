@@ -1,3 +1,4 @@
+'use client'
 import React, { useCallback, useState } from 'react'
 import { Loader } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
@@ -5,7 +6,7 @@ import { showNotification } from '@mantine/notifications'
 import {
   useGetSectionsQuery,
   useDeleteManySectionsMutation,
-} from 'features/editor/editorApiSlice'
+} from 'app/global-state/features/editor/editorApiSlice'
 import { SectionProps } from '@lib/types'
 import SectionsTable from './SectionsTable'
 import UpdateSectionModal from './UpdateSectionModal'
@@ -24,8 +25,8 @@ const SectionsSettings = () => {
   const [checked, setChecked] = useState<boolean>(false)
   const [selectedSectionIds, setSelectedSectionIds] = useState<string[]>([])
 
-  const [deleteManySections, { isLoading: isDeleting }] = useDeleteManySectionsMutation()
-
+  const [deleteManySections, { isLoading: isDeleting }] =
+    useDeleteManySectionsMutation()
 
   const handleModalClose = () => {
     setOpen(false)
@@ -75,7 +76,7 @@ const SectionsSettings = () => {
         autoClose: 3000,
       })
     }
-  } , [checked, selectedSectionIds])
+  }, [checked, selectedSectionIds])
 
   if (isLoadingSections) {
     return (

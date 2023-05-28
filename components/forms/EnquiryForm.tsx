@@ -1,12 +1,13 @@
+'use client'
 import { useRef } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { showNotification } from '@mantine/notifications'
 import { Button, Textarea, TextInput } from '@mantine/core'
 import ReCAPTCHA from 'react-google-recaptcha'
 
 import { IEmailFormData } from '@lib/types'
-import { useSendEnquiryMutation } from 'features/messages/messagesApiSlice'
+import { useSendEnquiryMutation } from 'app/global-state/features/messages/messagesApiSlice'
 import { enquiryEmailTemplate } from '@lib/emailTemplates'
 import FormInput from './FormComponents/FormInput'
 
@@ -52,7 +53,7 @@ const EnquiryForm = () => {
   return (
     <form
       onSubmit={handleSubmit(handleSendEmail)}
-      className="flex flex-col space-y-2 rounded-lg bg-primary-light-100 px-8 py-8 shadow-2xl "
+      className="flex flex-col space-y-2 rounded-lg bg-primary-light-100 px-8 py-8 shadow-2xl"
     >
       <h1 className="mb-4 text-2xl font-bold text-primary-dark-100">
         Leave a message
@@ -166,7 +167,7 @@ const EnquiryForm = () => {
           {isLoading ? 'Sending...' : 'Send'}
         </Button>
       </div>
-      <p className="text-justify text-sm font-normal text-gray-300">
+      <p className="text-justify text-sm font-normal text-gray-500">
         This site is protected by reCAPTCHA and the Google{' '}
         <a
           href="https://policies.google.com/privacy"

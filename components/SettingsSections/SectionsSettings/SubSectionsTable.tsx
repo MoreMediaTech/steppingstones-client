@@ -1,3 +1,4 @@
+'use client'
 import React, { useState, useCallback } from 'react'
 import { FaEdit, FaTrash, FaCheck, FaTimes } from 'react-icons/fa'
 import { Button, Loader } from '@mantine/core'
@@ -11,9 +12,12 @@ import {
   useDeleteSubSectionByIdMutation,
   useGetSubSectionsBySectionIdQuery,
   useDeleteManySubSectionsMutation,
-} from 'features/editor/editorApiSlice'
-import { useAppDispatch, useAppSelector } from 'state/hooks'
-import { setSectionType, editorSelector } from 'features/editor/editorSlice'
+} from 'app/global-state/features/editor/editorApiSlice'
+import { useAppDispatch, useAppSelector } from 'app/global-state/hooks'
+import {
+  setSectionType,
+  editorSelector,
+} from 'app/global-state/features/editor/editorSlice'
 import HandleDeleteModal from '../../HandleDeleteModal/HandleDeleteModal'
 import UpdateSectionModal from './UpdateSectionModal'
 
@@ -127,9 +131,6 @@ const SubSectionsTable = ({
   return (
     <>
       <Modal
-        overlayColor="rgba(0, 0, 0, 0.5)"
-        overlayOpacity={0.55}
-        overlayBlur={3}
         size="80%"
         opened={openSubSectionModal}
         onClose={handleModalClose}

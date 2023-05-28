@@ -1,3 +1,4 @@
+'use client'
 import React, { useCallback } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
@@ -5,7 +6,7 @@ import { showNotification } from '@mantine/notifications'
 import { Button, Modal, TextInput, UnstyledButton } from '@mantine/core'
 import { IoMdCloseCircleOutline } from 'react-icons/io'
 
-import { useCreateDistrictMutation } from 'features/editor/editorApiSlice'
+import { useCreateDistrictMutation } from 'app/global-state/features/editor/editorApiSlice'
 import { NEXT_URL } from '@config/index'
 
 type FormDataProps = {
@@ -17,13 +18,13 @@ const AddDistrictForm = ({
   setOpened,
   countyId,
   county,
-   refetch,
+  refetch,
 }: {
   opened: boolean
   setOpened: React.Dispatch<React.SetStateAction<boolean>>
   countyId: string
   county: string
-   refetch: () => void
+  refetch: () => void
 }) => {
   const {
     handleSubmit,
@@ -43,13 +44,13 @@ const AddDistrictForm = ({
 
   const submitHandler: SubmitHandler<FormDataProps> = useCallback(
     async (data) => {
-        const newData = { ...data, countyId }
+      const newData = { ...data, countyId }
       try {
         await createDistrict(newData).unwrap()
         handleClose()
         router.push({
           pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}`,
-          query: { county, countyId},
+          query: { county, countyId },
         })
       } catch (error) {
         if (!error?.response) {
@@ -82,7 +83,13 @@ const AddDistrictForm = ({
     []
   )
   return (
-    <Modal centered size="md" opened={opened} onClose={handleClose} title="Create a new District">
+    <Modal
+      centered
+      size="md"
+      opened={opened}
+      onClose={handleClose}
+      title="Create a new District"
+    >
       {/* Modal content */}
       <form onSubmit={handleSubmit(submitHandler)}>
         <div className="my-4 w-full">

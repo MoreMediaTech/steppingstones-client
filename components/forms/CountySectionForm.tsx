@@ -1,23 +1,15 @@
-import {
-  Button,
-  Checkbox,
-  Divider,
-  Indicator,
-  Textarea,
-  TextInput,
-} from '@mantine/core'
+'use client';
+import { Button, Divider, TextInput } from '@mantine/core'
 import {
   FieldError,
   SubmitHandler,
   UseFormHandleSubmit,
   UseFormRegister,
 } from 'react-hook-form'
-import dynamic from 'next/dynamic'
 
 import { EditorFormDataProps } from '@lib/types'
-const RichText = dynamic(() => import('@components/RichText'), {
-  ssr: false,
-})
+import RichTextEditor from '@components/RichText'
+import { Suspense } from 'react'
 
 interface IEconomicDataForm {
   submitHandler: SubmitHandler<Partial<EditorFormDataProps>>
@@ -45,7 +37,7 @@ const CountySectionForm = ({
   return (
     <form className="space-y-8" onSubmit={handleSubmit(submitHandler)}>
       <div className="flex w-full flex-row items-center ">
-        <label className=" text-sm font-semibold text-gray-900 w-1/4">
+        <label className=" w-1/4 text-sm font-semibold text-gray-900">
           Is Section Live? <span className="text-red-500">*</span>
         </label>
         <input
@@ -86,7 +78,9 @@ const CountySectionForm = ({
         <label htmlFor="title" className="w-1/4">
           Content:
         </label>
-        <RichText value={value} setValue={setValue} />
+        <Suspense fallback={<div>Loading...</div>}>
+          <RichTextEditor value={value} setValue={setValue} />
+        </Suspense>
       </div>
       <Divider />
       <div className="my-4 flex w-full items-center justify-between ">

@@ -1,3 +1,4 @@
+'use client'
 import { useCallback, useState, useEffect } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { showNotification } from '@mantine/notifications'
@@ -5,12 +6,12 @@ import { Loader, Paper, UnstyledButton } from '@mantine/core'
 import { BiEdit } from 'react-icons/bi'
 
 import { CountySectionForm } from '@components/forms'
-import { setError } from 'features/upload/uploadSlice'
+import { setError } from 'app/global-state/features/upload/uploadSlice'
 import {
   useGetCountyByIdQuery,
   useUpdateOrCreateCountyNewsMutation,
-} from 'features/editor/editorApiSlice'
-import { useAppDispatch } from 'state/hooks'
+} from 'app/global-state/features/editor/editorApiSlice'
+import { useAppDispatch } from 'app/global-state/hooks'
 import { EditorFormDataProps } from '@lib/types'
 import ContentPreview from '@components/ContentPreview'
 import Spinner from '@components/spinner'
@@ -76,7 +77,7 @@ const NewsSection = ({ id }: { id: string }) => {
     )
 
   return (
-    <section className="relative h-auto w-full flex-grow px-2 py-2  md:py-8 md:px-8">
+    <section className="relative h-auto w-full flex-grow px-2 py-2  md:px-8 md:py-8">
       <section className="w-full rounded-md bg-primary-light-50 p-4 shadow-lg dark:bg-primary-dark-500">
         {isLoadingCounty ? (
           <div className="flex h-[700px] items-center justify-center">

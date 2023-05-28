@@ -1,23 +1,17 @@
+'use client'
 import { useState, useEffect } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import dynamic from 'next/dynamic'
 
 import { IPartnerFormData } from '@lib/types'
-import { useAppDispatch, useAppSelector } from 'state/hooks'
+import { useAppDispatch } from 'app/global-state/hooks'
 import { showNotification } from '@mantine/notifications'
 import { useRouter } from 'next/router'
-import {
-  Button,
-  Checkbox,
-  NativeSelect,
-  PasswordInput,
-  TextInput,
-} from '@mantine/core'
+import { NativeSelect, TextInput } from '@mantine/core'
 import { FaCheckCircle } from 'react-icons/fa'
 import { MdOutlineError } from 'react-icons/md'
 
 import { NEXT_URL } from '@config/index'
-import { useCreatePartnerDataMutation } from 'features/partner/partnerApiSlice'
+import { useCreatePartnerDataMutation } from 'app/global-state/features/partner/partnerApiSlice'
 import RichTextEditor from '@components/RichText'
 
 const areaOfOperation = [

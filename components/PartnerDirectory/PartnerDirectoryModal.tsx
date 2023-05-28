@@ -1,6 +1,7 @@
+'use client';
 import React from 'react'
 import { Modal } from '@mantine/core'
-import { IFormData, PartnerData } from '@lib/types'
+import { IFormData } from '@lib/types'
 import { PartnerDirectoryForm } from '@components/forms'
 import { DeepRequired, FieldErrorsImpl, SubmitHandler, UseFormHandleSubmit, UseFormRegister } from 'react-hook-form'
 
@@ -28,9 +29,6 @@ const PartnerDirectoryModal = ({
 }) => {
   return (
     <Modal
-      overlayColor="rgba(0, 0, 0, 0.5)"
-      overlayOpacity={0.55}
-      overlayBlur={3}
       size="90%"
       opened={open}
       onClose={handleModalClose}

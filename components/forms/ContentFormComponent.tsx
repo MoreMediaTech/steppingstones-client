@@ -1,3 +1,4 @@
+'use client'
 import { Button, Divider, TextInput } from '@mantine/core'
 import {
   FieldError,
@@ -5,12 +6,10 @@ import {
   UseFormHandleSubmit,
   UseFormRegister,
 } from 'react-hook-form'
-import dynamic from 'next/dynamic'
 
 import { EditorFormDataProps } from '@lib/types'
-const RichTextEditor = dynamic(() => import('@components/RichText'), {
-  ssr: false,
-})
+import RichTextEditor from '@components/RichText'
+import { Suspense } from 'react'
 
 interface IContentFormComponent {
   submitHandler: SubmitHandler<EditorFormDataProps>
@@ -82,7 +81,9 @@ const ContentFormComponent = ({
         <label htmlFor="content" className="w-1/4">
           Content:
         </label>
-        <RichTextEditor value={value} setValue={setValue} />
+        <Suspense fallback={<div>Loading...</div>}>
+          <RichTextEditor value={value} setValue={setValue} />
+        </Suspense>
       </div>
       <Divider />
       <div className="my-4 flex w-full items-center justify-between ">

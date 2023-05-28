@@ -1,12 +1,16 @@
+'use client'
 import React, { useState } from 'react'
 import { Loader } from '@mantine/core'
 
-import { useGetCountiesQuery } from 'features/editor/editorApiSlice'
+import { useGetCountiesQuery } from 'app/global-state/features/editor/editorApiSlice'
 import { CountyDataProps } from '@lib/types'
 import CountyTable from './CountyTable'
 import UpdateCountyModal from './UpdateCountyModal'
-import { useAppDispatch, useAppSelector } from 'state/hooks'
-import { editorSelector, setCounty } from 'features/editor/editorSlice'
+import { useAppDispatch, useAppSelector } from 'app/global-state/hooks'
+import {
+  editorSelector,
+  setCounty,
+} from 'app/global-state/features/editor/editorSlice'
 
 const CountySettings = () => {
   const {

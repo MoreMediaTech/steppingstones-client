@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import {
   Box,
@@ -6,7 +7,7 @@ import {
   Drawer,
   Indicator,
   Menu,
-  Title
+  Title,
 } from '@mantine/core'
 import { BiHomeCircle } from 'react-icons/bi'
 import {
@@ -20,13 +21,15 @@ import { GoFileDirectory } from 'react-icons/go'
 import Link from 'next/link'
 import Image from 'next/image'
 
-import { useGetAllInAppEnquiryMsgQuery } from 'features/messages/messagesApiSlice'
+import { useGetAllInAppEnquiryMsgQuery } from 'app/global-state/features/messages/messagesApiSlice'
 import { MessageProps } from '@lib/types'
 import { AppLogo } from './AppLogo'
 
-
-import { useAppSelector, useAppDispatch } from 'state/hooks'
-import { globalSelector, setDrawerOpened } from 'features/global/globalSlice'
+import { useAppSelector, useAppDispatch } from 'app/global-state/hooks'
+import {
+  globalSelector,
+  setDrawerOpened,
+} from 'app/global-state/features/global/globalSlice'
 
 const NAV_ITEMS = [
   {
@@ -84,7 +87,6 @@ const AdminSidebar = ({ handleLogout }: { handleLogout?: () => void }) => {
     pollingInterval: 60000,
   })
 
-
   // filter all unread messages
   const unreadMessages = messages?.filter(
     (message: MessageProps) => message.isRead === false
@@ -108,16 +110,12 @@ const AdminSidebar = ({ handleLogout }: { handleLogout?: () => void }) => {
       <Drawer
         aria-labelledby="drawer-title"
         aria-describedby="drawer-body"
-        closeButtonLabel="Close drawer"
         opened={drawerOpened}
         onClose={() => dispatch(setDrawerOpened(false))}
         padding="sm"
         size={250}
         position="left"
         className="flex h-screen flex-col bg-primary-light-100 dark:bg-primary-dark-700"
-        overlayOpacity={0.55}
-        overlayBlur={3}
-        overlayColor="#000"
         title={
           <>
             <Link href={'/'} className="flex items-center px-4">
@@ -131,7 +129,7 @@ const AdminSidebar = ({ handleLogout }: { handleLogout?: () => void }) => {
           </>
         }
       >
-        <div className="flex flex-grow flex-col  space-y-4 py-2 px-4">
+        <div className="flex flex-grow flex-col  space-y-4 px-4 py-2">
           {NAV_ITEMS.map(({ label, icon, href }) => {
             if (!icon && !href) {
               return (

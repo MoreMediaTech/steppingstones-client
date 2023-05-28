@@ -1,9 +1,10 @@
+'use client'
 import React, { useCallback, useState, useEffect } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { showNotification } from '@mantine/notifications'
 import { Modal } from '@mantine/core'
 
-import { useCreateUserMutation } from 'features/user/usersApiSlice'
+import { useCreateUserMutation } from 'app/global-state/features/user/usersApiSlice'
 import { CurrentUser } from '@lib/types'
 import CreateAdminForm from '@components/forms/CreateAdminForm'
 import { generatePass } from '@lib/generatePass'
@@ -59,9 +60,6 @@ const CreateAdminModal = ({
   )
   return (
     <Modal
-      overlayColor="rgba(0, 0, 0, 0.5)"
-      overlayOpacity={0.55}
-      overlayBlur={3}
       size="lg"
       opened={opened}
       onClose={() => setOpened(false)}

@@ -1,12 +1,13 @@
+'use client'
 import React from 'react'
-import { Box, Container, Flex, Loader, SimpleGrid, Tabs, Text } from '@mantine/core'
+import { Box, Container, Loader, SimpleGrid, Tabs, Text } from '@mantine/core'
 import { DataGrid } from '@mui/x-data-grid'
 import { FaUsers } from 'react-icons/fa'
 import { useTheme } from 'next-themes'
 import { FcSalesPerformance, FcFactoryBreakdown } from 'react-icons/fc'
 
 // redux
-import { useGetAnalyticsQuery } from 'features/analytics/analyticsApiSlice'
+import { useGetAnalyticsQuery } from 'app/global-state/features/analytics/analyticsApiSlice'
 
 import PerformanceChart from './PerformanceChart'
 import Header from 'components/Header'

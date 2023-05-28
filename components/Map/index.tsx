@@ -1,12 +1,10 @@
+'use client';
 import React, { useEffect } from 'react'
 import {
   GoogleMap,
   useJsApiLoader,
   Marker,
-  DirectionsRenderer,
   Circle,
-  MarkerClusterer,
-  MarkerClustererProps,
 } from '@react-google-maps/api'
 import { Loader } from '@mantine/core'
 import { getGeocode, getLatLng } from 'use-places-autocomplete'

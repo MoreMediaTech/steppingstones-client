@@ -1,3 +1,4 @@
+'use client'
 import { useEffect, useState } from 'react'
 import {
   Burger,
@@ -14,8 +15,11 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { Dispatch, SetStateAction } from 'react'
 import { FaSignOutAlt } from 'react-icons/fa'
-import { useAppSelector, useAppDispatch } from 'state/hooks'
-import { globalSelector, setDrawerOpened } from 'features/global/globalSlice'
+import { useAppSelector, useAppDispatch } from 'app/global-state/hooks'
+import {
+  globalSelector,
+  setDrawerOpened,
+} from 'app/global-state/features/global/globalSlice'
 
 interface IAdminNavbar {
   theme: MantineTheme
@@ -55,22 +59,20 @@ const AdminNavbar = ({
       height={70}
       p="md"
       className={`${
-        pos === 'top'
-          ? 'absolute  '
-          : 'shadow-b-2xl bg-white fixed '
+        pos === 'top' ? 'absolute  ' : 'shadow-b-2xl fixed bg-white '
       }`}
     >
       <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
         <div className="flex w-full items-center justify-between">
-           <div className=" flex items-center px-4 py-2  ">
-        <Burger
-          opened={drawerOpened}
-          aria-label={title}
-          onClick={() => dispatch(setDrawerOpened(!drawerOpened))}
-          title={title}
-          color="#00dcb3"
-        />
-      </div>
+          <div className=" flex items-center px-4 py-2  ">
+            <Burger
+              opened={drawerOpened}
+              aria-label={title}
+              onClick={() => dispatch(setDrawerOpened(!drawerOpened))}
+              title={title}
+              color="#00dcb3"
+            />
+          </div>
           <UnstyledButton
             onClick={() => {
               router.push('/')

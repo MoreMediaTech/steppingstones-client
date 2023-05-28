@@ -1,16 +1,16 @@
+'use client'
 import { useState, useCallback } from 'react'
 import Link from 'next/link'
 import { Button, Loader } from '@mantine/core'
 import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa'
+import { showNotification } from '@mantine/notifications'
 
 import Avatar from '@components/Avatar'
 import { UpdateUserForm, UpdateUserPassForm } from '@components/forms'
-import { useGetUserQuery } from 'features/user/usersApiSlice'
+import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
 import EditImageModal from '@components/EditImageComponent/EditImageModal'
 import { CurrentUser } from '@lib/types'
-import { useVerifyEmailMutation } from 'features/auth/authApiSlice'
-import { showNotification } from '@mantine/notifications'
-
+import { useVerifyEmailMutation } from 'app/global-state/features/auth/authApiSlice'
 
 const UserProfileSection = () => {
   const [opened, setOpened] = useState<boolean>(false)
@@ -104,7 +104,7 @@ const UserProfileSection = () => {
             </div>
           </section>
           <section className="space-y-4 lg:col-span-2">
-            <div className=" w-full space-y-4 rounded-md bg-white px-4 pt-6 pb-8 shadow-xl">
+            <div className=" w-full space-y-4 rounded-md bg-white px-4 pb-8 pt-6 shadow-xl">
               <h1 className="text-xl font-bold">General Information</h1>
               <UpdateUserForm
                 refetch={refetch}
@@ -112,7 +112,7 @@ const UserProfileSection = () => {
                 disabled
               />
             </div>
-            <div className="w-full space-y-4 rounded-md bg-white px-4 pt-6 pb-8 shadow-xl">
+            <div className="w-full space-y-4 rounded-md bg-white px-4 pb-8 pt-6 shadow-xl">
               <h1 className="text-xl font-bold">Password Information</h1>
               <UpdateUserPassForm
                 refetch={refetch}
@@ -122,21 +122,15 @@ const UserProfileSection = () => {
           </section>
         </section>
         <section className=" flex w-full flex-col items-center justify-between space-y-4 rounded-md bg-white p-6 shadow-xl md:flex-row md:space-y-0">
-          <div className="flex flex-col items-center space-y-2 text-gray-400 md:flex-row md:space-y-0 md:space-x-4">
+          <div className="flex flex-col items-center space-y-2 text-gray-400 md:flex-row md:space-x-4 md:space-y-0">
             <Link href="#" className=" hover:cursor-pointer hover:underline">
-              
-                Terms and Conditions
-              
+              Terms and Conditions
             </Link>
             <Link href="#" className=" hover:cursor-pointer hover:underline">
-              
-                Privacy Policy
-              
+              Privacy Policy
             </Link>
             <Link href="#" className=" hover:cursor-pointer hover:underline">
-              
-                Cookie Policy
-              
+              Cookie Policy
             </Link>
             <Link href="#" className=" hover:cursor-pointer hover:underline">
               Contact

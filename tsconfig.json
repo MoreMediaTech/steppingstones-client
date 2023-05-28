@@ -2,15 +2,33 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["components/*"],
-      "@hooks/*": ["hooks/*"],
-      "@lib/*": ["lib/*"],
-      "@context/*": ["context/*"],
-      "@models/*": ["models/*"],
-      "@config/*": ["config/*"]
+      "@components/*": [
+        "components/*"
+      ],
+      "@hooks/*": [
+        "hooks/*"
+      ],
+      "@lib/*": [
+        "lib/*"
+      ],
+      "@context/*": [
+        "context/*"
+      ],
+      "@models/*": [
+        "models/*"
+      ],
+      "@config/*": [
+        "config/*"
+      ]
     },
     "target": "esnext",
-    "lib": ["dom", "dom.iterable", "esnext", "ES2015.Collection", "ES2015.Iterable"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext",
+      "ES2015.Collection",
+      "ES2015.Iterable"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -24,8 +42,20 @@
     "jsx": "preserve",
     "incremental": true,
     "useUnknownInCatchVariables": false,
-     "noImplicitThis": false
+    "noImplicitThis": false,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

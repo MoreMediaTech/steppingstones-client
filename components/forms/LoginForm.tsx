@@ -1,16 +1,18 @@
+'use client'
 import { useRef } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
+import { useTheme } from 'next-themes'
 import { showNotification } from '@mantine/notifications'
 import { Button, PasswordInput } from '@mantine/core'
 import ReCAPTCHA from 'react-google-recaptcha'
 import Link from 'next/link'
 
-import { useLoginMutation } from 'features/auth/authApiSlice'
+import { useLoginMutation } from 'app/global-state/features/auth/authApiSlice'
 import { NEXT_URL } from '@config/index'
 import FormInput from './FormComponents/FormInput'
-import { useAppDispatch } from 'state/hooks'
-import { setCredentials } from 'features/auth/authSlice'
+import { useAppDispatch } from 'app/global-state/hooks'
+import { setCredentials } from 'app/global-state/features/auth/authSlice'
 import usePersist from '@hooks/usePersist'
 import FormCheckbox from './FormComponents/FormCheckBox'
 
@@ -22,6 +24,7 @@ type LoginFormProps = {
 const LoginForm: React.FC = (): JSX.Element => {
   const router = useRouter()
   const dispatch = useAppDispatch()
+  const { theme } = useTheme()
   const [login, { isLoading, isError, error: loginError }] = useLoginMutation()
   const {
     register,
@@ -82,7 +85,7 @@ const LoginForm: React.FC = (): JSX.Element => {
   return (
     <form
       onSubmit={handleSubmit(handleLogin)}
-      className="flex w-full max-w-screen-sm flex-col items-center space-y-2 px-2"
+      className="mt-2 grid w-full max-w-screen-sm gap-2 rounded-md bg-slate-100 dark:bg-slate-900 p-4 shadow-md "
     >
       <FormInput
         title="email"
@@ -90,13 +93,14 @@ const LoginForm: React.FC = (): JSX.Element => {
         placeholder="Email"
         label="Username"
         type="email"
+        resolvedTheme={theme}
         {...register('email', {
           pattern: {
             value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
             message: 'Invalid email address',
           },
         })}
-        errors={errors.email }
+        errors={errors.email}
         labelStyles={{ color: 'white' }}
         inputStyles={{ backgroundColor: 'white' }}
       />
@@ -112,6 +116,13 @@ const LoginForm: React.FC = (): JSX.Element => {
         label="Password"
         withAsterisk
         placeholder="Enter password"
+        labelProps={{
+          style: {
+            display: 'block',
+            fontSize: '0.875rem',
+            color: theme === 'dark' ? 'white' : 'black',
+          },
+        }}
         {...register('password', {
           required: true,
           minLength: {
@@ -130,10 +141,17 @@ const LoginForm: React.FC = (): JSX.Element => {
         })}
         variant="default"
         className="w-full "
-        styles={{ label: { color: 'white' }, input: { backgroundColor: 'white' } }}
-        error={errors.password ? (errors.password?.message || 'A password is required') : undefined}
+        styles={{
+          label: { color: 'white' },
+          input: { backgroundColor: 'white' },
+        }}
+        error={
+          errors.password
+            ? errors.password?.message || 'A password is required'
+            : undefined
+        }
       />
-     
+
       <FormCheckbox
         type="persist"
         title="persist"
@@ -141,7 +159,7 @@ const LoginForm: React.FC = (): JSX.Element => {
         onChange={handleToggle}
         checked={persist}
       />
-      <div className="mb-4 place-self-start">
+      <div className=" place-self-start">
         <Link
           href={'/auth/forgot-password'}
           className="cursor-pointer  text-sm text-[#00DCB3]"
@@ -161,7 +179,7 @@ const LoginForm: React.FC = (): JSX.Element => {
           loading={isLoading}
           fullWidth
           size="md"
-          className="mt-4 w-full rounded-md border border-[#5E17EB] bg-[#5E17EB] text-white hover:bg-[#3A0B99]"
+          className=" w-full rounded-md border border-[#5E17EB] bg-[#5E17EB] text-white hover:bg-[#3A0B99]"
         >
           {isLoading ? 'Signing In...' : 'Sign In'}
         </Button>

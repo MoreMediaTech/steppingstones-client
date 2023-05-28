@@ -1,9 +1,10 @@
+'use client'
 import { useEffect } from 'react'
 import Cookies from 'js-cookie'
 import { CookieConsentProps, OPTIONS } from '@lib/types'
 
-import { useAppDispatch, useAppSelector } from 'state/hooks'
-import { setIsVisible, globalSelector } from 'features/global/globalSlice'
+import { useAppDispatch } from 'app/global-state/hooks'
+import { setIsVisible } from 'app/global-state/features/global/globalSlice'
 
 /**
  * Returns the value of the consent cookie
@@ -37,7 +38,6 @@ export const resetCookieConsentValue = (name: string) => {
 const getLegacyCookieName = (name: string) => {
   return `${name}-legacy`
 }
-
 
 const CookieConsent = ({
   children,
@@ -78,19 +78,14 @@ const CookieConsent = ({
     watchScroll()
   }, [])
 
- 
-
   /**
    * Returns the value of the consent cookie
    * Retrieves the regular value first and if not found the legacy one according
    * to: https://web.dev/samesite-cookie-recipes/#handling-incompatible-clients
    */
   function getCookieValue() {
-
     return getCookieConsentValue(cookieName as string)
   }
-
-  
 
   const buttonsToRender = []
 

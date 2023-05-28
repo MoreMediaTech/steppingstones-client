@@ -1,10 +1,11 @@
+'use client'
 import React from 'react'
 import { Modal } from '@mantine/core'
 
 import { SectionProps, SubSectionProps } from '@lib/types'
 import { UpdateSectionForm } from '@components/forms'
-import { useAppSelector } from 'state/hooks'
-import { editorSelector } from 'features/editor/editorSlice'
+import { useAppSelector } from 'app/global-state/hooks'
+import { editorSelector } from 'app/global-state/features/editor/editorSlice'
 
 const UpdateSectionModal = ({
   open,
@@ -22,9 +23,6 @@ const UpdateSectionModal = ({
   const { sectionType } = useAppSelector(editorSelector)
   return (
     <Modal
-      overlayColor="rgba(0, 0, 0, 0.5)"
-      overlayOpacity={0.55}
-      overlayBlur={3}
       size="80%"
       opened={open}
       onClose={handleModalClose}

@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import { Modal, Title, Text } from '@mantine/core'
 import { useForm, SubmitHandler, useWatch } from 'react-hook-form'
@@ -10,11 +11,11 @@ import AutoComplete from './AutoComplete'
 import FormRowSelect from '@components/forms/FormComponents/FormRowSelect'
 
 // redux
-import { useGetUsersQuery } from '../../features/user/usersApiSlice'
+import { useGetUsersQuery } from '../../app/global-state/features/user/usersApiSlice'
 import {
   useSendEmailMutation,
   useSendInAppMsgMutation,
-} from '../../features/messages/messagesApiSlice'
+} from '../../app/global-state/features/messages/messagesApiSlice'
 
 // hooks
 import { useAuthUser } from '../../hooks/useAuthUser'
@@ -26,9 +27,10 @@ type Props = {
 
 const CreateMessage: React.FC<Props> = ({ opened, setOpened }): JSX.Element => {
   const [sendEmail, { isLoading }] = useSendEmailMutation()
-  const [sendInAppMsg, { isLoading: isSendingInAppMsg }] = useSendInAppMsgMutation()
+  const [sendInAppMsg, { isLoading: isSendingInAppMsg }] =
+    useSendInAppMsgMutation()
   const user = useAuthUser()
-  
+
   const { data: users } = useGetUsersQuery()
   // get user email addresses
   const userEmails = users?.map((user) => user.email) as string[]
@@ -39,7 +41,9 @@ const CreateMessage: React.FC<Props> = ({ opened, setOpened }): JSX.Element => {
     reset,
     control,
     formState: { errors },
-  } = useForm<FormInputs>({ defaultValues: { from: user?.email, to: '', subject: '', message: '' }})
+  } = useForm<FormInputs>({
+    defaultValues: { from: user?.email, to: '', subject: '', message: '' },
+  })
   const searchedEmails = useWatch({ control: control, name: 'to' })
 
   React.useEffect(() => {
@@ -53,13 +57,12 @@ const CreateMessage: React.FC<Props> = ({ opened, setOpened }): JSX.Element => {
 
   // onSubmit handler to send message
   const onSubmit: SubmitHandler<FormInputs> = React.useCallback((data) => {
-  
     const message = {
       from: user?.email as string,
       to: data.to,
       subject: data.subject,
       message: data.message,
-      html: ''
+      html: '',
     }
     try {
       if (data.type === 'external') {
@@ -70,17 +73,17 @@ const CreateMessage: React.FC<Props> = ({ opened, setOpened }): JSX.Element => {
       showNotification({
         message: 'Message sent',
         color: 'success',
-        autoClose: 3000
+        autoClose: 3000,
       })
       reset({ from: user?.email, to: '', subject: '', message: '' })
       setOpened(false)
     } catch (error) {
       console.log(error)
-     showNotification({
+      showNotification({
         message: 'Error sending message',
         color: 'error',
-        autoClose: 3000
-     })
+        autoClose: 3000,
+      })
     }
   }, [])
 
@@ -94,7 +97,6 @@ const CreateMessage: React.FC<Props> = ({ opened, setOpened }): JSX.Element => {
         opened={opened}
         onClose={() => setOpened(false)}
         title={<Title order={2}>New Message</Title>}
-        overflow="outside"
         fullScreen
         className="bg-primary-light-100 dark:bg-primary-dark-700"
       >

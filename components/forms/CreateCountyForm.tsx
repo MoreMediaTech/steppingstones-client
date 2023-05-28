@@ -1,3 +1,4 @@
+'use client'
 import React, { useCallback } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
@@ -5,7 +6,7 @@ import { showNotification } from '@mantine/notifications'
 import { Button, Modal, TextInput, UnstyledButton } from '@mantine/core'
 import { IoMdCloseCircleOutline } from 'react-icons/io'
 
-import { useCreateCountyMutation } from 'features/editor/editorApiSlice'
+import { useCreateCountyMutation } from 'app/global-state/features/editor/editorApiSlice'
 import { NEXT_URL } from '@config/index'
 import { CountyDataProps } from '@lib/types'
 
@@ -101,7 +102,7 @@ const CreateDirectoryForm = ({
                 value: 2,
                 message:
                   'Please enter a County name with at least 2 characters',
-              }
+              },
             })}
             className="focus:shadow-outline w-full appearance-none rounded-md focus:outline-none"
           />

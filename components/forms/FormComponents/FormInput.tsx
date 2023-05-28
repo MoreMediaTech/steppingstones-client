@@ -1,6 +1,6 @@
+'use client';
 import React from 'react'
 import {
-  appendErrors,
   DeepRequired,
   FieldError,
   FieldErrorsImpl,
@@ -20,6 +20,7 @@ type FormInputProps<T extends unknown> = {
   labelStyles?: CSSObject
   inputStyles?: CSSObject
   hidden?: boolean
+  resolvedTheme?: string
   prependComponent?: React.ReactNode
   appendComponent?: React.ReactNode
   errors?:
@@ -39,6 +40,7 @@ const FormInput = React.forwardRef(function FormInputInner<T extends unknown>(
     inputStyles,
     prependComponent,
     appendComponent,
+    resolvedTheme,
     ...props
   }: FormInputProps<T>,
   ref: React.ForwardedRef<HTMLInputElement>
@@ -54,7 +56,14 @@ const FormInput = React.forwardRef(function FormInputInner<T extends unknown>(
         aria-label={`${label?.toLowerCase()}-input`}
         aria-invalid="true"
         variant="default"
-        label={hidden ? label : undefined}
+        label={!hidden ? label : undefined}
+        labelProps={{
+          style: {
+            display: hidden ? 'none' : 'block',
+            fontSize: '0.875rem',
+            color: resolvedTheme === 'dark' ? 'white' : 'black',
+          },
+        }}
         withAsterisk
         radius="sm"
         error={

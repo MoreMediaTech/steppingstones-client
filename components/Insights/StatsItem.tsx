@@ -1,4 +1,5 @@
-import { Box, Flex, Grid } from '@mantine/core'
+'use client';
+import { Box } from '@mantine/core'
 import React from 'react'
 
 import Header from '../Header'

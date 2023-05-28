@@ -1,11 +1,15 @@
+'use client'
 import React, { useCallback, useEffect } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { FaTimes } from 'react-icons/fa'
 
 import FormInput from '@components/forms/FormComponents/FormInput'
-import { MessageProps } from '@lib/types'
-import { useAppSelector, useAppDispatch } from 'state/hooks'
-import { messagesSelector, setReply } from 'features/messages/messagesSlice'
+
+import { useAppSelector, useAppDispatch } from 'app/global-state/hooks'
+import {
+  messagesSelector,
+  setReply,
+} from 'app/global-state/features/messages/messagesSlice'
 
 export type FormInputs = {
   to?: string

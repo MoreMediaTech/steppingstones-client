@@ -1,12 +1,12 @@
+'use client'
 import React from 'react'
-import { Button } from '@mantine/core'
-import { useAppDispatch, useAppSelector } from 'state/hooks'
+import { useAppDispatch, useAppSelector } from 'app/global-state/hooks'
 import {
   setPreviewSource,
   setError,
   setSelectedFile,
-} from 'features/upload/uploadSlice'
-import { useUploadFileMutation } from 'features/upload/uploadApiSlice'
+} from 'app/global-state/features/upload/uploadSlice'
+import { useUploadFileMutation } from 'app/global-state/features/upload/uploadApiSlice'
 import Spinner from '@components/spinner'
 import Image from 'next/image'
 import { MdCloudUpload } from 'react-icons/md'
@@ -18,12 +18,12 @@ const FileUploadForm = () => {
   const dispatch = useAppDispatch()
   const [uploadFile, { isLoading, isSuccess }] = useUploadFileMutation()
 
-  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return
-    const file = e.target?.files[0]
-    previewFile(file)
-    dispatch(setSelectedFile(file))
-  }
+  // const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (!e.target.files) return
+  //   const file = e.target?.files[0]
+  //   previewFile(file)
+  //   dispatch(setSelectedFile(file))
+  // }
 
   const previewFile = (file: File) => {
     const reader = new FileReader()

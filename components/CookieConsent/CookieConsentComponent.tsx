@@ -1,3 +1,4 @@
+'use client'
 import { useState } from 'react'
 import Cookies from 'js-cookie'
 
@@ -5,106 +6,109 @@ import { OPTIONS, SAME_SITE_OPTIONS, VISIBLE_OPTIONS } from '@lib/types'
 import CookieConsent from './CookieConsent'
 import CookieConsentContainer from './CookieConsentContainer'
 
-import { useAppDispatch, useAppSelector } from 'state/hooks'
-import { setIsVisible, globalSelector } from 'features/global/globalSlice'
+import { useAppDispatch, useAppSelector } from 'app/global-state/hooks'
+import {
+  setIsVisible,
+  globalSelector,
+} from 'app/global-state/features/global/globalSlice'
 
- function setCookie(
-   cookieName: string,
-   cookieValue: string | boolean | object | number,
-   maxAge: number,
-   extraCookieOptions: object,
-   cookieSecurity: boolean,
-   sameSite: SAME_SITE_OPTIONS
- ) {
-   const cookieOptions = {
-     maxAge,
-     ...extraCookieOptions,
-     sameSite,
-     secure: cookieSecurity,
-   }
+function setCookie(
+  cookieName: string,
+  cookieValue: string | boolean | object | number,
+  maxAge: number,
+  extraCookieOptions: object,
+  cookieSecurity: boolean,
+  sameSite: SAME_SITE_OPTIONS
+) {
+  const cookieOptions = {
+    maxAge,
+    ...extraCookieOptions,
+    sameSite,
+    secure: cookieSecurity,
+  }
 
-   Cookies.set(cookieName, JSON.stringify(cookieValue))
- }
+  Cookies.set(cookieName, JSON.stringify(cookieValue))
+}
 
 const CookieConsentComponent = () => {
   const dispatch = useAppDispatch()
   const { isVisible } = useAppSelector(globalSelector)
-    const [opened, setOpened] = useState<boolean>(false)
-    const [snCookies, setSNCookies] = useState<boolean>(false)
-    const [pAndACookies, setPAndACookies] = useState<boolean>(false)
+  const [opened, setOpened] = useState<boolean>(false)
+  const [snCookies, setSNCookies] = useState<boolean>(false)
+  const [pAndACookies, setPAndACookies] = useState<boolean>(false)
 
-    // default cookie name
-    const COOKIE_NAME = 'ssapp-cookie-consent'
+  // default cookie name
+  const COOKIE_NAME = 'ssapp-cookie-consent'
 
-    /**
-     * @description - This function is used to set the cookie consent cookie.
-     */
-    const handleAccept = () => {
-      setCookie(
-        COOKIE_NAME,
-        true,
-        150,
-        { domain: 'steppingstonesapp.com' },
-        true,
-        SAME_SITE_OPTIONS.LAX
-      )
-      dispatch(setIsVisible(false))
-    }
+  /**
+   * @description - This function is used to set the cookie consent cookie.
+   */
+  const handleAccept = () => {
+    setCookie(
+      COOKIE_NAME,
+      true,
+      150,
+      { domain: 'steppingstonesapp.com' },
+      true,
+      SAME_SITE_OPTIONS.LAX
+    )
+    dispatch(setIsVisible(false))
+  }
 
-    /**
-     * @description - function to handle the user accepting all cookies
-     */
-    const handleAcceptAll = () => {
-      setCookie(
-        COOKIE_NAME,
-        {
-          'strictly-necessary-cookies': true,
-          'performance-and-analytics-cookies': true,
-        },
-        150,
-        { domain: 'steppingstonesapp.com' },
-        true,
-        SAME_SITE_OPTIONS.LAX
-      )
-      setOpened(false)
-      setSNCookies(true)
-      setPAndACookies(true)
-      dispatch(setIsVisible(false))
-    }
+  /**
+   * @description - function to handle the user accepting all cookies
+   */
+  const handleAcceptAll = () => {
+    setCookie(
+      COOKIE_NAME,
+      {
+        'strictly-necessary-cookies': true,
+        'performance-and-analytics-cookies': true,
+      },
+      150,
+      { domain: 'steppingstonesapp.com' },
+      true,
+      SAME_SITE_OPTIONS.LAX
+    )
+    setOpened(false)
+    setSNCookies(true)
+    setPAndACookies(true)
+    dispatch(setIsVisible(false))
+  }
 
-    /**
-     * @description - function to handle the user declining the cookies.
-     */
-    const handleDecline = () => {
-      setCookie(
-        COOKIE_NAME,
-        false,
-        0,
-        { domain: 'steppingstonesapp.com' },
-        true,
-        SAME_SITE_OPTIONS.LAX
-      )
-      dispatch(setIsVisible(false))
-    }
+  /**
+   * @description - function to handle the user declining the cookies.
+   */
+  const handleDecline = () => {
+    setCookie(
+      COOKIE_NAME,
+      false,
+      0,
+      { domain: 'steppingstonesapp.com' },
+      true,
+      SAME_SITE_OPTIONS.LAX
+    )
+    dispatch(setIsVisible(false))
+  }
 
-    /**
-     * @description - function to handle/confirm the user cookie options
-     */
-    const handleConfirmChoices = () => {
-      setCookie(
-        'ssapp-strictly-necessary-cookie-consent',
-        {
-          'strictly-necessary-cookies': snCookies ? true : false,
-          'performance-and-analytics-cookies': pAndACookies ? true : false,
-        },
-        150,
-        { domain: 'steppingstonesapp.com' },
-        true,
-        SAME_SITE_OPTIONS.LAX
-      )
-      dispatch(setIsVisible(false))
-      setOpened(false)
-    }
+  /**
+   * @description - function to handle/confirm the user cookie options
+   */
+  const handleConfirmChoices = () => {
+    setCookie(
+      'ssapp-strictly-necessary-cookie-consent',
+      {
+        'strictly-necessary-cookies': snCookies ? true : false,
+        'performance-and-analytics-cookies': pAndACookies ? true : false,
+      },
+      150,
+      { domain: 'steppingstonesapp.com' },
+      true,
+      SAME_SITE_OPTIONS.LAX
+    )
+    dispatch(setIsVisible(false))
+    setOpened(false)
+  }
 
   return (
     <>

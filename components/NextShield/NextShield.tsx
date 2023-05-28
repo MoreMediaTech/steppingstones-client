@@ -1,3 +1,4 @@
+'use client';
 import React, { ReactNode, useEffect } from 'react'
 import { getAccessRoute, verifyPath } from '@lib/routes'
 import { NextShieldProps } from '@lib/types'

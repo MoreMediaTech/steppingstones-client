@@ -1,4 +1,5 @@
-import { Modal, Button, Divider } from '@mantine/core'
+'use client'
+import { Modal, Button } from '@mantine/core'
 
 const HandleDeleteModal = ({
   open,
@@ -18,9 +19,6 @@ const HandleDeleteModal = ({
   return (
     <Modal
       centered
-      overlayColor="rgba(0, 0, 0, 0.5)"
-      overlayOpacity={0.55}
-      overlayBlur={3}
       size="sm"
       opened={open}
       onClose={() => setOpenModal(false)}

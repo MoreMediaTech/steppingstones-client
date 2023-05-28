@@ -1,3 +1,4 @@
+'use client';
 import { Dispatch, SetStateAction, useState } from 'react'
 import { UnstyledButton, Collapse, Drawer, List } from '@mantine/core'
 
@@ -24,7 +25,6 @@ const ContentDrawer = ({
     <Drawer
       aria-labelledby="content-nav-drawer"
       aria-describedby="content-nav-body"
-      closeButtonLabel="Close content drawer"
       opened={opened}
       onClose={() => setOpened(false)}
       title={<h1 className="text-xl font-semibold">Content</h1>}

@@ -1,6 +1,7 @@
-import { IFormData } from '@lib/types'
+'use client'
 import { Button, TextInput } from '@mantine/core'
 import { FieldError, SubmitHandler, UseFormHandleSubmit, UseFormRegister } from 'react-hook-form'
+import { IFormData } from '@lib/types'
 
 interface IRequestPasswordResetForm {
   submitHandler: SubmitHandler<Partial<IFormData>>

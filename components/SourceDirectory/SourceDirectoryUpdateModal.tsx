@@ -1,3 +1,4 @@
+'use client';
 import React from 'react'
 import { Modal } from '@mantine/core'
 import { useTheme } from 'next-themes'
@@ -24,9 +25,6 @@ const SourceDirectoryUpdateModal = ({
   
   return (
     <Modal
-      overlayColor="rgba(0, 0, 0, 0.5)"
-      overlayOpacity={0.55}
-      overlayBlur={3}
       size="90%"
       opened={open}
       onClose={handleModalClose}

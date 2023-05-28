@@ -1,7 +1,8 @@
+'use client'
 import { BiEdit } from 'react-icons/bi'
 import { MdOutlineDelete } from 'react-icons/md'
 import { EconomicDataWidgetProps } from '@lib/types'
-import { useDeleteEconomicDataWidgetByIdMutation } from 'features/editor/editorApiSlice'
+import { useDeleteEconomicDataWidgetByIdMutation } from 'app/global-state/features/editor/editorApiSlice'
 import { Button } from '@mantine/core'
 
 const EconomicDataWidget = ({
@@ -24,10 +25,10 @@ const EconomicDataWidget = ({
   const [deleteEconomicDataWidgetById, { isLoading }] =
     useDeleteEconomicDataWidgetByIdMutation()
   return (
-    <div className="flex flex-col space-y-2 bg-white p-2 rounded-lg shadow-lg">
+    <div className="flex flex-col space-y-2 rounded-lg bg-white p-2 shadow-lg">
       <div className="relative">
         <div className=" w-full rounded-2xl border border-[#3A0B99] bg-[#3A0B99] shadow-lg ">
-          <div className="flex flex-col items-center justify-center  space-y-8 p-4 text-sm font-semibold text-center text-white md:text-base lg:text-lg">
+          <div className="flex flex-col items-center justify-center  space-y-8 p-4 text-center text-sm font-semibold text-white md:text-base lg:text-lg">
             <h1>{economicData?.title}</h1>
             <p>
               {`${economicData?.stats}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}

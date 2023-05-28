@@ -1,3 +1,4 @@
+'use client'
 import React, { useState, useCallback } from 'react'
 import { FaEdit, FaTrash, FaCheck, FaTimes } from 'react-icons/fa'
 import { Button, Loader } from '@mantine/core'
@@ -9,15 +10,15 @@ import { DistrictSectionProps } from '@lib/types'
 import {
   useDeleteDistrictSectionByIdMutation,
   useGetDistrictSectionsByDistrictIdQuery,
-} from 'features/editor/editorApiSlice'
+} from 'app/global-state/features/editor/editorApiSlice'
 import { showNotification } from '@mantine/notifications'
 import HandleDeleteModal from '../../HandleDeleteModal/HandleDeleteModal'
 import UpdateDistrictModal from './UpdateDistrictModal'
-import { useAppSelector, useAppDispatch } from '../../../state/hooks'
+import { useAppSelector, useAppDispatch } from '../../../app/global-state/hooks'
 import {
   editorSelector,
   setDistrictSection,
-} from '../../../features/editor/editorSlice'
+} from '../../../app/global-state/features/editor/editorSlice'
 
 const DistrictSectionsTable = ({
   type,
@@ -95,9 +96,6 @@ const DistrictSectionsTable = ({
   return (
     <>
       <Modal
-        overlayColor="rgba(0, 0, 0, 0.5)"
-        overlayOpacity={0.55}
-        overlayBlur={3}
         size="80%"
         opened={openLASectionModal}
         onClose={handleModalClose}

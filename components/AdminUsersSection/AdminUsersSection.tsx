@@ -1,8 +1,9 @@
+'use client'
 import { useState } from 'react'
 import { Loader } from '@mantine/core'
 
 import AdminUsersTable from './AdminUsersTable'
-import { useGetUsersQuery } from 'features/user/usersApiSlice'
+import { useGetUsersQuery } from 'app/global-state/features/user/usersApiSlice'
 import Spinner from '@components/spinner'
 import { CurrentUser } from '@lib/types'
 import UpdateAdminUserModal from './UpdateAdminUserModal'
@@ -28,7 +29,8 @@ const AdminUsersSection = () => {
         user?.name?.toLowerCase().includes(e.target.value.toLowerCase()) ||
         user?.organisation?.name
           ?.toLowerCase()
-          .includes(e.target.value.toLowerCase()) || user?.county?.toLowerCase().includes(e.target.value.toLowerCase())
+          .includes(e.target.value.toLowerCase()) ||
+        user?.county?.toLowerCase().includes(e.target.value.toLowerCase())
     )
 
     setSearchResults(resultsArray as CurrentUser[])

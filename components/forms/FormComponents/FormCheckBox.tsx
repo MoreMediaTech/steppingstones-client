@@ -1,11 +1,7 @@
 import React from 'react'
 import {
-  appendErrors,
-  DeepRequired,
   FieldErrors,
-  FieldErrorsImpl,
 } from 'react-hook-form'
-import { IFormData } from '@lib/types'
 
 export type Ref = HTMLInputElement
 
@@ -36,7 +32,7 @@ const FormCheckbox: React.FunctionComponent<
       />
       <label
         htmlFor={title}
-        className="my-2 text-sm font-semibold text-gray-900 dark:text-gray-300"
+        className="my-2 text-sm font-semibold text-gray-900"
       >
         {label}
       </label>

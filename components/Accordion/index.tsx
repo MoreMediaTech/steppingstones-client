@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react'
 import { AiOutlineRight } from 'react-icons/ai'
 import { Collapse } from '@mantine/core'

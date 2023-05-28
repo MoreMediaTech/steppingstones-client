@@ -1,6 +1,6 @@
 module.exports = {
   content: [
-    './pages/**/*.{js,ts,jsx,tsx}',
+    './app/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
   ],
   darkMode: 'class',
@@ -63,6 +63,5 @@ module.exports = {
   },
   plugins: [
     require('tailwind-scrollbar-hide'),
-    require('@tailwindcss/line-clamp'),
   ],
 }

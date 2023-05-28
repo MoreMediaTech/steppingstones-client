@@ -1,3 +1,4 @@
+'use client'
 import { useCallback, useState, useEffect } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { Loader } from '@mantine/core'
@@ -6,7 +7,7 @@ import { showNotification } from '@mantine/notifications'
 import {
   useCreateEconomicDataWidgetMutation,
   useUpdateEconomicDataWidgetByIdMutation,
-} from 'features/editor/editorApiSlice'
+} from 'app/global-state/features/editor/editorApiSlice'
 import { EconomicDataWidgetProps } from '@lib/types'
 import EconomicDataWidget from './EconomicDataWidget'
 import EconomicDataModal from './EconomicDataModal'
@@ -66,37 +67,40 @@ const EconomicDataSection = ({
     },
   })
 
-  const submitHandler: SubmitHandler<EconomicDataWidgetProps> =
-    useCallback(
-      async (data) => {
-        try {
-          const formData = {
-            ...data,
-            districtSectionId: id,
-            id: economicData?.id,
-          }
-          if (type === 'create') {
-            await createEconomicDataWidget(formData as EconomicDataWidgetProps).unwrap()
-          }
-          if (type === 'edit') {
-            await updateEconomicDataWidgetById(formData as EconomicDataWidgetProps).unwrap()
-          }
-          refetch()
-          setOpened(false)
-        } catch (error) {
-          showNotification({
-            message: 'Error updating economic data content',
-            autoClose: 3000,
-            color: 'red',
-          })
+  const submitHandler: SubmitHandler<EconomicDataWidgetProps> = useCallback(
+    async (data) => {
+      try {
+        const formData = {
+          ...data,
+          districtSectionId: id,
+          id: economicData?.id,
         }
-      },
-      [id, economicData, type]
-    )
+        if (type === 'create') {
+          await createEconomicDataWidget(
+            formData as EconomicDataWidgetProps
+          ).unwrap()
+        }
+        if (type === 'edit') {
+          await updateEconomicDataWidgetById(
+            formData as EconomicDataWidgetProps
+          ).unwrap()
+        }
+        refetch()
+        setOpened(false)
+      } catch (error) {
+        showNotification({
+          message: 'Error updating economic data content',
+          autoClose: 3000,
+          color: 'red',
+        })
+      }
+    },
+    [id, economicData, type]
+  )
 
   return (
     <>
-      <section className="relative h-auto w-full flex-grow px-2 py-2  md:py-8 md:px-8">
+      <section className="relative h-auto w-full flex-grow px-2 py-2  md:px-8 md:py-8">
         <section className="container">
           {isLoadingSection ? (
             <div className="flex h-[700px] items-center justify-center">

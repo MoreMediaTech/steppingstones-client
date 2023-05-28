@@ -1,4 +1,4 @@
-import { FaEdit, FaTrash, FaCheck, FaTimes } from 'react-icons/fa'
+import { FaEdit, FaCheck, FaTimes } from 'react-icons/fa'
 import { CurrentUser } from '@lib/types'
 import { Button } from '@mantine/core'
 

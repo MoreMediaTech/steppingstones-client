@@ -1,12 +1,9 @@
 // RichText.tsx in your components folder
-import dynamic from 'next/dynamic'
-import React from 'react'
+import React, { Suspense } from 'react'
 import RichTextToolbar from './RichTextToolbar'
+import ReactQuill from 'react-quill'
 
 import styles from '../ContentPreview/ContentPreview.module.css'
-const ReactQuill = dynamic(import('react-quill'), {
-  ssr: false,
-})
 
 // Undo and redo functions for Custom Toolbar
 function undoChange() {
@@ -53,7 +50,6 @@ const formats = [
   'code-block',
 ]
 
-
 const RichTextEditor = ({
   value,
   setValue,
@@ -62,18 +58,20 @@ const RichTextEditor = ({
   setValue: React.Dispatch<React.SetStateAction<string>>
 }) => {
   return (
-    <div className='w-full'>
-      <RichTextToolbar id="toolbar" />
-      <ReactQuill
-        modules={modules}
-        placeholder="compose here"
-        value={value || ''}
-        aria-label="content"
-        onChange={(content) => setValue(content)}
-        formats={formats}
-        theme="snow"
-        style={{ height: '400px', overflowY: 'scroll', width: '100%' }}
-      />
+    <div className="w-full">
+      <Suspense fallback={<div>Loading...</div>}>
+        <RichTextToolbar id="toolbar" />
+        <ReactQuill
+          modules={modules}
+          placeholder="compose here"
+          value={value || ''}
+          aria-label="content"
+          onChange={(content) => setValue(content)}
+          formats={formats}
+          theme="snow"
+          style={{ height: '400px', overflowY: 'scroll', width: '100%' }}
+        />
+      </Suspense>
     </div>
   )
 }

@@ -1,8 +1,9 @@
+'use client'
 import React, { MouseEventHandler, useCallback, useRef, useState } from 'react'
 import HandleDeleteModal from '@components/HandleDeleteModal'
 import { showNotification } from '@mantine/notifications'
 import { PartnerData } from '@lib/types'
-import { useDeletePartnerDataMutation } from 'features/partner/partnerApiSlice'
+import { useDeletePartnerDataMutation } from 'app/global-state/features/partner/partnerApiSlice'
 import { Button } from '@mantine/core'
 import { FaCheck, FaEdit, FaTimes, FaTrash } from 'react-icons/fa'
 import { format } from 'date-fns'
@@ -10,8 +11,11 @@ import { enGB } from 'date-fns/locale'
 import { BiChevronDownSquare, BiChevronUpSquare } from 'react-icons/bi'
 import { BsPrinterFill } from 'react-icons/bs'
 
-import { useAppDispatch } from 'state/hooks'
-import { setPartnerData, setType } from 'features/partner/partnerSlice'
+import { useAppDispatch } from 'app/global-state/hooks'
+import {
+  setPartnerData,
+  setType,
+} from 'app/global-state/features/partner/partnerSlice'
 import FormInput from '@components/forms/FormComponents/FormInput'
 import useWindowSize from 'hooks/useWindowSize'
 
@@ -184,7 +188,6 @@ const PartnerDirectoryTable = ({
             placeholder="Filter by date"
             type="date"
             hidden
-            
           />
         </div>
         <div className="mt-2 flex items-center gap-2">

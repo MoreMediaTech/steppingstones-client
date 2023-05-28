@@ -1,5 +1,5 @@
+'use client';
 import { Button, PasswordInput } from '@mantine/core'
-import { Inputs } from 'pages/auth/forgot-password/[token]'
 import { IFormData } from '@lib/types'
 import { FieldError, SubmitHandler, UseFormHandleSubmit, UseFormRegister } from 'react-hook-form'
 

@@ -1,11 +1,5 @@
-import React, {
-  MouseEventHandler,
-  useCallback,
-  useState,
-  useRef,
-  HTMLProps,
-  ReactInstance,
-} from 'react'
+'use client'
+import React, { MouseEventHandler, useCallback, useState, useRef } from 'react'
 import { showNotification } from '@mantine/notifications'
 import { Button } from '@mantine/core'
 import { FaCheck, FaEdit, FaTimes, FaTrash } from 'react-icons/fa'
@@ -14,9 +8,9 @@ import { BiChevronDownSquare, BiChevronUpSquare } from 'react-icons/bi'
 
 import HandleDeleteModal from '@components/HandleDeleteModal'
 import { SourceDataProps } from '@lib/types'
-import { useDeleteSDDataMutation } from 'features/editor/editorApiSlice'
-import { useAppDispatch } from 'state/hooks'
-import { setSDData } from 'features/editor/editorSlice'
+import { useDeleteSDDataMutation } from 'app/global-state/features/editor/editorApiSlice'
+import { useAppDispatch } from 'app/global-state/hooks'
+import { setSDData } from 'app/global-state/features/editor/editorSlice'
 
 interface ISourceDirectoryTableProps {
   data: SourceDataProps[]

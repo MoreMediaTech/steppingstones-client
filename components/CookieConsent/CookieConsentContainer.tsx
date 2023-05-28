@@ -1,3 +1,4 @@
+'use client';
 import Button from '@components/Button'
 import { Modal, Accordion, Paper, Switch } from '@mantine/core'
 import Link from 'next/link'
@@ -19,9 +20,6 @@ const CookieConsentContainer = ({
 }) => {
   return (
     <Modal
-      overlayColor="rgba(0, 0, 0, 0.5)"
-      overlayOpacity={0.55}
-      overlayBlur={3}
       size="lg"
       opened={opened}
       onClose={() => setOpened(false)}

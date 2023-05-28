@@ -1,15 +1,16 @@
+'use client'
 import React, { useState } from 'react'
 import { Loader } from '@mantine/core'
 
-import { useGetDistrictsQuery } from 'features/editor/editorApiSlice'
+import { useGetDistrictsQuery } from 'app/global-state/features/editor/editorApiSlice'
 import { DistrictDataProps } from '@lib/types'
 import DistrictTable from './DistrictTable'
 import UpdateDistrictModal from './UpdateDistrictModal'
-import { useAppSelector, useAppDispatch } from '../../../state/hooks'
+import { useAppSelector, useAppDispatch } from '../../../app/global-state/hooks'
 import {
   editorSelector,
   setDistrict,
-} from '../../../features/editor/editorSlice'
+} from '../../../app/global-state/features/editor/editorSlice'
 
 const DistrictSettings = () => {
   const {

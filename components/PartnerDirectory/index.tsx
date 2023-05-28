@@ -1,3 +1,4 @@
+'use client'
 import { useCallback, useEffect, useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { showNotification } from '@mantine/notifications'
@@ -8,7 +9,7 @@ import {
   useGetAllPartnersDataQuery,
   useUpdatePartnerDataMutation,
   useDeleteManyPartnerDataMutation,
-} from 'features/partner/partnerApiSlice'
+} from 'app/global-state/features/partner/partnerApiSlice'
 import PartnerDirectoryTable from './PartnerDirectoryTable'
 import PartnerDirectoryModal from './PartnerDirectoryModal'
 import { Loader } from '@mantine/core'
@@ -16,8 +17,8 @@ import {
   partnerSelector,
   setPartnerData,
   setType,
-} from 'features/partner/partnerSlice'
-import { useAppSelector, useAppDispatch } from 'state/hooks'
+} from 'app/global-state/features/partner/partnerSlice'
+import { useAppSelector, useAppDispatch } from 'app/global-state/hooks'
 
 interface IPartnerDirectoryFormProps {
   isPartnerDirectoryModalOpen: boolean

@@ -1,3 +1,4 @@
+'use client';
 import { EconomicDataWidgetProps } from '@lib/types'
 import { Modal } from '@mantine/core'
 import {
@@ -28,9 +29,6 @@ const EconomicDataModal = ({
 }: IEconomicDataFormProps) => {
   return (
     <Modal
-      overlayColor="rgba(0, 0, 0, 0.5)"
-      overlayOpacity={0.55}
-      overlayBlur={3}
       size="lg"
       opened={opened}
       onClose={() => setOpened(false)}

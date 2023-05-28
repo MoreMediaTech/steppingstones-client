@@ -1,10 +1,7 @@
+'use client';
 import {
   Button,
   Divider,
-  Indicator,
-  NumberInput,
-  Textarea,
-  TextInput,
 } from '@mantine/core'
 import {
   FieldError,
@@ -31,7 +28,6 @@ interface IEconomicDataFormProps {
 
 const EconomicDataForm = ({
   submitHandler,
-
   isLoading,
   register,
   handleSubmit,

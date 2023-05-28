@@ -1,22 +1,22 @@
+'use client'
 import { useCallback, useEffect, useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { CurrentUser, IFormData } from '@lib/types'
-import { Button, Checkbox,  TextInput } from '@mantine/core'
+import { Button } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
-import { useUpdateUserMutation } from 'features/user/usersApiSlice'
+import { useUpdateUserMutation } from 'app/global-state/features/user/usersApiSlice'
 
 const UpdateUserForm = ({
   refetch,
   user,
   handleModalClose,
-  disabled
+  disabled,
 }: {
   refetch: () => void
   user?: CurrentUser
   handleModalClose?: () => void
   disabled?: boolean
 }) => {
-
   const defaultValues = {
     name: user?.name ? (user?.name as string) : '',
     email: user?.email ? (user?.email as string) : '',
@@ -27,10 +27,13 @@ const UpdateUserForm = ({
     organisation: user?.organisation?.name
       ? (user?.organisation?.name as string)
       : '',
-    emailVerified: user?.emailVerified ? (user?.emailVerified as boolean) : false,
+    emailVerified: user?.emailVerified
+      ? (user?.emailVerified as boolean)
+      : false,
     isAdmin: user?.isAdmin ? (user?.isAdmin as boolean) : false,
-    acceptTermsAndConditions: user?.acceptTermsAndConditions ? (user?.acceptTermsAndConditions as boolean) : false,
-
+    acceptTermsAndConditions: user?.acceptTermsAndConditions
+      ? (user?.acceptTermsAndConditions as boolean)
+      : false,
   }
   const [roles] = useState<string[]>([
     'USER',
@@ -288,7 +291,7 @@ const UpdateUserForm = ({
       </div>
       <div className="flex w-full items-center space-x-4 ">
         <input
-        disabled
+          disabled
           type="checkbox"
           {...register('isAdmin')}
           className="form-checkbox h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-transparent"
@@ -308,7 +311,7 @@ const UpdateUserForm = ({
           Email Verified
         </label>
       </div>
-      
+
       <div className="flex w-full items-center space-x-4 ">
         <input
           type="checkbox"

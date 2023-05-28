@@ -1,9 +1,10 @@
+'use client'
 import { useCallback } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { Button, PasswordInput, TextInput } from '@mantine/core'
+import { Button, PasswordInput } from '@mantine/core'
 import { CurrentUser, IFormData } from '@lib/types'
 import { showNotification } from '@mantine/notifications'
-import { useResetCredentialsMutation } from 'features/user/usersApiSlice'
+import { useResetCredentialsMutation } from 'app/global-state/features/user/usersApiSlice'
 
 const UpdateUserPassForm = ({
   refetch,
@@ -78,7 +79,7 @@ const UpdateUserPassForm = ({
             },
           })}
           variant="unstyled"
-          className="w-full rounded-md border-2 border-gray-200 bg-white !focus:outline-none !focus:ring-transparent"
+          className="!focus:outline-none !focus:ring-transparent w-full rounded-md border-2 border-gray-200 bg-white"
         />
         {errors.password && (
           <span className="text-center text-sm text-red-500">

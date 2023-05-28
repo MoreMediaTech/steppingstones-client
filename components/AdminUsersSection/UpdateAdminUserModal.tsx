@@ -1,3 +1,4 @@
+'use client';
 import { Modal } from '@mantine/core'
 
 import { CurrentUser } from '@lib/types'
@@ -16,9 +17,6 @@ const UpdateAdminUserModal = ({
 }) => {
   return (
     <Modal
-      overlayColor="rgba(0, 0, 0, 0.5)"
-      overlayOpacity={0.55}
-      overlayBlur={3}
       size="lg"
       opened={open}
       onClose={handleModalClose}

@@ -1,19 +1,19 @@
+'use client'
 import { useCallback, useState, useEffect } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { showNotification } from '@mantine/notifications'
-import { Loader, Paper, UnstyledButton } from '@mantine/core'
+import { Loader, UnstyledButton } from '@mantine/core'
 import { BiEdit } from 'react-icons/bi'
 
 import { CountySectionForm } from '@components/forms'
-import { setError } from 'features/upload/uploadSlice'
+import { setError } from 'app/global-state/features/upload/uploadSlice'
 import {
   useGetCountyByIdQuery,
   useUpdateOrCreateCountyWelcomeMutation,
-} from 'features/editor/editorApiSlice'
-import { useAppDispatch } from 'state/hooks'
+} from 'app/global-state/features/editor/editorApiSlice'
+import { useAppDispatch } from 'app/global-state/hooks'
 import { EditorFormDataProps } from '@lib/types'
 import ContentPreview from '@components/ContentPreview'
-import Spinner from '@components/spinner'
 
 const NewsSection = ({ id }: { id: string }) => {
   const dispatch = useAppDispatch()
