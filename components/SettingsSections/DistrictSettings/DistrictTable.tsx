@@ -147,7 +147,7 @@ const CountyTable = ({
   }, [])
   return (
     <>
-      <section className=" relative space-y-2 bg-primary-light-50 px-2 shadow-md dark:bg-primary-dark-600 sm:rounded-lg">
+      <section className=" relative space-y-2 bg-gray-100 px-2 shadow-md dark:bg-gray-800 sm:rounded-lg">
         <div className="p-4">
           <label htmlFor="table-search" className="sr-only">
             Search
@@ -183,8 +183,8 @@ const CountyTable = ({
             scrollbarWidth: 'none',
           }}
         >
-          <table className="relative table w-full bg-primary-light-50 text-left text-gray-500 dark:bg-primary-dark-600 dark:text-primary-light-100">
-            <thead className="bg-gray-100 text-xs uppercase text-gray-700 dark:bg-primary-dark-500 dark:text-primary-light-200">
+          <table className="relative table w-full bg-slate-100 text-left text-gray-500 dark:bg-slate-800 dark:text-gray-100">
+            <thead className="bg-slate-200 text-xs uppercase text-gray-700 dark:bg-slate-500 dark:text-gray-200">
               <tr>
                 {headers.map((header) => {
                   if (header.key === 'districtSections') {
@@ -219,7 +219,7 @@ const CountyTable = ({
               {sortedData().map((district: DistrictDataProps) => (
                 <tr
                   key={district.id}
-                  className="group border-b hover:bg-gray-100 dark:hover:bg-primary-light-500"
+                  className="group border-b hover:bg-slate-200 dark:hover:bg-slate-500"
                 >
                   <td
                     scope="row"

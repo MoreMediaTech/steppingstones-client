@@ -152,7 +152,7 @@ const SourceDirectoryTable = ({
   }, [])
 
   return (
-    <section className="relative my-2 bg-primary-light-50 px-2 dark:bg-primary-dark-600 dark:text-primary-light-100  md:w-full">
+    <section className="relative my-2 bg-slate-100 px-2 dark:bg-slate-800 dark:text-gray-200  md:w-full">
       <div className="my-2 flex items-center gap-2 py-2">
         <div className="relative mt-1 w-full">
           <label htmlFor="table-search" className="sr-only" />
@@ -196,8 +196,8 @@ const SourceDirectoryTable = ({
         className={`relative overflow-x-auto`}
         style={{ height: window.innerHeight - 500 }}
       >
-        <table className="table w-full bg-primary-light-50 text-left text-gray-500  dark:bg-primary-dark-600 dark:text-primary-light-100">
-          <thead className="bg-gray-100 text-xs uppercase text-gray-700 dark:bg-primary-dark-500 dark:text-primary-light-200">
+        <table className="table w-full text-left text-gray-500  dark:text-gray-200">
+          <thead className="bg-slate-200 text-xs uppercase text-gray-700 dark:bg-slate-500 dark:text-gray-200">
             <tr>
               <th scope="col" className="p-4"></th>
               {headers.map((header) => {
@@ -244,7 +244,7 @@ const SourceDirectoryTable = ({
             {sortedData().map((item: SourceDataProps) => (
               <tr
                 key={item.id}
-                className="group group border-b hover:bg-gray-100 dark:hover:bg-primary-light-500"
+                className="group group border-b hover:bg-slate-200 dark:hover:bg-slate-500"
               >
                 <td className="w-4 p-4">
                   <div className="flex items-center">

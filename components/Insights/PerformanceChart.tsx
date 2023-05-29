@@ -1,7 +1,7 @@
 'use client';
 import React from 'react'
 import { Box } from '@mantine/core'
-import { ResponsiveBar } from '@nivo/bar'
+// import { ResponsiveBar } from '@nivo/bar'
 
 type PerformanceChartProps = {
     data: any
@@ -10,7 +10,7 @@ type PerformanceChartProps = {
 function PerformanceChart({ data }: PerformanceChartProps) {
   return (
     <Box sx={{ width: '100%', height: '325px' }}>
-      <ResponsiveBar
+      {/* <ResponsiveBar
         data={data}
         keys={['avgLoadTime']}
         theme={{
@@ -127,7 +127,7 @@ function PerformanceChart({ data }: PerformanceChartProps) {
         barAriaLabel={function (e) {
           return `${e.id} ${e.value}`
         }}
-      />
+      /> */}
     </Box>
   )
 }

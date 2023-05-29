@@ -22,30 +22,33 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 import { useGetAllInAppEnquiryMsgQuery } from 'app/global-state/features/messages/messagesApiSlice'
+import { useLogoutMutation } from 'app/global-state/features/auth/authApiSlice'
 import { MessageProps } from '@lib/types'
 import { AppLogo } from './AppLogo'
 
-import { useAppSelector, useAppDispatch } from 'app/global-state/hooks'
+import { useAppSelector, useAppDispatch } from '../../app/global-state/hooks'
 import {
   globalSelector,
   setDrawerOpened,
 } from 'app/global-state/features/global/globalSlice'
+import { redirect } from 'next/navigation'
+import { NEXT_URL } from '@config/index'
 
 const NAV_ITEMS = [
   {
     label: 'Portal Home',
     icon: <BiHomeCircle fontSize={18} color="#00DCB3" />,
-    href: '/admin/editor-portal',
+    href: '/admin-portal',
   },
   {
     label: 'Messages',
     icon: <FaRegEnvelope fontSize={18} color="#00DCB3" />,
-    href: '/admin/editor-portal/messages',
+    href: '/admin-portal/messages',
   },
   {
     label: 'Manage Users',
     icon: <FaUsers fontSize={18} color="#00DCB3" />,
-    href: '/admin/editor-portal/users',
+    href: '/admin-portal/users',
   },
   {
     label: 'Admin',
@@ -55,37 +58,44 @@ const NAV_ITEMS = [
   {
     label: 'Manage County',
     icon: <FaBriefcase fontSize={18} color="#00DCB3" />,
-    href: '/admin/editor-portal/admin/county-settings',
+    href: '/admin-portal/admin/county-setting',
   },
   {
     label: 'Manage District',
     icon: <FaBriefcase fontSize={18} color="#00DCB3" />,
-    href: '/admin/editor-portal/admin/district-settings',
+    href: '/admin-portal/admin/district-setting',
   },
   {
     label: 'Manage Section',
     icon: <FaBriefcase fontSize={18} color="#00DCB3" />,
-    href: '/admin/editor-portal/admin/section-settings',
+    href: '/admin-portal/admin/section-setting',
   },
   {
     label: 'Partner Directory',
     icon: <GoFileDirectory fontSize={18} color="#00DCB3" />,
-    href: '/admin/editor-portal/admin/partner-directory',
+    href: '/admin-portal/admin/partner-directory',
   },
   {
     label: 'Source Directory',
     icon: <GoFileDirectory fontSize={18} color="#00DCB3" />,
-    href: '/admin/editor-portal/admin/source-directory',
+    href: '/admin-portal/admin/source-directory',
   },
 ]
 
-const AdminSidebar = ({ handleLogout }: { handleLogout?: () => void }) => {
+const AdminSidebar = () => {
   const dispatch = useAppDispatch()
   const { drawerOpened } = useAppSelector(globalSelector)
   let arg: void
   const { data: messages } = useGetAllInAppEnquiryMsgQuery(arg, {
     pollingInterval: 60000,
   })
+  const [logout] = useLogoutMutation()
+
+  const handleLogout = async () => {
+    logout()
+    localStorage.removeItem('token')
+    redirect(`${NEXT_URL}`)
+  }
 
   // filter all unread messages
   const unreadMessages = messages?.filter(
@@ -205,7 +215,7 @@ const AdminSidebar = ({ handleLogout }: { handleLogout?: () => void }) => {
                   />
                 }
                 onClick={() => {
-                  handleLogout && handleLogout()
+                  handleLogout()
                   dispatch(setDrawerOpened(false))
                 }}
               >

@@ -14,7 +14,7 @@ interface ISearchFormProps {
 
 const SearchForm = ({ register, types, handleModalOpen }: ISearchFormProps) => {
   return (
-    <div className="relative mx-2  mt-5  bg-primary-light-50 p-2 font-poppins dark:bg-primary-dark-600 dark:text-primary-light-100 md:mx-auto md:p-4">
+    <div className="relative mx-2  mt-5  bg-slate-100 p-2 font-poppins dark:bg-slate-800 dark:text-primary-light-100 md:mx-auto md:p-4">
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
         <div className="w-full space-y-2">
           <FormRowSelect

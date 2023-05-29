@@ -61,7 +61,7 @@ const PortalHeader = ({
 
   return (
     <header
-      className={`bg-primary-light-100 px-4 py-2 drop-shadow-md dark:bg-primary-dark-700`}
+      className={`bg-slate-100 px-4 py-2 drop-shadow-md dark:bg-slate-800`}
     >
       <div className="mx-auto py-2 md:px-4">
         <div className="flex flex-col items-start justify-between md:flex-row md:items-center">
@@ -159,6 +159,7 @@ const PortalHeader = ({
               aria-label="search"
               placeholder="Search"
               appendComponent={<IoIosSearch fontSize={25} fontWeight={500} />}
+              hidden
             />
 
             {/* <div className={!!data ? 'display: flex' : 'hidden'}>

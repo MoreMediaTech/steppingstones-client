@@ -100,7 +100,7 @@ const MessagesTable = ({
               {messages?.map((message: MessageProps) => (
                 <tr
                   key={message.id}
-                  className="border-b bg-white hover:cursor-pointer hover:bg-gray-50"
+                  className="border-b bg-white hover:cursor-pointer hover:bg-gray-50 dark:hover:bg-slate-700 dark:bg-slate-800"
                 >
                   <td className="w-4 p-4">
                     <div className="flex items-center">
@@ -126,14 +126,16 @@ const MessagesTable = ({
                     <div
                       onClick={() => {
                         router.push(
-                          `/admin/editor-portal/messages/${message.id}`
+                          `/admin-portal/messages/${message.id}`
                         )
                         handleUpdateIsRead(message)
                       }}
                     >
                       <p
                         className={`${
-                          message.isRead ? 'text-gray-500' : 'text-gray-700'
+                          message.isRead
+                            ? 'text-gray-500 dark:text-gray-200'
+                            : 'text-gray-700 dark:text-gray-400'
                         }`}
                       >
                         {message?.from}
@@ -141,8 +143,8 @@ const MessagesTable = ({
                       <p
                         className={`${
                           message.isRead
-                            ? 'font-medium text-gray-400'
-                            : 'font-semibold text-gray-900'
+                            ? 'font-medium text-gray-400 dark:text-gray-300'
+                            : 'font-semibold text-gray-900 dark:text-gray-500'
                         }text-left text-base md:text-lg`}
                       >
                         {message?.subject}

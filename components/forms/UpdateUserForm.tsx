@@ -89,7 +89,9 @@ const UpdateUserForm = ({
       className="grid grid-cols-1 gap-x-4 gap-y-6  bg-transparent md:grid-cols-2"
     >
       <div className="w-full space-y-2">
-        <label className="my-2 text-sm font-semibold text-gray-900">Name</label>
+        <label className="my-2 text-sm font-semibold text-gray-900 dark:text-gray-200">
+          Name
+        </label>
         <input
           id="name"
           aria-label="partner-name"
@@ -115,7 +117,7 @@ const UpdateUserForm = ({
         )}
       </div>
       <div className="w-full space-y-2">
-        <label className="my-2 text-sm font-semibold text-gray-900">
+        <label className="my-2 text-sm font-semibold text-gray-900 dark:text-gray-200">
           Email <span className="text-red-500">*</span>
         </label>
         <input
@@ -139,7 +141,7 @@ const UpdateUserForm = ({
         )}
       </div>
       <div className="w-full space-y-2">
-        <label className="my-2 text-sm font-semibold text-gray-900">
+        <label className="my-2 text-sm font-semibold text-gray-900 dark:text-gray-200">
           Contact Number
         </label>
         <input
@@ -168,7 +170,7 @@ const UpdateUserForm = ({
       </div>
 
       <div className="w-full space-y-2">
-        <label className="my-2 text-sm font-semibold text-gray-900">
+        <label className="my-2 text-sm font-semibold text-gray-900 dark:text-gray-200">
           Your PostCode <span className="text-red-500">*</span>
         </label>
         <input
@@ -192,7 +194,7 @@ const UpdateUserForm = ({
       </div>
 
       <div className="w-full space-y-2">
-        <label className="my-2 text-sm font-semibold text-gray-900">
+        <label className="my-2 text-sm font-semibold text-gray-900 dark:text-gray-200">
           District
         </label>
         <input
@@ -216,7 +218,7 @@ const UpdateUserForm = ({
       </div>
 
       <div className="w-full space-y-2">
-        <label className="my-2 text-sm font-semibold text-gray-900">
+        <label className="my-2 text-sm font-semibold text-gray-900 dark:text-gray-200">
           County <span className="text-red-500">*</span>
         </label>
         <input
@@ -240,7 +242,7 @@ const UpdateUserForm = ({
       </div>
 
       <div className="w-full space-y-2">
-        <label className="my-2 text-sm font-semibold text-gray-900">
+        <label className="my-2 text-sm font-semibold text-gray-900 dark:text-gray-200">
           Organisation <span className="text-red-500">*</span>
         </label>
         <input
@@ -262,9 +264,9 @@ const UpdateUserForm = ({
           </span>
         )}
       </div>
-      <div>
+      <div className="w-full space-y-2">
         <label htmlFor="role" className="mb-1 block">
-          <p className="font-normal text-gray-700 ">Role</p>
+          <p className="font-normal text-gray-700 dark:text-gray-200 ">Role</p>
         </label>
         <select
           id="role"
@@ -273,7 +275,7 @@ const UpdateUserForm = ({
           disabled={disabled}
           placeholder="Your Role"
           onChange={(e) => setRole(e.target.value)}
-          className="focus:shadow-outline mb-6 block w-full appearance-none rounded-md  border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-blue-500"
+          className="focus:shadow-outline mb-6 block w-full appearance-none rounded-md  border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-blue-500"
         >
           {roles?.map((itemValue, index) => {
             return (
@@ -296,7 +298,7 @@ const UpdateUserForm = ({
           {...register('isAdmin')}
           className="form-checkbox h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-transparent"
         />
-        <label className="my-2 text-sm font-semibold text-gray-900">
+        <label className="my-2 text-sm font-semibold text-gray-900 dark:text-gray-200">
           Admin
         </label>
       </div>
@@ -307,7 +309,7 @@ const UpdateUserForm = ({
           {...register('emailVerified')}
           className="form-checkbox h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-transparent"
         />
-        <label className="my-2 text-sm font-semibold text-gray-900">
+        <label className="my-2 text-sm font-semibold text-gray-900 dark:text-gray-200">
           Email Verified
         </label>
       </div>
@@ -318,7 +320,7 @@ const UpdateUserForm = ({
           {...register('acceptTermsAndConditions')}
           className="form-checkbox h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-transparent"
         />
-        <label className="my-2 text-sm font-semibold text-gray-900">
+        <label className="my-2 text-sm font-semibold text-gray-900 dark:text-gray-200">
           Accepted Terms and Conditions
         </label>
       </div>

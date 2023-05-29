@@ -180,7 +180,7 @@ const SubSectionsTable = ({
             </div>
             <div className="overflow-x-auto">
               <table className="relative table w-full  text-center text-sm text-gray-500">
-                <thead className="bg-gray-50 text-xs uppercase text-gray-700">
+                <thead className="bg-slate-200 dark:bg-slate-600 text-xs uppercase text-gray-700 dark:text-gray-200">
                   <tr>
                     <th scope="col" className="p-4"></th>
                     <th scope="col" className="px-6 py-3 text-left">
@@ -204,14 +204,14 @@ const SubSectionsTable = ({
                   {subSectionData?.map((section: SubSectionProps) => (
                     <tr
                       key={section.id}
-                      className="border-b bg-white hover:bg-gray-50"
+                      className="border-b hover:bg-slate-200"
                     >
                       <td className="w-4 p-4">
                         <div className="flex items-center">
                           <input
                             id="checkbox-table-search-1"
                             type="checkbox"
-                            className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 "
+                            className="h-4 w-4 rounded border-gray-300 bg-slate-100 text-blue-600 focus:ring-2 focus:ring-blue-500 "
                             value={section.id}
                             onChange={handleSelect}
                           />

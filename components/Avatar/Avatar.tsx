@@ -12,12 +12,12 @@ const Avatar = ({
 }) => {
   return (
     <div
-      className={`${classes} relative flex items-center justify-center rounded-lg border border-[#3A0B99] bg-white p-4 text-xl font-semibold text-white `}
+      className={`${classes} relative flex items-center justify-center rounded-full border border-[#3A0B99] bg-white p-4 text-xl font-semibold text-white `}
     >
       <Image
         src={!!imageUrl ? imageUrl : steppingstonesapplogo}
         alt={'User image or logo'}
-        className={`rounded-lg ${imgSize}`}
+        className={`rounded-full ${imgSize}`}
         fill
         style={{
           objectFit: 'cover',

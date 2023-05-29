@@ -1,6 +1,6 @@
 'use client';
 import React from 'react'
-import { ResponsivePie } from '@nivo/pie'
+// import { ResponsivePie } from '@nivo/pie'
 import { themeSettings } from '../../constants/styles'
 import { Box } from '@mantine/core';
 import { useTheme } from 'next-themes'
@@ -46,7 +46,7 @@ function BreakdownChart({
         position: 'relative',
       }}
     >
-      <ResponsivePie
+      {/* <ResponsivePie
         data={formattedData}
         theme={{
           axis: {
@@ -129,7 +129,7 @@ function BreakdownChart({
             ],
           },
         ]}
-      />
+      /> */}
     </Box>
   )
 }

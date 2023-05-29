@@ -83,7 +83,7 @@ const MessagesSection = () => {
     )
   }
   return (
-    <section className="h-full w-full dark:bg-primary-dark-800">
+    <section className="h-full w-full">
       <Tabs
         color="violet"
         variant="outline"

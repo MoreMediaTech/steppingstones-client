@@ -1,7 +1,7 @@
 'use client'
 import { useRef } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { useRouter } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 import { useTheme } from 'next-themes'
 import { showNotification } from '@mantine/notifications'
 import { Button, PasswordInput } from '@mantine/core'
@@ -47,7 +47,7 @@ const LoginForm: React.FC = (): JSX.Element => {
       }).unwrap()
       dispatch(setCredentials({ token: responseData.token }))
       // localStorage.setItem('token', responseData.token)
-      router.replace(`${NEXT_URL}/admin/editor-portal`)
+      redirect(`${NEXT_URL}/admin-portal`)
       reset()
     } catch (error) {
       if (!error?.response) {

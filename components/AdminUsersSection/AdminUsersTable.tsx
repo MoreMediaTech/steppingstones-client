@@ -23,7 +23,7 @@ const AdminUsersTable = ({
   
   return (
     <>
-      <section className="relative shadow-md  dark:bg-primary-dark-600 sm:rounded-lg md:w-full">
+      <section className="relative bg-slate-100 shadow-md dark:bg-slate-800 sm:rounded-lg md:w-full">
         <div className="p-4">
           <label htmlFor="table-search" className="sr-only">
             Search
@@ -53,8 +53,8 @@ const AdminUsersTable = ({
           </div>
         </div>
         <div className="overflow-x-auto">
-          <table className="relative w-full overflow-x-auto bg-primary-light-50 text-center text-sm text-gray-500 dark:bg-primary-dark-600 dark:text-primary-light-100 ">
-            <thead className=" text-xs uppercase text-gray-700 dark:text-primary-light-200">
+          <table className="relative w-full overflow-x-auto bg-slate-100 text-center text-sm text-gray-500 dark:bg-slate-800 dark:text-gray-100 ">
+            <thead className=" bg-slate-200 text-xs uppercase text-gray-700 dark:bg-slate-500 dark:text-gray-200">
               <tr>
                 <th scope="col" className="p-4">
                   {/* <div className="flex items-center">
@@ -95,7 +95,7 @@ const AdminUsersTable = ({
               {users?.map((user: CurrentUser) => (
                 <tr
                   key={user.id}
-                  className="border-b group hover:bg-gray-100 dark:hover:bg-primary-light-500"
+                  className="group border-b hover:bg-slate-200 dark:hover:bg-slate-500"
                 >
                   <td className="w-4 p-4">
                     <div className="flex items-center">

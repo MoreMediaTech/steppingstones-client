@@ -53,9 +53,9 @@ const UserProfileSection = () => {
   return (
     <>
       <section className="container relative mx-auto mt-24 w-full max-w-screen-xl space-y-4 py-6 sm:px-4">
-        <h1 className="text-xl font-semibold">User Settings</h1>
+        <h1 className="text-xl dark:text-gray-200 font-semibold">User Settings</h1>
         {!user?.emailVerified && (
-          <div className="mb-4 flex items-center justify-between rounded bg-white px-4 py-2 shadow-md">
+          <div className="mb-4 flex items-center justify-between rounded px-4 py-2  shadow-md dark:bg-slate-700 dark:text-gray-200">
             {!isSuccess ? (
               <>
                 <p className="font-poppins text-base">
@@ -80,11 +80,11 @@ const UserProfileSection = () => {
         )}
         <section className="grid grid-cols-1 gap-4 lg:grid-cols-3">
           <section className="w-full space-y-4 lg:col-span-1">
-            <div className="flex w-full items-center space-x-6 rounded-md bg-white  p-6 shadow-xl">
+            <div className="flex w-full items-center space-x-6 rounded-md p-6 shadow-xl  dark:bg-slate-700 dark:text-gray-200">
               <div className="mr-2 rounded-full">
                 <Avatar
                   imageUrl={user?.imageUrl as string}
-                  classes="rounded-lg bg-white w-24 h-24"
+                  classes="bg-white w-24 h-24"
                 />
               </div>
               <div className="space-y-1">
@@ -94,7 +94,7 @@ const UserProfileSection = () => {
                 </div>
                 <Button
                   type="button"
-                  className="rounded-md bg-primary px-4 py-2 text-center font-semibold text-white shadow-xl transition delay-150 
+                  className="rounded-md bg-primary px-4 py-2 text-center font-semibold text-gray-200 shadow-xl transition delay-150 
                 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-secondary md:text-lg"
                   onClick={() => setOpened(true)}
                 >
@@ -104,7 +104,7 @@ const UserProfileSection = () => {
             </div>
           </section>
           <section className="space-y-4 lg:col-span-2">
-            <div className=" w-full space-y-4 rounded-md bg-white px-4 pb-8 pt-6 shadow-xl">
+            <div className=" w-full space-y-4 rounded-md px-4 pb-8 pt-6 shadow-xl dark:bg-slate-700 dark:text-gray-200">
               <h1 className="text-xl font-bold">General Information</h1>
               <UpdateUserForm
                 refetch={refetch}
@@ -112,7 +112,7 @@ const UserProfileSection = () => {
                 disabled
               />
             </div>
-            <div className="w-full space-y-4 rounded-md bg-white px-4 pb-8 pt-6 shadow-xl">
+            <div className="w-full space-y-4 rounded-md px-4 pb-8 pt-6 shadow-xl dark:bg-slate-700 dark:text-gray-200">
               <h1 className="text-xl font-bold">Password Information</h1>
               <UpdateUserPassForm
                 refetch={refetch}
@@ -121,7 +121,7 @@ const UserProfileSection = () => {
             </div>
           </section>
         </section>
-        <section className=" flex w-full flex-col items-center justify-between space-y-4 rounded-md bg-white p-6 shadow-xl md:flex-row md:space-y-0">
+        <section className=" flex w-full flex-col items-center justify-between space-y-4 rounded-md p-6 shadow-xl dark:bg-slate-700 dark:text-gray-200 md:flex-row md:space-y-0">
           <div className="flex flex-col items-center space-y-2 text-gray-400 md:flex-row md:space-x-4 md:space-y-0">
             <Link href="#" className=" hover:cursor-pointer hover:underline">
               Terms and Conditions

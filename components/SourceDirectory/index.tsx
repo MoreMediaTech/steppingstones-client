@@ -38,7 +38,7 @@ const SourceDirectory: React.FC = () => {
     error,
     refetch,
   } = useGetAllSDDataByTypeQuery(sdDataType)
-  console.log('🚀 ~ file: index.tsx ~ line 37 ~ sourceData', sourceData)
+
   const [deleteManySDData, { isLoading: isLoadingDeleteMany }] =
     useDeleteManySDDataMutation()
 
@@ -130,7 +130,7 @@ const SourceDirectory: React.FC = () => {
           <Loader size="xl" variant="bars" />
         </div>
       ) : (
-        <section className="relative mx-2 bg-primary-light-50 px-1 py-1 shadow-md dark:bg-primary-dark-600 dark:text-primary-light-100 md:mx-auto md:w-full md:px-4">
+        <section className="relative mx-2 bg-slate-100 px-1 py-1 shadow-md dark:bg-slate-800 dark:text-gray-200 md:mx-auto md:w-full md:px-4">
           <SourceDirectoryTable
             data={
               searchResults?.length > 0

@@ -5,6 +5,7 @@ import {
   UseFormHandleSubmit,
   UseFormRegister,
 } from 'react-hook-form'
+import { useTheme } from 'next-themes';
 import { CurrentUser } from '@lib/types'
 import { Button, PasswordInput, TextInput } from '@mantine/core'
 
@@ -33,6 +34,7 @@ const CreateAdminForm = ({
   setPassword,
   generatePassword,
 }: ICreateAdminProps) => {
+  const { resolvedTheme } = useTheme()
   return (
     <form
       className="flex h-full w-full flex-col space-y-2"
@@ -45,7 +47,7 @@ const CreateAdminForm = ({
           placeholder="Your Full Name"
           type="text"
           label={
-            <p className="mt-2 font-light text-gray-900 ">
+            <p className="mt-2 font-light text-gray-900 dark:text-gray-200 ">
               Name <span className="text-red-500">*</span>
             </p>
           }
@@ -60,6 +62,13 @@ const CreateAdminForm = ({
               message: 'Please enter a valid name',
             },
           })}
+          labelProps={{
+            style: {
+              display: 'block',
+              fontSize: '0.875rem',
+              color: resolvedTheme === 'dark' ? 'white' : 'black',
+            },
+          }}
           className="focus:shadow-outline w-full appearance-none rounded-md focus:outline-none"
         />
         {errors.name && (
@@ -75,7 +84,7 @@ const CreateAdminForm = ({
           placeholder="Email"
           type="email"
           label={
-            <p className="mt-2 font-light text-gray-900 ">
+            <p className="mt-2 font-light text-gray-900 dark:text-gray-200">
               Email <span className="text-red-500">*</span>
             </p>
           }
@@ -86,6 +95,13 @@ const CreateAdminForm = ({
               message: 'Invalid email address',
             },
           })}
+          labelProps={{
+            style: {
+              display: 'block',
+              fontSize: '0.875rem',
+              color: resolvedTheme === 'dark' ? 'white' : 'black',
+            },
+          }}
           className="focus:shadow-outline w-full appearance-none rounded-md focus:outline-none"
         />
         {errors.email && (
@@ -95,13 +111,13 @@ const CreateAdminForm = ({
         )}
       </div>
       <div>
-        <div className='grid grid-cols-1 md:grid-cols-3 gap-2'>
+        <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
           <PasswordInput
             id="password"
             aria-label="password"
             placeholder="Enter password"
             label={
-              <p className="mt-2 font-light text-gray-900 ">
+              <p className="mt-2 font-light text-gray-900 dark:text-gray-200">
                 Password <span className="text-red-500">*</span>
               </p>
             }
@@ -121,11 +137,18 @@ const CreateAdminForm = ({
                   'Password must contain at least one uppercase letter, one number and one special character',
               },
             })}
+            labelProps={{
+              style: {
+                display: 'block',
+                fontSize: '0.875rem',
+                color: resolvedTheme === 'dark' ? 'white' : 'black',
+              },
+            }}
             className="w-ful col-span-1 md:col-span-2"
           />
           <Button
             type="button"
-            className=" bg-green-500 capitalize hover:bg-green-600 md:justify-self-end md:mt-8"
+            className=" bg-green-500 capitalize hover:bg-green-600 md:mt-8 md:justify-self-end"
             onClick={generatePassword}
           >
             Generate Password

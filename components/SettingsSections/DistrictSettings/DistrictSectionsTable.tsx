@@ -101,13 +101,14 @@ const DistrictSectionsTable = ({
         onClose={handleModalClose}
         title={`${laName} LA Sections`}
         centered
+        className='dark:bg-slate-800'
       >
         {isLoadingDistrictSections ? (
           <div className="flex h-[300px] items-center justify-center">
             <Loader size="xl" variant="bars" />
           </div>
         ) : (
-          <section className=" relative  overflow-auto  md:w-full">
+          <section className=" relative  overflow-auto  text-gray-500 dark:bg-slate-800 dark:text-gray-100 md:w-full">
             <div className="p-4">
               <label htmlFor="table-search" className="sr-only">
                 Search
@@ -130,14 +131,14 @@ const DistrictSectionsTable = ({
                 <input
                   type="text"
                   id="table-search"
-                  className="block rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 md:w-80  "
+                  className="block rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm  focus:border-blue-500 focus:ring-blue-500 md:w-80  "
                   placeholder="Search for items"
                   onChange={handleSearch}
                 />
               </div>
             </div>
-            <table className="relative table w-full overflow-auto overflow-x-auto text-center text-sm text-gray-500">
-              <thead className="bg-gray-100 text-xs uppercase text-gray-700">
+            <table className="relative table w-full overflow-auto overflow-x-auto text-center text-sm text-gray-500 dark:bg-slate-800 dark:text-gray-100">
+              <thead className="bg-gray-100 text-xs uppercase text-gray-700 dark:bg-slate-500 dark:text-gray-200">
                 <tr>
                   <th scope="col" className="px-6 py-3 text-left">
                     LA Section name
@@ -153,15 +154,15 @@ const DistrictSectionsTable = ({
                   </th>
                 </tr>
               </thead>
-              <tbody className="overflow-auto">
+              <tbody className="overflow-auto text-gray-500  dark:bg-slate-800 dark:text-gray-100">
                 {data?.map((section: DistrictSectionProps) => (
                   <tr
                     key={section.id}
-                    className="border-b bg-white hover:bg-gray-50"
+                    className="border-b hover:bg-slate-200 dark:text-gray-200 dark:hover:bg-slate-500"
                   >
                     <td
                       scope="row"
-                      className="whitespace-nowrap px-6 py-4 text-left font-medium text-gray-900"
+                      className="whitespace-nowrap px-6 py-4 text-left font-medium "
                     >
                       <div className="flex items-center justify-start space-x-2">
                         <div className="text-xs font-semibold sm:text-base ">

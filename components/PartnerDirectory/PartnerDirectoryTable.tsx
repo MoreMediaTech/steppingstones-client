@@ -5,7 +5,7 @@ import { showNotification } from '@mantine/notifications'
 import { PartnerData } from '@lib/types'
 import { useDeletePartnerDataMutation } from 'app/global-state/features/partner/partnerApiSlice'
 import { Button } from '@mantine/core'
-import { FaCheck, FaEdit, FaTimes, FaTrash } from 'react-icons/fa'
+import { FaEdit, FaTrash } from 'react-icons/fa'
 import { format } from 'date-fns'
 import { enGB } from 'date-fns/locale'
 import { BiChevronDownSquare, BiChevronUpSquare } from 'react-icons/bi'
@@ -154,7 +154,7 @@ const PartnerDirectoryTable = ({
   }, [])
 
   return (
-    <section className="relative space-y-2 bg-primary-light-50 px-2 shadow-md dark:bg-primary-dark-600 sm:rounded-lg md:px-4">
+    <section className="relative space-y-2 bg-slate-100 px-2 shadow-md dark:bg-slate-800 sm:rounded-lg md:px-4">
       <div className="grid grid-cols-1 items-center gap-6 p-4 md:grid-cols-4">
         <div className="relative col-span-1 w-full">
           <label htmlFor="table-search" className="sr-only" />
@@ -209,8 +209,8 @@ const PartnerDirectoryTable = ({
           scrollbarWidth: 'none',
         }}
       >
-        <table className="table bg-primary-light-50 text-left text-gray-500 dark:bg-primary-dark-600 dark:text-primary-light-100">
-          <thead className="bg-gray-100 text-xs uppercase text-gray-700 dark:bg-primary-dark-500 dark:text-primary-light-200">
+        <table className="table bg-slate-100 text-left text-gray-500 dark:bg-slate-800 dark:text-gray-100">
+          <thead className="bg-gray-200 text-xs uppercase text-gray-700 dark:bg-slate-500 dark:text-gray-200">
             <tr>
               <th scope="col" className="p-4"></th>
               {headers.map((header) => (
@@ -243,7 +243,7 @@ const PartnerDirectoryTable = ({
             {sortedData().map((partner: PartnerData) => (
               <tr
                 key={partner.id}
-                className="group border-b hover:bg-gray-100  dark:hover:bg-primary-light-500"
+                className="group border-b hover:bg-gray-200  dark:hover:bg-slate-500"
               >
                 <td className="w-4 p-4">
                   <div className="flex items-center">

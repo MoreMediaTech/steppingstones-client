@@ -41,34 +41,22 @@ export function LoginButton({
                 <Menu.Label>
                   <span className="item-center flex justify-center text-primary-dark-100 "></span>
                 </Menu.Label>
-                {currentUser.role !== 'PARTNER' ? (
                   <Menu.Item
                     icon={<MdBusiness fontSize={14} color="#5E17EB" />}
                   >
                     <Link
                       className="text-primary-dark-100 "
-                      href={'/admin/editor-portal'}
+                      href={'/admin-portal'}
                     >
                       Portal
                     </Link>
                   </Menu.Item>
-                ) : (
-                  <Menu.Item
-                    icon={<MdBusiness fontSize={14} color="#5E17EB" />}
-                  >
-                    <Link
-                      className="text-primary-dark-100 "
-                      href={'/admin/partner-portal'}
-                    >
-                      Portal
-                    </Link>
-                  </Menu.Item>
-                )}
+               
                 <Divider />
                 <Menu.Item icon={<FaRegUser fontSize={14} color="#5E17EB" />}>
                   <Link
                     className="text-primary-dark-100 "
-                    href={'/auth/profile'}
+                    href={'/auth/user-profile'}
                   >
                     Profile
                   </Link>
@@ -131,28 +119,17 @@ export function MobileLoginButton({
             <Collapse in={isOpen}>
               <Menu>
                 <Menu.Label>Application</Menu.Label>
-                {currentUser.role !== 'PARTNER' ? (
                   <Menu.Item>
                     <Link
-                      href={'/admin/editor-portal'}
+                      href={'/admin-portal'}
                       className="text-[#5E17EB]"
                     >
                       Portal
                     </Link>
                   </Menu.Item>
-                ) : (
-                  <Menu.Item>
-                    <Link
-                      href={'/admin/partner-portal'}
-                      className="text-[#5E17EB]"
-                    >
-                      Portal
-                    </Link>
-                  </Menu.Item>
-                )}
                 <Divider />
                 <Menu.Item>
-                  <Link href={'/auth/profile'} className="text-[#5E17EB]">
+                  <Link href={'/auth/user-profile'} className="text-[#5E17EB]">
                     Profile
                   </Link>
                 </Menu.Item>

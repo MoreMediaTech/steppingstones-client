@@ -32,7 +32,7 @@ const FormCheckbox: React.FunctionComponent<
       />
       <label
         htmlFor={title}
-        className="my-2 text-sm font-semibold text-gray-900"
+        className="my-2 text-sm font-semibold text-gray-900 dark:text-gray-200"
       >
         {label}
       </label>

@@ -7,15 +7,15 @@ export const AppLogo = ({
   activePath,
   setActivePath,
 }: {
-  activePath: string
-  setActivePath: React.Dispatch<React.SetStateAction<string>>
+  activePath?: string
+  setActivePath?: React.Dispatch<React.SetStateAction<string>>
 }) => (
   <>
     {activePath === 'hero' ? (
       <ScrollLink
         href={`${activePath === 'hero' ? '/#hero' : '/'}`}
         className="flex cursor-pointer items-center lg:w-0 lg:flex-1"
-        onClick={() => setActivePath('hero')}
+        onClick={() => setActivePath!('hero')}
       >
         <Group className=" flex items-center gap-6 md:gap-8">
           <div className="md:w-50 h-50 relative -mb-1 flex ">
@@ -40,7 +40,7 @@ export const AppLogo = ({
       <Link
         href={'/'}
         className="flex cursor-pointer items-center lg:w-0 lg:flex-1"
-        onClick={() => setActivePath('hero')}
+        onClick={() => setActivePath!('hero')}
       >
         <Group className=" flex items-center gap-6 md:gap-8">
           <div className="md:w-50 h-50 relative -mb-1 flex ">

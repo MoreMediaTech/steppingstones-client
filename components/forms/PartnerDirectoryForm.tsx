@@ -8,6 +8,7 @@ import {
   UseFormHandleSubmit,
   UseFormRegister,
 } from 'react-hook-form'
+import { useTheme } from 'next-themes'
 
 import { IFormData } from '@lib/types'
 import { useAppSelector, useAppDispatch } from 'app/global-state/hooks'
@@ -30,15 +31,16 @@ const PartnerDirectoryForm = ({
   register,
   submitHandler,
 }: IPartnerDirectoryFormProps) => {
+  const { resolvedTheme } = useTheme()
   const { type } = useAppSelector(partnerSelector)
   return (
     <form
       aria-label="update-user-form"
       data-testid="update-user-form"
       onSubmit={handleSubmit(submitHandler)}
-      className="container mx-auto space-y-6  bg-white"
+      className="container mx-auto space-y-6 "
     >
-      <div className="grid grid-cols-1 gap-x-4 gap-y-6  bg-transparent sm:grid-cols-2 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-x-4 gap-y-6  bg-transparent">
         <FormInput
           label="Name"
           aria-label="name-input"
@@ -47,6 +49,7 @@ const PartnerDirectoryForm = ({
           type="text"
           {...register('name')}
           errors={errors.name}
+          resolvedTheme={resolvedTheme}
         />
 
         <FormInput
@@ -63,6 +66,7 @@ const PartnerDirectoryForm = ({
             },
           })}
           errors={errors.email}
+          resolvedTheme={resolvedTheme}
         />
 
         <FormInput
@@ -73,6 +77,7 @@ const PartnerDirectoryForm = ({
           type="text"
           {...register('organisation')}
           errors={errors.organisation}
+          resolvedTheme={resolvedTheme}
         />
 
         <FormInput
@@ -83,6 +88,7 @@ const PartnerDirectoryForm = ({
           type="text"
           {...register('position')}
           errors={errors.position}
+          resolvedTheme={resolvedTheme}
         />
 
         <FormInput
@@ -93,6 +99,7 @@ const PartnerDirectoryForm = ({
           type="text"
           {...register('projectsResponsibleFor')}
           errors={errors.projectsResponsibleFor}
+          resolvedTheme={resolvedTheme}
         />
         <FormInput
           label="Expected Closing Date"
@@ -102,6 +109,7 @@ const PartnerDirectoryForm = ({
           type="date"
           {...register('closingDate')}
           errors={errors.closingDate}
+          resolvedTheme={resolvedTheme}
         />
       </div>
       <div className="grid grid-cols-1 gap-x-4 gap-y-6  bg-transparent sm:grid-cols-2 md:grid-cols-3">

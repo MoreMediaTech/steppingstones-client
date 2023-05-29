@@ -1,6 +1,7 @@
 'use client'
 import { useCallback, useEffect } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
+import { useTheme } from 'next-themes'
 
 import FormRowSelect from '@components/forms/FormComponents/FormRowSelect'
 import FormInput from '@components/forms/FormComponents/FormInput'
@@ -29,6 +30,7 @@ const SourceDirectoryForm = ({
   refetch,
   handleClose,
 }: ISearchFormProps) => {
+  const { resolvedTheme } = useTheme()
   const [createSDData, { isLoading: isCreating }] = useCreateSDDataMutation()
   const [updateSDData, { isLoading: isUpdating }] = useUpdateSDDataMutation()
 
@@ -87,8 +89,8 @@ const SourceDirectoryForm = ({
 
   return (
     <form onSubmit={handleSubmit(submitHandler)}>
-      <div className="relative mx-2  mt-5 w-full bg-white p-2 font-poppins md:mx-auto md:p-4">
-        <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+      <div className="relative mx-2  mt-5 w-full bg-slate-100 p-2 font-poppins dark:bg-gray-900 md:mx-auto md:p-4">
+        <div className="grid grid-cols-1 gap-2">
           <FormRowSelect
             label="Source Type"
             type="type"
@@ -101,6 +103,7 @@ const SourceDirectoryForm = ({
             type="text"
             {...register('category')}
             errors={errors?.category}
+            resolvedTheme={resolvedTheme}
           />
           <FormInput
             label="Description"
@@ -108,6 +111,7 @@ const SourceDirectoryForm = ({
             title="description"
             {...register('description')}
             errors={errors?.description}
+            resolvedTheme={resolvedTheme}
           />
           <FormInput
             label="Web-Link"
@@ -121,17 +125,18 @@ const SourceDirectoryForm = ({
               },
             })}
             errors={errors?.webLink}
+            resolvedTheme={resolvedTheme}
           />
           <FormCheckbox
             label="Email Alerts"
             type="canEmail"
-            classes="sm:mt-8 sm:ml-2"
+            classes="sm:mt-2 sm:ml-2"
             {...register('canEmail')}
           />
 
           <Button
             type="submit"
-            className="h-10 sm:mt-8"
+            className="h-10 sm:mt-4"
             color="primary"
             disabled={action === 'CREATE' ? isCreating : isUpdating}
           >

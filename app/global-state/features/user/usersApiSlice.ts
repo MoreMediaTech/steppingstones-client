@@ -1,4 +1,3 @@
-'use client'
 import { createEntityAdapter, createSelector } from '@reduxjs/toolkit'
 import { apiSlice } from 'app/global-state/api/apiSlice'
 import {
