@@ -66,6 +66,7 @@ const Navbar = () => {
                     href={`/#${path}`}
                     className={`cursor-pointer font-poppins text-[16px] font-normal capitalize text-primary-dark-100 dark:text-primary-light-100`}
                     onClick={() => setActivePath(path)}
+                    scroll={false}
                   >
                     <span
                       className={`${
@@ -86,6 +87,7 @@ const Navbar = () => {
                     href={`/#${path}`}
                     className={`cursor-pointer font-poppins text-[16px] font-normal capitalize text-primary-dark-100 dark:text-primary-light-100`}
                     onClick={() => setActivePath(path)}
+                    scroll={false}
                   >
                     <span
                       className={`${
@@ -181,6 +183,7 @@ const Navbar = () => {
                           setActivePath(path)
                           setOpened(false)
                         }}
+                        scroll={false}
                       >
                         <span
                           className={`${
@@ -208,6 +211,7 @@ const Navbar = () => {
                         setActivePath(path)
                         setOpened(false)
                       }}
+                      scroll={false}
                     >
                       {path}
                     </Link>

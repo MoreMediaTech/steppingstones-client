@@ -4,7 +4,7 @@ import { NEXT_URL } from './config'
 
 export function middleware(request: NextRequest) {
     const cookies = request.cookies.get('ss_refresh_token')
-  if ((!cookies  || cookies === undefined )&& request.nextUrl.pathname.startsWith('/admin') ) {
+  if ((!cookies  || cookies === undefined )&& request.nextUrl.pathname.startsWith('/admin-portal') ) {
     return NextResponse.redirect(`${NEXT_URL}/auth/login`)
   }
 

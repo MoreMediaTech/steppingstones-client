@@ -1,3 +1,4 @@
+'use client'
 import { ComponentShield } from '@components/NextShield'
 import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
 import PortalHeader from '@components/PortalHeader'

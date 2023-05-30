@@ -11,7 +11,7 @@ interface ILinks {
 const links: ILinks[] = [
   {
     title: 'Advertisements',
-    path: 'adds-section',
+    path: 'ads-section',
     icon: <MdOutlineSpeakerNotes fontSize={44} />,
   },
   {
@@ -20,13 +20,8 @@ const links: ILinks[] = [
     icon: <GiPortal fontSize={44} />,
   },
   {
-    title: 'Revenue',
-    path: 'revenue',
-    icon: <FaMoneyBillWave fontSize={44} />,
-  },
-  {
     title: 'Client Meetings',
-    path: 'client-meetings',
+    path: 'client-meeting',
     icon: <FaRegCalendarAlt fontSize={44} />,
   },
   { title: 'Insights', path: 'insight', icon: <FaChartBar fontSize={44} /> },

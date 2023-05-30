@@ -1,7 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { useRouter } from 'next/router'
-import dynamic from 'next/dynamic'
+import { useRouter } from 'next/navigation'
 import { Loader } from '@mantine/core'
 
 import { ComponentShield } from '@components/NextShield'
@@ -19,7 +18,13 @@ import { NEXT_URL } from '@config/index'
 import PortalButton from '@components/PortalButton'
 import Map from '@components/Map'
 
-export default function County ({ params }: { params: { county: string; countyId: string } }) {
+export default function County({
+  params,
+  searchParams,
+}: {
+  params: { county: string }
+  searchParams: { countyId: string }
+}) {
   const router = useRouter()
   const [opened, setOpened] = useState<boolean>(false)
   const [openAddSectionModal, setAddOpenSectionModal] = useState<boolean>(false)
@@ -30,7 +35,9 @@ export default function County ({ params }: { params: { county: string; countyId
     isLoading: isLoadingCounty,
     isError: isErrorCounty,
     refetch: refetchCounty,
-  } = useGetCountyByIdQuery(params.countyId, { refetchOnMountOrArgChange: true })
+  } = useGetCountyByIdQuery(searchParams.countyId, {
+    refetchOnMountOrArgChange: true,
+  })
 
   const [createSection, { isLoading: isLoadingCreateSection }] =
     useCreateSectionMutation()
@@ -51,9 +58,7 @@ export default function County ({ params }: { params: { county: string; countyId
               color="outline"
               className=" md:w-1/4 "
               onClick={() => {
-                router.replace({
-                  pathname: `${NEXT_URL}/admin/editor-portal/county-portal`,
-                })
+                router.push(`${NEXT_URL}/admin/editor-portal/county-portal`)
               }}
             >
               Go Back
@@ -101,7 +106,7 @@ export default function County ({ params }: { params: { county: string; countyId
                         isLive={countyData.welcome?.isLive}
                         onClick={() => {
                           router.push(
-                            `${NEXT_URL}/admin/editor-portal/county-portal/${params.county}/welcome?countyId=${params.countyId}&county=${params.county}`
+                            `${NEXT_URL}/admin-portal/county-portal/${params.county}/welcome?countyId=${searchParams.countyId}&county=${params.county}`
                           )
                         }}
                       >
@@ -113,7 +118,7 @@ export default function County ({ params }: { params: { county: string; countyId
                         isLive={countyData.lep?.isLive}
                         onClick={() => {
                           router.push(
-                            `${NEXT_URL}/admin/editor-portal/county-portal/${params.county}/lep?countyId=${params.countyId}&county=${params.county}`
+                            `${NEXT_URL}/admin-portal/county-portal/${params.county}/lep?countyId=${searchParams.countyId}&county=${params.county}`
                           )
                         }}
                       >
@@ -125,7 +130,7 @@ export default function County ({ params }: { params: { county: string; countyId
                         isLive={countyData.news?.isLive}
                         onClick={() => {
                           router.push(
-                            `${NEXT_URL}/admin/editor-portal/county-portal/${params.county}/news?countyId=${params.countyId}&county=${params.county}`
+                            `${NEXT_URL}/admin-portal/county-portal/${params.county}/news?countyId=${searchParams.countyId}&county=${params.county}`
                           )
                         }}
                       >
@@ -143,7 +148,7 @@ export default function County ({ params }: { params: { county: string; countyId
                               isLive={district?.isLive}
                               onClick={() =>
                                 router.push(
-                                  `${NEXT_URL}/admin/editor-portal/county-portal/district?countyId=${params.countyId}&county=${params.county}&district=${district?.name}&districtId=${district?.id}`
+                                  `${NEXT_URL}/admin-portal/county-portal/${params.county}/district?countyId=${searchParams.countyId}&county=${params.county}&district=${district?.name}&districtId=${district?.id}`
                                 )
                               }
                             >
@@ -161,7 +166,7 @@ export default function County ({ params }: { params: { county: string; countyId
                             isLive={section?.isLive}
                             onClick={() =>
                               router.push(
-                                `${NEXT_URL}/admin/editor-portal/county-portal/${params.county}/section?countyId=${params.countyId}&county=${params.county}&section=${section.name}&sectionId=${section.id}`
+                                `${NEXT_URL}/admin-portal/county-portal/${params.county}/section?countyId=${searchParams.countyId}&county=${params.county}&section=${section.name}&sectionId=${section.id}`
                               )
                             }
                           >
@@ -180,7 +185,7 @@ export default function County ({ params }: { params: { county: string; countyId
       <AddDistrictForm
         opened={opened}
         setOpened={setOpened}
-        countyId={params.countyId}
+        countyId={searchParams.countyId}
         county={countyData?.name as string}
         refetch={refetchCounty}
       />
@@ -195,6 +200,3 @@ export default function County ({ params }: { params: { county: string; countyId
     </ComponentShield>
   )
 }
-
-
-

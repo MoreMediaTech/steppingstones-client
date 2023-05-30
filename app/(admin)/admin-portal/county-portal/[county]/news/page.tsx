@@ -1,24 +1,20 @@
-import { GetServerSideProps, GetServerSidePropsContext } from 'next'
-import { useRouter } from 'next/router'
+'use client'
+import { useRouter } from 'next/navigation'
 
 import { ComponentShield } from '@components/NextShield'
 import PortalHeader from '@components/PortalHeader'
 
-import { AdminLayout } from 'layout'
 import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
 import { NEXT_URL } from '@config/index'
 import { NewsSection } from '@components/CountyDistrictSections'
 import Button from '@components/Button'
 import useHasMounted from '@hooks/useHasMounted'
 
-const News = ({ county, countyId }: { county: string; countyId: string }) => {
+export default function News({ searchParams }: { searchParams: {county: string; countyId: string} }){
   const router = useRouter()
-  const hasMounted = useHasMounted()
   const { data: user } = useGetUserQuery()
 
   return (
-    hasMounted && (
-      <AdminLayout title="Editor Dashboard">
         <ComponentShield
           RBAC
           showForRole={'SS_EDITOR'}
@@ -27,7 +23,7 @@ const News = ({ county, countyId }: { county: string; countyId: string }) => {
           <section className="h-screen overflow-auto">
             <section className="sticky w-full">
               <PortalHeader
-                title={`${county}`}
+                title={`${searchParams.county}`}
                 subTitle="Please Preview or Edit your content"
               />
 
@@ -38,10 +34,9 @@ const News = ({ county, countyId }: { county: string; countyId: string }) => {
                     color="outline"
                     className="md:w-1/4"
                     onClick={() => {
-                      router.replace({
-                        pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}`,
-                        query: { ...router.query },
-                      })
+                      router.push(
+                        `${NEXT_URL}/admin/editor-portal/county-portal/${searchParams.county}?countyId=${searchParams.countyId}`
+                      )
                     }}
                   >
                     Go Back
@@ -51,35 +46,11 @@ const News = ({ county, countyId }: { county: string; countyId: string }) => {
             </section>
 
             <section className="container mx-auto">
-              <NewsSection id={countyId} />
+              <NewsSection id={searchParams.countyId} />
             </section>
           </section>
         </ComponentShield>
-      </AdminLayout>
-    )
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
-  const { req } = context
-  const cookies = req.cookies.ss_refresh_token
-  const { county, countyId } = context.query
 
-  if (!cookies) {
-    context.res.writeHead(302, {
-      Location: '/auth/login',
-    })
-    context.res.end()
-  }
-
-  return {
-    // props: { user: user as SessionProps },
-    props: {
-      county: county,
-      countyId: countyId,
-    },
-  }
-}
-export default News

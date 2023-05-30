@@ -21,16 +21,16 @@ const Map = dynamic(() => import('@components/Map'), { ssr: false })
 
 // district, countyId, county, districtId
 
-const District = ({
-  params,
+export default function District({
+  searchParams,
 }: {
-  params: {
+  searchParams: {
     county: string
     countyId: string
     district: string
     districtId: string
   }
-}) => {
+}) {
   const router = useRouter()
 
   const [openAddLASectionModal, setAddOpenLASectionModal] =
@@ -42,7 +42,7 @@ const District = ({
     isLoading: isLoadingDistrict,
     isError: isErrorDistrict,
     refetch: refetchDistrict,
-  } = useGetDistrictByIdQuery(params.districtId, {
+  } = useGetDistrictByIdQuery(searchParams.districtId, {
     refetchOnMountOrArgChange: true,
   })
 
@@ -57,7 +57,7 @@ const District = ({
     >
       <section className="py-4 md:h-screen md:py-0">
         <PortalHeader
-          title={`${params.district}`}
+          title={`${searchParams.district}`}
           subTitle="Please select Area you want to review"
         />
         <section className="px-2 py-2 sm:px-4">
@@ -67,8 +67,8 @@ const District = ({
               color="outline"
               className="md:w-1/4"
               onClick={() => {
-                router.replace(
-                  `${NEXT_URL}/admin/editor-portal/county-portal/${params.county}`
+                router.push(
+                  `${NEXT_URL}/admin/editor-portal/county-portal/${searchParams.county}?countyId=${searchParams.countyId}`
                 )
               }}
             >
@@ -93,7 +93,7 @@ const District = ({
             {districtData && (
               <section className="grid h-full w-full grid-cols-1 gap-8 md:grid-cols-4">
                 <div className="h-full rounded  p-2 shadow-md md:col-span-2">
-                  <Map location={`${params.district}, UK`} />
+                  <Map location={`${searchParams.district}, UK`} />
                 </div>
                 <div className="mb-2 w-full md:col-span-2">
                   <div className="grid w-full grid-cols-1 gap-x-2 gap-y-2 sm:grid-cols-2">
@@ -106,7 +106,7 @@ const District = ({
                           isLive={section.isLive}
                           onClick={() =>
                             router.push(
-                              `${NEXT_URL}/admin/editor-portal/county-portal/district/${section.id}?county=${params.county}&countyId=${params.countyId}&district=${params.district}&districtId=${params.districtId}`
+                              `${NEXT_URL}/admin/editor-portal/county-portal/${searchParams.county}/district/${section.id}?county=${searchParams.county}&countyId=${searchParams.countyId}&district=${searchParams.district}&districtId=${searchParams.districtId}`
                             )
                           }
                         >

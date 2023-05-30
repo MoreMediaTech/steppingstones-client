@@ -108,7 +108,7 @@ export default function CountyPortal() {
                         className="!py-4"
                         onClick={() =>
                           router.push(
-                            `${NEXT_URL}/admin-portal/county-portal/${county.name}?countyId=${county.id}&county=${county.name}`
+                            `${NEXT_URL}/admin-portal/county-portal/${county.name}?countyId=${county.id}`
                           )
                         }
                       >
