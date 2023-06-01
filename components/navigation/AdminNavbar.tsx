@@ -11,8 +11,7 @@ import {
   UnstyledButton,
 } from '@mantine/core'
 import Image from 'next/image'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import React, { Dispatch, SetStateAction } from 'react'
 import { FaSignOutAlt } from 'react-icons/fa'
 import { useAppSelector, useAppDispatch } from 'app/global-state/hooks'

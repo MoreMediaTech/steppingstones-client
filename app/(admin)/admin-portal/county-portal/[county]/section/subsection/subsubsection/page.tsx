@@ -55,8 +55,8 @@ export default function SubSubSection({
               color="outline"
               className=" md:w-1/4 "
               onClick={() => {
-                router.replace(
-                  `${NEXT_URL}/admin/editor-portal/county-portal/${searchParams.county}/section/subsection?county=${searchParams.county}&countyId=${searchParams.countyId}&sectionId=${searchParams.sectionId}&subSectionId=${searchParams.subSectionId}`
+                router.push(
+                  `/admin-portal/county-portal/${searchParams.county}/section/subsection?county=${searchParams.county}&countyId=${searchParams.countyId}&sectionId=${searchParams.sectionId}&subSectionId=${searchParams.subSectionId}`
                 )
               }}
             >

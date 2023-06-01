@@ -5,7 +5,6 @@ import { ComponentShield } from '@components/NextShield'
 import PortalHeader from '@components/PortalHeader'
 
 import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
-import { NEXT_URL } from '@config/index'
 import { WelcomeSection } from '@components/CountyDistrictSections'
 import Button from '@components/Button'
 
@@ -37,7 +36,7 @@ export default function Welcome({
                 className="md:w-1/4"
                 onClick={() => {
                   router.push(
-                    `${NEXT_URL}/admin/editor-portal/county-portal/${searchParams.county}?countyId=${searchParams.countyId}`
+                    `/admin-portal/county-portal/${searchParams.county}?countyId=${searchParams.countyId}`
                   )
                 }}
               >

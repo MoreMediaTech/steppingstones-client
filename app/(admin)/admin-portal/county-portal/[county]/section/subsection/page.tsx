@@ -16,7 +16,6 @@ import {
   useCreateSubSubSectionMutation,
   useUpdateSubSectionByIdMutation,
 } from 'app/global-state/features/editor/editorApiSlice'
-import { NEXT_URL } from '@config/index'
 import PortalButton from '@components/PortalButton'
 
 export default function SubSection({
@@ -68,7 +67,7 @@ export default function SubSection({
               className=" md:w-1/4 "
               onClick={() => {
                 router.push(
-                  `${NEXT_URL}/admin/editor-portal/county-portal/${searchParams.county}/section?countyId=${searchParams.countyId}&sectionId=${searchParams.sectionId}`
+                  `/admin-portal/county-portal/${searchParams.county}/section?countyId=${searchParams.countyId}&sectionId=${searchParams.sectionId}`
                 )
               }}
             >
@@ -105,7 +104,7 @@ export default function SubSection({
                           color="primaryFilled"
                           onClick={() =>
                             router.replace(
-                              `${NEXT_URL}/admin/editor-portal/county-portal/${searchParams.county}/section/subsection/subsubsection?county=${searchParams.county}&countyId=${searchParams.countyId}&sectionId=${searchParams.sectionId}&subSectionId=${searchParams.subSectionId}&subSubSectionId=${subSubSection?.id}`
+                              `/admin-portal/county-portal/${searchParams.county}/section/subsection/subsubsection?county=${searchParams.county}&countyId=${searchParams.countyId}&sectionId=${searchParams.sectionId}&subSectionId=${searchParams.subSectionId}&subSubSectionId=${subSubSection?.id}`
                             )
                           }
                         >

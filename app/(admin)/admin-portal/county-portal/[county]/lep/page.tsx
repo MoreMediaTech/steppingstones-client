@@ -38,7 +38,7 @@ export default function Lep({
                 className="md:w-1/4"
                 onClick={() => {
                   router.push(
-                    `${NEXT_URL}/admin/editor-portal/county-portal/${searchParams.county}?countyId=${searchParams.countyId}`
+                    `/admin-portal/county-portal/${searchParams.county}?countyId=${searchParams.countyId}`
                   )
                 }}
               >

@@ -1,9 +1,8 @@
 'use client';
 import React, { useCallback } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useRouter } from 'next/router'
 import { showNotification } from '@mantine/notifications'
-import { Button, Checkbox, Modal, TextInput, UnstyledButton } from '@mantine/core'
+import { Button, Modal, TextInput, UnstyledButton } from '@mantine/core'
 import { IoMdCloseCircleOutline } from 'react-icons/io'
 
 
@@ -33,7 +32,6 @@ const CreateSectionForm = ({
     reset,
     formState: { errors },
   } = useForm<FormDataProps>()
-  const router = useRouter()
 
 
   const handleClose = () => {

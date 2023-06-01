@@ -5,7 +5,7 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { IPartnerFormData } from '@lib/types'
 import { useAppDispatch } from 'app/global-state/hooks'
 import { showNotification } from '@mantine/notifications'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { NativeSelect, TextInput } from '@mantine/core'
 import { FaCheckCircle } from 'react-icons/fa'
 import { MdOutlineError } from 'react-icons/md'
@@ -56,7 +56,7 @@ const PartnerForm = () => {
         color: 'red',
         icon: <FaCheckCircle fontSize={18} />,
       })
-      router.replace(`${NEXT_URL}/admin/partner-portal`)
+      router.replace(`/admin-portal`)
     }
   }, [isSuccess, isError, error])
 

@@ -1,7 +1,6 @@
 'use client';
 import React, { useCallback } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useRouter } from 'next/router'
 import { showNotification } from '@mantine/notifications'
 import {
   Button,
@@ -38,7 +37,6 @@ const CreateLASectionForm = ({
     reset,
     formState: { errors },
   } = useForm<FormDataProps>()
-  const router = useRouter()
 
   const handleClose = () => {
     reset()

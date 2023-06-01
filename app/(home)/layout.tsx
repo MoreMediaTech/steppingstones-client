@@ -12,7 +12,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="sm:scroll-smooth">
-      <body className="relative grid min-h-screen grid-cols-1 bg-slate-100 dark:bg-slate-900">
+      <body className="relative grid min-h-screen grid-cols-1 bg-slate-100 dark:bg-[#25262B]">
         <Provider>
           <Navbar />
           <PageWrapper>{children}</PageWrapper>

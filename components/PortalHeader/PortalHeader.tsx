@@ -4,7 +4,7 @@ import { Group, Burger } from '@mantine/core'
 import { IoIosSearch } from 'react-icons/io'
 import { useTheme } from 'next-themes'
 import { FiMoon, FiSun } from 'react-icons/fi'
-import { useRouter, usePathname } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { CurrentUser, CountyDataProps, DistrictDataProps } from '@lib/types'
 import ContentDrawer from '@components/navigation/ContentDrawer/ContentDrawer'
 import Avatar from '@components/Avatar'
@@ -30,7 +30,6 @@ const PortalHeader = ({
   data,
   imgUrl,
 }: IPortalHeaderProps) => {
-  const router = useRouter()
   const pathname = usePathname()
   const dispatch = useAppDispatch()
   const { drawerOpened } = useAppSelector(globalSelector)
@@ -61,12 +60,12 @@ const PortalHeader = ({
 
   return (
     <header
-      className={`bg-slate-100 px-4 py-2 drop-shadow-md dark:bg-slate-800`}
+      className={`bg-slate-100 px-4 py-2 drop-shadow-md dark:bg-[#3b3c40]`}
     >
       <div className="mx-auto py-2 md:px-4">
         <div className="flex flex-col items-start justify-between md:flex-row md:items-center">
           <div className="mb-2 flex items-center gap-4">
-            <div className="hidden items-center px-4 py-2 md:flex  ">
+            <div className=" items-center px-4 py-2  ">
               <Burger
                 opened={drawerOpened}
                 aria-label={drawerTitle}
@@ -161,26 +160,9 @@ const PortalHeader = ({
               appendComponent={<IoIosSearch fontSize={25} fontWeight={500} />}
               hidden
             />
-
-            {/* <div className={!!data ? 'display: flex' : 'hidden'}>
-              {!!data && (
-                <Burger
-                  opened={opened}
-                  onClick={() => setOpened((o) => !o)}
-                  title={drawerTitle}
-                  size={50}
-                  color="#00dcb3"
-                />
-              )}
-            </div> */}
           </div>
         </div>
       </div>
-      <ContentDrawer
-        opened={opened}
-        setOpened={setOpened}
-        countyData={data as CountyDataProps}
-      />
     </header>
   )
 }

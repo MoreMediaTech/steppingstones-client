@@ -20,9 +20,9 @@ import {
 import { GoFileDirectory } from 'react-icons/go'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 import { useGetAllInAppEnquiryMsgQuery } from 'app/global-state/features/messages/messagesApiSlice'
-import { useLogoutMutation } from 'app/global-state/features/auth/authApiSlice'
 import { MessageProps } from '@lib/types'
 import { AppLogo } from './AppLogo'
 
@@ -31,8 +31,6 @@ import {
   globalSelector,
   setDrawerOpened,
 } from 'app/global-state/features/global/globalSlice'
-import { redirect } from 'next/navigation'
-import { NEXT_URL } from '@config/index'
 
 const NAV_ITEMS = [
   {
@@ -84,17 +82,15 @@ const NAV_ITEMS = [
 
 const AdminSidebar = () => {
   const dispatch = useAppDispatch()
+  const router = useRouter()
   const { drawerOpened } = useAppSelector(globalSelector)
   let arg: void
   const { data: messages } = useGetAllInAppEnquiryMsgQuery(arg, {
     pollingInterval: 60000,
   })
-  const [logout] = useLogoutMutation()
 
   const handleLogout = async () => {
-    logout()
-    localStorage.removeItem('token')
-    redirect(`${NEXT_URL}`)
+    router.push(`/auth/logout`)
   }
 
   // filter all unread messages

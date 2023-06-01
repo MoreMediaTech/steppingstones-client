@@ -17,7 +17,6 @@ import {
   useCreateSubSectionMutation,
   useUpdateDistrictSectionByIdMutation,
 } from 'app/global-state/features/editor/editorApiSlice'
-import { NEXT_URL } from '@config/index'
 import Button from '@components/Button'
 
 export default function DistrictSection({
@@ -73,7 +72,7 @@ export default function DistrictSection({
               className=" md:w-1/4 "
               onClick={() => {
                 router.push(
-                  `${NEXT_URL}/admin-portal/county-portal/${searchParams.county}/district?countyId=${searchParams.countyId}&districtId=${searchParams.districtId}&district=${searchParams.district}&county=${searchParams.county}`
+                  `/admin-portal/county-portal/${searchParams.county}/district?countyId=${searchParams.countyId}&districtId=${searchParams.districtId}&district=${searchParams.district}&county=${searchParams.county}`
                 )
               }}
             >

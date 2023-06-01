@@ -25,7 +25,7 @@ export default function RootLayout({
   }
   return (
     <html lang="en" className="sm:scroll-smooth">
-      <body className="flex flex-row-reverse min-h-screen bg-slate-100 dark:bg-slate-900">
+      <body className="dark:bg-[#25262B] flex min-h-screen flex-row-reverse bg-slate-100">
         <Provider>
           <AdminSidebar />
           <PageWrapper>{children}</PageWrapper>

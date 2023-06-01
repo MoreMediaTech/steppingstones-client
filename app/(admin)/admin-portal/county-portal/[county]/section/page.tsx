@@ -13,7 +13,6 @@ import {
   useUpdateSectionByIdMutation,
 } from 'app/global-state/features/editor/editorApiSlice'
 import { CreateSectionForm } from '@components/forms'
-import { NEXT_URL } from '@config/index'
 import Button from '@components/Button'
 import SectionContainer from '@components/CountyDistrictSections/SectionContainer'
 import PortalButton from '@components/PortalButton'
@@ -61,7 +60,7 @@ export default function Section({
               className=" md:w-1/4 "
               onClick={() => {
                 router.push(
-                  `${NEXT_URL}/admin/editor-portal/county-portal/${searchParams.county}?countyId=${searchParams.countyId}&county=${searchParams.county}`
+                  `/admin-portal/county-portal/${searchParams.county}?countyId=${searchParams.countyId}&county=${searchParams.county}`
                 )
               }}
             >
@@ -114,7 +113,7 @@ export default function Section({
                           isLive={section?.isLive}
                           onClick={() =>
                             router.push(
-                              `${NEXT_URL}/admin/editor-portal/county-portal/${searchParams.county}/section/subsection?countyId=${searchParams.countyId}&county=${searchParams.county}&sectionId=${searchParams.sectionId}&subSectionId=${section.id}`
+                              `/admin-portal/county-portal/${searchParams.county}/section/subsection?countyId=${searchParams.countyId}&county=${searchParams.county}&sectionId=${searchParams.sectionId}&subSectionId=${section.id}`
                             )
                           }
                         >

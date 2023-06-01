@@ -57,7 +57,7 @@ const RegisterForm = () => {
     try {
       await registerUser(user).unwrap()
       reset()
-      router.replace(`${NEXT_URL}/auth/login`)
+      router.push(`/auth/login`)
     } catch (error) {
       if (!error?.response) {
         showNotification({

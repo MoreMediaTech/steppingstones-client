@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from 'app/global-state/hooks'
 import {
   setPreviewSource,
   setError,
-  setSelectedFile,
 } from 'app/global-state/features/upload/uploadSlice'
 import { useUploadFileMutation } from 'app/global-state/features/upload/uploadApiSlice'
 import Spinner from '@components/spinner'

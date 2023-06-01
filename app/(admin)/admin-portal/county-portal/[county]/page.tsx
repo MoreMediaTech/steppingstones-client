@@ -51,14 +51,14 @@ export default function County({
           subTitle="Please select district from the menu below"
           data={countyData}
         />
-        <section className="mt-4 px-2 py-2 sm:px-4">
+        <section className="mx-auto mt-4 max-w-screen-md px-2 py-2 sm:px-4">
           <div className="flex justify-between">
             <Button
               type="button"
               color="outline"
               className=" md:w-1/4 "
               onClick={() => {
-                router.push(`${NEXT_URL}/admin/editor-portal/county-portal`)
+                router.push(`/admin-portal/county-portal`)
               }}
             >
               Go Back
@@ -84,11 +84,11 @@ export default function County({
           </div>
         </section>
         {isLoadingCounty ? (
-          <div className="flex h-[700px] items-center justify-center">
+          <div className="mx-auto flex h-[700px] max-w-screen-md items-center justify-center">
             <Loader size="xl" variant="bars" />
           </div>
         ) : (
-          <section className=" w-full overflow-auto px-2 py-4 md:px-4 md:py-24">
+          <section className=" mx-auto w-full max-w-screen-md overflow-auto px-2 py-4 md:px-4 md:py-24">
             {countyData && (
               <div className="grid h-full w-full grid-cols-1 gap-8 md:grid-cols-4">
                 <div className="h-full rounded bg-primary-light-50 p-2 shadow-md dark:bg-primary-dark-600 md:col-span-2">
@@ -106,7 +106,7 @@ export default function County({
                         isLive={countyData.welcome?.isLive}
                         onClick={() => {
                           router.push(
-                            `${NEXT_URL}/admin-portal/county-portal/${params.county}/welcome?countyId=${searchParams.countyId}&county=${params.county}`
+                            `/admin-portal/county-portal/${params.county}/welcome?countyId=${searchParams.countyId}&county=${params.county}`
                           )
                         }}
                       >
@@ -118,7 +118,7 @@ export default function County({
                         isLive={countyData.lep?.isLive}
                         onClick={() => {
                           router.push(
-                            `${NEXT_URL}/admin-portal/county-portal/${params.county}/lep?countyId=${searchParams.countyId}&county=${params.county}`
+                            `/admin-portal/county-portal/${params.county}/lep?countyId=${searchParams.countyId}&county=${params.county}`
                           )
                         }}
                       >
@@ -130,7 +130,7 @@ export default function County({
                         isLive={countyData.news?.isLive}
                         onClick={() => {
                           router.push(
-                            `${NEXT_URL}/admin-portal/county-portal/${params.county}/news?countyId=${searchParams.countyId}&county=${params.county}`
+                            `/admin-portal/county-portal/${params.county}/news?countyId=${searchParams.countyId}&county=${params.county}`
                           )
                         }}
                       >
@@ -148,7 +148,7 @@ export default function County({
                               isLive={district?.isLive}
                               onClick={() =>
                                 router.push(
-                                  `${NEXT_URL}/admin-portal/county-portal/${params.county}/district?countyId=${searchParams.countyId}&county=${params.county}&district=${district?.name}&districtId=${district?.id}`
+                                  `/admin-portal/county-portal/${params.county}/district?countyId=${searchParams.countyId}&county=${params.county}&district=${district?.name}&districtId=${district?.id}`
                                 )
                               }
                             >
@@ -166,7 +166,7 @@ export default function County({
                             isLive={section?.isLive}
                             onClick={() =>
                               router.push(
-                                `${NEXT_URL}/admin-portal/county-portal/${params.county}/section?countyId=${searchParams.countyId}&county=${params.county}&section=${section.name}&sectionId=${section.id}`
+                                `/admin-portal/county-portal/${params.county}/section?countyId=${searchParams.countyId}&county=${params.county}&section=${section.name}&sectionId=${section.id}`
                               )
                             }
                           >

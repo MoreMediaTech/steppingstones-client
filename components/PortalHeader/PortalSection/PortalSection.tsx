@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { MdOutlineSpeakerNotes, MdOutlineReviews } from 'react-icons/md'
-import { FaMoneyBillWave, FaRegCalendarAlt, FaChartBar } from 'react-icons/fa'
+import { FaRegCalendarAlt, FaChartBar } from 'react-icons/fa'
 import { GiPortal } from 'react-icons/gi'
 
 interface ILinks {

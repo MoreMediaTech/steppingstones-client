@@ -1,7 +1,7 @@
 'use client'
 import React, { useCallback } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { showNotification } from '@mantine/notifications'
 import { Button, Modal, TextInput, UnstyledButton } from '@mantine/core'
 import { IoMdCloseCircleOutline } from 'react-icons/io'
@@ -48,10 +48,9 @@ const AddDistrictForm = ({
       try {
         await createDistrict(newData).unwrap()
         handleClose()
-        router.push({
-          pathname: `${NEXT_URL}/admin/editor-portal/county-portal/${county}`,
-          query: { county, countyId },
-        })
+        router.push(
+          `/admin-portal/county-portal/${county}?countyId=${countyId}`
+        )
       } catch (error) {
         if (!error?.response) {
           showNotification({

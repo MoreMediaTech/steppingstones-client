@@ -14,9 +14,8 @@ import {
   useGetDistrictByIdQuery,
   useCreateDistrictSectionMutation,
 } from 'app/global-state/features/editor/editorApiSlice'
-import { NEXT_URL } from '@config/index'
 import PortalButton from '@components/PortalButton'
-import useHasMounted from '@hooks/useHasMounted'
+
 const Map = dynamic(() => import('@components/Map'), { ssr: false })
 
 // district, countyId, county, districtId
@@ -68,7 +67,7 @@ export default function District({
               className="md:w-1/4"
               onClick={() => {
                 router.push(
-                  `${NEXT_URL}/admin/editor-portal/county-portal/${searchParams.county}?countyId=${searchParams.countyId}`
+                  `/admin-portal/county-portal/${searchParams.county}?countyId=${searchParams.countyId}`
                 )
               }}
             >
@@ -106,7 +105,7 @@ export default function District({
                           isLive={section.isLive}
                           onClick={() =>
                             router.push(
-                              `${NEXT_URL}/admin/editor-portal/county-portal/${searchParams.county}/district/${section.id}?county=${searchParams.county}&countyId=${searchParams.countyId}&district=${searchParams.district}&districtId=${searchParams.districtId}`
+                              `/admin-portal/county-portal/${searchParams.county}/district/${section.id}?county=${searchParams.county}&countyId=${searchParams.countyId}&district=${searchParams.district}&districtId=${searchParams.districtId}`
                             )
                           }
                         >
