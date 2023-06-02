@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import axios from 'axios'
 import { API_URL } from '@config/index'
 import Link from 'next/link'
