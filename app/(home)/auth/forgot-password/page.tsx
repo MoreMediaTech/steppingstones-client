@@ -68,7 +68,7 @@ export default function ForgotPassword() {
   )
 
   return (
-    <section className="bg-white py-10 text-gray-900 ">
+    <section className=" py-10 text-gray-900 dark:text-gray-200 ">
       <div className="mx-auto my-10 max-w-screen-sm">
         {isSuccess ? (
           <div className="flex w-full flex-col items-center justify-center">
@@ -81,7 +81,7 @@ export default function ForgotPassword() {
           <>
             <div className="flex w-full flex-col items-center justify-center">
               <h1 className="my-5 text-2xl sm:text-5xl ">Forgot password</h1>
-              <p className="mb-5 text-center text-gray-500 sm:text-xl">
+              <p className="mb-5 text-center text-gray-500 dark:text-gray-400 sm:text-xl">
                 Enter the email address associated with your account, and
                 we&apos;ll send you a link to reset your password.
               </p>
