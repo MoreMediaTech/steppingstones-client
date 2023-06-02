@@ -5,23 +5,19 @@ import { LoginForm } from '@components/forms'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { FaSignInAlt } from 'react-icons/fa'
-import { Loader } from '@mantine/core'
-import useHasMounted from '@hooks/useHasMounted'
+import Spinner from '@components/spinner/Spinner'
+// import { Loader } from '@mantine/core'
 
 const variants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1 },
 }
 
-export default function Login() {
-  const hasMounted = useHasMounted()
-  return hasMounted ? (
+export default function Login(){
+  return (
     <section className="relative h-screen w-full">
       <div className="absolute top-0 h-full w-full bg-cover bg-center">
-        <div
-          className="relative h-full w-full"
-          style={{ width: '100%', height: '100%' }}
-        >
+        <div className="relative h-full w-full" style={{ width: '100%', height: '100%' }}>
           <Image
             src={'/SS_Staircase.jpeg'}
             alt="Staircase image"
@@ -58,12 +54,14 @@ export default function Login() {
               <FaSignInAlt fontSize={40} color="#00DCB3" />
               <span className="text-primary-dark-100">Sign In</span>
             </h1>
-            <Suspense fallback={<Loader size="xl" variant="bars" />}>
+            <Suspense fallback={<Spinner classes='w-8 h-8' />}>
               <LoginForm />
             </Suspense>
           </motion.div>
         </div>
       </div>
     </section>
-  ) : null
+  )
 }
+
+
