@@ -7,7 +7,7 @@ import { format } from 'date-fns'
 import { enGB } from 'date-fns/locale'
 import { BiChevronDownSquare, BiChevronUpSquare } from 'react-icons/bi'
 
-import steppingstonesapplogo from '../../../public/steppingstonesapplogo.png'
+import steppingstonesapplogo from '../../../../public/steppingstonesapplogo.png'
 import { DistrictDataProps } from '@lib/types'
 import { useDeleteDistrictByIdMutation } from 'app/global-state/features/editor/editorApiSlice'
 import { showNotification } from '@mantine/notifications'

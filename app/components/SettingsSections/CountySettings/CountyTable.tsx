@@ -7,7 +7,7 @@ import { format } from 'date-fns'
 import { enGB } from 'date-fns/locale'
 import { BiChevronUpSquare, BiChevronDownSquare } from 'react-icons/bi'
 
-import steppingstonesapplogo from '../../../public/steppingstonesapplogo.png'
+import steppingstonesapplogo from '../../../../public/steppingstonesapplogo.png'
 import { CountyDataProps } from '@lib/types'
 import { useRemoveCountyMutation } from 'app/global-state/features/editor/editorApiSlice'
 import { showNotification } from '@mantine/notifications'

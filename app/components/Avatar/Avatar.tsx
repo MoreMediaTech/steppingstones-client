@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import steppingstonesapplogo from '../../public/steppingstonesapplogo.png'
+import steppingstonesapplogo from '../../../public/steppingstonesapplogo.png'
 
 const Avatar = ({
   imageUrl,

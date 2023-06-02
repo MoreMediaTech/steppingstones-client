@@ -9,7 +9,7 @@ import { showNotification } from '@mantine/notifications'
 import { BiChevronDownSquare, BiChevronUpSquare } from 'react-icons/bi'
 import { BsPrinterFill } from 'react-icons/bs'
 
-import steppingstonesapplogo from '../../../public/steppingstonesapplogo.png'
+import steppingstonesapplogo from '../../../../public/steppingstonesapplogo.png'
 import { SectionProps } from '@lib/types'
 import { useDeleteSectionByIdMutation } from 'app/global-state/features/editor/editorApiSlice'
 import { useAppDispatch, useAppSelector } from 'app/global-state/hooks'

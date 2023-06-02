@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { FaTwitter } from 'react-icons/fa'
-import steppinstonesapplogo from '../../public/android-chrome-512x512.png'
+import steppinstonesapplogo from '../../../public/android-chrome-512x512.png'
 
 const Footer = () => {
   const year = new Date().getFullYear()
