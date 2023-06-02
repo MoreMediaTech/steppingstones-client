@@ -6,7 +6,7 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { showNotification } from '@mantine/notifications'
 
 import { RequestPasswordResetForm } from '@components/forms'
-import { useRequestPasswordResetMutation } from 'app/global-state/features/auth/authApiSlice'
+import { useRequestPasswordResetMutation } from '../../../global-state/features/auth/authApiSlice'
 import { validateEmail } from '@lib/emailVerification'
 import { IFormData } from '@lib/types'
 

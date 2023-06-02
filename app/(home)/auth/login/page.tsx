@@ -6,17 +6,22 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { FaSignInAlt } from 'react-icons/fa'
 import { Loader } from '@mantine/core'
+import useHasMounted from '@hooks/useHasMounted'
 
 const variants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1 },
 }
 
-export default function Login(){
-  return (
+export default function Login() {
+  const hasMounted = useHasMounted()
+  return hasMounted ? (
     <section className="relative h-screen w-full">
       <div className="absolute top-0 h-full w-full bg-cover bg-center">
-        <div className="relative h-full w-full" style={{ width: '100%', height: '100%' }}>
+        <div
+          className="relative h-full w-full"
+          style={{ width: '100%', height: '100%' }}
+        >
           <Image
             src={'/SS_Staircase.jpeg'}
             alt="Staircase image"
@@ -60,7 +65,5 @@ export default function Login(){
         </div>
       </div>
     </section>
-  )
+  ) : null
 }
-
-
