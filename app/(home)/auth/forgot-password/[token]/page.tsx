@@ -2,7 +2,7 @@
 import axios from 'axios'
 import { API_URL } from '@config/index'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useCallback } from 'react'
 import { showNotification } from '@mantine/notifications'

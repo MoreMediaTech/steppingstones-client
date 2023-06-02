@@ -12,7 +12,7 @@ const variants = {
   visible: { opacity: 1 },
 }
 
-const Login = () => {
+export default function Login(){
   return (
     <section className="relative h-screen w-full">
       <div className="absolute top-0 h-full w-full bg-cover bg-center">
@@ -63,4 +63,4 @@ const Login = () => {
   )
 }
 
-export default Login
+
