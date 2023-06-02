@@ -1,12 +1,10 @@
 'use client'
-import { Suspense } from 'react'
+
 import { LoginForm } from 'app/components/forms'
 
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { FaSignInAlt } from 'react-icons/fa'
-import Spinner from 'app/components/spinner/Spinner'
-// import { Loader } from '@mantine/core'
 
 const variants = {
   hidden: { opacity: 0 },
@@ -57,9 +55,8 @@ export default function Login() {
               <FaSignInAlt fontSize={40} color="#00DCB3" />
               <span className="text-primary-dark-100">Sign In</span>
             </h1>
-            <Suspense fallback={<Spinner classes="w-8 h-8" />}>
-              <LoginForm />
-            </Suspense>
+
+            <LoginForm />
           </motion.div>
         </div>
       </div>
