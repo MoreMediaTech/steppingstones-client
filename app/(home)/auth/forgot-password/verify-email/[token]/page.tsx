@@ -1,4 +1,4 @@
-import { MainLayout } from 'layout'
+
 import { API_URL } from '@config/index'
 
 async function checkTokenValidity(token: string) {
@@ -43,7 +43,6 @@ export default async function VerifyEmail({
 }) {
   const { valid } = await checkTokenValidity(params.token)
   return (
-    <MainLayout title="Email Verification">
       <main className="bg-white text-gray-900 ">
         <section className="relative flex h-screen content-center items-center justify-center pb-32 pt-16">
           <div className="flex items-center justify-center ">
@@ -55,6 +54,5 @@ export default async function VerifyEmail({
           </div>
         </section>
       </main>
-    </MainLayout>
   )
 }
