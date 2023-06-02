@@ -97,7 +97,7 @@ export default function ForgotPassword() {
         )}
         <div className="flex flex-row justify-center py-3 text-lg">
           <p className="mr-2">Return to</p>{' '}
-          <Link href={'/account/login'} className="text-blue-500">
+          <Link href={'/auth/login'} className="text-blue-500">
             Login
           </Link>
         </div>
