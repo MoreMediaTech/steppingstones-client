@@ -3,8 +3,8 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Loader } from '@mantine/core'
 
-import { ComponentShield } from '@components/NextShield'
-import PortalHeader from '@components/PortalHeader'
+import { ComponentShield } from 'app/components/NextShield'
+import PortalHeader from 'app/components/PortalHeader'
 import { SectionProps, SubSectionProps } from '@lib/types'
 import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
 import {
@@ -12,10 +12,10 @@ import {
   useCreateSubSectionMutation,
   useUpdateSectionByIdMutation,
 } from 'app/global-state/features/editor/editorApiSlice'
-import { CreateSectionForm } from '@components/forms'
-import Button from '@components/Button'
-import SectionContainer from '@components/CountyDistrictSections/SectionContainer'
-import PortalButton from '@components/PortalButton'
+import { CreateSectionForm } from 'app/components/forms'
+import Button from 'app/components/Button'
+import SectionContainer from 'app/components/CountyDistrictSections/SectionContainer'
+import PortalButton from 'app/components/PortalButton'
 
 export default function Section({
   searchParams,

@@ -4,11 +4,11 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Loader } from '@mantine/core'
 
-import { ComponentShield } from '@components/NextShield'
-import PortalHeader from '@components/PortalHeader'
-import SectionContainer from '@components/CountyDistrictSections/SectionContainer'
-import { EconomicDataSection } from '@components/CountyDistrictSections'
-import { CreateSectionForm } from '@components/forms'
+import { ComponentShield } from 'app/components/NextShield'
+import PortalHeader from 'app/components/PortalHeader'
+import SectionContainer from 'app/components/CountyDistrictSections/SectionContainer'
+import { EconomicDataSection } from 'app/components/CountyDistrictSections'
+import { CreateSectionForm } from 'app/components/forms'
 
 import { DistrictSectionProps } from '@lib/types'
 import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
@@ -17,7 +17,7 @@ import {
   useCreateSubSectionMutation,
   useUpdateDistrictSectionByIdMutation,
 } from 'app/global-state/features/editor/editorApiSlice'
-import Button from '@components/Button'
+import Button from 'app/components/Button'
 
 export default function DistrictSection({
   params,

@@ -1,13 +1,13 @@
 'use client'
 import { Loader } from '@mantine/core'
 
-import { ComponentShield } from '@components/NextShield'
+import { ComponentShield } from 'app/components/NextShield'
 import { CurrentUser } from '@lib/types'
 import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
-import PortalHeader from '@components/PortalHeader'
-import PortalSection from '@components/PortalHeader/PortalSection'
+import PortalHeader from 'app/components/PortalHeader'
+import PortalSection from 'app/components/PortalHeader/PortalSection'
 
-export default function AdminPortal(){
+export default function AdminPortal() {
   const { data: user, isLoading } = useGetUserQuery()
   return (
     <ComponentShield RBAC showForRole={'SS_EDITOR'} userRole={user?.role ?? ''}>
@@ -27,5 +27,3 @@ export default function AdminPortal(){
     </ComponentShield>
   )
 }
-
-

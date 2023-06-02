@@ -1,17 +1,16 @@
 import React from 'react'
-import AboutSection from '@components/AboutSection'
-import FAQSection from '@components/FAQSection'
-import FeaturesSection from '@components/FeaturesSection'
-import HeroSection from '@components/HeroSection'
+import AboutSection from 'app/components/AboutSection'
+import FAQSection from 'app/components/FAQSection'
+import FeaturesSection from 'app/components/FeaturesSection'
+import HeroSection from 'app/components/HeroSection'
 
-export default function Home(){
+export default function Home() {
   return (
-        <>
-          <HeroSection />
-          <AboutSection />
-          <FeaturesSection />
-          <FAQSection />
-        </>
+    <>
+      <HeroSection />
+      <AboutSection />
+      <FeaturesSection />
+      <FAQSection />
+    </>
   )
 }
-

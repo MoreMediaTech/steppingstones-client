@@ -3,10 +3,10 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Loader } from '@mantine/core'
 
-import { ComponentShield } from '@components/NextShield'
-import PortalHeader from '@components/PortalHeader'
-import { AddDistrictForm, CreateSectionForm } from '@components/forms'
-import Button from '@components/Button'
+import { ComponentShield } from 'app/components/NextShield'
+import PortalHeader from 'app/components/PortalHeader'
+import { AddDistrictForm, CreateSectionForm } from 'app/components/forms'
+import Button from 'app/components/Button'
 
 import { DistrictDataProps, SectionProps } from '@lib/types'
 import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
@@ -15,8 +15,8 @@ import {
   useCreateSectionMutation,
 } from 'app/global-state/features/editor/editorApiSlice'
 import { NEXT_URL } from '@config/index'
-import PortalButton from '@components/PortalButton'
-import Map from '@components/Map'
+import PortalButton from 'app/components/PortalButton'
+import Map from 'app/components/Map'
 
 export default function County({
   params,

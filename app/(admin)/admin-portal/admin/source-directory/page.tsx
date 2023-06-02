@@ -1,11 +1,11 @@
 'use client'
 import { Box } from '@mantine/core'
-import { ComponentShield } from '@components/NextShield'
+import { ComponentShield } from 'app/components/NextShield'
 import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
-import PortalHeader from '@components/PortalHeader'
+import PortalHeader from 'app/components/PortalHeader'
 import { CurrentUser } from '@lib/types'
-import SourceDirectory from '@components/SourceDirectory'
-import Header from '@components/Header'
+import SourceDirectory from 'app/components/SourceDirectory'
+import Header from 'app/components/Header'
 
 export default function SourceDirectoryPage() {
   const { data: user } = useGetUserQuery()

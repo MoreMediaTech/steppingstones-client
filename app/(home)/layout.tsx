@@ -1,8 +1,8 @@
 import React from 'react'
-import PageWrapper from '@components/PageWrapper'
+import PageWrapper from 'app/components/PageWrapper'
 import Provider from '../global-state/providers/provider'
-import { Navbar } from '@components/navigation'
-import Footer from '@components/footer'
+import { Navbar } from 'app/components/navigation'
+import Footer from 'app/components/footer'
 import '../globals.css'
 
 export default function RootLayout({

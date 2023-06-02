@@ -1,15 +1,14 @@
-'use client';
+'use client'
 import { useCallback } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { showNotification } from '@mantine/notifications'
 
-import { RequestPasswordResetForm } from '@components/forms'
+import { RequestPasswordResetForm } from 'app/components/forms'
 import { useRequestPasswordResetMutation } from '../../../global-state/features/auth/authApiSlice'
 import { validateEmail } from '@lib/emailVerification'
 import { IFormData } from '@lib/types'
-
 
 export default function ForgotPassword() {
   const {

@@ -4,14 +4,14 @@ import { MdOutlineArrowRight, MdOutlineArrowLeft } from 'react-icons/md'
 import { useRouter } from 'next/navigation'
 import { Loader } from '@mantine/core'
 
-import { ComponentShield } from '@components/NextShield'
+import { ComponentShield } from 'app/components/NextShield'
 import { CountyDataProps } from '@lib/types'
 import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
-import PortalHeader from '@components/PortalHeader'
+import PortalHeader from 'app/components/PortalHeader'
 
-import { CreateCountyForm } from '@components/forms'
+import { CreateCountyForm } from 'app/components/forms'
 import { useGetCountiesQuery } from 'app/global-state/features/editor/editorApiSlice'
-import Button from '@components/Button'
+import Button from 'app/components/Button'
 
 export default function CountyPortal() {
   const router = useRouter()

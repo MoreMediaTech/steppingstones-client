@@ -1,12 +1,12 @@
 'use client'
 import { Box } from '@mantine/core'
 
-import { ComponentShield } from '@components/NextShield'
+import { ComponentShield } from 'app/components/NextShield'
 import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
-import PortalHeader from '@components/PortalHeader'
+import PortalHeader from 'app/components/PortalHeader'
 import { CurrentUser } from '@lib/types'
-import { DistrictSettings } from '@components/SettingsSections'
-import Header from '@components/Header'
+import { DistrictSettings } from 'app/components/SettingsSections'
+import Header from 'app/components/Header'
 
 export default function DistrictSetting() {
   const { data: user } = useGetUserQuery()

@@ -1,4 +1,4 @@
-'use client';
+'use client'
 import axios from 'axios'
 import { API_URL } from '@config/index'
 import Link from 'next/link'
@@ -8,9 +8,9 @@ import { useCallback } from 'react'
 import { showNotification } from '@mantine/notifications'
 
 import { useResetPasswordMutation } from 'app/global-state/features/auth/authApiSlice'
-import { ChangePasswordForm } from '@components/forms'
+import { ChangePasswordForm } from 'app/components/forms'
 import { IFormData } from '@lib/types'
-import Loader from '@components/Loader'
+import Loader from 'app/components/Loader'
 
 export type Inputs = {
   password: string

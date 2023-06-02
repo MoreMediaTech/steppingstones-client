@@ -2,10 +2,10 @@
 import { useRouter } from 'next/navigation'
 import { Loader } from '@mantine/core'
 
-import { ComponentShield } from '@components/NextShield'
-import PortalHeader from '@components/PortalHeader'
-import Button from '@components/Button'
-import { SectionContainer } from '@components/CountyDistrictSections'
+import { ComponentShield } from 'app/components/NextShield'
+import PortalHeader from 'app/components/PortalHeader'
+import Button from 'app/components/Button'
+import { SectionContainer } from 'app/components/CountyDistrictSections'
 
 import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
 import {
@@ -83,4 +83,3 @@ export default function SubSubSection({
     </ComponentShield>
   )
 }
-

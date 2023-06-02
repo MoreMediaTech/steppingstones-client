@@ -1,4 +1,4 @@
-import { EnquiryForm } from '@components/forms'
+import { EnquiryForm } from 'app/components/forms'
 import Image from 'next/image'
 
 const ContactUs = () => {
@@ -19,7 +19,7 @@ const ContactUs = () => {
         ></div>
       </div>
 
-      <div className=" mx-auto container  grid max-w-screen-md grid-cols-1 place-content-center md:gap-4 md:grid-cols-2 p-2 md:p-4">
+      <div className=" container mx-auto  grid max-w-screen-md grid-cols-1 place-content-center p-2 md:grid-cols-2 md:gap-4 md:p-4">
         <div className="flex flex-col px-4 py-8"></div>
         <EnquiryForm />
       </div>

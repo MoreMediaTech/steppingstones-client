@@ -1,4 +1,4 @@
-import UserProfileSection from '@components/UserProfileSection'
+import UserProfileSection from 'app/components/UserProfileSection'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
@@ -11,7 +11,7 @@ function checkUserCookie() {
   return false
 }
 
-export default function Profile(){
+export default function Profile() {
   if (!checkUserCookie()) {
     return redirect('/auth/login')
   }
@@ -21,5 +21,3 @@ export default function Profile(){
     </section>
   )
 }
-
-

@@ -2,7 +2,7 @@
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import Image from 'next/image'
-import Button from '@components/Button'
+import Button from 'app/components/Button'
 
 export default function Error({
   error,
@@ -31,12 +31,12 @@ export default function Error({
         <h2 className="mb-3 text-3xl">Something went wrong!</h2>
 
         <div className="flex justify-center">
-          <Button type="button" color='white' onClick={() => reset()}>
+          <Button type="button" color="white" onClick={() => reset()}>
             Try again
           </Button>
         </div>
         <div className="flex justify-center">
-          <Button type="button" color='white' onClick={() => router.back()}>
+          <Button type="button" color="white" onClick={() => router.back()}>
             Go back
           </Button>
         </div>

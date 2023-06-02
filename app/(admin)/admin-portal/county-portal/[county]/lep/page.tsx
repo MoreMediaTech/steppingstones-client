@@ -1,13 +1,13 @@
 'use client'
 import { useRouter } from 'next/navigation'
 
-import { ComponentShield } from '@components/NextShield'
-import PortalHeader from '@components/PortalHeader'
+import { ComponentShield } from 'app/components/NextShield'
+import PortalHeader from 'app/components/PortalHeader'
 
 import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
 import { NEXT_URL } from '@config/index'
-import { LEPSection } from '@components/CountyDistrictSections'
-import Button from '@components/Button'
+import { LEPSection } from 'app/components/CountyDistrictSections'
+import Button from 'app/components/Button'
 
 export default function Lep({
   searchParams,

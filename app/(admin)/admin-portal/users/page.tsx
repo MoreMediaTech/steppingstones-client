@@ -2,13 +2,13 @@
 import { useState } from 'react'
 import { Box } from '@mantine/core'
 
-import { ComponentShield } from '@components/NextShield'
+import { ComponentShield } from 'app/components/NextShield'
 import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
-import AdminUsersSection from '@components/AdminUsersSection'
-import PortalHeader from '@components/PortalHeader'
-import Header from '@components/Header'
-import Button from '@components/Button'
-import CreateAdminModal from '@components/AdminUsersSection/CreateAdminModal'
+import AdminUsersSection from 'app/components/AdminUsersSection'
+import PortalHeader from 'app/components/PortalHeader'
+import Header from 'app/components/Header'
+import Button from 'app/components/Button'
+import CreateAdminModal from 'app/components/AdminUsersSection/CreateAdminModal'
 import { CurrentUser } from '@lib/types'
 
 export default function Users() {
@@ -70,4 +70,3 @@ export default function Users() {
     </>
   )
 }
-

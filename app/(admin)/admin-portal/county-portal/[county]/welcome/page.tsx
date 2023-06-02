@@ -1,12 +1,12 @@
 'use client'
 import { useRouter } from 'next/navigation'
 
-import { ComponentShield } from '@components/NextShield'
-import PortalHeader from '@components/PortalHeader'
+import { ComponentShield } from 'app/components/NextShield'
+import PortalHeader from 'app/components/PortalHeader'
 
 import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
-import { WelcomeSection } from '@components/CountyDistrictSections'
-import Button from '@components/Button'
+import { WelcomeSection } from 'app/components/CountyDistrictSections'
+import Button from 'app/components/Button'
 
 export default function Welcome({
   searchParams,
