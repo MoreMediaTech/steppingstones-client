@@ -38,7 +38,7 @@ export default function Places({ setRegion, location }: PlacesProps) {
         placeholder="Search Map for Locality"
         radius="md"
         variant="filled"
-        className='rounded-md outline-none ring-0'
+        className='rounded-md outline-none border-2 border-gray-900 dark:border-white ring-0'
       />
     </>
   )

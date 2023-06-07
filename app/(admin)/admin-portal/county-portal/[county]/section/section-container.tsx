@@ -1,13 +1,25 @@
 'use client'
 import { useCallback, useState, useEffect } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { showNotification } from '@mantine/notifications'
-import { Loader, Paper, UnstyledButton } from '@mantine/core'
 import { BiEdit } from 'react-icons/bi'
 
+import {
+  showNotification,
+  Loader,
+  Paper,
+  UnstyledButton,
+} from '@components/mantine-components'
 import { CountySectionForm } from 'app/components/forms'
 import { EditorFormDataProps, SectionProps } from '@lib/types'
 import ContentPreview from 'app/components/ContentPreview'
+
+type Props = {
+  sectionData: SectionProps
+  isLoadingSection: boolean
+  isLoading: boolean
+  refetch(): void
+  updateSectionById: any
+}
 
 const SectionContainer = ({
   sectionData,
@@ -15,13 +27,7 @@ const SectionContainer = ({
   refetch,
   updateSectionById,
   isLoading,
-}: {
-  sectionData: SectionProps
-  isLoadingSection: boolean
-  isLoading: boolean
-  refetch(): void
-  updateSectionById: any
-}) => {
+}: Props) => {
   const [value, setValue] = useState<string>(sectionData?.content as string)
   const [isEdit, setIsEdit] = useState<boolean>(false)
 
@@ -67,7 +73,7 @@ const SectionContainer = ({
       [value, sectionData]
     )
   return (
-    <section className="relative w-full flex-grow px-2 py-2  md:px-4 md:py-8">
+    <section className="relative w-full flex-grow py-8">
       <section>
         {isLoadingSection ? (
           <div className="flex h-[700px] items-center justify-center">
@@ -77,11 +83,11 @@ const SectionContainer = ({
           <Paper shadow="sm" p="md" radius="md" withBorder className="w-full">
             <div className="mb-4 flex w-full items-center justify-between">
               {sectionData?.isLive ? (
-                <div className="rounded-xl bg-[#5E17EB] px-2 py-1 text-xl font-semibold text-white">
+                <div className="rounded-xl bg-green-500 px-2 py-1 text-xs  text-white">
                   <h1>Live</h1>
                 </div>
               ) : (
-                <div className="rounded-xl bg-red-500 px-2 py-1 text-xl font-semibold text-white">
+                <div className="rounded-xl bg-red-500 px-2 py-1 text-xs  text-white">
                   <h1>Not Live</h1>
                 </div>
               )}

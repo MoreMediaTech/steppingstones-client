@@ -1,5 +1,5 @@
 import React from 'react'
-import { Loader as MantineLoader } from '@mantine/core'
+import { Loader as MantineLoader } from '@components/mantine-components'
 
 export default function Loader() {
  return (

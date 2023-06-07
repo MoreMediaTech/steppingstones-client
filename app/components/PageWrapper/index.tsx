@@ -1,1 +1,4 @@
-export { default } from './PageWrapper'
+import PageWrapper from "./PageWrapper";
+import AdminPageWrapper from "./AdminPageWrapper";
+
+export { PageWrapper, AdminPageWrapper };

@@ -1,5 +1,4 @@
 'use client'
-import { ComponentShield } from 'app/components/NextShield'
 import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
 import { MessagePreviewSection } from 'app/components/MessagesSection'
 import PortalHeader from 'app/components/PortalHeader'
@@ -9,11 +8,7 @@ const Message = ({ params }: { params: { id: string } }) => {
   const { data: user, refetch } = useGetUserQuery()
 
   return (
-    <ComponentShield
-      RBAC
-      showForRole={'SS_EDITOR'}
-      userRole={user?.role as string}
-    >
+    <>
       <PortalHeader
         user={user as CurrentUser}
         imgUrl={user?.imageUrl}
@@ -22,7 +17,7 @@ const Message = ({ params }: { params: { id: string } }) => {
       />
 
       <MessagePreviewSection messageId={params.id} />
-    </ComponentShield>
+    </>
   )
 }
 

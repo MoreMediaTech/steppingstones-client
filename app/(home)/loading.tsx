@@ -1,5 +1,4 @@
-'use client'
-import { Loader } from '@mantine/core'
+import { Loader } from '@components/mantine-components'
 
 export default function Loading() {
   return (

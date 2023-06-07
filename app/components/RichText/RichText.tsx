@@ -58,7 +58,7 @@ const RichTextEditor = ({
   setValue: React.Dispatch<React.SetStateAction<string>>
 }) => {
   return (
-    <div className="w-full">
+    <div className="w-full ">
       <Suspense fallback={<div>Loading...</div>}>
         <RichTextToolbar id="toolbar" />
         <ReactQuill

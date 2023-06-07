@@ -1,7 +1,8 @@
-'use client';
+'use client'
 import React from 'react'
 import { motion } from 'framer-motion'
-
+import { ComponentShield } from 'app/components/NextShield'
+import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
 
 function PageWrapper({
   children,
@@ -10,6 +11,7 @@ function PageWrapper({
   children: React.ReactNode
   className?: string
 }) {
+  const { data: user } = useGetUserQuery()
   return (
     <motion.main
       initial={{ opacity: 0, y: 20 }}
@@ -18,7 +20,13 @@ function PageWrapper({
       transition={{ duration: 0.25 }}
       className={`${className}  w-full`}
     >
-      {children}
+      <ComponentShield
+        RBAC
+        showForRole={'SS_EDITOR'}
+        userRole={user?.role as string}
+      >
+        {children}
+      </ComponentShield>
     </motion.main>
   )
 }

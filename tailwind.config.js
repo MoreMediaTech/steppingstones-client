@@ -90,6 +90,7 @@ module.exports = {
         poppins: ['Poppins', 'sans-serif'],
         sans: ['Graphik', 'sans-serif'],
         serif: ['Merriweather', 'serif'],
+        montserrat: [`var(--font-montserrat)`, 'sans-serif'],
       },
       borderRadius: {
         lg: 'var(--radius)',

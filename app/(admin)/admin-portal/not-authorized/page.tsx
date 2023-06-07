@@ -2,7 +2,7 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
-import { Button } from '@mantine/core'
+import { Button } from '@components/mantine-components'
 
 export default function NotAuthorized() {
   const router = useRouter()

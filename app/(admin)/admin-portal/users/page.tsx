@@ -1,8 +1,7 @@
 'use client'
 import { useState } from 'react'
-import { Box } from '@mantine/core'
+import { Box } from '@components/mantine-components'
 
-import { ComponentShield } from 'app/components/NextShield'
 import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
 import AdminUsersSection from 'app/components/AdminUsersSection'
 import PortalHeader from 'app/components/PortalHeader'
@@ -16,51 +15,45 @@ export default function Users() {
   const [opened, setOpened] = useState(false)
   return (
     <>
-      <ComponentShield
-        RBAC
-        showForRole={'SS_EDITOR'}
-        userRole={user?.role as string}
-      >
-        <PortalHeader
-          user={user as CurrentUser}
-          imgUrl={user?.imageUrl}
-          title={`${user?.name}`}
-          subTitle="Manage application users"
-        />
-        <section className="mx-auto max-w-screen-lg space-y-4 overflow-y-auto px-2 sm:px-4">
+      <PortalHeader
+        user={user as CurrentUser}
+        imgUrl={user?.imageUrl}
+        title={`${user?.name}`}
+        subTitle="Manage application users"
+      />
+      <section className="mx-auto max-w-screen-lg space-y-4 overflow-y-auto px-2 sm:px-4">
+        <Box
+          sx={{
+            marginTop: '1rem',
+            marginLeft: '1rem',
+            marginRight: '1rem',
+            height: '100%',
+          }}
+        >
           <Box
             sx={{
-              marginTop: '1rem',
-              marginLeft: '1rem',
-              marginRight: '1rem',
-              height: '100%',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              paddingTop: '1rem',
+              paddingBottom: '1rem',
             }}
           >
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                paddingTop: '1rem',
-                paddingBottom: '1rem',
-              }}
-            >
-              <Header title="Users" order={2} />
-              {user?.isSuperAdmin && (
-                <Button
-                  type="button"
-                  color="outline"
-                  className="md:w-1/4"
-                  onClick={() => setOpened((o) => !o)}
-                >
-                  Create Admin
-                </Button>
-              )}
-            </Box>
-            <AdminUsersSection />
+            <Header title="Users" order={2} />
+            {user?.isSuperAdmin && (
+              <Button
+                type="button"
+                color="outline"
+                className="md:w-1/4"
+                onClick={() => setOpened((o) => !o)}
+              >
+                Create Admin
+              </Button>
+            )}
           </Box>
-        </section>
-      </ComponentShield>
+          <AdminUsersSection />
+        </Box>
+      </section>
       <CreateAdminModal
         opened={opened}
         setOpened={setOpened}

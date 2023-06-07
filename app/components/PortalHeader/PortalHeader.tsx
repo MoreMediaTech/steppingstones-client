@@ -64,34 +64,36 @@ const PortalHeader = ({
     >
       <div className="mx-auto py-2 md:px-4">
         <div className="flex flex-col items-start justify-between md:flex-row md:items-center">
-          <div className="mb-2 flex items-center gap-4">
-            <div className=" items-center px-4 py-2  ">
-              <Burger
-                opened={drawerOpened}
-                aria-label={drawerTitle}
-                onClick={() => dispatch(setDrawerOpened(!drawerOpened))}
-                title={drawerTitle}
-                color="#00dcb3"
-              />
-            </div>
-            <Group>
-              <Avatar
-                imageUrl={
-                  data ? (data?.logoIcon as string) : (imgUrl as string)
-                }
-                classes="md:h-10 h-12 md:w-10 w-12"
-                imgSize="md:h-10 h-14 md:w-10 w-14"
-              />
-              <div style={{ flex: 1 }}>
-                <h1 className="text-[1rem] font-semibold text-[#00dcb3] sm:text-base">
-                  {title}
-                </h1>
-
-                <h3 className="text-sm font-semibold text-primary-dark-100 dark:text-primary-light-700">
-                  {subTitle}
-                </h3>
+          <div className="mb-2 flex items-center justify-between w-full">
+            <div className="flex items-center">
+              <div className=" items-center md:px-4 py-2  ">
+                <Burger
+                  opened={drawerOpened}
+                  aria-label={drawerTitle}
+                  onClick={() => dispatch(setDrawerOpened(!drawerOpened))}
+                  title={drawerTitle}
+                  color="#00dcb3"
+                />
               </div>
-            </Group>
+              <Group>
+                <Avatar
+                  imageUrl={
+                    data ? (data?.logoIcon as string) : (imgUrl as string)
+                  }
+                  classes="md:h-10 h-12 md:w-10 w-12"
+                  imgSize="md:h-10 h-14 md:w-10 w-14"
+                />
+                <div style={{ flex: 1 }}>
+                  <h1 className="text-xs sm:text-[1rem] font-semibold text-[#00dcb3] sm:text-base">
+                    {title}
+                  </h1>
+
+                  <h3 className="text-xs sm:text-sm font-semibold text-primary-dark-100 dark:text-primary-light-700">
+                    {subTitle}
+                  </h3>
+                </div>
+              </Group>
+            </div>
             <div className="m-0 flex list-none px-1 md:hidden ">
               <button
                 type="button"

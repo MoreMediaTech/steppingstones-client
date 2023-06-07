@@ -44,8 +44,8 @@ const Button = forwardRef<Ref, ButtonProps>(
 )
 
 const colors: Colors = {
-  primary: `border-primary-dark-100 border-2 text-primary-light-100 bg-primary-dark-100 active:bg-primary-dark-100 active:text-primary-light-100 hover:bg-primary-dark-100  hover:text-primary-light-100 hover:-translate-y-1 hover:scale-100`,
-  outline: `border-primary-dark-100 dark:border-primary-light-100 border-2 text-primary-dark-100 dark:text-primary-light-100 active:bg-primary-dark-100 active:text-white hover:bg-primary-dark-100 hover:text-primary-light-100 hover:-translate-y-1 hover:scale-100`,
+  primary: `border-[#ef946c]  border-2 text-gray-100 bg-[#ef946c] active:bg-[#ef946c]  active:text-gray-100 hover:bg-[#f19f7b]   hover:text-gray-100 hover:-translate-y-1 hover:scale-100`,
+  outline: `border-gray-900 dark:border-gray-100 border-2 text-gray-900 dark:text-gray-100 active:bg-[#f19f7b] active:text-white hover:bg-[#f19f7b] hover:text-gray-100 hover:-translate-y-1 hover:scale-100 font-medium hover:border-[#f19f7b] dark:hover:border-[#f19f7b]`,
   success: `border-tertiary border-2 text-tertiary active:bg-tertiary active:text-white hover:bg-[#2796b2] hover:text-white hover:-translate-y-1 hover:scale-100`,
   danger: `border-red-600 border text-red-600 active:bg-red-600 active:text-white`,
   dark: `border-black border text-gray-900 active:bg-black active:text-white hover:bg-black hover:text-white`,

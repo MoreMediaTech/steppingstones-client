@@ -102,16 +102,6 @@ const AdminSidebar = () => {
 
   return (
     <header className="relative bg-primary-light-100 dark:bg-primary-dark-700   md:h-screen">
-      <div className=" mb-2  flex items-center justify-between px-4 py-2 md:hidden ">
-        <AppLogo />
-        <Burger
-          opened={drawerOpened}
-          aria-label={title}
-          onClick={() => dispatch(setDrawerOpened(!drawerOpened))}
-          title={title}
-          color="#00dcb3"
-        />
-      </div>
 
       <Drawer
         aria-labelledby="drawer-title"

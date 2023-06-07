@@ -62,7 +62,7 @@ const PortalButton = forwardRef<Ref, ButtonProps>(
 )
 
 const colors: Colors = {
-  primaryFilled: `border-primary bg-primary border-2 text-white active:bg-primary active:text-white hover:bg-secondary hover:text-white hover:-translate-y-1 hover:scale-100`,
+  primaryFilled: `border-[#ef946c]  border-2 text-primary-light-100 bg-[#ef946c] active:bg-[#ef946c]  active:text-gray-100 hover:bg-[#f19f7b]   hover:text-gray-100 hover:-translate-y-1 hover:scale-100`,
   primaryOutline: `border-primary border-2 text-primary active:bg-primary active:text-white hover:bg-secondary hover:text-white hover:-translate-y-1 hover:scale-100`,
   success: `border-tertiary border-2 text-tertiary active:bg-tertiary active:text-white hover:bg-[#2796b2] hover:text-white hover:-translate-y-1 hover:scale-100`,
   danger: `border-red-600 border text-red-600 active:bg-red-600 active:text-white`,

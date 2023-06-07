@@ -1,7 +1,7 @@
 'use client'
 import { forwardRef } from 'react'
 import { FaChevronRight } from 'react-icons/fa'
-import { Group, Avatar, Text, UnstyledButton } from '@mantine/core'
+import { Group, Avatar, Text, UnstyledButton } from '../mantine-components'
 import { useTheme } from 'next-themes'
 
 interface UserButtonProps extends React.ComponentPropsWithoutRef<'button'> {

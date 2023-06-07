@@ -1,5 +1,5 @@
 'use client'
-import { Button } from '@mantine/core'
+import { Button } from '@components/mantine-components'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import Image from 'next/image'
