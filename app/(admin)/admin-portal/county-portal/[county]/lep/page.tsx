@@ -22,7 +22,6 @@ export default function Page({
         <LEP
           id={searchParams.countyId}
           county={searchParams.county}
-          countyId={searchParams.countyId}
         />
       </section>
     </section>
