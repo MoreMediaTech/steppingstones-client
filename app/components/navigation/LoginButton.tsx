@@ -93,7 +93,7 @@ export function MobileLoginButton({
   return (
     <>
       {currentUser ? (
-        <li className="mb-4 w-full cursor-pointer font-poppins text-[16px] font-medium">
+        <li className="font-montserrat mb-4 w-full cursor-pointer text-[16px] font-medium">
           <Group position="left">
             <Menu width={150}>
               <div className="grid w-full">
@@ -130,14 +130,14 @@ export function MobileLoginButton({
           </Group>
         </li>
       ) : (
-        <li className="mb-4 cursor-pointer font-poppins text-[16px] font-medium">
+        <li className="mb-4 cursor-pointer rounded-sm bg-slate-200 px-2 py-1 font-montserrat text-[16px] font-medium dark:bg-[#3b3c40]">
           <Link
             href={'/auth/login'}
             className="flex items-center gap-1 text-[#00DCB3]"
             onClick={() => setActivePath('/auth/login')}
           >
             <FaSignInAlt fontSize={20} />
-            <span>Login</span>
+            <span className="text-base">Login</span>
           </Link>
         </li>
       )}

@@ -57,7 +57,7 @@ export default function SubSection({ searchParams }: Props) {
           }
           data={subSectionData}
         />
-        <section className="px-2 py-2 sm:px-4">
+        <section className="container mx-auto max-w-screen-md px-2 py-2 sm:px-0">
           <div className="flex justify-between">
             <Button
               type="button"
@@ -83,47 +83,47 @@ export default function SubSection({ searchParams }: Props) {
               </Button>
             )}
           </div>
+          {isLoadingSubSection ? (
+            <div className="flex h-[700px] items-center justify-center">
+              <Loader size="xl" variant="bars" />
+            </div>
+          ) : (
+            <section className="w-full overflow-auto">
+              {subSectionData?.isSubSubSection ? (
+                <section className="min-h-[500px] w-full overflow-auto py-24">
+                  {subSectionData && (
+                    <div className="container mx-auto grid max-w-screen-lg grid-cols-2 gap-4">
+                      {subSectionData?.subSubSections?.map(
+                        (subSubSection: SubSubSectionProps) => (
+                          <PortalButton
+                            key={`${subSubSection.id}`}
+                            type="button"
+                            color="primaryFilled"
+                            onClick={() =>
+                              router.replace(
+                                `/admin-portal/county-portal/${searchParams.county}/section/subsection/subsubsection?county=${searchParams.county}&countyId=${searchParams.countyId}&sectionId=${searchParams.sectionId}&subSectionId=${searchParams.subSectionId}&subSubSectionId=${subSubSection?.id}`
+                              )
+                            }
+                          >
+                            {subSubSection?.name}
+                          </PortalButton>
+                        )
+                      )}
+                    </div>
+                  )}
+                </section>
+              ) : (
+                <SectionContainer
+                  isLoadingSection={isLoadingSubSection}
+                  sectionData={subSectionData as SubSectionProps}
+                  refetch={refetchSubSection}
+                  isLoading={isLoading}
+                  updateSectionById={updateSubSectionById}
+                />
+              )}
+            </section>
+          )}
         </section>
-        {isLoadingSubSection ? (
-          <div className="flex h-[700px] items-center justify-center">
-            <Loader size="xl" variant="bars" />
-          </div>
-        ) : (
-          <section className="w-full overflow-auto px-2 py-2 md:px-4">
-            {subSectionData?.isSubSubSection ? (
-              <section className="min-h-[500px] w-full overflow-auto  px-2 py-24 md:px-4">
-                {subSectionData && (
-                  <div className="container mx-auto grid max-w-screen-lg grid-cols-2 gap-4">
-                    {subSectionData?.subSubSections?.map(
-                      (subSubSection: SubSubSectionProps) => (
-                        <PortalButton
-                          key={`${subSubSection.id}`}
-                          type="button"
-                          color="primaryFilled"
-                          onClick={() =>
-                            router.replace(
-                              `/admin-portal/county-portal/${searchParams.county}/section/subsection/subsubsection?county=${searchParams.county}&countyId=${searchParams.countyId}&sectionId=${searchParams.sectionId}&subSectionId=${searchParams.subSectionId}&subSubSectionId=${subSubSection?.id}`
-                            )
-                          }
-                        >
-                          {subSubSection?.name}
-                        </PortalButton>
-                      )
-                    )}
-                  </div>
-                )}
-              </section>
-            ) : (
-              <SectionContainer
-                isLoadingSection={isLoadingSubSection}
-                sectionData={subSectionData as SubSectionProps}
-                refetch={refetchSubSection}
-                isLoading={isLoading}
-                updateSectionById={updateSubSectionById}
-              />
-            )}
-          </section>
-        )}
       </section>
       <CreateSectionForm
         opened={openAddSectionModal}

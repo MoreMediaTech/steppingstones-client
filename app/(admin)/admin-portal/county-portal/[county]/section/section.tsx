@@ -48,7 +48,7 @@ export default function Section({ county, countyId, sectionId }: Props) {
           }
           data={sectionData}
         />
-        <section className="px-2 py-2 sm:px-4">
+        <section className="container mx-auto max-w-screen-md px-2 py-2 sm:px-0">
           <div className="flex justify-between">
             <Button
               type="button"
@@ -74,63 +74,63 @@ export default function Section({ county, countyId, sectionId }: Props) {
               </Button>
             )}
           </div>
-        </section>
-        {isLoadingSection ? (
-          <div className="flex h-[700px] items-center justify-center">
-            <Loader size="xl" variant="bars" />
-          </div>
-        ) : (
-          <section className="w-full overflow-auto px-2 py-2 md:px-4">
-            <div className="flex justify-end px-2 md:px-4">
-              {sectionData?.isSubSection && (
-                <>
-                  {sectionData?.isLive ? (
-                    <h1 className="rounded-xl bg-[#5E17EB] px-2 py-1 text-xl font-semibold text-white">
-                      Live
-                    </h1>
-                  ) : (
-                    <h1 className="rounded-xl bg-red-500 px-2 py-1 text-xl font-semibold text-white">
-                      Not Live
-                    </h1>
-                  )}
-                </>
-              )}
+          {isLoadingSection ? (
+            <div className="flex h-[700px] items-center justify-center">
+              <Loader size="xl" variant="bars" />
             </div>
-            {sectionData?.isSubSection ? (
-              <section className="min-h-[500px] w-full overflow-auto px-2 py-2  md:px-4 md:py-24">
-                {sectionData && (
-                  <div className="container mx-auto grid max-w-screen-lg grid-cols-2 gap-4">
-                    {sectionData?.subsections?.map(
-                      (section: SubSectionProps) => (
-                        <PortalButton
-                          key={`${section.id}`}
-                          type="button"
-                          color="primaryFilled"
-                          isLive={section?.isLive}
-                          onClick={() =>
-                            router.push(
-                              `/admin-portal/county-portal/${county}/section/subsection?countyId=${countyId}&county=${county}&sectionId=${sectionId}&subSectionId=${section.id}`
-                            )
-                          }
-                        >
-                          {section?.name}
-                        </PortalButton>
-                      )
+          ) : (
+            <section className="w-full overflow-auto ">
+              <div className="flex justify-end px-2 md:px-4">
+                {sectionData?.isSubSection && (
+                  <>
+                    {sectionData?.isLive ? (
+                      <h1 className="rounded-xl bg-[#5E17EB] px-2 py-1 text-xl font-semibold text-white">
+                        Live
+                      </h1>
+                    ) : (
+                      <h1 className="rounded-xl bg-red-500 px-2 py-1 text-xl font-semibold text-white">
+                        Not Live
+                      </h1>
                     )}
-                  </div>
+                  </>
                 )}
-              </section>
-            ) : (
-              <SectionContainer
-                isLoadingSection={isLoadingSection}
-                sectionData={sectionData as SectionProps}
-                refetch={refetchSection}
-                updateSectionById={updateSectionById}
-                isLoading={isLoading}
-              />
-            )}
-          </section>
-        )}
+              </div>
+              {sectionData?.isSubSection ? (
+                <section className="min-h-[500px] w-full overflow-auto md:py-24">
+                  {sectionData && (
+                    <div className="container mx-auto grid max-w-screen-lg grid-cols-2 gap-4">
+                      {sectionData?.subsections?.map(
+                        (section: SubSectionProps) => (
+                          <PortalButton
+                            key={`${section.id}`}
+                            type="button"
+                            color="primaryFilled"
+                            isLive={section?.isLive}
+                            onClick={() =>
+                              router.push(
+                                `/admin-portal/county-portal/${county}/section/subsection?countyId=${countyId}&county=${county}&sectionId=${sectionId}&subSectionId=${section.id}`
+                              )
+                            }
+                          >
+                            {section?.name}
+                          </PortalButton>
+                        )
+                      )}
+                    </div>
+                  )}
+                </section>
+              ) : (
+                <SectionContainer
+                  isLoadingSection={isLoadingSection}
+                  sectionData={sectionData as SectionProps}
+                  refetch={refetchSection}
+                  updateSectionById={updateSectionById}
+                  isLoading={isLoading}
+                />
+              )}
+            </section>
+          )}
+        </section>
       </section>
       <CreateSectionForm
         opened={openAddSectionModal}

@@ -51,13 +51,13 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`top-0 z-10  flex w-full px-2 py-2 sm:px-16 ${
+      className={`top-0 z-10  flex w-full  py-2 sm:px-16 ${
         pos === 'top'
           ? 'absolute bg-slate-100 dark:bg-[#25262B]'
           : 'shadow-b-2xl fixed bg-slate-100 dark:bg-[#25262B]'
       }`}
     >
-      <div className="container mx-auto flex items-center justify-between sm:max-w-screen-lg">
+      <div className="container mx-auto flex w-full items-center justify-between sm:max-w-screen-lg">
         <AppLogo activePath={activePath} setActivePath={setActivePath} />
         {/* Main Navigation */}
         <ul className="hidden list-none items-center justify-end gap-6 sm:flex">
@@ -161,13 +161,42 @@ const Navbar = () => {
         </ul>
 
         {/* Mobile Navigation */}
-        <div className="flex flex-1 items-center justify-end sm:hidden">
+        <div className="flex w-full flex-1 items-center justify-end sm:hidden">
           <div className="flex items-center gap-4">
-            <UserButton
-              name={currentUser?.name ?? ''}
-              email={currentUser?.email ?? ''}
-              initials={initials}
-            />
+            <button
+              type="button"
+              aria-label="toggle-theme-button"
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              className={`focus:ring-none flex cursor-pointer list-none  p-1 font-medium focus:border-transparent focus:outline-none md:block lg:mb-0 lg:ml-0 lg:p-1 lg:px-1`}
+            >
+              {resolvedTheme === 'light' ? (
+                <FiSun
+                  fontSize={18}
+                  className={`${
+                    pathname === '/' && pos === 'top'
+                      ? 'text-primary-dark-100 dark:text-primary-light-100'
+                      : 'text-primary-dark-100 dark:text-primary-light-100'
+                  } font-bold `}
+                />
+              ) : (
+                <FiMoon
+                  fontSize={18}
+                  className={`${
+                    pathname === '/' && pos === 'top'
+                      ? 'text-primary-dark-100 dark:text-primary-light-100'
+                      : 'text-primary-dark-100 dark:text-primary-light-100'
+                  } font-bold `}
+                />
+              )}
+              <span hidden>toggle theme</span>
+            </button>
+            {currentUser ? (
+              <UserButton
+                name={currentUser?.name ?? ''}
+                email={currentUser?.email ?? ''}
+                initials={initials}
+              />
+            ) : null}
             <Burger
               opened={opened}
               onClick={() => setOpened((o) => !o)}
@@ -175,6 +204,8 @@ const Navbar = () => {
               color="#00dcb3"
             />
           </div>
+
+          {/* Mobile Menu */}
 
           <div
             className={`${
@@ -186,12 +217,12 @@ const Navbar = () => {
                 if (activePath === path) {
                   return (
                     <li
-                      className="w-full rounded-sm bg-[#3b3c40] px-2 py-1"
+                      className="w-full rounded-sm bg-slate-200 px-2 py-1 dark:bg-[#3b3c40]"
                       key={`${path}-${index}`}
                     >
                       <ScrollLink
                         href={`/#${path}`}
-                        className={`cursor-pointer bg-[#3b3c40] font-poppins text-[16px] font-normal capitalize text-[#00DCB3]`}
+                        className={`cursor-pointer bg-slate-200 font-poppins text-[16px] font-normal capitalize text-[#00DCB3] dark:bg-[#3b3c40]`}
                         onClick={() => {
                           setActivePath(path)
                           setOpened(false)
@@ -213,7 +244,7 @@ const Navbar = () => {
                 }
                 return (
                   <li
-                    className="w-full rounded-sm bg-[#3b3c40] px-2 py-1"
+                    className="w-full rounded-sm bg-slate-200 px-2 py-1 hover:bg-slate-200 dark:bg-[#3b3c40]"
                     key={`${path}-${index}`}
                   >
                     <Link
@@ -237,7 +268,7 @@ const Navbar = () => {
               <li className="my-2 w-full cursor-pointer font-poppins text-[16px] font-medium">
                 <Link
                   href={'/enquire'}
-                  className="w-full rounded-lg bg-[#5E17EB] px-6 py-2 font-medium text-white"
+                  className="w-full rounded-lg bg-[#5E17EB] px-6 py-2 font-medium text-white "
                   onClick={() => {
                     setOpened(false)
                     setActivePath('enquire')

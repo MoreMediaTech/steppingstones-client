@@ -19,7 +19,7 @@ const ContactUs = () => {
         ></div>
       </div>
 
-      <div className=" container mx-auto  grid max-w-screen-md grid-cols-1 place-content-center p-2 md:grid-cols-2 md:gap-4 md:p-4">
+      <div className="-translate-y-1/2 container mx-auto w-full  grid max-w-screen-md grid-cols-1 place-content-center p-2 md:grid-cols-2 md:gap-4 md:p-0">
         <div className="flex flex-col px-4 py-8"></div>
         <EnquiryForm />
       </div>

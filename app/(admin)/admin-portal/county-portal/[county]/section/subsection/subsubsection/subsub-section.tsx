@@ -47,7 +47,7 @@ export default function SubSubSection({ searchParams }: Props) {
           subTitle={'Review or edit the content below'}
           data={subSubSectionData}
         />
-        <section className="container mx-auto px-4 py-2">
+        <section className="container mx-auto px-2 py-2 sm:px-0 max-w-screen-md">
           <div className="flex justify-between">
             <Button
               type="button"
@@ -62,22 +62,22 @@ export default function SubSubSection({ searchParams }: Props) {
               Go Back
             </Button>
           </div>
+          {isLoadingSubSubSection ? (
+            <div className="flex h-[700px] items-center justify-center">
+              <Loader size="xl" variant="bars" />
+            </div>
+          ) : (
+            <section className="w-full overflow-auto">
+              <SectionContainer
+                isLoadingSection={isLoadingSubSubSection}
+                sectionData={subSubSectionData as SubSubSectionProps}
+                refetch={refetchSubSection}
+                isLoading={isLoading}
+                updateSectionById={updateSubSubSectionById}
+              />
+            </section>
+          )}
         </section>
-        {isLoadingSubSubSection ? (
-          <div className="flex h-[700px] items-center justify-center">
-            <Loader size="xl" variant="bars" />
-          </div>
-        ) : (
-          <section className="w-full overflow-auto px-2 py-2 md:px-4">
-            <SectionContainer
-              isLoadingSection={isLoadingSubSubSection}
-              sectionData={subSubSectionData as SubSubSectionProps}
-              refetch={refetchSubSection}
-              isLoading={isLoading}
-              updateSectionById={updateSubSubSectionById}
-            />
-          </section>
-        )}
       </section>
     </ComponentShield>
   )

@@ -189,7 +189,7 @@ const AdminSidebar = () => {
                 icon={<FaRegUser fontSize={14} color="#00DCB3" />}
                 onClick={() => dispatch(setDrawerOpened(false))}
               >
-                <Link href={'/auth/profile'}>Profile</Link>
+                <Link href={'/auth/user-profile'}>Profile</Link>
               </Menu.Item>
               <Menu.Item
                 className="flex w-full items-center rounded-lg p-2  font-semibold text-[#00DCB3] "

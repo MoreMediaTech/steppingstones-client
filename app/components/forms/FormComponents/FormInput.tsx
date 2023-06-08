@@ -1,4 +1,3 @@
-'use client';
 import React from 'react'
 import {
   DeepRequired,
@@ -6,7 +5,7 @@ import {
   FieldErrorsImpl,
   Merge,
 } from 'react-hook-form'
-import { CSSObject, TextInput } from '@mantine/core'
+import { CSSObject, TextInput } from '@components/mantine-components'
 import { IFormData } from '@lib/types'
 
 export type Ref = HTMLInputElement
