@@ -100,7 +100,7 @@ const MessagesTable = ({
               {messages?.map((message: MessageProps) => (
                 <tr
                   key={message.id}
-                  className="border-b bg-white hover:cursor-pointer hover:bg-gray-50 dark:hover:bg-slate-700 dark:bg-slate-800"
+                  className="border-b bg-white hover:cursor-pointer hover:bg-gray-50 dark:bg-slate-800 dark:hover:bg-slate-700"
                 >
                   <td className="w-4 p-4">
                     <div className="flex items-center">
@@ -121,13 +121,11 @@ const MessagesTable = ({
                   </td>
                   <td
                     scope="row"
-                    className="whitespace-nowrap px-6 py-4 text-left font-medium text-gray-900"
+                    className="whitespace-nowrap px-6 py-4 text-left"
                   >
                     <div
                       onClick={() => {
-                        router.push(
-                          `/admin-portal/messages/${message.id}`
-                        )
+                        router.push(`/admin-portal/messages/${message.id}`)
                         handleUpdateIsRead(message)
                       }}
                     >
@@ -158,9 +156,11 @@ const MessagesTable = ({
                       </p>
                     </div>
                   </td>
-                  <td className="mt-4 hidden  px-6 py-4 md:flex">
-                    <div className="flex flex-grow items-center justify-center">
-                      {new Date(message?.createdAt as string).toUTCString()}
+                  <td className="mt-4 hidden h-full w-full items-center justify-center md:flex">
+                    <div className="flex w-full h-full items-center justify-center">
+                      <span>
+                        {new Date(message?.createdAt as string).toUTCString()}
+                      </span>
                     </div>
                   </td>
                 </tr>

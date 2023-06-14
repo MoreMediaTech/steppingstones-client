@@ -1,27 +1,28 @@
 'use client'
 import { Modal, Button } from '@mantine/core'
+import { setOpenModal } from 'app/global-state/features/editor/editorSlice'
+import { useAppDispatch } from 'app/global-state/hooks'
 
 const HandleDeleteModal = ({
   open,
   data,
   isLoading,
   deleteHandler,
-  setOpenModal,
 }: {
   open: boolean
   data: any
   isLoading: boolean
   type?: string
   deleteHandler: (id: string, type?:string) => void
-  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>
-}) => {
 
+}) => {
+  const dispatch = useAppDispatch()
   return (
     <Modal
       centered
       size="sm"
       opened={open}
-      onClose={() => setOpenModal(false)}
+      onClose={() => dispatch(setOpenModal(false))}
       title="Confirm Delete"
       closeOnClickOutside={false}
     >
@@ -34,7 +35,7 @@ const HandleDeleteModal = ({
             type="button"
             variant="outline"
             className="font-medium hover:bg-blue-500 hover:text-white "
-            onClick={() => setOpenModal(false)}
+            onClick={() => dispatch(setOpenModal(false))}
           >
             Cancel
           </Button>

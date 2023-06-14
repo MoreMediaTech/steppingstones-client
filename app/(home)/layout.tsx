@@ -19,7 +19,8 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${montserrat.variable} font-montserrat sm:scroll-smooth`}
+      className={`${montserrat.variable} light font-montserrat sm:scroll-smooth`}
+      style={{ scrollBehavior: 'smooth', colorScheme: 'light'}}
     >
       <body className="relative grid min-h-screen grid-cols-1 bg-slate-100 dark:bg-[#212227]">
         <Provider>

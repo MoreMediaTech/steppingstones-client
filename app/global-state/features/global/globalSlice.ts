@@ -5,7 +5,8 @@ import { AppThunk, RootState, AppDispatch } from 'app/global-state/store'
 
 type GlobalState = {
   loading: boolean
-  error: Error
+  error: Error;
+  openModal: boolean
   drawerOpened: boolean
   isVisible: boolean
 }
@@ -20,6 +21,7 @@ const checkCookieConsent = () => {
 
 const initialState: GlobalState = {
   loading: false,
+  openModal: false,
   error: { name: '', message: 'An Error occurred' },
   drawerOpened: false,
   isVisible: checkCookieConsent(),
@@ -37,10 +39,13 @@ export const globalSlice = createSlice({
     setIsVisible: (state, { payload }: PayloadAction<boolean>) => {
       state.isVisible = payload
     },
+    setOpenModal: (state, { payload }: PayloadAction<boolean>) => {
+      state.openModal = payload
+    },
   },
 })
 
-export const { setLoading, setError, setDrawerOpened, setIsVisible } =
+export const { setLoading, setError, setDrawerOpened, setIsVisible, setOpenModal } =
   globalSlice.actions
 export const globalSelector = (state: RootState) => state.global
 

@@ -14,6 +14,7 @@ import messagesReducer from 'app/global-state/features/messages/messagesSlice'
 import editorReducer from 'app/global-state/features/editor/editorSlice'
 import uploadReducer from 'app/global-state/features/upload/uploadSlice'
 import globalReducer from 'app/global-state/features/global/globalSlice'
+import userReducer from 'app/global-state/features/user/userSlice'
 import {
   apiSlice,
   messagesApiSlice,
@@ -36,6 +37,7 @@ const reducers = {
   editor: editorReducer,
   upload: uploadReducer,
   global: globalReducer,
+  user: userReducer,
 }
 
 const combinedReducer = combineReducers<typeof reducers>(reducers)

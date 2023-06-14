@@ -1,50 +1,27 @@
 'use client'
-import { useState } from 'react'
 import { Loader } from '@mantine/core'
 
 import AdminUsersTable from './AdminUsersTable'
 import { useGetUsersQuery } from 'app/global-state/features/user/usersApiSlice'
-import Spinner from 'app/components/spinner'
 import { CurrentUser } from '@lib/types'
 import UpdateAdminUserModal from './UpdateAdminUserModal'
+import { useAppDispatch, useAppSelector } from 'app/global-state/hooks'
+import {
+  globalSelector,
+  setOpenModal,
+} from 'app/global-state/features/global/globalSlice'
+import { userSelector, setUser } from 'app/global-state/features/user/userSlice'
 
 const AdminUsersSection = () => {
+  const dispatch = useAppDispatch()
   const { data: users, isLoading, refetch } = useGetUsersQuery()
-  const [open, setOpen] = useState<boolean>(false)
-  const [user, setUserState] = useState<CurrentUser | null>(null)
-  const [searchResults, setSearchResults] = useState<CurrentUser[]>([])
-  const [selectedUserId, setSelectedUserId] = useState<string[]>([])
-  const [checked, setChecked] = useState<boolean>(false)
+  const { openModal } = useAppSelector(globalSelector)
+  const { user: currentUser } = useAppSelector(userSelector)
+
 
   const handleModalClose = () => {
-    setOpen(false)
-    setUserState(null)
-  }
-
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.value) setSearchResults(users as CurrentUser[])
-
-    const resultsArray = users?.filter(
-      (user: CurrentUser) =>
-        user?.name?.toLowerCase().includes(e.target.value.toLowerCase()) ||
-        user?.organisation?.name
-          ?.toLowerCase()
-          .includes(e.target.value.toLowerCase()) ||
-        user?.county?.toLowerCase().includes(e.target.value.toLowerCase())
-    )
-
-    setSearchResults(resultsArray as CurrentUser[])
-  }
-
-  const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target
-    if (!e.target.checked) {
-      setChecked(false)
-      setSelectedUserId((userId) => userId.filter((id) => id !== value))
-    } else {
-      setChecked(true)
-      setSelectedUserId((userId) => [...new Set([...userId, value])])
-    }
+    dispatch(setOpenModal(false))
+    dispatch(setUser(null))
   }
 
   if (isLoading) {
@@ -57,24 +34,14 @@ const AdminUsersSection = () => {
   return (
     <>
       <section className="">
-        <AdminUsersTable
-          users={
-            searchResults.length > 0 ? searchResults : (users as CurrentUser[])
-          }
-          open={open}
-          setOpen={setOpen}
-          refetch={refetch}
-          setUser={setUserState}
-          handleSearch={handleSearch}
-          handleSelect={handleSelect}
-        />
+        <AdminUsersTable users={users as CurrentUser[]} />
       </section>
       <UpdateAdminUserModal
-        key={user?.id}
-        open={open}
+        key={currentUser?.id}
+        open={openModal}
         handleModalClose={handleModalClose}
         refetch={refetch}
-        user={user as CurrentUser}
+        user={currentUser as CurrentUser}
       />
     </>
   )

@@ -7,24 +7,30 @@ import { HYDRATE } from 'next-redux-wrapper'
 const token =
   typeof window !== 'undefined' ? localStorage.getItem('token') : null
 
-export const initialState: AuthState = {
+export type UserState = {
+    message: string
+    user: CurrentUser | null
+    error: Error
+}
+
+export const initialState: UserState = {
   message: '',
-  token: token,
+  user: null,
   error: { message: '' },
 }
 
-export const authSlice = createSlice({
+export const userSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setCredentials: (
+    setUser: (
       state,
-      { payload: { token } }: PayloadAction<{ token: string }>
+      { payload }: PayloadAction<CurrentUser | null>
     ) => {
-      state.token = token
+      state.user = payload
     },
-    resetCredentials: (state) => {
-      state.token = null
+    resetUser: (state) => {
+      state.user = null
       state.message = ''
     },
     setError: (state, { payload }: PayloadAction<Error>) => {
@@ -40,8 +46,8 @@ export const authSlice = createSlice({
   },
 })
 
-export const { setCredentials, resetCredentials, setError } = authSlice.actions
+export const { setUser, resetUser, setError } = userSlice.actions
 
-export const selectCurrentToken = (state: RootState) => state.auth.token
+export const userSelector = (state: RootState) => state.user
 
-export default authSlice.reducer
+export default userSlice.reducer
