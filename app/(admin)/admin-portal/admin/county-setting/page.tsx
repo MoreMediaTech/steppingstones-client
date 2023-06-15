@@ -2,14 +2,15 @@
 import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
 import PortalHeader from 'app/components/PortalHeader'
 import { CurrentUser } from '@lib/types'
-import { CountySettings } from 'app/components/SettingsSections'
+
 import Header from 'app/components/Header'
+import { CountySettings } from './CountySettings'
 
 export default function Page() {
   const { data: user } = useGetUserQuery()
 
   return (
-    <section className="">
+    <section>
       <PortalHeader
         user={user as CurrentUser}
         imgUrl={user?.imageUrl}
@@ -17,7 +18,7 @@ export default function Page() {
         subTitle="Manage counties"
       />
       <section
-        className={`mx-auto my-4 py-2 px-2 sm:px-4 sm:max-w-screen-md border rounded-md`}
+        className={`mx-auto my-4 rounded-md border px-2 py-2 sm:max-w-screen-md sm:px-4`}
       >
         <div className="flex flex-col space-y-4">
           <Header title="County Settings" order={2} />

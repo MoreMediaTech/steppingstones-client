@@ -19,6 +19,7 @@ interface DataTableRowActionsProps<TData> {
   enableEdit?: boolean
   handleDelete?: (row: Row<TData>) => void
   handleEdit?: (row: Row<TData>) => void
+  children?: React.ReactNode
 }
 
 export function DataTableRowActions<TData>({
@@ -27,6 +28,7 @@ export function DataTableRowActions<TData>({
   enableEdit = false,
   handleDelete,
   handleEdit,
+  children,
 }: DataTableRowActionsProps<TData>) {
   return (
     <DropdownMenu>
@@ -40,6 +42,7 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
+        {children}
         {enableEdit ? (
           <DropdownMenuItem onClick={() => handleEdit!(row)}>
             <Pen className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />

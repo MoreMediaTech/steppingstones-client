@@ -1,17 +1,20 @@
 'use client'
 import { useCallback } from 'react'
 import { ColumnDef, Row } from '@tanstack/react-table'
-import { CountyDataProps } from '@lib/types'
 import { FaCheck, FaTimes } from 'react-icons/fa'
 import { ArrowUpDown } from 'lucide-react'
-import { Button } from '@components/ui/button'
 import { format } from 'date-fns'
 import { enGB } from 'date-fns/locale'
+import Image from 'next/image'
+
+import { CountyDataProps } from '@lib/types'
+import { Button } from '@components/ui/button'
 import { Checkbox } from '@components/ui/checkbox'
 import { DataTableRowActions } from '@components/table/data-table-row-actions'
 import { useAppDispatch } from 'app/global-state/hooks'
 import { setCounty } from 'app/global-state/features/editor/editorSlice'
-import  { setOpenModal } from 'app/global-state/features/editor/editorSlice'
+import  { setOpenEditModal, setOpenDeleteModal } from 'app/global-state/features/editor/editorSlice'
+import steppingstonesapplogo from '../../../../../public/steppingstonesapplogo.png'
 
 
 export const columns: ColumnDef<CountyDataProps>[] = [
@@ -51,6 +54,22 @@ export const columns: ColumnDef<CountyDataProps>[] = [
         </div>
       )
     },
+    cell: ({ row }) => {
+      const county = row.original
+      return (
+        <div className="flex items-center justify-start space-x-2">
+          <div className="relative h-10 w-10 overflow-hidden rounded-full border-2 border-primary-dark-200 p-1">
+            <Image
+              src={county.logoIcon ?? steppingstonesapplogo}
+              alt={county.name as string}
+            />
+          </div>
+          <div className="text-xs font-semibold sm:text-base ">
+            <p>{county?.name}</p>
+          </div>
+        </div>
+      )
+    },
   },
 
   {
@@ -86,9 +105,7 @@ export const columns: ColumnDef<CountyDataProps>[] = [
     header: ({ column }) => {
       return (
         <div className="flex items-center justify-center">
-          <h3>
-            Last Updated
-          </h3>
+          <h3>Last Updated</h3>
         </div>
       )
     },
@@ -96,7 +113,7 @@ export const columns: ColumnDef<CountyDataProps>[] = [
       const updatedAt = row.getValue('updatedAt')
       return (
         <div className="flex items-center justify-center">
-          <div className="flex items-center justify-center rounded-lg bg-primary-dark-200 text-xs px-2 py-1 text-white shadow-lg">
+          <div className="flex items-center justify-center rounded-lg bg-primary-dark-200 px-2 py-1 text-xs text-white shadow-lg">
             <p>
               {format(new Date(updatedAt as string), 'MM/dd/yyyy HH:mm:ss', {
                 locale: enGB,
@@ -115,10 +132,12 @@ export const columns: ColumnDef<CountyDataProps>[] = [
       const handleEdit = useCallback((row: Row<CountyDataProps>) => {
         const county = row.original
         dispatch(setCounty(county))
-        dispatch(setOpenModal(true))
+        dispatch(setOpenEditModal(true))
       }, [])
       const handleDelete = useCallback((row: Row<CountyDataProps>) => {
         const county = row.original
+        dispatch(setCounty(county))
+        dispatch(setOpenDeleteModal(true))
       }, [])
 
       return (

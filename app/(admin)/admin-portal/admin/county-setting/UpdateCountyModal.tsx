@@ -4,17 +4,19 @@ import { Modal } from '@mantine/core'
 import { CountyDataProps } from '@lib/types'
 import { UpdateCountyForm } from 'app/components/forms'
 
-const UpdateCountyModal = ({
-  open,
-  refetch,
-  county,
-  handleModalClose,
-}: {
+type Props = {
   open: boolean
   refetch: () => void
   county: CountyDataProps
   handleModalClose: () => void
-}) => {
+}
+
+export function UpdateCountyModal({
+  open,
+  refetch,
+  county,
+  handleModalClose,
+}: Props) {
   return (
     <Modal
       size="lg"
@@ -31,4 +33,3 @@ const UpdateCountyModal = ({
   )
 }
 
-export default UpdateCountyModal

@@ -5,7 +5,7 @@ import { ComponentShield } from 'app/components/NextShield'
 import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
 import PortalHeader from 'app/components/PortalHeader'
 import { CurrentUser } from '@lib/types'
-import { SectionsSettings } from 'app/components/SettingsSections'
+import { SectionsSettings } from './SectionSettings'
 
 import Header from 'app/components/Header'
 

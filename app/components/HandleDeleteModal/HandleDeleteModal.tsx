@@ -1,6 +1,6 @@
 'use client'
 import { Modal, Button } from '@mantine/core'
-import { setOpenModal } from 'app/global-state/features/editor/editorSlice'
+import { setOpenDeleteModal } from 'app/global-state/features/editor/editorSlice'
 import { useAppDispatch } from 'app/global-state/hooks'
 
 const HandleDeleteModal = ({
@@ -22,7 +22,7 @@ const HandleDeleteModal = ({
       centered
       size="sm"
       opened={open}
-      onClose={() => dispatch(setOpenModal(false))}
+      onClose={() => dispatch(setOpenDeleteModal(false))}
       title="Confirm Delete"
       closeOnClickOutside={false}
     >
@@ -35,7 +35,7 @@ const HandleDeleteModal = ({
             type="button"
             variant="outline"
             className="font-medium hover:bg-blue-500 hover:text-white "
-            onClick={() => dispatch(setOpenModal(false))}
+            onClick={() => dispatch(setOpenDeleteModal(false))}
           >
             Cancel
           </Button>

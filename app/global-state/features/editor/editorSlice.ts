@@ -23,7 +23,10 @@ interface IEditorState {
   districtSection: Partial<DistrictSectionProps> | null
   economicData: Partial<EconomicDataWidgetProps> | null
   sdData: Partial<SourceDataProps> | null
-  openModal: boolean
+  openEditModal: boolean
+  openDeleteModal: boolean
+  openLASectionModal: boolean
+  openSubSectionModal: boolean
   message: string
   sectionType: string
   error: Error | null
@@ -40,7 +43,10 @@ export const initialState: IEditorState = {
   economicData: null,
   sdData: null,
   sectionType: 'Section',
-  openModal: false,
+  openEditModal: false,
+  openDeleteModal: false,
+  openLASectionModal: false,
+  openSubSectionModal: false,
   message: '',
   error: { message: 'An Error occurred' },
 }
@@ -97,8 +103,17 @@ const editorSlice = createSlice({
     ) => {
       state.sectionType = payload
     },
-    setOpenModal: (state, { payload }: PayloadAction<boolean>) => {
-      state.openModal = payload
+    setOpenEditModal: (state, { payload }: PayloadAction<boolean>) => {
+      state.openEditModal = payload
+    },
+    setOpenDeleteModal: (state, { payload }: PayloadAction<boolean>) => {
+      state.openDeleteModal = payload
+    },
+    setOpenLASectionModal: (state, { payload }: PayloadAction<boolean>) => {
+      state.openLASectionModal = payload
+    },
+    setOpenSubSectionModal: (state, { payload }: PayloadAction<boolean>) => {
+      state.openSubSectionModal = payload
     },
     setError: (state, { payload }: PayloadAction<Error>) => {
       state.error = payload
@@ -120,7 +135,10 @@ export const {
   setEconomicData,
   setSDData,
   setSectionType,
-  setOpenModal,
+  setOpenEditModal,
+  setOpenDeleteModal,
+  setOpenLASectionModal,
+  setOpenSubSectionModal,
 } = editorSlice.actions
 export const editorSelector = (state: RootState) => state.editor
 export default editorSlice.reducer

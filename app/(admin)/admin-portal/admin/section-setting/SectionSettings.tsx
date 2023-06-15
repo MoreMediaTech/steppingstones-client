@@ -11,7 +11,7 @@ import { SectionProps } from '@lib/types'
 import SectionsTable from './SectionsTable'
 import UpdateSectionModal from './UpdateSectionModal'
 
-const SectionsSettings = () => {
+export function SectionsSettings (){
   const {
     data: sectionData,
     isLoading: isLoadingSections,

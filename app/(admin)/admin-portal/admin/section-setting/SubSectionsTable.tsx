@@ -18,21 +18,17 @@ import {
   setSectionType,
   editorSelector,
 } from 'app/global-state/features/editor/editorSlice'
-import HandleDeleteModal from '../../HandleDeleteModal/HandleDeleteModal'
+import HandleDeleteModal from '../../../../components/HandleDeleteModal/HandleDeleteModal'
 import UpdateSectionModal from './UpdateSectionModal'
 
 const SubSectionsTable = ({
   sectionName,
   sectionId,
-  openSubSectionModal,
-  setOpenSubSectionModal,
   handleModalClose,
   refetch,
 }: {
   sectionName: string
   sectionId: string
-  openSubSectionModal: boolean
-  setOpenSubSectionModal: React.Dispatch<React.SetStateAction<boolean>>
   handleModalClose: () => void
   refetch: () => void
 }) => {
@@ -44,7 +40,7 @@ const SubSectionsTable = ({
   const [checked, setChecked] = useState<boolean>(false)
   const [selectedSectionIds, setSelectedSectionIds] = useState<string[]>([])
 
-  const { sectionType } = useAppSelector(editorSelector)
+  const { sectionType, openSubSectionModal } = useAppSelector(editorSelector)
   const {
     data: subSectionData,
     isLoading: isLoadingSubSections,
@@ -180,7 +176,7 @@ const SubSectionsTable = ({
             </div>
             <div className="overflow-x-auto">
               <table className="relative table w-full  text-center text-sm text-gray-500">
-                <thead className="bg-slate-200 dark:bg-slate-600 text-xs uppercase text-gray-700 dark:text-gray-200">
+                <thead className="bg-slate-200 text-xs uppercase text-gray-700 dark:bg-slate-600 dark:text-gray-200">
                   <tr>
                     <th scope="col" className="p-4"></th>
                     <th scope="col" className="px-6 py-3 text-left">
@@ -321,7 +317,7 @@ const SubSectionsTable = ({
           open={openModal}
           data={subSection as SubSectionProps}
           deleteHandler={deleteHandler}
-          setOpenModal={setOpenModal}
+
           isLoading={isLoading}
         />
       )}
