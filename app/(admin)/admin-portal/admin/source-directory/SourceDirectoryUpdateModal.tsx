@@ -3,34 +3,37 @@ import React from 'react'
 import { Modal } from '@mantine/core'
 import { useTheme } from 'next-themes'
 
-import SourceDirectoryForm from 'app/components/forms/SourceDirectoryForm'
-import { IFormDataProps } from '.'
+import { SourceDirectoryForm } from 'app/(admin)/admin-portal/admin/source-directory/SourceDirectoryForm'
+import { useAppDispatch, useAppSelector } from 'app/global-state/hooks'
+import {
+  setType,
+  editorSelector,
+  setOpenEditModal,
+} from 'app/global-state/features/editor/editorSlice'
 
 const SourceDirectoryUpdateModal = ({
-  open,
-  action,
   types,
-  data,
   refetch,
-  handleModalClose,
 }: {
-  action: string
-  open: boolean
   types: string[]
-  data: IFormDataProps
   refetch: () => void
-  handleModalClose: () => void
 }) => {
-  const { theme } = useTheme()
+  const dispatch = useAppDispatch()
+  const { openEditModal, type } = useAppSelector(editorSelector)
+
+  const handleModalClose = React.useCallback(() => {
+    dispatch(setOpenEditModal(false))
+    dispatch(setType('Create'))
+  }, [])
 
   return (
     <Modal
       size="50%"
       centered
-      opened={open}
+      opened={openEditModal}
       onClose={handleModalClose}
       title={
-        action === 'CREATE' ? (
+        type === 'Create' ? (
           <h3 className="mb-4 text-xl font-semibold  capitalize text-gray-900 dark:text-gray-200">
             Create Source Directory
           </h3>
@@ -42,10 +45,9 @@ const SourceDirectoryUpdateModal = ({
       }
     >
       <SourceDirectoryForm
-        currentSDData={data}
         types={types}
         refetch={refetch}
-        action={action}
+        action={type}
         handleClose={handleModalClose}
       />
     </Modal>

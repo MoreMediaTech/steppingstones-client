@@ -5,31 +5,32 @@ import { useTheme } from 'next-themes'
 
 import FormRowSelect from 'app/components/forms/FormComponents/FormRowSelect'
 import FormInput from 'app/components/forms/FormComponents/FormInput'
-import { IFormDataProps } from '../SourceDirectory'
+import { IFormDataProps } from './SourceDirectory'
 import Button from 'app/components/Button'
-import FormCheckbox from './FormComponents/FormCheckBox'
+import FormCheckbox from '../../../../components/forms/FormComponents/FormCheckBox'
 import {
   useCreateSDDataMutation,
   useUpdateSDDataMutation,
 } from 'app/global-state/features/editor/editorApiSlice'
+import { useAppSelector } from 'app/global-state/hooks'
+import { editorSelector } from 'app/global-state/features/editor/editorSlice'
 import { showNotification } from '@mantine/notifications'
 import { SourceDirectoryType } from '@lib/types'
 
 interface ISearchFormProps {
   action: string
   types: string[]
-  currentSDData?: IFormDataProps
   refetch: () => void
   handleClose: () => void
 }
 
-const SourceDirectoryForm = ({
+export function SourceDirectoryForm({
   action,
   types,
-  currentSDData,
   refetch,
   handleClose,
-}: ISearchFormProps) => {
+}: ISearchFormProps) {
+  const { sdData } = useAppSelector(editorSelector)
   const { resolvedTheme } = useTheme()
   const [createSDData, { isLoading: isCreating }] = useCreateSDDataMutation()
   const [updateSDData, { isLoading: isUpdating }] = useUpdateSDDataMutation()
@@ -42,7 +43,7 @@ const SourceDirectoryForm = ({
   } = useForm<IFormDataProps>()
 
   useEffect(() => {
-    if (action === 'CREATE') {
+    if (action === 'Create') {
       reset({
         type: SourceDirectoryType.BSI,
         category: '',
@@ -51,9 +52,13 @@ const SourceDirectoryForm = ({
         canEmail: false,
       })
     }
-    if (action === 'UPDATE') {
+    if (action === 'Update') {
       reset({
-        ...currentSDData,
+        type: sdData?.type,
+        category: sdData?.category,
+        description: sdData?.description,
+        webLink: sdData?.webLink,
+        canEmail: sdData?.canEmail,
       })
     }
   }, [action])
@@ -62,10 +67,10 @@ const SourceDirectoryForm = ({
     async (data) => {
       try {
         let response
-        if (action === 'CREATE') {
+        if (action === 'Create') {
           response = await createSDData(data).unwrap()
-        } else if (action === 'UPDATE') {
-          const updatedData = { id: currentSDData?.id, ...data }
+        } else if (action === 'Update') {
+          const updatedData = { id: sdData?.id, ...data }
           response = await updateSDData(updatedData).unwrap()
         }
         refetch()
@@ -89,7 +94,7 @@ const SourceDirectoryForm = ({
 
   return (
     <form onSubmit={handleSubmit(submitHandler)}>
-      <div className="relative mx-2  mt-5 w-full bg-slate-100 p-2 font-poppins dark:bg-gray-900 md:mx-auto md:p-4">
+      <div className="relative mx-2  mt-5 w-full p-2 font-poppins md:mx-auto md:p-4">
         <div className="grid grid-cols-1 gap-2">
           <FormRowSelect
             label="Source Type"
@@ -147,5 +152,3 @@ const SourceDirectoryForm = ({
     </form>
   )
 }
-
-export default SourceDirectoryForm

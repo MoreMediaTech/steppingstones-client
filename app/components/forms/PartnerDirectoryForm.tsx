@@ -11,9 +11,8 @@ import {
 import { useTheme } from 'next-themes'
 
 import { IFormData } from '@lib/types'
-import { useAppSelector, useAppDispatch } from 'app/global-state/hooks'
 import FormInput from './FormComponents/FormInput'
-import { partnerSelector } from 'app/global-state/features/partner/partnerSlice'
+
 
 interface IPartnerDirectoryFormProps {
   errors: FieldErrorsImpl<DeepRequired<IFormData>>
@@ -32,7 +31,7 @@ const PartnerDirectoryForm = ({
   submitHandler,
 }: IPartnerDirectoryFormProps) => {
   const { resolvedTheme } = useTheme()
-  const { type } = useAppSelector(partnerSelector)
+
   return (
     <form
       aria-label="update-user-form"

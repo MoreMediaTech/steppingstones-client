@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { AxiosError } from 'axios'
 
 import {
   DistrictDataProps,
@@ -9,6 +8,7 @@ import {
   SubSectionProps,
   SubSubSectionProps,
   SourceDataProps,
+  PartnerData,
 } from '../../../../lib/types'
 import { RootState } from 'app/global-state/store'
 import { CountyDataProps, Error } from '@lib/types'
@@ -23,10 +23,12 @@ interface IEditorState {
   districtSection: Partial<DistrictSectionProps> | null
   economicData: Partial<EconomicDataWidgetProps> | null
   sdData: Partial<SourceDataProps> | null
+  partner: Partial<PartnerData> | null
   openEditModal: boolean
   openDeleteModal: boolean
   openLASectionModal: boolean
   openSubSectionModal: boolean
+  type: 'Create' | 'Update'
   message: string
   sectionType: string
   error: Error | null
@@ -42,11 +44,13 @@ export const initialState: IEditorState = {
   districtSection: null,
   economicData: null,
   sdData: null,
+  partner: null,
   sectionType: 'Section',
   openEditModal: false,
   openDeleteModal: false,
   openLASectionModal: false,
   openSubSectionModal: false,
+  type: 'Create',
   message: '',
   error: { message: 'An Error occurred' },
 }
@@ -97,6 +101,12 @@ const editorSlice = createSlice({
     setSDData: (state, { payload }: PayloadAction<SourceDataProps | null>) => {
       state.sdData = payload
     },
+    setPartner: (
+      state,
+      { payload }: PayloadAction<PartnerData | null>
+    ) => {
+      state.partner = payload
+    },
     setSectionType: (
       state,
       { payload }: PayloadAction<'Section' | 'SubSection'>
@@ -114,6 +124,9 @@ const editorSlice = createSlice({
     },
     setOpenSubSectionModal: (state, { payload }: PayloadAction<boolean>) => {
       state.openSubSectionModal = payload
+    },
+    setType: (state, { payload }: PayloadAction<'Create' | 'Update'>) => {
+      state.type = payload
     },
     setError: (state, { payload }: PayloadAction<Error>) => {
       state.error = payload
@@ -134,11 +147,13 @@ export const {
   setDistrictSection,
   setEconomicData,
   setSDData,
+  setPartner,
   setSectionType,
   setOpenEditModal,
   setOpenDeleteModal,
   setOpenLASectionModal,
   setOpenSubSectionModal,
+  setType,
 } = editorSlice.actions
 export const editorSelector = (state: RootState) => state.editor
 export default editorSlice.reducer

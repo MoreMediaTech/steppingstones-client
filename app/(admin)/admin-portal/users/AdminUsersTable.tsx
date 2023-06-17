@@ -1,4 +1,3 @@
-
 import { CurrentUser } from '@lib/types'
 import { columns } from './table-columns'
 import { DataTable } from '@components/table/data-table'
@@ -14,7 +13,7 @@ const AdminUsersTable = ({
 }) => {
   return (
     <>
-      <DataTable columns={columns} data={users} name='name' />
+      <DataTable columns={columns} data={users} name="name" />
     </>
   )
 }

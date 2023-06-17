@@ -10,8 +10,7 @@ import {
   useGetMessageByIdQuery,
   useDeleteMailByIdMutation,
 } from 'app/global-state/features/messages/messagesApiSlice'
-import { Loader } from '@mantine/core'
-import { showNotification } from '@mantine/notifications'
+import { showNotification, Loader } from '@components/mantine-components'
 import useWindowSize from '@hooks/useWindowSize'
 import { useAppDispatch, useAppSelector } from 'app/global-state/hooks'
 import {
@@ -21,7 +20,7 @@ import {
 import { MessageProps } from '@lib/types'
 import MessageReplyForm from './MessageReplyForm'
 
-const MessagePreviewSection = ({ messageId }: { messageId: string }) => {
+export function MessagePreviewSection({ messageId }: { messageId: string }) {
   const router = useRouter()
   const dispatch = useAppDispatch()
   const {
@@ -158,5 +157,3 @@ const MessagePreviewSection = ({ messageId }: { messageId: string }) => {
     </>
   )
 }
-
-export default MessagePreviewSection

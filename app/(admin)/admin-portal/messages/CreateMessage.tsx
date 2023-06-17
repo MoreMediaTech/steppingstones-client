@@ -6,19 +6,19 @@ import { showNotification } from '@mantine/notifications'
 
 // components
 import FormInput from 'app/components/forms/FormComponents/FormInput'
-import { FormInputs } from './MessageReplyForm'
+import { FormInputs } from './[id]/MessageReplyForm'
 import AutoComplete from './AutoComplete'
 import FormRowSelect from 'app/components/forms/FormComponents/FormRowSelect'
 
 // redux
-import { useGetUsersQuery } from '../../global-state/features/user/usersApiSlice'
+import { useGetUsersQuery } from '../../../global-state/features/user/usersApiSlice'
 import {
   useSendEmailMutation,
   useSendInAppMsgMutation,
-} from '../../global-state/features/messages/messagesApiSlice'
+} from '../../../global-state/features/messages/messagesApiSlice'
 
 // hooks
-import { useAuthUser } from '../../../hooks/useAuthUser'
+import { useAuthUser } from '../../../../hooks/useAuthUser'
 
 type Props = {
   opened: boolean

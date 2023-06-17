@@ -1,7 +1,12 @@
 'use client'
 import React, { useCallback, useState } from 'react'
-import { Loader, Tabs, Text, Box } from '@mantine/core'
-import { showNotification } from '@mantine/notifications'
+import {
+  Loader,
+  Tabs,
+  Text,
+  Box,
+  showNotification,
+} from '@components/mantine-components'
 import { MdEmail } from 'react-icons/md'
 import { SiMinutemailer } from 'react-icons/si'
 import { useMediaQuery } from '@mantine/hooks'
@@ -11,10 +16,11 @@ import {
   useDeleteManyMailMutation,
   useGetAllMsgSentByUserQuery,
 } from 'app/global-state/features/messages/messagesApiSlice'
-import MessagesTable from './MessagesTable'
 import { MessageProps } from '@lib/types'
+import { DataTable } from '@components/table/data-table'
+import { columns } from './table-column'
 
-const MessagesSection = () => {
+export function MessagesSection() {
   const matches = useMediaQuery('(max-width: 900px)', true, {
     getInitialValueInEffect: false,
   })
@@ -111,17 +117,10 @@ const MessagesSection = () => {
               marginLeft: '1rem',
             }}
           >
-            <MessagesTable
-              messages={
-                searchResults.length > 0
-                  ? searchResults
-                  : (messages as MessageProps[])
-              }
-              checked={checked}
-              selectedMessageId={selectedMessageId}
-              handleSearch={handleSearch}
-              handleSelect={handleSelect}
-              handleDeleteMany={handleDeleteMany}
+            <DataTable
+              columns={columns}
+              data={messages as MessageProps[]}
+              name={'from' || 'subject'}
             />
           </Box>
         </Tabs.Panel>
@@ -132,14 +131,12 @@ const MessagesSection = () => {
               marginLeft: '1rem',
             }}
           >
-            <MessagesTable
-              messages={sentMessages as MessageProps[]}
-              checked={checked}
-              selectedMessageId={selectedMessageId}
-              handleSearch={handleSearch}
-              handleSelect={handleSelect}
-              handleDeleteMany={handleDeleteMany}
+            <DataTable
+              columns={columns}
+              data={sentMessages as MessageProps[]}
+              name={'from' || 'subject'}
             />
+
           </Box>
         </Tabs.Panel>
       </Tabs>

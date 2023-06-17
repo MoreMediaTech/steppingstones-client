@@ -3,21 +3,20 @@ import { useCallback } from 'react'
 import { ColumnDef, Row } from '@tanstack/react-table'
 import { FaCheck, FaTimes } from 'react-icons/fa'
 import { ArrowUpDown } from 'lucide-react'
-import { format } from 'date-fns'
-import { enGB } from 'date-fns/locale'
 
-import { SubSectionProps } from '@lib/types'
+import { SourceDataProps } from '@lib/types'
 import { Button } from '@components/ui/button'
 import { Checkbox } from '@components/ui/checkbox'
-import { SecondaryDataTableRowActions } from '@components/table/data-table-row-actions'
+import { DataTableRowActions } from '@components/table/data-table-row-actions'
 import { useAppDispatch } from 'app/global-state/hooks'
 import {
-  setSubSection,
+  setSDData,
   setOpenEditModal,
   setOpenDeleteModal,
+  setType
 } from 'app/global-state/features/editor/editorSlice'
 
-export const columns: ColumnDef<SubSectionProps>[] = [
+export const columns: ColumnDef<SourceDataProps>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -40,7 +39,7 @@ export const columns: ColumnDef<SubSectionProps>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'name',
+    accessorKey: 'description',
     header: ({ column }) => {
       return (
         <div className="flex items-center justify-start">
@@ -48,16 +47,47 @@ export const columns: ColumnDef<SubSectionProps>[] = [
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           >
-            Name
+            Description
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         </div>
       )
     },
   },
-
   {
-    accessorKey: 'isLive',
+    accessorKey: 'webLink',
+    header: ({ column }) => {
+      return (
+        <div className="flex items-center justify-start">
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          >
+            Web-Link
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+      )
+    },
+  },
+  {
+    accessorKey: 'category',
+    header: ({ column }) => {
+      return (
+        <div className="flex items-center justify-start">
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          >
+            Category
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+      )
+    },
+  },
+  {
+    accessorKey: 'canEmail',
     header: ({ column }) => {
       return (
         <div className="flex items-center justify-center">
@@ -65,73 +95,21 @@ export const columns: ColumnDef<SubSectionProps>[] = [
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           >
-            Live
+            Email Alerts
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         </div>
       )
     },
     cell: ({ row }) => {
-      const isLive = row.getValue('isLive')
+      const canEmail = row.getValue('canEmail')
       return (
         <div className="flex items-center justify-center">
-          {isLive ? (
+          {canEmail ? (
             <FaCheck className="text-green-400" />
           ) : (
             <FaTimes className="text-red-500" />
           )}
-        </div>
-      )
-    },
-  },
-  {
-    accessorKey: 'isSubSubSection',
-    header: ({ column }) => {
-      return (
-        <div className="flex items-center justify-center">
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          >
-            Sub Section
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        </div>
-      )
-    },
-    cell: ({ row }) => {
-      const isSubSubSection = row.getValue('isSubSubSection')
-      return (
-        <div className="flex items-center justify-center">
-          {isSubSubSection ? (
-            <FaCheck className="text-green-400" />
-          ) : (
-            <FaTimes className="text-red-500" />
-          )}
-        </div>
-      )
-    },
-  },
-  {
-    accessorKey: 'updatedAt',
-    header: ({ column }) => {
-      return (
-        <div className="flex items-center justify-center">
-          <h3>Last Updated</h3>
-        </div>
-      )
-    },
-    cell: ({ row }) => {
-      const updatedAt = row.getValue('updatedAt')
-      return (
-        <div className="flex items-center justify-center">
-          <div className="flex items-center justify-center rounded-lg bg-primary-dark-200 px-2 py-1 text-xs text-white shadow-lg">
-            <p>
-              {format(new Date(updatedAt as string), 'MM/dd/yyyy HH:mm:ss', {
-                locale: enGB,
-              })}
-            </p>
-          </div>
         </div>
       )
     },
@@ -141,19 +119,21 @@ export const columns: ColumnDef<SubSectionProps>[] = [
     cell: ({ row }) => {
       const dispatch = useAppDispatch()
 
-      const handleEdit = useCallback((row: Row<SubSectionProps>) => {
-        const section = row.original
-        dispatch(setSubSection(section))
+      const handleEdit = useCallback((row: Row<SourceDataProps>) => {
+        const source = row.original
+        dispatch(setSDData(source))
         dispatch(setOpenEditModal(true))
+        dispatch(setType('Update'))
+
       }, [])
-      const handleDelete = useCallback((row: Row<SubSectionProps>) => {
-        const section = row.original
-        dispatch(setSubSection(section))
+      const handleDelete = useCallback((row: Row<SourceDataProps>) => {
+        const source = row.original
+        dispatch(setSDData(source))
         dispatch(setOpenDeleteModal(true))
       }, [])
 
       return (
-        <SecondaryDataTableRowActions
+        <DataTableRowActions
           row={row}
           enableEdit
           enableDelete

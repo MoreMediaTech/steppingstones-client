@@ -1,6 +1,6 @@
 'use client'
 import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
-import { MessagePreviewSection } from 'app/components/MessagesSection'
+import { MessagePreviewSection } from './MessagePreviewSection'
 import PortalHeader from 'app/components/PortalHeader'
 import { CurrentUser } from '@lib/types'
 

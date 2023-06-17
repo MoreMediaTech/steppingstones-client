@@ -12,12 +12,11 @@ import {
 } from 'app/global-state/features/global/globalSlice'
 import { userSelector, setUser } from 'app/global-state/features/user/userSlice'
 
-const AdminUsersSection = () => {
+export function AdminUsersSection(){
   const dispatch = useAppDispatch()
   const { data: users, isLoading, refetch } = useGetUsersQuery()
   const { openModal } = useAppSelector(globalSelector)
   const { user: currentUser } = useAppSelector(userSelector)
-
 
   const handleModalClose = () => {
     dispatch(setOpenModal(false))
@@ -47,4 +46,3 @@ const AdminUsersSection = () => {
   )
 }
 
-export default AdminUsersSection

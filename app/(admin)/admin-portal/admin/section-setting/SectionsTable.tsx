@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useCallback, MouseEventHandler } from 'react'
+import React, { useState, useCallback } from 'react'
 import { showNotification } from '@components/mantine-components'
 
 import { SectionProps } from '@lib/types'
@@ -11,40 +11,23 @@ import SubSectionsTable from './SubSectionsTable'
 
 import { DataTable } from '@components/table/data-table'
 import { columns } from './table-column'
-import { setSection, setOpenSubSectionModal, editorSelector } from 'app/global-state/features/editor/editorSlice'
+import {
+  setSection,
+  setOpenSubSectionModal,
+  editorSelector,
+} from 'app/global-state/features/editor/editorSlice'
 
 interface ISectionsTableProps {
-  type: 'Section' | 'SubSection'
   sectionsData: SectionProps[]
-  checked: boolean
-  selectedSectionIds: string[]
-  setType: React.Dispatch<React.SetStateAction<'Section' | 'SubSection'>>
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
-  setSection: React.Dispatch<React.SetStateAction<SectionProps | null>>
   refetch: () => void
-  handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void
-  handleSelect: (e: React.ChangeEvent<HTMLInputElement>) => void
-  handleDeleteMany: () => void
 }
 
-
-
-const SectionsTable = ({
-  sectionsData,
-  type,
-  setType,
-  setOpen,
-  checked,
-  refetch,
-  handleSearch,
-  handleSelect,
-  handleDeleteMany,
-  selectedSectionIds,
-}: ISectionsTableProps) => {
+export function SectionsTable({ sectionsData, refetch }: ISectionsTableProps) {
   const dispatch = useAppDispatch()
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [deleteSectionById, { isLoading }] = useDeleteSectionByIdMutation()
-  const { section, openSubSectionModal, openDeleteModal } = useAppSelector(editorSelector)
+  const { section, openSubSectionModal, openDeleteModal } =
+    useAppSelector(editorSelector)
 
   const handleModalClose = () => {
     dispatch(setOpenSubSectionModal(false))
@@ -72,8 +55,8 @@ const SectionsTable = ({
 
   return (
     <>
-    <DataTable columns={columns} data={sectionsData} name="name" />
-      
+      <DataTable columns={columns} data={sectionsData} name="name" />
+
       {openSubSectionModal && (
         <SubSectionsTable
           sectionId={section?.id as string}
