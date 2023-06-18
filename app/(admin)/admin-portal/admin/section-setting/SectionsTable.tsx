@@ -20,9 +20,14 @@ import {
 interface ISectionsTableProps {
   sectionsData: SectionProps[]
   refetch: () => void
+  handleDeleteMany?: (rows: SectionProps[]) => void
 }
 
-export function SectionsTable({ sectionsData, refetch }: ISectionsTableProps) {
+export function SectionsTable({
+  sectionsData,
+  refetch,
+  handleDeleteMany,
+}: ISectionsTableProps) {
   const dispatch = useAppDispatch()
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [deleteSectionById, { isLoading }] = useDeleteSectionByIdMutation()
@@ -55,7 +60,12 @@ export function SectionsTable({ sectionsData, refetch }: ISectionsTableProps) {
 
   return (
     <>
-      <DataTable columns={columns} data={sectionsData} name="name" />
+      <DataTable
+        columns={columns}
+        data={sectionsData}
+        name="name"
+        handleDeleteManyById={handleDeleteMany}
+      />
 
       {openSubSectionModal && (
         <SubSectionsTable

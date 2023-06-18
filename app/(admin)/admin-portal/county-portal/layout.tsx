@@ -1,9 +1,14 @@
 import React from 'react'
+import { CountyPortalLayoutWrapper } from './county-portal-layout-wrapper'
 
-export default function CountyPortalLayout({ children }: { children: React.ReactNode}) {
+export default function CountyPortalLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
-    <section>
-        {children}
-    </section>
+    <>
+      <CountyPortalLayoutWrapper>{children}</CountyPortalLayoutWrapper>
+    </>
   )
 }

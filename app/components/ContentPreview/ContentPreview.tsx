@@ -12,8 +12,8 @@ type ContentPreviewProps = {
 const ContentPreview = ({ content }: ContentPreviewProps) => {
   return (
     <div className="w-full  overflow-auto py-2">
-      <div className="space-y-6 border border-gray-800 dark:border-gray-200 p-1 md:p-4">
-        <div className="mb-2 pl-4 text-base md:text-2xl font-semibold capitalize text-gray-900 dark:text-gray-200 ">
+      <div className="space-y-2 border rounded-md border-gray-800 dark:border-gray-200 p-2 md:p-4">
+        <div className=" pl-4 text-base md:text-2xl font-semibold capitalize text-gray-900 dark:text-gray-200 ">
           <h1>{content?.title ? content.title : 'Create New Content'}</h1>
         </div>
         {!!content?.imageUrl && (

@@ -1,8 +1,10 @@
 'use client'
-import { Loader } from '@components/mantine-components'
+import React from 'react'
+import { Loader, showNotification } from '@components/mantine-components'
 
 import {
   useGetSectionsQuery,
+  useDeleteManySectionsMutation
 } from 'app/global-state/features/editor/editorApiSlice'
 import { SectionProps } from '@lib/types'
 import SectionsTable from './SectionsTable'
@@ -17,6 +19,7 @@ export function SectionsSettings() {
     isLoading: isLoadingSections,
     refetch: refetchSections,
   } = useGetSectionsQuery()
+  const [deleteManySections] = useDeleteManySectionsMutation()
   const { openEditModal, section } = useAppSelector(editorSelector)
 
   const handleModalClose = () => {
@@ -25,27 +28,27 @@ export function SectionsSettings() {
   }
 
 
-  // const handleDeleteMany = useCallback(async () => {
-  //   try {
-  //     const response = await deleteManySections(selectedSectionIds).unwrap()
-  //     if (response.success) {
-  //       showNotification({
-  //         message: 'Successfully deleted Partner Directory entries',
-  //         color: 'success',
-  //         autoClose: 3000,
-  //       })
-  //       refetchSections()
-  //       setChecked(false)
-  //       setSelectedSectionIds([])
-  //     }
-  //   } catch (error) {
-  //     showNotification({
-  //       message: 'Error deleting Partner Directory Data',
-  //       color: 'error',
-  //       autoClose: 3000,
-  //     })
-  //   }
-  // }, [checked, selectedSectionIds])
+  const handleDeleteMany = React.useCallback(async (rows: SectionProps[]) => {
+    const selectedSectionIds = rows.map((row) => row.id)
+    try {
+      const response = await deleteManySections(selectedSectionIds).unwrap()
+      if (response.success) {
+        showNotification({
+          message: 'Successfully deleted Partner Directory entries',
+          color: 'success',
+          autoClose: 3000,
+        })
+        refetchSections()
+
+      }
+    } catch (error) {
+      showNotification({
+        message: 'Error deleting Partner Directory Data',
+        color: 'error',
+        autoClose: 3000,
+      })
+    }
+  }, [])
 
   if (isLoadingSections) {
     return (

@@ -1,9 +1,8 @@
 'use client'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Loader } from '@components/mantine-components'
 
-import PortalHeader from 'app/components/PortalHeader'
+import { Loader } from '@components/mantine-components'
 import SectionContainer from 'app/(admin)/admin-portal/county-portal/[county]/section/section-container'
 import EconomicDataSection from 'app/components/EconomicDataSection'
 import { CreateSectionForm } from 'app/components/forms'
@@ -15,6 +14,7 @@ import {
   useUpdateDistrictSectionByIdMutation,
 } from 'app/global-state/features/editor/editorApiSlice'
 import Button from 'app/components/Button'
+import Header from '@components/Header'
 
 type Props = {
   id: string
@@ -43,9 +43,6 @@ export default function District({
   })
 
   const [openAddSectionModal, setAddOpenSectionModal] = useState<boolean>(false)
-  const [checked, setChecked] = useState<boolean>(
-    laSectionData?.isLive as boolean
-  )
   const [opened, setOpened] = useState(false)
   const [type, setType] = useState<'create' | 'edit'>('create')
   const [createSubSection, { isLoading: isLoadingCreate }] =
@@ -55,16 +52,10 @@ export default function District({
 
   return (
     <>
-      <section className="h-screen overflow-auto">
-        <PortalHeader
-          title={`${laSectionData?.name ?? 'LA'} ${
-            laSectionData?.name ?? 'Section'
-          }`}
-          subTitle="Review or edit the content below"
-          data={laSectionData}
-        />
+
         <section className="px-2 py-2 sm:px-0 sm:max-w-screen-md mx-auto">
-          <div className="flex justify-between">
+          <div className="flex flex-col sm:flex-row items-center justify-between">
+            <Header title={laSectionData?.name as string} order={1} />
             <Button
               type="button"
               color="outline"
@@ -138,7 +129,6 @@ export default function District({
             </section>
           )}
         </section>
-      </section>
       <CreateSectionForm
         opened={openAddSectionModal}
         setOpened={setAddOpenSectionModal}

@@ -1,9 +1,15 @@
 'use client'
-import React from 'react'
-import { Box, Container, Loader, SimpleGrid, Tabs, Text } from '@mantine/core'
-import { DataGrid } from '@mui/x-data-grid'
+import React, { Suspense } from 'react'
+import {
+  Box,
+  Container,
+  Loader,
+  SimpleGrid,
+  Tabs,
+  Text,
+} from '@components/mantine-components'
+
 import { FaUsers } from 'react-icons/fa'
-import { useTheme } from 'next-themes'
 import { FcSalesPerformance, FcFactoryBreakdown } from 'react-icons/fc'
 
 // redux
@@ -13,8 +19,8 @@ import PerformanceChart from './PerformanceChart'
 import Header from 'app/components/Header'
 import StatsItem, { DefaultStatsProps } from './StatsItem'
 import BreakdownChart from './BreakdownChart'
-import { themeSettings } from '../../../constants/styles'
-import { PaletteMode } from '@lib/types'
+import { columns } from './table-column'
+import { DataTable } from '@components/table/data-table'
 
 const defaultStats = (stats: any): DefaultStatsProps[] => {
   return [
@@ -53,10 +59,9 @@ const defaultStats = (stats: any): DefaultStatsProps[] => {
   ]
 }
 
-function RenderInsights() {
+export function RenderInsights() {
   const { data: analytics, isLoading } = useGetAnalyticsQuery()
-  const { theme: mode } = useTheme()
-  const theme = themeSettings(mode as PaletteMode)
+  console.log(analytics?.averageLoadTimesByDay)
   // add color scheme to bar in Performance Chart
   const performanceChartData = analytics?.averageLoadTimesByDay.map(
     (item: any) => {
@@ -73,13 +78,6 @@ function RenderInsights() {
     totalNumberUsers: analytics?.totalNumberUsers,
     totalNumberUsersEmailVerified: analytics?.totalNumberUsersEmailVerified,
   }
-
-  const columns = [
-    { field: 'id', headerName: 'ID', flex: 1 },
-    { field: 'name', headerName: 'Name', flex: 1 },
-    { field: 'date', headerName: 'Date Viewed', flex: 0.5 },
-    { field: 'timesViewed', headerName: '# of Views', flex: 0.4 },
-  ]
 
   if (isLoading) {
     return (
@@ -202,64 +200,16 @@ function RenderInsights() {
                 cols={1}
                 breakpoints={[{ maxWidth: 980, cols: 1, spacing: 'md' }]}
               >
-                <BreakdownChart data={analytics.topFiveViewedScreensByDay} />
-                <Box
-                  sx={{
-                    '& .MuiDataGrid-root': {
-                      border: 'none',
-                      color: `${theme.palette.secondary?.[200]} !important`,
-                    },
-                    '& .MuiDataGrid-cell': {
-                      borderBottom: 'none',
-                    },
-                    '& .MuiDataGrid-columnHeaders': {
-                      backgroundColor: theme.palette.background?.alt,
-                      color: theme.palette.secondary?.[100],
-                      borderBottom: 'none',
-                    },
-                    '& .MuiDataGrid-virtualScroller': {
-                      backgroundColor: theme.palette.background?.alt,
-                    },
-                    '& .MuiDataGrid-footerContainer': {
-                      backgroundColor: theme.palette.background?.alt,
-                      color: theme.palette.secondary?.[100],
-                      borderTop: 'none',
-                    },
-                    '& .MuiDataGrid-toolbarContainer .MuiButton-text': {
-                      color: `${theme.palette.secondary?.[200]} !important`,
-                    },
-                    '& .MuiTablePagination-selectLabel': {
-                      color: `${theme.palette.secondary?.[200]} !important`,
-                    },
-                    '& .MuiInputBase-input': {
-                      color: `${theme.palette.secondary?.[200]} !important`,
-                    },
-                    '& .MuiSelect-icon': {
-                      color: `${theme.palette.secondary?.[200]} !important`,
-                    },
-                    '& .MuiTablePagination-displayedRows': {
-                      color: `${theme.palette.secondary?.[200]} !important`,
-                    },
-                    '& .MuiIconButton-root': {
-                      color: `${theme.palette.secondary?.[200]} !important`,
-                    },
-                    width: '100%',
-                    minWidth: '325px',
-                    minHeight: '325px',
-                    height: '420px',
-                  }}
-                >
-                  <DataGrid
-                    loading={isLoading || !analytics}
-                    getRowId={(row) => row.id}
-                    rows={analytics.viewedScreensByDay || []}
+                <Suspense fallback={<Loader size="xl" variant="bars" />}>
+                  <BreakdownChart data={analytics.topFiveViewedScreensByDay || []} />
+                </Suspense>
+                <div className="rounded-md border p-2">
+                  <DataTable
                     columns={columns}
-                    sx={{
-                      boxShadow: 2,
-                      border: 2,
-                    }}
+                    data={analytics.viewedScreensByDay}
+                    name="name"
                   />
-                </Box>
+                </div>
               </SimpleGrid>
             </Box>
           </Tabs.Panel>
@@ -268,5 +218,3 @@ function RenderInsights() {
     </div>
   )
 }
-
-export default RenderInsights

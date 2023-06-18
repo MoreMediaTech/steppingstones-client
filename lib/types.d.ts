@@ -76,6 +76,13 @@ export interface SourceDirectoryDataProps extends SourceDataProps {
   ids?: string[]
 }
 
+export type AnalyticProps = {
+  id?: string 
+  name: string
+  date: string
+  timesViewed: number
+}
+
 export enum SourceDirectoryType {
   BSI = 'BSI',
   IS = 'IS',

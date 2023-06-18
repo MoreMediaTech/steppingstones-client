@@ -5,7 +5,6 @@ import { Loader } from '@components/mantine-components'
 
 import { AddDistrictForm, CreateSectionForm } from 'app/components/forms'
 import Button from 'app/components/Button'
-import PortalHeader from 'app/components/PortalHeader'
 import { DistrictDataProps, SectionProps } from '@lib/types'
 import {
   useGetCountyByIdQuery,
@@ -13,16 +12,14 @@ import {
 } from 'app/global-state/features/editor/editorApiSlice'
 import PortalButton from 'app/components/PortalButton'
 import Map from 'app/components/Map'
+import Header from '@components/Header'
 
 type Props = {
   county: string
   countyId: string
 }
 
-export default function County({
-  county,
-  countyId,
-}: Props) {
+export default function County({ county, countyId }: Props) {
   const router = useRouter()
   const [opened, setOpened] = useState<boolean>(false)
   const [openAddSectionModal, setAddOpenSectionModal] = useState<boolean>(false)
@@ -41,29 +38,14 @@ export default function County({
 
   return (
     <>
-      <PortalHeader
-        title={`${countyData?.name} Portal` ?? 'County Portal'}
-        subTitle="Please select district from the menu below"
-        data={countyData}
-      />
-
-      <section className="mx-auto mt-4 max-w-screen-md px-2 py-2 sm:px-4">
-        <div className="flex justify-between">
-          <Button
-            type="button"
-            color="outline"
-            className=" md:w-1/4 "
-            onClick={() => {
-              router.push(`/admin-portal/county-portal`)
-            }}
-          >
-            Go Back
-          </Button>
-          <div className="flex items-center gap-2 md:w-1/3">
+      <section className="mx-auto mt-4 max-w-screen-md px-2 py-4 sm:py-8 md:px-6">
+        <div className="flex w-full flex-col items-center justify-between sm:flex-row">
+          <Header title={countyData?.name as string} order={1} />
+          <div className="flex w-full items-center gap-2">
             <Button
               type="button"
               color="outline"
-              className="md:w-full"
+              className="w-full"
               onClick={() => setAddOpenSectionModal((o) => !o)}
             >
               Add Section
@@ -71,7 +53,7 @@ export default function County({
             <Button
               type="button"
               color="outline"
-              className="md:w-full "
+              className="w-full "
               onClick={() => setOpened((o) => !o)}
             >
               Add LA
@@ -84,9 +66,9 @@ export default function County({
           <Loader size="xl" variant="bars" />
         </div>
       ) : (
-        <section className=" mx-auto w-full max-w-screen-md overflow-auto px-2 py-4 md:px-4 md:py-24">
+        <section className=" mx-auto w-full max-w-screen-md px-2 py-4 sm:py-8 md:px-4">
           {countyData && (
-            <div className="grid h-full w-full grid-cols-1 gap-8 md:grid-cols-4">
+            <div className="grid h-full w-full grid-cols-1 gap-8 lg:grid-cols-4">
               <div className="h-full rounded  p-2 shadow-lg dark:shadow-gray-500 md:col-span-2">
                 <Map
                   location={`${county}, UK`}

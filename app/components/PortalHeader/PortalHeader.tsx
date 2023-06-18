@@ -60,7 +60,7 @@ const PortalHeader = ({
 
   return (
     <header
-      className={`bg-slate-100 px-4 py-2 drop-shadow-md dark:bg-[#3b3c40]`}
+      className={`bg-slate-100 px-4 py-2 drop-shadow-md dark:bg-[#3b3c40] w-full`}
     >
       <div className="mx-auto py-2 md:px-4">
         <div className="flex flex-col items-start justify-between md:flex-row md:items-center">

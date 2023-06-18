@@ -83,12 +83,12 @@ const SectionContainer = ({
           <Paper shadow="sm" p="md" radius="md" withBorder className="w-full">
             <div className="mb-4 flex w-full items-center justify-between">
               {sectionData?.isLive ? (
-                <div className="rounded-xl bg-green-500 px-2 py-1 text-xs  text-white">
-                  <h1>Live</h1>
+                <div className="rounded-xl bg-green-500 px-2 py-1 text-sm text-white">
+                  <p>Live</p>
                 </div>
               ) : (
-                <div className="rounded-xl bg-red-500 px-2 py-1 text-xs  text-white">
-                  <h1>Not Live</h1>
+                <div className="rounded-xl bg-red-500 px-2 py-1 text-sm text-white">
+                  <p>Not Live</p>
                 </div>
               )}
               <UnstyledButton
@@ -96,7 +96,7 @@ const SectionContainer = ({
                 onClick={() => setIsEdit(!isEdit)}
                 className=""
               >
-                <BiEdit fontSize={44} />
+                <BiEdit fontSize={34} />
               </UnstyledButton>
             </div>
             {!isEdit && sectionData ? (

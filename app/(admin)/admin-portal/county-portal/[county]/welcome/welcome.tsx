@@ -18,7 +18,7 @@ import {
 import { useAppDispatch } from 'app/global-state/hooks'
 import { EditorFormDataProps } from '@lib/types'
 import ContentPreview from 'app/components/ContentPreview'
-import PortalHeader from '@components/PortalHeader/PortalHeader'
+import Header from '@components/Header'
 import Button from '@components/Button'
 
 type Props = { id: string; county: string }
@@ -86,26 +86,21 @@ export default function Welcome({ id, county }: Props) {
 
   return (
     <section className="relative w-full ">
-      <PortalHeader
-        title={`${county}`}
-        subTitle="Please Preview or Edit your content"
-      />
-      <section className="md:container mx-auto md:max-w-screen-md px-2 md:px-0 space-y-2 py-4">
-        <section className=" py-2">
-          <div className="flex justify-between">
-            <Button
-              type="button"
-              color="outline"
-              className="md:w-1/4"
-              onClick={() => {
-                router.push(
-                  `/admin-portal/county-portal/${county}?countyId=${id}`
-                )
-              }}
-            >
-              Go Back
-            </Button>
-          </div>
+      <section className="mx-auto space-y-2 px-2 py-4 md:container md:max-w-screen-md md:px-0">
+        <section className="flex items-center justify-between py-2">
+          <Header title="Welcome" order={1} />
+          <Button
+            type="button"
+            color="outline"
+            className="md:w-1/4"
+            onClick={() => {
+              router.push(
+                `/admin-portal/county-portal/${county}?countyId=${id}`
+              )
+            }}
+          >
+            Go Back
+          </Button>
         </section>
         <section className=" w-full rounded-md bg-gray-100 p-4 shadow-lg dark:bg-[#3b3c40]">
           {isLoadingCounty ? (
@@ -156,4 +151,3 @@ export default function Welcome({ id, county }: Props) {
     </section>
   )
 }
-

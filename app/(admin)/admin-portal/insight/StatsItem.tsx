@@ -1,8 +1,8 @@
-'use client';
+'use client'
 import { Box } from '@mantine/core'
 import React from 'react'
 
-import Header from '../Header'
+import Header from '../../../components/Header'
 
 export type DefaultStatsProps = {
   title: string
@@ -35,14 +35,14 @@ function StatsItem({
         }}
       >
         <Box
-          className={`inline-flex items-center justify-center p-2 ${textColor} h-12 w-12 rounded-md text-white shadow-lg`}
+          className={`inline-flex items-center justify-center p-2 ${textColor} h-12 w-12 rounded-md text-gray-900 shadow-xl dark:text-gray-200`}
         >
           {count}
         </Box>
 
         {percentageInc ? (
           <Box
-            className={`inline-flex items-center justify-center p-2 ${textColor} h-12 w-12 rounded-md text-white shadow-lg`}
+            className={`inline-flex items-center justify-center p-2 ${textColor} h-12 w-12 rounded-md text-gray-900 shadow-lg dark:text-gray-200`}
           >
             {percentageInc}
           </Box>

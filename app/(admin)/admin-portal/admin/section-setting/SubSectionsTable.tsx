@@ -1,16 +1,12 @@
 'use client'
-import React, { useState, useCallback } from 'react'
-import { FaEdit, FaTrash, FaCheck, FaTimes } from 'react-icons/fa'
-import { Button, Loader } from '@mantine/core'
-import { format } from 'date-fns'
-import { enGB } from 'date-fns/locale'
-import { Modal } from '@mantine/core'
-import { showNotification } from '@mantine/notifications'
+import React, { useCallback } from 'react'
 
+import { showNotification, Loader, Modal } from '@components/mantine-components'
 import { SubSectionProps } from '@lib/types'
 import {
   useDeleteSubSectionByIdMutation,
   useGetSubSectionsBySectionIdQuery,
+  useDeleteManySubSectionsMutation,
 } from 'app/global-state/features/editor/editorApiSlice'
 import { useAppDispatch, useAppSelector } from 'app/global-state/hooks'
 import {
@@ -52,6 +48,7 @@ const SubSectionsTable = ({
 
   const [deleteSubSectionById, { isLoading }] =
     useDeleteSubSectionByIdMutation()
+  const [deleteManySubSections] = useDeleteManySubSectionsMutation()
 
   const handleUpdateModalClose = () => {
     dispatch(setOpenEditModal(false))
@@ -77,27 +74,26 @@ const SubSectionsTable = ({
     }
   }, [])
 
-  // const handleDeleteMany = useCallback(async () => {
-  //   try {
-  //     const response = await deleteManySubSections(selectedSectionIds).unwrap()
-  //     if (response.success) {
-  //       showNotification({
-  //         message: 'Successfully deleted Partner Directory entries',
-  //         color: 'success',
-  //         autoClose: 3000,
-  //       })
-  //       refetchSubSection()
-  //       setChecked(false)
-  //       setSelectedSectionIds([])
-  //     }
-  //   } catch (error) {
-  //     showNotification({
-  //       message: 'Error deleting Partner Directory Data',
-  //       color: 'error',
-  //       autoClose: 3000,
-  //     })
-  //   }
-  // }, [checked, selectedSectionIds])
+  const handleDeleteMany = useCallback(async (rows: SubSectionProps[]) => {
+    const selectedSectionIds = rows.map((row) => row.id)
+    try {
+      const response = await deleteManySubSections(selectedSectionIds).unwrap()
+      if (response.success) {
+        showNotification({
+          message: 'Successfully deleted Partner Directory entries',
+          color: 'success',
+          autoClose: 3000,
+        })
+        refetchSubSection()
+      }
+    } catch (error) {
+      showNotification({
+        message: 'Error deleting Partner Directory Data',
+        color: 'error',
+        autoClose: 3000,
+      })
+    }
+  }, [])
 
   return (
     <>
@@ -118,6 +114,7 @@ const SubSectionsTable = ({
               columns={columns}
               data={subSectionData as SubSectionProps[]}
               name="name"
+              handleDeleteManyById={handleDeleteMany}
             />
           </>
         )}

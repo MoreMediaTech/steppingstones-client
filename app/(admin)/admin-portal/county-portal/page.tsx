@@ -1,4 +1,4 @@
-import CountyPortal from './county-portal'
+import { CountyPortal } from './county-portal'
 
 export default function Page() {
   return (

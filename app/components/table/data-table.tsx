@@ -30,12 +30,14 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
   name: string
+  handleDeleteManyById?: (rows: TData[]) => void
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   name,
+  handleDeleteManyById,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -68,7 +70,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="space-y-4">
-      <DataTableToolbar table={table} name={name} />
+      <DataTableToolbar table={table} name={name} handleDeleteManyById={handleDeleteManyById} />
       <div className="rounded-md border">
         <Table>
           <TableHeader>

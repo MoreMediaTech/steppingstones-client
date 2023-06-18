@@ -1,7 +1,6 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import { ColumnDef, Row } from '@tanstack/react-table'
-import { FaCheck, FaTimes } from 'react-icons/fa'
+import { ColumnDef } from '@tanstack/react-table'
 import { ArrowUpDown } from 'lucide-react'
 import { format } from 'date-fns'
 import { enGB } from 'date-fns/locale'
@@ -15,12 +14,6 @@ export const columns: ColumnDef<MessageProps>[] = [
   {
     id: 'select',
     header: ({ table }) => {
-        // console.log(
-        //   table
-        //     .getRowModel()
-        //     .rows.filter((row) => row.getIsSelected())
-        //     .map((row) => row.original?.id)
-        // )
       return (
         <Checkbox
           checked={table.getIsAllPageRowsSelected()}

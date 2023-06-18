@@ -13,6 +13,8 @@ import {
   CSSObject,
   TextInput,
   Modal,
+  Container,
+  SimpleGrid,
   Tabs,
 } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
@@ -31,7 +33,9 @@ export {
   Textarea,
   TextInput,
   Modal,
-  Tabs
+  Tabs,
+  Container,
+  SimpleGrid,
 }
 
 export type { CSSObject }

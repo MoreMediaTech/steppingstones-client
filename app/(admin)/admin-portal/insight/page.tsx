@@ -1,11 +1,11 @@
 'use client'
 import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
 import PortalHeader from 'app/components/PortalHeader'
-import RenderInsights from 'app/components/Insights'
+import {RenderInsights }from './Insights'
 import { CurrentUser } from '@lib/types'
 
 export default function Insight() {
-  const { data: user, refetch } = useGetUserQuery()
+  const { data: user } = useGetUserQuery()
 
   return (
     <>

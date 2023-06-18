@@ -27,41 +27,15 @@ export function MessagesSection() {
 
   const { data: messages, isLoading, refetch } = useGetAllInAppEnquiryMsgQuery()
   const { data: sentMessages } = useGetAllMsgSentByUserQuery()
-  const [searchResults, setSearchResults] = useState<MessageProps[]>([])
-  const [selectedMessageId, setSelectedMessageId] = useState<string[]>([])
-  const [checked, setChecked] = useState<boolean>(false)
+
   const [deleteManyMail, { isLoading: isDeleting }] =
     useDeleteManyMailMutation()
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.value) setSearchResults(messages as MessageProps[])
 
-    const resultsArray = messages?.filter(
-      (message: MessageProps) =>
-        message?.from.toLowerCase().includes(e.target.value.toLowerCase()) ||
-        message?.subject.toLowerCase().includes(e.target.value.toLowerCase()) ||
-        message?.message.toLowerCase().includes(e.target.value.toLowerCase())
-    )
-
-    setSearchResults(resultsArray as MessageProps[])
-  }
-
-  const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target
-    if (!e.target.checked) {
-      setChecked(false)
-      setSelectedMessageId((messageId) =>
-        messageId.filter((id) => id !== value)
-      )
-    } else {
-      setChecked(true)
-      setSelectedMessageId((messageId) => [...new Set([...messageId, value])])
-    }
-  }
-
-  const handleDeleteMany = useCallback(async () => {
+  const handleDeleteMany = useCallback(async (rows: MessageProps[]) => {
+    const selectedIds = rows.map((row) => row.id)
     try {
-      const response = await deleteManyMail(selectedMessageId).unwrap()
+      const response = await deleteManyMail(selectedIds as string[]).unwrap()
       if (response.success) {
         showNotification({
           message: 'Successfully deleted Enquiries',
@@ -69,8 +43,6 @@ export function MessagesSection() {
           autoClose: 3000,
         })
         refetch()
-        setChecked(false)
-        setSelectedMessageId([])
       }
     } catch (error) {
       showNotification({
@@ -79,7 +51,7 @@ export function MessagesSection() {
         autoClose: 3000,
       })
     }
-  }, [checked, selectedMessageId])
+  }, [])
 
   if (isLoading) {
     return (
@@ -121,6 +93,7 @@ export function MessagesSection() {
               columns={columns}
               data={messages as MessageProps[]}
               name={'from' || 'subject'}
+              handleDeleteManyById={handleDeleteMany}
             />
           </Box>
         </Tabs.Panel>
@@ -135,8 +108,8 @@ export function MessagesSection() {
               columns={columns}
               data={sentMessages as MessageProps[]}
               name={'from' || 'subject'}
+              handleDeleteManyById={handleDeleteMany}
             />
-
           </Box>
         </Tabs.Panel>
       </Tabs>

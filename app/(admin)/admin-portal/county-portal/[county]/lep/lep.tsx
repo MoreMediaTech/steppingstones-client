@@ -16,6 +16,7 @@ import { useAppDispatch } from 'app/global-state/hooks'
 import { EditorFormDataProps } from '@lib/types'
 import ContentPreview from 'app/components/ContentPreview'
 import Button from '@components/Button'
+import Header from '@components/Header'
 
 type Props = {
   id: string
@@ -82,8 +83,9 @@ export default function LEP({ id, county }: Props) {
 
   return (
     <>
-      <section className="container mx-auto px-4 py-2">
-        <div className="flex justify-between">
+      <section className="container mx-auto px-2 py-2 md:px-8 md:py-8">
+        <div className="flex items-center justify-between">
+          <Header title="LEP" order={1} />
           <Button
             type="button"
             color="outline"
