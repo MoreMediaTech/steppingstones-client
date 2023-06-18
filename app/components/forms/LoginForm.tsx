@@ -25,7 +25,7 @@ const LoginForm: React.FC = (): JSX.Element => {
   const router = useRouter()
   const dispatch = useAppDispatch()
   const { theme } = useTheme()
-  const [login, { isLoading, isError, error: loginError }] = useLoginMutation()
+  const [login, { isLoading }] = useLoginMutation()
   const {
     register,
     handleSubmit,

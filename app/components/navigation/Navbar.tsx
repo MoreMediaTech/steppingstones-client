@@ -8,7 +8,6 @@ import { useTheme } from 'next-themes'
 
 import { LoginButton, MobileLoginButton } from './LoginButton'
 import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
-import { useLogoutMutation } from 'app/global-state/features/auth/authApiSlice'
 import { AppLogo } from './AppLogo'
 import { CurrentUser } from '@lib/types'
 import ScrollLink from 'app/components/scroll-link'
@@ -21,7 +20,6 @@ const Navbar = () => {
   const router = useRouter()
   const { theme, setTheme, resolvedTheme } = useTheme()
   const { data: currentUser } = useGetUserQuery()
-  const [logout] = useLogoutMutation()
   const [pos, setPos] = useState<string>('top')
   const [activePath, setActivePath] = useState<string>('')
   const [opened, setOpened] = useState<boolean>(false)

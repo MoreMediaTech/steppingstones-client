@@ -19,7 +19,7 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
   return (
     <nav
       className={cn(
-        'flex w-full scroll-m-0 space-x-2 overflow-x-scroll py-0 md:py-4 px-2 md:flex-col md:space-x-0 md:space-y-1 md:overflow-x-hidden ',
+        'flex w-full scroll-m-0 space-x-2 overflow-y-hidden overflow-x-scroll px-2 py-0 md:flex-col md:space-x-0 md:space-y-1 md:overflow-x-hidden md:overflow-y-scroll md:py-4 ',
         className
       )}
       {...props}
