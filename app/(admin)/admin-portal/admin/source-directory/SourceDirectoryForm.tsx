@@ -14,7 +14,7 @@ import {
 } from 'app/global-state/features/editor/editorApiSlice'
 import { useAppSelector } from 'app/global-state/hooks'
 import { editorSelector } from 'app/global-state/features/editor/editorSlice'
-import { showNotification } from '@mantine/notifications'
+import { showNotification } from '@components/mantine-components'
 import { SourceDirectoryType } from '@lib/types'
 
 interface ISearchFormProps {
