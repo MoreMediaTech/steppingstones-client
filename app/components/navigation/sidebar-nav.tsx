@@ -19,26 +19,28 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
   return (
     <nav
       className={cn(
-        'flex w-full scroll-m-0 space-x-2 overflow-y-hidden overflow-x-scroll px-2 py-0 md:flex-col md:space-x-0 md:space-y-1 md:overflow-x-hidden md:overflow-y-scroll md:py-4 ',
+        'flex relative w-full px-2 py-0 md:flex-col md:pt-2 md:pb-8',
         className
       )}
       {...props}
     >
-      {items.map((item) => (
-        <Link
-          key={item.href}
-          href={item.href}
-          className={cn(
-            buttonVariants({ variant: 'ghost' }),
-            item.href.includes(pathname)
-              ? 'bg-gray-300 text-justify dark:bg-gray-800 '
-              : 'hover:bg-gray-300 hover:underline dark:hover:bg-gray-800',
-            'w-full justify-start subpixel-antialiased'
-          )}
-        >
-          {item.title}
-        </Link>
-      ))}
+      <div className=' flex w-full space-x-2 md:h-[800px] overflow-y-hidden overflow-x-scroll md:flex-col md:space-x-0 md:space-y-1 md:overflow-x-hidden md:overflow-y-auto '>
+        {items.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={cn(
+              buttonVariants({ variant: 'ghost' }),
+              item.href.includes(pathname)
+                ? 'bg-gray-300 text-justify dark:bg-gray-800 '
+                : 'hover:bg-gray-300 hover:underline dark:hover:bg-gray-800',
+              'w-full justify-start subpixel-antialiased'
+            )}
+          >
+            {item.title}
+          </Link>
+        ))}
+      </div>
     </nav>
   )
 }

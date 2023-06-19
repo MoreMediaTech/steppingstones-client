@@ -10,11 +10,9 @@ export function middleware(request: NextRequest) {
   ) {
     return NextResponse.redirect(`${NEXT_URL}/auth/login`)
   }
+}
 
-  if (
-    cookies &&
-    request.nextUrl.pathname.startsWith('${NEXT_URL}/auth/login')
-  ) {
-    return NextResponse.redirect(`${NEXT_URL}/admin/admin-portal`)
-  }
+// See "Matching Paths" below to learn more
+export const config = {
+  matcher: '/admin-portal/:path*',
 }
