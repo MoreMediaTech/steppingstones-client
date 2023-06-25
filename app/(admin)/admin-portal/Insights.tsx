@@ -201,7 +201,9 @@ export function RenderInsights() {
                 breakpoints={[{ maxWidth: 980, cols: 1, spacing: 'md' }]}
               >
                 <Suspense fallback={<Loader size="xl" variant="bars" />}>
-                  <BreakdownChart data={analytics.topFiveViewedScreensByDay || []} />
+                  <BreakdownChart
+                    data={analytics.topFiveViewedScreensByDay || []}
+                  />
                 </Suspense>
                 <div className="rounded-md border p-2">
                   <DataTable

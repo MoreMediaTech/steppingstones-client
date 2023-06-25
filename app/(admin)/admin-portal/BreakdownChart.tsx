@@ -2,7 +2,7 @@
 import React from 'react'
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts'
 
-import { themeSettings } from '../../../../constants/styles'
+import { themeSettings } from '../../../constants/styles'
 import { Box } from '@components/mantine-components'
 import { useTheme } from 'next-themes'
 import { PaletteMode } from '@lib/types'
@@ -67,7 +67,7 @@ function BreakdownChart({
   }
 
   return (
-    <div className='relative w-full h-[500px]'>
+    <div className="relative h-[500px] w-full">
       <ResponsiveContainer width="100%" height="100%">
         <PieChart width={600} height={600}>
           <Pie

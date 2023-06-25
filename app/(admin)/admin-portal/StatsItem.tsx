@@ -2,7 +2,7 @@
 import { Box } from '@mantine/core'
 import React from 'react'
 
-import Header from '../../../components/Header'
+import Header from '../../components/Header'
 
 export type DefaultStatsProps = {
   title: string

@@ -12,7 +12,7 @@ export function middleware(request: NextRequest) {
   }
 
   if (
-    cookies &&
+    cookies && cookies !== undefined &&
     request.nextUrl.pathname.startsWith('${NEXT_URL}/auth/login')
   ) {
     return NextResponse.redirect(`${NEXT_URL}/admin/admin-portal`)
