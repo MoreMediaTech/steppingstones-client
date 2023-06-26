@@ -1,7 +1,4 @@
 'use client'
-import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
-import PortalHeader from 'app/components/PortalHeader'
-import { CurrentUser } from '@lib/types'
 import { PartnerDirectorySection } from 'app/(admin)/admin-portal/admin/partner-directory/PartnerDirectory'
 import Button from 'app/components/Button'
 import { useAppDispatch } from 'app/global-state/hooks'
@@ -14,16 +11,8 @@ import Header from 'app/components/Header'
 export default function PartnerDirectory() {
   const dispatch = useAppDispatch()
 
-  const { data: user } = useGetUserQuery()
-
   return (
     <section className="overflow-auto md:h-screen">
-      <PortalHeader
-        user={user as CurrentUser}
-        imgUrl={user?.imageUrl}
-        title={`${user?.name}`}
-        subTitle="Partner Directory"
-      />
       <section className="my-4 w-full space-y-4 rounded-md border px-2 sm:mx-auto sm:max-w-screen-lg sm:px-4">
         <div className="mt-4">
           <div className="flex flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between ">
