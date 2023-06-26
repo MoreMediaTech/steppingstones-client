@@ -44,7 +44,7 @@ export default function SubSection({ searchParams }: Props) {
 
   return (
     <>
-      <section className="container mx-auto h-full max-w-screen-md px-2 py-2 sm:px-4 sm:py-8">
+      <section className="container mx-auto h-full max-w-screen-sm px-2 py-2 sm:px-4 sm:py-8">
         <div className="flex flex-col items-center  justify-between sm:flex-row">
           <Header title={subSectionData?.title as string} order={1} />
           <div className="flex items-center gap-2 sm:w-1/3">

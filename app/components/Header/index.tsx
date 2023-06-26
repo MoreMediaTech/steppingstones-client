@@ -1,6 +1,12 @@
-'use client';
+'use client'
 import React from 'react'
-import { Box, Title, Group, TitleOrder, ThemeIcon } from '@mantine/core'
+import {
+  Box,
+  Title,
+  Group,
+  TitleOrder,
+  ThemeIcon,
+} from '@components/mantine-components'
 
 type Props = {
   title: string
@@ -8,32 +14,41 @@ type Props = {
   bcg?: string
   order: TitleOrder
   subOrder?: TitleOrder
-  icon?: React.ReactElement
+  iconRight?: React.ReactElement
+  iconLeft?: React.ReactElement
 }
 
-function Header({ title, order, subOrder, subtitle, icon, bcg }: Props) {
+function Header({
+  title,
+  order,
+  subOrder,
+  subtitle,
+  iconRight,
+  iconLeft,
+  bcg,
+}: Props) {
   return (
     <Box sx={{ width: '100%', marginBottom: '1rem' }}>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
+      <div className="flex items-center gap-1"
       >
-        <Title order={order} className="text-gray-800 dark:text-gray-100">
-          {title}
-        </Title>
-        {icon ? (
-          <Box
-            className={`flex items-center ${bcg} rounded-md shadow-lg`}
-          >
-            <ThemeIcon  radius="md" size="xl" color="violet">
-              {icon}
+        {iconLeft ? (
+          <Box className={`flex items-center rounded-md shadow-lg`}>
+            <ThemeIcon radius="md" size="xl" color="lightgreen">
+              {iconLeft}
             </ThemeIcon>
           </Box>
         ) : null}
-      </Box>
+        <Title order={order} className="text-gray-800 dark:text-gray-100">
+          {title}
+        </Title>
+        {iconRight ? (
+          <Box className={`flex items-center rounded-md shadow-lg`}>
+            <ThemeIcon radius="md" size="xl" color="violet">
+              {iconRight}
+            </ThemeIcon>
+          </Box>
+        ) : null}
+      </div>
       <Title order={subOrder} color="dimmed">
         {subtitle}
       </Title>

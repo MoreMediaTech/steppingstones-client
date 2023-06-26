@@ -1,6 +1,6 @@
 import React from 'react'
 import { Montserrat } from 'next/font/google'
-import { PageWrapper } from 'app/components/PageWrapper'
+import  PageWrapper from './PageWrapper'
 import Provider from '../global-state/providers/provider'
 import { Navbar } from 'app/components/navigation'
 import Footer from 'app/components/footer'

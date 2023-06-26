@@ -36,7 +36,7 @@ export default function SubSubSection({ searchParams }: Props) {
 
   return (
     <>
-      <section className="container mx-auto max-w-screen-md px-2 py-2 sm:px-0">
+      <section className="container mx-auto max-w-screen-sm px-2 py-2 sm:px-0">
         <div className="flex flex-col sm:flex-row items-center justify-between">
           <Header title={subSubSectionData?.title as string} order={1} />
           <Button

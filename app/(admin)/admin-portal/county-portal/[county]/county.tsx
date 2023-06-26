@@ -38,7 +38,7 @@ export default function County({ county, countyId }: Props) {
 
   return (
     <>
-      <section className="mx-auto mt-4 max-w-screen-md px-2 py-4 sm:py-8 md:px-6">
+      <section className="mx-auto mt-4 max-w-screen-sm px-2 py-4 sm:py-8 md:px-6">
         <div className="flex w-full flex-col items-center justify-between sm:flex-row">
           <Header title={countyData?.name as string} order={1} />
           <div className="flex w-full items-center gap-2">
@@ -66,16 +66,16 @@ export default function County({ county, countyId }: Props) {
           <Loader size="xl" variant="bars" />
         </div>
       ) : (
-        <section className=" mx-auto w-full max-w-screen-md px-2 py-4 sm:py-8 md:px-4">
+        <section className=" mx-auto w-full max-w-screen-sm px-2 py-4 sm:py-8 md:px-4">
           {countyData && (
-            <div className="grid h-full w-full grid-cols-1 gap-8 lg:grid-cols-4">
-              <div className="h-full rounded  p-2 shadow-lg dark:shadow-gray-500 md:col-span-2">
+            <div className="grid h-full w-full grid-cols-1 gap-8 ">
+              <div className="h-full rounded  p-2 shadow-lg dark:shadow-gray-500 lg:col-span-2">
                 <Map
                   location={`${county}, UK`}
                   districtsArray={districts as string[]}
                 />
               </div>
-              <div className="h-full w-full md:col-span-2">
+              <div className="h-full w-full lg:col-span-2">
                 <div className="flex flex-col">
                   <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
                     <PortalButton

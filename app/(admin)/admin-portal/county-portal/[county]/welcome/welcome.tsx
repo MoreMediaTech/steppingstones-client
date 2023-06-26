@@ -86,7 +86,7 @@ export default function Welcome({ id, county }: Props) {
 
   return (
     <section className="relative w-full ">
-      <section className="mx-auto space-y-2 px-2 py-4 md:container md:max-w-screen-md md:px-0">
+      <section className="mx-auto space-y-2 px-2 py-4 md:container md:max-w-screen-sm md:px-0">
         <section className="flex items-center justify-between py-2">
           <Header title="Welcome" order={1} />
           <Button

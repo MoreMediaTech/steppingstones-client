@@ -1,3 +1,4 @@
+import { ScrollArea } from '@components/ui/scroll-area'
 import County from './county'
 
 type Props = {
@@ -7,8 +8,10 @@ type Props = {
 
 export default function Page({ params, searchParams }: Props) {
   return (
-    <section className="h-screen overflow-auto">
-      <County county={params.county} countyId={searchParams.countyId} />
+    <section>
+      <ScrollArea className=" p-4  sm:h-screen ">
+        <County county={params.county} countyId={searchParams.countyId} />
+      </ScrollArea>
     </section>
   )
 }

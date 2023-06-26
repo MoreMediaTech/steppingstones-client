@@ -38,7 +38,7 @@ export default function Section({ county, countyId, sectionId }: Props) {
 
   return (
     <>
-      <section className="container mx-auto h-full max-w-screen-md px-2 py-2 sm:px-8 sm:py-8">
+      <section className="container mx-auto h-full max-w-screen-sm px-2 py-2 sm:px-8 sm:py-8">
         <div className="my-4 flex w-full flex-col  items-center justify-between sm:flex-row">
           <div className="flex items-center gap-2">
             <Header title={sectionData?.name as string} order={1} />
@@ -93,7 +93,7 @@ export default function Section({ county, countyId, sectionId }: Props) {
             {sectionData?.isSubSection ? (
               <section className=" w-full overflow-auto md:py-24">
                 {sectionData && (
-                  <div className="container mx-auto grid max-w-screen-lg grid-cols-2 gap-4">
+                  <div className="container mx-auto grid max-w-screen-sm grid-cols-2 gap-4">
                     {sectionData?.subsections?.map(
                       (section: SubSectionProps) => (
                         <PortalButton

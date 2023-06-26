@@ -16,6 +16,9 @@ import {
   Container,
   SimpleGrid,
   Tabs,
+  Title,
+  TitleOrder,
+  ThemeIcon,
 } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 
@@ -36,6 +39,8 @@ export {
   Tabs,
   Container,
   SimpleGrid,
+  Title,
+  ThemeIcon,
 }
 
-export type { CSSObject }
+export type { CSSObject, TitleOrder }

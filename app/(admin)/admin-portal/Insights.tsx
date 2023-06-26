@@ -87,136 +87,76 @@ export function RenderInsights() {
     )
   }
   return (
-    <div className="overflow-y-auto">
-      <Container size="lg" px="xs">
-        <Box
-          sx={{
-            marginTop: '1rem',
-            marginLeft: '1rem',
-          }}
-        >
-          <Header title="Insights" order={2} />
-        </Box>
-        <Tabs
-          color="violet"
-          variant="outline"
-          radius="xs"
-          defaultValue="users"
-          keepMounted={false}
-        >
-          <Tabs.List aria-label="Insights Tabs">
-            <Tabs.Tab
-              value="users"
-              icon={<FaUsers fontSize={24} color="#00dcb3" />}
-            >
-              <Text
-                fz="md"
-                fw={500}
-                className="text-gray-800 dark:text-gray-200"
-              >
-                Users
-              </Text>
-            </Tabs.Tab>
-            <Tabs.Tab
-              value="performance"
-              icon={<FcSalesPerformance fontSize={24} />}
-            >
-              <Text
-                fz="md"
-                fw={500}
-                className="text-gray-800 dark:text-gray-200"
-              >
-                App Performance
-              </Text>
-            </Tabs.Tab>
-            <Tabs.Tab
-              value="breakdown"
-              icon={<FcFactoryBreakdown fontSize={24} />}
-            >
-              <Text
-                fz="md"
-                fw={500}
-                className="text-gray-800 dark:text-gray-200"
-              >
-                Breakdown
-              </Text>
-            </Tabs.Tab>
-          </Tabs.List>
-
-          <Tabs.Panel value="users" pt="xs">
-            <Box
-              sx={{
-                marginTop: '1rem',
-                marginLeft: '1rem',
-              }}
-            >
+    <section>
+      <div className="container mx-auto max-w-screen-lg space-y-2 py-8">
+        <div className='grid grid-cols-1 gap-8'>
+          <div>
+            <div className="flex items-center">
               <Header
                 title="User Stats"
                 order={3}
+                iconLeft={<FaUsers fontSize={24} color="#fff" />}
                 subtitle="View your user stats"
                 subOrder={6}
               />
-              <SimpleGrid
-                cols={2}
-                breakpoints={[{ maxWidth: 980, cols: 1, spacing: 'md' }]}
-              >
-                {defaultStats(stats).map((item, index) => (
-                  <StatsItem key={`stats-${index}`} {...item} />
-                ))}
-              </SimpleGrid>
-            </Box>
-          </Tabs.Panel>
-          <Tabs.Panel value="performance" pt="xs">
-            <Box
-              sx={{
-                marginTop: '1rem',
-                marginLeft: '1rem',
-              }}
+            </div>
+            <SimpleGrid
+              cols={4}
+              breakpoints={[{ maxWidth: 980, cols: 1, spacing: 'md' }]}
             >
-              <Header
-                title="Performance"
-                order={3}
-                subtitle="Track your App performance over time"
-                subOrder={6}
+              {defaultStats(stats).map((item, index) => (
+                <StatsItem key={`stats-${index}`} {...item} />
+              ))}
+            </SimpleGrid>
+          </div>
+          <div>
+            <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+              <div className="col-span-1">
+                <Header
+                  title="Performance"
+                  order={3}
+                  subtitle="Track your App performance over time"
+                  subOrder={6}
+                />
+                <PerformanceChart data={performanceChartData} />
+              </div>
+              <div className="col-span-1">
+                <Header
+                  title="Breakdown"
+                  order={3}
+                  subtitle="Breakdown of screens viewed by users"
+                  subOrder={6}
+                />
+                <SimpleGrid
+                  cols={1}
+                  breakpoints={[{ maxWidth: 980, cols: 1, spacing: 'md' }]}
+                >
+                  <Suspense fallback={<Loader size="xl" variant="bars" />}>
+                    <BreakdownChart
+                      data={analytics.topFiveViewedScreensByDay || []}
+                    />
+                  </Suspense>
+                </SimpleGrid>
+              </div>
+            </div>
+          </div>
+          <div>
+            <Header
+              title="Viewed Screens"
+              order={3}
+              subtitle="Viewed screens by day"
+              subOrder={6}
+            />
+            <div className="rounded-md border p-2">
+              <DataTable
+                columns={columns}
+                data={analytics.viewedScreensByDay}
+                name="name"
               />
-              <PerformanceChart data={performanceChartData} />
-            </Box>
-          </Tabs.Panel>
-          <Tabs.Panel value="breakdown" pt="xs">
-            <Box
-              sx={{
-                marginTop: '1rem',
-                marginLeft: '1rem',
-                marginBottom: '1rem',
-              }}
-            >
-              <Header
-                title="Breakdown"
-                order={3}
-                subtitle="Breakdown of screens viewed by users"
-                subOrder={6}
-              />
-              <SimpleGrid
-                cols={1}
-                breakpoints={[{ maxWidth: 980, cols: 1, spacing: 'md' }]}
-              >
-                <Suspense fallback={<Loader size="xl" variant="bars" />}>
-                  <BreakdownChart
-                    data={analytics.topFiveViewedScreensByDay || []}
-                  />
-                </Suspense>
-                <div className="rounded-md border p-2">
-                  <DataTable
-                    columns={columns}
-                    data={analytics.viewedScreensByDay}
-                    name="name"
-                  />
-                </div>
-              </SimpleGrid>
-            </Box>
-          </Tabs.Panel>
-        </Tabs>
-      </Container>
-    </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   )
 }

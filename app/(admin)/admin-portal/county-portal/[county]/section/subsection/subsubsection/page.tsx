@@ -1,3 +1,4 @@
+import { ScrollArea } from '@components/ui/scroll-area'
 import SubSubSection from './subsub-section'
 
 type Props = {
@@ -12,8 +13,10 @@ type Props = {
 
 export default function Page({ searchParams }: Props) {
   return (
-    <>
-      <SubSubSection searchParams={searchParams} />
-    </>
+    <section>
+      <ScrollArea className=" p-4  sm:h-screen ">
+        <SubSubSection searchParams={searchParams} />
+      </ScrollArea>
+    </section>
   )
 }

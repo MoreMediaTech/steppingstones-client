@@ -3,6 +3,9 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { ComponentShield } from 'app/components/NextShield'
 import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
+import { AdminSidebar } from 'app/components/navigation'
+import PortalHeader from 'app/components/PortalHeader'
+import { CurrentUser } from '@lib/types'
 
 function PageWrapper({
   children,
@@ -25,7 +28,18 @@ function PageWrapper({
         showForRole={'SS_EDITOR'}
         userRole={user?.role as string}
       >
-        {children}
+        <section className="grid">
+          <PortalHeader
+            user={user as CurrentUser}
+            title={`Welcome ${user?.name}`}
+            subTitle="Please select from the menu below"
+            imgUrl={user?.imageUrl}
+          />
+          <section className="grid ">
+            <div className="col-span-1 sm:col-span-1"></div>
+            <div className="col-span-1 sm:col-span-1">{children}</div>
+          </section>
+        </section>
       </ComponentShield>
     </motion.main>
   )

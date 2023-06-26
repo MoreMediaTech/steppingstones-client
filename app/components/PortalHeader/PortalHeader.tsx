@@ -14,6 +14,7 @@ import {
   setDrawerOpened,
 } from 'app/global-state/features/global/globalSlice'
 import FormInput from 'app/components/forms/FormComponents/FormInput'
+import { AdminNavbar, AdminSidebar } from '@components/navigation'
 
 interface IPortalHeaderProps {
   user?: CurrentUser
@@ -65,15 +66,9 @@ const PortalHeader = ({
       <div className="mx-auto py-2 md:px-4">
         <div className="flex flex-col items-start justify-between md:flex-row md:items-center">
           <div className="mb-2 flex items-center justify-between w-full">
-            <div className="flex items-center">
+            <div className="flex items-center gap-1">
               <div className=" items-center md:px-4 py-2  ">
-                <Burger
-                  opened={drawerOpened}
-                  aria-label={drawerTitle}
-                  onClick={() => dispatch(setDrawerOpened(!drawerOpened))}
-                  title={drawerTitle}
-                  color="#00dcb3"
-                />
+               <AdminSidebar />
               </div>
               <Group>
                 <Avatar

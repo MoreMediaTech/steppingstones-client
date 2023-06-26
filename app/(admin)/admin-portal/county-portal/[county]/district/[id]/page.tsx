@@ -1,3 +1,4 @@
+import { ScrollArea } from '@components/ui/scroll-area'
 import District from './district'
 
 type Props = {
@@ -11,16 +12,17 @@ type Props = {
 }
 
 export default function Page({ params, searchParams }: Props) {
-
   return (
-    <>
-      <District
-        id={params.id}
-        county={searchParams.county}
-        countyId={searchParams.countyId}
-        district={searchParams.district}
-        districtId={searchParams.districtId}
-      />
-    </>
+    <section>
+      <ScrollArea className=" p-4  sm:h-screen ">
+        <District
+          id={params.id}
+          county={searchParams.county}
+          countyId={searchParams.countyId}
+          district={searchParams.district}
+          districtId={searchParams.districtId}
+        />
+      </ScrollArea>
+    </section>
   )
 }

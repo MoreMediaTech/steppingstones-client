@@ -1,6 +1,5 @@
+import { ScrollArea } from '@components/ui/scroll-area'
 import Districts from './districts'
-
-
 
 type Props = {
   searchParams: {
@@ -13,8 +12,10 @@ type Props = {
 
 export default function Page({ searchParams }: Props) {
   return (
-    <>
-      <Districts searchParams={searchParams} />
-    </>
+    <section>
+      <ScrollArea className=" p-4  sm:h-screen ">
+        <Districts searchParams={searchParams} />
+      </ScrollArea>
+    </section>
   )
 }
