@@ -27,7 +27,7 @@ function StatsItem({
     <Box
       className={`$ mx-2 mt-5 rounded-md border-b-4 bg-white px-4 py-2 shadow-xl ${borderColor} ${bcg}`}
     >
-      <Header title={title} order={5} icon={icon} />
+      <Header title={title} order={5} iconLeft={icon} />
       <Box
         sx={{
           display: 'flex',
