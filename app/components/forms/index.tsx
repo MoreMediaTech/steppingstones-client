@@ -1,5 +1,5 @@
 import SignUpForm from './SignUpForm'
-import LoginForm from './LoginForm'
+import LoginForm from '../../(home)/auth/login/LoginForm'
 import RegisterForm from './RegisterForm'
 import EnquiryForm from './EnquiryForm'
 import RequestPasswordResetForm from './RequestPasswordResetForm'

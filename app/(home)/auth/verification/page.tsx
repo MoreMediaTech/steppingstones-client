@@ -1,19 +1,17 @@
 'use client'
-
-import { LoginForm } from 'app/components/forms'
-
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { FaSignInAlt } from 'react-icons/fa'
+import VerificationForm from './verification-form'
 
 const variants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1 },
 }
 
-export default function Login() {
+export default function Verification() {
   return (
-    <section className="relative h-screen w-full grid grid-cols-2">
+    <section className="relative grid h-screen w-full grid-cols-2">
       <div className=" top-0 h-full w-full bg-cover bg-center">
         <div
           className="relative h-full w-full"
@@ -44,10 +42,10 @@ export default function Login() {
           >
             <h1 className="flex items-center gap-2 text-4xl">
               <FaSignInAlt fontSize={40} color="#00DCB3" />
-              <span className="text-primary-dark-100">Sign In</span>
+              <span className="text-primary-dark-100">Verify</span>
             </h1>
-            <div className="w-full max-w-screen-sm px-6 py-4 border border-gray-900 dark:border-gray-200 rounded-md">
-              <LoginForm />
+            <div className="w-full max-w-screen-sm rounded-md border border-gray-900 px-6 py-4 dark:border-gray-200">
+              <VerificationForm />
             </div>
           </motion.div>
         </div>

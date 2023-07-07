@@ -5,14 +5,41 @@ import {
 } from 'app/global-state/features/auth/authSlice'
 import { apiSlice, editorApiSlice } from 'app/global-state/api/apiSlice'
 import { CurrentUser } from '@lib/types'
+import * as z from 'zod'
+
+export const authSchema = z.object({
+  token: z.string().nonempty(),
+  email: z.string().email().nonempty(),
+  oneTimeCode: z.string().nonempty().optional(),
+})
+
+export type Auth = z.infer<typeof authSchema>
+
+
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
-      query: ({ email, password, token }) => ({
+      query: ({ email, token }: Auth) => ({
         url: 'auth/login',
         method: 'POST',
-        body: { email, password, token },
+        body: { email, token },
+      }),
+      invalidatesTags: [{ type: 'Auth', id: 'LIST' }],
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled
+        } catch (error) {
+          console.log(error)
+          dispatch(setError({ message: error.message }))
+        }
+      },
+    }),
+    authenticate: builder.mutation({
+      query: ({ email, token, oneTimeCode }: Auth) => ({
+        url: 'auth/authenticate',
+        method: 'POST',
+        body: { email, token, oneTimeCode },
       }),
       invalidatesTags: [{ type: 'Auth', id: 'LIST' }],
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
@@ -95,7 +122,7 @@ export const authApi = apiSlice.injectEndpoints({
           dispatch(apiSlice.util.resetApiState())
           dispatch(editorApiSlice.util.resetApiState())
         } catch (error) {
-          console.log(error)
+          console.error(error)
           dispatch(setError({ message: error.message }))
         }
       },
@@ -107,6 +134,7 @@ export const authApi = apiSlice.injectEndpoints({
 
 export const {
   useLoginMutation,
+  useAuthenticateMutation,
   useRegisterPartnerMutation,
   useLogoutMutation,
   useRequestPasswordResetMutation,

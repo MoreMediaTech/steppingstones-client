@@ -1,7 +1,7 @@
 import React from 'react'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { AdminSidebar } from 'app/components/navigation'
+import { Toaster } from '@components/ui/toaster'
 import  AdminPageWrapper  from './AdminPageWrapper'
 import Provider from '../global-state/providers/provider'
 import '../globals.css'
@@ -28,6 +28,7 @@ export default function RootLayout({
       <body className="flex min-h-screen flex-row-reverse bg-slate-100 dark:bg-[#212227]">
         <Provider>
           <AdminPageWrapper>{children}</AdminPageWrapper>
+          <Toaster />
         </Provider>
       </body>
     </html>

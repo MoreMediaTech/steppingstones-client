@@ -1,5 +1,6 @@
 import React from 'react'
 import { Montserrat } from 'next/font/google'
+import { Toaster } from '@app/components/ui/toaster'
 import  PageWrapper from './PageWrapper'
 import Provider from '../global-state/providers/provider'
 import { Navbar } from 'app/components/navigation'
@@ -27,6 +28,7 @@ export default function RootLayout({
           <Navbar />
           <PageWrapper>{children}</PageWrapper>
           <Footer />
+          <Toaster />
         </Provider>
       </body>
     </html>
