@@ -13,9 +13,9 @@ import {
   setCredentials,
   resetCredentials,
 } from 'app/global-state/features/auth/authSlice'
-import { CurrentUser } from '@lib/types'
 import { API_URL } from '@config/index'
 import { RootState } from 'app/global-state/store'
+import { UserSchemaWithIdAndOrganisationType } from '@models/User'
 
 interface RefreshResult {
   error?: FetchBaseQueryError | undefined
@@ -74,7 +74,7 @@ const baseQueryWithReAuth: BaseQueryFn = async (
     )
     if (refreshResult?.data) {
       const { auth } = api.getState() as RootState
-      const user = auth.currentUser as CurrentUser
+      const user = auth.currentUser as UserSchemaWithIdAndOrganisationType
       // store new token
       localStorage.setItem('token', refreshResult?.data?.token as string)
       api.dispatch(

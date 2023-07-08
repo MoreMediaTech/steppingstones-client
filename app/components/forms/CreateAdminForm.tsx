@@ -6,11 +6,11 @@ import {
   UseFormRegister,
 } from 'react-hook-form'
 import { useTheme } from 'next-themes';
-import { CurrentUser } from '@lib/types'
-import { Button, PasswordInput, TextInput } from '@mantine/core'
+import { Button, TextInput } from '@mantine/core'
+import { UserSchemaWithIdAndOrganisationType } from '@models/User';
 
 interface ICreateAdminProps {
-  submitHandler: SubmitHandler<Partial<CurrentUser>>
+  submitHandler: SubmitHandler<Partial<UserSchemaWithIdAndOrganisationType>>
   errors: {
     name?: FieldError | undefined
     email?: FieldError | undefined
@@ -19,8 +19,8 @@ interface ICreateAdminProps {
   isLoading: boolean
   setOpened: React.Dispatch<React.SetStateAction<boolean>>
   setPassword: React.Dispatch<React.SetStateAction<string>>
-  register: UseFormRegister<Partial<CurrentUser>>
-  handleSubmit: UseFormHandleSubmit<Partial<CurrentUser>>
+  register: UseFormRegister<Partial<UserSchemaWithIdAndOrganisationType>>
+  handleSubmit: UseFormHandleSubmit<Partial<UserSchemaWithIdAndOrganisationType>>
   generatePassword: () => void
 }
 
@@ -110,56 +110,7 @@ const CreateAdminForm = ({
           </span>
         )}
       </div>
-      <div>
-        <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
-          <PasswordInput
-            id="password"
-            aria-label="password"
-            placeholder="Enter password"
-            label={
-              <p className="mt-2 font-light text-gray-900 dark:text-gray-200">
-                Password <span className="text-red-500">*</span>
-              </p>
-            }
-            {...register('passwordInput', {
-              required: true,
-              minLength: {
-                value: 10,
-                message: 'Please enter a password with at least 7 characters',
-              },
-              maxLength: {
-                value: 15,
-                message: 'Please enter a password not more than 15 characters',
-              },
-              pattern: {
-                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{7,})/,
-                message:
-                  'Password must contain at least one uppercase letter, one number and one special character',
-              },
-            })}
-            labelProps={{
-              style: {
-                display: 'block',
-                fontSize: '0.875rem',
-                color: resolvedTheme === 'dark' ? 'white' : 'black',
-              },
-            }}
-            className="w-ful col-span-1 md:col-span-2"
-          />
-          <Button
-            type="button"
-            className=" bg-green-500 capitalize hover:bg-green-600 md:mt-8 md:justify-self-end"
-            onClick={generatePassword}
-          >
-            Generate Password
-          </Button>
-        </div>
-        {errors.password && (
-          <span className="text-center text-sm text-red-500">
-            {errors.password?.message || 'A password is required'}
-          </span>
-        )}
-      </div>
+
       <div className="w-full space-y-2">
         <Button
           type="submit"

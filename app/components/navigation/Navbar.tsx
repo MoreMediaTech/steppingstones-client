@@ -9,9 +9,10 @@ import { useTheme } from 'next-themes'
 import { LoginButton, MobileLoginButton } from './LoginButton'
 import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
 import { AppLogo } from './AppLogo'
-import { CurrentUser } from '@lib/types'
+
 import ScrollLink from 'app/components/scroll-link'
 import UserButton from 'app/components/UserButton'
+import { UserSchemaWithIdAndOrganisationType } from '@models/User'
 
 const paths = ['about', 'features', 'faqs']
 
@@ -106,7 +107,7 @@ const Navbar = () => {
           })}
 
           <LoginButton
-            currentUser={currentUser as CurrentUser}
+            currentUser={currentUser as UserSchemaWithIdAndOrganisationType}
             handleLogout={handleLogout}
             setActivePath={setActivePath}
           />
@@ -285,7 +286,7 @@ const Navbar = () => {
               </li>
 
               <MobileLoginButton
-                currentUser={currentUser as CurrentUser}
+                currentUser={currentUser as UserSchemaWithIdAndOrganisationType}
                 handleLogout={handleLogout}
                 setActivePath={setActivePath}
               />

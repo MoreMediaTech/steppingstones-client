@@ -5,14 +5,15 @@ import { usePathname } from 'next/navigation'
 import { MdBusiness } from 'react-icons/md'
 import { FaRegUser, FaSignInAlt, FaSignOutAlt } from 'react-icons/fa'
 import UserButton from 'app/components/UserButton'
-import { CurrentUser } from '@lib/types'
+import { UserSchemaWithIdAndOrganisationType } from '@models/User'
+
 
 export function LoginButton({
   currentUser,
   handleLogout,
   setActivePath,
 }: {
-  currentUser: CurrentUser
+  currentUser: UserSchemaWithIdAndOrganisationType
   handleLogout(): void
   setActivePath: React.Dispatch<React.SetStateAction<string>>
 }) {
@@ -86,14 +87,14 @@ export function MobileLoginButton({
   handleLogout,
   setActivePath,
 }: {
-  currentUser: CurrentUser
+  currentUser: UserSchemaWithIdAndOrganisationType
   handleLogout(): void
   setActivePath: React.Dispatch<React.SetStateAction<string>>
 }) {
   return (
     <>
       {currentUser ? (
-        <li className="font-montserrat mb-4 w-full cursor-pointer text-[16px] font-medium">
+        <li className="mb-4 w-full cursor-pointer font-montserrat text-[16px] font-medium">
           <Group position="left">
             <Menu width={150}>
               <div className="grid w-full">

@@ -1,23 +1,22 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { Group, Burger } from '@mantine/core'
+import { Group } from '@components/mantine-components'
 import { IoIosSearch } from 'react-icons/io'
 import { useTheme } from 'next-themes'
 import { FiMoon, FiSun } from 'react-icons/fi'
 import { usePathname } from 'next/navigation'
-import { CurrentUser, CountyDataProps, DistrictDataProps } from '@lib/types'
-import ContentDrawer from 'app/components/navigation/ContentDrawer/ContentDrawer'
+import { CountyDataProps, DistrictDataProps } from '@lib/types'
 import Avatar from 'app/components/Avatar'
 import { useAppSelector, useAppDispatch } from 'app/global-state/hooks'
 import {
   globalSelector,
-  setDrawerOpened,
 } from 'app/global-state/features/global/globalSlice'
 import FormInput from 'app/components/forms/FormComponents/FormInput'
-import { AdminNavbar, AdminSidebar } from '@components/navigation'
+import {  AdminSidebar } from '@components/navigation'
+import { UserSchemaWithIdAndOrganisationType } from '@models/User'
 
 interface IPortalHeaderProps {
-  user?: CurrentUser
+  user?: UserSchemaWithIdAndOrganisationType
   title?: string
   subTitle?: string
   imgUrl?: string
