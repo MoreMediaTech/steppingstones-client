@@ -1,11 +1,12 @@
 'use client'
-import { CurrentUser, EditImageProps } from '@lib/types'
+import {  EditImageProps } from '@lib/types'
 import React, { useCallback, useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { Modal } from '@mantine/core'
 import EditImageComponent from './EditImageForm'
 import { useUpdateUserMutation } from 'app/global-state/features/user/usersApiSlice'
 import { showNotification } from '@mantine/notifications'
+import { UserSchemaWithIdAndOrganisationType } from '@models/User'
 
 const EditImageModal = ({
   opened,
@@ -16,7 +17,7 @@ const EditImageModal = ({
   opened: boolean
   setOpened: React.Dispatch<React.SetStateAction<boolean>>
   refetch: () => void
-  user: Partial<CurrentUser>
+  user: Partial<UserSchemaWithIdAndOrganisationType>
 }) => {
   const [preview, setPreview] = useState<string | ArrayBuffer | null>(null)
   const [updateUser, { isLoading }] = useUpdateUserMutation()

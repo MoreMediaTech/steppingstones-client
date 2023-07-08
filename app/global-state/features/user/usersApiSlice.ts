@@ -4,15 +4,18 @@ import {
   setCredentials,
   setError,
 } from 'app/global-state/features/auth/authSlice'
-import { CurrentUser } from '@lib/types'
+import {
+  UserSchemaWithIdType,
+  UserSchemaWithIdAndOrganisationType,
+} from '@models/User'
 
-export const usersAdapter = createEntityAdapter<CurrentUser>({})
+export const usersAdapter = createEntityAdapter<UserSchemaWithIdAndOrganisationType>({})
 
 const initialState = usersAdapter.getInitialState()
 
 export const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getUser: builder.query<CurrentUser, void>({
+    getUser: builder.query<UserSchemaWithIdAndOrganisationType, void>({
       query: () => ({
         url: '/users/getMe',
         validateStatus: (response: any, result: any) => {
@@ -33,7 +36,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         }
       },
     }),
-    getUsers: builder.query<CurrentUser[], void>({
+    getUsers: builder.query<UserSchemaWithIdAndOrganisationType[], void>({
       query: () => ({
         url: '/users',
         validateStatus: (response: any, result: any) => {
@@ -45,7 +48,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
           ? result.map((user) => ({ type: 'User', id: user.id }))
           : [{ type: 'User', id: 'LIST' }],
     }),
-    getUserById: builder.query<CurrentUser, string>({
+    getUserById: builder.query<UserSchemaWithIdAndOrganisationType, string>({
       query: (id) => ({
         url: `/users/${id}`,
         validateStatus: (response: any, result: any) => {
@@ -54,34 +57,28 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: (result, error, arg) => [{ type: 'User', id: result?.id }],
     }),
-    createUser: builder.mutation<CurrentUser, CurrentUser>({
+    createUser: builder.mutation<
+      { success: boolean; message: string },
+      UserSchemaWithIdType
+    >({
       query: (user) => ({
         url: '/users',
         method: 'POST',
         body: { ...user },
       }),
-      invalidatesTags: (result, error, arg) => [
-        { type: 'User', id: result?.id },
-      ],
+      invalidatesTags: (result, error, arg) => [{ type: 'User' }],
     }),
-    updateUser: builder.mutation<CurrentUser, CurrentUser>({
+    updateUser: builder.mutation<
+      { success: boolean; message: string },
+      Partial<UserSchemaWithIdType>
+    >({
       query: (user) => ({
         url: `/users/${user.id}`,
         method: 'PUT',
         body: { ...user },
       }),
       invalidatesTags: (result, error, arg) => [
-        { type: 'User', id: result?.id },
-      ],
-    }),
-    resetCredentials: builder.mutation<CurrentUser, CurrentUser>({
-      query: (user) => ({
-        url: `/resetCredentials/${user.id}`,
-        method: 'PUT',
-        body: { ...user },
-      }),
-      invalidatesTags: (result, error, arg) => [
-        { type: 'User', id: result?.id },
+        { type: 'User'},
       ],
     }),
   }),
@@ -94,7 +91,6 @@ export const {
   useGetUserByIdQuery,
   useCreateUserMutation,
   useUpdateUserMutation,
-  useResetCredentialsMutation,
 } = usersApiSlice
 
 // returns the query result for the current user

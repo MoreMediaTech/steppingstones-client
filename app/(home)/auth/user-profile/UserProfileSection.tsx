@@ -1,18 +1,25 @@
 'use client'
 import { useState, useCallback } from 'react'
 import Link from 'next/link'
-import { Button, Loader } from '@mantine/core'
 import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa'
-import { showNotification } from '@mantine/notifications'
 
-import Avatar from 'app/components/Avatar'
-import { UpdateUserForm, UpdateUserPassForm } from 'app/components/forms'
+import { ToastAction } from '@components/ui/toast'
+import { useToast } from '@components/ui/use-toast'
+import { Button } from '@components/ui/button'
+import Avatar from '@components/Avatar'
+import UpdateUserForm from './UpdateUserForm'
+
 import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
 import EditImageModal from 'app/components/EditImageComponent/EditImageModal'
-import { CurrentUser } from '@lib/types'
+
 import { useVerifyEmailMutation } from 'app/global-state/features/auth/authApiSlice'
+import Loader from '@components/Loader'
+import { UserSchemaWithIdAndOrganisationType } from '@models/User'
+
+
 
 const UserProfileSection = () => {
+  const { toast } = useToast()
   const [opened, setOpened] = useState<boolean>(false)
   const [responseMessage, setResponseMessage] = useState<string>('')
   const { data: user, isLoading, refetch } = useGetUserQuery()
@@ -27,17 +34,16 @@ const UserProfileSection = () => {
       }).unwrap()
       if (response?.success) {
         setResponseMessage(response?.message)
-        showNotification({
-          message: response?.message ?? 'Email verification email sent',
-          color: 'green',
-          autoClose: 3000,
+        toast({
+          title: 'Success!',
+          description: response?.message,
         })
       }
     } catch (error: any) {
-      showNotification({
-        message: error?.message ?? 'Error sending email verification',
-        color: 'red',
-        autoClose: 3000,
+      toast({
+        title: 'Error!',
+        description: error?.data?.message,
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
       })
     }
   }, [])
@@ -45,7 +51,7 @@ const UserProfileSection = () => {
   if (isLoading) {
     return (
       <div className="flex h-[700px] items-center justify-center">
-        <Loader size="xl" variant="bars" />
+        <Loader />
       </div>
     )
   }
@@ -65,13 +71,7 @@ const UserProfileSection = () => {
                   <span className="text-primary">{user?.email}</span>) is
                   unverified.
                 </p>
-                <Button
-                  type="button"
-                  color="primary"
-                  className="rounded-md bg-primary px-4 py-2 text-center font-semibold text-white transition duration-300 
-                delay-150 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-secondary md:text-lg"
-                  onClick={handleVerifyEmail}
-                >
+                <Button type="button" onClick={handleVerifyEmail}>
                   Verify
                 </Button>
               </>
@@ -94,12 +94,7 @@ const UserProfileSection = () => {
                   <h1 className="text-base font-semibold">{user?.name}</h1>
                   <h3 className="text-sm text-gray-500">{user?.role}</h3>
                 </div>
-                <Button
-                  type="button"
-                  className="rounded-md bg-primary px-4 py-2 text-center font-semibold text-gray-200 shadow-xl transition duration-300 
-                delay-150 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-secondary md:text-lg"
-                  onClick={() => setOpened(true)}
-                >
+                <Button type="button" onClick={() => setOpened(true)}>
                   Change Picture
                 </Button>
               </div>
@@ -110,15 +105,8 @@ const UserProfileSection = () => {
               <h1 className="text-xl font-bold">General Information</h1>
               <UpdateUserForm
                 refetch={refetch}
-                user={user as CurrentUser}
+                user={user as UserSchemaWithIdAndOrganisationType}
                 disabled
-              />
-            </div>
-            <div className="w-full space-y-4 rounded-md px-4 pb-8 pt-6 shadow-xl dark:bg-slate-700 dark:text-gray-200">
-              <h1 className="text-xl font-bold">Password Information</h1>
-              <UpdateUserPassForm
-                refetch={refetch}
-                user={user as CurrentUser}
               />
             </div>
           </section>
@@ -155,7 +143,7 @@ const UserProfileSection = () => {
         opened={opened}
         setOpened={setOpened}
         refetch={refetch}
-        user={user as CurrentUser}
+        user={user as UserSchemaWithIdAndOrganisationType}
       />
     </>
   )

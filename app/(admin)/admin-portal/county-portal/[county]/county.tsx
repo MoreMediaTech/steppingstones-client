@@ -3,7 +3,8 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Loader } from '@components/mantine-components'
 
-import { AddDistrictForm, CreateSectionForm } from 'app/components/forms'
+import CreateSectionForm from './CreateSectionForm'
+import AddDistrictForm from './AddDistrictForm'
 import Button from 'app/components/Button'
 import { DistrictDataProps, SectionProps } from '@lib/types'
 import {
@@ -21,9 +22,7 @@ type Props = {
 
 export default function County({ county, countyId }: Props) {
   const router = useRouter()
-  const [opened, setOpened] = useState<boolean>(false)
-  const [openAddSectionModal, setAddOpenSectionModal] = useState<boolean>(false)
-
+  const [createSection] = useCreateSectionMutation()
   const {
     data: countyData,
     isLoading: isLoadingCounty,
@@ -32,8 +31,6 @@ export default function County({ county, countyId }: Props) {
     refetchOnMountOrArgChange: true,
   })
 
-  const [createSection, { isLoading: isLoadingCreateSection }] =
-    useCreateSectionMutation()
   const districts = countyData?.districts.map((district) => district.name)
 
   return (
@@ -42,22 +39,16 @@ export default function County({ county, countyId }: Props) {
         <div className="flex w-full flex-col items-center justify-between sm:flex-row">
           <Header title={countyData?.name as string} order={1} />
           <div className="flex w-full items-center gap-2">
-            <Button
-              type="button"
-              color="outline"
-              className="w-full"
-              onClick={() => setAddOpenSectionModal((o) => !o)}
-            >
-              Add Section
-            </Button>
-            <Button
-              type="button"
-              color="outline"
-              className="w-full "
-              onClick={() => setOpened((o) => !o)}
-            >
-              Add LA
-            </Button>
+            <CreateSectionForm
+              createSection={createSection}
+              refetch={refetchCounty}
+              id={countyData?.id as string}
+            />
+            <AddDistrictForm
+              countyId={countyId}
+              county={countyData?.name as string}
+              refetch={refetchCounty}
+            />
           </div>
         </div>
       </section>
@@ -159,21 +150,6 @@ export default function County({ county, countyId }: Props) {
           )}
         </section>
       )}
-      <AddDistrictForm
-        opened={opened}
-        setOpened={setOpened}
-        countyId={countyId}
-        county={countyData?.name as string}
-        refetch={refetchCounty}
-      />
-      <CreateSectionForm
-        opened={openAddSectionModal}
-        setOpened={setAddOpenSectionModal}
-        isLoading={isLoadingCreateSection}
-        createSection={createSection}
-        refetch={refetchCounty}
-        id={countyData?.id as string}
-      />
     </>
   )
 }

@@ -4,8 +4,8 @@ import {
   setError,
 } from 'app/global-state/features/auth/authSlice'
 import { apiSlice, editorApiSlice } from 'app/global-state/api/apiSlice'
-import { CurrentUser } from '@lib/types'
 import * as z from 'zod'
+import { UserSchemaWithIdAndOrganisationType } from '@models/User'
 
 export const authSchema = z.object({
   token: z.string().nonempty(),
@@ -85,7 +85,7 @@ export const authApi = apiSlice.injectEndpoints({
     }),
     verifyEmail: builder.mutation<
       { success: boolean; message: string },
-      Partial<CurrentUser>
+      Partial<UserSchemaWithIdAndOrganisationType>
     >({
       query: (data) => ({
         url: 'auth/verify-email',

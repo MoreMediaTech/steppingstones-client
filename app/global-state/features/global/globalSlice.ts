@@ -1,7 +1,6 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import Cookies from 'js-cookie'
-
-import { AppThunk, RootState, AppDispatch } from 'app/global-state/store'
+import { RootState } from 'app/global-state/store'
 
 type GlobalState = {
   loading: boolean
@@ -11,20 +10,21 @@ type GlobalState = {
   isVisible: boolean
 }
 
-const checkCookieConsent = () => {
-  const cookie = Cookies.get('ssapp-cookie-consent')
-  if (!cookie || cookie === undefined) {
-    return true
-  }
-  return false
+const checkIsVisible = () => {
+  const isVisible = Cookies.get('ssapp-cookie-consent') === 'true'
+  return isVisible
 }
+
+const isVisible = checkIsVisible()
+console.log("🚀 ~ file: globalSlice.ts:20 ~ isVisible:", isVisible)
+
 
 const initialState: GlobalState = {
   loading: false,
   openModal: false,
   error: { name: '', message: 'An Error occurred' },
   drawerOpened: false,
-  isVisible: checkCookieConsent(),
+  isVisible: isVisible as boolean,
 }
 
 export const globalSlice = createSlice({

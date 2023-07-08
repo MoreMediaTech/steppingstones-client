@@ -1,6 +1,5 @@
 'use client'
 import { useState } from 'react'
-import Cookies from 'js-cookie'
 
 import { OPTIONS, SAME_SITE_OPTIONS, VISIBLE_OPTIONS } from '@lib/types'
 import CookieConsent from './CookieConsent'
@@ -11,28 +10,11 @@ import {
   setIsVisible,
   globalSelector,
 } from 'app/global-state/features/global/globalSlice'
+import { setCookie } from './actions'
 
-function setCookie(
-  cookieName: string,
-  cookieValue: string | boolean | object | number,
-  maxAge: number,
-  extraCookieOptions: object,
-  cookieSecurity: boolean,
-  sameSite: SAME_SITE_OPTIONS
-) {
-  const cookieOptions = {
-    maxAge,
-    ...extraCookieOptions,
-    sameSite,
-    secure: cookieSecurity,
-  }
-
-  Cookies.set(cookieName, JSON.stringify(cookieValue))
-}
 
 const CookieConsentComponent = () => {
   const dispatch = useAppDispatch()
-  const { isVisible } = useAppSelector(globalSelector)
   const [opened, setOpened] = useState<boolean>(false)
   const [snCookies, setSNCookies] = useState<boolean>(false)
   const [pAndACookies, setPAndACookies] = useState<boolean>(false)
@@ -117,7 +99,6 @@ const CookieConsentComponent = () => {
         flipButtons
         cookieName={COOKIE_NAME}
         visible={VISIBLE_OPTIONS.BY_COOKIE_VALUE}
-        isVisible={isVisible}
         ariaAcceptLabel="Accept cookies"
         ariaDeclineLabel="Decline cookies"
         disableStyles={true}
@@ -143,25 +124,15 @@ const CookieConsentComponent = () => {
             steppingstonesapp.com. You do not have to accept but some content
             may not work if you don't. click manage preferences to see how we
             use your data.{' '}
-            <button
-              type="button"
-              aria-label="Manage Preferences"
-              className="text-[#5E17EB] underline"
-              onClick={() => setOpened(true)}
-            >
-              Manage Preferences
-            </button>
           </p>
+          <CookieConsentContainer
+            snCookies={snCookies}
+            setSNCookies={setSNCookies}
+            handleAccept={handleAcceptAll}
+            handleConfirmChoices={handleConfirmChoices}
+          />
         </div>
       </CookieConsent>
-      <CookieConsentContainer
-        opened={opened}
-        snCookies={snCookies}
-        setOpened={setOpened}
-        setSNCookies={setSNCookies}
-        handleAccept={handleAcceptAll}
-        handleConfirmChoices={handleConfirmChoices}
-      />
     </>
   )
 }

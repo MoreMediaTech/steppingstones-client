@@ -1,4 +1,4 @@
-import UserProfileSection from 'app/components/UserProfileSection'
+import UserProfileSection from './UserProfileSection'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 

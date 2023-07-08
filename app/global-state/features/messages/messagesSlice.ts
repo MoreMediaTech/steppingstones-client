@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
-import { AppThunk, RootState, AppDispatch } from 'app/global-state/store'
-import { IEmailFormData, MessageProps } from '../../../../lib/types'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { RootState } from 'app/global-state/store'
+import {  MessageProps } from '../../../../lib/types'
 
 export interface EmailState {
   enquiries: MessageProps[]

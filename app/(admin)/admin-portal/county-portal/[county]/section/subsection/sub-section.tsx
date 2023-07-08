@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { Loader } from '@components/mantine-components'
 
 import SectionContainer from '../section-container'
-import { CreateSectionForm } from 'app/components/forms'
+import CreateSectionForm  from '../../CreateSectionForm'
 import Button from 'app/components/Button'
 import { SubSectionProps, SubSubSectionProps } from '@lib/types'
 import {
@@ -62,14 +62,11 @@ export default function SubSection({ searchParams }: Props) {
             </Button>
 
             {subSectionData?.isSubSubSection && (
-              <Button
-                type="button"
-                color="outline"
-                className="w-full"
-                onClick={() => setAddOpenSectionModal((o) => !o)}
-              >
-                Add Section
-              </Button>
+              <CreateSectionForm
+                createSection={createSubSubSection}
+                refetch={refetchSubSection}
+                id={subSectionData?.id as string}
+              />
             )}
           </div>
         </div>
@@ -114,14 +111,6 @@ export default function SubSection({ searchParams }: Props) {
           </section>
         )}
       </section>
-      <CreateSectionForm
-        opened={openAddSectionModal}
-        setOpened={setAddOpenSectionModal}
-        isLoading={isLoadingCreate}
-        createSection={createSubSubSection}
-        refetch={refetchSubSection}
-        id={subSectionData?.id as string}
-      />
     </>
   )
 }

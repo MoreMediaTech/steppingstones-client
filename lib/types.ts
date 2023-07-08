@@ -89,12 +89,6 @@ export enum SourceDirectoryType {
   EU = 'EU',
 }
 
-export enum ROLE {
-  PARTNER = 'PARTNER',
-  COUNTY_EDITOR = 'COUNTY_EDITOR',
-  SS_EDITOR = 'SS_EDITOR',
-  USER = 'USER',
-}
 
 export enum OPTIONS {
   TOP = 'top',
@@ -384,29 +378,6 @@ export interface Error {
   message: string
 }
 
-export interface CurrentUser {
-  id?: string
-  name?: string
-  email?: string
-  isAdmin?: boolean
-  isSuperAdmin?: boolean
-  passwordInput?: string
-  role?: ROLE
-  contactNumber?: string
-  imageUrl?: string
-  imageFile?: string | ArrayBuffer | null
-  county?: string
-  postCode?: string
-  organisation?: {
-    id?: string
-    name?: string
-    userId?: string
-    createdAt?: string
-  }
-  district?: string
-  emailVerified?: boolean
-  acceptTermsAndConditions?: boolean
-}
 
 export type PartnerData = {
   id?: string

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { RootState } from '../../store'
-import { Error, AuthState, CurrentUser } from '@lib/types'
+import { Error, AuthState } from '@lib/types'
 import { HYDRATE } from 'next-redux-wrapper'
 
 const token =

@@ -11,12 +11,9 @@ import {
 } from '@lib/types'
 import { editorApiSlice } from 'app/global-state/api/apiSlice'
 import {
-  setCounties,
   setCounty,
   setDistrict,
   setError,
-  setSection,
-  setSubSection,
   setSubSubSection,
   setEconomicData,
   setDistrictSection,

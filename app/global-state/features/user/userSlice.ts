@@ -1,15 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { RootState } from '../../store'
-import { Error, AuthState, CurrentUser } from '@lib/types'
+import { Error, AuthState,  } from '@lib/types'
 import { HYDRATE } from 'next-redux-wrapper'
+import { UserSchemaWithIdAndOrganisationType } from '@models/User'
 
 const token =
   typeof window !== 'undefined' ? localStorage.getItem('token') : null
 
 export type UserState = {
     message: string
-    user: CurrentUser | null
+    user: UserSchemaWithIdAndOrganisationType | null
     error: Error
 }
 
@@ -25,7 +26,7 @@ export const userSlice = createSlice({
   reducers: {
     setUser: (
       state,
-      { payload }: PayloadAction<CurrentUser | null>
+      { payload }: PayloadAction<UserSchemaWithIdAndOrganisationType | null>
     ) => {
       state.user = payload
     },
