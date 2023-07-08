@@ -1,9 +1,8 @@
 'use client'
 import { useCallback } from 'react'
 import { ColumnDef, Row } from '@tanstack/react-table'
-import { CurrentUser } from '@lib/types'
-import { FaCheck, FaEdit, FaTimes } from 'react-icons/fa'
-import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
+import { FaCheck, FaTimes } from 'react-icons/fa'
+import { ArrowUpDown } from 'lucide-react'
 import { Button } from '@components/ui/button'
 import { Badge } from '@components/ui/badge'
 import { Checkbox } from '@components/ui/checkbox'
@@ -11,8 +10,9 @@ import { DataTableRowActions } from '@components/table/data-table-row-actions'
 import { useAppDispatch } from 'app/global-state/hooks'
 import { setUser } from 'app/global-state/features/user/userSlice'
 import { setOpenModal } from 'app/global-state/features/global/globalSlice'
+import { UserSchemaWithIdAndOrganisationType } from '@models/User'
 
-export const columns: ColumnDef<CurrentUser>[] = [
+export const columns: ColumnDef<UserSchemaWithIdAndOrganisationType>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -127,11 +127,14 @@ export const columns: ColumnDef<CurrentUser>[] = [
     cell: ({ row }) => {
       const dispatch = useAppDispatch()
 
-      const handleEdit = useCallback((row: Row<CurrentUser>) => {
-        const user = row.original
-        dispatch(setUser(user))
-        dispatch(setOpenModal(true))
-      }, [])
+      const handleEdit = useCallback(
+        (row: Row<UserSchemaWithIdAndOrganisationType>) => {
+          const user = row.original
+          dispatch(setUser(user))
+          dispatch(setOpenModal(true))
+        },
+        []
+      )
 
       return (
         <DataTableRowActions row={row} enableEdit handleEdit={handleEdit} />

@@ -3,7 +3,7 @@ import { Loader } from '@mantine/core'
 
 import AdminUsersTable from './AdminUsersTable'
 import { useGetUsersQuery } from 'app/global-state/features/user/usersApiSlice'
-import { CurrentUser } from '@lib/types'
+
 import UpdateAdminUserModal from './UpdateAdminUserModal'
 import { useAppDispatch, useAppSelector } from 'app/global-state/hooks'
 import {
@@ -11,6 +11,7 @@ import {
   setOpenModal,
 } from 'app/global-state/features/global/globalSlice'
 import { userSelector, setUser } from 'app/global-state/features/user/userSlice'
+import { UserSchemaWithIdAndOrganisationType } from '@models/User'
 
 export function AdminUsersSection(){
   const dispatch = useAppDispatch()
@@ -33,14 +34,16 @@ export function AdminUsersSection(){
   return (
     <>
       <section className="">
-        <AdminUsersTable users={users as CurrentUser[]} />
+        <AdminUsersTable
+          users={users as UserSchemaWithIdAndOrganisationType[]}
+        />
       </section>
       <UpdateAdminUserModal
         key={currentUser?.id}
         open={openModal}
         handleModalClose={handleModalClose}
         refetch={refetch}
-        user={currentUser as CurrentUser}
+        user={currentUser as UserSchemaWithIdAndOrganisationType}
       />
     </>
   )

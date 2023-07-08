@@ -6,7 +6,8 @@ import { AdminUsersSection } from './AdminUsersSection'
 import Header from 'app/components/Header'
 import { Button } from '@components/ui/button'
 import CreateAdminModal from 'app/(admin)/admin-portal/users/CreateAdminModal'
-import { CurrentUser } from '@lib/types'
+import { UserSchemaWithIdAndOrganisationType } from '@models/User'
+
 
 export default function Users() {
   const { data: user, refetch } = useGetUserQuery()
@@ -32,7 +33,7 @@ export default function Users() {
       <CreateAdminModal
         opened={opened}
         setOpened={setOpened}
-        user={user as CurrentUser}
+        user={user as UserSchemaWithIdAndOrganisationType}
         refetch={refetch}
       />
     </>

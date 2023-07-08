@@ -81,11 +81,12 @@ export const UserSchema = z.object({
   isAdmin: z.boolean().default(false),
   acceptTermsAndConditions: z.boolean().default(false),
   role: z.nativeEnum(Role),
+  isSuperAdmin: z.boolean().default(false).optional(),
+  createdAt: z.string().nonempty({}).optional(),
+  updatedAt: z.string().nonempty({}).optional(),
 })
 
-export const IsSuperAdminsSchema = UserSchema.extend({
-  isSuperAdmin: z.boolean().default(true),
-})
+
 
 export const UserSchemaWithIdAndOrganisation = UserSchema.extend({
   id: z.string().nonempty({}).optional(),
@@ -104,4 +105,3 @@ export type UserSchemaWithIdAndOrganisationType = z.infer<
   typeof UserSchemaWithIdAndOrganisation
 >
 
-export type IsSuperAdminsSchemaType = z.infer<typeof IsSuperAdminsSchema>

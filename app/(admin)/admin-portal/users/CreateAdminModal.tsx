@@ -5,9 +5,9 @@ import { showNotification } from '@mantine/notifications'
 import { Modal } from '@mantine/core'
 
 import { useCreateUserMutation } from 'app/global-state/features/user/usersApiSlice'
-import { CurrentUser } from '@lib/types'
 import CreateAdminForm from 'app/components/forms/CreateAdminForm'
 import { generatePass } from '@lib/generatePass'
+import { UserSchemaWithIdAndOrganisationType } from '@models/User'
 
 const CreateAdminModal = ({
   opened,
@@ -18,7 +18,7 @@ const CreateAdminModal = ({
   opened: boolean
   setOpened: React.Dispatch<React.SetStateAction<boolean>>
   refetch: () => void
-  user: CurrentUser
+  user: UserSchemaWithIdAndOrganisationType
 }) => {
   const [password, setPassword] = useState<string>('')
   const [createUser, { isLoading }] = useCreateUserMutation()
@@ -27,24 +27,21 @@ const CreateAdminModal = ({
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<Partial<CurrentUser>>({
-    defaultValues: { passwordInput: password },
-  })
+  } = useForm<Partial<UserSchemaWithIdAndOrganisationType>>()
 
-  useEffect(() => {
-    // update the password field with the password when generatePassword is called
-    reset({ passwordInput: password })
-  }, [password])
+ 
 
   const generatePassword = useCallback(() => {
     const password = generatePass(12)
     setPassword(password)
   }, [])
 
-  const submitHandler: SubmitHandler<Partial<CurrentUser>> = useCallback(
+  const submitHandler: SubmitHandler<
+    Partial<UserSchemaWithIdAndOrganisationType>
+  > = useCallback(
     async (data) => {
       try {
-        await createUser(data as CurrentUser).unwrap()
+        await createUser(data as UserSchemaWithIdAndOrganisationType).unwrap()
         refetch()
         setOpened(false)
         setPassword('')

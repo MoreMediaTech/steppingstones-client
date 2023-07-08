@@ -1,8 +1,8 @@
 'use client'
 import { Modal } from '@mantine/core'
 
-import { CurrentUser } from '@lib/types'
-import { UpdateUserForm } from 'app/components/forms'
+import UpdateUserForm from './UpdateUserForm'
+import { UserSchemaWithIdAndOrganisationType } from '@models/User'
 
 const UpdateAdminUserModal = ({
   open,
@@ -12,7 +12,7 @@ const UpdateAdminUserModal = ({
 }: {
   open: boolean
   refetch: () => void
-  user: CurrentUser
+  user: UserSchemaWithIdAndOrganisationType
   handleModalClose: () => void
 }) => {
   return (
@@ -25,7 +25,7 @@ const UpdateAdminUserModal = ({
       <UpdateUserForm
         refetch={refetch}
         user={user}
-        handleModalClose={handleModalClose}
+
       />
     </Modal>
   )
