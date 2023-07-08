@@ -3,9 +3,8 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { ComponentShield } from 'app/components/NextShield'
 import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
-import { AdminSidebar } from 'app/components/navigation'
 import PortalHeader from 'app/components/PortalHeader'
-import { CurrentUser } from '@lib/types'
+import { UserSchemaWithIdAndOrganisationType } from '@models/User'
 
 function PageWrapper({
   children,
@@ -30,7 +29,7 @@ function PageWrapper({
       >
         <section className="grid">
           <PortalHeader
-            user={user as CurrentUser}
+            user={user as UserSchemaWithIdAndOrganisationType}
             title={`Welcome ${user?.name}`}
             subTitle="Please select from the menu below"
             imgUrl={user?.imageUrl}
