@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
+
 import {
   Sheet,
   SheetClose,
@@ -25,16 +26,19 @@ export interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
     title: string
   }[]
   title: string
+  height: number
 }
 
 export function SidebarNav({
   className,
   items,
   title,
+  height,
   ...props
 }: SidebarNavProps) {
   const pathname = usePathname()
-
+  const SCROLL_AREA_HEIGHT = height - 300
+  console.log("🚀 ~ file: sidebar-nav.tsx:40 ~ SCROLL_AREA_HEIGHT:", SCROLL_AREA_HEIGHT)
   return (
     <nav
       className={cn(
@@ -44,10 +48,12 @@ export function SidebarNav({
       {...props}
     >
       <div className="hidden md:block">
-        <ScrollArea className="hidden rounded-md border p-4 sm:flex sm:h-[700px]  sm:flex-col">
+        <ScrollArea
+          className={`hidden rounded-md border p-4 sm:flex sm:h-[${SCROLL_AREA_HEIGHT}px]  sm:flex-col`}
+        >
           <h4 className="mb-4 text-sm font-medium leading-none">{title}</h4>
-          {items.map((item) => (
-            <>
+          {items.map((item, index) => (
+            <div key={`${item.href}-${index}`}>
               <Link
                 key={item.href}
                 href={item.href}
@@ -62,7 +68,7 @@ export function SidebarNav({
                 {item.title}
               </Link>
               <Separator className="my-2" />
-            </>
+            </div>
           ))}
         </ScrollArea>
       </div>
@@ -74,10 +80,11 @@ export function MobileSideNav({
   className,
   items,
   title,
+  height,
   ...props
 }: SidebarNavProps) {
   const pathname = usePathname()
-
+    const SCROLL_AREA_HEIGHT = height - 300
   return (
     <nav>
       <Sheet>
@@ -88,9 +95,11 @@ export function MobileSideNav({
           <SheetHeader>
             <SheetTitle className="text-left">{title}</SheetTitle>
           </SheetHeader>
-          <ScrollArea className="flex h-[700px] flex-col rounded-md border  p-4">
-            {items.map((item) => (
-              <>
+          <ScrollArea
+            className={`flex h-[${SCROLL_AREA_HEIGHT}px] flex-col rounded-md border  p-4`}
+          >
+            {items.map((item, index) => (
+              <div key={`${item.href}-${index}`}>
                 <Link
                   key={item.href}
                   href={item.href}
@@ -105,7 +114,7 @@ export function MobileSideNav({
                   {item.title}
                 </Link>
                 <Separator className="my-2" />
-              </>
+              </div>
             ))}
           </ScrollArea>
         </SheetContent>

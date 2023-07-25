@@ -61,7 +61,6 @@ const defaultStats = (stats: any): DefaultStatsProps[] => {
 
 export function RenderInsights() {
   const { data: analytics, isLoading } = useGetAnalyticsQuery()
-  console.log(analytics?.averageLoadTimesByDay)
   // add color scheme to bar in Performance Chart
   const performanceChartData = analytics?.averageLoadTimesByDay.map(
     (item: any) => {

@@ -8,7 +8,8 @@
       "@context/*": ["context/*"],
       "@models/*": ["models/*"],
       "@config/*": ["config/*"],
-      "@app/*": ["app/*"]
+      "@app/*": ["app/*"],
+      "@types/*": ["types/*"],
     },
     "target": "esnext",
     "lib": [

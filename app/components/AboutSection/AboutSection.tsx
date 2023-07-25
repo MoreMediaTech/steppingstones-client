@@ -24,6 +24,7 @@ const AboutSection = () => {
               alt="Photo by Will Dunkley on Unsplash"
               quality={50}
               fill
+              sizes="100%"
             />
           </div>
           <div className="md:items-left flex items-center p-2 text-justify">
@@ -75,6 +76,7 @@ const AboutSection = () => {
               alt="Photo by Tom Podmore on Unsplash"
               quality={50}
               fill
+              sizes="100%"
             />
           </div>
         </div>
