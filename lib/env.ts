@@ -8,3 +8,9 @@ export const envSchema = zod.object({
 export type Env = zod.infer<typeof envSchema>;
 
 export const env = envSchema.parse(process.env);
+
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv extends Env {}
+  }
+}
