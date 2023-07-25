@@ -2,18 +2,21 @@
 import React from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Loader } from '@components/mantine-components'
-import { MobileSideNav, SidebarNav, SidebarNavProps } from '@components/navigation/sidebar-nav'
+import {
+  MobileSideNav,
+  SidebarNav,
+  SidebarNavProps,
+} from '@components/navigation/sidebar-nav'
 import { useGetCountiesQuery } from 'app/global-state/features/editor/editorApiSlice'
 import { useElementSize } from '@hooks/useElementSize'
-import { useWindowSize } from '@hooks/useWindowSize'
+import useWindowSize from '@hooks/useWindowSize'
 
 export function CountyPortalLayoutWrapper({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const size = useWindowSize()
-  console.log("🚀 ~ file: county-portal-layout-wrapper.tsx:15 ~ height:", size.height)
+  const [size] = useWindowSize()
   const { data: counties, isLoading } = useGetCountiesQuery()
   const sidebarNavItems = counties?.map((county) => ({
     title: county.name,
@@ -28,21 +31,16 @@ export function CountyPortalLayoutWrapper({
         </div>
       ) : (
         <section className="relative grid grid-cols-1 lg:grid-cols-5">
-          <aside
-            className="hidden h-full overflow-hidden px-4 py-4  shadow-md  sm:py-2 lg:col-span-1 lg:block lg:h-screen"
-          >
+          <aside className="hidden h-full overflow-hidden px-4 py-4  shadow-md  sm:py-2 lg:col-span-1 lg:block lg:h-screen">
             <SidebarNav
-              height={size.height as number}
+              height={size.innerHeight as number}
               items={sidebarNavItems as SidebarNavProps['items']}
               title="Counties"
             />
           </aside>
-          <div
-
-            className="block h-full overflow-hidden px-4 py-4  sm:py-2  lg:col-span-1 lg:hidden lg:h-screen"
-          >
+          <div className="block h-full overflow-hidden px-4 py-4  sm:py-2  lg:col-span-1 lg:hidden lg:h-screen">
             <MobileSideNav
-              height={size.height as number}
+              height={size.innerHeight as number}
               items={sidebarNavItems as SidebarNavProps['items']}
               title="Counties"
             />
