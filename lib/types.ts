@@ -240,6 +240,8 @@ export type SectionProps = {
   name: string
   title?: string
   content?: string
+  author?: string
+  summary?: string
   imageUrl?: string
   isSubSection?: boolean
   isLive?: boolean
@@ -254,6 +256,8 @@ export type DistrictSectionProps = {
   name: string
   title?: string
   content?: string
+  author?: string
+  summary?: string
   imageUrl?: string
   isEconomicData?: boolean
   isLive?: boolean
@@ -267,6 +271,8 @@ export type SubSectionProps = {
   name: string
   title?: string
   content?: string
+  author?: string
+  summary?: string
   imageUrl?: string
   isSubSubSection?: boolean
   isLive?: boolean
@@ -280,6 +286,8 @@ export type SubSubSectionProps = {
   name: string
   title?: string
   content?: string
+  author?: string
+  summary?: string
   imageUrl?: string
   isLive?: boolean
 }
@@ -324,6 +332,8 @@ export type CountyDataProps = {
     createdAt: string
     updatedAt: string
     imageUrl: string
+    author: string
+    summary: string
   }
   lep: {
     id: string
@@ -334,6 +344,8 @@ export type CountyDataProps = {
     createdAt: string
     updatedAt: string
     imageUrl: string
+    author: string
+    summary: string
   }
   news: {
     id: string
@@ -344,6 +356,8 @@ export type CountyDataProps = {
     createdAt: string
     updatedAt: string
     imageUrl: string
+    author: string
+    summary: string
   }
   districts: DistrictDataProps[]
   sections: SectionProps[]

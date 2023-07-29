@@ -5,8 +5,7 @@ import EnquiryForm from './EnquiryForm'
 
 import CreateCountyForm from './CreateCountyForm'
 import AddDistrictForm from '../../(admin)/admin-portal/county-portal/[county]/AddDistrictForm'
-import ContentFormComponent from './ContentFormComponent'
-import CountySectionForm from './CountySectionForm'
+import {ContentForm} from './ContentForm'
 
 
 import CreateLASectionForm from './CreateLASectionForm'
@@ -22,8 +21,7 @@ export {
   EnquiryForm,
   CreateCountyForm,
   AddDistrictForm,
-  ContentFormComponent,
-  CountySectionForm,
+  ContentForm,
   CreateLASectionForm,
   UpdateSectionForm,
   UpdateDistrictForm,

@@ -8,7 +8,6 @@ import {
   SidebarNavProps,
 } from '@components/navigation/sidebar-nav'
 import { useGetCountiesQuery } from 'app/global-state/features/editor/editorApiSlice'
-import { useElementSize } from '@hooks/useElementSize'
 import useWindowSize from '@hooks/useWindowSize'
 
 export function CountyPortalLayoutWrapper({

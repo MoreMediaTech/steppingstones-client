@@ -3,7 +3,6 @@ import React, { useCallback } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
-import validator from 'validator'
 import { ToastAction } from '@components/ui/toast'
 import { useToast } from '@components/ui/use-toast'
 import { Button } from '@components/ui/button'
@@ -113,7 +112,7 @@ const CreateSectionForm = ({
         type="button"
         variant="outline"
         asChild
-        className="w-full border-gray-900 dark:border-gray-200"
+        className="w-full sm:w-1/3 border-gray-900 dark:border-gray-200"
       >
         <DialogTrigger>Create Section</DialogTrigger>
       </Button>

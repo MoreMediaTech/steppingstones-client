@@ -60,7 +60,7 @@ const PortalHeader = ({
 
   return (
     <header
-      className={`bg-slate-100 px-4 py-2 drop-shadow-md dark:bg-[#3b3c40] w-full`}
+      className={`bg-background px-4 py-2 drop-shadow-md  w-full`}
     >
       <div className="mx-auto py-2 md:px-4">
         <div className="flex flex-col items-start justify-between md:flex-row md:items-center">
@@ -78,11 +78,11 @@ const PortalHeader = ({
                   imgSize="md:h-10 h-14 md:w-10 w-14"
                 />
                 <div style={{ flex: 1 }}>
-                  <h1 className="text-xs sm:text-[1rem] font-semibold text-[#00dcb3] sm:text-base">
+                  <h1 className="text-xs sm:text-[1rem] font-semibold text-textDark dark:text-textLight sm:text-base">
                     {title}
                   </h1>
 
-                  <h3 className="text-xs sm:text-sm font-semibold text-primary-dark-100 dark:text-primary-light-700">
+                  <h3 className="text-xs sm:text-sm font-semibold text-accent-dark-100 dark:text-accent-light-200">
                     {subTitle}
                   </h3>
                 </div>

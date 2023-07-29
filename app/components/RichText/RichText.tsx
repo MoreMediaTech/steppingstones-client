@@ -1,9 +1,10 @@
-// RichText.tsx in your components folder
+'use client'
 import React, { Suspense } from 'react'
 import RichTextToolbar from './RichTextToolbar'
 import ReactQuill from 'react-quill'
 
-import styles from '../ContentPreview/ContentPreview.module.css'
+import { ControllerRenderProps } from 'react-hook-form'
+import { ContentFormProps } from '@models/ContentForm'
 
 // Undo and redo functions for Custom Toolbar
 function undoChange() {
@@ -51,27 +52,23 @@ const formats = [
 ]
 
 const RichTextEditor = ({
-  value,
-  setValue,
+  field,
 }: {
-  value: string
-  setValue: React.Dispatch<React.SetStateAction<string>>
+  field: ControllerRenderProps<ContentFormProps, 'content'>
 }) => {
   return (
     <div className="w-full ">
-      <Suspense fallback={<div>Loading...</div>}>
-        <RichTextToolbar id="toolbar" />
-        <ReactQuill
-          modules={modules}
-          placeholder="compose here"
-          value={value || ''}
-          aria-label="content"
-          onChange={(content) => setValue(content)}
-          formats={formats}
-          theme="snow"
-          style={{ height: '400px', overflowY: 'scroll', width: '100%' }}
-        />
-      </Suspense>
+      <RichTextToolbar id="toolbar" />
+      <ReactQuill
+        modules={modules}
+        placeholder="compose here"
+        {...field}
+        aria-label="content"
+        onChange={(content) => field.onChange(content)}
+        formats={formats}
+        theme="snow"
+        style={{ height: '400px', overflowY: 'scroll', width: '100%' }}
+      />
     </div>
   )
 }

@@ -35,39 +35,37 @@ export default function SubSubSection({ searchParams }: Props) {
     useUpdateSubSubSectionByIdMutation()
 
   return (
-    <>
-      <section className="container mx-auto max-w-screen-sm px-2 py-2 sm:px-0">
-        <div className="flex flex-col sm:flex-row items-center justify-between">
-          <Header title={subSubSectionData?.title as string} order={1} />
-          <Button
-            type="button"
-            color="outline"
-            className=" sm:w-1/4 "
-            onClick={() => {
-              router.push(
-                `/admin-portal/county-portal/${searchParams.county}/section/subsection?county=${searchParams.county}&countyId=${searchParams.countyId}&sectionId=${searchParams.sectionId}&subSectionId=${searchParams.subSectionId}`
-              )
-            }}
-          >
-            Go Back
-          </Button>
+    <section className="space-y-2">
+      <div className="flex flex-col items-center justify-between sm:flex-row">
+        <Header title={subSubSectionData?.title as string} order={1} />
+        <Button
+          type="button"
+          color="outline"
+          className=" sm:w-1/4 "
+          onClick={() => {
+            router.push(
+              `/admin-portal/county-portal/${searchParams.county}/section/subsection?county=${searchParams.county}&countyId=${searchParams.countyId}&sectionId=${searchParams.sectionId}&subSectionId=${searchParams.subSectionId}`
+            )
+          }}
+        >
+          Go Back
+        </Button>
+      </div>
+      {isLoadingSubSubSection ? (
+        <div className="flex h-[700px] items-center justify-center">
+          <Loader size="xl" variant="bars" />
         </div>
-        {isLoadingSubSubSection ? (
-          <div className="flex h-[700px] items-center justify-center">
-            <Loader size="xl" variant="bars" />
-          </div>
-        ) : (
-          <section className="w-full overflow-auto">
-            <SectionContainer
-              isLoadingSection={isLoadingSubSubSection}
-              sectionData={subSubSectionData as SubSubSectionProps}
-              refetch={refetchSubSection}
-              isLoading={isLoading}
-              updateSectionById={updateSubSubSectionById}
-            />
-          </section>
-        )}
-      </section>
-    </>
+      ) : (
+        <section className="w-full overflow-auto">
+          <SectionContainer
+            isLoadingSection={isLoadingSubSubSection}
+            sectionData={subSubSectionData as SubSubSectionProps}
+            refetch={refetchSubSection}
+            isLoading={isLoading}
+            updateSectionById={updateSubSubSectionById}
+          />
+        </section>
+      )}
+    </section>
   )
 }

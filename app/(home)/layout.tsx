@@ -6,7 +6,6 @@ import Provider from '../global-state/providers/provider'
 import { Navbar } from 'app/components/navigation'
 import Footer from 'app/components/footer'
 import '../globals.css'
-import CookieConsent from '@components/CookieConsent/CookieConsent'
 import CookieConsentComponent from '@components/CookieConsent/CookieConsentComponent'
 
 const montserrat = Montserrat({
@@ -25,7 +24,7 @@ export default function RootLayout({
       className={`${montserrat.variable} light font-montserrat sm:scroll-smooth`}
       style={{ scrollBehavior: 'smooth', colorScheme: 'light' }}
     >
-      <body className="relative grid min-h-screen grid-cols-1 bg-slate-100 dark:bg-[#212227]">
+      <body className="relative grid min-h-screen grid-cols-1 bg-background">
         <Provider>
           <Navbar />
           <PageWrapper>{children}</PageWrapper>

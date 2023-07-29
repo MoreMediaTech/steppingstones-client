@@ -7,11 +7,12 @@ import {
   useGetSectionByIdQuery,
   useCreateSubSectionMutation,
   useUpdateSectionByIdMutation,
-} from 'app/global-state/features/editor/editorApiSlice'
-import CreateSectionForm  from '../CreateSectionForm'
+} from '@global-state/features/editor/editorApiSlice'
+import CreateSectionForm from '../CreateSectionForm'
 import { Button } from '@components/ui/button'
-import SectionContainer from 'app/(admin)/admin-portal/county-portal/[county]/section/section-container'
-import PortalButton from 'app/components/PortalButton'
+import { Badge } from '@components/ui/badge'
+import SectionContainer from './section-container'
+import PortalButton from '@components/PortalButton'
 import Header from '@components/Header'
 
 type Props = {
@@ -26,7 +27,6 @@ export default function Section({ county, countyId, sectionId }: Props) {
   const {
     data: sectionData,
     isLoading: isLoadingSection,
-    isError: isErrorSection,
     refetch: refetchSection,
   } = useGetSectionByIdQuery(sectionId)
 
@@ -36,31 +36,24 @@ export default function Section({ county, countyId, sectionId }: Props) {
 
   return (
     <>
-      <section className="container mx-auto h-full max-w-screen-md px-2 py-2 sm:px-8 sm:py-8">
-        <div className="my-4 flex w-full flex-col  items-center justify-between sm:flex-row">
-          <div className="flex items-center gap-2">
+      <section className="space-y-2">
+        <div className="my-4 flex w-full flex-col-reverse  items-center justify-between sm:flex-row">
+          <div className="flex items-center justify-start gap-2">
             <Header title={sectionData?.name as string} order={1} />
-            <div className="flex justify-end">
-              {sectionData?.isSubSection && (
-                <>
-                  {sectionData?.isLive ? (
-                    <p className="rounded-xl bg-[#5E17EB] px-2 py-1 text-sm font-semibold text-white">
-                      Live
-                    </p>
-                  ) : (
-                    <p className="rounded-xl bg-red-500 px-2 py-1 text-sm font-semibold text-white">
-                      Not Live
-                    </p>
-                  )}
-                </>
-              )}
-            </div>
+            {sectionData?.isSubSection && (
+              <>
+                {sectionData?.isLive ? (
+                  <Badge>Live</Badge>
+                ) : (
+                  <Badge variant="destructive">Not Live</Badge>
+                )}
+              </>
+            )}
           </div>
-          <div className="flex flex-col items-center gap-2 sm:w-1/3 sm:flex-row">
+          <div className="flex items-center justify-between sm:justify-end w-full gap-2 sm:w-1/3 flex-row">
             <Button
               type="button"
-              variant="outline"
-              className="w-full border-gray-900 dark:border-gray-200"
+              className="w-1/3 sm:w-full border-gray-900 dark:border-gray-200"
               onClick={() => {
                 router.push(
                   `/admin-portal/county-portal/${county}?countyId=${countyId}&county=${county}`
@@ -88,7 +81,7 @@ export default function Section({ county, countyId, sectionId }: Props) {
             {sectionData?.isSubSection ? (
               <section className=" w-full overflow-auto md:py-24">
                 {sectionData && (
-                  <div className="container mx-auto grid max-w-screen-md grid-cols-2 gap-4">
+                  <div className=" grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {sectionData?.subsections?.map(
                       (section: SubSectionProps) => (
                         <PortalButton

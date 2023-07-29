@@ -87,7 +87,7 @@ export function RenderInsights() {
   }
   return (
     <section>
-      <div className="container mx-auto max-w-screen-lg space-y-2 py-8">
+      <div className="container mx-auto sm:max-w-screen-sm md:max-w-screen-lg lg:max-w-screen-xl space-y-2 py-8">
         <div className='grid grid-cols-1 gap-8'>
           <div>
             <div className="flex items-center">

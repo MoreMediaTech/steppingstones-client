@@ -14,6 +14,7 @@ function PageWrapper({
   className?: string
 }) {
   const { data: user } = useGetUserQuery()
+  const userFirstName = user?.name.split(' ')[0]
   return (
     <motion.main
       initial={{ opacity: 0, y: 20 }}
@@ -30,7 +31,7 @@ function PageWrapper({
         <section className="grid">
           <PortalHeader
             user={user as UserSchemaWithIdAndOrganisationType}
-            title={`Welcome ${user?.name}`}
+            title={`Welcome ${userFirstName}`}
             subTitle="Please select from the menu below"
             imgUrl={user?.imageUrl}
           />

@@ -9,8 +9,8 @@ export default function Page({
   searchParams: { county: string; countyId: string }
 }) {
   return (
-    <section className="container mx-auto">
-      <ScrollArea className=" p-4  sm:h-screen ">
+    <section className="sm:container sm:mx-auto px-2">
+      <ScrollArea className=" sm:h-screen sm:p-4 ">
         <LEP id={searchParams.countyId} county={searchParams.county} />
       </ScrollArea>
     </section>

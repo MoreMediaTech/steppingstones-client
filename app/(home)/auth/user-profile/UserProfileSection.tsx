@@ -10,17 +10,15 @@ import Avatar from '@components/Avatar'
 import UpdateUserForm from './UpdateUserForm'
 
 import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
-import EditImageModal from 'app/components/EditImageComponent/EditImageModal'
 
 import { useVerifyEmailMutation } from 'app/global-state/features/auth/authApiSlice'
 import Loader from '@components/Loader'
 import { UserSchemaWithIdAndOrganisationType } from '@models/User'
-
-
+import { UploadImageForm } from '@components/forms/UploadImageForm'
+import Header from '@components/Header'
 
 const UserProfileSection = () => {
   const { toast } = useToast()
-  const [opened, setOpened] = useState<boolean>(false)
   const [responseMessage, setResponseMessage] = useState<string>('')
   const { data: user, isLoading, refetch } = useGetUserQuery()
   const [verifyEmail, { isSuccess }] = useVerifyEmailMutation()
@@ -59,9 +57,7 @@ const UserProfileSection = () => {
   return (
     <>
       <section className="container relative mx-auto mt-24 w-full max-w-screen-xl space-y-4 py-6 sm:px-4">
-        <h1 className="text-xl font-semibold dark:text-gray-200">
-          User Settings
-        </h1>
+        <Header title="Profile" order={1} />
         {!user?.emailVerified && (
           <div className="mb-4 flex items-center justify-between rounded px-4 py-2  shadow-md dark:bg-slate-700 dark:text-gray-200">
             {!isSuccess ? (
@@ -94,9 +90,11 @@ const UserProfileSection = () => {
                   <h1 className="text-base font-semibold">{user?.name}</h1>
                   <h3 className="text-sm text-gray-500">{user?.role}</h3>
                 </div>
-                <Button type="button" onClick={() => setOpened(true)}>
-                  Change Picture
-                </Button>
+                <UploadImageForm
+                  type="user"
+                  refetch={refetch}
+                  user={user as UserSchemaWithIdAndOrganisationType}
+                />
               </div>
             </div>
           </section>
@@ -139,12 +137,6 @@ const UserProfileSection = () => {
           </div>
         </section>
       </section>
-      <EditImageModal
-        opened={opened}
-        setOpened={setOpened}
-        refetch={refetch}
-        user={user as UserSchemaWithIdAndOrganisationType}
-      />
     </>
   )
 }

@@ -1,16 +1,13 @@
 'use client'
-import { useCallback } from 'react'
 import { ColumnDef, Row } from '@tanstack/react-table'
 import { FaCheck, FaTimes } from 'react-icons/fa'
 import { ArrowUpDown } from 'lucide-react'
 import { Button } from '@components/ui/button'
 import { Badge } from '@components/ui/badge'
 import { Checkbox } from '@components/ui/checkbox'
-import { DataTableRowActions } from '@components/table/data-table-row-actions'
-import { useAppDispatch } from 'app/global-state/hooks'
-import { setUser } from 'app/global-state/features/user/userSlice'
-import { setOpenModal } from 'app/global-state/features/global/globalSlice'
+import { useGetUsersQuery } from 'app/global-state/features/user/usersApiSlice'
 import { UserSchemaWithIdAndOrganisationType } from '@models/User'
+import { UpdateUserForm } from './UpdateUserForm'
 
 export const columns: ColumnDef<UserSchemaWithIdAndOrganisationType>[] = [
   {
@@ -125,19 +122,11 @@ export const columns: ColumnDef<UserSchemaWithIdAndOrganisationType>[] = [
   {
     id: 'action',
     cell: ({ row }) => {
-      const dispatch = useAppDispatch()
-
-      const handleEdit = useCallback(
-        (row: Row<UserSchemaWithIdAndOrganisationType>) => {
-          const user = row.original
-          dispatch(setUser(user))
-          dispatch(setOpenModal(true))
-        },
-        []
-      )
+      const user = row.original
+      const { refetch } = useGetUsersQuery()
 
       return (
-        <DataTableRowActions row={row} enableEdit handleEdit={handleEdit} />
+        <UpdateUserForm user={user}refetch={refetch}/>
       )
     },
   },

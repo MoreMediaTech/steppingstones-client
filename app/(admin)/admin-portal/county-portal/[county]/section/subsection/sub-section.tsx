@@ -1,11 +1,10 @@
 'use client'
-import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Loader } from '@components/mantine-components'
 
 import SectionContainer from '../section-container'
 import CreateSectionForm  from '../../CreateSectionForm'
-import Button from 'app/components/Button'
+import {Button }from 'app/components/ui/button'
 import { SubSectionProps, SubSubSectionProps } from '@lib/types'
 import {
   useGetSubSectionByIdQuery,
@@ -26,7 +25,6 @@ type Props = {
 
 export default function SubSection({ searchParams }: Props) {
   const router = useRouter()
-  const [openAddSectionModal, setAddOpenSectionModal] = useState<boolean>(false)
 
   const {
     data: subSectionData,
@@ -36,7 +34,7 @@ export default function SubSection({ searchParams }: Props) {
     refetchOnMountOrArgChange: true,
   })
 
-  const [createSubSubSection, { isLoading: isLoadingCreate }] =
+  const [createSubSubSection] =
     useCreateSubSubSectionMutation()
 
   const [updateSubSectionById, { isLoading }] =
@@ -44,14 +42,13 @@ export default function SubSection({ searchParams }: Props) {
 
   return (
     <>
-      <section className="container mx-auto h-full max-w-screen-sm px-2 py-2 sm:px-4 sm:py-8">
+      <section className="space-y-2">
         <div className="flex flex-col items-center  justify-between sm:flex-row">
           <Header title={subSectionData?.title as string} order={1} />
           <div className="flex items-center gap-2 sm:w-1/3">
             <Button
               type="button"
-              color="outline"
-              className=" w-full "
+              className="w-1/3 sm:w-full "
               onClick={() => {
                 router.push(
                   `/admin-portal/county-portal/${searchParams.county}/section?countyId=${searchParams.countyId}&sectionId=${searchParams.sectionId}`
@@ -79,7 +76,7 @@ export default function SubSection({ searchParams }: Props) {
             {subSectionData?.isSubSubSection ? (
               <section className="min-h-[500px] w-full overflow-auto py-24">
                 {subSectionData && (
-                  <div className="container mx-auto grid max-w-screen-lg grid-cols-2 gap-4">
+                  <div className=" grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {subSectionData?.subSubSections?.map(
                       (subSubSection: SubSubSectionProps) => (
                         <PortalButton

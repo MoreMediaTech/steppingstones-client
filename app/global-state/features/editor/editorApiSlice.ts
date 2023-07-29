@@ -18,6 +18,7 @@ import {
   setEconomicData,
   setDistrictSection,
 } from './editorSlice'
+import { ContentFormProps } from '@models/ContentForm';
 
 const editorApi = editorApiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -180,7 +181,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     createSection: builder.mutation<
       { success: boolean; message: string },
-      SectionProps
+      ContentFormProps
     >({
       query: (data) => ({
         url: 'editor/section',
@@ -209,7 +210,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     updateSectionById: builder.mutation<
       { success: boolean; message: string },
-      SectionProps
+      ContentFormProps & { id: string }
     >({
       query: (data) => ({
         url: `editor/section/${data.id}`,
@@ -250,7 +251,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     createSubSection: builder.mutation<
       { success: boolean; message: string },
-      SubSectionProps
+      ContentFormProps
     >({
       query: (data) => ({
         url: 'editor/subsection',
@@ -261,7 +262,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     updateSubSectionById: builder.mutation<
       { success: boolean; message: string },
-      SubSectionProps
+      ContentFormProps & { id: string }
     >({
       query: (data) => ({
         url: `editor/subsection/${data.id}`,
@@ -328,7 +329,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     updateSubSubSectionById: builder.mutation<
       { success: boolean; message: string },
-      SubSubSectionProps
+      ContentFormProps & { id: string }
     >({
       query: (data) => ({
         url: `editor/sub-subsection/${data.id}`,
@@ -377,7 +378,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     createDistrictSection: builder.mutation<
       { success: boolean; message: string },
-      DistrictSectionProps
+      { districtId: string; name: string; isEconomicData: boolean }
     >({
       query: (data) => ({
         url: 'editor/district-section',
@@ -388,7 +389,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     updateDistrictSectionById: builder.mutation<
       { success: boolean; message: string },
-      DistrictSectionProps
+      ContentFormProps & { id: string }
     >({
       query: (data) => ({
         url: `editor/district-section/${data.id}`,

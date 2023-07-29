@@ -2,7 +2,8 @@
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import Image from 'next/image'
-import Button from 'app/components/Button'
+import { Button } from '@components/ui/button'
+
 
 export default function Error({
   error,
@@ -12,31 +13,24 @@ export default function Error({
   reset: () => void
 }) {
   const router = useRouter()
-  useEffect(() => {
-    setTimeout(() => {
-      console.error(error)
-      router.push('/admin-portal')
-    }, 5000)
-  }, [error])
   return (
     <section className="mt-20 h-screen">
-      <div className="flex flex-col items-center justify-center">
+      <div className="container mx-auto flex flex-col items-center justify-center space-y-2">
         <Image
           src={'/android-chrome-512x512.png'}
-          alt="blooms hair logo"
+          alt="Stepping Stones Logo"
           width={300}
           height={300}
         />
         <h1 className="my-5 text-6xl">Whoops!</h1>
         <h2 className="mb-3 text-3xl">Something went wrong!</h2>
-
-        <div className="flex justify-center">
-          <Button type="button" color="white" onClick={() => reset()}>
+        <p className="mb-3 text-xl">{error.name}: {error.message}</p>
+        <div className="flex w-full items-center gap-6">
+          <Button type="button" onClick={() => reset()}>
             Try again
           </Button>
-        </div>
-        <div className="flex justify-center">
-          <Button type="button" color="white" onClick={() => router.back()}>
+
+          <Button type="button" onClick={() => router.back()}>
             Go back
           </Button>
         </div>

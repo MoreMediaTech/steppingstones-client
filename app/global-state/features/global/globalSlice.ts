@@ -8,6 +8,7 @@ type GlobalState = {
   openModal: boolean
   drawerOpened: boolean
   isVisible: boolean
+  isEdit: boolean
 }
 
 const checkIsVisible = () => {
@@ -16,7 +17,7 @@ const checkIsVisible = () => {
 }
 
 const isVisible = checkIsVisible()
-console.log("🚀 ~ file: globalSlice.ts:20 ~ isVisible:", isVisible)
+
 
 
 const initialState: GlobalState = {
@@ -25,19 +26,27 @@ const initialState: GlobalState = {
   error: { name: '', message: 'An Error occurred' },
   drawerOpened: false,
   isVisible: isVisible as boolean,
+  isEdit: false,
 }
 
 export const globalSlice = createSlice({
   name: 'global',
   initialState,
   reducers: {
-    setLoading: (state, { payload }: PayloadAction<boolean>) => {},
-    setError: (state, { payload }: PayloadAction<Error>) => {},
+    setLoading: (state, { payload }: PayloadAction<boolean>) => {
+      state.loading = payload
+    },
+    setError: (state, { payload }: PayloadAction<Error>) => {
+      state.error = payload
+    },
     setDrawerOpened: (state, { payload }: PayloadAction<boolean>) => {
       state.drawerOpened = payload
     },
     setIsVisible: (state, { payload }: PayloadAction<boolean>) => {
       state.isVisible = payload
+    },
+    setIsEdit: (state, { payload }: PayloadAction<boolean>) => {
+      state.isEdit = payload
     },
     setOpenModal: (state, { payload }: PayloadAction<boolean>) => {
       state.openModal = payload
@@ -45,7 +54,7 @@ export const globalSlice = createSlice({
   },
 })
 
-export const { setLoading, setError, setDrawerOpened, setIsVisible, setOpenModal } =
+export const { setLoading, setError, setDrawerOpened, setIsVisible, setOpenModal, setIsEdit } =
   globalSlice.actions
 export const globalSelector = (state: RootState) => state.global
 

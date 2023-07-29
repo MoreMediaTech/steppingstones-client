@@ -18,7 +18,6 @@ const uploadApi = uploadApiSlice.injectEndpoints({
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled
-          console.log(data)
           dispatch(setImageUrl(data.imageUrl))
         } catch (error) {
           if (error instanceof AxiosError) {
@@ -29,7 +28,7 @@ const uploadApi = uploadApiSlice.injectEndpoints({
       },
     }),
   }),
-  overrideExisting: false,
+  overrideExisting: true,
 })
 
 export const { useUploadFileMutation } = uploadApi

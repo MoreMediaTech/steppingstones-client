@@ -8,8 +8,6 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -37,8 +35,7 @@ export function SidebarNav({
   ...props
 }: SidebarNavProps) {
   const pathname = usePathname()
-  const SCROLL_AREA_HEIGHT = height - 300
-  console.log("🚀 ~ file: sidebar-nav.tsx:40 ~ SCROLL_AREA_HEIGHT:", SCROLL_AREA_HEIGHT)
+  const SCROLL_AREA_HEIGHT = height - 70
   return (
     <nav
       className={cn(
@@ -49,7 +46,8 @@ export function SidebarNav({
     >
       <div className="hidden md:block">
         <ScrollArea
-          className={`hidden rounded-md border p-4 sm:flex sm:h-[${SCROLL_AREA_HEIGHT}px]  sm:flex-col`}
+          className={`hidden rounded-md border p-4 sm:flex  sm:flex-col`}
+          style={{ height: SCROLL_AREA_HEIGHT }}
         >
           <h4 className="mb-4 text-sm font-medium leading-none">{title}</h4>
           {items.map((item, index) => (
@@ -84,7 +82,7 @@ export function MobileSideNav({
   ...props
 }: SidebarNavProps) {
   const pathname = usePathname()
-    const SCROLL_AREA_HEIGHT = height - 300
+    const SCROLL_AREA_HEIGHT = height - 70
   return (
     <nav>
       <Sheet>
@@ -96,7 +94,8 @@ export function MobileSideNav({
             <SheetTitle className="text-left">{title}</SheetTitle>
           </SheetHeader>
           <ScrollArea
-            className={`flex h-[${SCROLL_AREA_HEIGHT}px] flex-col rounded-md border  p-4`}
+            className={`flex flex-col rounded-md border  p-4`}
+            style={{ height: SCROLL_AREA_HEIGHT }}
           >
             {items.map((item, index) => (
               <div key={`${item.href}-${index}`}>

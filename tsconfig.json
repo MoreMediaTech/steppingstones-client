@@ -10,6 +10,7 @@
       "@config/*": ["config/*"],
       "@app/*": ["app/*"],
       "@types/*": ["types/*"],
+      "@global-state/*": ["app/global-state/*"],
     },
     "target": "esnext",
     "lib": [

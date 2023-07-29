@@ -3,7 +3,6 @@ import React from 'react'
 import {
   Box,
   Title,
-  Group,
   TitleOrder,
   ThemeIcon,
 } from '@components/mantine-components'
@@ -28,7 +27,7 @@ function Header({
   bcg,
 }: Props) {
   return (
-    <Box sx={{ width: '100%', marginBottom: '1rem' }}>
+    <Box sx={{ width: '100%' }}>
       <div className="flex items-center gap-1"
       >
         {iconLeft ? (

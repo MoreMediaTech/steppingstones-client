@@ -11,8 +11,8 @@ type Props = {
 
 export default function Page({ searchParams }: Props) {
   return (
-    <section>
-      <ScrollArea className=" p-4  sm:h-screen ">
+    <section className="px-2 sm:container sm:mx-auto">
+      <ScrollArea className=" sm:h-screen  sm:p-4 ">
         <Section
           county={searchParams.county}
           countyId={searchParams.countyId}

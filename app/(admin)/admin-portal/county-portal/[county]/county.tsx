@@ -34,22 +34,20 @@ export default function County({ county, countyId }: Props) {
   const districts = countyData?.districts.map((district) => district.name)
 
   return (
-    <>
-      <section className="mx-auto mt-4 max-w-screen-sm px-2 py-4 sm:py-8 md:px-6">
-        <div className="flex w-full flex-col items-center justify-between sm:flex-row">
-          <Header title={countyData?.name as string} order={1} />
-          <div className="flex w-full items-center gap-2">
-            <CreateSectionForm
-              createSection={createSection}
-              refetch={refetchCounty}
-              id={countyData?.id as string}
-            />
-            <AddDistrictForm
-              countyId={countyId}
-              county={countyData?.name as string}
-              refetch={refetchCounty}
-            />
-          </div>
+    <section className="space-y-2">
+      <section className="flex w-full flex-col items-center justify-between sm:flex-row">
+        <Header title={countyData?.name as string} order={1} />
+        <div className="flex w-full items-center gap-2">
+          <CreateSectionForm
+            createSection={createSection}
+            refetch={refetchCounty}
+            id={countyData?.id as string}
+          />
+          <AddDistrictForm
+            countyId={countyId}
+            county={countyData?.name as string}
+            refetch={refetchCounty}
+          />
         </div>
       </section>
       {isLoadingCounty ? (
@@ -57,7 +55,7 @@ export default function County({ county, countyId }: Props) {
           <Loader size="xl" variant="bars" />
         </div>
       ) : (
-        <section className=" mx-auto w-full max-w-screen-sm px-2 py-4 sm:py-8 md:px-4">
+        <section className="w-full  px-2 py-4">
           {countyData && (
             <div className="grid h-full w-full grid-cols-1 gap-8 ">
               <div className="h-full rounded  p-2 shadow-lg dark:shadow-gray-500 lg:col-span-2">
@@ -107,7 +105,7 @@ export default function County({ county, countyId }: Props) {
                     </PortalButton>
                   </div>
                   <div className="w-full space-y-4 py-8">
-                    <div className="grid grid-cols-2 gap-x-10 gap-y-4 ">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-4 ">
                       {countyData?.districts?.map(
                         (district: DistrictDataProps) => (
                           <PortalButton
@@ -150,6 +148,6 @@ export default function County({ county, countyId }: Props) {
           )}
         </section>
       )}
-    </>
+    </section>
   )
 }

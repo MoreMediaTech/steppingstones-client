@@ -21,7 +21,7 @@ type ButtonProps = {
   color: string
   type: 'submit' | 'button'
   children?: ReactNode
-  props?: HTMLProps<HTMLButtonElement>
+  props?: React.ComponentProps<'button'>
   onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
 
@@ -62,9 +62,9 @@ const PortalButton = forwardRef<Ref, ButtonProps>(
 )
 
 const colors: Colors = {
-  primaryFilled: `border-[#ef946c]  border-2 text-primary-light-100 bg-[#ef946c] active:bg-[#ef946c]  active:text-gray-100 hover:bg-[#f19f7b]   hover:text-gray-100 hover:-translate-y-1 hover:scale-100`,
+  primaryFilled: `border-primary-dark-200 dark:border-primary-light-200  border-2 text-textLight dark:text-textDark bg-primary-dark-200 dark:bg-primary-light-200 hover:bg-primary-dark-100 dark:hover:bg-primary-light-100  hover:text-textLight dark:hover:text-textDark hover:-translate-y-1 hover:scale-100`,
   primaryOutline: `border-primary border-2 text-primary active:bg-primary active:text-white hover:bg-secondary hover:text-white hover:-translate-y-1 hover:scale-100`,
-  success: `border-tertiary border-2 text-tertiary active:bg-tertiary active:text-white hover:bg-[#2796b2] hover:text-white hover:-translate-y-1 hover:scale-100`,
+  success: `border-tertiary border-2 text-tertiary active:bg-tertiary active:text-white hover:bg-accent hover:text-white hover:-translate-y-1 hover:scale-100`,
   danger: `border-red-600 border text-red-600 active:bg-red-600 active:text-white`,
   dark: `border-black border text-gray-900 active:bg-black active:text-white hover:bg-black hover:text-white`,
   gray: `border-gray-500 border text-gray-500 active:bg-gray-500 active:text-gray-200 hover:bg-gray-500 hover:text-gray-200`,

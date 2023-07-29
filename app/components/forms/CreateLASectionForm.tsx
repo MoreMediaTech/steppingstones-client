@@ -1,50 +1,74 @@
-'use client';
+'use client'
 import React, { useCallback } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { showNotification } from '@mantine/notifications'
+import { zodResolver } from '@hookform/resolvers/zod'
+import * as z from 'zod'
+import { ToastAction } from '@components/ui/toast'
+import { useToast } from '@components/ui/use-toast'
+import { Button } from '@components/ui/button'
 import {
-  Button,
-  Checkbox,
-  Modal,
-  TextInput,
-  UnstyledButton,
-} from '@mantine/core'
-import { IoMdCloseCircleOutline } from 'react-icons/io'
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@components/ui/form'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@components/ui/dialog'
 
-type FormDataProps = {
-  name: string
-  isEconomicData: boolean
+import { Input } from '@components/ui/input'
+import { Checkbox } from '@components/ui/checkbox'
+
+import { MutationTrigger } from '@reduxjs/toolkit/dist/query/react/buildHooks'
+import { BaseQueryFn, MutationDefinition } from '@reduxjs/toolkit/dist/query'
+import { DistrictSectionProps } from '@lib/types'
+
+export const createLASectionFormSchema = z.object({
+  name: z.string().min(2, {
+    message: 'LA Section name must be at least 2 characters',
+  }),
+  isEconomicData: z.boolean(),
+})
+
+export type CreateLASectionFormProps = z.infer<typeof createLASectionFormSchema>
+
+type Props = {
+  refetch: () => void
+  createSection: MutationTrigger<
+    MutationDefinition<
+      CreateLASectionFormProps & { districtId: string },
+      BaseQueryFn,
+      'Editor',
+      {
+        success: boolean
+        message: string
+      },
+      'editorApi'
+    >
+  >
+  id: string
 }
 
-const CreateLASectionForm = ({
-  opened,
-  setOpened,
-  refetch,
-  createSection,
-  isLoading,
-  id,
-}: {
-  opened: boolean
-  isLoading: boolean
-  createSection: any
-  id: string
-  setOpened: React.Dispatch<React.SetStateAction<boolean>>
-  refetch: () => void
-}) => {
-  const {
-    handleSubmit,
-    register,
-    reset,
-    formState: { errors },
-  } = useForm<FormDataProps>()
+const CreateLASectionForm = ({ refetch, createSection, id }: Props) => {
+  const { toast } = useToast()
+  const form = useForm<CreateLASectionFormProps>({
+    resolver: zodResolver(createLASectionFormSchema),
+  })
 
   const handleClose = () => {
-    reset()
+    form.reset()
     refetch()
-    setOpened(false)
   }
 
-  const submitHandler: SubmitHandler<FormDataProps> = useCallback(
+  const onSubmit: SubmitHandler<CreateLASectionFormProps> = useCallback(
     async (data) => {
       const sectionData = { ...data, districtId: id }
 
@@ -53,28 +77,28 @@ const CreateLASectionForm = ({
         handleClose()
       } catch (error) {
         if (!error?.response) {
-          showNotification({
-            message: 'No server response',
-            autoClose: 3000,
-            color: 'red',
+          toast({
+            title: 'Error!',
+            description: 'Unable to complete request',
+            action: <ToastAction altText="Retry">Retry</ToastAction>,
           })
         } else if (error.response?.status === 400) {
-          showNotification({
-            message: 'Invalid input data',
-            autoClose: 3000,
-            color: 'red',
+          toast({
+            title: 'Error!',
+            description: 'Invalid Input Provided',
+            action: <ToastAction altText="Retry">Retry</ToastAction>,
           })
         } else if (error.response?.status === 401) {
-          showNotification({
-            message: 'Unauthorized',
-            autoClose: 3000,
-            color: 'red',
+          toast({
+            title: 'Error!',
+            description: 'Unauthorized action',
+            action: <ToastAction altText="Retry">Retry</ToastAction>,
           })
         } else {
-          showNotification({
-            message: 'Unable to complete request',
-            autoClose: 3000,
-            color: 'red',
+          toast({
+            title: 'Error!',
+            description: 'Unable to complete request',
+            action: <ToastAction altText="Retry">Retry</ToastAction>,
           })
         }
       }
@@ -82,66 +106,72 @@ const CreateLASectionForm = ({
     [id]
   )
   return (
-    <Modal
-      centered
-      size="md"
-      opened={opened}
-      onClose={handleClose}
-      title="Create a new Section"
-    >
-      {/* Modal content */}
-      <form onSubmit={handleSubmit(submitHandler)} className="space-y-4">
-        <div className="my-4 w-full">
-          <TextInput
-            id="la-sectionName"
-            aria-label="LA Section name"
-            placeholder="Enter a LA Section Name"
-            rightSection={
-              <UnstyledButton type="button" onClick={() => reset()}>
-                <IoMdCloseCircleOutline />
-              </UnstyledButton>
-            }
-            type="text"
-            {...register('name', {
-              required: true,
-              minLength: {
-                value: 2,
-                message:
-                  'Please enter an LA Section name with at least 2 characters',
-              },
-            })}
-            className="focus:shadow-outline w-full appearance-none rounded-md focus:outline-none"
-          />
-          {errors.name && (
-            <span className="text-center text-sm text-red-500">
-              {errors.name?.message || 'A valid Section name is required'}
-            </span>
-          )}
-        </div>
-        <div className="flex w-full items-center space-x-4 sm:my-4">
-          <input
-            id="economic-data"
-            aria-label="Economic Data"
-            type="checkbox"
-            {...register('isEconomicData')}
-            className="form-checkbox h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-transparent"
-          />
-          <label className="my-2 text-sm font-semibold text-gray-900">
-            Select if this is an Economic Data Section
-          </label>
-        </div>
-        <div className="w-full">
-          <Button
-            type="submit"
-            loading={isLoading}
-            fullWidth
-            className="w-full rounded-md border border-indigo-900 bg-indigo-900 px-4 py-2 text-white"
-          >
-            {isLoading ? 'Creating...' : 'Create'}
-          </Button>
-        </div>
-      </form>
-    </Modal>
+    <Dialog>
+      <Button
+        type="button"
+        variant="outline"
+        asChild
+        className="w-full sm:w-1/3 border-gray-900 dark:border-gray-200"
+      >
+        <DialogTrigger>Create District Section</DialogTrigger>
+      </Button>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Create a District LA Section</DialogTitle>
+          <DialogDescription>
+            Create a section for a new District Local Authority
+          </DialogDescription>
+        </DialogHeader>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Section name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Section name" {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    The name of the section you want to create
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="isEconomicData"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+                  <FormControl>
+                    <Checkbox
+                      disabled
+                      checked={field.value}
+                      onCheckedChange={(event) =>
+                        field.onChange(event as boolean)
+                      }
+                    />
+                  </FormControl>
+                  <div className="space-y-1 leading-none">
+                    <FormLabel>
+                      Is this section for economic data collection?
+                    </FormLabel>
+                    <FormDescription>
+                      Create a section for economic data collection
+                    </FormDescription>
+                  </div>
+                </FormItem>
+              )}
+            />
+            <DialogTrigger>
+              <Button type="submit">Submit</Button>
+            </DialogTrigger>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
   )
 }
 

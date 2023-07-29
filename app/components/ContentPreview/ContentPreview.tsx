@@ -4,6 +4,7 @@ import parse from 'html-react-parser'
 import 'react-quill/dist/quill.snow.css'
 import styles from './ContentPreview.module.css'
 import { SectionProps, SubSectionProps, SubSubSectionProps } from '@lib/types'
+import Header from '@components/Header'
 
 type ContentPreviewProps = {
   content?: { title: string; imageUrl?: string; content: string } | SectionProps | SubSectionProps | SubSubSectionProps
@@ -12,10 +13,12 @@ type ContentPreviewProps = {
 const ContentPreview = ({ content }: ContentPreviewProps) => {
   return (
     <div className="w-full  overflow-auto py-2">
-      <div className="space-y-2 border rounded-md border-gray-800 dark:border-gray-200 p-2 md:p-4">
-        <div className=" pl-4 text-base md:text-2xl font-semibold capitalize text-gray-900 dark:text-gray-200 ">
-          <h1>{content?.title ? content.title : 'Create New Content'}</h1>
-        </div>
+      <div className="space-y-2 rounded-md border border-gray-800 p-2 dark:border-gray-200 md:p-4">
+        <Header
+          title={content?.title ? content.title : 'Create New Content'}
+          order={1}
+        />
+       
         {!!content?.imageUrl && (
           <div className="w-full">
             <Image
