@@ -96,7 +96,7 @@ export function UploadImageForm({
           await updateUser(updatedImg).unwrap()
         } else if (type === 'image') {
           const response = await uploadFile(preview).unwrap()
-          form?.setValue('imageUrl', response.imageUrl)
+          form?.setValue('imageFile', response.imageUrl)
         }
         toast({
           title: 'Success!',

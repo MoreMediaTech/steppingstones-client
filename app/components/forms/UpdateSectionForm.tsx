@@ -8,6 +8,7 @@ import {
   useUpdateSectionByIdMutation,
   useUpdateSubSectionByIdMutation,
 } from 'app/global-state/features/editor/editorApiSlice'
+import { ContentFormProps } from '@models/ContentForm'
 
 const UpdateSectionForm = ({
   sectionData,
@@ -48,10 +49,10 @@ const UpdateSectionForm = ({
       let response
       try {
         if (type === 'Section') {
-          response = await updateSectionById(newData as SectionProps).unwrap()
+          response = await updateSectionById(newData as ContentFormProps & { id: string}).unwrap()
         } else if (type === 'SubSection') {
           response = await updateSubSectionById(
-            newData as SubSectionProps
+            newData as ContentFormProps & { id: string }
           ).unwrap()
         }
         refetch()

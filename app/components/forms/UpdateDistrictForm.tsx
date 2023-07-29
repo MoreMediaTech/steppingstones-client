@@ -13,6 +13,7 @@ import {
   useUpdateDistrictByIdMutation,
   useUpdateDistrictSectionByIdMutation,
 } from 'app/global-state/features/editor/editorApiSlice'
+import { ContentFormProps } from '@models/ContentForm'
 
 const UpdateDistrictForm = ({
   refetch,
@@ -60,7 +61,7 @@ const UpdateDistrictForm = ({
         }
         if (type === 'DistrictSection') {
           await updateDistrictSectionById(
-            newData as DistrictSectionProps
+            newData as ContentFormProps & { id: string }
           ).unwrap()
         }
         refetch()
