@@ -12,6 +12,7 @@ import {
 import PortalButton from 'app/components/PortalButton'
 import Map from 'app/components/Map'
 import Header from '@components/Header'
+import { Button } from '@components/ui/button'
 
 type Props = {
   searchParams: {
@@ -33,18 +34,23 @@ export default function Districts({ searchParams }: Props) {
     refetchOnMountOrArgChange: true,
   })
 
-  const [createDistrictSection, { isLoading: isLoadingCreateLASection }] =
+  const [createDistrictSection] =
     useCreateDistrictSectionMutation()
 
   return (
     <section className="space-y-2">
-      <section className="flex  flex-row items-center justify-between md:px-4 md:py-8">
+      <section className="flex flex-col-reverse  sm:flex-row items-center gap-2 justify-between md:px-4 md:py-8">
         <Header title={searchParams.district} order={1} />
-        <CreateLASectionForm
-          createSection={createDistrictSection}
-          refetch={refetchDistrict}
-          id={districtData?.id as string}
-        />
+        <div className="flex items-center justify-center gap-2 w-full">
+          <Button type="button" onClick={() => router.back()} className='w-full'>
+            Go Back
+          </Button>
+          <CreateLASectionForm
+            createSection={createDistrictSection}
+            refetch={refetchDistrict}
+            id={districtData?.id as string}
+          />
+        </div>
       </section>
       {isLoadingDistrict ? (
         <div className="flex h-[700px] items-center justify-center">

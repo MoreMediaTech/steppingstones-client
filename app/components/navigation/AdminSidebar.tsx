@@ -1,10 +1,6 @@
 'use client'
 import React from 'react'
-import {
-  Indicator,
-  Menu,
-  Title,
-} from '@mantine/core'
+import { Indicator, Menu, Title } from '@mantine/core'
 import {
   Sheet,
   SheetClose,
@@ -14,6 +10,7 @@ import {
   SheetTrigger,
 } from '@components/ui/sheet'
 import { BiHomeCircle } from 'react-icons/bi'
+import { BsArrowLeftShort } from 'react-icons/bs'
 import {
   FaRegEnvelope,
   FaUsers,
@@ -29,88 +26,210 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
-import { useGetAllInAppEnquiryMsgQuery } from 'app/global-state/features/messages/messagesApiSlice'
+import { useGetAllInAppEnquiryMsgQuery } from '@global-state/features/messages/messagesApiSlice'
 import { MessageProps } from '@lib/types'
+import ColorLogo from '@public/SS-Color-logo-with-background.png'
 
-import { useAppSelector, useAppDispatch } from '../../global-state/hooks'
-import {
-  globalSelector,
-  setDrawerOpened,
-} from 'app/global-state/features/global/globalSlice'
+import { useAppDispatch } from '@global-state/hooks'
+import { setDrawerOpened } from 'app/global-state/features/global/globalSlice'
 import { Separator } from '@components/ui/separator'
+import Header from '@components/Header'
+import { Button } from '@components/ui/button'
+import { ScrollArea } from '@components/ui/scroll-area'
+import { NAV_ITEMS } from 'data'
 
-const NAV_ITEMS = [
-  {
-    label: 'Portal Home',
-    icon: <BiHomeCircle fontSize={18} color="#00DCB3" />,
-    href: '/admin-portal',
-  },
-  {
-    label: 'Advertisements',
-    href: '/admin-portal/ads-section',
-    icon: <MdOutlineSpeakerNotes fontSize={18} color="#00DCB3" />,
-  },
-  {
-    label: 'County Portal',
-    href: '/admin-portal/county-portal',
-    icon: <GiPortal fontSize={18} color="#00DCB3" />,
-  },
-  {
-    label: 'Client Meetings',
-    href: '/admin-portal/client-meeting',
-    icon: <FaRegCalendarAlt fontSize={18} color="#00DCB3" />,
-  },
-  {
-    label: 'Feedback',
-    href: '/admin-portal/feedback',
-    icon: <MdOutlineReviews fontSize={18} color="#00DCB3" />,
-  },
-  {
-    label: 'Messages',
-    icon: <FaRegEnvelope fontSize={18} color="#00DCB3" />,
-    href: '/admin-portal/messages',
-  },
-  {
-    label: 'Manage Users',
-    icon: <FaUsers fontSize={18} color="#00DCB3" />,
-    href: '/admin-portal/users',
-  },
-  {
-    label: 'Admin',
-    icon: null,
-    href: null,
-  },
-  {
-    label: 'Manage County',
-    icon: <FaBriefcase fontSize={18} color="#00DCB3" />,
-    href: '/admin-portal/admin/county-setting',
-  },
-  {
-    label: 'Manage District',
-    icon: <FaBriefcase fontSize={18} color="#00DCB3" />,
-    href: '/admin-portal/admin/district-setting',
-  },
-  {
-    label: 'Manage Section',
-    icon: <FaBriefcase fontSize={18} color="#00DCB3" />,
-    href: '/admin-portal/admin/section-setting',
-  },
-  {
-    label: 'Partner Directory',
-    icon: <GoFileDirectory fontSize={18} color="#00DCB3" />,
-    href: '/admin-portal/admin/partner-directory',
-  },
-  {
-    label: 'Source Directory',
-    icon: <GoFileDirectory fontSize={18} color="#00DCB3" />,
-    href: '/admin-portal/admin/source-directory',
-  },
-]
-
-const AdminSidebar = () => {
+export function AdminSidebar({ height }: { height: number }) {
+  const SCROLL_AREA_HEIGHT = height - 70
+  const [opened, setOpened] = React.useState(false)
   const dispatch = useAppDispatch()
   const router = useRouter()
-  const { drawerOpened } = useAppSelector(globalSelector)
+  let arg: void
+  const { data: messages } = useGetAllInAppEnquiryMsgQuery(arg, {
+    pollingInterval: 60000,
+  })
+
+  const handleLogout = async () => {
+    router.push(`/auth/logout`)
+  }
+
+  // filter all unread messages
+  const unreadMessages = messages?.filter(
+    (message: MessageProps) => message.isRead === false
+  )
+  return (
+    <aside className="sticky z-50">
+      <div
+        className={`relative flex flex-col items-center py-4 ${
+          opened ? 'w-72' : 'w-24'
+        } hidden min-h-screen rounded-lg border bg-background shadow-md transition-all duration-500  ease-in-out md:block`}
+      >
+        <BsArrowLeftShort
+          className={`absolute -right-3 top-24 ml-auto h-6 w-6 cursor-pointer rounded-full bg-accent-light-500 text-white shadow-sm ${
+            !opened ? 'rotate-180' : ''
+          }`}
+          onClick={() => setOpened(!opened)}
+        />
+        <div
+          className={`inline-flex items-center px-2 ${
+            opened ? 'gap-2' : 'gap-0'
+          }`}
+        >
+          <Image
+            src={ColorLogo}
+            alt="Stepping Stones logo"
+            width={60}
+            height={40}
+            sizes="(max-width: 640px) 40vw, 20vw"
+            className={`${opened ? 'ml-0 ' : 'ml-2.5'}`}
+          />
+          <div
+            className={`origin-left transition-all duration-300 ease-in-out fade-in-10 ${
+              !opened ? 'hidden' : ''
+            }`}
+          >
+            <Header
+              title="Stepping Stones"
+              order={4}
+              subtitle="Business Solutions"
+              subOrder={5}
+            />
+          </div>
+        </div>
+        <ScrollArea
+          className={`w-full p-2 py-4`}
+          style={{ height: SCROLL_AREA_HEIGHT }}
+        >
+          <div className="w-full px-2">
+            {NAV_ITEMS.map(({ label, Icon, href }) => {
+              if (!Icon && !href) {
+                return (
+                  <div key={label} className="my-2 w-full text-center">
+                    <Title
+                      order={opened ? 4 : 6}
+                      className="text-textDark dark:text-textLight"
+                    >
+                      {label}
+                    </Title>
+                  </div>
+                )
+              }
+
+              if (label === 'Messages') {
+                return (
+                  <Button
+                    className={`mb-2 flex w-full items-center rounded-lg font-semibold ${
+                      opened ? 'justify-start' : ''
+                    }`}
+                    variant="outline"
+                    asChild
+                  >
+                    <Link
+                      href={href as string}
+                      className={`group-hover:hover:bg-[#00DCB3]/20" relative inline-flex w-full  space-x-2 rounded-lg`}
+                      onClick={() => dispatch(setDrawerOpened(false))}
+                    >
+                      <Indicator
+                        inline
+                        label={unreadMessages?.length}
+                        size={16}
+                        offset={5}
+                        position="top-end"
+                        color="red"
+                        withBorder
+                        className={`flex items-center duration-100 `}
+                      >
+                        {<Icon size={20} />}
+                      </Indicator>
+                      <span
+                        className={` text-sm transition-all duration-300 ease-in-out ${
+                          !opened ? 'hidden' : ''
+                        }`}
+                      >
+                        {label}
+                      </span>
+                    </Link>
+                  </Button>
+                )
+              }
+
+              return (
+                <Button
+                  className={`flex w-full items-center ${
+                    opened ? 'justify-start' : ''
+                  } mb-2 rounded-lg font-semibold`}
+                  variant="outline"
+                  asChild
+                >
+                  <Link
+                    key={label}
+                    href={href as string}
+                    className={`flex w-auto items-center space-x-2 duration-300 group-hover:hover:bg-[#00DCB3]/20 `}
+                    onClick={() => dispatch(setDrawerOpened(false))}
+                  >
+                    {<Icon className="text-2xl" />}
+                    <span
+                      className={`text-sm duration-300 ${
+                        !opened ? 'hidden' : ' '
+                      }`}
+                    >
+                      {label}
+                    </span>
+                  </Link>
+                </Button>
+              )
+            })}
+          </div>
+          <div className="bottom-2 left-0 w-full px-2">
+            <Separator className={`my-2 ${opened ? 'w-64' : 'w-16'}`} />
+            <div className="flex w-full flex-col items-center space-y-2 py-2">
+              <Button
+                className="flex w-full items-center rounded-lg p-2  font-semibold"
+                variant="outline"
+                asChild
+              >
+                <Link
+                  href={'/auth/user-profile'}
+                  className="flex items-center justify-start space-x-2 px-2 group-hover:hover:bg-[#00DCB3]/20"
+                >
+                  <FaRegUser className="text-xl" />
+                  <span
+                    className={`transition-all duration-300 ${
+                      !opened ? 'hidden' : 'mt-1 '
+                    }`}
+                  >
+                    Profile
+                  </span>
+                </Link>
+              </Button>
+              <Button
+                className="flex w-full items-center rounded-lg p-2  font-semibold"
+                variant="outline"
+                onClick={() => {
+                  handleLogout()
+                  dispatch(setDrawerOpened(false))
+                }}
+              >
+                <FaSignOutAlt className="text-2xl" />
+                <p
+                  className={`transition-all duration-300 ${
+                    !opened ? 'hidden' : ''
+                  }`}
+                >
+                  Logout
+                </p>
+              </Button>
+            </div>
+          </div>
+        </ScrollArea>
+      </div>
+    </aside>
+  )
+}
+
+export function MobileAdminSidebar({ height }: { height: number }) {
+  const SCROLL_AREA_HEIGHT = height - 100
+  const dispatch = useAppDispatch()
+  const router = useRouter()
   let arg: void
   const { data: messages } = useGetAllInAppEnquiryMsgQuery(arg, {
     pollingInterval: 60000,
@@ -125,10 +244,8 @@ const AdminSidebar = () => {
     (message: MessageProps) => message.isRead === false
   )
 
-  const title = drawerOpened ? 'Close navigation' : 'Open navigation'
-
   return (
-    <header className="">
+    <header>
       <Sheet>
         <SheetTrigger>
           <button className="navbar-burger flex items-center p-3 text-blue-600">
@@ -142,110 +259,137 @@ const AdminSidebar = () => {
             </svg>
           </button>
         </SheetTrigger>
-        <SheetContent side={'left'} className="w-[240px] sm:w-[540px]">
+        <SheetContent side={'left'} className="w-[240px]">
           <SheetHeader>
             <SheetTitle>
-              <Link href={'/'} className="flex items-center px-4">
+              <div className={`inline-flex items-center gap-2`}>
                 <Image
-                  src={'/android-chrome-512x512.png'}
-                  alt=""
-                  width={70}
-                  height={70}
+                  src={ColorLogo}
+                  alt="Stepping Stones logo"
+                  width={60}
+                  height={40}
+                  sizes="(max-width: 640px) 40vw, 20vw"
+                  className=""
                 />
-              </Link>
+                <div
+                  className={`origin-left transition-all duration-300 ease-in-out fade-in-10 `}
+                >
+                  <Header
+                    title="Stepping Stones"
+                    order={4}
+                    subtitle="Business Solutions"
+                    subOrder={5}
+                  />
+                </div>
+              </div>
             </SheetTitle>
           </SheetHeader>
-          <div className="grid gap-4 py-4">
-            {NAV_ITEMS.map(({ label, icon, href }) => {
-              if (!icon && !href) {
-                return (
-                  <div key={label} className="pl-2">
-                    <Title
-                      order={4}
-                      className="text-gray-800 dark:text-gray-100"
-                    >
-                      {label}
-                    </Title>
-                    <Separator className="my-2" />
-                  </div>
-                )
-              }
+          <ScrollArea
+            className={`  py-12`}
+            style={{ height: SCROLL_AREA_HEIGHT }}
+          >
+            <div className="w-full">
+              {NAV_ITEMS.map(({ label, Icon, href }) => {
+                if (!Icon && !href) {
+                  return (
+                    <div key={label} className="my-2 w-full text-center">
+                      <Title
+                        order={4}
+                        className="text-textDark dark:text-textLight"
+                      >
+                        {label}
+                      </Title>
+                    </div>
+                  )
+                }
 
-              if (label === 'Messages') {
+                if (label === 'Messages') {
+                  return (
+                    <Button
+                      className={`mb-2 flex w-full items-center justify-start rounded-lg font-semibold`}
+                      variant="outline"
+                      asChild
+                    >
+                      <Link
+                        href={href as string}
+                        className={`group-hover:hover:bg-[#00DCB3]/20" relative inline-flex w-full  space-x-2 rounded-lg`}
+                        onClick={() => dispatch(setDrawerOpened(false))}
+                      >
+                        <Indicator
+                          inline
+                          label={unreadMessages?.length}
+                          size={16}
+                          offset={5}
+                          position="top-end"
+                          color="red"
+                          withBorder
+                          className={`flex items-center duration-100 `}
+                        >
+                          {<Icon size={20} />}
+                        </Indicator>
+                        <span
+                          className={` text-sm transition-all duration-300 ease-in-out`}
+                        >
+                          {label}
+                        </span>
+                      </Link>
+                    </Button>
+                  )
+                }
+
                 return (
-                  <SheetClose key={label} asChild>
+                  <Button
+                    className={`mb-2 flex w-full items-center justify-start rounded-lg font-semibold`}
+                    variant="outline"
+                    asChild
+                  >
                     <Link
+                      key={label}
                       href={href as string}
-                      className="relative flex space-x-4 rounded-lg  p-2 group-hover:hover:bg-[#00DCB3]/20"
+                      className={`flex w-auto items-center space-x-2 duration-300 group-hover:hover:bg-[#00DCB3]/20 `}
                       onClick={() => dispatch(setDrawerOpened(false))}
                     >
-                      <Indicator
-                        inline
-                        label={unreadMessages?.length}
-                        size={16}
-                        offset={7}
-                        position="top-start"
-                        color="red"
-                        withBorder
-                        className="flex items-center  space-x-2"
-                      >
-                        {icon}
-                        <span className=" text-sm text-[#00DCB3]">{label}</span>
-                      </Indicator>
+                      {<Icon className="text-2xl" />}
+                      <span className={`text-sm duration-300 `}>{label}</span>
                     </Link>
-                  </SheetClose>
+                  </Button>
                 )
-              }
-
-              return (
-                <SheetClose key={label} asChild>
-                  <Link
-                    key={label}
-                    href={href as string}
-                    className="flex items-center justify-start space-x-2 px-2 group-hover:hover:bg-[#00DCB3]/20"
-                    onClick={() => dispatch(setDrawerOpened(false))}
-                  >
-                    {icon}
-                    <span className="mt-1 text-sm text-[#00DCB3]">{label}</span>
-                  </Link>
-                </SheetClose>
-              )
-            })}
-          </div>
-          <div className="absolute bottom-0 left-0 w-full px-2">
-            <Separator className="my-2" />
-            <div className="flex w-full flex-col items-center justify-start py-2">
-              <Menu width={150}>
-                <Menu.Item
-                  className="mb-2 flex w-full  items-center rounded-lg  p-2 font-semibold text-[#00DCB3]"
-                  icon={<FaRegUser fontSize={14} color="#00DCB3" />}
-                  onClick={() => dispatch(setDrawerOpened(false))}
+              })}
+            </div>
+            <div className="bottom-2 left-0 w-full">
+              <Separator className={`my-2`} />
+              <div className="flex w-full flex-col items-center space-y-2 py-2">
+                <Button
+                  className="flex w-full items-center justify-start rounded-lg p-2  font-semibold"
+                  variant="outline"
+                  asChild
                 >
-                  <Link href={'/auth/user-profile'}>Profile</Link>
-                </Menu.Item>
-                <Menu.Item
-                  className="flex w-full items-center rounded-lg p-2  font-semibold text-[#00DCB3] "
-                  icon={
-                    <FaSignOutAlt
-                      fontSize={14}
-                      color="#00DCB3"
-                      className="hover:text-primary-light-100"
-                    />
-                  }
+                  <Link
+                    href={'/auth/user-profile'}
+                    className="flex items-center justify-start space-x-2 px-2 group-hover:hover:bg-[#00DCB3]/20"
+                  >
+                    <FaRegUser className="text-xl" />
+                    <span className={`transition-all duration-300 `}>
+                      Profile
+                    </span>
+                  </Link>
+                </Button>
+                <Button
+                  className="flex w-full items-center justify-start rounded-lg p-2  font-semibold"
+                  variant="outline"
                   onClick={() => {
                     handleLogout()
                     dispatch(setDrawerOpened(false))
                   }}
                 >
-                  <p>Logout</p>
-                </Menu.Item>
-              </Menu>
+                  <FaSignOutAlt className="text-2xl" />
+                  <p className={`transition-all duration-300 `}>Logout</p>
+                </Button>
+              </div>
             </div>
-          </div>
+          </ScrollArea>
         </SheetContent>
       </Sheet>
     </header>
   )
 }
-
-export default AdminSidebar

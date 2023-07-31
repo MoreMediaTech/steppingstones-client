@@ -22,7 +22,7 @@ const HeroSection = () => {
           ></div>
         </div>
       </div>
-      <div className="relative grid grid-cols-1 sm:max-w-screen-md sm:grid-cols-2 sm:gap-12 sm:space-x-14 ">
+      <div className="relative grid grid-cols-1 sm:container sm:mx-auto sm:grid-cols-2 sm:gap-12 sm:space-x-14 ">
         <div className="relative">
           <Image
             src={'/ssapp_hero_section.png'}

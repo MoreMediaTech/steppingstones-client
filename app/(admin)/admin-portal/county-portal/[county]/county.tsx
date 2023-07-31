@@ -35,7 +35,7 @@ export default function County({ county, countyId }: Props) {
 
   return (
     <section className="space-y-2">
-      <section className="flex w-full flex-col items-center justify-between sm:flex-row">
+      <section className="flex w-full flex-col items-center gap-2 justify-between sm:flex-row">
         <Header title={countyData?.name as string} order={1} />
         <div className="flex w-full items-center gap-2">
           <CreateSectionForm
@@ -57,91 +57,85 @@ export default function County({ county, countyId }: Props) {
       ) : (
         <section className="w-full  px-2 py-4">
           {countyData && (
-            <div className="grid h-full w-full grid-cols-1 gap-8 ">
+            <div className="grid h-full w-full grid-cols-1 gap-4">
+              <div className="grid w-full grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-4">
+                <PortalButton
+                  type="button"
+                  color="primaryFilled"
+                  isLive={countyData.welcome?.isLive}
+                  onClick={() => {
+                    router.push(
+                      `/admin-portal/county-portal/${county}/welcome?countyId=${countyId}&county=${county}`
+                    )
+                  }}
+                >
+                  Welcome
+                </PortalButton>
+                <PortalButton
+                  type="button"
+                  color="primaryFilled"
+                  isLive={countyData.lep?.isLive}
+                  onClick={() => {
+                    router.push(
+                      `/admin-portal/county-portal/${county}/lep?countyId=${countyId}&county=${county}`
+                    )
+                  }}
+                >
+                  LEP
+                </PortalButton>
+                <PortalButton
+                  type="button"
+                  color="primaryFilled"
+                  isLive={countyData.news?.isLive}
+                  onClick={() => {
+                    router.push(
+                      `/admin-portal/county-portal/${county}/news?countyId=${countyId}&county=${county}`
+                    )
+                  }}
+                >
+                  NEWS
+                </PortalButton>
+              </div>
               <div className="h-full rounded  p-2 shadow-lg dark:shadow-gray-500 lg:col-span-2">
                 <Map
                   location={`${county}, UK`}
                   districtsArray={districts as string[]}
                 />
               </div>
-              <div className="h-full w-full lg:col-span-2">
-                <div className="flex flex-col">
-                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+              <div className="h-full w-full space-y-4 lg:col-span-2">
+                <div className="grid grid-cols-1 gap-x-10 gap-y-4 sm:grid-cols-2 ">
+                  {countyData?.districts?.map((district: DistrictDataProps) => (
                     <PortalButton
+                      key={district?.id}
                       type="button"
                       color="primaryFilled"
-                      isLive={countyData.welcome?.isLive}
-                      onClick={() => {
+                      isLive={district?.isLive}
+                      onClick={() =>
                         router.push(
-                          `/admin-portal/county-portal/${county}/welcome?countyId=${countyId}&county=${county}`
+                          `/admin-portal/county-portal/${county}/district?countyId=${countyId}&county=${county}&district=${district?.name}&districtId=${district?.id}`
                         )
-                      }}
+                      }
                     >
-                      Welcome
+                      {district?.name}
                     </PortalButton>
+                  ))}
+                </div>
+                <div className="grid grid-cols-1 gap-x-4 gap-y-4 md:grid-cols-3">
+                  {countyData?.sections?.map((section: SectionProps) => (
                     <PortalButton
+                      key={`${section?.id}`}
                       type="button"
                       color="primaryFilled"
-                      isLive={countyData.lep?.isLive}
-                      onClick={() => {
+                      isLive={section?.isLive}
+                      onClick={() =>
                         router.push(
-                          `/admin-portal/county-portal/${county}/lep?countyId=${countyId}&county=${county}`
+                          `/admin-portal/county-portal/${county}/section?countyId=${countyId}&county=${county}&section=${section.name}&sectionId=${section.id}`
                         )
-                      }}
+                      }
                     >
-                      LEP
+                      {section?.name}
                     </PortalButton>
-                    <PortalButton
-                      type="button"
-                      color="primaryFilled"
-                      isLive={countyData.news?.isLive}
-                      onClick={() => {
-                        router.push(
-                          `/admin-portal/county-portal/${county}/news?countyId=${countyId}&county=${county}`
-                        )
-                      }}
-                    >
-                      NEWS
-                    </PortalButton>
-                  </div>
-                  <div className="w-full space-y-4 py-8">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-4 ">
-                      {countyData?.districts?.map(
-                        (district: DistrictDataProps) => (
-                          <PortalButton
-                            key={district?.id}
-                            type="button"
-                            color="primaryFilled"
-                            isLive={district?.isLive}
-                            onClick={() =>
-                              router.push(
-                                `/admin-portal/county-portal/${county}/district?countyId=${countyId}&county=${county}&district=${district?.name}&districtId=${district?.id}`
-                              )
-                            }
-                          >
-                            {district?.name}
-                          </PortalButton>
-                        )
-                      )}
-                    </div>
-                    <div className="grid grid-cols-1 gap-x-4 gap-y-4 md:grid-cols-3">
-                      {countyData?.sections?.map((section: SectionProps) => (
-                        <PortalButton
-                          key={`${section?.id}`}
-                          type="button"
-                          color="primaryFilled"
-                          isLive={section?.isLive}
-                          onClick={() =>
-                            router.push(
-                              `/admin-portal/county-portal/${county}/section?countyId=${countyId}&county=${county}&section=${section.name}&sectionId=${section.id}`
-                            )
-                          }
-                        >
-                          {section?.name}
-                        </PortalButton>
-                      ))}
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>

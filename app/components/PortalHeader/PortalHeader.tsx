@@ -12,7 +12,7 @@ import {
   globalSelector,
 } from 'app/global-state/features/global/globalSlice'
 import FormInput from 'app/components/forms/FormComponents/FormInput'
-import {  AdminSidebar } from '@components/navigation'
+import {  MobileAdminSidebar } from '@components/navigation'
 import { UserSchemaWithIdAndOrganisationType } from '@models/User'
 
 interface IPortalHeaderProps {
@@ -31,17 +31,13 @@ const PortalHeader = ({
   imgUrl,
 }: IPortalHeaderProps) => {
   const pathname = usePathname()
-  const dispatch = useAppDispatch()
-  const { drawerOpened } = useAppSelector(globalSelector)
   const { theme, setTheme, resolvedTheme } = useTheme()
-  const [opened, setOpened] = useState(false)
+ 
   const [pos, setPos] = useState<string>('top')
   const initials = user?.name
     ?.split(' ')
     ?.map((n) => n[0])
     ?.join('')
-
-  const drawerTitle = drawerOpened ? 'Close navigation' : 'Open navigation'
 
   // Check the top position of the navigation in the window
   useEffect(() => {
@@ -60,15 +56,13 @@ const PortalHeader = ({
 
   return (
     <header
-      className={`bg-background px-4 py-2 drop-shadow-md  w-full`}
+      className={` bg-background px-4 py-2 drop-shadow-md  w-full`}
     >
       <div className="mx-auto py-2 md:px-4">
         <div className="flex flex-col items-start justify-between md:flex-row md:items-center">
           <div className="mb-2 flex items-center justify-between w-full">
             <div className="flex items-center gap-1">
-              <div className=" items-center md:px-4 py-2  ">
-               <AdminSidebar />
-              </div>
+             
               <Group>
                 <Avatar
                   imageUrl={

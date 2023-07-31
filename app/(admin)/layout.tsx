@@ -25,7 +25,7 @@ export default function RootLayout({
   }
   return (
     <html lang="en" className={`font-montserrat sm:scroll-smooth`}>
-      <body className="flex min-h-screen flex-row-reverse bg-background">
+      <body className="min-h-screen bg-background">
         <Provider>
           <AdminPageWrapper>{children}</AdminPageWrapper>
           <Toaster />

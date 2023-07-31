@@ -11,6 +11,7 @@
       "@app/*": ["app/*"],
       "@types/*": ["types/*"],
       "@global-state/*": ["app/global-state/*"],
+      "@public/*": ["public/*"],
     },
     "target": "esnext",
     "lib": [

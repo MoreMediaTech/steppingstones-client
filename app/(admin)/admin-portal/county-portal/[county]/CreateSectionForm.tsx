@@ -112,7 +112,7 @@ const CreateSectionForm = ({
         type="button"
         variant="outline"
         asChild
-        className="w-full sm:w-1/3 border-gray-900 dark:border-gray-200"
+        className="w-full border-gray-900 dark:border-gray-200"
       >
         <DialogTrigger>Create Section</DialogTrigger>
       </Button>

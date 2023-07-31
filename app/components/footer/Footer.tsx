@@ -7,15 +7,15 @@ import steppinstonesapplogo from '../../../public/android-chrome-512x512.png'
 const Footer = () => {
   const year = new Date().getFullYear()
   return (
-    <footer className="bottom-0 left-0 mb-0 py-2 w-full border-t-2 border-slate-300  dark:text-primary-light-100">
-      <div className="container mx-auto max-w-screen-md space-y-2">
+    <footer className="bottom-0 left-0 mb-0 py-6 w-full border-t-2 border-slate-300  dark:text-textLight">
+      <div className="container mx-auto py-4 space-y-2">
         <div className="flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
           <div>
             <Image
               src={steppinstonesapplogo}
               alt="Stepping Stones app logo"
-              width={200}
-              height={200}
+              width={100}
+              height={100}
             />
           </div>
           <div>

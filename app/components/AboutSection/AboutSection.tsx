@@ -8,16 +8,16 @@ import Button from 'app/components/Button'
 const AboutSection = () => {
   return (
     <section id="about" className=" pb-4 pt-24">
-      <div className="mx-auto max-w-screen-md space-y-8">
-        <div className="space-y-4">
+      <div className="space-y-8 px-2 sm:px-0 sm:container sm:mx-auto">
+        <div className="space-y-4 items-center text-center">
           <h1 className="text-center text-4xl font-medium text-primary-dark-100 dark:text-primary-light-600">
             About
           </h1>
-          <h3 className="text-center text-xl font-bold text-[#00DCB3]">
+          <h4 className="text-center text-xl font-bold text-accent-dark-300">
             Information that fits your business needs.
-          </h3>
+          </h4>
         </div>
-        <div className="container mx-auto grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
           <div className="relative h-[288px] w-full ">
             <Image
               src={'/about_section_img1.1.png'}

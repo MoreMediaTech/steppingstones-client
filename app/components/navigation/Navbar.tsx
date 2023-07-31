@@ -50,13 +50,13 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`top-0 z-10  flex w-full  py-2 sm:px-16 ${
+      className={`top-0 z-10  flex w-full  py-2 sm:px-16 bg-background ${
         pos === 'top'
-          ? 'absolute bg-slate-100 dark:bg-[#25262B]'
-          : 'shadow-b-2xl fixed bg-slate-100 dark:bg-[#25262B]'
+          ? 'absolute '
+          : 'shadow-b-2xl fixed '
       }`}
     >
-      <div className="container mx-auto flex w-full items-center justify-between sm:max-w-screen-lg">
+      <div className="container mx-auto flex w-full items-center justify-between sm:max-w-screen-xl">
         <AppLogo activePath={activePath} setActivePath={setActivePath} />
         {/* Main Navigation */}
         <ul className="hidden list-none items-center justify-end gap-6 sm:flex">

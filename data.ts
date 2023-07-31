@@ -8,6 +8,11 @@ import {
   HelpCircle,
   XCircle,
 } from 'lucide-react'
+import { BiHomeCircle } from 'react-icons/bi'
+import { FaBriefcase, FaRegCalendarAlt, FaRegEnvelope, FaUsers } from 'react-icons/fa'
+import { GiPortal } from 'react-icons/gi'
+import { GoFileDirectory } from 'react-icons/go'
+import { MdOutlineReviews, MdOutlineSpeakerNotes } from 'react-icons/md'
 
 export const faqItems = [
   {
@@ -51,6 +56,74 @@ export const faqItems = [
     question: 'Is this app for the UK only?',
     answer:
       'Our Beta app will be restricted to one region in the UK. Post-Beta, we will add more regions to the app to cover the whole of the UK. We are working with partners to offer the platform to other countries on a white-label basis. If you would like this app in your country, email info@steppingstonesapp.com for more information.',
+  },
+]
+
+export const NAV_ITEMS = [
+  {
+    label: 'Portal Home',
+    Icon: BiHomeCircle,
+    href: '/admin-portal',
+  },
+  {
+    label: 'Advertisements',
+    href: '/admin-portal/ads-section',
+    Icon: MdOutlineSpeakerNotes,
+  },
+  {
+    label: 'County Portal',
+    href: '/admin-portal/county-portal',
+    Icon: GiPortal,
+  },
+  {
+    label: 'Client Meetings',
+    href: '/admin-portal/client-meeting',
+    Icon: FaRegCalendarAlt,
+  },
+  {
+    label: 'Feedback',
+    href: '/admin-portal/feedback',
+    Icon: MdOutlineReviews,
+  },
+  {
+    label: 'Messages',
+    Icon: FaRegEnvelope,
+    href: '/admin-portal/messages',
+  },
+  {
+    label: 'Manage Users',
+    Icon: FaUsers,
+    href: '/admin-portal/users',
+  },
+  {
+    label: 'Admin',
+    Icon: null,
+    href: null,
+  },
+  {
+    label: 'Manage County',
+    Icon: FaBriefcase,
+    href: '/admin-portal/admin/county-setting',
+  },
+  {
+    label: 'Manage District',
+    Icon: FaBriefcase,
+    href: '/admin-portal/admin/district-setting',
+  },
+  {
+    label: 'Manage Section',
+    Icon: FaBriefcase,
+    href: '/admin-portal/admin/section-setting',
+  },
+  {
+    label: 'Partner Directory',
+    Icon: GoFileDirectory,
+    href: '/admin-portal/admin/partner-directory',
+  },
+  {
+    label: 'Source Directory',
+    Icon: GoFileDirectory,
+    href: '/admin-portal/admin/source-directory',
   },
 ]
 

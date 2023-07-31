@@ -5,6 +5,9 @@ import { ComponentShield } from 'app/components/NextShield'
 import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
 import PortalHeader from 'app/components/PortalHeader'
 import { UserSchemaWithIdAndOrganisationType } from '@models/User'
+import { AdminSidebar, MobileAdminSidebar } from '@components/navigation'
+import useWindowSize from '@hooks/useWindowSize'
+import { ScrollArea } from '@components/ui/scroll-area'
 
 function PageWrapper({
   children,
@@ -13,6 +16,8 @@ function PageWrapper({
   children: React.ReactNode
   className?: string
 }) {
+  const [size] = useWindowSize()
+  const SCROLL_AREA_HEIGHT = size.innerHeight as number - 10
   const { data: user } = useGetUserQuery()
   const userFirstName = user?.name.split(' ')[0]
   return (
@@ -21,23 +26,30 @@ function PageWrapper({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
       transition={{ duration: 0.25 }}
-      className={`${className}  w-full`}
+      className={`${className} h-screen  w-full`}
     >
       <ComponentShield
         RBAC
         showForRole={'SS_EDITOR'}
         userRole={user?.role as string}
       >
-        <section className="grid">
-          <PortalHeader
-            user={user as UserSchemaWithIdAndOrganisationType}
-            title={`Welcome ${userFirstName}`}
-            subTitle="Please select from the menu below"
-            imgUrl={user?.imageUrl}
-          />
-          <section className="grid ">
-            <div className="col-span-1 sm:col-span-1"></div>
-            <div className="col-span-1 sm:col-span-1">{children}</div>
+        <section className="relative">
+          <section className="relative flex flex-col md:flex-row">
+            <aside className="hidden px-4 md:block h-screen">
+              <AdminSidebar height={size.innerHeight as number} />
+            </aside>
+            <div className="block md:hidden h-full px-4 py-4 ">
+              <MobileAdminSidebar height={size.innerHeight as number} />
+            </div>
+            <ScrollArea className="relative w-full" style={{ height: SCROLL_AREA_HEIGHT }}>
+              {/* <PortalHeader
+                user={user as UserSchemaWithIdAndOrganisationType}
+                title={`Welcome ${userFirstName}`}
+                subTitle="Please select from the menu below"
+                imgUrl={user?.imageUrl}
+              /> */}
+              <div>{children}</div>
+            </ScrollArea>
           </section>
         </section>
       </ComponentShield>
