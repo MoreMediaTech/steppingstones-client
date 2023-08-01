@@ -11,8 +11,8 @@ const variants = {
 
 export default function Verification() {
   return (
-    <section className="relative grid h-screen w-full grid-cols-2">
-      <div className=" top-0 h-full w-full bg-cover bg-center">
+    <section className="relative grid h-screen w-full md:grid-cols-2">
+      <div className=" top-0 h-full w-full bg-cover bg-center hidden md:block">
         <div
           className="relative h-full w-full"
           style={{ width: '100%', height: '100%' }}

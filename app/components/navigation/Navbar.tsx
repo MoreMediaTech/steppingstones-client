@@ -2,17 +2,26 @@
 import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
-import { Burger } from '@mantine/core'
 import { FiMoon, FiSun } from 'react-icons/fi'
 import { useTheme } from 'next-themes'
+import { GiHamburgerMenu } from 'react-icons/gi'
 
 import { LoginButton, MobileLoginButton } from './LoginButton'
 import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
 import { AppLogo } from './AppLogo'
 
 import ScrollLink from 'app/components/scroll-link'
-import UserButton from 'app/components/UserButton'
 import { UserSchemaWithIdAndOrganisationType } from '@models/User'
+import { Button } from '@components/ui/button'
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@components/ui/sheet'
+import { Avatar, AvatarFallback, AvatarImage } from '@components/ui/avatar'
 
 const paths = ['about', 'features', 'faqs']
 
@@ -50,23 +59,29 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`top-0 z-10  flex w-full  py-2 sm:px-16 bg-background ${
+      className={`top-0 z-10  flex w-full  py-4 sm:px-16 ${
         pos === 'top'
-          ? 'absolute '
-          : 'shadow-b-2xl fixed '
+          ? 'absolute bg-transparent shadow-none'
+          : 'shadow-b-2xl fixed bg-background'
       }`}
     >
       <div className="container mx-auto flex w-full items-center justify-between sm:max-w-screen-xl">
-        <AppLogo activePath={activePath} setActivePath={setActivePath} />
+        <AppLogo
+          pos={pos}
+          activePath={activePath}
+          setActivePath={setActivePath}
+        />
         {/* Main Navigation */}
-        <ul className="hidden list-none items-center justify-end gap-6 sm:flex">
+        <ul className="hidden list-none items-center justify-end gap-6 md:flex">
           {paths.map((path, index) => {
             if (activePath === path) {
               return (
                 <li key={`${path}-${index}`}>
                   <ScrollLink
                     href={`/#${path}`}
-                    className={`cursor-pointer font-poppins text-[16px] font-normal capitalize text-primary-dark-100 dark:text-primary-light-100`}
+                    className={`cursor-pointer font-poppins text-[16px] font-normal capitalize ${
+                      pos === 'top' ? 'text-textLight' : ' '
+                    }`}
                     onClick={() => setActivePath(path)}
                     scroll={false}
                   >
@@ -87,7 +102,9 @@ const Navbar = () => {
                 <li key={`${path}-${index}`}>
                   <Link
                     href={`/#${path}`}
-                    className={`cursor-pointer font-poppins text-[16px] font-normal capitalize text-primary-dark-100 dark:text-primary-light-100`}
+                    className={`cursor-pointer font-poppins text-[16px] font-normal capitalize ${
+                      pos === 'top' ? 'text-textLight' : ' '
+                    }`}
                     onClick={() => setActivePath(path)}
                     scroll={false}
                   >
@@ -107,6 +124,7 @@ const Navbar = () => {
           })}
 
           <LoginButton
+            pos={pos}
             currentUser={currentUser as UserSchemaWithIdAndOrganisationType}
             handleLogout={handleLogout}
             setActivePath={setActivePath}
@@ -116,182 +134,184 @@ const Navbar = () => {
               type="button"
               aria-label="toggle-theme-button"
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className={`focus:ring-none flex cursor-pointer list-none  p-1 font-medium focus:border-transparent focus:outline-none md:block lg:mb-0 lg:ml-0 lg:p-1 lg:px-1`}
+              className={`focus:ring-none flex cursor-pointer list-none  p-1 font-medium focus:border-transparent focus:outline-none md:block lg:mb-0 lg:ml-0 lg:p-1 lg:px-1 ${
+                pos === 'top' ? 'text-textLight' : ' '
+              }`}
             >
               {resolvedTheme === 'light' ? (
-                <FiSun
-                  fontSize={18}
-                  className={`${
-                    pathname === '/' && pos === 'top'
-                      ? 'text-primary-dark-100 dark:text-primary-light-100'
-                      : 'text-primary-dark-100 dark:text-primary-light-100'
-                  } font-bold `}
-                />
+                <FiSun fontSize={20} />
               ) : (
-                <FiMoon
-                  fontSize={18}
-                  className={`${
-                    pathname === '/' && pos === 'top'
-                      ? 'text-primary-dark-100 dark:text-primary-light-100'
-                      : 'text-primary-dark-100 dark:text-primary-light-100'
-                  } font-bold `}
-                />
+                <FiMoon fontSize={20} />
               )}
               <span hidden>toggle theme</span>
             </button>
           </li>
           <li className="hidden flex-1 items-center md:flex ">
-            <Link
-              href={'/enquire'}
-              className={`rounded-lg bg-[#5E17EB] px-4 py-1 text-lg font-medium text-primary-light-100`}
-              onClick={() => setActivePath('enquire')}
-            >
-              <span
-                className={`${
-                  pathname === '/enquire'
-                    ? 'w-full border-b-2 border-primary-light-100'
-                    : 'border-0'
+            <Button variant="outline" asChild>
+              <Link
+                href={'/enquire'}
+                className={`rounded-lg  px-4 py-1 text-lg font-medium  ${
+                  pos === 'top'
+                    ? 'border-primary-light-100 text-textLight '
+                    : ' border-primary-dark-100 dark:border-primary-light-100 '
                 }`}
+                onClick={() => setActivePath('enquire')}
               >
-                Enquire
-              </span>
-            </Link>
+                <span
+                  className={`${
+                    pathname === '/enquire' ? 'w-full ' : 'border-0'
+                  }`}
+                >
+                  Enquire
+                </span>
+              </Link>
+            </Button>
           </li>
         </ul>
 
         {/* Mobile Navigation */}
-        <div className="flex w-full flex-1 items-center justify-end sm:hidden">
-          <div className="flex items-center gap-4">
+
+        <div className="flex w-full flex-1 items-center justify-end md:hidden">
+          <div className="flex items-center gap-2">
             <button
               type="button"
               aria-label="toggle-theme-button"
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className={`focus:ring-none flex cursor-pointer list-none  p-1 font-medium focus:border-transparent focus:outline-none md:block lg:mb-0 lg:ml-0 lg:p-1 lg:px-1`}
+              className={`focus:ring-none flex cursor-pointer list-none  p-1 font-medium focus:border-transparent focus:outline-none md:block lg:mb-0 lg:ml-0 lg:p-1 lg:px-1 ${
+                pos === 'top' ? 'text-textLight' : ' '
+              }`}
             >
               {resolvedTheme === 'light' ? (
-                <FiSun
-                  fontSize={18}
-                  className={`${
-                    pathname === '/' && pos === 'top'
-                      ? 'text-primary-dark-100 dark:text-primary-light-100'
-                      : 'text-primary-dark-100 dark:text-primary-light-100'
-                  } font-bold `}
-                />
+                <FiSun fontSize={20} />
               ) : (
-                <FiMoon
-                  fontSize={18}
-                  className={`${
-                    pathname === '/' && pos === 'top'
-                      ? 'text-primary-dark-100 dark:text-primary-light-100'
-                      : 'text-primary-dark-100 dark:text-primary-light-100'
-                  } font-bold `}
-                />
+                <FiMoon fontSize={20} />
               )}
               <span hidden>toggle theme</span>
             </button>
             {currentUser ? (
-              <UserButton
-                name={currentUser?.name ?? ''}
-                email={currentUser?.email ?? ''}
-                initials={initials}
-              />
+              <Avatar>
+                <AvatarFallback>
+                  {initials}
+                </AvatarFallback>
+              </Avatar>
             ) : null}
-            <Burger
-              opened={opened}
-              onClick={() => setOpened((o) => !o)}
-              title={title}
-              color="#00dcb3"
-            />
-          </div>
-
-          {/* Mobile Menu */}
-
-          <div
-            className={`${
-              !opened ? 'hidden' : 'flex'
-            } sidebar absolute right-0 top-14 mx-4 my-2 w-[240px] rounded-md bg-slate-100 p-6 shadow-md dark:bg-[#25262B]`}
-          >
-            <ul className="grid w-full list-none grid-cols-1 gap-2 ">
-              {paths.map((path, index) => {
-                if (activePath === path) {
-                  return (
-                    <li
-                      className="w-full rounded-sm bg-slate-200 px-2 py-1 dark:bg-[#3b3c40]"
-                      key={`${path}-${index}`}
+            {/* Mobile Menu */}
+            <Sheet>
+              <SheetTrigger>
+                <GiHamburgerMenu
+                  fontSize={24}
+                  className={`${pos === 'top' ? 'text-textLight' : ' '}`}
+                />
+              </SheetTrigger>
+              <SheetContent>
+                <SheetHeader>
+                  <SheetTitle></SheetTitle>
+                  <SheetDescription></SheetDescription>
+                </SheetHeader>
+                <ul className="grid w-full list-none grid-cols-1 gap-2 py-8">
+                  {paths.map((path, index) => {
+                    if (activePath === path) {
+                      return (
+                        <li
+                          className="w-full "
+                          key={`${path}-${index}`}
+                        >
+                          <Button
+                            variant="outline"
+                            asChild
+                            className="flex items-center justify-start"
+                          >
+                            <ScrollLink
+                              href={`/#${path}`}
+                              className={`cursor-pointer font-poppins text-[16px] font-normal capitalize `}
+                              onClick={() => {
+                                setActivePath(path)
+                                setOpened(false)
+                              }}
+                              scroll={false}
+                            >
+                              <span
+                                className={`text-lg ${
+                                  activePath === path
+                                    ? ' w-full border-b-2 border-primary-dark-100 pb-1 dark:border-primary-light-100'
+                                    : 'border-0'
+                                }`}
+                              >
+                                {path}
+                              </span>
+                            </ScrollLink>
+                          </Button>
+                        </li>
+                      )
+                    }
+                    return (
+                      <li
+                        className="w-full "
+                        key={`${path}-${index}`}
+                      >
+                        <Button
+                          variant="outline"
+                          asChild
+                          className="flex items-center justify-start"
+                        >
+                          <Link
+                            href={`/#${path}`}
+                            className={`${
+                              pathname === `${path}`
+                                ? 'w-full border-b border-primary-dark-100 pb-1 dark:border-primary-light-100'
+                                : 'border-0'
+                            } cursor-pointer  font-poppins text-lg font-normal capitalize`}
+                            onClick={() => {
+                              setActivePath(path)
+                              setOpened(false)
+                            }}
+                            scroll={false}
+                          >
+                            {path}
+                          </Link>
+                        </Button>
+                      </li>
+                    )
+                  })}
+                  <li className="my-2 w-full cursor-pointer font-poppins font-medium">
+                    <Button
+                      variant="outline"
+                      asChild
+                      className="flex items-center justify-start"
                     >
-                      <ScrollLink
-                        href={`/#${path}`}
-                        className={`cursor-pointer bg-slate-200 font-poppins text-[16px] font-normal capitalize text-[#00DCB3] dark:bg-[#3b3c40]`}
+                      <Link
+                        href={'/enquire'}
+                        className="w-full font-medium "
                         onClick={() => {
-                          setActivePath(path)
                           setOpened(false)
+                          setActivePath('enquire')
                         }}
-                        scroll={false}
                       >
                         <span
-                          className={`${
-                            activePath === path
-                              ? ' w-full border-b-2 border-[#00DCB3]'
+                          className={`text-lg ${
+                            pathname === '/enquire'
+                              ? 'w-full border-b-2 border-primary-light-100'
                               : 'border-0'
                           }`}
                         >
-                          {path}
+                          Enquire
                         </span>
-                      </ScrollLink>
-                    </li>
-                  )
-                }
-                return (
-                  <li
-                    className="w-full rounded-sm bg-slate-200 px-2 py-1 hover:bg-slate-200 dark:bg-[#3b3c40]"
-                    key={`${path}-${index}`}
-                  >
-                    <Link
-                      href={`/#${path}`}
-                      className={`${
-                        pathname === `${path}`
-                          ? 'w-full border-b border-[#00DCB3]'
-                          : 'border-0'
-                      } cursor-pointer  font-poppins text-[16px] font-normal capitalize text-[#00DCB3]`}
-                      onClick={() => {
-                        setActivePath(path)
-                        setOpened(false)
-                      }}
-                      scroll={false}
-                    >
-                      {path}
-                    </Link>
+                      </Link>
+                    </Button>
                   </li>
-                )
-              })}
-              <li className="my-2 w-full cursor-pointer font-poppins text-[16px] font-medium">
-                <Link
-                  href={'/enquire'}
-                  className="w-full rounded-lg bg-[#5E17EB] px-6 py-2 font-medium text-white "
-                  onClick={() => {
-                    setOpened(false)
-                    setActivePath('enquire')
-                  }}
-                >
-                  <span
-                    className={`${
-                      pathname === '/enquire'
-                        ? 'w-full border-b-2 border-primary-light-100'
-                        : 'border-0'
-                    }`}
-                  >
-                    Enquire
-                  </span>
-                </Link>
-              </li>
-
-              <MobileLoginButton
-                currentUser={currentUser as UserSchemaWithIdAndOrganisationType}
-                handleLogout={handleLogout}
-                setActivePath={setActivePath}
-              />
-            </ul>
+                  <MobileLoginButton
+                    currentUser={
+                      currentUser as UserSchemaWithIdAndOrganisationType
+                    }
+                    handleLogout={handleLogout}
+                    setActivePath={setActivePath}
+                  />
+                </ul>
+              </SheetContent>
+            </Sheet>
           </div>
+
+          {/* Mobile Menu */}
         </div>
       </div>
     </nav>

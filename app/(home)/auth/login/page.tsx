@@ -13,8 +13,8 @@ const variants = {
 
 export default function Login() {
   return (
-    <section className="relative h-screen w-full grid grid-cols-2">
-      <div className=" top-0 h-full w-full bg-cover bg-center">
+    <section className="relative h-screen w-full grid md:grid-cols-2">
+      <div className=" top-0 h-full w-full bg-cover bg-center hidden md:block">
         <div
           className="relative h-full w-full"
           style={{ width: '100%', height: '100%' }}

@@ -1,27 +1,15 @@
 'use client'
 import React from 'react'
-import { Indicator, Menu, Title } from '@mantine/core'
+import { Indicator, Title } from '@mantine/core'
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from '@components/ui/sheet'
-import { BiHomeCircle } from 'react-icons/bi'
 import { BsArrowLeftShort } from 'react-icons/bs'
-import {
-  FaRegEnvelope,
-  FaUsers,
-  FaBriefcase,
-  FaSignOutAlt,
-  FaRegUser,
-  FaRegCalendarAlt,
-} from 'react-icons/fa'
-import { GoFileDirectory } from 'react-icons/go'
-import { MdOutlineReviews, MdOutlineSpeakerNotes } from 'react-icons/md'
-import { GiPortal } from 'react-icons/gi'
+import { FaSignOutAlt, FaRegUser } from 'react-icons/fa'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -69,7 +57,8 @@ export function AdminSidebar({ height }: { height: number }) {
           }`}
           onClick={() => setOpened(!opened)}
         />
-        <div
+        <Link
+          href="/"
           className={`inline-flex items-center px-2 ${
             opened ? 'gap-2' : 'gap-0'
           }`}
@@ -94,7 +83,7 @@ export function AdminSidebar({ height }: { height: number }) {
               subOrder={5}
             />
           </div>
-        </div>
+        </Link>
         <ScrollArea
           className={`w-full p-2 py-4`}
           style={{ height: SCROLL_AREA_HEIGHT }}

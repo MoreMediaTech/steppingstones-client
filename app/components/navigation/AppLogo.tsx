@@ -1,12 +1,14 @@
-import { Group } from '@mantine/core'
+
 import Link from 'next/link'
 import Image from 'next/image'
 import ScrollLink from 'app/components/scroll-link'
 
 export const AppLogo = ({
+  pos,
   activePath,
   setActivePath,
 }: {
+  pos: string
   activePath?: string
   setActivePath?: React.Dispatch<React.SetStateAction<string>>
 }) => (
@@ -17,24 +19,25 @@ export const AppLogo = ({
         className="flex cursor-pointer items-center lg:w-0 lg:flex-1"
         onClick={() => setActivePath!('hero')}
       >
-        <Group className=" flex items-center gap-6 md:gap-8">
-          <div className="md:w-50 h-50 relative -mb-1 flex ">
+        <div className=" flex items-center gap-6 md:gap-8">
+          <div className="md:w-50 h-50 relative -mb-1 hidden md:flex ">
             <Image
-              src={'/steppingstonesapplogo.png'}
+              src={'/SS_Color _logo _with background2.png'}
               alt="Stepping Stones logo"
               height={50}
-              width={50}
+              width={200}
             />
           </div>
-          <div className="-ml-6 flex flex-col">
-            <h1 className="font-poppins text-lg font-bold capitalize text-[#5E17EB] md:text-lg">
-              SteppingStones
-            </h1>
-            <h3 className="font-poppins text-xs capitalize text-[#00DCB3]">
-              Solutions for Businesses
-            </h3>
+          <div className="md:w-50 h-50 relative -mb-1 flex md:hidden">
+            <Image
+              src={'/SS-Color-logo-with-background.png'}
+              alt="Stepping Stones logo"
+              height={40}
+              width={40}
+            />
           </div>
-        </Group>
+        
+        </div>
       </ScrollLink>
     ) : (
       <Link
@@ -42,24 +45,25 @@ export const AppLogo = ({
         className="flex cursor-pointer items-center lg:w-0 lg:flex-1"
         onClick={() => setActivePath!('hero')}
       >
-        <Group className=" flex items-center gap-6 md:gap-8">
-          <div className="md:w-50 h-50 relative -mb-1 flex ">
+        <div className=" flex items-center gap-2 md:gap-8">
+          <div className="md:w-42 h-42 relative -mb-1 hidden md:flex ">
             <Image
-              src={'/steppingstonesapplogo.png'}
+              src={'/SS_Color _logo _with background2.png'}
               alt="Stepping Stones logo"
               height={50}
-              width={50}
+              width={200}
             />
           </div>
-          <div className="-ml-6 flex flex-col">
-            <h1 className="font-poppins text-lg font-bold capitalize text-[#5E17EB] md:text-lg">
-              SteppingStones
-            </h1>
-            <h3 className="font-poppins text-xs capitalize text-[#00DCB3]">
-              Solutions for Businesses
-            </h3>
+          <div className="md:w-42 h-42 relative -mb-1 flex md:hidden">
+            <Image
+              src={'/SS-Color-logo-with-background.png'}
+              alt="Stepping Stones logo"
+              height={40}
+              width={40}
+            />
           </div>
-        </Group>
+         
+        </div>
       </Link>
     )}
   </>

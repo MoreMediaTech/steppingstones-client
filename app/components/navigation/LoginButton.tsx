@@ -4,15 +4,25 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { MdBusiness } from 'react-icons/md'
 import { FaRegUser, FaSignInAlt, FaSignOutAlt } from 'react-icons/fa'
-import UserButton from 'app/components/UserButton'
 import { UserSchemaWithIdAndOrganisationType } from '@models/User'
-
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from '@components/ui/navigation-menu'
+import { Button } from '@components/ui/button'
+import { Separator } from '@components/ui/separator'
 
 export function LoginButton({
+  pos,
   currentUser,
   handleLogout,
   setActivePath,
 }: {
+  pos: string
   currentUser: UserSchemaWithIdAndOrganisationType
   handleLogout(): void
   setActivePath: React.Dispatch<React.SetStateAction<string>>
@@ -26,45 +36,54 @@ export function LoginButton({
     <>
       {currentUser ? (
         <li>
-          <Group position="center">
-            <Menu withArrow position="bottom" shadow="md" width={150}>
-              <Menu.Target>
-                <UserButton
-                  name={currentUser?.name ?? ''}
-                  email={currentUser?.email ?? ''}
-                  initials={initials}
-                  show
-                />
-              </Menu.Target>
-              {/* ...menu items */}
-              <Menu.Dropdown>
-                <Menu.Label>
-                  <span className="item-center flex justify-center text-[#00DCB3] "></span>
-                </Menu.Label>
-                <Menu.Item icon={<MdBusiness fontSize={14} color="#00DCB3" />}>
-                  <Link className="text-[#00DCB3] " href={'/admin-portal'}>
-                    Portal
-                  </Link>
-                </Menu.Item>
-
-                <Divider />
-                <Menu.Item icon={<FaRegUser fontSize={14} color="#00DCB3" />}>
-                  <Link className="text-[#00DCB3] " href={'/auth/user-profile'}>
-                    Profile
-                  </Link>
-                </Menu.Item>
-                <Divider />
-                <Menu.Item
-                  icon={<FaSignOutAlt fontSize={14} color="#00DCB3" />}
-                  onClick={() => {
-                    handleLogout()
-                  }}
+          <NavigationMenu>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger
+                  className={`bg-transparent text-[16px] hover:bg-transparent ${
+                    pos === 'top' ? 'text-textLight' : ' '
+                  }`}
                 >
-                  <span className="text-[#00DCB3] ">Logout</span>
-                </Menu.Item>
-              </Menu.Dropdown>
-            </Menu>
-          </Group>
+                  {currentUser?.email ?? ''}
+                </NavigationMenuTrigger>
+                <NavigationMenuContent className=" bg-background ">
+                  <ul className="grid w-[220px] gap-3 p-4  ">
+                    <li className="w-full rounded p-2 hover:bg-primary-dark-200/50">
+                      <NavigationMenuLink
+                        className="w-full gap-2 px-2"
+                        href={'/admin-portal'}
+                      >
+                        <MdBusiness fontSize={20} />
+                        <span className="text-lg">Admin Portal</span>
+                      </NavigationMenuLink>
+                    </li>
+                    <li className="w-full rounded p-2 hover:bg-primary-dark-200/50">
+                      <NavigationMenuLink
+                        className="w-full gap-2 px-2"
+                        href={'/auth/user-profile'}
+                      >
+                        <FaRegUser fontSize={20} />
+                        <span className="text-lg">Profile</span>
+                      </NavigationMenuLink>
+                    </li>
+                    <li className="w-full rounded hover:bg-primary-dark-200/50">
+                      <NavigationMenuLink className="w-full">
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          className="flex w-full items-center justify-start hover:bg-transparent"
+                          onClick={() => handleLogout()}
+                        >
+                          <FaSignOutAlt fontSize={14} />
+                          <span>Logout</span>
+                        </Button>
+                      </NavigationMenuLink>
+                    </li>
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
         </li>
       ) : (
         <li className={` cursor-pointer font-poppins text-[16px] font-normal `}>
@@ -94,52 +113,67 @@ export function MobileLoginButton({
   return (
     <>
       {currentUser ? (
-        <li className="mb-4 w-full cursor-pointer font-montserrat text-[16px] font-medium">
-          <Group position="left">
-            <Menu width={150}>
-              <div className="grid w-full">
-                <Menu.Label>
-                  <span className="text-[16px] text-[#557e77]">Admin</span>
-                </Menu.Label>
-                <Divider my="sm" />
-                <Menu.Item icon={<MdBusiness fontSize={14} color="#00DCB3" />}>
-                  <Link className="text-[#00DCB3] " href={'/admin-portal'}>
-                    Portal
-                  </Link>
-                </Menu.Item>
-
-                <Menu.Label>
-                  <span className="text-[16px] text-[#557e77]">Settings</span>
-                </Menu.Label>
-                <Divider my="sm" />
-                <Menu.Item icon={<FaRegUser fontSize={14} color="#00DCB3" />}>
-                  <Link className="text-[#00DCB3] " href={'/auth/user-profile'}>
-                    Profile
-                  </Link>
-                </Menu.Item>
-                <Divider my="sm" />
-                <Menu.Item
-                  icon={<FaSignOutAlt fontSize={14} color="#00DCB3" />}
-                  onClick={() => {
-                    handleLogout()
-                  }}
-                >
-                  <span className="text-[#00DCB3] ">Logout</span>
-                </Menu.Item>
-              </div>
-            </Menu>
-          </Group>
-        </li>
+        <>
+          <Separator className="my-2 w-full" />
+          <span className="mb-2 text-[16px]">Admin</span>
+          <li className="mb-4 w-full cursor-pointer font-montserrat text-[16px] font-medium">
+            <Button
+              variant="outline"
+              asChild
+              className="flex items-center justify-start"
+            >
+              <Link
+                className="flex items-center justify-start gap-2"
+                href={'/admin-portal'}
+              >
+                <MdBusiness fontSize={20} />
+                <span className="text-lg">Admin Portal</span>
+              </Link>
+            </Button>
+          </li>
+          <Separator className="my-2 w-full" />
+          <span className="mb-2 text-[16px]">Setting</span>
+          <li className="mb-4 w-full cursor-pointer font-montserrat text-[16px] font-medium">
+            <Button
+              variant="outline"
+              asChild
+              className="flex items-center justify-start"
+            >
+              <Link
+                href={'/auth/user-profile'}
+                className="flex items-center justify-start gap-2 text-lg"
+              >
+                <FaRegUser fontSize={20} />
+                <span className="text-lg">Profile</span>
+              </Link>
+            </Button>
+          </li>
+          <li className="mb-4 w-full cursor-pointer font-montserrat text-[16px] font-medium">
+            <Button
+              variant="outline"
+              className="flex w-full items-center justify-start gap-2"
+            >
+              <FaSignOutAlt fontSize={20} />
+              <span className="text-lg ">Logout</span>
+            </Button>
+          </li>
+        </>
       ) : (
-        <li className="mb-4 cursor-pointer rounded-sm bg-slate-200 px-2 py-1 font-montserrat text-[16px] font-medium dark:bg-[#3b3c40]">
-          <Link
-            href={'/auth/login'}
-            className="flex items-center gap-1 text-[#00DCB3]"
-            onClick={() => setActivePath('/auth/login')}
+        <li className="mb-4 cursor-pointer font-montserrat text-[16px] font-medium ">
+          <Button
+            variant="outline"
+            asChild
+            className="flex items-center justify-start"
           >
-            <FaSignInAlt fontSize={20} />
-            <span className="text-base">Login</span>
-          </Link>
+            <Link
+              href={'/auth/login'}
+              className="flex items-center gap-1"
+              onClick={() => setActivePath('/auth/login')}
+            >
+              <FaSignInAlt fontSize={20} />
+              <span className="text-base">Login</span>
+            </Link>
+          </Button>
         </li>
       )}
     </>
