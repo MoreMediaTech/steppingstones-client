@@ -3,7 +3,7 @@ import FAQItem from './FAQItem'
 
 const FAQSection = () => {
   return (
-    <section id="faqs" className=" mx-auto  max-w-screen-xl space-y-4 pt-24 ">
+    <section id="faqs" className=" mx-auto  max-w-screen-xl space-y-4 pt-36 ">
       <div className="space-y-4 px-2 md:px-0">
         <h1 className="text-center text-3xl font-medium text-primary-dark-100 md:text-4xl">
           FAQs

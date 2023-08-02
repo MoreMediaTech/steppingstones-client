@@ -21,7 +21,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@components/ui/sheet'
-import { Avatar, AvatarFallback, AvatarImage } from '@components/ui/avatar'
+import { Avatar, AvatarFallback } from '@components/ui/avatar'
+import Banner from '@components/Banner'
 
 const paths = ['about', 'features', 'faqs']
 
@@ -32,8 +33,6 @@ const Navbar = () => {
   const { data: currentUser } = useGetUserQuery()
   const [pos, setPos] = useState<string>('top')
   const [activePath, setActivePath] = useState<string>('')
-  const [opened, setOpened] = useState<boolean>(false)
-  const title = opened ? 'Close navigation' : 'Open navigation'
 
   const initials = currentUser?.name
     ?.split(' ')
@@ -59,13 +58,14 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`top-0 z-10  flex w-full  py-4 sm:px-16 ${
+      className={`top-0 z-10  flex w-full flex-col ${
         pos === 'top'
           ? 'absolute bg-transparent shadow-none'
           : 'shadow-b-2xl fixed bg-background'
       }`}
     >
-      <div className="container mx-auto flex w-full items-center justify-between sm:max-w-screen-xl">
+      <Banner />
+      <div className="container mx-auto flex w-full items-center justify-between py-4 sm:max-w-screen-xl">
         <AppLogo
           pos={pos}
           activePath={activePath}
@@ -74,15 +74,16 @@ const Navbar = () => {
         {/* Main Navigation */}
         <ul className="hidden list-none items-center justify-end gap-6 md:flex">
           {paths.map((path, index) => {
-            if (activePath === path) {
+            
               return (
                 <li key={`${path}-${index}`}>
                   <ScrollLink
                     href={`/#${path}`}
                     className={`cursor-pointer font-poppins text-[16px] font-normal capitalize ${
-                      pos === 'top' ? 'text-textLight' : ' '
+                      pos === 'top' && pathname === '/' ? 'text-textLight' : ' '
                     }`}
-                    onClick={() => setActivePath(path)}
+                    setActivePath={setActivePath}
+                    path={path}
                     scroll={false}
                   >
                     <span
@@ -97,30 +98,6 @@ const Navbar = () => {
                   </ScrollLink>
                 </li>
               )
-            } else {
-              return (
-                <li key={`${path}-${index}`}>
-                  <Link
-                    href={`/#${path}`}
-                    className={`cursor-pointer font-poppins text-[16px] font-normal capitalize ${
-                      pos === 'top' ? 'text-textLight' : ' '
-                    }`}
-                    onClick={() => setActivePath(path)}
-                    scroll={false}
-                  >
-                    <span
-                      className={`${
-                        activePath === path
-                          ? 'w-full border-b-2 border-primary-dark-100 pb-1 dark:border-primary-light-100'
-                          : 'border-0'
-                      }`}
-                    >
-                      {path}
-                    </span>
-                  </Link>
-                </li>
-              )
-            }
           })}
 
           <LoginButton
@@ -135,7 +112,7 @@ const Navbar = () => {
               aria-label="toggle-theme-button"
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
               className={`focus:ring-none flex cursor-pointer list-none  p-1 font-medium focus:border-transparent focus:outline-none md:block lg:mb-0 lg:ml-0 lg:p-1 lg:px-1 ${
-                pos === 'top' ? 'text-textLight' : ' '
+                pos === 'top' && pathname === '/' ? 'text-textLight' : ' '
               }`}
             >
               {resolvedTheme === 'light' ? (
@@ -151,19 +128,13 @@ const Navbar = () => {
               <Link
                 href={'/enquire'}
                 className={`rounded-lg  px-4 py-1 text-lg font-medium  ${
-                  pos === 'top'
+                  pos === 'top' && pathname === '/'
                     ? 'border-primary-light-100 text-textLight '
                     : ' border-primary-dark-100 dark:border-primary-light-100 '
                 }`}
                 onClick={() => setActivePath('enquire')}
               >
-                <span
-                  className={`${
-                    pathname === '/enquire' ? 'w-full ' : 'border-0'
-                  }`}
-                >
-                  Enquire
-                </span>
+                <span>Enquire</span>
               </Link>
             </Button>
           </li>
@@ -190,9 +161,7 @@ const Navbar = () => {
             </button>
             {currentUser ? (
               <Avatar>
-                <AvatarFallback>
-                  {initials}
-                </AvatarFallback>
+                <AvatarFallback>{initials}</AvatarFallback>
               </Avatar>
             ) : null}
             {/* Mobile Menu */}
@@ -210,12 +179,9 @@ const Navbar = () => {
                 </SheetHeader>
                 <ul className="grid w-full list-none grid-cols-1 gap-2 py-8">
                   {paths.map((path, index) => {
-                    if (activePath === path) {
-                      return (
-                        <li
-                          className="w-full "
-                          key={`${path}-${index}`}
-                        >
+                    return (
+                      <li className="w-full " key={`${path}-${index}`}>
+                        <SheetTrigger>
                           <Button
                             variant="outline"
                             asChild
@@ -224,10 +190,8 @@ const Navbar = () => {
                             <ScrollLink
                               href={`/#${path}`}
                               className={`cursor-pointer font-poppins text-[16px] font-normal capitalize `}
-                              onClick={() => {
-                                setActivePath(path)
-                                setOpened(false)
-                              }}
+                              setActivePath={setActivePath}
+                              path={path}
                               scroll={false}
                             >
                               <span
@@ -241,71 +205,48 @@ const Navbar = () => {
                               </span>
                             </ScrollLink>
                           </Button>
-                        </li>
-                      )
-                    }
-                    return (
-                      <li
-                        className="w-full "
-                        key={`${path}-${index}`}
-                      >
-                        <Button
-                          variant="outline"
-                          asChild
-                          className="flex items-center justify-start"
-                        >
-                          <Link
-                            href={`/#${path}`}
-                            className={`${
-                              pathname === `${path}`
-                                ? 'w-full border-b border-primary-dark-100 pb-1 dark:border-primary-light-100'
-                                : 'border-0'
-                            } cursor-pointer  font-poppins text-lg font-normal capitalize`}
-                            onClick={() => {
-                              setActivePath(path)
-                              setOpened(false)
-                            }}
-                            scroll={false}
-                          >
-                            {path}
-                          </Link>
-                        </Button>
+                        </SheetTrigger>
                       </li>
                     )
                   })}
                   <li className="my-2 w-full cursor-pointer font-poppins font-medium">
-                    <Button
-                      variant="outline"
-                      asChild
-                      className="flex items-center justify-start"
-                    >
-                      <Link
-                        href={'/enquire'}
-                        className="w-full font-medium "
-                        onClick={() => {
-                          setOpened(false)
-                          setActivePath('enquire')
-                        }}
+                    <SheetTrigger>
+                      <Button
+                        variant="outline"
+                        asChild
+                        className="flex items-center justify-start"
                       >
-                        <span
-                          className={`text-lg ${
-                            pathname === '/enquire'
-                              ? 'w-full border-b-2 border-primary-light-100'
-                              : 'border-0'
-                          }`}
+                        <Link
+                          href={'/enquire'}
+                          className="w-full font-medium "
+                          onClick={() => {
+                            setActivePath('enquire')
+                          }}
                         >
-                          Enquire
-                        </span>
-                      </Link>
-                    </Button>
+                          <span
+                            className={`text-lg ${
+                              pathname === '/enquire'
+                                ? 'w-full border-b-2 border-primary-light-100'
+                                : 'border-0'
+                            }`}
+                          >
+                            Enquire
+                          </span>
+                        </Link>
+                      </Button>
+                    </SheetTrigger>
                   </li>
-                  <MobileLoginButton
-                    currentUser={
-                      currentUser as UserSchemaWithIdAndOrganisationType
-                    }
-                    handleLogout={handleLogout}
-                    setActivePath={setActivePath}
-                  />
+                  <li className="my-2 w-full cursor-pointer font-poppins font-medium">
+                    <SheetTrigger>
+                      <MobileLoginButton
+                        currentUser={
+                          currentUser as UserSchemaWithIdAndOrganisationType
+                        }
+                        handleLogout={handleLogout}
+                        setActivePath={setActivePath}
+                      />
+                    </SheetTrigger>
+                  </li>
                 </ul>
               </SheetContent>
             </Sheet>

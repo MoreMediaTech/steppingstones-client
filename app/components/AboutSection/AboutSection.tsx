@@ -7,7 +7,7 @@ import Button from 'app/components/Button'
 
 const AboutSection = () => {
   return (
-    <section id="about" className=" pb-4 pt-24">
+    <section id="about" className=" pb-4 pt-36">
       <div className="space-y-8 px-2 sm:px-0 sm:container sm:mx-auto">
         <div className="space-y-4 items-center text-center">
           <h1 className="text-center text-4xl font-medium text-primary-dark-100 dark:text-primary-light-600">

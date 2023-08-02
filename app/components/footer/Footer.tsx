@@ -2,21 +2,32 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { FaTwitter } from 'react-icons/fa'
-import steppinstonesapplogo from '../../../public/android-chrome-512x512.png'
 
 const Footer = () => {
   const year = new Date().getFullYear()
   return (
-    <footer className="bottom-0 left-0 mb-0 py-6 w-full border-t-2 border-slate-300  dark:text-textLight">
-      <div className="container mx-auto py-4 space-y-2">
+    <footer className="bottom-0 left-0 mb-0 w-full border-t-2 border-slate-300 py-6  dark:text-textLight">
+      <div className="container mx-auto space-y-2 py-4 md:space-y-8">
         <div className="flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
-          <div>
-            <Image
-              src={steppinstonesapplogo}
-              alt="Stepping Stones app logo"
-              width={100}
-              height={100}
-            />
+          <div className=" flex items-center gap-6 md:gap-8">
+            <div className=" relative -mb-1 hidden md:flex ">
+              <Image
+                src={'/SS_Color _logo _with background2.png'}
+                alt="Stepping Stones logo"
+                height={50}
+                width={200}
+                priority
+              />
+            </div>
+            <div className=" relative -mb-1 flex md:hidden">
+              <Image
+                src={'/SS-Color-logo-with-background.png'}
+                alt="Stepping Stones logo"
+                height={70}
+                width={70}
+                priority
+              />
+            </div>
           </div>
           <div>
             <nav className=" flex flex-col justify-between space-y-4 text-center text-sm  font-medium sm:flex-row sm:space-x-24 sm:space-y-0">

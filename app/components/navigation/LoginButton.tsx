@@ -1,5 +1,4 @@
 import React from 'react'
-import { Group, Menu, Divider, Collapse } from '@mantine/core'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { MdBusiness } from 'react-icons/md'
@@ -28,10 +27,6 @@ export function LoginButton({
   setActivePath: React.Dispatch<React.SetStateAction<string>>
 }) {
   const pathname = usePathname()
-  const initials = currentUser?.name
-    ?.split(' ')
-    ?.map((n) => n[0])
-    ?.join('')
   return (
     <>
       {currentUser ? (
@@ -41,7 +36,7 @@ export function LoginButton({
               <NavigationMenuItem>
                 <NavigationMenuTrigger
                   className={`bg-transparent text-[16px] hover:bg-transparent ${
-                    pos === 'top' ? 'text-textLight' : ' '
+                    pos === 'top' && pathname === '/' ? 'text-textLight' : ' '
                   }`}
                 >
                   {currentUser?.email ?? ''}
@@ -50,7 +45,7 @@ export function LoginButton({
                   <ul className="grid w-[220px] gap-3 p-4  ">
                     <li className="w-full rounded p-2 hover:bg-primary-dark-200/50">
                       <NavigationMenuLink
-                        className="w-full gap-2 px-2"
+                        className="flex w-full items-center gap-2 px-2"
                         href={'/admin-portal'}
                       >
                         <MdBusiness fontSize={20} />
@@ -59,7 +54,7 @@ export function LoginButton({
                     </li>
                     <li className="w-full rounded p-2 hover:bg-primary-dark-200/50">
                       <NavigationMenuLink
-                        className="w-full gap-2 px-2"
+                        className="flex w-full items-center gap-2 px-2"
                         href={'/auth/user-profile'}
                       >
                         <FaRegUser fontSize={20} />
@@ -71,11 +66,11 @@ export function LoginButton({
                         <Button
                           type="button"
                           variant="ghost"
-                          className="flex w-full items-center justify-start hover:bg-transparent"
+                          className="flex w-full items-center justify-start gap-2 hover:bg-transparent"
                           onClick={() => handleLogout()}
                         >
-                          <FaSignOutAlt fontSize={14} />
-                          <span>Logout</span>
+                          <FaSignOutAlt fontSize={20} />
+                          <span className="text-lg">Logout</span>
                         </Button>
                       </NavigationMenuLink>
                     </li>
@@ -86,10 +81,14 @@ export function LoginButton({
           </NavigationMenu>
         </li>
       ) : (
-        <li className={` cursor-pointer font-poppins text-[16px] font-normal `}>
+        <li
+          className={` cursor-pointer font-poppins text-[16px] font-normal ${
+            pos === 'top' && pathname === '/' ? 'text-textLight' : ' '
+          }`}
+        >
           <Link
             href={'/auth/login'}
-            className={`flex items-center gap-1 text-primary-dark-100 dark:text-primary-light-100`}
+            className={`flex items-center gap-1 `}
             onClick={() => setActivePath('/auth/login')}
           >
             <FaSignInAlt fontSize={18} />
