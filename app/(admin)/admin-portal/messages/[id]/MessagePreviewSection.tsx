@@ -74,8 +74,8 @@ export function MessagePreviewSection({ messageId }: { messageId: string }) {
         className="flex flex-col"
         style={{
           height: reply
-            ? windowSize.innerHeight - 100
-            : windowSize.innerHeight - 150,
+            ? (windowSize?.innerHeight as number)- 100
+            : (windowSize?.innerHeight as number) - 150,
         }}
       >
         <div className="relative  flex w-full items-center justify-between border-b border-primary-dark-100 py-2">
