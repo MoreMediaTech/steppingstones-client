@@ -33,7 +33,7 @@ const formSchema = z.object({
 })
 
 
-export default function LoginForm() {
+export function LoginForm() {
   const { toast } = useToast()
   const router = useRouter()
   const [login, { isLoading }] = useLoginMutation()

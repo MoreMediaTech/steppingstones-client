@@ -7,6 +7,9 @@ const useWindowSize = () => {
     function handleWindowResize() {
       setWindowSize(getWindowSize())
     }
+    if (typeof window === 'undefined') {
+      return
+    }
     window.addEventListener('resize', handleWindowResize)
 
     return () => {
@@ -17,6 +20,7 @@ const useWindowSize = () => {
 }
 
 function getWindowSize() {
+  if (typeof window === 'undefined') return
   const { innerWidth, innerHeight } = window
   return { innerWidth, innerHeight }
 }

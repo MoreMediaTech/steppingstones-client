@@ -1,6 +1,6 @@
 'use client'
 
-import { LoginForm } from 'app/components/forms'
+import { LoginForm } from './LoginForm'
 
 import Image from 'next/image'
 import { motion } from 'framer-motion'

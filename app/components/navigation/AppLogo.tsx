@@ -13,7 +13,7 @@ export const AppLogo = ({
 }) => (
   <>
     <ScrollLink
-      href='/#hero'
+      href="/#hero"
       className="flex cursor-pointer items-center lg:w-0 lg:flex-1"
       setActivePath={setActivePath}
       path="hero"
@@ -30,10 +30,10 @@ export const AppLogo = ({
         </div>
         <div className="md:w-50 h-50 relative -mb-1 flex md:hidden">
           <Image
-            src={'/SS-Color-logo-with-background.png'}
+            src={'/SS_Color _logo _with background2.png'}
             alt="Stepping Stones logo"
-            height={40}
-            width={40}
+            height={50}
+            width={180}
             priority
           />
         </div>

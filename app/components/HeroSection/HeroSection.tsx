@@ -3,6 +3,8 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Button } from '@components/ui/button'
 import { Carousel } from '@components/ImageCarousel'
+import { useGetCountiesQuery } from '@global-state/features/editor/editorApiSlice'
+import { CountyDataProps } from '@lib/types'
 
 const imageVariants = {
   initial: { y: '100%', opacity: 0 },
@@ -38,6 +40,8 @@ const images = [
 ]
 
 const HeroSection = () => {
+  const { data: counties } = useGetCountiesQuery()
+  
   return (
     <>
       <section
@@ -61,11 +65,11 @@ const HeroSection = () => {
         </div>
         <div className="relative flex max-w-screen-2xl items-center justify-center sm:container sm:mx-auto">
           <div className="grid grid-cols-1 gap-4 sm:gap-2 md:grid-cols-5">
-            <div className="relative col-span-2 flex flex-col justify-start space-y-4  px-4 py-8 sm:w-2/3 md:w-full">
+            <div className="relative col-span-2 flex flex-col justify-start space-y-4 md:ml-12 lg:-ml-12 xl:-ml-24 mt-8  px-4 py-8 sm:w-2/3 md:w-full">
               <h1 className="text-5xl text-textLight">
                 Empowering Business for Success
               </h1>
-              <p className="text-primary-light-300">
+              <p className="text-accent-light-600">
                 Your Gateway to Growth and Support
               </p>
               <Button
@@ -144,7 +148,7 @@ const HeroSection = () => {
           </div>
         </div>
       </section>
-      <Carousel images={images} />
+      <Carousel images={images} counties={counties as CountyDataProps[]} />
     </>
   )
 }

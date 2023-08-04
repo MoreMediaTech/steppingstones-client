@@ -8,7 +8,7 @@ import { ContentForm } from './ContentForm'
 import CreateLASectionForm from './CreateLASectionForm'
 import UpdateSectionForm from './UpdateSectionForm'
 import UpdateDistrictForm from './UpdateDistrictForm'
-import UpdateCountyForm from './UpdateCountyForm'
+
 import PartnerDirectoryForm from './PartnerDirectoryForm'
 
 export {
@@ -19,6 +19,5 @@ export {
   CreateLASectionForm,
   UpdateSectionForm,
   UpdateDistrictForm,
-  UpdateCountyForm,
   PartnerDirectoryForm,
 }

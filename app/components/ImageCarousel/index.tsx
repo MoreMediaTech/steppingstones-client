@@ -11,13 +11,20 @@ import {
   useAnimationFrame,
 } from 'framer-motion'
 import { wrap } from '@motionone/utils'
+import { CountyDataProps } from '@lib/types'
+import Image from 'next/image'
 
 type CarouselProps = {
   images: string[]
+  counties: CountyDataProps[]
   baseVelocity?: number
 }
 
-export function Carousel({ images, baseVelocity = -3 }: CarouselProps) {
+export function Carousel({
+  images,
+  baseVelocity = -2,
+  counties,
+}: CarouselProps) {
   const baseX = useMotionValue(0)
   const { scrollY } = useScroll()
   const scrollVelocity = useVelocity(scrollY)
@@ -45,7 +52,7 @@ export function Carousel({ images, baseVelocity = -3 }: CarouselProps) {
      * switch scrolling directions.
      */
     if (velocityFactor.get() < 0) {
-      directionFactor.current = -1
+      directionFactor.current = 1
     } else if (velocityFactor.get() > 0) {
       directionFactor.current = 1
     }
@@ -56,20 +63,29 @@ export function Carousel({ images, baseVelocity = -3 }: CarouselProps) {
   })
 
   return (
-    <div className="relative h-[150px] w-full max-w-full flex flex-nowrap whitespace-nowrap overflow-x-hidden px-4 py-6 ">
+    <div className="relative flex h-[150px] w-full max-w-full flex-nowrap overflow-x-hidden whitespace-nowrap px-4 py-6 ">
       <motion.div
-        className="absolute flex-nowrap flex items-center gap-24  whitespace-nowrap"
+        className="absolute flex flex-nowrap items-center gap-28  whitespace-nowrap"
         style={{ x }}
       >
-        {images.map((image, index) => (
-          <img
-            src={image}
-            alt={`Slide ${index}`}
-            style={{
-              width: '100px',
-              height: '100px',
-            }}
-          />
+        {counties?.map((county) => (
+          <motion.div className="w-full h-full flex flex-col items-center gap-2">
+            <Image
+              src={county.logoIcon ?? '/sohee-kim-NGeVlMIaFsg-unsplash.jpg'}
+              alt={`Slide ${county.id}`}
+              width={100}
+              height={70}
+              style={{
+                objectFit: 'cover',
+                objectPosition: 'center',
+              }}
+              priority
+              key={county.id}
+            />
+            <motion.h3 className="text-xs font-semibold sm:text-base ">
+              {county.name}
+            </motion.h3>
+          </motion.div>
         ))}
       </motion.div>
     </div>

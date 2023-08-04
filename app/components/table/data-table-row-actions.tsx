@@ -1,5 +1,5 @@
 'use client'
-import React from 'react';
+import React from 'react'
 import { Row } from '@tanstack/react-table'
 import { MoreHorizontal, Pen, Trash } from 'lucide-react'
 
@@ -30,9 +30,8 @@ export function DataTableRowActions<TData>({
   handleEdit,
   children,
 }: DataTableRowActionsProps<TData>) {
-
   return (
-    <DropdownMenu >
+    <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
@@ -73,7 +72,7 @@ export function SecondaryDataTableRowActions<TData>({
 }: DataTableRowActionsProps<TData>) {
   const [dropdownOpen, setDropdownOpen] = React.useState(false)
   return (
-    <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen} >
+    <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
