@@ -32,14 +32,14 @@ export function CountyPortalLayoutWrapper({
         <section className="relative grid grid-cols-1 lg:grid-cols-5">
           <aside className="hidden h-full overflow-hidden px-1 py-4  shadow-md  sm:py-2 lg:col-span-1 lg:block lg:h-screen">
             <SidebarNav
-              height={size.innerHeight as number}
+              height={size?.innerHeight as number}
               items={sidebarNavItems as SidebarNavProps['items']}
               title="Counties"
             />
           </aside>
           <div className="block h-full lg:hidden overflow-hidden px-4 py-4 ">
             <MobileSideNav
-              height={size.innerHeight as number}
+              height={size?.innerHeight as number}
               items={sidebarNavItems as SidebarNavProps['items']}
               title="Counties"
             />
