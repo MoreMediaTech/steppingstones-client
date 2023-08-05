@@ -13,8 +13,8 @@ const variants = {
 
 export default function Login() {
   return (
-    <section className="relative h-screen w-full grid md:grid-cols-2">
-      <div className=" top-0 h-full w-full bg-cover bg-center hidden md:block">
+    <section className="relative grid h-screen w-full md:grid-cols-2">
+      <div className=" top-0 hidden h-full w-full bg-cover bg-center md:block">
         <div
           className="relative h-full w-full"
           style={{ width: '100%', height: '100%' }}
@@ -36,17 +36,19 @@ export default function Login() {
       <div className="container relative mx-auto h-full">
         <div className="flex h-full flex-col flex-wrap items-center justify-center">
           <motion.div
-            className="flex w-full flex-col items-center space-y-2 opacity-75"
+            className="w-full space-y-8 opacity-75"
             initial="hidden"
             animate="visible"
             variants={variants}
             transition={{ delay: 1.0, duration: 2.0 }}
           >
-            <h1 className="flex items-center gap-2 text-4xl">
-              <FaSignInAlt fontSize={40} color="#00DCB3" />
-              <span className="text-primary-dark-100">Sign In</span>
-            </h1>
-            <div className="w-full max-w-screen-sm px-6 py-4 border border-gray-900 dark:border-gray-200 rounded-md">
+            <div className='space-y-2 text-left'>
+              <h1 className="flex items-center font-montserrat font-bold text-4xl md:text-5xl">
+                Welcome back!
+              </h1>
+              <p className="text-lg font-thin">Welcome back! Sign in to your account</p>
+            </div>
+            <div className="w-full rounded-md border border-gray-900 px-6 py-4 dark:border-gray-200">
               <LoginForm />
             </div>
           </motion.div>

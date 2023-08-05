@@ -66,38 +66,31 @@ const Navbar = () => {
     >
       <Banner />
       <div className="container mx-auto flex w-full items-center justify-between py-4 sm:max-w-screen-xl">
-        <AppLogo
-          pos={pos}
-          activePath={activePath}
-          setActivePath={setActivePath}
-        />
+        <AppLogo pathname={pathname} />
         {/* Main Navigation */}
         <ul className="hidden list-none items-center justify-end gap-6 md:flex">
           {paths.map((path, index) => {
-            
-              return (
-                <li key={`${path}-${index}`}>
-                  <ScrollLink
-                    href={`/#${path}`}
-                    className={`cursor-pointer font-poppins text-[16px] font-normal capitalize ${
-                      pos === 'top' && pathname === '/' ? 'text-textLight' : ' '
+            return (
+              <li key={`${path}-${index}`}>
+                <Link
+                  href={pathname === '/' ? `${path}` : '/'}
+                  className={`cursor-pointer font-poppins text-[16px] font-normal capitalize ${
+                    pos === 'top' && pathname === '/' ? 'text-textLight' : ' '
+                  }`}
+                  scroll
+                >
+                  <span
+                    className={`${
+                      activePath === path
+                        ? 'w-full border-b-2 border-primary-dark-100 pb-1 dark:border-primary-light-100'
+                        : 'border-0'
                     }`}
-                    setActivePath={setActivePath}
-                    path={path}
-                    scroll={false}
                   >
-                    <span
-                      className={`${
-                        activePath === path
-                          ? 'w-full border-b-2 border-primary-dark-100 pb-1 dark:border-primary-light-100'
-                          : 'border-0'
-                      }`}
-                    >
-                      {path}
-                    </span>
-                  </ScrollLink>
-                </li>
-              )
+                    {path}
+                  </span>
+                </Link>
+              </li>
+            )
           })}
 
           <LoginButton
@@ -187,12 +180,10 @@ const Navbar = () => {
                             asChild
                             className="flex items-center justify-start"
                           >
-                            <ScrollLink
+                            <Link
                               href={`/#${path}`}
                               className={`cursor-pointer font-poppins text-[16px] font-normal capitalize `}
-                              setActivePath={setActivePath}
-                              path={path}
-                              scroll={false}
+                              scroll
                             >
                               <span
                                 className={`text-lg ${
@@ -203,7 +194,7 @@ const Navbar = () => {
                               >
                                 {path}
                               </span>
-                            </ScrollLink>
+                            </Link>
                           </Button>
                         </SheetTrigger>
                       </li>

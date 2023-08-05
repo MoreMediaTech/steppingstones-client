@@ -1,5 +1,5 @@
 import RegisterForm from './RegisterForm'
-import EnquiryForm from './EnquiryForm'
+import EnquiryForm from '../../(home)/enquire/EnquiryForm'
 
 import CreateCountyForm from './CreateCountyForm'
 

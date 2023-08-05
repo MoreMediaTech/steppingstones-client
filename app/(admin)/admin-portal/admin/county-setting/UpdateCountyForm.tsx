@@ -1,15 +1,15 @@
 'use client'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState, useRef } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 
-import { useUpdateCountyMutation } from 'app/global-state/features/editor/editorApiSlice'
+import { useUpdateCountyMutation } from '@global-state/features/editor/editorApiSlice'
 import { ToastAction } from '@components/ui/toast'
 import { useToast } from '@components/ui/use-toast'
-import { CountyDataProps, IFormData } from '@lib/types'
+import { CountyDataProps } from '@lib/types'
 import {
   Form,
   FormControl,
@@ -52,6 +52,7 @@ export function UpdateCountyForm({ refetch, county, buttonTitle }: Props) {
   const { toast } = useToast()
   const router = useRouter()
   const [preview, setPreview] = useState<string | ArrayBuffer | null>(null)
+  const formRef = useRef<HTMLFormElement>(null)
   const [open, setOpen] = useState(false)
   const [updateCounty] = useUpdateCountyMutation()
 
@@ -145,6 +146,7 @@ export function UpdateCountyForm({ refetch, county, buttonTitle }: Props) {
           <ScrollArea className="w-full p-2">
             <Form {...form}>
               <form
+                ref={formRef}
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-6 px-2"
               >
@@ -221,11 +223,19 @@ export function UpdateCountyForm({ refetch, county, buttonTitle }: Props) {
                     </FormItem>
                   )}
                 />
-                  <Button type="submit" className="w-full">
-                <DialogTrigger>
-                    Update
-                </DialogTrigger>
-                  </Button>
+                <Button
+                  asChild
+                  className="w-full"
+                  onClick={() => {
+                    if (formRef.current) {
+                      formRef.current.dispatchEvent(
+                        new Event('submit', { bubbles: true })
+                      )
+                    }
+                  }}
+                >
+                  <DialogTrigger>Update</DialogTrigger>
+                </Button>
               </form>
             </Form>
           </ScrollArea>

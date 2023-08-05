@@ -1,22 +1,12 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import ScrollLink from 'app/components/scroll-link'
 
-export const AppLogo = ({
-  pos,
-  activePath,
-  setActivePath,
-}: {
-  pos: string
-  activePath?: string
-  setActivePath: React.Dispatch<React.SetStateAction<string>>
-}) => (
+export const AppLogo = ({ pathname }: { pathname: string }) => (
   <>
-    <ScrollLink
-      href="/#hero"
+    <Link
+      href={pathname === '/' ? `/#hero` : '/'}
       className="flex cursor-pointer items-center lg:w-0 lg:flex-1"
-      setActivePath={setActivePath}
-      path="hero"
+      scroll
     >
       <div className=" flex items-center gap-6 md:gap-8">
         <div className="md:w-50 h-50 relative -mb-1 hidden md:flex ">
@@ -25,6 +15,7 @@ export const AppLogo = ({
             alt="Stepping Stones logo"
             height={50}
             width={200}
+            sizes="(min-width: 640px) 100px, 50px"
             priority
           />
         </div>
@@ -33,11 +24,12 @@ export const AppLogo = ({
             src={'/SS_Color _logo _with background2.png'}
             alt="Stepping Stones logo"
             height={50}
+            sizes="(min-width: 640px) 100px, 50px"
             width={180}
             priority
           />
         </div>
       </div>
-    </ScrollLink>
+    </Link>
   </>
 )

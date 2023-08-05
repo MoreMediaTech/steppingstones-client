@@ -1,10 +1,10 @@
-import { EnquiryForm } from 'app/components/forms'
+import { EnquiryForm } from './EnquiryForm'
 import Image from 'next/image'
 
 const ContactUs = () => {
   return (
-    <section className="grid w-full md:mb-4">
-      <div className="relative w-full md:mt-14" style={{ height: '600px' }}>
+    <section className="grid w-full md:grid-cols-2">
+      <div className="relative w-full h-screen" >
         <Image
           src={'/enquire_section_img.png'}
           alt="Enquire section image"
@@ -19,8 +19,7 @@ const ContactUs = () => {
         ></div>
       </div>
 
-      <div className="-translate-y-1/2 container mx-auto w-full  grid max-w-screen-md grid-cols-1 place-content-center p-2 md:grid-cols-2 md:gap-4 md:p-0">
-        <div className="flex flex-col px-4 py-8"></div>
+      <div className="flex w-full items-center justify-center p-2 md:px-6 md:py-8">
         <EnquiryForm />
       </div>
     </section>

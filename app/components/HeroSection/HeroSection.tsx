@@ -2,7 +2,7 @@
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Button } from '@components/ui/button'
-import { Carousel } from '@components/ImageCarousel'
+import { Carousel } from '@components/ImageTickerCarousel'
 import { useGetCountiesQuery } from '@global-state/features/editor/editorApiSlice'
 import { CountyDataProps } from '@lib/types'
 
@@ -21,23 +21,6 @@ const imageVariants3 = {
   animate: { x: 0 },
   exit: { x: '100%' },
 }
-
-const images = [
-  '/sohee-kim-NGeVlMIaFsg-unsplash.jpg',
-  '/tom-podmore-hWMwHgkjcKU-unsplash.jpg',
-  '/sohee-kim-NGeVlMIaFsg-unsplash.jpg',
-  '/tom-podmore-hWMwHgkjcKU-unsplash.jpg',
-  '/sohee-kim-NGeVlMIaFsg-unsplash.jpg',
-  '/tom-podmore-hWMwHgkjcKU-unsplash.jpg',
-  '/sohee-kim-NGeVlMIaFsg-unsplash.jpg',
-  '/tom-podmore-hWMwHgkjcKU-unsplash.jpg',
-  '/sohee-kim-NGeVlMIaFsg-unsplash.jpg',
-  '/tom-podmore-hWMwHgkjcKU-unsplash.jpg',
-  '/sohee-kim-NGeVlMIaFsg-unsplash.jpg',
-  '/tom-podmore-hWMwHgkjcKU-unsplash.jpg',
-  '/sohee-kim-NGeVlMIaFsg-unsplash.jpg',
-  '/tom-podmore-hWMwHgkjcKU-unsplash.jpg',
-]
 
 const HeroSection = () => {
   const { data: counties } = useGetCountiesQuery()
@@ -148,7 +131,7 @@ const HeroSection = () => {
           </div>
         </div>
       </section>
-      <Carousel images={images} counties={counties as CountyDataProps[]} />
+      <Carousel counties={counties as CountyDataProps[]} />
     </>
   )
 }
