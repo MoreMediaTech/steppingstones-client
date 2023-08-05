@@ -243,6 +243,9 @@ export type SectionProps = {
   author?: string
   summary?: string
   imageUrl?: string
+  videoUrl?: string
+  videoTitle?: string
+  videoDescription?: string
   isSubSection?: boolean
   isLive?: boolean
   subsections?: SubSectionProps[]
@@ -259,6 +262,9 @@ export type DistrictSectionProps = {
   author?: string
   summary?: string
   imageUrl?: string
+  videoUrl?: string
+  videoTitle?: string
+  videoDescription?: string
   isEconomicData?: boolean
   isLive?: boolean
   economicDataWidgets: EconomicDataWidgetProps[]
@@ -274,6 +280,9 @@ export type SubSectionProps = {
   author?: string
   summary?: string
   imageUrl?: string
+  videoUrl?: string
+  videoTitle?: string
+  videoDescription?: string
   isSubSubSection?: boolean
   isLive?: boolean
   subSubSections?: SubSubSectionProps[]
@@ -289,6 +298,9 @@ export type SubSubSectionProps = {
   author?: string
   summary?: string
   imageUrl?: string
+  videoUrl?: string
+  videoTitle?: string
+  videoDescription?: string
   isLive?: boolean
 }
 
@@ -332,6 +344,9 @@ export type CountyDataProps = {
     createdAt: string
     updatedAt: string
     imageUrl: string
+    videoUrl?: string
+    videoTitle?: string
+    videoDescription?: string
     author: string
     summary: string
   }
@@ -344,6 +359,9 @@ export type CountyDataProps = {
     createdAt: string
     updatedAt: string
     imageUrl: string
+    videoUrl?: string
+    videoTitle?: string
+    videoDescription?: string
     author: string
     summary: string
   }
@@ -356,6 +374,9 @@ export type CountyDataProps = {
     createdAt: string
     updatedAt: string
     imageUrl: string
+    videoUrl?: string
+    videoTitle?: string
+    videoDescription?: string
     author: string
     summary: string
   }

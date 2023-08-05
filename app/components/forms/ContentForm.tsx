@@ -103,9 +103,7 @@ export const ContentForm = ({
                 width={250}
                 height={250}
               />
-            ) : (
-              null
-            )}
+            ) : null}
           </div>
           <FormField
             control={form.control}
@@ -144,6 +142,54 @@ export const ContentForm = ({
           />
           <FormField
             control={form.control}
+            name="videoUrl"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Video Url</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter a video url" {...field} />
+                </FormControl>
+                <FormDescription>
+                  The url of the video you want to add to the content
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="videoTitle"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Video Title</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter a video title" {...field} />
+                </FormControl>
+                <FormDescription>
+                  The title of the video you want to add to the content
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="videoDescription"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Video Description</FormLabel>
+                <FormControl>
+                  <Textarea placeholder="Enter a description" {...field} />
+                </FormControl>
+                <FormDescription>
+                  A short description of the video you want to add to the content
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
             name="content"
             render={({ field }) => (
               <FormItem>
@@ -162,7 +208,7 @@ export const ContentForm = ({
             <Button
               type="button"
               className=" rounded-md border border-red-700 bg-red-600 px-4 py-2 text-white hover:bg-red-700"
-              onClick={() =>{
+              onClick={() => {
                 setIsEdit(false)
                 form.reset()
               }}

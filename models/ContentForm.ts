@@ -13,6 +13,9 @@ export const contentFormSchema = z.object({
   imageFile: z
     .string()
     .optional(),
+  videoUrl: z.string().optional(),
+  videoTitle: z.string().optional(),
+  videoDescription: z.string().optional(),
   summary: z
     .string()
     .min(10, {

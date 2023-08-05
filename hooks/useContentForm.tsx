@@ -1,6 +1,5 @@
 'use client'
 
-
 import React from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -18,92 +17,103 @@ interface Props {
   >
 }
 
-export function useContentForm({ data, updateOrCreate }: Props, refetch: () => void) {
-   const [preview, setPreview] = React.useState<string | ArrayBuffer | null>(null)
-   const [isEdit, setIsEdit] = React.useState<boolean>(false)
-    const { toast } = useToast()
+export function useContentForm(
+  { data, updateOrCreate }: Props,
+  refetch: () => void
+) {
+  const [preview, setPreview] = React.useState<string | ArrayBuffer | null>(
+    null
+  )
+  const [isEdit, setIsEdit] = React.useState<boolean>(false)
+  const { toast } = useToast()
 
-   const form = useForm<ContentFormProps>({
-     resolver: zodResolver(contentFormSchema),
-     defaultValues: {
-       title: data?.title,
-       isLive: data?.isLive,
-       content: data?.content,
-       author: data?.author,
-       summary: data?.summary,
-     },
-   })
+  const values = {
+    title: data?.title,
+    isLive: data?.isLive,
+    content: data?.content,
+    author: data?.author,
+    summary: data?.summary,
+    videoUrl: data?.videoUrl,
+    videoTitle: data?.videoTitle,
+    videoDescription: data?.videoDescription,
+  }
 
-   React.useEffect(() => {
-     // reset the form when the county data is changed/updated
-     form.reset({
-       title: data?.title,
-       isLive: data?.isLive,
-       content: data?.content,
-       author: data?.author,
-       summary: data?.summary,
-     })
-   }, [isEdit])
+  const form = useForm<ContentFormProps>({
+    resolver: zodResolver(contentFormSchema),
+    defaultValues: {
+      ...values,
+    },
+  })
 
-   const onChangePicture = React.useCallback(
-     (e: React.FormEvent<HTMLInputElement>) => {
-       const target = e.target as HTMLInputElement & { files: FileList }
-       const file: File = (target.files as FileList)[0]
-       if (typeof file === 'undefined') return
+  React.useEffect(() => {
+    // reset the form when the county data is changed/updated
+    form.reset({
+      ...values,
+    })
+  }, [isEdit])
 
-       try {
-         const reader = new FileReader()
-         reader.onloadend = () => {
-           setPreview(reader.result)
-         }
-         reader.readAsDataURL(file)
-       } catch (error) {
-         toast({
-           variant: 'destructive',
-           title: 'Uh oh! Something went wrong.',
-           description: 'Unable to upload image.',
-           action: <ToastAction altText="Try again">Try again</ToastAction>,
-         })
-       }
-     },
-     []
-   )
+  const onChangePicture = React.useCallback(
+    (e: React.FormEvent<HTMLInputElement>) => {
+      const target = e.target as HTMLInputElement & { files: FileList }
+      const file: File = (target.files as FileList)[0]
+      if (typeof file === 'undefined') return
 
-   const onSubmit: SubmitHandler<ContentFormProps> = React.useCallback(
-     async (formData) => {
-       try {
-         const newData = {
-           title: formData.title,
-           content: formData.content,
-           countyId: data.countyId || '',
-           author: formData.author,
-           summary: formData.summary,
-           imageFile: preview,
-           isLive: formData.isLive,
-           id: data.id,
-         }
+      try {
+        const reader = new FileReader()
+        reader.onloadend = () => {
+          setPreview(reader.result)
+        }
+        reader.readAsDataURL(file)
+      } catch (error) {
+        toast({
+          variant: 'destructive',
+          title: 'Uh oh! Something went wrong.',
+          description: 'Unable to upload image.',
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+        })
+      }
+    },
+    []
+  )
 
-         const response = await updateOrCreate(newData).unwrap()
-         if (response.success) {
-           toast({
-             title: 'Success',
-             description: 'Content updated successfully',
-           })
-         }
-         refetch()
-         form.reset()
-         setIsEdit(false)
-         setPreview(null)
-       } catch (error) {
-         toast({
-           variant: 'destructive',
-           title: 'Uh oh! Something went wrong.',
-           description: 'There was a problem updating the content.',
-           action: <ToastAction altText="Try again">Try again</ToastAction>,
-         })
-       }
-     },
-     [preview]
-   )
-     return { form, preview, isEdit, setIsEdit, onChangePicture, onSubmit }
+  const onSubmit: SubmitHandler<ContentFormProps> = React.useCallback(
+    async (formData) => {
+      try {
+        const newData = {
+          title: formData.title,
+          content: formData.content,
+          countyId: data.countyId || '',
+          author: formData.author,
+          summary: formData.summary,
+          imageFile: preview,
+          isLive: formData.isLive,
+          videoUrl: formData.videoUrl,
+          videoTitle: formData.videoTitle,
+          videoDescription: formData.videoDescription,
+          id: data.id,
+        }
+
+        const response = await updateOrCreate(newData).unwrap()
+        if (response.success) {
+          toast({
+            title: 'Success',
+            description: 'Content updated successfully',
+          })
+        }
+        refetch()
+        form.reset()
+        setIsEdit(false)
+        setPreview(null)
+      } catch (error) {
+        toast({
+          variant: 'destructive',
+          title: 'Uh oh! Something went wrong.',
+          description: 'There was a problem updating the content.',
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+        })
+      }
+    },
+    [preview]
+  )
+  return { form, preview, isEdit, setIsEdit, onChangePicture, onSubmit }
 }

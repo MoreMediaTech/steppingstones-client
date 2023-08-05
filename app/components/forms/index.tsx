@@ -1,5 +1,4 @@
 import RegisterForm from './RegisterForm'
-import EnquiryForm from '../../(home)/enquire/EnquiryForm'
 
 import CreateCountyForm from './CreateCountyForm'
 
@@ -13,7 +12,6 @@ import PartnerDirectoryForm from './PartnerDirectoryForm'
 
 export {
   RegisterForm,
-  EnquiryForm,
   CreateCountyForm,
   ContentForm,
   CreateLASectionForm,
