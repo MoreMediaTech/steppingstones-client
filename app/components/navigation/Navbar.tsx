@@ -7,10 +7,9 @@ import { useTheme } from 'next-themes'
 import { GiHamburgerMenu } from 'react-icons/gi'
 
 import { LoginButton, MobileLoginButton } from './LoginButton'
-import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
+import { useGetUserQuery } from '@global-state/features/user/usersApiSlice'
 import { AppLogo } from './AppLogo'
 
-import ScrollLink from 'app/components/scroll-link'
 import { UserSchemaWithIdAndOrganisationType } from '@models/User'
 import { Button } from '@components/ui/button'
 import {
@@ -21,10 +20,18 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@components/ui/sheet'
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from '@components/ui/navigation-menu'
 import { Avatar, AvatarFallback } from '@components/ui/avatar'
 import Banner from '@components/Banner'
 
-const paths = ['about', 'features', 'faqs']
+const paths = ['features', 'faqs']
 
 const Navbar = () => {
   const pathname = usePathname()
@@ -69,11 +76,38 @@ const Navbar = () => {
         <AppLogo pathname={pathname} />
         {/* Main Navigation */}
         <ul className="hidden list-none items-center justify-end gap-6 md:flex">
+          <li className="hidden flex-1 items-center md:flex ">
+            <NavigationMenu>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger
+                    className={`cursor-pointer bg-transparent font-poppins text-[16px] font-normal capitalize ${
+                      pos === 'top' && pathname === '/' ? 'text-textLight' : ' '
+                    }`}
+                  >
+                    <span>About</span>
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent className=" bg-background ">
+                    <ul className="grid w-[220px] gap-3 p-4  ">
+                      <li className="w-full rounded p-2 hover:bg-primary-dark-200/50">
+                        <NavigationMenuLink
+                          className="flex w-full items-center gap-2 px-2"
+                          href={'/about'}
+                        >
+                          <span className="text-sm">About Stepping Stones</span>
+                        </NavigationMenuLink>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+          </li>
           {paths.map((path, index) => {
             return (
               <li key={`${path}-${index}`}>
                 <Link
-                  href={pathname === '/' ? `${path}` : '/'}
+                  href={pathname === '/' ? `/#${path}` : '/'}
                   className={`cursor-pointer font-poppins text-[16px] font-normal capitalize ${
                     pos === 'top' && pathname === '/' ? 'text-textLight' : ' '
                   }`}

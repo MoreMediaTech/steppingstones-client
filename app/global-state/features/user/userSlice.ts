@@ -1,8 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { RootState } from '../../store'
-import { Error, AuthState,  } from '@lib/types'
-import { HYDRATE } from 'next-redux-wrapper'
+import { Error } from '@lib/types'
 import { UserSchemaWithIdAndOrganisationType } from '@models/User'
 
 const token =
@@ -36,13 +35,6 @@ export const userSlice = createSlice({
     },
     setError: (state, { payload }: PayloadAction<Error>) => {
       state.error = payload
-    },
-  },
-  extraReducers: {
-    [HYDRATE]: (state, action) => {
-      if (action.payload) {
-        state = action.payload
-      }
     },
   },
 })

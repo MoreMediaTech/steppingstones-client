@@ -7,7 +7,7 @@ const Footer = () => {
   const year = new Date().getFullYear()
   return (
     <footer className="bottom-0 left-0 mb-0 w-full border-t-2 border-slate-300 py-6  dark:text-textLight">
-      <div className="container mx-auto space-y-2 py-4 md:space-y-8">
+      <div className="container mx-auto max-w-screen-xl space-y-2 py-4 md:space-y-8">
         <div className="flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
           <div className=" flex items-center gap-6 md:gap-8">
             <div className=" relative -mb-1 hidden md:flex ">
@@ -21,10 +21,10 @@ const Footer = () => {
             </div>
             <div className=" relative -mb-1 flex md:hidden">
               <Image
-                src={'/SS-Color-logo-with-background.png'}
+                src={'/SS_Color _logo _with background2.png'}
                 alt="Stepping Stones logo"
-                height={70}
-                width={70}
+                height={50}
+                width={200}
                 priority
               />
             </div>

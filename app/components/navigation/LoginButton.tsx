@@ -48,8 +48,8 @@ export function LoginButton({
                         className="flex w-full items-center gap-2 px-2"
                         href={'/admin-portal'}
                       >
-                        <MdBusiness fontSize={20} />
-                        <span className="text-lg">Admin Portal</span>
+                        <MdBusiness fontSize={18} />
+                        <span className="text-sm">Admin Portal</span>
                       </NavigationMenuLink>
                     </li>
                     <li className="w-full rounded p-2 hover:bg-primary-dark-200/50">
@@ -57,8 +57,8 @@ export function LoginButton({
                         className="flex w-full items-center gap-2 px-2"
                         href={'/auth/user-profile'}
                       >
-                        <FaRegUser fontSize={20} />
-                        <span className="text-lg">Profile</span>
+                        <FaRegUser fontSize={18} />
+                        <span className="text-sm">Profile</span>
                       </NavigationMenuLink>
                     </li>
                     <li className="w-full rounded hover:bg-primary-dark-200/50">
@@ -69,8 +69,8 @@ export function LoginButton({
                           className="flex w-full items-center justify-start gap-2 hover:bg-transparent"
                           onClick={() => handleLogout()}
                         >
-                          <FaSignOutAlt fontSize={20} />
-                          <span className="text-lg">Logout</span>
+                          <FaSignOutAlt fontSize={18} />
+                          <span className="text-sm">Logout</span>
                         </Button>
                       </NavigationMenuLink>
                     </li>

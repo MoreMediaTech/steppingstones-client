@@ -19,6 +19,7 @@ import {
   Title,
   TitleOrder,
   ThemeIcon,
+  Blockquote,
 } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 
@@ -41,6 +42,7 @@ export {
   SimpleGrid,
   Title,
   ThemeIcon,
+  Blockquote,
 }
 
 export type { CSSObject, TitleOrder }

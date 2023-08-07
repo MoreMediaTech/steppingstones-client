@@ -52,7 +52,7 @@ const HeroSection = () => {
               <h1 className="text-5xl text-textLight">
                 Empowering Business for Success
               </h1>
-              <p className="text-accent-light-600">
+              <p className="text-accent-light-600 font-semibold">
                 Your Gateway to Growth and Support
               </p>
               <Button
