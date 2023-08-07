@@ -62,11 +62,14 @@ export function Carousel({ baseVelocity = -1, counties }: CarouselProps) {
     <div className="relative flex h-[150px] w-full max-w-full flex-nowrap overflow-x-hidden whitespace-nowrap px-4 py-6 ">
       <motion.div
         className="absolute flex flex-nowrap items-center gap-28  whitespace-nowrap"
-        animate={{ x: 200}}
+        animate={{ x: 200 }}
         style={{ x }}
       >
         {counties?.map((county) => (
-          <motion.div className="relative flex flex-col items-center gap-2">
+          <motion.div
+            className="relative flex flex-col items-center gap-2"
+            key={`${county.id}`}
+          >
             <motion.div className="relative flex h-[70px] w-[100px]">
               <Image
                 src={county.logoIcon ?? '/sohee-kim-NGeVlMIaFsg-unsplash.jpg'}
@@ -88,7 +91,10 @@ export function Carousel({ baseVelocity = -1, counties }: CarouselProps) {
           </motion.div>
         ))}
         {counties?.map((county) => (
-          <motion.div className="relative flex flex-col items-center gap-2">
+          <motion.div
+            className="relative flex flex-col items-center gap-2"
+            key={`${county.id}-2`}
+          >
             <motion.div className="relative flex h-[70px] w-[100px]">
               <Image
                 src={county.logoIcon ?? '/sohee-kim-NGeVlMIaFsg-unsplash.jpg'}
@@ -110,7 +116,10 @@ export function Carousel({ baseVelocity = -1, counties }: CarouselProps) {
           </motion.div>
         ))}
         {counties?.map((county) => (
-          <motion.div className="relative flex flex-col items-center gap-2">
+          <motion.div
+            className="relative flex flex-col items-center gap-2"
+            key={`${county.id}-3`}
+          >
             <motion.div className="relative flex h-[70px] w-[100px]">
               <Image
                 src={county.logoIcon ?? '/sohee-kim-NGeVlMIaFsg-unsplash.jpg'}
@@ -132,7 +141,10 @@ export function Carousel({ baseVelocity = -1, counties }: CarouselProps) {
           </motion.div>
         ))}
         {counties?.map((county) => (
-          <motion.div className="relative flex flex-col items-center gap-2">
+          <motion.div
+            className="relative flex flex-col items-center gap-2"
+            key={`${county.id}-4`}
+          >
             <motion.div className="relative flex h-[70px] w-[100px]">
               <Image
                 src={county.logoIcon ?? '/sohee-kim-NGeVlMIaFsg-unsplash.jpg'}

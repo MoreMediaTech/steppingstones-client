@@ -5,6 +5,7 @@ import { Button } from '@components/ui/button'
 import { Carousel } from '@components/ImageTickerCarousel'
 import { useGetPublicFeedQuery } from '@global-state/features/editor/editorApiSlice'
 import { CountyDataProps } from '@lib/types'
+import { CountySchemaProps } from '@models/County'
 
 const imageVariants = {
   initial: { y: '100%', opacity: 0 },
@@ -22,8 +23,10 @@ const imageVariants3 = {
   exit: { x: '100%' },
 }
 
-const HeroSection = () => {
-  const { data } = useGetPublicFeedQuery()
+ 
+
+export default async function HeroSection ({ data } : { data: { counties: CountySchemaProps[] }}){
+  
   
   return (
     <>
@@ -135,5 +138,3 @@ const HeroSection = () => {
     </>
   )
 }
-
-export default HeroSection
