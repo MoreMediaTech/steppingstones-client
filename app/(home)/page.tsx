@@ -6,7 +6,7 @@ import HeroSection from '@components/HeroSection'
 import { SectionOne } from '@components/HomePageSections'
 
 async function getFeed() {
-  const res = await fetch('http://localhost:3001/api/v1/feed', {
+  const res = await fetch('https://steppingstonesapp.com/api/v1/feed', {
     cache: 'force-cache'
   })
   // The return value is *not* serialized
