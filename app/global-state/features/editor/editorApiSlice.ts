@@ -19,6 +19,7 @@ import {
   setDistrictSection,
 } from './editorSlice'
 import { ContentFormProps } from '@models/ContentForm';
+import { CountySchemaProps } from '@models/County';
 
 const editorApi = editorApiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -621,6 +622,24 @@ const editorApi = editorApiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: 'LIST' }],
     }),
+    getPublicFeed: builder.query<{ counties: Pick<CountySchemaProps, 'id' | 'name' | 'imageUrl' | 'logoIcon'>[] }, void>({
+      query: () => ({
+        url: `feed`,
+      }),
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.counties?.map(
+                (item) =>
+                  ({
+                    type: 'Editor',
+                    id: item?.id,
+                  } as const)
+              ),
+              { type: 'Editor', id: 'LIST' },
+            ]
+          : [{ type: 'Editor', id: 'LIST' }],
+    }),
   }),
   overrideExisting: true,
 })
@@ -674,4 +693,5 @@ export const {
   useUpdateSDDataMutation,
   useDeleteSDDataMutation,
   useDeleteManySDDataMutation,
+  useGetPublicFeedQuery,
 } = editorApi

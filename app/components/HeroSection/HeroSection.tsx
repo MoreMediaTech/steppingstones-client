@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Button } from '@components/ui/button'
 import { Carousel } from '@components/ImageTickerCarousel'
-import { useGetCountiesQuery } from '@global-state/features/editor/editorApiSlice'
+import { useGetPublicFeedQuery } from '@global-state/features/editor/editorApiSlice'
 import { CountyDataProps } from '@lib/types'
 
 const imageVariants = {
@@ -23,7 +23,7 @@ const imageVariants3 = {
 }
 
 const HeroSection = () => {
-  const { data: counties } = useGetCountiesQuery()
+  const { data } = useGetPublicFeedQuery()
   
   return (
     <>
@@ -131,7 +131,7 @@ const HeroSection = () => {
           </div>
         </div>
       </section>
-      <Carousel counties={counties as CountyDataProps[]} />
+      <Carousel counties={data?.counties as CountyDataProps[]} />
     </>
   )
 }
