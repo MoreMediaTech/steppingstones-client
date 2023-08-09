@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 
 import {
   DistrictDataProps,
@@ -12,9 +12,11 @@ import {
 } from '../../../../lib/types'
 import { RootState } from 'app/global-state/store'
 import { CountyDataProps, Error } from '@lib/types'
+import { CountySchemaProps } from '@models/County'
 
 interface IEditorState {
-  counties: Partial<CountyDataProps[]> | null
+  publicFeed: Pick<CountySchemaProps, 'id' | 'name' | 'imageUrl' | 'logoIcon'>[]
+  counties: Partial<CountySchemaProps[]> | null
   district: Partial<DistrictDataProps> | null
   county: Partial<CountyDataProps> | null
   section: Partial<SectionProps> | null
@@ -36,6 +38,7 @@ interface IEditorState {
 
 export const initialState: IEditorState = {
   counties: [],
+  publicFeed: [],
   district: null,
   county: null,
   section: null,
@@ -55,11 +58,22 @@ export const initialState: IEditorState = {
   error: { message: 'An Error occurred' },
 }
 
+export const fetchPublicFeed = createAsyncThunk(
+  'editor/fetchPublicFeed',
+  async (): Promise<
+    Pick<CountySchemaProps, 'id' | 'name' | 'imageUrl' | 'logoIcon'>[]
+  > => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}feed`)
+    const data = await res.json()
+    return data.counties
+  }
+)
+
 const editorSlice = createSlice({
   name: 'editor',
   initialState,
   reducers: {
-    setCounties: (state, { payload }: PayloadAction<CountyDataProps[]>) => {
+    setCounties: (state, { payload }: PayloadAction<CountySchemaProps[]>) => {
       state.counties = payload
     },
     setCounty: (state, { payload }: PayloadAction<CountyDataProps | null>) => {
@@ -132,6 +146,11 @@ const editorSlice = createSlice({
       state.error = payload
     },
     clearState: (state) => initialState,
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchPublicFeed.fulfilled, (state, { payload }) => {
+      state.publicFeed = payload
+    })
   },
 })
 

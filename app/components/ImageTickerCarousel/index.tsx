@@ -11,11 +11,11 @@ import {
   useAnimationFrame,
 } from 'framer-motion'
 import { wrap } from '@motionone/utils'
-import { CountyDataProps } from '@lib/types'
 import Image from 'next/image'
+import { CountySchemaProps } from '@models/County'
 
 type CarouselProps = {
-  counties: CountyDataProps[]
+  counties: CountySchemaProps[]
   baseVelocity?: number
 }
 
@@ -59,7 +59,7 @@ export function Carousel({ baseVelocity = -1, counties }: CarouselProps) {
   })
 
   return (
-    <div className="relative flex h-[150px] w-full max-w-full flex-nowrap overflow-x-hidden whitespace-nowrap px-4 py-6 ">
+    <div className="relative flex h-[300px] md:h-[150px] w-full max-w-full flex-nowrap overflow-x-hidden whitespace-nowrap px-4 py-6 ">
       <motion.div
         className="absolute flex flex-nowrap items-center gap-28  whitespace-nowrap"
         animate={{ x: 200 }}

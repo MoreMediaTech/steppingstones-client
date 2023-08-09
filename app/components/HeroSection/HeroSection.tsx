@@ -3,7 +3,9 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Button } from '@components/ui/button'
 import { Carousel } from '@components/ImageTickerCarousel'
-import { useGetPublicFeedQuery } from '@global-state/features/editor/editorApiSlice'
+
+import { editorSelector } from '@global-state/features/editor/editorSlice'
+import { useAppSelector } from '@app/global-state/hooks'
 import { CountyDataProps } from '@lib/types'
 import { CountySchemaProps } from '@models/County'
 
@@ -25,8 +27,8 @@ const imageVariants3 = {
 
  
 
-export default async function HeroSection ({ data } : { data: { counties: CountySchemaProps[] }}){
-  
+export default async function HeroSection (){
+  const{ publicFeed } = useAppSelector(editorSelector)
   
   return (
     <>
@@ -52,7 +54,7 @@ export default async function HeroSection ({ data } : { data: { counties: County
         <div className="relative flex max-w-screen-2xl items-center justify-center sm:container sm:mx-auto">
           <div className="grid grid-cols-1 gap-4 sm:gap-2 md:grid-cols-5">
             <div className="relative col-span-2 flex flex-col justify-start space-y-4 md:ml-12 lg:-ml-12 xl:-ml-24 mt-8  px-4 py-8 sm:w-2/3 md:w-full">
-              <h1 className="text-5xl text-textLight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl text-textLight">
                 Empowering Business for Success
               </h1>
               <p className="text-accent-light-600 font-semibold">
@@ -134,7 +136,7 @@ export default async function HeroSection ({ data } : { data: { counties: County
           </div>
         </div>
       </section>
-      <Carousel counties={data?.counties as CountyDataProps[]} />
+      <Carousel counties={publicFeed as CountySchemaProps[]} />
     </>
   )
 }

@@ -20,19 +20,20 @@ export function SectionOne() {
     },
   }
   return (
-    <section className=" flex h-[500px] w-full items-center justify-center bg-primary-light-50/50 p-2  dark:bg-background md:p-4">
+    <section className=" flex h-[500px] w-full items-center justify-center bg-primary-light-50/50 px-2 py-6 dark:bg-background  md:p-4 md:py-0">
       <div className="container mx-auto">
-        <div className="grid h-full w-full grid-cols-1 gap-8 md:grid-cols-2 md:gap-12">
-          <div className="col-span-1 flex w-full items-center justify-center ">
+        <div className="grid h-full w-full grid-cols-1 gap-12 md:grid-cols-2">
+          <div className="col-span-1 mb-24 w-full  place-items-center md:mb-0">
             <YouTube
               videoId="Hj8dWDd1HbM"
               opts={opts}
               onReady={onPlayerReady}
               title="YouTube video player"
+              className="h-[200px] w-full py-4 md:h-[315px] md:w-[560px] md:py-0"
             />
           </div>
-          <div className="col-span-1 flex w-full items-center justify-center">
-            <Blockquote cite="- Sky News">
+          <div className="col-span-1 flex w-full items-center justify-center py-4 md:py-0">
+            <Blockquote cite="- Sky News" className="w-full">
               <div className="flex w-full flex-col justify-start space-y-6">
                 <p className="font-montserrat text-sm font-semibold">
                   Apprentice star and chair of West Ham Football Club, Baroness

@@ -40,7 +40,7 @@ const baseQuery: BaseQueryFn<
   {},
   FetchBaseQueryMeta
 > = fetchBaseQuery({
-  baseUrl: API_URL,
+  baseUrl: process.env.NEXT_PUBLIC_API_URL,
   credentials: 'include',
   prepareHeaders: (headers, api) => {
     const { auth } = api.getState() as RootState
