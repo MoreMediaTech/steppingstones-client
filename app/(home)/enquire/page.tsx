@@ -1,10 +1,16 @@
-import { EnquiryForm } from './EnquiryForm'
 import Image from 'next/image'
+import { Metadata } from 'next'
+import { EnquiryForm } from './EnquiryForm'
 
-const ContactUs = () => {
+// Static metadata
+export const metadata: Metadata = {
+  title: 'Stepping Stones - Enquire',
+}
+
+export default function EnquiryPage() {
   return (
-    <section className="grid w-full md:grid-cols-2">
-      <div className="relative w-full h-screen" >
+    <section className="relative grid h-screen w-full md:grid-cols-2">
+      <div className="relative hidden md:block h-screen w-full">
         <Image
           src={'/enquire_section_img.png'}
           alt="Enquire section image"
@@ -19,11 +25,11 @@ const ContactUs = () => {
         ></div>
       </div>
 
-      <div className="flex w-full items-center justify-center p-2 md:px-6 md:py-8">
-        <EnquiryForm />
+      <div className="container relative mx-auto w-full h-screen px-4  md:px-6 py-16">
+        <div className="flex w-full items-center justify-center   ">
+          <EnquiryForm />
+        </div>
       </div>
     </section>
   )
 }
-
-export default ContactUs

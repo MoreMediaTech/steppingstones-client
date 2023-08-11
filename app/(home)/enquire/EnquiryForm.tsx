@@ -71,19 +71,19 @@ export function EnquiryForm() {
   }
 
   return (
-    <div className='p-4'>
+    <div className='md:px-12 py-6 w-full mt-8'>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-4 md:mt-6 px-2 py-6">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full mt-4 md:mt-6 px-2 py-6">
           <div className="space-y-2">
-            <h1 className="text-xl font-bold ">
+            <h1 className="text-lg font-bold ">
               Leave a message
             </h1>
-            <p className="text-tertiary text-justify font-normal font-montserrat">
+            <p className="text-tertiary text-justify text-sm font-normal font-montserrat">
               Fill the form and we will respond as soon as we can.
               Alternatively, you can reach out to us at{' '}
               <a
                 href="mailto:admin@steppingstonesapp.com"
-                className="text-primary-dark-100 dark:text-primary-light-100 font-semibold"
+                className="text-primary-dark-100 dark:text-primary-light-100 underline font-semibold"
               >
                 our email address
               </a>

@@ -1,36 +1,24 @@
 'use client'
 import React from 'react'
-import YouTube, { YouTubeProps } from 'react-youtube'
 
 import { Blockquote } from '@components/mantine-components'
 import { Button } from '@components/ui/button'
 
 export function SectionOne() {
-  const onPlayerReady: YouTubeProps['onReady'] = (event) => {
-    // access to player in all event handlers via event.target
-    event.target.pauseVideo()
-  }
-
-  const opts: YouTubeProps['opts'] = {
-    height: '315',
-    width: '560',
-    playerVars: {
-      // https://developers.google.com/youtube/player_parameters
-      autoplay: 1,
-    },
-  }
+  
   return (
     <section className=" flex h-[500px] w-full items-center justify-center bg-primary-light-50/50 px-2 py-6 dark:bg-background  md:p-4 md:py-0">
       <div className="container mx-auto">
-        <div className="grid h-full w-full grid-cols-1 gap-12 md:grid-cols-2">
-          <div className="col-span-1 mb-24 w-full  place-items-center md:mb-0">
-            <YouTube
-              videoId="Hj8dWDd1HbM"
-              opts={opts}
-              onReady={onPlayerReady}
+        <div className="grid h-full w-full grid-cols-1 gap-4 md:gap-12 md:grid-cols-2">
+          <div className="col-span-1 video-container place-items-center md:mb-0">
+            <iframe
+              width="560"
+              height="315"
+              src="https://www.youtube.com/embed/Hj8dWDd1HbM?start=70"
               title="YouTube video player"
-              className="h-[200px] w-full py-4 md:h-[315px] md:w-[560px] md:py-0"
-            />
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            ></iframe>
           </div>
           <div className="col-span-1 flex w-full items-center justify-center py-4 md:py-0">
             <Blockquote cite="- Sky News" className="w-full">

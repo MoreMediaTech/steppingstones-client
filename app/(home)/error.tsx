@@ -20,7 +20,7 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
         <p className="mb-3 text-xl">
           {error.name}: {error.message}
         </p>
-        <div className="flex w-full items-center gap-6">
+        <div className="flex w-full items-center justify-center gap-6">
           <Button type="button" onClick={() => reset()}>
             Try again
           </Button>

@@ -6,7 +6,6 @@ import { Carousel } from '@components/ImageTickerCarousel'
 
 import { editorSelector } from '@global-state/features/editor/editorSlice'
 import { useAppSelector } from '@app/global-state/hooks'
-import { CountyDataProps } from '@lib/types'
 import { CountySchemaProps } from '@models/County'
 
 const imageVariants = {
@@ -27,7 +26,7 @@ const imageVariants3 = {
 
  
 
-export default async function HeroSection (){
+export default function HeroSection (){
   const{ publicFeed } = useAppSelector(editorSelector)
   
   return (

@@ -1,5 +1,12 @@
 import React from 'react'
+import { Metadata } from 'next'
 import AboutSection from '@components/AboutSection'
+
+// Static metadata
+export const metadata: Metadata = {
+  title: 'Stepping Stones - About',
+}
+ 
 
 export default function AboutPage() {
   return (

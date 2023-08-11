@@ -67,8 +67,8 @@ const Navbar = () => {
     <nav
       className={`top-0 z-10  flex w-full flex-col ${
         pos === 'top'
-          ? 'absolute bg-transparent shadow-none'
-          : 'shadow-b-2xl fixed bg-background'
+          ? 'absolute bg-transparent shadow-md hover:bg-background/50'
+          : 'shadow-b-2xl fixed bg-background border-b border-primary-dark-100 dark:border-primary-light-100'
       }`}
     >
       <Banner />
@@ -176,7 +176,7 @@ const Navbar = () => {
               aria-label="toggle-theme-button"
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
               className={`focus:ring-none flex cursor-pointer list-none  p-1 font-medium focus:border-transparent focus:outline-none md:block lg:mb-0 lg:ml-0 lg:p-1 lg:px-1 ${
-                pos === 'top' ? 'text-textLight' : ' '
+                pos === 'top' && pathname === '/' ? 'text-textLight' : ' '
               }`}
             >
               {resolvedTheme === 'light' ? (
@@ -196,7 +196,9 @@ const Navbar = () => {
               <SheetTrigger>
                 <GiHamburgerMenu
                   fontSize={24}
-                  className={`${pos === 'top' ? 'text-textLight' : ' '}`}
+                  className={`${
+                    pos === 'top' && pathname === '/' ? 'text-textLight' : ' '
+                  }`}
                 />
               </SheetTrigger>
               <SheetContent>

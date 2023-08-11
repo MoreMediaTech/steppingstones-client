@@ -34,7 +34,7 @@ export default function Login() {
         </div>
       </div>
       <div className="container relative mx-auto h-full">
-        <div className="flex h-full flex-col flex-wrap items-center justify-center">
+        <div className="flex h-full flex-col flex-wrap items-center justify-center md:px-4 ">
           <motion.div
             className="w-full space-y-8 opacity-75"
             initial="hidden"

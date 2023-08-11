@@ -10,7 +10,7 @@ export default function Logout() {
 
   useEffect(() => {
     setTimeout(async () => {
-        await logout().unwrap()
+        await logout()
         router.push('/')
     }, 5000)
   }, [])

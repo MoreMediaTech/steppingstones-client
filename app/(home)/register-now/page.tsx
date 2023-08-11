@@ -1,5 +1,12 @@
-import { RegisterNowForm } from './register-now-form'
 import React from 'react'
+import { RegisterNowForm } from './register-now-form'
+import { Metadata } from 'next'
+
+// Static metadata
+export const metadata: Metadata = {
+  title: 'Stepping Stones - Register Now',
+}
+ 
 
 export default function RegisterNow() {
   return (

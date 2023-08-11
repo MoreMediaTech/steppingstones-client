@@ -6,7 +6,7 @@ import { FaTwitter } from 'react-icons/fa'
 const Footer = () => {
   const year = new Date().getFullYear()
   return (
-    <footer className="bottom-0 left-0 mb-0 w-full border-t-2 border-slate-300 py-6  dark:text-textLight">
+    <footer className="bottom-0 left-0 mb-0 w-full border-b border-t border-primary-dark-100 py-6 dark:border-primary-light-100  dark:text-textLight">
       <div className="container mx-auto max-w-screen-xl space-y-2 py-4 md:space-y-8">
         <div className="flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
           <div className=" flex items-center gap-6 md:gap-8">

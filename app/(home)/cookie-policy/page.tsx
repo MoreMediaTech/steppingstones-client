@@ -1,6 +1,13 @@
 import React from 'react'
+import { Metadata } from 'next'
 
-const CookiePolicy = () => {
+// Static metadata
+export const metadata: Metadata = {
+  title: 'Stepping Stones - Cookie Policy',
+}
+ 
+
+export default function CookiePolicy() {
   return (
     <section className="relative mt-24 bg-slate-50 py-8">
       <section className="mx-4 space-y-4 py-4 text-justify text-sm font-thin md:container md:mx-auto md:max-w-screen-md md:py-8">
@@ -96,4 +103,4 @@ const CookiePolicy = () => {
   )
 }
 
-export default CookiePolicy
+

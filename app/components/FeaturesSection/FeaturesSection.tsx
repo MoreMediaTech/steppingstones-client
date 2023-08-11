@@ -2,16 +2,19 @@ import React from 'react'
 
 const FeaturesSection = () => {
   return (
-    <section id="features" className="space-y-8 pt-36 pb-8 max-w-screen-md mx-auto">
+    <section
+      id="features"
+      className="mx-auto max-w-screen-lg space-y-8 pb-8 pt-36"
+    >
       <div className="space-y-4">
-        <h1 className="text-center text-4xl font-medium text-primary-dark-100">
+        <h1 className="text-center text-4xl font-medium">
           Features
         </h1>
-        <h3 className="font-base text-center text-xl text-[#00DCB3]">
+        <h3 className="font-base text-accent-dark-200 text-center text-xl">
           Practical support for business without information overload.
         </h3>
       </div>
-      <div className="container mx-auto grid grid-cols-1 gap-4 sm:grid-cols-2 text-gray-800 dark:text-gray-200">
+      <div className="container mx-auto grid grid-cols-1 gap-4 md:gap-8 text-gray-800 dark:text-gray-200 sm:grid-cols-2">
         <div className="space-y-4 p-2">
           <h3 className="font-semibold">Latest information</h3>
           <p className="font-thin">

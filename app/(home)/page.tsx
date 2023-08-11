@@ -1,10 +1,16 @@
 import React from 'react'
-import AboutSection from '@components/AboutSection'
+import { Metadata } from 'next'
+// import AboutSection from '@components/AboutSection'
 import FAQSection from '@components/FAQSection'
 import FeaturesSection from '@components/FeaturesSection'
 import HeroSection from '@components/HeroSection'
 import { SectionOne } from '@components/HomePageSections'
 
+// Static metadata
+export const metadata: Metadata = {
+  title: 'Stepping Stones - Home',
+}
+ 
 
 export default async function Home() {
 
