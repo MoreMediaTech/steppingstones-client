@@ -35,22 +35,6 @@ export const columns: ColumnDef<AnalyticProps>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'id',
-    header: ({ column }) => {
-      return (
-        <div className="flex items-center justify-start">
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          >
-            Id
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        </div>
-      )
-    },
-  },
-  {
     accessorKey: 'name',
     header: ({ column }) => {
       return (

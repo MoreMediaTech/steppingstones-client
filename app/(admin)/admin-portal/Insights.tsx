@@ -87,14 +87,13 @@ export function RenderInsights() {
   }
   return (
     <section>
-      <div className="container mx-auto sm:max-w-screen-sm md:max-w-screen-lg lg:max-w-screen-xl space-y-2 py-8">
+      <div className="container mx-auto sm:max-w-screen-sm md:max-w-screen-lg lg:max-w-screen-xl space-y-2 ">
         <div className='grid grid-cols-1 gap-8'>
           <div>
             <div className="flex items-center">
               <Header
                 title="User Stats"
                 order={3}
-                iconLeft={<FaUsers fontSize={24} color="#fff" />}
                 subtitle="View your user stats"
                 subOrder={6}
               />

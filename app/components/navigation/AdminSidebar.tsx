@@ -17,6 +17,7 @@ import { useRouter } from 'next/navigation'
 import { useGetAllInAppEnquiryMsgQuery } from '@global-state/features/messages/messagesApiSlice'
 import { MessageProps } from '@lib/types'
 import ColorLogo from '@public/SS-Color-logo-with-background.png'
+import ColoLogo2 from '@public/SS_Color_logo_with-background2.png'
 
 import { useAppDispatch } from '@global-state/hooks'
 import { setDrawerOpened } from 'app/global-state/features/global/globalSlice'
@@ -45,11 +46,11 @@ export function AdminSidebar({ height }: { height: number }) {
     (message: MessageProps) => message.isRead === false
   )
   return (
-    <aside className="sticky z-50">
+    <aside className="sticky z-50 h-screen">
       <div
-        className={`relative flex flex-col items-center py-4 ${
+        className={`relative flex flex-col items-center  ${
           opened ? 'w-72' : 'w-24'
-        } hidden min-h-screen rounded-lg border bg-background shadow-md transition-all duration-500  ease-in-out md:block`}
+        } hidden h-screen rounded-lg border bg-background shadow-md transition-all duration-500  ease-in-out md:block`}
       >
         <BsArrowLeftShort
           className={`absolute -right-3 top-24 ml-auto h-6 w-6 cursor-pointer rounded-full bg-accent-light-500 text-white shadow-sm ${
@@ -59,8 +60,8 @@ export function AdminSidebar({ height }: { height: number }) {
         />
         <Link
           href="/"
-          className={`inline-flex items-center px-2 ${
-            opened ? 'gap-2' : 'gap-0'
+          className={`items-center px-2 ${
+            opened ? 'hidden gap-2' : 'inline-flex gap-0'
           }`}
         >
           <Image
@@ -71,18 +72,21 @@ export function AdminSidebar({ height }: { height: number }) {
             sizes="(max-width: 640px) 40vw, 20vw"
             className={`${opened ? 'ml-0 ' : 'ml-2.5'}`}
           />
-          <div
-            className={`origin-left transition-all duration-300 ease-in-out fade-in-10 ${
-              !opened ? 'hidden' : ''
-            }`}
-          >
-            <Header
-              title="Stepping Stones"
-              order={4}
-              subtitle="Business Solutions"
-              subOrder={5}
-            />
-          </div>
+        </Link>
+        <Link
+          href="/"
+          className={`origin-left items-center px-2 transition-all duration-300 ease-in-out fade-in-10 ${
+            opened ? 'inline-flex gap-2' : 'hidden gap-0'
+          }`}
+        >
+          <Image
+            src={ColoLogo2}
+            alt="Stepping Stones logo"
+            width={200}
+            height={60}
+            sizes="(max-width: 640px) 40vw, 20vw"
+            className=""
+          />
         </Link>
         <ScrollArea
           className={`w-full p-2 py-4`}
@@ -168,11 +172,13 @@ export function AdminSidebar({ height }: { height: number }) {
               )
             })}
           </div>
-          <div className="bottom-2 left-0 w-full px-2">
+          <div className="bottom-2 left-0 w-full px-2 flex flex-col justify-end">
             <Separator className={`my-2 ${opened ? 'w-64' : 'w-16'}`} />
             <div className="flex w-full flex-col items-center space-y-2 py-2">
               <Button
-                className="flex w-full items-center rounded-lg p-2  font-semibold"
+                className={`mb-2 flex w-full items-center rounded-lg font-semibold ${
+                  opened ? 'justify-start' : ''
+                }`}
                 variant="outline"
                 asChild
               >
@@ -191,7 +197,9 @@ export function AdminSidebar({ height }: { height: number }) {
                 </Link>
               </Button>
               <Button
-                className="flex w-full items-center rounded-lg p-2  font-semibold"
+                className={`mb-2 flex w-full items-center rounded-lg font-semibold ${
+                  opened ? 'justify-start' : ''
+                }`}
                 variant="outline"
                 onClick={() => {
                   handleLogout()
@@ -237,7 +245,10 @@ export function MobileAdminSidebar({ height }: { height: number }) {
     <header>
       <Sheet>
         <SheetTrigger>
-          <button className="navbar-burger flex items-center p-3 text-blue-600">
+          <Button
+            variant="ghost"
+            className="navbar-burger flex items-center p-3 text-blue-600"
+          >
             <svg
               className="block h-4 w-4 fill-current"
               viewBox="0 0 20 20"
@@ -246,30 +257,21 @@ export function MobileAdminSidebar({ height }: { height: number }) {
               <title>Mobile menu</title>
               <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
             </svg>
-          </button>
+            <span hidden>Mobile Menu</span>
+          </Button>
         </SheetTrigger>
         <SheetContent side={'left'} className="w-[240px]">
           <SheetHeader>
             <SheetTitle>
               <div className={`inline-flex items-center gap-2`}>
                 <Image
-                  src={ColorLogo}
+                  src={ColoLogo2}
                   alt="Stepping Stones logo"
-                  width={60}
+                  width={140}
                   height={40}
                   sizes="(max-width: 640px) 40vw, 20vw"
                   className=""
                 />
-                <div
-                  className={`origin-left transition-all duration-300 ease-in-out fade-in-10 `}
-                >
-                  <Header
-                    title="Stepping Stones"
-                    order={4}
-                    subtitle="Business Solutions"
-                    subOrder={5}
-                  />
-                </div>
               </div>
             </SheetTitle>
           </SheetHeader>

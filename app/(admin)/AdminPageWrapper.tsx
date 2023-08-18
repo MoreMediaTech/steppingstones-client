@@ -33,7 +33,7 @@ function PageWrapper({
         userRole={user?.role as string}
       >
         <section className="relative">
-          <section className="relative flex flex-col md:flex-row">
+          <section className="relative flex flex-col md:admin-layout">
             <aside className="hidden px-4 md:block h-screen">
               <AdminSidebar height={size?.innerHeight as number} />
             </aside>
