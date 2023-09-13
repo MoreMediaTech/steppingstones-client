@@ -32,7 +32,7 @@ const editorApi = editorApiSlice.injectEndpoints({
         method: 'POST',
         body: { ...data },
       }),
-      invalidatesTags: [{ type: 'Editor', id: 'LIST' }],
+      invalidatesTags: ['Editor'],
     }),
     updateCounty: builder.mutation<
       { success: boolean; message: string },
@@ -410,6 +410,7 @@ const editorApi = editorApiSlice.injectEndpoints({
           dispatch(setDistrictSection(result.data))
         } catch (error) {
           if (error instanceof Error) {
+
             dispatch(setError({ message: error.message }))
           }
           dispatch(setError({ message: 'Unable to get County objects' }))

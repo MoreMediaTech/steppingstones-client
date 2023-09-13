@@ -1,5 +1,6 @@
 'use client'
 import {
+  AppShell,
   Button,
   Group,
   Avatar,
@@ -24,6 +25,7 @@ import {
 import { showNotification } from '@mantine/notifications'
 
 export {
+  AppShell,
   Button,
   Group,
   Avatar,

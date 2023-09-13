@@ -6,11 +6,15 @@ import { FiMoon, FiSun } from 'react-icons/fi'
 import { useTheme } from 'next-themes'
 import { GiHamburgerMenu } from 'react-icons/gi'
 
-import { LoginButton, MobileLoginButton } from './LoginButton'
+// redux-state and types
 import { useGetUserQuery } from '@global-state/features/user/usersApiSlice'
-import { AppLogo } from './AppLogo'
-
 import { UserSchemaWithIdAndOrganisationType } from '@models/User'
+import { useAppSelector } from '@app/global-state/hooks';
+import { authSelector } from '@app/global-state/features/auth/authSlice'
+
+// components
+import { AppLogo } from './AppLogo'
+import { LoginButton, MobileLoginButton } from './LoginButton'
 import { Button } from '@components/ui/button'
 import {
   Sheet,
@@ -37,7 +41,10 @@ const Navbar = () => {
   const pathname = usePathname()
   const router = useRouter()
   const { theme, setTheme, resolvedTheme } = useTheme()
-  const { data: currentUser } = useGetUserQuery()
+  const { isAuthenticated } = useAppSelector(authSelector)
+  const { data: currentUser } = useGetUserQuery(undefined, {
+    skip: !isAuthenticated,
+  })
   const [pos, setPos] = useState<string>('top')
   const [activePath, setActivePath] = useState<string>('')
 
@@ -68,7 +75,7 @@ const Navbar = () => {
       className={`top-0 z-10  flex w-full flex-col ${
         pos === 'top'
           ? 'absolute bg-transparent shadow-md hover:bg-background/50'
-          : 'shadow-b-2xl fixed bg-background border-b border-primary-dark-100 dark:border-primary-light-100'
+          : 'shadow-b-2xl fixed border-b border-primary-dark-100 bg-background dark:border-primary-light-100'
       }`}
     >
       <Banner />
@@ -77,7 +84,7 @@ const Navbar = () => {
         {/* Main Navigation */}
         <ul className="hidden list-none items-center justify-end gap-6 md:flex">
           <li className="hidden flex-1 items-center md:flex ">
-            <NavigationMenu>
+            {/* <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
                   <NavigationMenuTrigger
@@ -101,7 +108,24 @@ const Navbar = () => {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
               </NavigationMenuList>
-            </NavigationMenu>
+            </NavigationMenu> */}
+            <Link
+              href={'/about'}
+              className={`cursor-pointer font-poppins text-[16px] font-normal capitalize ${
+                pos === 'top' && pathname === '/' ? 'text-textLight' : ' '
+              }`}
+              scroll
+            >
+              <span
+                className={`${
+                  activePath === 'about'
+                    ? 'w-full border-b-2 border-primary-dark-100 pb-1 dark:border-primary-light-100'
+                    : 'border-0'
+                }`}
+              >
+                About
+              </span>
+            </Link>
           </li>
           {paths.map((path, index) => {
             return (

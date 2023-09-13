@@ -9,6 +9,7 @@ const token =
 export const initialState: AuthState = {
   message: '',
   token: token,
+  isAuthenticated: false,
   error: { message: '' },
 }
 
@@ -16,15 +17,17 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setCredentials: (
+    setAuthState: (
       state,
-      { payload: { token } }: PayloadAction<{ token: string }>
+      { payload: { token, isAuthenticated } }: PayloadAction<{ token: string; isAuthenticated: boolean }>
     ) => {
       state.token = token
+      state.isAuthenticated = isAuthenticated
     },
     resetCredentials: (state) => {
       state.token = null
       state.message = ''
+      state.isAuthenticated = false
     },
     setError: (state, { payload }: PayloadAction<Error>) => {
       state.error = payload
@@ -32,7 +35,9 @@ export const authSlice = createSlice({
   },
 })
 
-export const { setCredentials, resetCredentials, setError } = authSlice.actions
+export const { setAuthState, resetCredentials, setError } = authSlice.actions
+
+export const authSelector = (state: RootState) => state.auth
 
 export const selectCurrentToken = (state: RootState) => state.auth.token
 

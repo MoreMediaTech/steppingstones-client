@@ -1,10 +1,6 @@
 import { createEntityAdapter, createSelector } from '@reduxjs/toolkit'
 import { apiSlice } from 'app/global-state/api/apiSlice'
 import {
-  setCredentials,
-  setError,
-} from 'app/global-state/features/auth/authSlice'
-import {
   UserSchemaWithIdType,
   UserSchemaWithIdAndOrganisationType,
 } from '@models/User'
@@ -23,18 +19,6 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         },
       }),
       providesTags: (result, error, arg) => [{ type: 'User', id: result?.id }],
-      async onQueryStarted(args, { dispatch, queryFulfilled }) {
-        try {
-          const result = await queryFulfilled
-          dispatch(
-            setCredentials({
-              token: JSON.parse(localStorage.getItem('token') as string),
-            })
-          )
-        } catch (error) {
-          dispatch(setError({ message: error.message }))
-        }
-      },
     }),
     getUsers: builder.query<UserSchemaWithIdAndOrganisationType[], void>({
       query: () => ({

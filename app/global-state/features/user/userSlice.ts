@@ -10,12 +10,14 @@ const token =
 export type UserState = {
     message: string
     user: UserSchemaWithIdAndOrganisationType | null
+    isAuthenticated: boolean
     error: Error
 }
 
 export const initialState: UserState = {
   message: '',
   user: null,
+  isAuthenticated: false,
   error: { message: '' },
 }
 

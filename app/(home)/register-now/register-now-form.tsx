@@ -1,5 +1,6 @@
 'use client'
 import React from 'react'
+import { useRouter } from 'next/navigation'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
@@ -17,6 +18,7 @@ import {
 } from '@components/ui/form'
 import { Input } from '@components/ui/input'
 import ReCAPTCHA from 'react-google-recaptcha'
+import { env } from '@lib/env'
 
 const formSchema = z.object({
   name: z.string().nonempty({
@@ -35,6 +37,7 @@ const formSchema = z.object({
 type FormSchemaProps = z.infer<typeof formSchema>
 
 export function RegisterNowForm() {
+  const router = useRouter()
   const recaptchaRef = React.useRef<ReCAPTCHA | null>(null)
   const { toast } = useToast()
   const form = useForm<FormSchemaProps>({
@@ -42,26 +45,32 @@ export function RegisterNowForm() {
   })
 
   const onSubmit: SubmitHandler<FormSchemaProps> = async (data) => {
-     const token = await recaptchaRef.current?.executeAsync()
-     recaptchaRef?.current?.reset()
-     const formData = {
+    const token = await recaptchaRef.current?.executeAsync()
+    recaptchaRef?.current?.reset()
+    const formData = {
       ...data,
       token: token as string,
-     }
+    }
     try {
-      const response = await fetch('http://localhost:5001/api/users/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      })
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}feed/register`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        }
+      )
 
-      if(response.ok) {
+      const responseData = await response.json()
+
+      if (responseData.success) {
         toast({
           title: 'Success!',
-          description: 'You  have been registered successfully!',
+          description: responseData.message,
         })
+        router.push(`/register-now/thank-you/${data.name.split(' ')[0]}`)
         form.reset()
       }
     } catch (error) {

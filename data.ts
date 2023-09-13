@@ -19,7 +19,7 @@ export const faqItems = [
     id: 1,
     question: 'When will Stepping Stones Beta be available?',
     answer:
-      'More Media Tech is currently building the Stepping Stones App. Subscribers will get an invitation to access the app and try our the features in the Summer of 2022. Your feedback will be used to make the app better and prep for official launch in the Winter of 2022.',
+      'Equilibrium Startup Labs is currently building the Stepping Stones App to serve Nottingham County businesses. Beta subscribers will get an invitation to access the app and try out the features in the Winter of 2023. Your feedback will be used to make the app better and prepare for its official launch in the Spring of 2024.',
   },
   {
     id: 2,
@@ -43,7 +43,7 @@ export const faqItems = [
     id: 5,
     question: 'Will the app be free?',
     answer:
-      "The app will be available on the Apple and Android app stores for a one-time fee. Beta testers will be able to try the app for 6months free. Once the Beta phase is complete, users will need to pay a fee to continue using the app's features.",
+      "The app will be available on the Apple and Android app stores for free to Beta testers. Once the Beta phase is complete, users will need to pay a one-time fee to continue using the app's features. In-app services will be available in the future.",
   },
   {
     id: 6,

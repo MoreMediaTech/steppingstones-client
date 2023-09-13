@@ -1,6 +1,6 @@
 import {
   resetCredentials,
-  setCredentials,
+  setAuthState,
   setError,
 } from 'app/global-state/features/auth/authSlice'
 import { apiSlice, editorApiSlice } from 'app/global-state/api/apiSlice'
@@ -26,14 +26,6 @@ export const authApi = apiSlice.injectEndpoints({
         body: { email, token },
       }),
       invalidatesTags: [{ type: 'Auth', id: 'LIST' }],
-      async onQueryStarted(args, { dispatch, queryFulfilled }) {
-        try {
-          const { data } = await queryFulfilled
-        } catch (error) {
-          console.log(error)
-          dispatch(setError({ message: error.message }))
-        }
-      },
     }),
     authenticate: builder.mutation({
       query: ({ email, token, oneTimeCode }: Auth) => ({
@@ -46,8 +38,9 @@ export const authApi = apiSlice.injectEndpoints({
         try {
           const { data } = await queryFulfilled
           dispatch(
-            setCredentials({
+            setAuthState({
               token: data.token,
+              isAuthenticated: true,
             })
           )
         } catch (error) {
@@ -101,9 +94,8 @@ export const authApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled
-          console.log(data)
           const { token } = data
-          dispatch(setCredentials({ token }))
+          dispatch(setAuthState({ token: token, isAuthenticated: true }))
         } catch (err) {
           console.log(err)
           dispatch(setError({ message: err.message }))

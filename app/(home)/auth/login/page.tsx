@@ -1,11 +1,12 @@
 'use client'
 
-import { LoginForm } from './LoginForm'
-
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { FaSignInAlt } from 'react-icons/fa'
 
+// components
+import { LoginForm } from './LoginForm'
+
+// framer motion variants
 const variants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1 },
@@ -43,7 +44,7 @@ export default function Login() {
             transition={{ delay: 1.0, duration: 2.0 }}
           >
             <div className='space-y-2 text-left'>
-              <h1 className="flex items-center font-montserrat font-bold text-4xl md:text-5xl">
+              <h1 data-test="login-page-title" className="flex items-center font-montserrat font-bold text-4xl md:text-5xl">
                 Welcome back!
               </h1>
               <p className="text-lg font-thin">Welcome back! Sign in to your account</p>

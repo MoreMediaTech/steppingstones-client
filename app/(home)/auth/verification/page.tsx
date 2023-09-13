@@ -43,7 +43,7 @@ export default function Verification() {
             transition={{ delay: 1.0, duration: 2.0 }}
           >
             <div className="space-y-2 text-left">
-              <h1 className="flex items-center font-montserrat text-4xl font-bold md:text-5xl">
+              <h1 data-test="verification-page-title" className="flex items-center font-montserrat text-4xl font-bold md:text-5xl">
                 Enter verification code!
               </h1>
               <p className="text-lg font-thin">

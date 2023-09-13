@@ -10,9 +10,9 @@ export const metadata: Metadata = {
 export default function EnquiryPage() {
   return (
     <section className="relative grid h-screen w-full md:grid-cols-2">
-      <div className="relative hidden md:block h-screen w-full">
+      <div className="relative hidden h-screen w-full md:block">
         <Image
-          src={'/enquire_section_img.png'}
+          src={'/smartmockups.jpg'}
           alt="Enquire section image"
           quality={50}
           fill
@@ -25,7 +25,7 @@ export default function EnquiryPage() {
         ></div>
       </div>
 
-      <div className="container relative mx-auto w-full h-screen px-4  md:px-6 py-16">
+      <div className="container relative mx-auto h-screen w-full px-4  py-16 md:px-6">
         <div className="flex w-full items-center justify-center   ">
           <EnquiryForm />
         </div>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Metadata } from 'next'
-import AboutSection from '@components/AboutSection'
+import AboutSection from './AboutSection'
 
 // Static metadata
 export const metadata: Metadata = {

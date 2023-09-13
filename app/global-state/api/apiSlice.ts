@@ -6,16 +6,13 @@ import {
   FetchBaseQueryError,
   FetchBaseQueryMeta,
 } from '@reduxjs/toolkit/query/react'
-import { QueryReturnValue } from '@reduxjs/toolkit/dist/query/baseQueryTypes'
 import { HYDRATE } from 'next-redux-wrapper'
 
 import {
-  setCredentials,
+  setAuthState,
   resetCredentials,
 } from 'app/global-state/features/auth/authSlice'
-import { API_URL } from '@config/index'
 import { RootState } from 'app/global-state/store'
-import { UserSchemaWithIdAndOrganisationType } from '@models/User'
 
 interface RefreshResult {
   error?: FetchBaseQueryError | undefined
@@ -73,12 +70,10 @@ const baseQueryWithReAuth: BaseQueryFn = async (
       extraOptions
     )
     if (refreshResult?.data) {
-      const { auth } = api.getState() as RootState
-      const user = auth.currentUser as UserSchemaWithIdAndOrganisationType
       // store new token
       localStorage.setItem('token', refreshResult?.data?.token as string)
       api.dispatch(
-        setCredentials({ token: refreshResult?.data?.token as string })
+        setAuthState({ token: refreshResult?.data?.token as string, isAuthenticated: true })
       )
       // retry original request
       result = await baseQuery(args, api, extraOptions)

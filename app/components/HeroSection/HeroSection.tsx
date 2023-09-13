@@ -24,11 +24,9 @@ const imageVariants3 = {
   exit: { x: '100%' },
 }
 
- 
+export default function HeroSection() {
+  const { publicFeed } = useAppSelector(editorSelector)
 
-export default function HeroSection (){
-  const{ publicFeed } = useAppSelector(editorSelector)
-  
   return (
     <>
       <section
@@ -52,14 +50,24 @@ export default function HeroSection (){
         </div>
         <div className="relative flex max-w-screen-2xl items-center justify-center sm:container sm:mx-auto">
           <div className="grid grid-cols-1 gap-4 sm:gap-2 md:grid-cols-5">
-            <div className="relative col-span-2 flex flex-col justify-start space-y-4 md:ml-12 lg:-ml-12 xl:-ml-24 mt-8  px-4 py-8 sm:w-2/3 md:w-full">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl text-textLight">
+            <div className="relative col-span-2 mt-8 flex flex-col justify-start space-y-4 px-4 py-8 sm:w-2/3  md:ml-12 md:w-full lg:-ml-12 xl:-ml-24">
+              <h1
+                aria-label="Empowering Business for Success"
+                data-test="hero-title"
+                className="text-3xl text-textLight sm:text-4xl md:text-5xl"
+              >
                 Empowering Business for Success
               </h1>
-              <p className="text-accent-light-600 font-semibold">
+              <p
+                aria-label="Your Gateway to Growth and Support"
+                data-test="hero-text"
+                className="font-semibold text-accent-light-600"
+              >
                 Your Gateway to Growth and Support
               </p>
               <Button
+                aria-label="Get Started"
+                data-test="hero-button"
                 type="button"
                 className="w-1/2 sm:w-1/3"
                 onClick={() => null}

@@ -12,7 +12,7 @@ const Footer = () => {
           <div className=" flex items-center gap-6 md:gap-8">
             <div className=" relative -mb-1 hidden md:flex ">
               <Image
-                src={'/SS_Color _logo _with background2.png'}
+                src={'/SS_Color_logo_with-background2.png'}
                 alt="Stepping Stones logo"
                 height={50}
                 width={200}
@@ -21,7 +21,7 @@ const Footer = () => {
             </div>
             <div className=" relative -mb-1 flex md:hidden">
               <Image
-                src={'/SS_Color _logo _with background2.png'}
+                src={'/SS_Color_logo_with-background2.png'}
                 alt="Stepping Stones logo"
                 height={50}
                 width={200}
@@ -31,9 +31,9 @@ const Footer = () => {
           </div>
           <div>
             <nav className=" flex flex-col justify-between space-y-4 text-center text-sm  font-medium sm:flex-row sm:space-x-24 sm:space-y-0">
-              <a className="font-semibold " href="#about">
+              <Link className="font-semibold " href="/about">
                 About
-              </a>
+              </Link>
               <a className="font-semibold " href="#features">
                 Features
               </a>
@@ -53,7 +53,11 @@ const Footer = () => {
           <div>
             <p className="text-xs sm:text-sm">
               Stepping Stones App<sup>&copy;</sup> is the copyright and product
-              of <span>Equilibrium Startup Lab LLC</span> {year}{' '}
+              of{' '}
+              <a href="https://www.buildwithequilibrium.com" target='_blank' className='underline'>
+                Equilibrium Startup Lab LLC
+              </a>{' '}
+              {year}{' '}
             </p>
           </div>
           <div className="flex flex-row items-center gap-2 sm:gap-3">

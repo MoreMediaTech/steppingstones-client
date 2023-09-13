@@ -449,6 +449,7 @@ export type PartnerData = {
 export interface AuthState {
   message: string
   token: string | null
+  isAuthenticated: boolean
   error: Error | undefined
 }
 
