@@ -2,15 +2,15 @@
 import React from 'react'
 
 import RTKProvider from './rtk-providers'
-import NextThemeProvider from './nexttheme-provider'
+import {ThemeProvider }from './nexttheme-provider'
 import GlobalMantineProvider from './mantine-provider'
 
 export default function Provider({ children }: { children: React.ReactNode }) {
   return (
     <RTKProvider>
-      <NextThemeProvider>
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <GlobalMantineProvider>{children}</GlobalMantineProvider>
-      </NextThemeProvider>
+      </ThemeProvider>
     </RTKProvider>
   )
 }
