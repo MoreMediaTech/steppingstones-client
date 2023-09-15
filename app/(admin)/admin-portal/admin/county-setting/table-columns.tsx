@@ -1,24 +1,27 @@
 'use client'
-import { useCallback } from 'react'
-import { ColumnDef, Row } from '@tanstack/react-table'
+
+import { ColumnDef } from '@tanstack/react-table'
 import { FaCheck, FaTimes } from 'react-icons/fa'
 import { ArrowUpDown, Pen } from 'lucide-react'
 import { format } from 'date-fns'
 import { enGB } from 'date-fns/locale'
 import Image from 'next/image'
 
+// types
 import { CountyDataProps } from '@lib/types'
+
+// components
 import { Button } from '@components/ui/button'
 import { Checkbox } from '@components/ui/checkbox'
 import { DataTableRowActions } from '@components/table/data-table-row-actions'
-import { useAppDispatch } from '@global-state/hooks'
-import { setCounty } from '@global-state/features/editor/editorSlice'
-import {
-  setOpenDeleteModal,
-} from '@global-state/features/editor/editorSlice'
-import { useGetCountiesQuery } from '@global-state/features/editor/editorApiSlice'
-import steppingstonesapplogo from '@public/steppingstonesapplogo.png'
+import HandleDeleteModal from '@components/HandleDeleteModal/HandleDeleteModal'
 import { UpdateCountyForm } from './UpdateCountyForm'
+
+// public
+import steppingstonesapplogo from '@public/steppingstonesapplogo.png'
+
+// hooks (Controller)
+import useCountySettingController from './use-county-setting-controller'
 
 export const columns: ColumnDef<CountyDataProps>[] = [
   {
@@ -66,7 +69,7 @@ export const columns: ColumnDef<CountyDataProps>[] = [
               src={county.logoIcon ?? steppingstonesapplogo}
               alt={county.name as string}
               fill
-              sizes='(min-width: 640px) 100px, 50px'
+              sizes="(min-width: 640px) 100px, 50px"
             />
           </div>
           <div className="text-xs font-semibold sm:text-base ">
@@ -133,17 +136,10 @@ export const columns: ColumnDef<CountyDataProps>[] = [
     id: 'action',
     cell: ({ row }) => {
       const county = row.original
-      const dispatch = useAppDispatch()
-      const { refetch } = useGetCountiesQuery()
-
-      const handleDelete = useCallback((row: Row<CountyDataProps>) => {
-        const county = row.original
-        dispatch(setCounty(county))
-        dispatch(setOpenDeleteModal(true))
-      }, [])
+      const { deleteHandler } = useCountySettingController()
 
       return (
-        <DataTableRowActions row={row} enableDelete handleDelete={handleDelete}>
+        <DataTableRowActions row={row}>
           <UpdateCountyForm
             buttonTitle={
               <div className="flex items-center justify-start">
@@ -152,8 +148,8 @@ export const columns: ColumnDef<CountyDataProps>[] = [
               </div>
             }
             county={county}
-            refetch={refetch}
           />
+          <HandleDeleteModal deleteHandler={deleteHandler} data={county} />
         </DataTableRowActions>
       )
     },

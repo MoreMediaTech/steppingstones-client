@@ -272,6 +272,7 @@ export type DistrictSectionProps = {
   updatedAt?: string
 }
 
+
 export type SubSectionProps = {
   id: string
   name: string

@@ -1,16 +1,14 @@
 'use client'
 import { Loader } from '@components/mantine-components'
 
-import { useGetCountiesQuery } from '@global-state/features/editor/editorApiSlice'
 import { CountyDataProps } from '@lib/types'
 import { CountyTable } from './CountyTable'
 
+// hooks (Controller)
+import useCountySettingController from './use-county-setting-controller'
+
 export function CountySettings() {
-  const {
-    data: counties,
-    isLoading: isLoadingCounties,
-    refetch: refetchCounties,
-  } = useGetCountiesQuery()
+  const { counties, isLoadingCounties, isRemoving, deleteHandler } = useCountySettingController()
 
   if (isLoadingCounties) {
     return (
@@ -24,7 +22,6 @@ export function CountySettings() {
     <>
       <CountyTable
         countyData={counties as CountyDataProps[]}
-        refetch={refetchCounties}
       />
     </>
   )

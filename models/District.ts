@@ -14,11 +14,11 @@ export const economicDataSchema = z.object({
   updatedAt: z.string().nonempty({ message: 'Updated At is required' }),
 });
 
-const districtSectionSchema = z.object({
-    economicData: z.array(economicDataSchema).optional(),
-});
+export const districtSectionSchema = sectionSchema.extend({
+  economicData: z.array(economicDataSchema).optional(),
+})
 
-const mergedDistrictSectionSchema = districtSectionSchema.merge(sectionSchema);
+export type DistrictSectionSchemaProps = z.infer<typeof districtSectionSchema>
 
 export const districtSchema = z.object({
     id: z.string(),
@@ -26,7 +26,7 @@ export const districtSchema = z.object({
   imageUrl: z.string(),
   logoIcon: z.string(),
   isLive: z.boolean(),
-  districtSections: z.array(mergedDistrictSectionSchema),
+  districtSections: z.array(districtSectionSchema),
   createdAt: z.string(),
   updatedAt: z.string(),
 });

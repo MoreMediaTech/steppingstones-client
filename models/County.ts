@@ -25,6 +25,10 @@ export const countySchema = zod.object({
 
 export type CountySchemaProps = zod.infer<typeof countySchema>
 
+export const partialCountySchema = countySchema.partial()
+
+export type PartialCountySchemaProps = zod.infer<typeof partialCountySchema>
+
 export const welcomeSchema = sectionSchema
 
 export type WelcomeSchemaProps = zod.infer<typeof welcomeSchema>

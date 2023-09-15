@@ -1,58 +1,48 @@
 'use client'
-import { Modal, Button } from '@mantine/core'
-import { setOpenDeleteModal } from 'app/global-state/features/editor/editorSlice'
-import { useAppDispatch } from 'app/global-state/hooks'
 
-const HandleDeleteModal = ({
-  open,
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@components/ui/alert-dialog'
+import { Trash } from 'lucide-react'
+
+export default function HandleDeleteModal({
   data,
-  isLoading,
   deleteHandler,
 }: {
-  open: boolean
   data: any
-  isLoading: boolean
-  type?: string
-  deleteHandler: (id: string, type?:string) => void
-
-}) => {
-  const dispatch = useAppDispatch()
+  deleteHandler: (id: string, type?: string) => void
+}) {
   return (
-    <Modal
-      centered
-      size="sm"
-      opened={open}
-      onClose={() => dispatch(setOpenDeleteModal(false))}
-      title="Confirm Delete"
-      closeOnClickOutside={false}
-    >
-      <div className="flex flex-col items-center justify-center space-y-2 p-4">
-        <div className="w-full border-b py-4 text-center text-lg font-semibold">
-          <p>Are you sure you want to delete?</p>
-        </div>
-        <div className="flex w-full items-center justify-between py-4">
-          <Button
-            type="button"
-            variant="outline"
-            className="font-medium hover:bg-blue-500 hover:text-white "
-            onClick={() => dispatch(setOpenDeleteModal(false))}
-          >
-            Cancel
-          </Button>
-          <Button
-            type="button"
-            variant="outline"
-            color="red"
-            loading={isLoading}
-            className="font-medium  hover:bg-red-500 hover:text-white "
+    <AlertDialog>
+      <AlertDialogTrigger>
+        <Trash className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+        Delete
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogDescription>
+            This action cannot be undone. This will permanently delete the data
+            from our servers.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction
             onClick={() => deleteHandler(data?.id, data?.type)}
           >
-            Delete
-          </Button>
-        </div>
-      </div>
-    </Modal>
+            Continue
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   )
 }
-
-export default HandleDeleteModal
