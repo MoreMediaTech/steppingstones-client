@@ -2,8 +2,6 @@
 import { useRef } from 'react'
 import Image from 'next/image'
 
-import { CountyDataProps } from '@lib/types'
-
 // components
 import {
   Form,
@@ -18,7 +16,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -31,9 +28,12 @@ import { Button } from '@components/ui/button'
 // hooks (Controller)
 import useCountySettingController from './use-county-setting-controller'
 
+// zod schemas
+import { CountySchemaProps } from '@models/County'
+
 type Props = {
   buttonTitle: React.ReactNode
-  county: CountyDataProps | null
+  county: CountySchemaProps | null
 }
 
 export function UpdateCountyForm({ county, buttonTitle }: Props) {
@@ -41,7 +41,7 @@ export function UpdateCountyForm({ county, buttonTitle }: Props) {
      name: county?.name ? (county?.name as string) : '',
      published: county?.published ? (county?.published as boolean) : false,
    }
- const { form, onSubmit, preview, onChangePicture} = useCountySettingController(defaultValues, county?.id)
+ const { form, updateHandler, preview, onChangePicture} = useCountySettingController(defaultValues, county?.id)
 
   const formRef = useRef<HTMLFormElement>(null)
   
@@ -57,7 +57,7 @@ export function UpdateCountyForm({ county, buttonTitle }: Props) {
         >
           <DialogTrigger>{buttonTitle}</DialogTrigger>
         </Button>
-        <DialogContent className="h-[70vh] w-[60vw]">
+        <DialogContent className=" w-[60vw]">
           <DialogHeader>
             <DialogTitle>Update County Details</DialogTitle>
             <DialogDescription>
@@ -68,7 +68,7 @@ export function UpdateCountyForm({ county, buttonTitle }: Props) {
             <Form {...form}>
               <form
                 ref={formRef}
-                onSubmit={form.handleSubmit(onSubmit)}
+                onSubmit={form.handleSubmit(updateHandler)}
                 className="space-y-6 px-2"
               >
                 <FormField

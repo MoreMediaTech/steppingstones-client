@@ -20,12 +20,13 @@ import {
 } from './editorSlice'
 import { ContentFormProps } from '@models/ContentForm';
 import { CountySchemaProps } from '@models/County';
+import { PartialFormSchemaProps } from '@app/(admin)/admin-portal/admin/county-setting/use-county-setting-controller';
 
 const editorApi = editorApiSlice.injectEndpoints({
   endpoints: (builder) => ({
     createCounty: builder.mutation<
       { success: boolean; message: string },
-      CountyDataProps
+      PartialFormSchemaProps
     >({
       query: (data) => ({
         url: 'editor/county',
@@ -62,7 +63,7 @@ const editorApi = editorApiSlice.injectEndpoints({
         }
       },
     }),
-    getCounties: builder.query<CountyDataProps[], void>({
+    getCounties: builder.query<CountySchemaProps[], void>({
       query: () => ({
         url: 'editor/county',
       }),
@@ -410,7 +411,6 @@ const editorApi = editorApiSlice.injectEndpoints({
           dispatch(setDistrictSection(result.data))
         } catch (error) {
           if (error instanceof Error) {
-
             dispatch(setError({ message: error.message }))
           }
           dispatch(setError({ message: 'Unable to get County objects' }))
@@ -623,24 +623,6 @@ const editorApi = editorApiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Editor', id: 'LIST' }],
     }),
-    getPublicFeed: builder.query<{ counties: Pick<CountySchemaProps, 'id' | 'name' | 'imageUrl' | 'logoIcon'>[] }, void>({
-      query: () => ({
-        url: `feed`,
-      }),
-      providesTags: (result) =>
-        result
-          ? [
-              ...result.counties?.map(
-                (item) =>
-                  ({
-                    type: 'Editor',
-                    id: item?.id,
-                  } as const)
-              ),
-              { type: 'Editor', id: 'LIST' },
-            ]
-          : [{ type: 'Editor', id: 'LIST' }],
-    }),
   }),
   overrideExisting: true,
 })
@@ -694,5 +676,4 @@ export const {
   useUpdateSDDataMutation,
   useDeleteSDDataMutation,
   useDeleteManySDDataMutation,
-  useGetPublicFeedQuery,
 } = editorApi

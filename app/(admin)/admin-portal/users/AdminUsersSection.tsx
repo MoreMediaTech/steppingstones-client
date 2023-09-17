@@ -1,15 +1,15 @@
-'use client'
-import { Loader } from '@mantine/core'
-
+// component
+import { Loader } from '@components/mantine-components'
 import AdminUsersTable from './AdminUsersTable'
-import { useGetUsersQuery } from 'app/global-state/features/user/usersApiSlice'
 
-import { useAppDispatch, useAppSelector } from 'app/global-state/hooks'
-import { UserSchemaWithIdAndOrganisationType } from '@models/User'
+// zod schemas
+import { UserSchemaWithIdType } from '@models/User'
 
-export function AdminUsersSection(){
-  const dispatch = useAppDispatch()
-  const { data: users, isLoading, refetch } = useGetUsersQuery()
+// hooks (Controller)
+import useUsersController from './useUsersController'
+
+export function AdminUsersSection() {
+  const { users, isLoading } = useUsersController()
 
   if (isLoading) {
     return (
@@ -19,13 +19,8 @@ export function AdminUsersSection(){
     )
   }
   return (
-    <>
-      <section className="">
-        <AdminUsersTable
-          users={users as UserSchemaWithIdAndOrganisationType[]}
-        />
-      </section>
-    </>
+    <section>
+      <AdminUsersTable users={users as UserSchemaWithIdType[]} />
+    </section>
   )
 }
-

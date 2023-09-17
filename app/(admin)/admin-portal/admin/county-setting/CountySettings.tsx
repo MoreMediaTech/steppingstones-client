@@ -6,9 +6,10 @@ import { CountyTable } from './CountyTable'
 
 // hooks (Controller)
 import useCountySettingController from './use-county-setting-controller'
+import { CountySchemaProps } from '@models/County'
 
 export function CountySettings() {
-  const { counties, isLoadingCounties, isRemoving, deleteHandler } = useCountySettingController()
+  const { counties, isLoadingCounties } = useCountySettingController()
 
   if (isLoadingCounties) {
     return (
@@ -19,10 +20,8 @@ export function CountySettings() {
   }
 
   return (
-    <>
-      <CountyTable
-        countyData={counties as CountyDataProps[]}
-      />
-    </>
+    <section>
+      <CountyTable countyData={counties as CountySchemaProps[]} />
+    </section>
   )
 }

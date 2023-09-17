@@ -17,18 +17,23 @@ interface DataTableRowActionsProps<TData> {
   row: Row<TData>
   enableDelete?: boolean
   enableEdit?: boolean
+  enableDeleteItem?: boolean
+  enableEditItem?: boolean
   handleDelete?: (row: Row<TData>) => void
   handleEdit?: (row: Row<TData>) => void
-  children?: React.ReactNode
+  deleteItem?: React.ReactNode
+  editItem?: React.ReactNode
 }
 
 export function DataTableRowActions<TData>({
   row,
-  enableDelete = false,
-  enableEdit = false,
+  enableDeleteItem = false,
+  enableEditItem = false,
   handleDelete,
   handleEdit,
-  children,
+
+  deleteItem,
+  editItem,
 }: DataTableRowActionsProps<TData>) {
   return (
     <DropdownMenu>
@@ -42,21 +47,24 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        {children}
-        {enableEdit ? (
-          <DropdownMenuItem onClick={() => handleEdit!(row)}>
+        {enableEditItem ? (
+          <>{editItem}</>
+        ) : (
+          <>
             <Pen className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
             Edit
-          </DropdownMenuItem>
-        ) : null}
+          </>
+        )}
         <DropdownMenuSeparator />
-        {enableDelete ? (
-          <DropdownMenuItem onClick={() => handleDelete!(row)}>
+        {enableDeleteItem ? (
+          <>{deleteItem}</>
+        ) : (
+          <>
             <Trash className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
             Delete
             <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
-          </DropdownMenuItem>
-        ) : null}
+          </>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   )
@@ -64,11 +72,14 @@ export function DataTableRowActions<TData>({
 
 export function SecondaryDataTableRowActions<TData>({
   row,
+  deleteItem,
+  editItem,
   enableDelete = false,
   enableEdit = false,
+  enableDeleteItem = false,
+  enableEditItem = false,
   handleDelete,
   handleEdit,
-  children,
 }: DataTableRowActionsProps<TData>) {
   const [dropdownOpen, setDropdownOpen] = React.useState(false)
   return (
@@ -84,19 +95,30 @@ export function SecondaryDataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        {children}
         {enableEdit ? (
           <DropdownMenuItem onClick={() => handleEdit!(row)}>
-            <Pen className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-            Edit
+            {enableEditItem ? (
+              <>{editItem}</>
+            ) : (
+              <>
+                <Pen className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+                Edit
+              </>
+            )}
           </DropdownMenuItem>
         ) : null}
         <DropdownMenuSeparator />
         {enableDelete ? (
           <DropdownMenuItem onClick={() => handleDelete!(row)}>
-            <Trash className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-            Delete
-            <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
+            {enableDeleteItem ? (
+              <>{deleteItem}</>
+            ) : (
+              <>
+                <Trash className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+                Delete
+                <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
+              </>
+            )}
           </DropdownMenuItem>
         ) : null}
       </DropdownMenuContent>

@@ -1,12 +1,6 @@
 'use client'
-import React, { useCallback, useState, useEffect } from 'react'
-import { SubmitHandler, UseFormReturn, useForm } from 'react-hook-form'
-import { useTheme } from 'next-themes'
-import { UserSchemaWithIdAndOrganisationType } from '@models/User'
-import { zodResolver } from '@hookform/resolvers/zod'
-import * as z from 'zod'
-import { ToastAction } from '@components/ui/toast'
-import { useToast } from '@components/ui/use-toast'
+
+// components
 import { Button } from '@components/ui/button'
 import {
   Form,
@@ -25,43 +19,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@components/ui/dialog'
-
 import { Input } from '@components/ui/input'
-import { useCreateUserMutation } from 'app/global-state/features/user/usersApiSlice'
 
-interface ICreateAdminProps {
-  refetch: () => void
-}
+// hooks (Controller)
+import useUsersController from './useUsersController'
 
-export function CreateAdminForm({ refetch }: ICreateAdminProps) {
-  const { toast } = useToast()
-  const [createUser] = useCreateUserMutation()
-  const form = useForm<Partial<UserSchemaWithIdAndOrganisationType>>()
+export function CreateAdminForm() {
+  const { form, onSubmit } = useUsersController()
 
-  const onSubmit: SubmitHandler<Partial<UserSchemaWithIdAndOrganisationType>> =
-    useCallback(
-      async (data) => {
-        try {
-          const response = await createUser(
-            data as UserSchemaWithIdAndOrganisationType
-          ).unwrap()
-          if (response.success) {
-            toast({
-              title: 'Success!',
-              description: 'User created successfully',
-            })
-            refetch()
-          }
-        } catch (error) {
-          toast({
-            title: 'Error!',
-            description: 'Unable to complete request',
-            action: <ToastAction altText="Retry">Retry</ToastAction>,
-          })
-        }
-      },
-      [createUser, refetch]
-    )
   return (
     <Dialog>
       <Button
@@ -86,12 +51,12 @@ export function CreateAdminForm({ refetch }: ICreateAdminProps) {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Section name</FormLabel>
+                  <FormLabel>Admin name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Section name" {...field} />
+                    <Input placeholder="Enter users name" {...field} />
                   </FormControl>
                   <FormDescription>
-                    The name of the section you want to create
+                    The name of the user you want to create
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

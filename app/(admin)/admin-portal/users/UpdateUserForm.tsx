@@ -1,11 +1,8 @@
 'use client'
-import { useCallback, useEffect, useState } from 'react'
-import { useForm, SubmitHandler } from 'react-hook-form'
-import { useUpdateUserMutation } from 'app/global-state/features/user/usersApiSlice'
-import { zodResolver } from '@hookform/resolvers/zod'
+
 import { Pen } from 'lucide-react'
-import { ToastAction } from '@components/ui/toast'
-import { useToast } from '@components/ui/use-toast'
+
+// components
 import { Button } from '@components/ui/button'
 import {
   Form,
@@ -31,33 +28,23 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@components/ui/dialog'
-
 import { Input } from '@components/ui/input'
 import { Checkbox } from '@components/ui/checkbox'
-import {
-  UserSchemaType,
-  UserSchema,
-  UserSchemaWithIdAndOrganisationType,
-  Role,
-  UserSchemaWithIdType,
-} from '@models/User'
 import { ScrollArea } from '@components/ui/scroll-area'
 
+// zod schemas
+import { Role, PartialUserWithIdType } from '@models/User'
+
+// hooks (Controller)
+import useUsersController from './useUsersController'
+
 type Props = {
-  refetch: () => void
-  user?: UserSchemaWithIdAndOrganisationType
+  user?: PartialUserWithIdType
   disabled?: boolean
 }
 
-export function UpdateUserForm({ refetch, user, disabled }: Props) {
-  const { toast } = useToast()
-  const [roles] = useState<Role[]>([
-    Role.USER,
-    Role.SS_EDITOR,
-    Role.PARTNER,
-    Role.COUNTY_EDITOR,
-  ])
-  const defaultValues: UserSchemaType = {
+export function UpdateUserForm({ user, disabled }: Props) {
+  const defaultValues = {
     name: user?.name ? (user?.name as string) : '',
     email: user?.email ? (user?.email as string) : '',
     contactNumber: user?.contactNumber ? (user?.contactNumber as string) : '',
@@ -77,43 +64,14 @@ export function UpdateUserForm({ refetch, user, disabled }: Props) {
       : false,
   }
 
-  const form = useForm<UserSchemaType>({
-    resolver: zodResolver(UserSchema),
-    defaultValues: { ...defaultValues },
-  })
-  const [updateUser] = useUpdateUserMutation()
-
-  useEffect(() => {
-    // reset the form when the user changes
-    form.reset({ ...defaultValues })
-  }, [user])
-
-  const onSubmit: SubmitHandler<UserSchemaType> = useCallback(async (data) => {
-    const newData = {
-      id: user?.id as string,
-      ...data,
-    }
-    try {
-      await updateUser(newData as UserSchemaWithIdType).unwrap()
-      refetch()
-      toast({
-        title: 'User updated',
-        description: 'User updated successfully',
-      })
-    } catch (error) {
-      toast({
-        title: 'Error',
-        description: error.message,
-        action: <ToastAction altText="Try again">Try again</ToastAction>,
-      })
-    }
-  }, [])
+  const { form, roles, onSubmitUpdate } = useUsersController(defaultValues, user)
 
   return (
     <Dialog>
       <Button
         type="button"
         asChild
+        variant="ghost"
         className="w-full border-gray-900 dark:border-gray-200 "
       >
         <DialogTrigger>
@@ -126,9 +84,12 @@ export function UpdateUserForm({ refetch, user, disabled }: Props) {
           <DialogTitle>Update User Details</DialogTitle>
           <DialogDescription>Update the details of the user</DialogDescription>
         </DialogHeader>
-        <ScrollArea className='w-full p-2'>
+        <ScrollArea className="w-full p-2">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 px-2">
+            <form
+              onSubmit={form.handleSubmit(onSubmitUpdate)}
+              className="space-y-6 px-2"
+            >
               <FormField
                 control={form.control}
                 name="name"

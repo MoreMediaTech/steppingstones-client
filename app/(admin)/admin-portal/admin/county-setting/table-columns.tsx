@@ -9,6 +9,7 @@ import Image from 'next/image'
 
 // types
 import { CountyDataProps } from '@lib/types'
+import { CountySchemaProps } from '@models/County'
 
 // components
 import { Button } from '@components/ui/button'
@@ -23,7 +24,7 @@ import steppingstonesapplogo from '@public/steppingstonesapplogo.png'
 // hooks (Controller)
 import useCountySettingController from './use-county-setting-controller'
 
-export const columns: ColumnDef<CountyDataProps>[] = [
+export const columns: ColumnDef<CountySchemaProps>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -139,18 +140,25 @@ export const columns: ColumnDef<CountyDataProps>[] = [
       const { deleteHandler } = useCountySettingController()
 
       return (
-        <DataTableRowActions row={row}>
-          <UpdateCountyForm
-            buttonTitle={
-              <div className="flex items-center justify-start">
-                <Pen className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-                Edit
-              </div>
-            }
-            county={county}
-          />
-          <HandleDeleteModal deleteHandler={deleteHandler} data={county} />
-        </DataTableRowActions>
+        <DataTableRowActions
+          row={row}
+          enableEditItem
+          editItem={
+            <UpdateCountyForm
+              buttonTitle={
+                <div className="flex items-center justify-start">
+                  <Pen className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+                  Edit
+                </div>
+              }
+              county={county}
+            />
+          }
+          enableDeleteItem
+          deleteItem={
+            <HandleDeleteModal deleteHandler={deleteHandler} data={county} />
+          }
+        />
       )
     },
   },

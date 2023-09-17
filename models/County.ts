@@ -1,5 +1,6 @@
 import * as zod from 'zod'
 
+import { Prettify } from './helpers'
 import {  sectionSchema } from './Section'
 import {  districtSchema } from './District'
 
@@ -23,11 +24,6 @@ export const countySchema = zod.object({
   updatedAt: zod.string().nonempty({ message: 'Updated At is required' }),
 })
 
-export type CountySchemaProps = zod.infer<typeof countySchema>
-
-export const partialCountySchema = countySchema.partial()
-
-export type PartialCountySchemaProps = zod.infer<typeof partialCountySchema>
 
 export const welcomeSchema = sectionSchema
 
@@ -42,6 +38,14 @@ export const newsSchema = sectionSchema
 export type NewsSchemaProps = zod.infer<typeof newsSchema>
 
 
-export const countyLepNewsWelcomeSchema = zod.union([ countySchema, lepSchema, newsSchema, welcomeSchema ])
+export const countyLepNewsWelcomeSchema = countySchema.extend({
+  welcome: welcomeSchema,
+  lep: lepSchema,
+  news: newsSchema,
+})
 
-export type CountyLepNewsWelcomeSchemaProps = zod.infer<typeof countyLepNewsWelcomeSchema>
+export const partialCountySchema = countyLepNewsWelcomeSchema.partial()
+
+export type PartialCountySchemaProps = zod.infer<typeof partialCountySchema>
+
+export type CountySchemaProps = Prettify<zod.infer<typeof countyLepNewsWelcomeSchema>>

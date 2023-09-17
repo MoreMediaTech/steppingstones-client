@@ -1,6 +1,6 @@
-'use client';
+'use client'
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -11,16 +11,16 @@ import {
   useGetCountiesQuery,
   useRemoveCountyMutation,
   useUpdateCountyMutation,
+  useCreateCountyMutation,
 } from '@global-state/features/editor/editorApiSlice'
-import { useAppDispatch, useAppSelector } from 'app/global-state/hooks'
-
-// zod schema
-import { CountySchemaProps, PartialCountySchemaProps, partialCountySchema } from '@models/County';
 
 // components
 import { ToastAction } from '@components/ui/toast'
 import { useToast } from '@components/ui/use-toast'
-import { isErrorWithMessage, isFetchBaseQueryError } from '@app/global-state/helper';
+import {
+  isErrorWithMessage,
+  isFetchBaseQueryError,
+} from '@app/global-state/helper'
 
 const formSchema = z.object({
   name: z.string().nonempty({ message: 'Name is required' }),
@@ -32,10 +32,12 @@ const partialFormSchema = formSchema.partial()
 
 type FormSchemaProps = z.infer<typeof formSchema>
 
-type PartialFormSchemaProps = z.infer<typeof partialFormSchema>
+export type PartialFormSchemaProps = z.infer<typeof partialFormSchema>
 
-
-export default function useCountySettingController(defaultValues?: PartialFormSchemaProps, countyId?: string) {
+export default function useCountySettingController(
+  defaultValues?: PartialFormSchemaProps,
+  countyId?: string
+) {
   const { toast } = useToast()
   const router = useRouter()
   const [preview, setPreview] = useState<string | ArrayBuffer | null>(null)
@@ -47,6 +49,7 @@ export default function useCountySettingController(defaultValues?: PartialFormSc
 
   const [removeCounty, { isLoading: isRemoving }] = useRemoveCountyMutation()
   const [updateCounty, { isLoading: isUpdating }] = useUpdateCountyMutation()
+  const [createCounty, { isLoading: isCreating }] = useCreateCountyMutation()
 
   const form = useForm<FormSchemaProps>({
     resolver: zodResolver(formSchema),
@@ -54,9 +57,9 @@ export default function useCountySettingController(defaultValues?: PartialFormSc
   })
 
   useEffect(() => {
-    // reset the form when the user changes
+    // reset the form when the data changes
     form.reset({ ...defaultValues })
-  }, [defaultValues])
+  }, [countyId])
 
   const deleteHandler = useCallback(async (id: string) => {
     try {
@@ -73,14 +76,16 @@ export default function useCountySettingController(defaultValues?: PartialFormSc
         toast({
           variant: 'destructive',
           title: 'Uh oh! Something went wrong.',
-          description: (errMsg as string) || 'Login failed. Please try again.',
+          description:
+            (errMsg as string) || 'Unable to delete county. Please try again.',
           action: <ToastAction altText="Try again">Try again</ToastAction>,
         })
       } else if (isErrorWithMessage(error)) {
         toast({
           variant: 'destructive',
           title: 'Uh oh! Something went wrong.',
-          description: error.message || 'Login failed. Please try again.',
+          description:
+            error.message || 'Unable to delete county Please try again.',
           action: <ToastAction altText="Try again">Try again</ToastAction>,
         })
       }
@@ -111,7 +116,7 @@ export default function useCountySettingController(defaultValues?: PartialFormSc
     []
   )
 
-  const onSubmit: SubmitHandler<FormSchemaProps> = useCallback(
+  const updateHandler: SubmitHandler<FormSchemaProps> = useCallback(
     async (data) => {
       const newData = {
         id: countyId as string,
@@ -130,15 +135,65 @@ export default function useCountySettingController(defaultValues?: PartialFormSc
           })
         }
       } catch (error) {
-        toast({
-          variant: 'destructive',
-          title: 'Uh oh! Something went wrong.',
-          description: 'There was a problem updating the county.',
-          action: <ToastAction altText="Try again">Try again</ToastAction>,
-        })
+        if (isFetchBaseQueryError(error)) {
+          const errMsg =
+            'error' in error ? error.error : JSON.stringify(error.message)
+          toast({
+            variant: 'destructive',
+            title: 'Uh oh! Something went wrong.',
+            description:
+              (errMsg as string) ||
+              'Unable to update county. Please try again.',
+            action: <ToastAction altText="Try again">Try again</ToastAction>,
+          })
+        } else if (isErrorWithMessage(error)) {
+          toast({
+            variant: 'destructive',
+            title: 'Uh oh! Something went wrong.',
+            description:
+              error.message || 'Unable to update county Please try again.',
+            action: <ToastAction altText="Try again">Try again</ToastAction>,
+          })
+        }
       }
     },
     [preview, countyId]
+  )
+
+  const createHandler: SubmitHandler<PartialFormSchemaProps> = useCallback(
+    async (data) => {
+      try {
+        const response = await createCounty(data).unwrap()
+        if (response.success) {
+          refetchCounties()
+          router.replace('/admin-portal/admin/county-setting')
+          toast({
+            title: 'County created.',
+            description: response.message,
+          })
+        }
+      } catch (error) {
+        if (isFetchBaseQueryError(error)) {
+        const errMsg =
+          'error' in error ? error.error : JSON.stringify(error.message)
+        toast({
+          variant: 'destructive',
+          title: 'Uh oh! Something went wrong.',
+          description: (errMsg as string) || 'Unable to create county. Please try again.',
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+        })
+      } else if (isErrorWithMessage(error)) {
+        toast({
+          variant: 'destructive',
+          title: 'Uh oh! Something went wrong.',
+          description: error.message || 'Unable to create county Please try again.',
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+        })
+      }
+    
+      }
+    },
+    []
   )
 
   return {
@@ -148,9 +203,11 @@ export default function useCountySettingController(defaultValues?: PartialFormSc
     deleteHandler,
     isRemoving,
     isUpdating,
+    isCreating,
     form,
     preview,
     onChangePicture,
-    onSubmit,
+    updateHandler,
+    createHandler,
   }
 }

@@ -1,15 +1,17 @@
-'use client'
-import { ColumnDef, Row } from '@tanstack/react-table'
+import { ColumnDef } from '@tanstack/react-table'
 import { FaCheck, FaTimes } from 'react-icons/fa'
 import { ArrowUpDown } from 'lucide-react'
+
+// components
 import { Button } from '@components/ui/button'
-import { Badge } from '@components/ui/badge'
 import { Checkbox } from '@components/ui/checkbox'
-import { useGetUsersQuery } from 'app/global-state/features/user/usersApiSlice'
-import { UserSchemaWithIdAndOrganisationType } from '@models/User'
+import { DataTableRowActions } from '@components/table/data-table-row-actions'
 import { UpdateUserForm } from './UpdateUserForm'
 
-export const columns: ColumnDef<UserSchemaWithIdAndOrganisationType>[] = [
+// zod schemas
+import { UserSchemaWithIdType } from '@models/User'
+
+export const columns: ColumnDef<UserSchemaWithIdType>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -123,10 +125,13 @@ export const columns: ColumnDef<UserSchemaWithIdAndOrganisationType>[] = [
     id: 'action',
     cell: ({ row }) => {
       const user = row.original
-      const { refetch } = useGetUsersQuery()
 
       return (
-        <UpdateUserForm user={user}refetch={refetch}/>
+        <DataTableRowActions
+          row={row}
+          enableEditItem
+          editItem={<UpdateUserForm user={user} />}
+        />
       )
     },
   },

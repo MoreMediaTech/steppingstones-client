@@ -1,6 +1,8 @@
 import * as z from 'zod'
 import validator from 'validator'
 
+import { Prettify } from './helpers'
+
 export enum Role {
   PARTNER = 'PARTNER',
   COUNTY_EDITOR = 'COUNTY_EDITOR',
@@ -86,22 +88,25 @@ export const UserSchema = z.object({
   updatedAt: z.string().nonempty({}).optional(),
 })
 
+export const partialUserSchema = UserSchema.partial()
 
-
-export const UserSchemaWithIdAndOrganisation = UserSchema.extend({
+export const userSchemaWithIdAndOrganisation = UserSchema.extend({
   id: z.string().nonempty({}).optional(),
   organisation: OrganisationSchema.optional(),
 })
+
+export const partialUserWithIdSchema = userSchemaWithIdAndOrganisation.partial()
 
 export type OrganisationSchemaType = z.infer<typeof OrganisationSchema>
 
 export type UserSchemaType = z.infer<typeof UserSchema>
 
-export type UserSchemaWithIdType = z.infer<
-  typeof UserSchemaWithIdAndOrganisation
->
+export type PartialUserSchemaType = z.infer<typeof partialUserSchema>
 
-export type UserSchemaWithIdAndOrganisationType = z.infer<
-  typeof UserSchemaWithIdAndOrganisation
->
+export type UserSchemaWithIdType = Prettify<z.infer<
+  typeof userSchemaWithIdAndOrganisation
+>>
+
+export type PartialUserWithIdType = Prettify<z.infer<typeof partialUserWithIdSchema>>
+
 
