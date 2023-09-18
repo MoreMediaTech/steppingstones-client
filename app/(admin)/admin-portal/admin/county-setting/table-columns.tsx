@@ -1,32 +1,32 @@
-'use client'
+"use client";
 
-import { ColumnDef } from '@tanstack/react-table'
-import { FaCheck, FaTimes } from 'react-icons/fa'
-import { ArrowUpDown, Pen } from 'lucide-react'
-import { format } from 'date-fns'
-import { enGB } from 'date-fns/locale'
-import Image from 'next/image'
+import { ColumnDef } from "@tanstack/react-table";
+import { FaCheck, FaTimes } from "react-icons/fa";
+import { ArrowUpDown, Pen } from "lucide-react";
+import { format } from "date-fns";
+import { enGB } from "date-fns/locale";
+import Image from "next/image";
 
 // types
-import { CountyDataProps } from '@lib/types'
-import { CountySchemaProps } from '@models/County'
+import { CountyDataProps } from "@lib/types";
+import { CountySchemaProps } from "@models/County";
 
 // components
-import { Button } from '@components/ui/button'
-import { Checkbox } from '@components/ui/checkbox'
-import { DataTableRowActions } from '@components/table/data-table-row-actions'
-import HandleDeleteModal from '@components/HandleDeleteModal/HandleDeleteModal'
-import { UpdateCountyForm } from './UpdateCountyForm'
+import { Button } from "@components/ui/button";
+import { Checkbox } from "@components/ui/checkbox";
+import { DataTableRowActions } from "@components/table/data-table-row-actions";
+import HandleDeleteModal from "@components/HandleDeleteModal/HandleDeleteModal";
+import { UpdateCountyForm } from "./UpdateCountyForm";
 
 // public
-import steppingstonesapplogo from '@public/steppingstonesapplogo.png'
+import steppingstonesapplogo from "@public/steppingstonesapplogo.png";
 
 // hooks (Controller)
-import useCountySettingController from './use-county-setting-controller'
+import useCountySettingController from "./use-county-setting-controller";
 
 export const columns: ColumnDef<CountySchemaProps>[] = [
   {
-    id: 'select',
+    id: "select",
     header: ({ table }) => (
       <Checkbox
         checked={table.getIsAllPageRowsSelected()}
@@ -47,22 +47,22 @@ export const columns: ColumnDef<CountySchemaProps>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'name',
+    accessorKey: "name",
     header: ({ column }) => {
       return (
         <div className="flex items-center justify-start">
           <Button
             variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             County Name
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         </div>
-      )
+      );
     },
     cell: ({ row }) => {
-      const county = row.original
+      const county = row.original;
       return (
         <div className="flex items-center justify-start space-x-2">
           <div className="relative h-10 w-10 overflow-hidden rounded-full border-2 border-primary-dark-200 p-1">
@@ -77,27 +77,27 @@ export const columns: ColumnDef<CountySchemaProps>[] = [
             <p>{county?.name}</p>
           </div>
         </div>
-      )
+      );
     },
   },
 
   {
-    accessorKey: 'published',
+    accessorKey: "published",
     header: ({ column }) => {
       return (
         <div className="flex items-center justify-center">
           <Button
             variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Published
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         </div>
-      )
+      );
     },
     cell: ({ row }) => {
-      const published = row.getValue('published')
+      const published = row.getValue("published");
       return (
         <div className="flex items-center justify-center">
           {published ? (
@@ -106,38 +106,38 @@ export const columns: ColumnDef<CountySchemaProps>[] = [
             <FaTimes className="text-red-500" />
           )}
         </div>
-      )
+      );
     },
   },
   {
-    accessorKey: 'updatedAt',
+    accessorKey: "updatedAt",
     header: ({ column }) => {
       return (
         <div className="flex items-center justify-center">
           <h3>Last Updated</h3>
         </div>
-      )
+      );
     },
     cell: ({ row }) => {
-      const updatedAt = row.getValue('updatedAt')
+      const updatedAt = row.getValue("updatedAt");
       return (
         <div className="flex items-center justify-center">
           <div className="flex items-center justify-center rounded-lg bg-primary-dark-200 px-2 py-1 text-xs text-white shadow-lg">
             <p>
-              {format(new Date(updatedAt as string), 'MM/dd/yyyy HH:mm:ss', {
+              {format(new Date(updatedAt as string), "MM/dd/yyyy HH:mm:ss", {
                 locale: enGB,
               })}
             </p>
           </div>
         </div>
-      )
+      );
     },
   },
   {
-    id: 'action',
+    id: "action",
     cell: ({ row }) => {
-      const county = row.original
-      const { deleteHandler } = useCountySettingController()
+      const county = row.original;
+      const { deleteHandler } = useCountySettingController();
 
       return (
         <DataTableRowActions
@@ -159,7 +159,7 @@ export const columns: ColumnDef<CountySchemaProps>[] = [
             <HandleDeleteModal deleteHandler={deleteHandler} data={county} />
           }
         />
-      )
+      );
     },
   },
-]
+];

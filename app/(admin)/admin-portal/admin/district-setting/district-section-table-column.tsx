@@ -1,22 +1,26 @@
-'use client'
-import { useCallback } from 'react'
-import { ColumnDef, Row } from '@tanstack/react-table'
-import { FaCheck, FaTimes } from 'react-icons/fa'
-import { ArrowUpDown } from 'lucide-react'
-import { format } from 'date-fns'
-import { enGB } from 'date-fns/locale'
+"use client";
 
-import { DistrictSectionProps } from '@lib/types'
-import { Button } from '@components/ui/button'
-import { Checkbox } from '@components/ui/checkbox'
-import { DataTableRowActions } from '@components/table/data-table-row-actions'
-import { useAppDispatch } from 'app/global-state/hooks'
-import { setDistrictSection } from 'app/global-state/features/editor/editorSlice'
-import { setOpenEditModal } from 'app/global-state/features/editor/editorSlice'
+import { ColumnDef } from "@tanstack/react-table";
+import { FaCheck, FaTimes } from "react-icons/fa";
+import { ArrowUpDown } from "lucide-react";
+import { format } from "date-fns";
+import { enGB } from "date-fns/locale";
 
-export const columns: ColumnDef<DistrictSectionProps>[] = [
+// components
+import { Button } from "@components/ui/button";
+import { Checkbox } from "@components/ui/checkbox";
+import { DataTableRowActions } from "@components/table/data-table-row-actions";
+
+// zod schema
+import { DistrictSectionSchemaProps } from "@models/District";
+
+// hooks (Controller)
+import useDistrictSettingController from "./use-district-setting-controller";
+import HandleDeleteModal from "@components/HandleDeleteModal/HandleDeleteModal";
+
+export const columns: ColumnDef<DistrictSectionSchemaProps>[] = [
   {
-    id: 'select',
+    id: "select",
     header: ({ table }) => (
       <Checkbox
         checked={table.getIsAllPageRowsSelected()}
@@ -37,38 +41,38 @@ export const columns: ColumnDef<DistrictSectionProps>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'name',
+    accessorKey: "name",
     header: ({ column }) => {
       return (
         <div className="flex items-center justify-start">
           <Button
             variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             LA Name
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         </div>
-      )
+      );
     },
   },
   {
-    accessorKey: 'isLive',
+    accessorKey: "isLive",
     header: ({ column }) => {
       return (
         <div className="flex items-center justify-center">
           <Button
             variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Live
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         </div>
-      )
+      );
     },
     cell: ({ row }) => {
-      const isLive = row.getValue('isLive')
+      const isLive = row.getValue("isLive");
       return (
         <div className="flex items-center justify-center">
           {isLive ? (
@@ -77,47 +81,50 @@ export const columns: ColumnDef<DistrictSectionProps>[] = [
             <FaTimes className="text-red-500" />
           )}
         </div>
-      )
+      );
     },
   },
   {
-    accessorKey: 'updatedAt',
+    accessorKey: "updatedAt",
     header: ({ column }) => {
       return (
         <div className="flex items-center justify-center">
           <h3>Last Updated</h3>
         </div>
-      )
+      );
     },
     cell: ({ row }) => {
-      const updatedAt = row.getValue('updatedAt')
+      const updatedAt = row.getValue("updatedAt");
       return (
         <div className="flex items-center justify-center">
           <div className="flex items-center justify-center rounded-lg bg-primary-dark-200 px-2 py-1 text-xs text-white shadow-lg">
             <p>
-              {format(new Date(updatedAt as string), 'MM/dd/yyyy HH:mm:ss', {
+              {format(new Date(updatedAt as string), "MM/dd/yyyy HH:mm:ss", {
                 locale: enGB,
               })}
             </p>
           </div>
         </div>
-      )
+      );
     },
   },
   {
-    id: 'action',
+    id: "action",
     cell: ({ row }) => {
-      const dispatch = useAppDispatch()
-
-      const handleEdit = useCallback((row: Row<DistrictSectionProps>) => {
-        const districtSection = row.original
-        dispatch(setDistrictSection(districtSection))
-        dispatch(setOpenEditModal(true))
-      }, [])
-
+      const districtSection = row.original;
+      const { deleteDistrictSectionHandler } = useDistrictSettingController();
       return (
-        <DataTableRowActions row={row} enableEdit handleEdit={handleEdit} />
-      )
+        <DataTableRowActions
+          row={row}
+          enableDeleteItem
+          deleteItem={
+            <HandleDeleteModal
+              deleteHandler={deleteDistrictSectionHandler}
+              data={districtSection}
+            />
+          }
+        />
+      );
     },
   },
-]
+];

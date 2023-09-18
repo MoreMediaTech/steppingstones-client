@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
 // components
-import { Button } from '@components/ui/button'
+import { Button } from "@components/ui/button";
 import {
   Form,
   FormControl,
@@ -10,7 +10,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@components/ui/form'
+} from "@components/ui/form";
 import {
   Dialog,
   DialogContent,
@@ -18,13 +18,13 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@components/ui/dialog'
-import { Input } from '@components/ui/input'
+} from "@components/ui/dialog";
+import { Input } from "@components/ui/input";
 
-import useCountySettingController from './use-county-setting-controller'
+import useCountySettingController from "./use-county-setting-controller";
 
 export function CreateCountyForm() {
-  const { form, isCreating, createHandler } = useCountySettingController()
+  const { form, isCreating, createHandler } = useCountySettingController();
 
   return (
     <Dialog>
@@ -32,7 +32,7 @@ export function CreateCountyForm() {
         type="button"
         variant="outline"
         asChild
-        className=" border-gray-900 dark:border-gray-200 w-1/3"
+        className=" w-1/3 border-gray-900 dark:border-gray-200"
       >
         <DialogTrigger>Create County</DialogTrigger>
       </Button>
@@ -73,5 +73,5 @@ export function CreateCountyForm() {
         </Form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

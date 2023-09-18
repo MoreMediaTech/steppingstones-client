@@ -1,29 +1,31 @@
-'use client'
-import { useCallback } from 'react'
-import { ColumnDef, Row } from '@tanstack/react-table'
-import { FaCheck, FaTimes } from 'react-icons/fa'
-import { ArrowUpDown } from 'lucide-react'
-import { format } from 'date-fns'
-import { enGB } from 'date-fns/locale'
-import Image from 'next/image'
+"use client";
 
-import steppingstonesapplogo from '../../../../../public/steppingstonesapplogo.png'
-import { DistrictDataProps } from '@lib/types'
-import { Button } from '@components/ui/button'
-import { Checkbox } from '@components/ui/checkbox'
-import { DataTableRowActions } from '@components/table/data-table-row-actions'
-import { useAppDispatch } from 'app/global-state/hooks'
-import {  setDistrict } from 'app/global-state/features/editor/editorSlice'
-import {
-  setOpenEditModal,
-  setOpenDeleteModal,
-  setOpenLASectionModal,
-} from 'app/global-state/features/editor/editorSlice'
-import { DropdownMenuItem } from '@components/ui/dropdown-menu'
+import { ColumnDef } from "@tanstack/react-table";
+import { FaCheck, FaTimes } from "react-icons/fa";
+import { ArrowUpDown } from "lucide-react";
+import { format } from "date-fns";
+import { enGB } from "date-fns/locale";
+import Image from "next/image";
 
-export const columns: ColumnDef<DistrictDataProps>[] = [
+import steppingstonesapplogo from "../../../../../public/steppingstonesapplogo.png";
+
+// hooks (Controller)
+import useDistrictSettingController from "./use-district-setting-controller";
+
+// zod schema
+import { DistrictSchemaProps } from "@models/District";
+
+// components
+import { Button } from "@components/ui/button";
+import { Checkbox } from "@components/ui/checkbox";
+import { DataTableRowActions } from "@components/table/data-table-row-actions";
+import DistrictSectionsTable from "./DistrictSectionsTable";
+import UpdateDistrictForm from "./UpdateDistrictForm";
+import HandleDeleteModal from "@components/HandleDeleteModal/HandleDeleteModal";
+
+export const columns: ColumnDef<DistrictSchemaProps>[] = [
   {
-    id: 'select',
+    id: "select",
     header: ({ table }) => (
       <Checkbox
         checked={table.getIsAllPageRowsSelected()}
@@ -44,86 +46,110 @@ export const columns: ColumnDef<DistrictDataProps>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'name',
+    accessorKey: "name",
     header: ({ column }) => {
       return (
         <div className="flex items-center justify-start">
           <Button
             variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             District Name
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         </div>
-      )
+      );
     },
     cell: ({ row }) => {
-        const district = row.original
-        return (
-          <div className="flex items-center justify-start space-x-2">
-            <div className="relative h-10 w-10 overflow-hidden rounded-full border-2 border-primary-dark-200 p-1">
-              <Image
-                src={district.logoIcon ?? steppingstonesapplogo}
-                alt={district.name as string}
-              />
-            </div>
-            <div className="text-xs font-semibold sm:text-base ">
-              <p>{district?.name}</p>
-            </div>
+      const district = row.original;
+      return (
+        <div className="flex items-center justify-start space-x-2">
+          <div className="relative h-10 w-10 overflow-hidden rounded-full border-2 border-primary-dark-200 p-1">
+            <Image
+              src={district.logoIcon ?? steppingstonesapplogo}
+              alt={district.name as string}
+            />
           </div>
-        )
+          <div className="text-xs font-semibold sm:text-base ">
+            <p>{district?.name}</p>
+          </div>
+        </div>
+      );
     },
   },
-  { 
-    accessorKey: 'county',
+  {
+    accessorKey: "county",
     header: ({ column }) => {
-        return (
-            <div className="flex items-center justify-start">
-            <Button
-                variant="ghost"
-                onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            >
-                County
-                <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-            </div>
-        )
+      return (
+        <div className="flex items-center justify-start">
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            County
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+      );
     },
     cell: ({ row }) => {
-        const district = row.original
-        return (
-          <div className="flex items-center justify-start space-x-2">
-            <div className="relative h-10 w-10 overflow-hidden rounded-full border-2 border-[#5E17EB] p-1">
-              <Image
-                src={district.county?.logoIcon ?? steppingstonesapplogo}
-                alt={district.county?.name as string}
-              />
-            </div>
-            <div className="text-xs font-semibold sm:text-base">
-              <p>{district.county?.name}</p>
-            </div>
+      const district = row.original;
+      return (
+        <div className="flex items-center justify-start space-x-2">
+          <div className="relative h-10 w-10 overflow-hidden rounded-full border-2 border-[#5E17EB] p-1">
+            <Image
+              src={district.county?.logoIcon ?? steppingstonesapplogo}
+              alt={district.county?.name as string}
+            />
           </div>
-        )
+          <div className="text-xs font-semibold sm:text-base">
+            <p>{district.county?.name}</p>
+          </div>
+        </div>
+      );
     },
-   },
+  },
   {
-    accessorKey: 'isLive',
+    accessorKey: "districtSections",
+    header: ({ column }) => {
+      return (
+        <div className="flex items-center justify-start">
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            District Sections
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      const district = row.original;
+      return (
+        <div className="flex items-center justify-start space-x-2">
+          <DistrictSectionsTable district={district} />
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "isLive",
     header: ({ column }) => {
       return (
         <div className="flex items-center justify-center">
           <Button
             variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Live
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         </div>
-      )
+      );
     },
     cell: ({ row }) => {
-      const isLive = row.getValue('isLive')
+      const isLive = row.getValue("isLive");
       return (
         <div className="flex items-center justify-center">
           {isLive ? (
@@ -132,68 +158,51 @@ export const columns: ColumnDef<DistrictDataProps>[] = [
             <FaTimes className="text-red-500" />
           )}
         </div>
-      )
+      );
     },
   },
   {
-    accessorKey: 'updatedAt',
+    accessorKey: "updatedAt",
     header: ({ column }) => {
       return (
         <div className="flex items-center justify-center">
           <h3>Last Updated</h3>
         </div>
-      )
+      );
     },
     cell: ({ row }) => {
-      const updatedAt = row.getValue('updatedAt')
+      const updatedAt = row.getValue("updatedAt");
       return (
         <div className="flex items-center justify-center">
           <div className="flex items-center justify-center rounded-lg bg-primary-dark-200 px-2 py-1 text-xs text-white shadow-lg">
             <p>
-              {format(new Date(updatedAt as string), 'MM/dd/yyyy HH:mm:ss', {
+              {format(new Date(updatedAt as string), "MM/dd/yyyy HH:mm:ss", {
                 locale: enGB,
               })}
             </p>
           </div>
         </div>
-      )
+      );
     },
   },
   {
-    id: 'action',
+    id: "action",
     cell: ({ row }) => {
-      const dispatch = useAppDispatch()
+      const district = row.original;
 
-      const handleOpenLASection = useCallback((row: Row<DistrictDataProps>) => {
-        const district = row.original
-        dispatch(setDistrict(district))
-        dispatch(setOpenLASectionModal(true))
-      }, [])
-
-      const handleEdit = useCallback((row: Row<DistrictDataProps>) => {
-        const district = row.original
-        dispatch(setDistrict(district))
-        dispatch(setOpenEditModal(true))
-      }, [])
-      const handleDelete = useCallback((row: Row<DistrictDataProps>) => {
-        const district = row.original
-        dispatch(setDistrict(district))
-        dispatch(setOpenDeleteModal(true))
-      }, [])
+      const { deleteDistrictHandler } = useDistrictSettingController();
 
       return (
         <DataTableRowActions
           row={row}
-          enableEdit
-          enableDelete
-          handleEdit={handleEdit}
-          handleDelete={handleDelete}
-        >
-          <DropdownMenuItem onClick={() => handleOpenLASection(row)}>
-            Open LA Section
-          </DropdownMenuItem>
-        </DataTableRowActions>
-      )
+          enableEditItem
+          enableDeleteItem
+          editItem={<UpdateDistrictForm data={district} />}
+          deleteItem={
+            <HandleDeleteModal data={district} deleteHandler={deleteDistrictHandler} />
+          }
+        />
+      );
     },
   },
-]
+];
