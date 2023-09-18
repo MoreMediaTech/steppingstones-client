@@ -9,26 +9,28 @@ import {
   DialogTrigger,
 } from "@components/ui/dialog";
 import { Button } from "@components/ui/button";
-import { DistrictSchemaProps, DistrictSectionSchemaProps } from "@models/District";
+import {
+  DistrictSchemaProps,
+  DistrictSectionSchemaProps,
+} from "@models/District";
 
 const DistrictSectionsTable = ({
- district
+  district,
 }: {
   district: DistrictSchemaProps;
 }) => {
-
-
   return (
     <Dialog>
-      <Button
-        type="button"
-        asChild
-        variant="ghost"
-        className="w-full border-gray-900 dark:border-gray-200 "
-      >
-        <DialogTrigger>District Sections</DialogTrigger>
-      </Button>
-      <DialogContent className=" md:w-[80vw]">
+      <DialogTrigger asChild>
+        <Button
+          type="button"
+          variant="outline"
+          className="w-full border-gray-900 dark:border-gray-200 "
+        >
+          District Sections
+        </Button>
+      </DialogTrigger>
+      <DialogContent className=" sm:min-w-[700px] overflow-x-auto">
         <DialogHeader>
           <DialogTitle>{district.name} Sections</DialogTitle>
           <DialogDescription>

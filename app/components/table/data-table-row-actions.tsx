@@ -49,22 +49,11 @@ export function DataTableRowActions<TData>({
       <DropdownMenuContent align="end" className="w-[160px]">
         {enableEditItem ? (
           <>{editItem}</>
-        ) : (
-          <>
-            <Pen className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-            Edit
-          </>
-        )}
+        ) : null}
         <DropdownMenuSeparator />
         {enableDeleteItem ? (
           <>{deleteItem}</>
-        ) : (
-          <>
-            <Trash className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-            Delete
-            <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
-          </>
-        )}
+        ) : null}
       </DropdownMenuContent>
     </DropdownMenu>
   )

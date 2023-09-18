@@ -43,18 +43,12 @@ const UpdateDistrictForm = ({data}: { data: PartialDistrictSchemaProps}) => {
 
   return (
     <Dialog>
-      <Button
-        type="button"
-        asChild
-        variant="ghost"
-        className="w-full border-gray-900 dark:border-gray-200 "
-      >
-        <DialogTrigger>
-          <Pen className="mr-2 h-3.5 w-3.5 " />
-          Edit
-        </DialogTrigger>
-      </Button>
-      <DialogContent className="h-[70vh] w-[60vw]">
+      <DialogTrigger className="flex w-full items-center justify-start border-gray-900 px-4 py-2 dark:border-gray-200">
+        <Pen className="mr-2 h-3.5 w-3.5 " />
+        Edit
+      </DialogTrigger>
+
+      <DialogContent className=" sm:max-w-[500px]">
         <DialogHeader>
           <DialogTitle>Update User Details</DialogTitle>
           <DialogDescription>Update the details of the user</DialogDescription>
@@ -98,16 +92,16 @@ const UpdateDistrictForm = ({data}: { data: PartialDistrictSchemaProps}) => {
                     </FormControl>
                     <div className="space-y-1 leading-none">
                       <FormLabel>
-                        Admin<span className="text-red">*</span>
+                        Live<span className="text-red">*</span>
                       </FormLabel>
                       <FormDescription>
-                        This is the role that will be displayed on your profile
+                        This is the status of the district if it is live or not.
                       </FormDescription>
                     </div>
                   </FormItem>
                 )}
               />
-             
+
               <Button type="submit" className="w-full">
                 Submit
               </Button>
@@ -116,8 +110,7 @@ const UpdateDistrictForm = ({data}: { data: PartialDistrictSchemaProps}) => {
         </ScrollArea>
       </DialogContent>
     </Dialog>
-
-  )
+  );
 }
 
 export default UpdateDistrictForm

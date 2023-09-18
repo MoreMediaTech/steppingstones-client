@@ -1,46 +1,48 @@
-'use client'
-import { Button } from '@components/mantine-components'
-import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
-import Image from 'next/image'
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import Image from "next/image";
+import { Button } from "@components/ui/button";
 
 export default function Error({
   error,
   reset,
 }: {
-  error: Error
-  reset: () => void
+  error: Error;
+  reset: () => void;
 }) {
-  const router = useRouter()
-  useEffect(() => {
-    setTimeout(() => {
-      console.error(error)
-      router.push('/admin-portal')
-    }, 5000)
-  }, [error])
+  const router = useRouter();
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     console.error(error)
+  //     router.push('/admin-portal')
+  //   }, 5000)
+  // }, [error])
   return (
-    <section className="mt-20 h-screen">
-      <div className="flex flex-col items-center justify-center">
+    <section className="flex h-screen flex-col items-center justify-center">
+      <div className="flex flex-col items-center">
         <Image
-          src={'/android-chrome-512x512.png'}
-          alt="blooms hair logo"
-          width={300}
-          height={300}
+          src={"/android-chrome-512x512.png"}
+          alt="Stepping Stones icon"
+          width={200}
+          height={200}
         />
         <h1 className="my-5 text-6xl">Whoops!</h1>
         <h2 className="mb-3 text-3xl">Something went wrong!</h2>
-
-        <div className="flex justify-center">
-          <Button type="button" onClick={() => reset()}>
-            Try again
-          </Button>
-        </div>
-        <div className="flex justify-center">
-          <Button type="button" onClick={() => router.back()}>
-            Go back
-          </Button>
+        <div className="flex gap-4">
+          <div className="flex justify-center">
+            <Button type="button" onClick={() => reset()}>
+              Try again
+            </Button>
+          </div>
+          <div className="flex justify-center">
+            <Button type="button" onClick={() => router.back()}>
+              Go back
+            </Button>
+          </div>
         </div>
       </div>
     </section>
-  )
+  );
 }
