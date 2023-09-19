@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import { Pen } from 'lucide-react'
 
 // components
@@ -33,16 +34,16 @@ import { PartialDistrictSchemaProps } from '@models/District'
 
 
 const UpdateDistrictForm = ({data}: { data: PartialDistrictSchemaProps}) => {
-
+  const [open, setOpen] = React.useState<boolean>(false)
   const defaultValues = {
     name: data?.name ? (data?.name as string) : '',
     isLive: data?.isLive ? (data?.isLive as boolean) : false,
   }
 
-  const { form, updateDistrictHandler } = useDistrictSettingController(defaultValues, data);
+  const { form, updateDistrictHandler } = useDistrictSettingController(defaultValues, data, setOpen);
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen} >
       <DialogTrigger className="flex w-full items-center justify-start border-gray-900 px-4 py-2 dark:border-gray-200">
         <Pen className="mr-2 h-3.5 w-3.5 " />
         Edit

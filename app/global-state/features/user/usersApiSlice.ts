@@ -2,16 +2,15 @@ import { createEntityAdapter, createSelector } from '@reduxjs/toolkit'
 import { apiSlice } from 'app/global-state/api/apiSlice'
 import {
   UserSchemaWithIdType,
-  UserSchemaWithIdAndOrganisationType,
 } from '@models/User'
 
-export const usersAdapter = createEntityAdapter<UserSchemaWithIdAndOrganisationType>({})
+export const usersAdapter = createEntityAdapter<UserSchemaWithIdType>({})
 
 const initialState = usersAdapter.getInitialState()
 
 export const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getUser: builder.query<UserSchemaWithIdAndOrganisationType, void>({
+    getUser: builder.query<UserSchemaWithIdType, void>({
       query: () => ({
         url: '/users/getMe',
         validateStatus: (response: any, result: any) => {
@@ -20,7 +19,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: (result, error, arg) => [{ type: 'User', id: result?.id }],
     }),
-    getUsers: builder.query<UserSchemaWithIdAndOrganisationType[], void>({
+    getUsers: builder.query<UserSchemaWithIdType[], void>({
       query: () => ({
         url: '/users',
         validateStatus: (response: any, result: any) => {
@@ -32,7 +31,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
           ? result.map((user) => ({ type: 'User', id: user.id }))
           : [{ type: 'User', id: 'LIST' }],
     }),
-    getUserById: builder.query<UserSchemaWithIdAndOrganisationType, string>({
+    getUserById: builder.query<UserSchemaWithIdType, string>({
       query: (id) => ({
         url: `/users/${id}`,
         validateStatus: (response: any, result: any) => {

@@ -26,7 +26,8 @@ import {
 
 export default function useDistrictSettingController(
   defaultValues?: PartialDistrictSchemaProps,
-  dataProps?: PartialDistrictSchemaProps
+  dataProps?: PartialDistrictSchemaProps,
+  setOpen?: React.Dispatch<React.SetStateAction<boolean>>
 ) {
   const { toast } = useToast();
 
@@ -65,6 +66,7 @@ export default function useDistrictSettingController(
             title: "Success!",
             description: response.message,
           });
+          setOpen!(false); 
           refetchDistricts();
         }
       } catch (error) {

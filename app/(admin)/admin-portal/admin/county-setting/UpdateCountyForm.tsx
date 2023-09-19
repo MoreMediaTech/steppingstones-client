@@ -1,4 +1,6 @@
 'use client'
+
+import React from 'react'
 import { useRef } from 'react'
 import Image from 'next/image'
 
@@ -37,18 +39,19 @@ type Props = {
 }
 
 export function UpdateCountyForm({ county, buttonTitle }: Props) {
+  const [open, setOpen] = React.useState(false)
    const defaultValues = {
      name: county?.name ? (county?.name as string) : '',
      published: county?.published ? (county?.published as boolean) : false,
    }
- const { form, updateHandler, preview, onChangePicture} = useCountySettingController(defaultValues, county?.id)
+ const { form, updateHandler, preview, onChangePicture} = useCountySettingController(defaultValues, county?.id, setOpen)
 
   const formRef = useRef<HTMLFormElement>(null)
   
 
   return (
-    <>
-      <Dialog>
+    
+      <Dialog open={open} onOpenChange={setOpen}>
         <Button
           type="button"
           variant="ghost"
@@ -162,6 +165,5 @@ export function UpdateCountyForm({ county, buttonTitle }: Props) {
           </ScrollArea>
         </DialogContent>
       </Dialog>
-    </>
   )
 }

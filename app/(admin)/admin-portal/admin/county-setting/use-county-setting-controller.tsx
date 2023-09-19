@@ -2,7 +2,6 @@
 
 import React, { useCallback, useEffect, useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 
@@ -36,10 +35,10 @@ export type PartialFormSchemaProps = z.infer<typeof partialFormSchema>
 
 export default function useCountySettingController(
   defaultValues?: PartialFormSchemaProps,
-  countyId?: string
+  countyId?: string,
+  setOpen?: React.Dispatch<React.SetStateAction<boolean>>
 ) {
   const { toast } = useToast()
-  const router = useRouter()
   const [preview, setPreview] = useState<string | ArrayBuffer | null>(null)
   const {
     data: counties,
@@ -128,7 +127,7 @@ export default function useCountySettingController(
         const response = await updateCounty(newData).unwrap()
         if (response.success) {
           refetchCounties()
-          router.replace('/admin-portal/admin/county-setting')
+          setOpen!(false)
           toast({
             title: 'County updated.',
             description: 'County has been updated.',
@@ -166,7 +165,7 @@ export default function useCountySettingController(
         const response = await createCounty(data).unwrap()
         if (response.success) {
           refetchCounties()
-          router.replace('/admin-portal/admin/county-setting')
+          setOpen!(false)
           toast({
             title: 'County created.',
             description: response.message,

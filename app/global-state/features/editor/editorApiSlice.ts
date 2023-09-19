@@ -22,6 +22,7 @@ import { ContentFormProps } from '@models/ContentForm';
 import { CountySchemaProps } from '@models/County';
 import { PartialFormSchemaProps } from '@app/(admin)/admin-portal/admin/county-setting/use-county-setting-controller';
 import { DistrictSchemaProps, PartialDistrictSchemaProps } from '@models/District';
+import { PartialSourceDirectoryProps } from '@models/SourceDirectory';
 
 const editorApi = editorApiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -553,7 +554,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     createSDData: builder.mutation<
       { success: boolean; message: boolean },
-      SourceDataProps
+      PartialSourceDirectoryProps
     >({
       query: (data) => ({
         url: `editor/source-directory`,
@@ -562,7 +563,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Editor", id: "LIST" }],
     }),
-    getAllSDDataByType: builder.query<SourceDataProps[], string>({
+    getAllSDDataByType: builder.query<PartialSourceDirectoryProps[], string>({
       query: (type) => ({
         url: `editor/source-directory/${type}`,
       }),
@@ -582,7 +583,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     updateSDData: builder.mutation<
       { success: boolean; message: boolean },
-      SourceDirectoryDataProps
+      PartialSourceDirectoryProps
     >({
       query: (data) => ({
         url: `editor/source-directory/${data.type}`,
@@ -593,7 +594,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     deleteSDData: builder.mutation<
       { success: boolean; message: boolean },
-      Partial<SourceDirectoryDataProps>
+      PartialSourceDirectoryProps
     >({
       query: (data) => ({
         url: `editor/source-directory/${data.type}`,
@@ -604,7 +605,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     deleteManySDData: builder.mutation<
       { success: boolean; message: boolean },
-      Partial<SourceDirectoryDataProps>
+      PartialSourceDirectoryProps
     >({
       query: (data) => ({
         url: `editor/delete-source-directories/${data.type}`,

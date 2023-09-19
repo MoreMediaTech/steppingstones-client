@@ -1,7 +1,8 @@
-'use client'
+"use client";
 
+import React from "react";
 // components
-import { Button } from '@components/ui/button'
+import { Button } from "@components/ui/button";
 import {
   Form,
   FormControl,
@@ -10,7 +11,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@components/ui/form'
+} from "@components/ui/form";
 import {
   Dialog,
   DialogContent,
@@ -18,17 +19,26 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@components/ui/dialog'
-import { Input } from '@components/ui/input'
+} from "@components/ui/dialog";
+import { Input } from "@components/ui/input";
 
 // hooks (Controller)
-import useUsersController from './useUsersController'
+import useUsersController from "./useUsersController";
 
 export function CreateAdminForm() {
-  const { form, onSubmit } = useUsersController()
+  const [open, setOpen] = React.useState<boolean>(false);
+  const defaultValues = {
+    name: "",
+    email: "",
+  };
+  const { form, isCreating, onSubmit } = useUsersController(
+    defaultValues,
+    undefined,
+    setOpen
+  );
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <Button
         type="button"
         variant="outline"
@@ -79,12 +89,12 @@ export function CreateAdminForm() {
               )}
             />
 
-            <DialogTrigger>
-              <Button type="submit">Submit</Button>
-            </DialogTrigger>
+            <Button disabled={isCreating} type="submit">
+              Submit
+            </Button>
           </form>
         </Form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

@@ -1,5 +1,7 @@
 "use client";
 
+import React from "react";
+
 // components
 import { Button } from "@components/ui/button";
 import {
@@ -24,7 +26,15 @@ import { Input } from "@components/ui/input";
 import useCountySettingController from "./use-county-setting-controller";
 
 export function CreateCountyForm() {
-  const { form, isCreating, createHandler } = useCountySettingController();
+  const [open, setOpen] = React.useState<boolean>(false);
+  const defaultValues = {
+    name: "",
+  };
+  const { form, isCreating, createHandler } = useCountySettingController(
+    defaultValues,
+    undefined,
+    setOpen
+  );
 
   return (
     <Dialog>
