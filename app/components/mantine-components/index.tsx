@@ -21,6 +21,7 @@ import {
   TitleOrder,
   ThemeIcon,
   Blockquote,
+  List,
 } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 
@@ -45,6 +46,7 @@ export {
   Title,
   ThemeIcon,
   Blockquote,
+  List,
 }
 
 export type { CSSObject, TitleOrder }

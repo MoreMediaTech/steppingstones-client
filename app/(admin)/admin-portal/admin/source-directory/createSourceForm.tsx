@@ -58,12 +58,12 @@ export function CreateSourceForm() {
         <Button
           type="button"
           asChild
-          variant="ghost"
-          className="w-full border-gray-900 dark:border-gray-200 "
+          variant="outline"
+          className="w-1/3 border-gray-900 dark:border-gray-200 "
         >
           <DialogTrigger>Create Source</DialogTrigger>
         </Button>
-        <DialogContent className="h-[70vh] w-[60vw]">
+        <DialogContent className="h-[70vh] sm:min-w-[800px]">
           <DialogHeader>
             <DialogTitle>Create Source</DialogTitle>
             <DialogDescription>
@@ -156,12 +156,7 @@ export function CreateSourceForm() {
                       <FormItem>
                         <FormLabel>Web-Link</FormLabel>
                         <FormControl>
-                          <Input
-                            type="tel"
-                            pattern="[0-9]{11}"
-                            placeholder="Your contact number"
-                            {...field}
-                          />
+                          <Input placeholder="Enter a web-link" {...field} />
                         </FormControl>
                         <FormDescription>
                           This is the website link for the source

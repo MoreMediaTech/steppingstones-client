@@ -24,7 +24,7 @@ export const sectionSchema = z.object({
 
 export const partialSectionSchema = sectionSchema.extend({
   county: partialCountySchema,
-  subSections: z.array(sectionSchema),
+  subsections: z.array(sectionSchema),
 }).partial()
 
 export type SectionSchemaProps = Prettify<z.infer<typeof sectionSchema>>

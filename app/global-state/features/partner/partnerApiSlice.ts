@@ -1,36 +1,40 @@
 import { PartnerData, IFormData } from '@lib/types'
-import { partnerApiSlice } from 'app/global-state/api/apiSlice'
+import { partnerApiSlice } from '@global-state/api/apiSlice'
+import {
+  PartialPartnerProps,
+  PartialPartnerWithOrganisationProps,
+} from "@models/Partner";
 
 export const partnerApi = partnerApiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getPartnerById: builder.query<PartnerData, string>({
+    getPartnerById: builder.query<PartialPartnerWithOrganisationProps, string>({
       query: (id: string) => ({
         url: `partners/directory/${id}`,
       }),
-      providesTags: [{ type: 'Partner' }],
+      providesTags: [{ type: "Partner" }],
     }),
     createPartnerData: builder.mutation<
       { success: boolean; message: string },
-      IFormData
+      PartialPartnerProps
     >({
       query: (data) => ({
         url: `partners/directory`,
-        method: 'POST',
+        method: "POST",
         body: { ...data },
       }),
-      invalidatesTags: [{ type: 'Partner', id: 'List' }],
+      invalidatesTags: [{ type: "Partner", id: "List" }],
     }),
     updatePartnerData: builder.mutation<
       { success: boolean; message: string },
-      IFormData
+      PartialPartnerProps
     >({
       query: (data) => ({
         url: `partners/directory/${data.id}`,
-        method: 'PUT',
+        method: "PUT",
         body: { ...data },
       }),
       invalidatesTags: (result, error, arg) => [
-        { type: 'Partner', id: arg.id },
+        { type: "Partner", id: arg.id },
       ],
     }),
     deletePartnerData: builder.mutation<
@@ -39,9 +43,9 @@ export const partnerApi = partnerApiSlice.injectEndpoints({
     >({
       query: (id: string) => ({
         url: `partners/directory/${id}`,
-        method: 'DELETE',
+        method: "DELETE",
       }),
-      invalidatesTags: [{ type: 'Partner', id: 'List' }],
+      invalidatesTags: [{ type: "Partner", id: "List" }],
     }),
     deleteManyPartnerData: builder.mutation<
       { success: boolean; message: string },
@@ -49,12 +53,15 @@ export const partnerApi = partnerApiSlice.injectEndpoints({
     >({
       query: (ids: string[]) => ({
         url: `partners/delete-directories`,
-        method: 'DELETE',
+        method: "DELETE",
         body: { ids },
       }),
-      invalidatesTags: [{ type: 'Partner', id: 'List' }],
+      invalidatesTags: [{ type: "Partner", id: "List" }],
     }),
-    getAllPartnersData: builder.query<PartnerData[], void>({
+    getAllPartnersData: builder.query<
+      PartialPartnerWithOrganisationProps[],
+      void
+    >({
       query: () => ({
         url: `partners/directory`,
       }),
@@ -64,15 +71,18 @@ export const partnerApi = partnerApiSlice.injectEndpoints({
               ...result?.map(
                 (partnerData) =>
                   ({
-                    type: 'Partner' as const,
+                    type: "Partner" as const,
                     id: partnerData?.id,
                   } as const)
               ),
-              { type: 'Partner', id: 'LIST' },
+              { type: "Partner", id: "LIST" },
             ]
-          : [{ type: 'Partner', id: 'LIST' }],
+          : [{ type: "Partner", id: "LIST" }],
     }),
-    getAllPartnerData: builder.query<PartnerData[], string>({
+    getAllPartnerData: builder.query<
+      PartialPartnerWithOrganisationProps[],
+      string
+    >({
       query: (id: string) => ({
         url: `partners/all/${id}`,
       }),
@@ -82,17 +92,17 @@ export const partnerApi = partnerApiSlice.injectEndpoints({
               ...result?.map(
                 (partnerData) =>
                   ({
-                    type: 'Partner' as const,
+                    type: "Partner" as const,
                     id: partnerData?.id,
                   } as const)
               ),
-              { type: 'Partner', id: 'LIST' },
+              { type: "Partner", id: "LIST" },
             ]
-          : [{ type: 'Partner', id: 'LIST' }],
+          : [{ type: "Partner", id: "LIST" }],
     }),
   }),
   overrideExisting: true,
-})
+});
 
 export const {
   useGetPartnerByIdQuery,

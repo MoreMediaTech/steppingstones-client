@@ -49,7 +49,7 @@ const UpdateDistrictForm = ({data}: { data: PartialDistrictSchemaProps}) => {
         Edit
       </DialogTrigger>
 
-      <DialogContent className=" sm:max-w-[500px]">
+      <DialogContent className=" sm:min-w-[800px]">
         <DialogHeader>
           <DialogTitle>Update User Details</DialogTitle>
           <DialogDescription>Update the details of the user</DialogDescription>

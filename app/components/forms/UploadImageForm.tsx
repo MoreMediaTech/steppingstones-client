@@ -7,7 +7,7 @@ import { useToast } from '@components/ui/use-toast'
 
 import { useUpdateUserMutation } from 'app/global-state/features/user/usersApiSlice'
 import { useUploadFileMutation } from 'app/global-state/features/upload/uploadApiSlice'
-import { UserSchemaWithIdAndOrganisationType } from '@models/User'
+import { UserSchemaWithIdType } from '@models/User'
 import {
   Dialog,
   DialogContent,
@@ -40,7 +40,7 @@ type ImageUploadFormProps = z.infer<typeof imageUploadFormSchema>
 type UploadImageFormProps = {
   refetch?: () => void
   type: 'user' | 'image'
-  user?: Partial<UserSchemaWithIdAndOrganisationType>
+  user?: Partial<UserSchemaWithIdType>
   form?: UseFormReturn<ContentFormProps, any, undefined>
 }
 

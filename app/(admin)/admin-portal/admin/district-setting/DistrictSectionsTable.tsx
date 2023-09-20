@@ -30,7 +30,7 @@ const DistrictSectionsTable = ({
           District Sections
         </Button>
       </DialogTrigger>
-      <DialogContent className=" sm:min-w-[700px] overflow-x-auto">
+      <DialogContent className=" sm:min-w-[800px] overflow-x-auto">
         <DialogHeader>
           <DialogTitle>{district.name} Sections</DialogTitle>
           <DialogDescription>

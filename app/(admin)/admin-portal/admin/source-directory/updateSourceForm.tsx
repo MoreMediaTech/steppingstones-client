@@ -66,18 +66,18 @@ export function UpDateSourceForm({ data }: ISearchFormProps) {
           type="button"
           asChild
           variant="ghost"
-          className="w-full border-gray-900 dark:border-gray-200 "
+          className="flex w-full items-center justify-start border-gray-900 dark:border-gray-200 "
         >
           <DialogTrigger>
             <Pen className="mr-2 h-3.5 w-3.5 " />
             Edit
           </DialogTrigger>
         </Button>
-        <DialogContent className="h-[70vh] w-[60vw]">
+        <DialogContent className="h-[70vh] sm:min-w-[800px]">
           <DialogHeader>
-            <DialogTitle>Update User Details</DialogTitle>
+            <DialogTitle>Update Source Details</DialogTitle>
             <DialogDescription>
-              Update the details of the user
+              Update the details of the source in the source directory
             </DialogDescription>
           </DialogHeader>
           <ScrollArea className="w-full p-2">
@@ -188,7 +188,6 @@ export function UpDateSourceForm({ data }: ISearchFormProps) {
                       <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
                         <FormControl>
                           <Checkbox
-                            disabled
                             checked={field.value}
                             onCheckedChange={(event) =>
                               field.onChange(event as boolean)

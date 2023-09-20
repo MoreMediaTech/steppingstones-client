@@ -32,7 +32,11 @@ export default function useVerificationController({
   const [authenticate, { isLoading }] = useAuthenticateMutation()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      oneTimeCode: '',
+    },
   })
+  
   const recaptchaRef = useRef<ReCAPTCHA | null>(null)
 
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (data) => {

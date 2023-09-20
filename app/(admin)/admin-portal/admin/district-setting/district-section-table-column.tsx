@@ -10,13 +10,13 @@ import { enGB } from "date-fns/locale";
 import { Button } from "@components/ui/button";
 import { Checkbox } from "@components/ui/checkbox";
 import { DataTableRowActions } from "@components/table/data-table-row-actions";
+import HandleDeleteModal from "@components/HandleDeleteModal/HandleDeleteModal";
 
 // zod schema
 import { DistrictSectionSchemaProps } from "@models/District";
 
 // hooks (Controller)
 import useDistrictSettingController from "./use-district-setting-controller";
-import HandleDeleteModal from "@components/HandleDeleteModal/HandleDeleteModal";
 
 export const columns: ColumnDef<DistrictSectionSchemaProps>[] = [
   {

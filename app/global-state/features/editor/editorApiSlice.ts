@@ -3,16 +3,13 @@ import {
   DistrictDataProps,
   DistrictSectionProps,
   EconomicDataWidgetProps,
-  SectionProps,
-  SourceDataProps,
-  SourceDirectoryDataProps,
+
   SubSectionProps,
   SubSubSectionProps,
 } from '@lib/types'
 import { editorApiSlice } from 'app/global-state/api/apiSlice'
 import {
   setCounty,
-  setDistrict,
   setError,
   setSubSubSection,
   setEconomicData,
@@ -24,6 +21,7 @@ import { PartialFormSchemaProps } from '@app/(admin)/admin-portal/admin/county-s
 import { DistrictSchemaProps, PartialDistrictSchemaProps } from '@models/District';
 import { PartialSourceDirectoryProps } from '@models/SourceDirectory';
 import { PartialSectionSchemaProps } from '@models/Section';
+
 
 const editorApi = editorApiSlice.injectEndpoints({
   endpoints: (builder) => ({

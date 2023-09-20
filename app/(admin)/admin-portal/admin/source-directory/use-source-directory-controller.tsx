@@ -41,23 +41,26 @@ export default function useSourceDirectoryController(
     data: sourceData,
     isLoading,
     refetch,
-  } = useGetAllSDDataByTypeQuery(sdDataType);
+  } = useGetAllSDDataByTypeQuery(sdDataType, {
+    refetchOnMountOrArgChange: true,
+  });
   const [createSDData, { isLoading: isCreating }] = useCreateSDDataMutation();
   const [updateSDData, { isLoading: isUpdating }] = useUpdateSDDataMutation();
   const [deleteSDData, { isLoading: isDeleting }] = useDeleteSDDataMutation();
 
   const form = useForm<PartialSourceDirectoryProps>({
     resolver: zodResolver(partialSourceDirectorySchema),
+    defaultValues: { ...defaultValues },
   });
 
+  const watch = form.watch();
+  const { type } = watch;
+
   React.useEffect(() => {
-    const subscribe = form.watch((data) => {
-      const { type } = data;
-      setSdDataType(type as string);
-      refetch();
-    });
-    return () => subscribe.unsubscribe();
-  }, [sourceData, refetch]);
+    if (type) {
+      setSdDataType(type);
+    }
+  }, [type]);
 
   React.useEffect(() => {
     form.reset({ ...defaultValues });

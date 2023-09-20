@@ -34,6 +34,9 @@ export default function useLoginController() {
   // react hook form for form actions and validation
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: '',
+    }
   })
 
   // ref for reCAPTCHA

@@ -16,7 +16,7 @@ import { DataTableRowActions } from "@components/table/data-table-row-actions";
 import { SubSectionsTable } from "./SubSectionsTable";
 
 // zod schema
-import { PartialSectionSchemaProps } from "@models/Section";
+import { PartialSectionSchemaProps, SectionSchemaProps } from "@models/Section";
 
 // hooks (Controller)
 import useSectionSettingController from "./use-section-setting-controller";
@@ -79,10 +79,13 @@ export const columns: ColumnDef<PartialSectionSchemaProps>[] = [
       const section = row.original;
       return (
         <div className="flex items-center justify-start space-x-2">
-          <div className="relative h-10 w-10 overflow-hidden rounded-full border-2 border-[#5E17EB] p-1">
+          <div className="relative h-10 w-10 overflow-hidden rounded-full flex items-center justify-center border-2 border-[#5E17EB] p-1">
             <Image
               src={section.county?.logoIcon ?? steppingstonesapplogo}
               alt={section.county?.name as string}
+              width={40}
+              height={40}
+              sizes="40px"
             />
           </div>
           <div className="text-xs font-semibold sm:text-base">
@@ -109,12 +112,13 @@ export const columns: ColumnDef<PartialSectionSchemaProps>[] = [
     },
     cell: ({ row }) => {
       const section = row.original;
+      
       const { deleteManySubsectionHandler } = useSectionSettingController();
       return (
         <div className="flex items-center ">
           <SubSectionsTable
             subSectionData={
-              section.subSections as PartialSectionSchemaProps["subSections"]
+              section.subsections as PartialSectionSchemaProps["subsections"] || []
             }
             deleteManySubsectionsHandler={deleteManySubsectionHandler}
           />
@@ -181,7 +185,7 @@ export const columns: ColumnDef<PartialSectionSchemaProps>[] = [
 
       const { handleDelete } = useSectionSettingController();
       return <DataTableRowActions row={row} enableDeleteItem deleteItem={
-        <HandleDeleteModal data={section} deleteHandler={handleDelete} />
+        <HandleDeleteModal data={section as SectionSchemaProps} deleteHandler={handleDelete} />
       } />;
     },
   },

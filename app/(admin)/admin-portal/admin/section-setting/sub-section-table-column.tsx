@@ -6,12 +6,16 @@ import { ArrowUpDown } from 'lucide-react'
 import { format } from 'date-fns'
 import { enGB } from 'date-fns/locale'
 
-
+// components
 import { Button } from '@components/ui/button'
 import { Checkbox } from '@components/ui/checkbox'
-import { SecondaryDataTableRowActions } from '@components/table/data-table-row-actions'
+import { DataTableRowActions } from '@components/table/data-table-row-actions'
+import HandleDeleteModal from '@components/HandleDeleteModal/HandleDeleteModal'
 
-import { PartialSectionSchemaProps } from '@models/Section'
+// zod schema
+import { PartialSectionSchemaProps, SectionSchemaProps } from '@models/Section'
+
+import useSectionSettingController from './use-section-setting-controller'
 
 export const columns: ColumnDef<PartialSectionSchemaProps>[] = [
   {
@@ -81,34 +85,6 @@ export const columns: ColumnDef<PartialSectionSchemaProps>[] = [
     },
   },
   {
-    accessorKey: "isSubSubSection",
-    header: ({ column }) => {
-      return (
-        <div className="flex items-center justify-center">
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Sub Section
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        </div>
-      );
-    },
-    cell: ({ row }) => {
-      const isSubSubSection = row.getValue("isSubSubSection");
-      return (
-        <div className="flex items-center justify-center">
-          {isSubSubSection ? (
-            <FaCheck className="text-green-400" />
-          ) : (
-            <FaTimes className="text-red-500" />
-          )}
-        </div>
-      );
-    },
-  },
-  {
     accessorKey: "updatedAt",
     header: ({ column }) => {
       return (
@@ -137,12 +113,15 @@ export const columns: ColumnDef<PartialSectionSchemaProps>[] = [
     cell: ({ row }) => {
       const subSection = row.original;
 
-     
+     const { deleteSubSectionHandler } = useSectionSettingController();
 
       return (
-        <SecondaryDataTableRowActions
+        <DataTableRowActions
           row={row}
-          
+          enableDeleteItem
+          deleteItem={
+            <HandleDeleteModal data={subSection as SectionSchemaProps} deleteHandler={deleteSubSectionHandler} />
+          }
         />
       );
     },

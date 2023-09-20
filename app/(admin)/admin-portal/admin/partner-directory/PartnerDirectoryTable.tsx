@@ -1,68 +1,27 @@
 'use client'
-import React, { useCallback, useState } from 'react'
-import HandleDeleteModal from 'app/components/HandleDeleteModal'
-import { showNotification } from '@mantine/notifications'
-import { PartnerData } from '@lib/types'
-import { useDeletePartnerDataMutation } from 'app/global-state/features/partner/partnerApiSlice'
+import React from 'react'
 
-import { useAppDispatch, useAppSelector } from 'app/global-state/hooks'
-import {
-  editorSelector,
-  setPartner,
-  setOpenDeleteModal,
-} from 'app/global-state/features/editor/editorSlice'
+// components
 import { columns } from './table-column'
 import { DataTable } from '@components/table/data-table'
 
+// hooks  (Controller)
+import usePartnerDirectoryController from './use-partner-directory-controller'
 
-interface PartnerDirectoryTableProps {
-  partnerData: PartnerData[]
-  refetch: () => void
-}
+// zod schemas
+import { PartialPartnerWithOrganisationProps } from '@models/Partner'
 
-export function PartnerDirectoryTable({
-  partnerData,
-  refetch,
-}: PartnerDirectoryTableProps) {
-  const dispatch = useAppDispatch()
-  const [openModal, setOpenModal] = useState<boolean>(false)
-  const [deletePartnerData, { isLoading }] = useDeletePartnerDataMutation()
-  const { openDeleteModal, partner } = useAppSelector(editorSelector)
-
-  const deleteHandler = useCallback(async (id: string) => {
-    try {
-      const response = await deletePartnerData(id).unwrap()
-      refetch()
-      dispatch(setOpenDeleteModal(false))
-      dispatch(setPartner(null))
-      showNotification({
-        message: response.message ?? 'Section deleted successfully',
-        color: 'green',
-        autoClose: 3000,
-      })
-    } catch (error) {
-      showNotification({
-        message: 'Error deleting section',
-        color: 'red',
-        autoClose: 3000,
-      })
-    }
-  }, [])
-
+export function PartnerDirectoryTable() {
+  const { partnerData, handleDeleteMany } = usePartnerDirectoryController()
   return (
     <>
       <DataTable
         columns={columns}
-        data={partnerData}
-        name={'organisation' || 'projectsResponsibleFor' || 'createdAt'}
-      />
-      <HandleDeleteModal
-        open={openDeleteModal}
-        data={partner}
-        deleteHandler={deleteHandler}
-        isLoading={isLoading}
+        data={partnerData as PartialPartnerWithOrganisationProps[]}
+        name={"organisation" || "projectsResponsibleFor" || "createdAt"}
+        handleDeleteManyById={handleDeleteMany}
       />
     </>
-  )
+  );
 }
 

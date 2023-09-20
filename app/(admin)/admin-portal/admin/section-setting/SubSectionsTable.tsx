@@ -1,13 +1,6 @@
-"use client";
-
-import React, { useCallback } from "react";
-
-// components
-import { Modal } from "@components/mantine-components";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -23,7 +16,7 @@ export function SubSectionsTable({
   subSectionData,
   deleteManySubsectionsHandler,
 }: {
-  subSectionData: PartialSectionSchemaProps['subSections'];
+  subSectionData: PartialSectionSchemaProps['subsections'];
   deleteManySubsectionsHandler: (rows: PartialSectionSchemaProps[]) => void;
 }) {
   return (
@@ -37,10 +30,10 @@ export function SubSectionsTable({
           SubSections
         </Button>
       </DialogTrigger>
-      <DialogContent className=" overflow-x-auto sm:min-w-[700px]">
+      <DialogContent className=" overflow-x-auto sm:min-w-[800px]">
         <DialogHeader>
           <DialogTitle>Sub Sections</DialogTitle>
-          <DialogDescription>The content sections for</DialogDescription>
+          
         </DialogHeader>
         <DataTable
           columns={columns}

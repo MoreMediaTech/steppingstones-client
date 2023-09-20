@@ -3,6 +3,8 @@ import React, { useCallback } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
+
+// components
 import { ToastAction } from '@components/ui/toast'
 import { useToast } from '@components/ui/use-toast'
 import { Button } from '@components/ui/button'
@@ -23,13 +25,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@components/ui/dialog'
-
 import { Input } from '@components/ui/input'
 import { Checkbox } from '@components/ui/checkbox'
 
 import { MutationTrigger } from '@reduxjs/toolkit/dist/query/react/buildHooks'
 import { BaseQueryFn, MutationDefinition } from '@reduxjs/toolkit/dist/query'
-import { DistrictSectionProps } from '@lib/types'
+
 
 export const createLASectionFormSchema = z.object({
   name: z.string().min(2, {

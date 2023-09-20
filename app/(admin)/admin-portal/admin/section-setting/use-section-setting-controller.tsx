@@ -1,19 +1,24 @@
 "use client";
 
 import React from "react";
+import { ToastAction } from "@components/ui/toast";
+import { useToast } from "@components/ui/use-toast";
 
+// redux global state (Model)
 import {
   useGetSectionsQuery,
   useDeleteSectionByIdMutation,
   useDeleteManySectionsMutation,
   useDeleteSubSectionByIdMutation,
-  useGetSubSectionsBySectionIdQuery,
   useDeleteManySubSectionsMutation,
 } from "app/global-state/features/editor/editorApiSlice";
+import { isErrorWithMessage, isFetchBaseQueryError } from "@app/global-state/helper";
 
+// zod schemas
 import { PartialSectionSchemaProps } from "@models/Section";
 
 export default function useSectionSettingController() {
+  const { toast } = useToast();
   const {
     data: sectionData,
     isLoading: isLoadingSections,
@@ -29,9 +34,29 @@ export default function useSectionSettingController() {
     try {
       const response = await deleteSectionById(id).unwrap();
       if (response.success) {
+        toast({
+          title: "Success!",
+          description: response.message,
+        });
         refetchSections();
       }
-    } catch (error) {}
+    } catch (error) {
+      if (isFetchBaseQueryError(error)) {
+        const errMsg =
+          "error" in error ? error.error : JSON.stringify(error.message);
+        toast({
+          title: "Error!",
+          description: (errMsg as string) || "Unable to delete section",
+          action: <ToastAction altText="Retry">Retry</ToastAction>,
+        });
+      } else if (isErrorWithMessage(error)) {
+        toast({
+          title: "Error!",
+          description: error.message || "Unable to delete section",
+          action: <ToastAction altText="Retry">Retry</ToastAction>,
+        });
+      }
+    }
   }, []);
 
   const handleDeleteMany = React.useCallback(
@@ -42,21 +67,59 @@ export default function useSectionSettingController() {
           selectedSectionIds as string[]
         ).unwrap();
         if (response.success) {
+           toast({
+             title: "Success!",
+             description: response.message,
+           });
           refetchSections();
         }
-      } catch (error) {}
+      } catch (error) {
+        if (isFetchBaseQueryError(error)) {
+          const errMsg =
+            "error" in error ? error.error : JSON.stringify(error.message);
+          toast({
+            title: "Error!",
+            description: (errMsg as string) || "Unable to delete sections",
+            action: <ToastAction altText="Retry">Retry</ToastAction>,
+          });
+        } else if (isErrorWithMessage(error)) {
+          toast({
+            title: "Error!",
+            description: error.message || "Unable to delete sections",
+            action: <ToastAction altText="Retry">Retry</ToastAction>,
+          });
+        }
+      }
     },
     []
   );
 
    const deleteSubSectionHandler = React.useCallback(async (id: string) => {
      try {
-       await deleteSubSectionById(id).unwrap();
-
-
- 
+       const response = await deleteSubSectionById(id).unwrap();
+        if (response.success) {
+          toast({
+            title: "Success!",
+            description: response.message,
+          });
+          refetchSections();
+        }
      } catch (error) {
-    
+        if (isFetchBaseQueryError(error)) {
+          const errMsg =
+            "error" in error ? error.error : JSON.stringify(error.message);
+          toast({
+            title: "Error!",
+            description: (errMsg as string) || "Unable to delete section",
+            action: <ToastAction altText="Retry">Retry</ToastAction>,
+          });
+        } else if (isErrorWithMessage(error)) {
+          toast({
+            title: "Error!",
+            description: error.message || "Unable to delete section",
+            action: <ToastAction altText="Retry">Retry</ToastAction>,
+          });
+        }
      }
    }, []);
 
@@ -68,8 +131,29 @@ export default function useSectionSettingController() {
            selectedSectionIds as string[]
          ).unwrap();
          if (response.success) {
+            toast({
+              title: "Success!",
+              description: response.message,
+            });
+            refetchSections();
          }
-       } catch (error) {}
+       } catch (error) {
+          if (isFetchBaseQueryError(error)) {
+            const errMsg =
+              "error" in error ? error.error : JSON.stringify(error.message);
+            toast({
+              title: "Error!",
+              description: (errMsg as string) || "Unable to delete sections",
+              action: <ToastAction altText="Retry">Retry</ToastAction>,
+            });
+          } else if (isErrorWithMessage(error)) {
+            toast({
+              title: "Error!",
+              description: error.message || "Unable to delete sections",
+              action: <ToastAction altText="Retry">Retry</ToastAction>,
+            });
+          }
+       }
      },
      []
    );
