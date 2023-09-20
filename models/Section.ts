@@ -1,4 +1,7 @@
+import { Prettify } from './helpers';
 import * as z from 'zod';
+
+import { partialCountySchema } from './County';
 
 export const sectionSchema = z.object({
   id: z.string().nonempty({ message: 'ID is required' }),
@@ -19,5 +22,14 @@ export const sectionSchema = z.object({
   updatedAt: z.string().nonempty({ message: 'Updated At is required' }),
 })
 
-export type SectionSchemaProps = z.infer<typeof sectionSchema>
+export const partialSectionSchema = sectionSchema.extend({
+  county: partialCountySchema,
+  subSections: z.array(sectionSchema),
+}).partial()
+
+export type SectionSchemaProps = Prettify<z.infer<typeof sectionSchema>>
+
+export type PartialSectionSchemaProps = Prettify<z.infer<typeof partialSectionSchema>>
+
+
 

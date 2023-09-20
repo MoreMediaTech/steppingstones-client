@@ -1,90 +1,27 @@
-'use client'
-import React, { useState, useCallback } from 'react'
-import { showNotification } from '@components/mantine-components'
+"use client";
+import React from "react";
 
-import { SectionProps } from '@lib/types'
-import { useDeleteSectionByIdMutation } from 'app/global-state/features/editor/editorApiSlice'
-import { useAppDispatch, useAppSelector } from 'app/global-state/hooks'
+// components
+import { DataTable } from "@components/table/data-table";
+import { columns } from "./table-column";
 
-import HandleDeleteModal from '../../../../components/HandleDeleteModal/HandleDeleteModal'
-import SubSectionsTable from './SubSectionsTable'
+// hooks (controller)
+import useSectionSettingController from "./use-section-setting-controller";
 
-import { DataTable } from '@components/table/data-table'
-import { columns } from './table-column'
-import {
-  setSection,
-  setOpenSubSectionModal,
-  editorSelector,
-} from 'app/global-state/features/editor/editorSlice'
+// zod schema
+import { PartialSectionSchemaProps } from "@models/Section";
 
-interface ISectionsTableProps {
-  sectionsData: SectionProps[]
-  refetch: () => void
-  handleDeleteMany?: (rows: SectionProps[]) => void
-}
-
-export function SectionsTable({
-  sectionsData,
-  refetch,
-  handleDeleteMany,
-}: ISectionsTableProps) {
-  const dispatch = useAppDispatch()
-  const [openModal, setOpenModal] = useState<boolean>(false)
-  const [deleteSectionById, { isLoading }] = useDeleteSectionByIdMutation()
-  const { section, openSubSectionModal, openDeleteModal } =
-    useAppSelector(editorSelector)
-
-  const handleModalClose = () => {
-    dispatch(setOpenSubSectionModal(false))
-    dispatch(setSection(null))
-  }
-
-  const deleteHandler = useCallback(async (id: string, type?: string) => {
-    try {
-      const response = await deleteSectionById(id).unwrap()
-      refetch()
-      setOpenModal(false)
-      showNotification({
-        message: response.message ?? 'Section deleted successfully',
-        color: 'green',
-        autoClose: 3000,
-      })
-    } catch (error) {
-      showNotification({
-        message: 'Error deleting section',
-        color: 'red',
-        autoClose: 3000,
-      })
-    }
-  }, [])
+export function SectionsTable() {
+  const { sectionData, handleDeleteMany } = useSectionSettingController();
 
   return (
     <>
       <DataTable
         columns={columns}
-        data={sectionsData}
+        data={sectionData as PartialSectionSchemaProps[]}
         name="name"
         handleDeleteManyById={handleDeleteMany}
       />
-
-      {openSubSectionModal && (
-        <SubSectionsTable
-          sectionId={section?.id as string}
-          handleModalClose={handleModalClose}
-          refetch={refetch}
-          sectionName={section?.name as string}
-        />
-      )}
-      {openModal && (
-        <HandleDeleteModal
-          open={openDeleteModal}
-          data={section}
-          deleteHandler={deleteHandler}
-          isLoading={isLoading}
-        />
-      )}
     </>
-  )
+  );
 }
-
-export default SectionsTable

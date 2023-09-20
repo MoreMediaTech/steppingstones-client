@@ -23,6 +23,7 @@ import { CountySchemaProps } from '@models/County';
 import { PartialFormSchemaProps } from '@app/(admin)/admin-portal/admin/county-setting/use-county-setting-controller';
 import { DistrictSchemaProps, PartialDistrictSchemaProps } from '@models/District';
 import { PartialSourceDirectoryProps } from '@models/SourceDirectory';
+import { PartialSectionSchemaProps } from '@models/Section';
 
 const editorApi = editorApiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -183,7 +184,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Editor", id: "LIST" }],
     }),
-    getSections: builder.query<SectionProps[], void>({
+    getSections: builder.query<PartialSectionSchemaProps[], void>({
       query: () => ({
         url: "editor/section",
       }),
@@ -212,7 +213,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{ type: "Editor", id: arg.id }],
     }),
-    getSectionById: builder.query<SectionProps, string>({
+    getSectionById: builder.query<PartialSectionSchemaProps, string>({
       query: (id: string) => ({
         url: `editor/section/${id}`,
         validateStatus: (response: any, result: any) => {
