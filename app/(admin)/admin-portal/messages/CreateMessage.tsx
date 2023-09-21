@@ -1,150 +1,207 @@
-'use client'
-import React from 'react'
-import { Modal, Title, Text } from '@mantine/core'
-import { useForm, SubmitHandler, useWatch } from 'react-hook-form'
-import { showNotification } from '@mantine/notifications'
+"use client";
+import React from "react";
 
 // components
-import FormInput from 'app/components/forms/FormComponents/FormInput'
-import { FormInputs } from './[id]/MessageReplyForm'
-import AutoComplete from './AutoComplete'
-import FormRowSelect from 'app/components/forms/FormComponents/FormRowSelect'
 
-// redux
-import { useGetUsersQuery } from '../../../global-state/features/user/usersApiSlice'
+import AutoComplete from "./AutoComplete";
 import {
-  useSendEmailMutation,
-  useSendInAppMsgMutation,
-} from '../../../global-state/features/messages/messagesApiSlice'
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@components/ui/dialog";
+import { Input } from "@components/ui/input";
+import { Button } from "@components/ui/button";
+import { ScrollArea } from "@components/ui/scroll-area";
+import { Textarea } from "@components/ui/textarea";
 
-// hooks
-import { useAuthUser } from '../../../../hooks/useAuthUser'
+// hooks (Controller)
+import useMessagesController from "./use-messages-controller";
+import { MailPlus, MessageSquare } from "lucide-react";
 
-type Props = {
-  opened: boolean
-  setOpened: React.Dispatch<React.SetStateAction<boolean>>
-}
+export function CreateMessage() {
+  const [open, setOpen] = React.useState(false);
 
-const CreateMessage: React.FC<Props> = ({ opened, setOpened }): JSX.Element => {
-  const [sendEmail, { isLoading }] = useSendEmailMutation()
-  const [sendInAppMsg, { isLoading: isSendingInAppMsg }] =
-    useSendInAppMsgMutation()
-  const user = useAuthUser()
-
-  const { data: users } = useGetUsersQuery()
-  // get user email addresses
-  const userEmails = users?.map((user) => user.email) as string[]
-  const [emails, setEmails] = React.useState<string[]>(userEmails)
   const {
-    register,
-    handleSubmit,
-    reset,
-    control,
-    formState: { errors },
-  } = useForm<FormInputs>({
-    defaultValues: { from: user?.email, to: '', subject: '', message: '' },
-  })
-  const searchedEmails = useWatch({ control: control, name: 'to' })
-
-  React.useEffect(() => {
-    if (searchedEmails) {
-      const filteredEmails = userEmails?.filter((userEmail) =>
-        userEmail?.toLowerCase().includes(searchedEmails.toLowerCase())
-      )
-      setEmails(filteredEmails || [])
-    }
-  }, [searchedEmails, users])
-
-  // onSubmit handler to send message
-  const onSubmit: SubmitHandler<FormInputs> = React.useCallback((data) => {
-    const message = {
-      from: user?.email as string,
-      to: data.to,
-      subject: data.subject,
-      message: data.message,
-      html: '',
-    }
-    try {
-      if (data.type === 'external') {
-        sendEmail(message)
-      } else {
-        sendInAppMsg(message)
-      }
-      showNotification({
-        message: 'Message sent',
-        color: 'success',
-        autoClose: 3000,
-      })
-      reset({ from: user?.email, to: '', subject: '', message: '' })
-      setOpened(false)
-    } catch (error) {
-      console.log(error)
-      showNotification({
-        message: 'Error sending message',
-        color: 'error',
-        autoClose: 3000,
-      })
-    }
-  }, [])
-
-  const handleSuggestionClick = (suggestion: string) => {
-    reset({ from: user?.email, to: suggestion, subject: '', message: '' })
-  }
+    form,
+    emails,
+    isSendingEmail,
+    isSendingInAppMsg,
+    messageType,
+    createMessageHandler,
+    suggestionClickedHandler,
+  } = useMessagesController(undefined, undefined, setOpen);
 
   return (
     <>
-      <Modal
-        opened={opened}
-        onClose={() => setOpened(false)}
-        title={<Title order={2}>New Message</Title>}
-        fullScreen
-        className="bg-primary-light-100 dark:bg-primary-dark-700"
-      >
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <FormInput
-            hidden
-            prependComponent={<Text fz="xs">From:</Text>}
-            type="email"
-            {...register('from')}
-          />
-          <FormInput
-            hidden
-            prependComponent={<Text fz="xs">To:</Text>}
-            type="email"
-            {...register('to')}
-          />
-          <AutoComplete
-            suggestions={emails || []}
-            handleSuggestionClick={handleSuggestionClick}
-          />
-          <FormInput
-            hidden
-            placeholder="Subject"
-            type="text"
-            {...register('subject')}
-          />
-          <FormRowSelect
-            type="emailType"
-            list={['external', 'internal']}
-            {...register('type')}
-          />
-          <textarea
-            id="message"
-            className="form-textarea w-full rounded-lg border border-gray-300 bg-gray-100 p-2  text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-            placeholder="enter message..."
-            rows={5}
-            {...register('message')}
-          />
-          <button
-            type="submit"
-            className="rounded bg-tertiary-500 px-4 py-2 text-white shadow"
-          >
-            Send
-          </button>
-        </form>
-      </Modal>
-    </>
-  )
-}
+      <Dialog open={open} onOpenChange={setOpen}>
+        <Button
+          type="button"
+          asChild
+          variant="outline"
+          className="w-1/3 flex items-center border-gray-900 dark:border-gray-200 "
+        >
+          <DialogTrigger>
+            <MailPlus className="mr-2 h-3.5 w-3.5 " />
+            New Message
+          </DialogTrigger>
+        </Button>
+        <DialogContent className="h-[70vh] w-[60vw]">
+          <DialogHeader>
+            <DialogTitle>Update User Details</DialogTitle>
+            <DialogDescription>
+              Update the details of the user
+            </DialogDescription>
+          </DialogHeader>
+          <ScrollArea className="w-full p-2">
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(createMessageHandler)}
+                className="px-2"
+              >
+                <fieldset
+                  disabled={isSendingEmail || isSendingInAppMsg}
+                  className="group space-y-4"
+                >
+                  <FormField
+                    control={form.control}
+                    name="from"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          From<span className="text-red">*</span>
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            className="border-gray-900 dark:border-gray-200"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="to"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          To<span className="text-red">*</span>
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            className="border-gray-900 dark:border-gray-200"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <AutoComplete
+                    suggestions={emails || []}
+                    handleSuggestionClick={suggestionClickedHandler}
+                  />
 
-export default CreateMessage
+                  <FormField
+                    control={form.control}
+                    name="subject"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Subject</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            className="border-gray-900 dark:border-gray-200"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="type"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Message Type</FormLabel>
+                        <Select
+                          onValueChange={(value) => field.onChange(value)}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select a Message type" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {messageType?.map((itemValue, index) => {
+                              return (
+                                <SelectItem
+                                  key={`${index} + ${itemValue}`}
+                                  value={itemValue}
+                                >
+                                  {itemValue}
+                                </SelectItem>
+                              );
+                            })}
+                          </SelectContent>
+                        </Select>
+                        <FormDescription>
+                          This is the type of message you want to send.
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="message"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Summary</FormLabel>
+                        <FormControl>
+                          <Textarea placeholder="Write a message" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button
+                    type="submit"
+                    className="inline-flex w-full items-center justify-center group-disabled:pointer-events-none"
+                  >
+                    <span className="w-full group-disabled:opacity-0">
+                      Submit
+                    </span>
+                  </Button>
+                </fieldset>
+              </form>
+            </Form>
+          </ScrollArea>
+        </DialogContent>
+      </Dialog>
+    </>
+  );
+}

@@ -1,5 +1,3 @@
-import PortalHeader from 'app/components/PortalHeader'
-
 import LEP from './lep'
 import { ScrollArea } from '@components/ui/scroll-area';
 

@@ -1,23 +1,4 @@
 export function CountyPortal() {
-  // const totalCountyButtonSlides = Math.ceil(counties?.length! / 12)
-
-  // function goToNextPage() {
-  //   setCurrentPage((page) => page + 1)
-  //   if (currentPage >= totalCountyButtonSlides) {
-  //     setCurrentPage(1)
-  //   }
-  // }
-  // function goToPreviousPage() {
-  //   setCurrentPage((page) => page - 1)
-  //   if (currentPage <= 1) {
-  //     setCurrentPage(totalCountyButtonSlides)
-  //   }
-  // }
-  // const getPaginatedData = () => {
-  //   const startIndex = currentPage * 12 - 12
-  //   const endIndex = startIndex + 12
-  //   return counties?.slice(startIndex, endIndex)
-  // }
 
   return (
     <section className="mx-auto flex max-w-screen-lg items-center justify-center  md:py-28">

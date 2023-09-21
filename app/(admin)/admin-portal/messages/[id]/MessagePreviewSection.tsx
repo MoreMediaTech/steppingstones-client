@@ -1,81 +1,53 @@
-'use client'
-import React, { useCallback } from 'react'
-import { useRouter } from 'next/navigation'
-import { FaTrash } from 'react-icons/fa'
-import { AiOutlineArrowLeft } from 'react-icons/ai'
-import { format } from 'date-fns'
-import { enGB } from 'date-fns/locale'
-import { IoArrowUndoSharp } from 'react-icons/io5'
-import {
-  useGetMessageByIdQuery,
-  useDeleteMailByIdMutation,
-} from 'app/global-state/features/messages/messagesApiSlice'
-import { showNotification, Loader } from '@components/mantine-components'
-import useWindowSize from '@hooks/useWindowSize'
-import { useAppDispatch, useAppSelector } from 'app/global-state/hooks'
-import {
-  setReply,
-  messagesSelector,
-} from 'app/global-state/features/messages/messagesSlice'
-import { MessageProps } from '@lib/types'
-import MessageReplyForm from './MessageReplyForm'
+"use client";
+import React from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { FaTrash } from "react-icons/fa";
+import { AiOutlineArrowLeft } from "react-icons/ai";
+import { format } from "date-fns";
+import { enGB } from "date-fns/locale";
+import { IoArrowUndoSharp } from "react-icons/io5";
+
+// components
+import { Loader } from "@components/mantine-components";
+
+// hooks
+import useWindowSize from "@hooks/useWindowSize";
+
+// hooks (Controller)
+import useMessagesController from "../use-messages-controller";
 
 export function MessagePreviewSection({ messageId }: { messageId: string }) {
-  const router = useRouter()
-  const dispatch = useAppDispatch()
-  const {
-    data: message,
-    isLoading,
-    refetch,
-  } = useGetMessageByIdQuery(messageId)
-  const { reply } = useAppSelector(messagesSelector)
-  const [deleteMailById] = useDeleteMailByIdMutation()
-  const [windowSize] = useWindowSize()
+  const router = useRouter();
+  
+  const { message, isMessageLoading, handleDelete } = useMessagesController(
+    undefined,
+    messageId,
+    undefined
+  );
+
+  const [windowSize] = useWindowSize();
 
   const handleBack = () => {
-    router.back()
-  }
+    router.back();
+  };
 
   const handleReply = () => {
-    dispatch(setReply({ enquiry: message as MessageProps, reply: true }))
-  }
+    router.push(`/admin-portal/messages/reply?id=${messageId}`);
+  };
 
-  const handleDelete = useCallback(async () => {
-    try {
-      const response = await deleteMailById(messageId).unwrap()
-      if (response.success) {
-        router.back()
-        showNotification({
-          message: 'Successfully deleted Enquiry',
-          color: 'green',
-          autoClose: 3000,
-        })
-      }
-    } catch (error) {
-      console.error(error)
-      showNotification({
-        message: 'Error deleting Enquiry',
-        color: 'red',
-        autoClose: 3000,
-      })
-    }
-  }, [])
-
-  if (isLoading) {
+  if (isMessageLoading) {
     return (
       <div className="flex h-[700px] items-center justify-center">
         <Loader size="xl" variant="bars" />
       </div>
-    )
+    );
   }
   return (
     <>
       <section
         className="flex flex-col"
         style={{
-          height: reply
-            ? (windowSize?.innerHeight as number)- 100
-            : (windowSize?.innerHeight as number) - 150,
+          height: (windowSize?.innerHeight as number) - 150,
         }}
       >
         <div className="relative  flex w-full items-center justify-between border-b border-primary-dark-100 py-2">
@@ -96,7 +68,7 @@ export function MessagePreviewSection({ messageId }: { messageId: string }) {
                 {message &&
                   format(
                     new Date(message?.createdAt as string),
-                    'MM/dd/yyyy HH:MM',
+                    "MM/dd/yyyy HH:MM",
                     {
                       locale: enGB,
                     }
@@ -115,7 +87,11 @@ export function MessagePreviewSection({ messageId }: { messageId: string }) {
                 className="text-primary-dark-100 hover:text-primary-light-600 dark:text-primary-light-100"
               />
             </button>
-            <button type="button" onClick={handleDelete} className="px-4 py-2">
+            <button
+              type="button"
+              onClick={() => handleDelete(messageId)}
+              className="px-4 py-2"
+            >
               <FaTrash fontSize={30} className="text-red-500" />
             </button>
           </div>
@@ -135,17 +111,8 @@ export function MessagePreviewSection({ messageId }: { messageId: string }) {
             </p>
           </div>
         </div>
-        <div
-          className={
-            reply
-              ? 'block transition-opacity duration-300 ease-in-out'
-              : 'hidden'
-          }
-        >
-          <MessageReplyForm />
-        </div>
       </section>
-      <section className={`${reply ? 'hidden' : 'bottom-0 left-0 block p-2'}`}>
+      <section className="bottom-0 left-0 block p-2">
         <button
           type="button"
           className="rounded bg-tertiary-500 px-4 py-2 text-white shadow"
@@ -155,5 +122,5 @@ export function MessagePreviewSection({ messageId }: { messageId: string }) {
         </button>
       </section>
     </>
-  )
+  );
 }

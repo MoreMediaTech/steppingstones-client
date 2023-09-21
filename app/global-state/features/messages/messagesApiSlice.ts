@@ -1,74 +1,77 @@
-import { MessageProps } from '@lib/types'
-import { messagesApiSlice } from 'app/global-state/api/apiSlice'
+import { PartialMessageSchemaProps } from "@models/Messages";
+import { messagesApiSlice } from "app/global-state/api/apiSlice";
 
 export const messagesApi = messagesApiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    sendEnquiry: builder.mutation<MessageProps, Partial<MessageProps>>({
+    sendEnquiry: builder.mutation<
+      { message: string; success: boolean },
+      PartialMessageSchemaProps
+    >({
       query: (data) => ({
-        url: 'messages/sendEnquiry',
-        method: 'POST',
+        url: "messages/sendEnquiry",
+        method: "POST",
         body: { ...data },
       }),
-      invalidatesTags: [{ type: 'Messages', id: 'LIST' }],
+      invalidatesTags: [{ type: "Messages", id: "LIST" }],
     }),
     sendEmail: builder.mutation<
       { message: string; success: boolean },
-      MessageProps
+      PartialMessageSchemaProps
     >({
       query: (data) => ({
-        url: 'messages/sendEmail',
-        method: 'POST',
+        url: "messages/sendEmail",
+        method: "POST",
         body: { ...data },
       }),
-      invalidatesTags: [{ type: 'Messages', id: 'LIST' }],
+      invalidatesTags: [{ type: "Messages", id: "LIST" }],
     }),
     sendInAppMsg: builder.mutation<
       { message: string; success: boolean },
-      MessageProps
+      PartialMessageSchemaProps
     >({
       query: (data) => ({
-        url: 'messages/send-inapp-msg',
-        method: 'POST',
+        url: "messages/send-inapp-msg",
+        method: "POST",
         body: { ...data },
       }),
-      invalidatesTags: [{ type: 'Messages', id: 'LIST' }],
+      invalidatesTags: [{ type: "Messages", id: "LIST" }],
     }),
-    getAllInAppEnquiryMsg: builder.query<MessageProps[], void>({
+    getAllInAppEnquiryMsg: builder.query<PartialMessageSchemaProps[], void>({
       query: () => ({
-        url: 'messages/',
+        url: "messages/",
       }),
       providesTags: (result, error, arg) =>
         result
           ? [
               ...result.map((email) => ({
-                type: 'Messages' as const,
+                type: "Messages" as const,
                 id: email.id,
               })),
-              { type: 'Messages', id: 'LIST' },
+              { type: "Messages", id: "LIST" },
             ]
-          : [{ type: 'Messages', id: 'LIST' }],
+          : [{ type: "Messages", id: "LIST" }],
     }),
-    getAllMsgSentByUser: builder.query<MessageProps[], void>({
+    getAllMsgSentByUser: builder.query<PartialMessageSchemaProps[], void>({
       query: () => ({
-        url: 'messages/sent-by-user',
+        url: "messages/sent-by-user",
       }),
       providesTags: (result, error, arg) =>
         result
           ? [
               ...result.map((email) => ({
-                type: 'Messages' as const,
+                type: "Messages" as const,
                 id: email.id,
               })),
-              { type: 'Messages', id: 'LIST' },
+              { type: "Messages", id: "LIST" },
             ]
-          : [{ type: 'Messages', id: 'LIST' }],
+          : [{ type: "Messages", id: "LIST" }],
     }),
-    getMessageById: builder.query<MessageProps, string>({
+    getMessageById: builder.query<PartialMessageSchemaProps, string>({
       query: (id) => ({
         url: `messages/${id}`,
       }),
       providesTags: (result, error, arg) => [
-        { type: 'Messages', id: result?.id },
+        { type: "Messages", id: result?.id },
       ],
     }),
     updateMsgStatusById: builder.mutation<
@@ -77,7 +80,7 @@ export const messagesApi = messagesApiSlice.injectEndpoints({
     >({
       query: (data) => ({
         url: `messages/status/${data.id}`,
-        method: 'PATCH',
+        method: "PATCH",
         body: { isRead: data.isRead, isArchived: data.isArchived },
       }),
     }),
@@ -87,9 +90,9 @@ export const messagesApi = messagesApiSlice.injectEndpoints({
     >({
       query: (id) => ({
         url: `messages/${id}`,
-        method: 'DELETE',
+        method: "DELETE",
       }),
-      invalidatesTags: (result, error, arg) => [{ type: 'Messages', id: arg }],
+      invalidatesTags: (result, error, arg) => [{ type: "Messages", id: arg }],
     }),
     deleteManyMail: builder.mutation<
       { message: string; success: true },
@@ -97,14 +100,14 @@ export const messagesApi = messagesApiSlice.injectEndpoints({
     >({
       query: (ids: string[]) => ({
         url: `messages/delete-many`,
-        method: 'DELETE',
+        method: "DELETE",
         body: { ids },
       }),
-      invalidatesTags: [{ type: 'Messages', id: 'LIST' }],
+      invalidatesTags: [{ type: "Messages", id: "LIST" }],
     }),
   }),
   overrideExisting: true,
-})
+});
 
 export const {
   useSendEnquiryMutation,
@@ -116,4 +119,4 @@ export const {
   useSendInAppMsgMutation,
   useDeleteManyMailMutation,
   useUpdateMsgStatusByIdMutation,
-} = messagesApi
+} = messagesApi;

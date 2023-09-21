@@ -5,14 +5,20 @@ import { ArrowUpDown } from 'lucide-react'
 import { format } from 'date-fns'
 import { enGB } from 'date-fns/locale'
 
-import { MessageProps } from '@lib/types'
+// components
 import { Button } from '@components/ui/button'
 import { Checkbox } from '@components/ui/checkbox'
-import useMessage from './use-message'
 
-export const columns: ColumnDef<MessageProps>[] = [
+// hooks (Controller)
+import useMessagesController from './use-messages-controller'
+
+// zod schemas
+import { PartialMessageSchemaProps } from '@models/Messages'
+
+
+export const columns: ColumnDef<PartialMessageSchemaProps>[] = [
   {
-    id: 'select',
+    id: "select",
     header: ({ table }) => {
       return (
         <Checkbox
@@ -21,7 +27,7 @@ export const columns: ColumnDef<MessageProps>[] = [
           aria-label="Select all"
           className="translate-y-[2px]"
         />
-      )
+      );
     },
     cell: ({ row }) => {
       return (
@@ -31,47 +37,47 @@ export const columns: ColumnDef<MessageProps>[] = [
           aria-label="Select row"
           className="translate-y-[2px]"
         />
-      )
+      );
     },
     enableSorting: false,
     enableHiding: false,
   },
   {
-    accessorKey: 'from',
+    accessorKey: "from",
     header: ({ column }) => {
       return (
         <div className="flex items-center justify-start">
           <Button
             variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             from
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         </div>
-      )
+      );
     },
   },
   {
-    accessorKey: 'subject',
-    header: 'subject',
+    accessorKey: "subject",
+    header: "subject",
     cell: ({ row }) => {
-      const message = row.original
-      const router = useRouter()
-      const { handleUpdateIsRead } = useMessage()
+      const message = row.original;
+      const router = useRouter();
+      const { handleUpdateIsRead } = useMessagesController();
       return (
         <div
           className="flex cursor-pointer items-center justify-start gap-2"
           onClick={() => {
-            router.push(`/admin-portal/messages/${message.id}`)
-            handleUpdateIsRead(message)
+            router.push(`/admin-portal/messages/${message.id}`);
+            handleUpdateIsRead(message);
           }}
         >
           <p
             className={`${
               message.isRead
-                ? 'font-medium text-gray-400 dark:text-gray-300'
-                : 'font-semibold text-gray-600 dark:text-gray-500'
+                ? "font-medium text-gray-600 dark:text-gray-500"
+                : "font-semibold text-gray-400 dark:text-gray-300"
             }text-left text-base md:text-lg`}
           >
             {message?.subject}
@@ -79,31 +85,31 @@ export const columns: ColumnDef<MessageProps>[] = [
           <span className="w-2 border"></span>
           <p
             className={`${
-              message.isRead ? 'text-gray-500' : 'text-gray-700'
+              message.isRead ? "text-gray-700" : "text-gray-500"
             } whitespace-wrap text-ellipsis text-left text-xs md:text-sm`}
           >
             {message?.message}
           </p>
         </div>
-      )
+      );
     },
   },
   {
-    accessorKey: 'createdAt',
-    header: '',
+    accessorKey: "createdAt",
+    header: "",
     cell: ({ row }) => {
-      const createdAt = row.original.createdAt
+      const createdAt = row.original.createdAt;
       return (
         <div className="flex items-center justify-start">
           <div className="flex items-center justify-center rounded-lg bg-primary-dark-200 px-2 py-1 text-xs text-white shadow-lg">
             <p>
-              {format(new Date(createdAt as string), 'PPP', {
+              {format(new Date(createdAt as string), "PPP", {
                 locale: enGB,
               })}
             </p>
           </div>
         </div>
-      )
+      );
     },
   },
-]
+];
