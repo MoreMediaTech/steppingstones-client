@@ -1,7 +1,6 @@
 import * as z from "zod";
 
 import { Prettify } from "./helpers";
-import { sectionSchema } from "./Section";
 
 export const economicDataSchema = z.object({
   id: z.string().nonempty({ message: "ID is required" }),
@@ -19,9 +18,29 @@ export const economicDataSchema = z.object({
   updatedAt: z.string().nonempty({ message: "Updated At is required" }),
 });
 
-export const districtSectionSchema = sectionSchema.extend({
+export const districtSectionSchema = z.object({
+  id: z.string().nonempty({ message: "ID is required" }),
+  name: z.string().nonempty({ message: "Name is required" }),
+  title: z.string().nonempty({ message: "Title is required" }),
+  content: z.string().nonempty({ message: "Content is required" }),
+  isLive: z.boolean(),
+  isSubSection: z.boolean(),
+  logoIcon: z
+    .string()
+    .url({ message: "Logo icon must be a URL" })
+    .nonempty({ message: "Logo Icon is required" }),
+  imageUrl: z.string().nonempty({ message: "Image URL is required" }),
+  videoUrl: z.string().nonempty({ message: "Video URL is required" }),
+  videoTitle: z.string().nonempty({ message: "Video Title is required" }),
+  videoDescription: z
+    .string()
+    .nonempty({ message: "Video Description is required" }),
+  author: z.string().nonempty({ message: "Author is required" }),
+  summary: z.string().nonempty({ message: "Summary is required" }),
   isEconomicData: z.boolean(),
   economicDataWidgets: z.array(economicDataSchema),
+  createdAt: z.string().nonempty({ message: "Created At is required" }),
+  updatedAt: z.string().nonempty({ message: "Updated At is required" }),
 });
 
 export const partialDistrictSectionSchema = districtSectionSchema.partial();
@@ -40,12 +59,12 @@ export const districtSchema = z.object({
   imageUrl: z.string(),
   logoIcon: z.string(),
   isLive: z.boolean(),
-  districtSections: z.array(districtSectionSchema),
   county: z.object({
     id: z.string(),
     name: z.string(),
     logoIcon: z.string().url(),
   }),
+  districtSections: z.array(districtSectionSchema),
   createdAt: z.string(),
   updatedAt: z.string(),
 });

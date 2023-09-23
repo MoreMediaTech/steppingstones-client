@@ -1,29 +1,29 @@
-'use client'
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-import { Loader } from '@components/mantine-components'
-import SectionContainer from '../../section/section-container'
-import EconomicDataSection from 'app/components/EconomicDataSection'
-import CreateSectionForm from '../../CreateSectionForm'
+import { Loader } from "@components/mantine-components";
+import SectionContainer from "../../section/section-container";
+import EconomicDataSection from "app/components/EconomicDataSection";
+import CreateSectionForm from "../../section/create-section-form";
 
-import { DistrictSectionProps } from '@lib/types'
+import { DistrictSectionProps } from "@lib/types";
 import {
   useGetDistrictSectionByIdQuery,
   useCreateSubSectionMutation,
   useUpdateDistrictSectionByIdMutation,
-} from 'app/global-state/features/editor/editorApiSlice'
-import { Button } from 'app/components/ui/button'
-import Header from '@components/Header'
-import { Badge } from '@components/ui/badge'
+} from "app/global-state/features/editor/editorApiSlice";
+import { Button } from "app/components/ui/button";
+import Header from "@components/Header";
+import { Badge } from "@components/ui/badge";
 
 type Props = {
-  id: string
-  county: string
-  countyId: string
-  district: string
-  districtId: string
-}
+  id: string;
+  county: string;
+  countyId: string;
+  district: string;
+  districtId: string;
+};
 
 export default function District({
   id,
@@ -32,7 +32,7 @@ export default function District({
   district,
   districtId,
 }: Props) {
-  const router = useRouter()
+  const router = useRouter();
 
   const {
     data: laSectionData,
@@ -40,20 +40,19 @@ export default function District({
     refetch: refetchSection,
   } = useGetDistrictSectionByIdQuery(id, {
     refetchOnMountOrArgChange: true,
-  })
+  });
 
-
-  const [opened, setOpened] = useState(false)
-  const [type, setType] = useState<'create' | 'edit'>('create')
-  const [createSubSection] = useCreateSubSectionMutation()
+  const [opened, setOpened] = useState(false);
+  const [type, setType] = useState<"create" | "edit">("create");
+  const [createSubSection] = useCreateSubSectionMutation();
   const [updateDistrictSectionById, { isLoading }] =
-    useUpdateDistrictSectionByIdMutation()
+    useUpdateDistrictSectionByIdMutation();
 
   return (
     <section className="space-y-2">
       <div className="flex flex-col-reverse items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
         <Header title={laSectionData?.name as string} order={1} />
-        <div className="flex w-full items-center gap-2 justify-end">
+        <div className="flex w-full items-center justify-end gap-2">
           <Button
             type="button"
             color="outline"
@@ -61,7 +60,7 @@ export default function District({
             onClick={() => {
               router.push(
                 `/admin-portal/county-portal/${county}/district?countyId=${countyId}&districtId=${districtId}&district=${district}&county=${county}`
-              )
+              );
             }}
           >
             Go Back
@@ -72,8 +71,8 @@ export default function District({
               color="outline"
               className="md:w-1/4 "
               onClick={() => {
-                setOpened(true)
-                setType('create')
+                setOpened(true);
+                setType("create");
               }}
             >
               Add Economic Data
@@ -128,5 +127,5 @@ export default function District({
         </section>
       )}
     </section>
-  )
+  );
 }

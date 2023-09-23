@@ -1,88 +1,45 @@
-'use client'
-import { BiEdit } from 'react-icons/bi'
+import { BiEdit } from "react-icons/bi";
 
-import { Loader, Paper, UnstyledButton } from '@components/mantine-components'
-import { ContentForm } from 'app/components/forms'
-import { SectionProps } from '@lib/types'
-import ContentPreview from 'app/components/ContentPreview'
-import { useContentForm } from '@hooks/useContentForm'
-import { Badge } from '@components/ui/badge'
+// components
+import ContentPreview from "@components/ContentPreview";
+import { Badge } from "@components/ui/badge";
+import { Button } from "@components/ui/button";
 
-type Props = {
-  sectionData: SectionProps
-  isLoadingSection: boolean
-  isLoading: boolean
-  refetch(): void
-  updateSectionById: any
-}
+// zod schemas
+import { PartialSectionSchemaProps } from "@models/Section";
 
-const SectionContainer = ({
-  sectionData,
-  isLoadingSection,
-  refetch,
-  updateSectionById,
-  isLoading,
-}: Props) => {
+type SectionContainerProps = {
+  data: PartialSectionSchemaProps;
+  onClick?: () => void;
+};
 
-  const { form, onChangePicture, onSubmit, isEdit, setIsEdit, preview } =
-    useContentForm(
-      {
-        data: {
-          title: sectionData.title as string,
-          isLive: sectionData.isLive as boolean,
-          content: sectionData.content as string,
-          author: sectionData.author as string ?? '',
-          summary: sectionData.summary as string ?? '',
-          imageFile: sectionData.imageUrl as string,
-          videoUrl: sectionData.videoUrl as string ?? '',
-          videoTitle: sectionData.videoTitle as string ?? '',
-          videoDescription: sectionData.videoDescription as string ?? '',
-          id: sectionData.id as string,
-        },
-        updateOrCreate: updateSectionById,
-      },
-      refetch
-    )
-    console.log('🚀 ~ file: section-container.tsx:43 ~ preview,:', preview)
+export function SectionContainer({
+  data,
+  onClick,
+}: SectionContainerProps) {
 
   return (
     <section className="relative w-full flex-grow py-8">
-      {isLoadingSection ? (
-        <div className="flex h-[700px] items-center justify-center">
-          <Loader size="xl" variant="bars" />
-        </div>
-      ) : (
-        <div  className="w-full">
+        <div className="w-full">
           <div className="mb-4 flex w-full items-center justify-between">
-            {sectionData?.isLive ? (
+            {data?.isLive ? (
               <Badge>Live</Badge>
             ) : (
               <Badge variant="destructive">Not Live</Badge>
             )}
-            <UnstyledButton
+            <Button
               type="button"
-              onClick={() => setIsEdit(!isEdit)}
-              className=""
+              variant="outline"
+              onClick={onClick}
+              className="flex items-center gap-2"
             >
               <BiEdit fontSize={34} />
-            </UnstyledButton>
+              Edit Section
+            </Button>
           </div>
-          {!isEdit && sectionData ? (
-            <ContentPreview content={sectionData} />
-          ) : (
-            <ContentForm
-              form={form}
-              preview={preview}
-              isLoading={isLoading}
-              onChangePicture={onChangePicture}
-              onSubmit={onSubmit}
-              setIsEdit={setIsEdit}
-            />
-          )}
-        </div>
-      )}
-    </section>
-  )
-}
 
-export default SectionContainer
+          <ContentPreview content={data} />
+        </div>
+    </section>
+  );
+}

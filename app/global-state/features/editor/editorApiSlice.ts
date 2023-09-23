@@ -173,7 +173,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     createSection: builder.mutation<
       { success: boolean; message: string },
-      ContentFormProps
+      PartialSectionSchemaProps
     >({
       query: (data) => ({
         url: "editor/section",
@@ -243,7 +243,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     createSubSection: builder.mutation<
       { success: boolean; message: string },
-      ContentFormProps
+      PartialSectionSchemaProps
     >({
       query: (data) => ({
         url: "editor/subsection",
@@ -263,13 +263,13 @@ const editorApi = editorApiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{ type: "Editor", id: arg.id }],
     }),
-    getSubSectionById: builder.query<SubSectionProps, string>({
+    getSubSectionById: builder.query<PartialSectionSchemaProps, string>({
       query: (id: string) => ({
         url: `editor/subsection/${id}`,
       }),
       providesTags: (result, error, arg) => [{ type: "Editor", id: arg }],
     }),
-    getSubSectionsBySectionId: builder.query<SubSectionProps[], string>({
+    getSubSectionsBySectionId: builder.query<PartialSectionSchemaProps[], string>({
       query: (sectionId: string) => ({
         url: `editor/sub-subsections/${sectionId}`,
       }),
@@ -303,66 +303,6 @@ const editorApi = editorApiSlice.injectEndpoints({
     >({
       query: (ids: string[]) => ({
         url: `editor/delete-subsections`,
-        method: "DELETE",
-        body: { ids },
-      }),
-      invalidatesTags: [{ type: "Editor", id: "LIST" }],
-    }),
-    createSubSubSection: builder.mutation<
-      { success: boolean; message: string },
-      SubSubSectionProps
-    >({
-      query: (data) => ({
-        url: "editor/sub-subsection",
-        method: "POST",
-        body: { ...data },
-      }),
-      invalidatesTags: [{ type: "Editor", id: "LIST" }],
-    }),
-    updateSubSubSectionById: builder.mutation<
-      { success: boolean; message: string },
-      ContentFormProps & { id: string }
-    >({
-      query: (data) => ({
-        url: `editor/sub-subsection/${data.id}`,
-        method: "PUT",
-        body: { ...data },
-      }),
-      invalidatesTags: (result, error, arg) => [{ type: "Editor", id: arg.id }],
-    }),
-    getSubSubSectionById: builder.query<SubSubSectionProps, string>({
-      query: (id: string) => ({
-        url: `editor/sub-subsection/${id}`,
-      }),
-      providesTags: (result, error, arg) => [{ type: "Editor", id: arg }],
-      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-        try {
-          const result = await queryFulfilled;
-          dispatch(setSubSubSection(result.data));
-        } catch (error) {
-          if (error instanceof Error) {
-            dispatch(setError({ message: error.message }));
-          }
-          dispatch(setError({ message: "Unable to get County objects" }));
-        }
-      },
-    }),
-    deleteSubSubSectionById: builder.mutation<
-      { success: boolean; message: string },
-      string
-    >({
-      query: (id: string) => ({
-        url: `editor/sub-subsection/${id}`,
-        method: "DELETE",
-      }),
-      invalidatesTags: [{ type: "Editor", id: "LIST" }],
-    }),
-    deleteManySubSubSections: builder.mutation<
-      { success: boolean; message: string },
-      string[]
-    >({
-      query: (ids: string[]) => ({
-        url: `editor/delete-sub-subsections`,
         method: "DELETE",
         body: { ids },
       }),
@@ -645,11 +585,6 @@ export const {
   useUpdateSubSectionByIdMutation,
   useDeleteSubSectionByIdMutation,
   useDeleteManySubSectionsMutation,
-  useCreateSubSubSectionMutation,
-  useGetSubSubSectionByIdQuery,
-  useUpdateSubSubSectionByIdMutation,
-  useDeleteSubSubSectionByIdMutation,
-  useDeleteManySubSubSectionsMutation,
   useCreateDistrictSectionMutation,
   useGetDistrictSectionByIdQuery,
   useGetDistrictSectionsByDistrictIdQuery,

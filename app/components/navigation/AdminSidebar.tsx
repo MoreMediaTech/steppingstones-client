@@ -11,8 +11,10 @@ import { MessageProps } from '@lib/types'
 
 // redux global state (Model)
 import { useGetAllInAppEnquiryMsgQuery } from '@global-state/features/messages/messagesApiSlice'
-import { useAppDispatch } from '@global-state/hooks'
-import { setDrawerOpened } from 'app/global-state/features/global/globalSlice'
+import { useAppDispatch, useAppSelector } from '@global-state/hooks'
+import { setDrawerOpened, setMobileDrawerOpened } from '@global-state/features/global/globalSlice'
+import { globalSelector } from "@global-state/features/global/globalSlice";
+
 
 // public
 import ColorLogo from '@public/SS-Color-logo-with-background.png'
@@ -31,15 +33,16 @@ import { Button } from '@components/ui/button'
 import { ScrollArea } from '@components/ui/scroll-area'
 
 import { NAV_ITEMS } from 'data'
+import { PartialMessageSchemaProps } from '@models/Messages'
 
 export function AdminSidebar({ height }: { height: number }) {
   const SCROLL_AREA_HEIGHT = height - 70
-  const [opened, setOpened] = React.useState(false)
+  const { drawerOpened } = useAppSelector(globalSelector)
   const dispatch = useAppDispatch()
   const router = useRouter()
   let arg: void
   const { data: messages } = useGetAllInAppEnquiryMsgQuery(arg, {
-    pollingInterval: 60000,
+    pollingInterval: 100000,
   })
 
   const handleLogout = async () => {
@@ -48,25 +51,26 @@ export function AdminSidebar({ height }: { height: number }) {
 
   // filter all unread messages
   const unreadMessages = messages?.filter(
-    (message: MessageProps) => message.isRead === false
+    (message: PartialMessageSchemaProps) => message.isRead === false
   )
+
   return (
-    <aside className="sticky z-50 h-screen">
+    <aside className="fixed left-0 top-0 z-50 ml-1  h-screen py-1">
       <div
         className={`relative flex flex-col items-center  ${
-          opened ? 'w-72' : 'w-24'
+          drawerOpened ? "w-72" : "w-24"
         } hidden h-screen rounded-lg border bg-background shadow-md transition-all duration-500  ease-in-out md:block`}
       >
         <BsArrowLeftShort
           className={`absolute -right-3 top-28 ml-auto h-6 w-6 cursor-pointer rounded-full bg-accent-light-500 text-white shadow-sm ${
-            !opened ? 'rotate-180' : ''
+            !drawerOpened ? "rotate-180" : ""
           }`}
-          onClick={() => setOpened(!opened)}
+          onClick={() => dispatch(setDrawerOpened(!drawerOpened))}
         />
         <Link
           href="/"
           className={`items-center px-2 pt-2 ${
-            opened ? 'hidden gap-2' : 'inline-flex gap-0'
+            drawerOpened ? "hidden gap-2" : "inline-flex gap-0"
           }`}
         >
           <Image
@@ -75,13 +79,13 @@ export function AdminSidebar({ height }: { height: number }) {
             width={60}
             height={40}
             sizes="(max-width: 640px) 40vw, 20vw"
-            className={`${opened ? 'ml-0 ' : 'ml-2.5'}`}
+            className={`${drawerOpened ? "ml-0 " : "ml-2.5"}`}
           />
         </Link>
         <Link
           href="/"
           className={`origin-left items-center px-4 pt-2 transition-all duration-300 ease-in-out fade-in-10 ${
-            opened ? 'inline-flex gap-2' : 'hidden gap-0'
+            drawerOpened ? "inline-flex gap-2" : "hidden gap-0"
           }`}
         >
           <Image
@@ -103,21 +107,21 @@ export function AdminSidebar({ height }: { height: number }) {
                 return (
                   <div key={label} className="my-2 w-full text-center">
                     <Title
-                      order={opened ? 4 : 6}
+                      order={drawerOpened ? 4 : 6}
                       className="text-textDark dark:text-textLight"
                     >
                       {label}
                     </Title>
                   </div>
-                )
+                );
               }
 
-              if (label === 'Messages') {
+              if (label === "Messages") {
                 return (
                   <Button
                     key={`${label}-${href}`}
                     className={`mb-2 flex w-full items-center rounded-lg font-semibold ${
-                      opened ? "justify-start" : ""
+                      drawerOpened ? "justify-start" : ""
                     }`}
                     variant="outline"
                     asChild
@@ -141,7 +145,7 @@ export function AdminSidebar({ height }: { height: number }) {
                       </Indicator>
                       <span
                         className={` text-sm transition-all duration-300 ease-in-out ${
-                          !opened ? "hidden" : ""
+                          !drawerOpened ? "hidden" : ""
                         }`}
                       >
                         {label}
@@ -155,7 +159,7 @@ export function AdminSidebar({ height }: { height: number }) {
                 <Button
                   key={`${label}-${href}`}
                   className={`flex w-full items-center ${
-                    opened ? "justify-start" : ""
+                    drawerOpened ? "justify-start" : ""
                   } mb-2 rounded-lg font-semibold`}
                   variant="outline"
                   asChild
@@ -169,7 +173,7 @@ export function AdminSidebar({ height }: { height: number }) {
                     {<Icon className="text-2xl" />}
                     <span
                       className={`text-sm duration-300 ${
-                        !opened ? "hidden" : " "
+                        !drawerOpened ? "hidden" : " "
                       }`}
                     >
                       {label}
@@ -179,24 +183,24 @@ export function AdminSidebar({ height }: { height: number }) {
               );
             })}
           </div>
-          <div className="bottom-2 left-0 w-full px-2 flex flex-col justify-end">
-            <Separator className={`my-2 ${opened ? 'w-64' : 'w-16'}`} />
+          <div className="bottom-2 left-0 flex w-full flex-col justify-end px-2">
+            <Separator className={`my-2 ${drawerOpened ? "w-64" : "w-16"}`} />
             <div className="flex w-full flex-col items-center space-y-2 py-2">
               <Button
                 className={`mb-2 flex w-full items-center rounded-lg font-semibold ${
-                  opened ? 'justify-start' : ''
+                  drawerOpened ? "justify-start" : ""
                 }`}
                 variant="outline"
                 asChild
               >
                 <Link
-                  href={'/auth/user-profile'}
+                  href={"/auth/user-profile"}
                   className="flex items-center justify-start space-x-2 px-2 group-hover:hover:bg-[#00DCB3]/20"
                 >
                   <FaRegUser className="text-xl" />
                   <span
                     className={`transition-all duration-300 ${
-                      !opened ? 'hidden' : 'mt-1 '
+                      !drawerOpened ? "hidden" : "mt-1 "
                     }`}
                   >
                     Profile
@@ -205,18 +209,18 @@ export function AdminSidebar({ height }: { height: number }) {
               </Button>
               <Button
                 className={`mb-2 flex w-full items-center rounded-lg font-semibold ${
-                  opened ? 'justify-start' : ''
+                  drawerOpened ? "justify-start" : ""
                 }`}
                 variant="outline"
                 onClick={() => {
-                  handleLogout()
-                  dispatch(setDrawerOpened(false))
+                  handleLogout();
+                  dispatch(setDrawerOpened(false));
                 }}
               >
                 <FaSignOutAlt className="text-2xl" />
                 <p
                   className={`transition-all duration-300 ${
-                    !opened ? 'hidden' : ''
+                    !drawerOpened ? "hidden" : ""
                   }`}
                 >
                   Logout
@@ -227,12 +231,13 @@ export function AdminSidebar({ height }: { height: number }) {
         </ScrollArea>
       </div>
     </aside>
-  )
+  );
 }
 
 export function MobileAdminSidebar({ height }: { height: number }) {
   const SCROLL_AREA_HEIGHT = height - 100
   const dispatch = useAppDispatch()
+  const { mobileDrawerOpened } = useAppSelector(globalSelector)
   const router = useRouter()
   let arg: void
   const { data: messages } = useGetAllInAppEnquiryMsgQuery(arg, {
@@ -245,12 +250,16 @@ export function MobileAdminSidebar({ height }: { height: number }) {
 
   // filter all unread messages
   const unreadMessages = messages?.filter(
-    (message: MessageProps) => message.isRead === false
+    (message: PartialMessageSchemaProps) => message.isRead === false
   )
+
+  const handleOpenChange = (opened: boolean) => {
+    dispatch(setMobileDrawerOpened(opened))
+  }
 
   return (
     <header>
-      <Sheet>
+      <Sheet open={mobileDrawerOpened} onOpenChange={handleOpenChange}>
         <SheetTrigger className="navbar-burger flex items-center p-3 text-blue-600">
             <svg
               className="block h-4 w-4 fill-current"
@@ -285,7 +294,7 @@ export function MobileAdminSidebar({ height }: { height: number }) {
               {NAV_ITEMS.map(({ label, Icon, href }) => {
                 if (!Icon && !href) {
                   return (
-                    <div key={label} className="my-2 w-full text-center">
+                    <div key={label} className="my-2 w-full text-left">
                       <Title
                         order={4}
                         className="text-textDark dark:text-textLight"
@@ -307,7 +316,7 @@ export function MobileAdminSidebar({ height }: { height: number }) {
                       <Link
                         href={href as string}
                         className={`group-hover:hover:bg-[#00DCB3]/20" relative inline-flex w-full  space-x-2 rounded-lg`}
-                        onClick={() => dispatch(setDrawerOpened(false))}
+                        onClick={() => dispatch(setMobileDrawerOpened(false))}
                       >
                         <Indicator
                           inline
@@ -342,7 +351,7 @@ export function MobileAdminSidebar({ height }: { height: number }) {
                       key={label}
                       href={href as string}
                       className={`flex w-auto items-center space-x-2 duration-300 group-hover:hover:bg-[#00DCB3]/20 `}
-                      onClick={() => dispatch(setDrawerOpened(false))}
+                      onClick={() => dispatch(setMobileDrawerOpened(false))}
                     >
                       {<Icon className="text-2xl" />}
                       <span className={`text-sm duration-300 `}>{label}</span>
@@ -374,7 +383,7 @@ export function MobileAdminSidebar({ height }: { height: number }) {
                   variant="outline"
                   onClick={() => {
                     handleLogout();
-                    dispatch(setDrawerOpened(false));
+                    dispatch(setMobileDrawerOpened(false));
                   }}
                 >
                   <FaSignOutAlt className="text-2xl" />

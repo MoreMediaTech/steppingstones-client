@@ -7,6 +7,7 @@ type GlobalState = {
   error: Error;
   openModal: boolean
   drawerOpened: boolean
+  mobileDrawerOpened: boolean
   isVisible: boolean
   isEdit: boolean
 }
@@ -25,6 +26,7 @@ const initialState: GlobalState = {
   openModal: false,
   error: { name: '', message: 'An Error occurred' },
   drawerOpened: false,
+  mobileDrawerOpened: false,
   isVisible: isVisible as boolean,
   isEdit: false,
 }
@@ -42,6 +44,9 @@ export const globalSlice = createSlice({
     setDrawerOpened: (state, { payload }: PayloadAction<boolean>) => {
       state.drawerOpened = payload
     },
+    setMobileDrawerOpened: (state, { payload }: PayloadAction<boolean>) => {
+      state.mobileDrawerOpened = payload
+    },
     setIsVisible: (state, { payload }: PayloadAction<boolean>) => {
       state.isVisible = payload
     },
@@ -54,7 +59,7 @@ export const globalSlice = createSlice({
   },
 })
 
-export const { setLoading, setError, setDrawerOpened, setIsVisible, setOpenModal, setIsEdit } =
+export const { setLoading, setError, setDrawerOpened, setMobileDrawerOpened, setIsVisible, setOpenModal, setIsEdit } =
   globalSlice.actions
 export const globalSelector = (state: RootState) => state.global
 

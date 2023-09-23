@@ -9,6 +9,7 @@ export const sectionSchema = z.object({
   title: z.string().nonempty({ message: 'Title is required' }),
   content: z.string().nonempty({ message: 'Content is required' }),
   isLive: z.boolean(),
+  isSubSection: z.boolean(),
   logoIcon: z.string().url({ message: 'Logo icon must be a URL'}).nonempty({ message: 'Logo Icon is required' }),
   imageUrl: z.string().nonempty({ message: 'Image URL is required' }),
   videoUrl: z.string().nonempty({ message: 'Video URL is required' }),

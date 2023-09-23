@@ -39,7 +39,7 @@ export function SidebarNav({
   return (
     <nav
       className={cn(
-        'relative flex w-full px-2 py-0 md:flex-col md:pb-8 md:pt-2',
+        ' md:h-screen flex  px-2 py-0 md:flex-col',
         className
       )}
       {...props}

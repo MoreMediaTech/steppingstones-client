@@ -1,7 +1,9 @@
 'use client'
-import React, { Suspense } from 'react'
+
+import React from 'react'
 import RichTextToolbar from './RichTextToolbar'
 import ReactQuill from 'react-quill'
+import "react-quill/dist/quill.snow.css";
 
 import { ControllerRenderProps } from 'react-hook-form'
 import { ContentFormProps } from '@models/ContentForm'
@@ -57,7 +59,7 @@ const RichTextEditor = ({
   field: ControllerRenderProps<ContentFormProps, 'content'>
 }) => {
   return (
-    <div className="w-full ">
+    <div className="w-full">
       <RichTextToolbar id="toolbar" />
       <ReactQuill
         modules={modules}
@@ -67,6 +69,7 @@ const RichTextEditor = ({
         onChange={(content) => field.onChange(content)}
         formats={formats}
         theme="snow"
+        className='w-full'
         style={{ height: '400px', overflowY: 'scroll', width: '100%' }}
       />
     </div>

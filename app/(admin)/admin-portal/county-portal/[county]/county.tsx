@@ -1,47 +1,47 @@
-'use client'
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { Loader } from '@components/mantine-components'
+"use client";
 
-import CreateSectionForm from './CreateSectionForm'
-import AddDistrictForm from './AddDistrictForm'
-import Button from 'app/components/Button'
-import { DistrictDataProps, SectionProps } from '@lib/types'
+import { useRouter } from "next/navigation";
+
+// components
+import { Loader } from "@components/mantine-components";
+import CreateSectionForm from "./section/create-section-form";
+import AddDistrictForm from "./AddDistrictForm";
+import PortalButton from "@components/PortalButton";
+import Map from "@components/Map";
+import Header from "@components/Header";
+
+import { DistrictDataProps, SectionProps } from "@lib/types";
 import {
   useGetCountyByIdQuery,
-  useCreateSectionMutation,
-} from 'app/global-state/features/editor/editorApiSlice'
-import PortalButton from 'app/components/PortalButton'
-import Map from 'app/components/Map'
-import Header from '@components/Header'
+} from "@global-state/features/editor/editorApiSlice";
 
 type Props = {
-  county: string
-  countyId: string
-}
+  county: string;
+  countyId: string;
+};
 
 export default function County({ county, countyId }: Props) {
-  const router = useRouter()
-  const [createSection] = useCreateSectionMutation()
+  const router = useRouter();
+
   const {
     data: countyData,
     isLoading: isLoadingCounty,
     refetch: refetchCounty,
   } = useGetCountyByIdQuery(countyId, {
     refetchOnMountOrArgChange: true,
-  })
+  });
 
-  const districts = countyData?.districts.map((district) => district.name)
+  const districts = countyData?.districts.map((district) => district.name);
 
   return (
     <section className="space-y-2">
-      <section className="flex w-full flex-col items-center gap-2 justify-between sm:flex-row">
+      <section className="flex w-full flex-col items-center justify-between gap-2 sm:flex-row">
         <Header title={countyData?.name as string} order={1} />
         <div className="flex w-full items-center gap-2">
           <CreateSectionForm
-            createSection={createSection}
-            refetch={refetchCounty}
-            id={countyData?.id as string}
+            btnTitle="Create Section"
+            type="section"
+            id={countyId}
           />
           <AddDistrictForm
             countyId={countyId}
@@ -55,7 +55,7 @@ export default function County({ county, countyId }: Props) {
           <Loader size="xl" variant="bars" />
         </div>
       ) : (
-        <section className="w-full  px-2 py-4">
+        <section className="w-full py-4">
           {countyData && (
             <div className="grid h-full w-full grid-cols-1 gap-4">
               <div className="grid w-full grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-4">
@@ -66,7 +66,7 @@ export default function County({ county, countyId }: Props) {
                   onClick={() => {
                     router.push(
                       `/admin-portal/county-portal/${county}/welcome?countyId=${countyId}&county=${county}`
-                    )
+                    );
                   }}
                 >
                   Welcome
@@ -78,7 +78,7 @@ export default function County({ county, countyId }: Props) {
                   onClick={() => {
                     router.push(
                       `/admin-portal/county-portal/${county}/lep?countyId=${countyId}&county=${county}`
-                    )
+                    );
                   }}
                 >
                   LEP
@@ -90,7 +90,7 @@ export default function County({ county, countyId }: Props) {
                   onClick={() => {
                     router.push(
                       `/admin-portal/county-portal/${county}/news?countyId=${countyId}&county=${county}`
-                    )
+                    );
                   }}
                 >
                   NEWS
@@ -143,5 +143,5 @@ export default function County({ county, countyId }: Props) {
         </section>
       )}
     </section>
-  )
+  );
 }

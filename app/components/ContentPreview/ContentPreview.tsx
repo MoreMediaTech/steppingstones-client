@@ -3,12 +3,16 @@ import React from 'react'
 import parse from 'html-react-parser'
 import 'react-quill/dist/quill.snow.css'
 import styles from './ContentPreview.module.css'
-import { SectionProps, SubSectionProps, SubSubSectionProps } from '@lib/types'
+
+// components
 import Header from '@components/Header'
 
+// zod schemas
+import { PartialSectionSchemaProps } from '@models/Section'
+
 type ContentPreviewProps = {
-  content?: { title: string; imageUrl?: string; content: string } | SectionProps | SubSectionProps | SubSubSectionProps
-}
+  content?: PartialSectionSchemaProps;
+};
 
 const ContentPreview = ({ content }: ContentPreviewProps) => {
   return (

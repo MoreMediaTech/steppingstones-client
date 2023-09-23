@@ -1,38 +1,35 @@
-'use client'
-import { useRouter } from 'next/navigation'
-import { Loader } from '@components/mantine-components'
+"use client";
+import { useRouter } from "next/navigation";
+import { Loader } from "@components/mantine-components";
 
-import { SectionProps, SubSectionProps } from '@lib/types'
-import {
-  useGetSectionByIdQuery,
-  useCreateSubSectionMutation,
-  useUpdateSectionByIdMutation,
-} from '@global-state/features/editor/editorApiSlice'
-import CreateSectionForm from '../CreateSectionForm'
-import { Button } from '@components/ui/button'
-import { Badge } from '@components/ui/badge'
-import SectionContainer from './section-container'
-import PortalButton from '@components/PortalButton'
-import Header from '@components/Header'
+// components
+import CreateSectionForm from "./create-section-form";
+import { Button } from "@components/ui/button";
+import { Badge } from "@components/ui/badge";
+import { SectionContainer } from "./section-container";
+import PortalButton from "@components/PortalButton";
+import Header from "@components/Header";
 
-type Props = {
-  county: string
-  countyId: string
-  sectionId: string
-}
+// hooks (Controller)
+import useSectionController from "./use-section-controller";
 
-export default function Section({ county, countyId, sectionId }: Props) {
-  const router = useRouter()
+// zod schemas
+import { PartialSectionSchemaProps, SectionSchemaProps } from "@models/Section";
 
-  const {
-    data: sectionData,
-    isLoading: isLoadingSection,
-    refetch: refetchSection,
-  } = useGetSectionByIdQuery(sectionId)
+type SectionProps = {
+  county: string;
+  countyId: string;
+  sectionId: string;
+};
 
-  const [createSubSection, { isLoading: isLoadingCreate }] =
-    useCreateSubSectionMutation()
-  const [updateSectionById, { isLoading }] = useUpdateSectionByIdMutation()
+export default function Section({ county, countyId, sectionId }: SectionProps) {
+  const router = useRouter();
+
+  const { sectionData, isLoadingSection } = useSectionController(sectionId);
+
+  const handleClick = () => {
+    router.push(`/admin-portal/county-portal/${county}/section/${sectionId}`);
+  };
 
   return (
     <>
@@ -50,25 +47,21 @@ export default function Section({ county, countyId, sectionId }: Props) {
               </>
             )}
           </div>
-          <div className="flex items-center justify-between sm:justify-end w-full gap-2 sm:w-1/3 flex-row">
+          <div className="flex w-full flex-row items-center justify-between gap-2 sm:w-1/3 sm:justify-end">
             <Button
               type="button"
-              className="w-1/3 sm:w-full border-gray-900 dark:border-gray-200"
+              className="w-1/3 border-gray-900 dark:border-gray-200 sm:w-full"
               onClick={() => {
                 router.push(
                   `/admin-portal/county-portal/${county}?countyId=${countyId}&county=${county}`
-                )
+                );
               }}
             >
               Go Back
             </Button>
 
             {sectionData?.isSubSection && (
-              <CreateSectionForm
-                createSection={createSubSection}
-                refetch={refetchSection}
-                id={sectionData?.id as string}
-              />
+              <CreateSectionForm btnTitle="Create Subsection" type="section" id={sectionId} />
             )}
           </div>
         </div>
@@ -81,9 +74,9 @@ export default function Section({ county, countyId, sectionId }: Props) {
             {sectionData?.isSubSection ? (
               <section className=" w-full overflow-auto md:py-24">
                 {sectionData && (
-                  <div className=" grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className=" grid grid-cols-1 gap-4 sm:grid-cols-2">
                     {sectionData?.subsections?.map(
-                      (section: SubSectionProps) => (
+                      (section: SectionSchemaProps) => (
                         <PortalButton
                           key={`${section.id}`}
                           type="button"
@@ -104,16 +97,13 @@ export default function Section({ county, countyId, sectionId }: Props) {
               </section>
             ) : (
               <SectionContainer
-                isLoadingSection={isLoadingSection}
-                sectionData={sectionData as SectionProps}
-                refetch={refetchSection}
-                updateSectionById={updateSectionById}
-                isLoading={isLoading}
+                data={sectionData as PartialSectionSchemaProps}
+                onClick={handleClick}
               />
             )}
           </section>
         )}
       </section>
     </>
-  )
+  );
 }
