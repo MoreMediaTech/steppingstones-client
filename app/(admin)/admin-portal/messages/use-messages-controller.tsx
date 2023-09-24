@@ -189,7 +189,7 @@ export default function useMessagesController(
   // handle message response
   const handleMessageResponse: SubmitHandler<PartialMessageSchemaProps> =
     useCallback(async (data) => {
-      console.log(data);
+      // console.log(data);
       refetch();
       router.replace("/admin-portal/messages");
     }, []);

@@ -1,5 +1,6 @@
 "use client";
-import React, { useCallback } from "react";
+
+import React from "react";
 
 // components
 import { Button } from "@components/ui/button";
@@ -23,42 +24,36 @@ import {
 import { Input } from "@components/ui/input";
 import { Checkbox } from "@components/ui/checkbox";
 
-// hooks (Controller)
-import useSectionController, { CreateSectionType } from "./use-section-controller";
+import useDistrictController from "./use-district-controller";
 
-
-
-type CreateSectionFormProps = {
-  type: CreateSectionType;
+type Props = {
   id: string;
-  btnTitle: string;
 };
 
-const CreateSectionForm = ({ type, id, btnTitle }: CreateSectionFormProps) => {
-  const { form, createSectionHandler } = useSectionController(undefined, undefined, type, id);
+export function CreateLASectionForm({ id }: Props){
+  const [open, setOpen] = React.useState(false);
+
+  const { form, onSubmit } = useDistrictController(id, undefined, setOpen);
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <Button
         type="button"
         variant="outline"
         asChild
         className="w-full border-gray-900 dark:border-gray-200"
       >
-        <DialogTrigger>{btnTitle}</DialogTrigger>
+        <DialogTrigger>Create District Section</DialogTrigger>
       </Button>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create a new Section</DialogTitle>
+          <DialogTitle>Create a District LA Section</DialogTitle>
           <DialogDescription>
-            Fill in the form below to create a new section
+            Create a section for a new District Local Authority
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(createSectionHandler)}
-            className="space-y-8"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
               control={form.control}
               name="name"
@@ -77,7 +72,7 @@ const CreateSectionForm = ({ type, id, btnTitle }: CreateSectionFormProps) => {
             />
             <FormField
               control={form.control}
-              name="isSubSection"
+              name="isEconomicData"
               render={({ field }) => (
                 <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
                   <FormControl>
@@ -91,10 +86,10 @@ const CreateSectionForm = ({ type, id, btnTitle }: CreateSectionFormProps) => {
                   </FormControl>
                   <div className="space-y-1 leading-none">
                     <FormLabel>
-                      Is this a sub-section of an existing section?
+                      Is this section for economic data collection?
                     </FormLabel>
                     <FormDescription>
-                      Create a new sub-section of an existing section
+                      Create a section for economic data collection
                     </FormDescription>
                   </div>
                 </FormItem>
@@ -110,4 +105,3 @@ const CreateSectionForm = ({ type, id, btnTitle }: CreateSectionFormProps) => {
   );
 };
 
-export default CreateSectionForm;

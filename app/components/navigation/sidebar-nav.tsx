@@ -50,7 +50,7 @@ export function SidebarNav({
           style={{ height: SCROLL_AREA_HEIGHT }}
         >
           <h4 className="mb-4 text-sm font-medium leading-none">{title}</h4>
-          {items.map((item, index) => (
+          {items?.map((item, index) => (
             <div key={`${item.href}-${index}`}>
               <Link
                 key={item.href}
@@ -97,7 +97,7 @@ export function MobileSideNav({
             className={`flex flex-col rounded-md border  p-4`}
             style={{ height: SCROLL_AREA_HEIGHT }}
           >
-            {items.map((item, index) => (
+            {items?.map((item, index) => (
               <div key={`${item.href}-${index}`}>
                 <Link
                   key={item.href}

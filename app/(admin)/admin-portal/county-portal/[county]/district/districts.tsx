@@ -1,74 +1,76 @@
-'use client'
-import { Suspense } from 'react'
-import { useRouter } from 'next/navigation'
-import { Loader } from '@components/mantine-components'
+"use client";
+import { Suspense } from "react";
+import { useRouter } from "next/navigation";
 
-import { CreateLASectionForm } from 'app/components/forms'
-import { DistrictSectionProps } from '@lib/types'
-import {
-  useGetDistrictByIdQuery,
-  useCreateDistrictSectionMutation,
-} from 'app/global-state/features/editor/editorApiSlice'
-import PortalButton from 'app/components/PortalButton'
-import Map from 'app/components/Map'
-import Header from '@components/Header'
-import { Button } from '@components/ui/button'
+// components
+import { Loader } from "@components/mantine-components";
+import { CreateLASectionForm } from "./create-district-section-form";
+import PortalButton from "@components/PortalButton";
+import Map from "@components/Map";
+import Header from "@components/Header";
+import { Button } from "@components/ui/button";
+
+// hooks (Controller)
+import useDistrictController from "./use-district-controller";
+
+// zod schemas
+import { DistrictSectionSchemaProps } from "@models/District";
 
 type Props = {
   searchParams: {
-    county: string
-    countyId: string
-    district: string
-    districtId: string
-  }
-}
+    county: string;
+    countyId: string;
+    district: string;
+    districtId: string;
+  };
+};
 
 export default function Districts({ searchParams }: Props) {
-  const router = useRouter()
+  const router = useRouter();
 
-  const {
-    data: districtData,
-    isLoading: isLoadingDistrict,
-    refetch: refetchDistrict,
-  } = useGetDistrictByIdQuery(searchParams.districtId, {
-    refetchOnMountOrArgChange: true,
-  })
+  const { district, isLoadingDistrict } = useDistrictController(
+    searchParams.districtId,
+    undefined,
+    undefined
+  );
 
-  const [createDistrictSection] =
-    useCreateDistrictSectionMutation()
+  if (isLoadingDistrict) {
+    return (
+      <div className="flex h-[700px] items-center justify-center">
+        <Loader size="xl" variant="bars" />
+      </div>
+    );
+  }
 
   return (
     <section className="space-y-2">
-      <section className="flex flex-col-reverse  sm:flex-row items-center gap-2 justify-between md:px-4 md:py-8">
+      <section className="flex flex-col-reverse  items-center justify-between gap-2 sm:flex-row md:px-4 md:py-8">
         <Header title={searchParams.district} order={1} />
-        <div className="flex items-center justify-center gap-2 w-full">
-          <Button type="button" onClick={() => router.back()} className='w-full'>
+        <div className="flex w-full items-center justify-center gap-2">
+          <Button
+            type="button"
+            onClick={() => router.back()}
+            className="w-full"
+          >
             Go Back
           </Button>
-          <CreateLASectionForm
-            createSection={createDistrictSection}
-            refetch={refetchDistrict}
-            id={districtData?.id as string}
-          />
+          <CreateLASectionForm id={district?.id as string} />
         </div>
       </section>
-      {isLoadingDistrict ? (
-        <div className="flex h-[700px] items-center justify-center">
-          <Loader size="xl" variant="bars" />
-        </div>
-      ) : (
-        <section className="w-full px-2 py-4">
-          {districtData && (
-            <div className="grid h-full w-full grid-cols-1 gap-8 lg:grid-cols-4">
-              <div className="h-full rounded  p-2 shadow-md md:col-span-2">
-                <Suspense fallback={<Loader size="xl" variant="bars" />}>
-                  <Map location={`${searchParams.district}, UK`} />
-                </Suspense>
-              </div>
-              <div className="mb-2 w-full md:col-span-2">
-                <div className="grid w-full grid-cols-1 gap-x-2 gap-y-2 sm:grid-cols-2">
-                  {districtData?.districtSections?.map(
-                    (section: DistrictSectionProps) => (
+
+      <section className="w-full px-2 py-4">
+        <div className="grid h-full w-full grid-cols-1 gap-8 lg:grid-cols-4">
+          <div className="h-full rounded  p-2 shadow-md md:col-span-2">
+            <Suspense fallback={<Loader size="xl" variant="bars" />}>
+              <Map location={`${searchParams.district}, UK`} />
+            </Suspense>
+          </div>
+          <div className="mb-2 w-full md:col-span-2">
+            <div className="grid w-full grid-cols-1 gap-x-2 gap-y-2 sm:grid-cols-2">
+              {district?.districtSections?.map(
+                (section: DistrictSectionSchemaProps) => {
+                  if (section.name === "Economic Data") {
+                    return (
                       <PortalButton
                         key={`${section.id}`}
                         type="button"
@@ -76,20 +78,35 @@ export default function Districts({ searchParams }: Props) {
                         isLive={section.isLive}
                         onClick={() =>
                           router.push(
-                            `/admin-portal/county-portal/${searchParams.county}/district/${section.id}?county=${searchParams.county}&countyId=${searchParams.countyId}&district=${searchParams.district}&districtId=${searchParams.districtId}`
+                            `/admin-portal/county-portal/${searchParams.county}/district/${section.id}/economic-data?countyId=${searchParams.countyId}&districtId=${searchParams.districtId}&district=${searchParams.district}`
                           )
                         }
                       >
                         {section.name}
                       </PortalButton>
-                    )
-                  )}
-                </div>
-              </div>
+                    );
+                  }
+                  return (
+                    <PortalButton
+                      key={`${section.id}`}
+                      type="button"
+                      color="primaryFilled"
+                      isLive={section.isLive}
+                      onClick={() =>
+                        router.push(
+                          `/admin-portal/county-portal/${searchParams.county}/district/${section.id}?&countyId=${searchParams.countyId}&district=${searchParams.district}&districtId=${searchParams.districtId}`
+                        )
+                      }
+                    >
+                      {section.name}
+                    </PortalButton>
+                  );
+                }
+              )}
             </div>
-          )}
-        </section>
-      )}
+          </div>
+        </div>
+      </section>
     </section>
-  )
+  );
 }

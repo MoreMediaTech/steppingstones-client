@@ -13,6 +13,10 @@ import {
 } from '@components/ui/alert-dialog'
 import { Trash } from 'lucide-react'
 
+
+// lib
+import { cn } from "@lib/utils";
+
 type DataObj = {
   [key: string]: any
   id: string | undefined
@@ -20,16 +24,20 @@ type DataObj = {
 
 interface HandleDeleteModalProps<T> {
   data: T;
+  className?: string;
   deleteHandler: (id: string) => void
 }
 
 export default function HandleDeleteModal<T extends DataObj>({
   data,
+  className,
   deleteHandler,
 }: HandleDeleteModalProps<T>) {
   return (
     <AlertDialog>
-      <AlertDialogTrigger className="w-full py-2 flex items-center justify-start border-gray-900 px-4 dark:border-gray-200">
+      <AlertDialogTrigger
+        className={cn(`w-full flex items-center justify-start border-gray-900 px-4 py-2 dark:border-gray-200`, className)}
+      >
         <Trash className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
         Delete
       </AlertDialogTrigger>
@@ -43,13 +51,11 @@ export default function HandleDeleteModal<T extends DataObj>({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction
-            onClick={() => deleteHandler(data?.id as string)}
-          >
+          <AlertDialogAction onClick={() => deleteHandler(data?.id as string)}>
             Continue
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-  )
+  );
 }

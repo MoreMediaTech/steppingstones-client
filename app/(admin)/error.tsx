@@ -30,7 +30,7 @@ export default function Error({
         />
         <h1 className="my-5 text-6xl">Whoops!</h1>
         <h2 className="mb-3 text-3xl">Something went wrong!</h2>
-        <div className="flex gap-4">
+        <div className="flex gap-4 items-center justify-center">
           <div className="flex justify-center">
             <Button type="button" onClick={() => reset()}>
               Try again

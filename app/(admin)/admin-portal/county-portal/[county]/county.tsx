@@ -11,9 +11,9 @@ import Map from "@components/Map";
 import Header from "@components/Header";
 
 import { DistrictDataProps, SectionProps } from "@lib/types";
-import {
-  useGetCountyByIdQuery,
-} from "@global-state/features/editor/editorApiSlice";
+
+import useCountyController from "../use-county-controller";
+import { PartialDistrictSchemaProps } from "@models/District";
 
 type Props = {
   county: string;
@@ -23,15 +23,19 @@ type Props = {
 export default function County({ county, countyId }: Props) {
   const router = useRouter();
 
-  const {
-    data: countyData,
-    isLoading: isLoadingCounty,
-    refetch: refetchCounty,
-  } = useGetCountyByIdQuery(countyId, {
-    refetchOnMountOrArgChange: true,
-  });
-
+  const { county: countyData, isLoadingCounty } = useCountyController(
+    countyId,
+    undefined
+  );
   const districts = countyData?.districts.map((district) => district.name);
+
+  if (isLoadingCounty) {
+    return (
+      <div className="mx-auto flex h-[700px] max-w-screen-md items-center justify-center">
+        <Loader size="lg" variant="bars" />
+      </div>
+    );
+  }
 
   return (
     <section className="space-y-2">
@@ -46,102 +50,96 @@ export default function County({ county, countyId }: Props) {
           <AddDistrictForm
             countyId={countyId}
             county={countyData?.name as string}
-            refetch={refetchCounty}
           />
         </div>
       </section>
-      {isLoadingCounty ? (
-        <div className="mx-auto flex h-[700px] max-w-screen-md items-center justify-center">
-          <Loader size="xl" variant="bars" />
-        </div>
-      ) : (
-        <section className="w-full py-4">
-          {countyData && (
-            <div className="grid h-full w-full grid-cols-1 gap-4">
-              <div className="grid w-full grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-4">
-                <PortalButton
-                  type="button"
-                  color="primaryFilled"
-                  isLive={countyData.welcome?.isLive}
-                  onClick={() => {
-                    router.push(
-                      `/admin-portal/county-portal/${county}/welcome?countyId=${countyId}&county=${county}`
-                    );
-                  }}
-                >
-                  Welcome
-                </PortalButton>
-                <PortalButton
-                  type="button"
-                  color="primaryFilled"
-                  isLive={countyData.lep?.isLive}
-                  onClick={() => {
-                    router.push(
-                      `/admin-portal/county-portal/${county}/lep?countyId=${countyId}&county=${county}`
-                    );
-                  }}
-                >
-                  LEP
-                </PortalButton>
-                <PortalButton
-                  type="button"
-                  color="primaryFilled"
-                  isLive={countyData.news?.isLive}
-                  onClick={() => {
-                    router.push(
-                      `/admin-portal/county-portal/${county}/news?countyId=${countyId}&county=${county}`
-                    );
-                  }}
-                >
-                  NEWS
-                </PortalButton>
+
+      <section className="w-full py-4">
+        {countyData && (
+          <div className="grid h-full w-full grid-cols-1 gap-4">
+            <div className="grid w-full grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-4">
+              <PortalButton
+                type="button"
+                color="primaryFilled"
+                isLive={countyData.welcome?.isLive}
+                onClick={() => {
+                  router.push(
+                    `/admin-portal/county-portal/${county}/welcome?countyId=${countyId}&county=${county}`
+                  );
+                }}
+              >
+                Welcome
+              </PortalButton>
+              <PortalButton
+                type="button"
+                color="primaryFilled"
+                isLive={countyData.lep?.isLive}
+                onClick={() => {
+                  router.push(
+                    `/admin-portal/county-portal/${county}/lep?countyId=${countyId}&county=${county}`
+                  );
+                }}
+              >
+                LEP
+              </PortalButton>
+              <PortalButton
+                type="button"
+                color="primaryFilled"
+                isLive={countyData.news?.isLive}
+                onClick={() => {
+                  router.push(
+                    `/admin-portal/county-portal/${county}/news?countyId=${countyId}&county=${county}`
+                  );
+                }}
+              >
+                NEWS
+              </PortalButton>
+            </div>
+            <div className="h-full rounded  p-2 shadow-lg dark:shadow-gray-500 lg:col-span-2">
+              <Map
+                location={`${county}, UK`}
+                districtsArray={districts as string[]}
+              />
+            </div>
+            <div className="h-full w-full space-y-4 lg:col-span-2">
+              <div className="grid grid-cols-1 gap-x-10 gap-y-4 sm:grid-cols-2 ">
+                {countyData?.districts?.map((district: PartialDistrictSchemaProps) => (
+                  <PortalButton
+                    key={district?.id}
+                    type="button"
+                    color="primaryFilled"
+                    isLive={district?.isLive}
+                    onClick={() =>
+                      router.push(
+                        `/admin-portal/county-portal/${county}/district?countyId=${countyId}&county=${county}&district=${district?.name}&districtId=${district?.id}`
+                      )
+                    }
+                  >
+                    {district?.name}
+                  </PortalButton>
+                ))}
               </div>
-              <div className="h-full rounded  p-2 shadow-lg dark:shadow-gray-500 lg:col-span-2">
-                <Map
-                  location={`${county}, UK`}
-                  districtsArray={districts as string[]}
-                />
-              </div>
-              <div className="h-full w-full space-y-4 lg:col-span-2">
-                <div className="grid grid-cols-1 gap-x-10 gap-y-4 sm:grid-cols-2 ">
-                  {countyData?.districts?.map((district: DistrictDataProps) => (
-                    <PortalButton
-                      key={district?.id}
-                      type="button"
-                      color="primaryFilled"
-                      isLive={district?.isLive}
-                      onClick={() =>
-                        router.push(
-                          `/admin-portal/county-portal/${county}/district?countyId=${countyId}&county=${county}&district=${district?.name}&districtId=${district?.id}`
-                        )
-                      }
-                    >
-                      {district?.name}
-                    </PortalButton>
-                  ))}
-                </div>
-                <div className="grid grid-cols-1 gap-x-4 gap-y-4 md:grid-cols-3">
-                  {countyData?.sections?.map((section: SectionProps) => (
-                    <PortalButton
-                      key={`${section?.id}`}
-                      type="button"
-                      color="primaryFilled"
-                      isLive={section?.isLive}
-                      onClick={() =>
-                        router.push(
-                          `/admin-portal/county-portal/${county}/section?countyId=${countyId}&county=${county}&section=${section.name}&sectionId=${section.id}`
-                        )
-                      }
-                    >
-                      {section?.name}
-                    </PortalButton>
-                  ))}
-                </div>
+              <div className="grid grid-cols-1 gap-x-4 gap-y-4 md:grid-cols-3">
+                {countyData?.sections?.map((section: SectionProps) => (
+                  <PortalButton
+                    key={`${section?.id}`}
+                    type="button"
+                    color="primaryFilled"
+                    isLive={section?.isLive}
+                    onClick={() =>
+                      router.push(
+                        `/admin-portal/county-portal/${county}/section?countyId=${countyId}&county=${county}&section=${section.name}&sectionId=${section.id}`
+                      )
+                    }
+                  >
+                    {section?.name}
+                  </PortalButton>
+                ))}
               </div>
             </div>
-          )}
-        </section>
-      )}
+          </div>
+        )}
+      </section>
     </section>
   );
 }

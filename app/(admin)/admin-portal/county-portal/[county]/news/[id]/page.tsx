@@ -1,5 +1,5 @@
 import React from 'react'
-import EditSection from './edit-section';
+import EditNewsSection from './edit-section';
 
 type PageProps = {
     params: { county: string; id: string }
@@ -8,7 +8,7 @@ export default function Page({ params }: PageProps) {
 
   return (
     <section>
-      <EditSection sectionId={params.id} />
+      <EditNewsSection countyId={params.id} />
     </section>
   );
 }

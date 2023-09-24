@@ -18,6 +18,11 @@ export const economicDataSchema = z.object({
   updatedAt: z.string().nonempty({ message: "Updated At is required" }),
 });
 
+export const partialEconomicDataSchema = economicDataSchema.partial();
+
+export type EconomicDataSchemaProps = Prettify<z.infer<typeof economicDataSchema>>;
+export type PartialEconomicDataSchemaProps = Prettify<z.infer<typeof partialEconomicDataSchema>>;
+
 export const districtSectionSchema = z.object({
   id: z.string().nonempty({ message: "ID is required" }),
   name: z.string().nonempty({ message: "Name is required" }),

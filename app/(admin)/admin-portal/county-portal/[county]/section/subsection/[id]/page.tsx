@@ -8,7 +8,7 @@ type PageProps = {
 }
 
 export default function Page({ params }: PageProps) {
-  console.log(params)
+
   return (
     <section>
       <EditSubSection subSectionId={params.id} />

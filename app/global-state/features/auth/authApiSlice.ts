@@ -5,7 +5,7 @@ import {
 } from 'app/global-state/features/auth/authSlice'
 import { apiSlice, editorApiSlice } from 'app/global-state/api/apiSlice'
 import * as z from 'zod'
-import { UserSchemaWithIdAndOrganisationType } from '@models/User'
+import { UserSchemaWithIdType } from '@models/User'
 
 export const authSchema = z.object({
   token: z.string().nonempty(),
@@ -44,7 +44,7 @@ export const authApi = apiSlice.injectEndpoints({
             })
           )
         } catch (error) {
-          console.log(error)
+          console.error("authenticate builder mutation: ",error)
           dispatch(setError({ message: error.message }))
         }
       },
@@ -78,7 +78,7 @@ export const authApi = apiSlice.injectEndpoints({
     }),
     verifyEmail: builder.mutation<
       { success: boolean; message: string },
-      Partial<UserSchemaWithIdAndOrganisationType>
+      Partial<UserSchemaWithIdType>
     >({
       query: (data) => ({
         url: 'auth/verify-email',
@@ -97,7 +97,7 @@ export const authApi = apiSlice.injectEndpoints({
           const { token } = data
           dispatch(setAuthState({ token: token, isAuthenticated: true }))
         } catch (err) {
-          console.log(err)
+          console.error("refresh builder mutation: ", err)
           dispatch(setError({ message: err.message }))
         }
       },

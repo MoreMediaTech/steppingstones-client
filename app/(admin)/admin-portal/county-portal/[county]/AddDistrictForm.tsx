@@ -1,12 +1,7 @@
-'use client'
-import React, { useCallback } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { useRouter } from 'next/navigation'
-import { zodResolver } from '@hookform/resolvers/zod'
-import * as z from 'zod'
-import { ToastAction } from '@components/ui/toast'
-import { useToast } from '@components/ui/use-toast'
-import { Button } from '@components/ui/button'
+"use client";
+import React, { useCallback } from "react";
+
+import { Button } from "@components/ui/button";
 import {
   Form,
   FormControl,
@@ -15,7 +10,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@components/ui/form'
+} from "@components/ui/form";
 import {
   Dialog,
   DialogContent,
@@ -23,106 +18,47 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@components/ui/dialog'
+} from "@components/ui/dialog";
 
-import { Input } from '@components/ui/input'
+import { Input } from "@components/ui/input";
 
-import { useCreateDistrictMutation } from 'app/global-state/features/editor/editorApiSlice'
-
-const addDistrictFormSchema = z.object({
-  name: z
-    .string()
-    .min(2, {
-      message: 'District name must be at least 2 characters',
-    })
-    .regex(/^[a-zA-Z0-9!@#$%^&*()._ -]+$/, {
-      message:
-        'District name can only contain letters, numbers, and special characters',
-    })
-    .nonempty({ message: 'District name is required' }),
-})
-
-type AddDistrictFormProps = z.infer<typeof addDistrictFormSchema>
+import useCountyController from "../use-county-controller";
 
 const AddDistrictForm = ({
   countyId,
   county,
-  refetch,
 }: {
-  countyId: string
-  county: string
-  refetch: () => void
+  countyId: string;
+  county: string;
 }) => {
-  const { toast } = useToast()
-  const form = useForm<AddDistrictFormProps>({
-    resolver: zodResolver(addDistrictFormSchema),
-  })
-  const router = useRouter()
+  const [open, setOpen] = React.useState(false);
+  const { form, createDistrictHandler } = useCountyController(
+    countyId,
+    setOpen
+  );
 
-  const [createDistrict, { isLoading }] = useCreateDistrictMutation()
-
-  const handleClose = () => {
-    form.reset()
-    refetch()
-  }
-
-  const onSubmit: SubmitHandler<AddDistrictFormProps> = useCallback(
-    async (data) => {
-      const newData = { ...data, countyId }
-      try {
-        await createDistrict(newData).unwrap()
-        handleClose()
-        toast({
-          title: 'Success!',
-          description: 'District created successfully',
-        })
-        router.push(
-          `/admin-portal/county-portal/${county}?countyId=${countyId}`
-        )
-      } catch (error) {
-        if (!error?.response) {
-          toast({
-            title: 'Error!',
-            description: 'Unable to complete request',
-            action: <ToastAction altText="Retry">Retry</ToastAction>,
-          })
-        } else if (error.response?.status === 400) {
-          toast({
-            title: 'Error!',
-            description: 'Invalid Input Provided',
-            action: <ToastAction altText="Retry">Retry</ToastAction>,
-          })
-        } else if (error.response?.status === 401) {
-          toast({
-            title: 'Error!',
-            description: 'Unauthorized action',
-            action: <ToastAction altText="Retry">Retry</ToastAction>,
-          })
-        } else {
-          toast({
-            title: 'Error!',
-            description: 'Unable to complete request',
-            action: <ToastAction altText="Retry">Retry</ToastAction>,
-          })
-        }
-      }
-    },
-    []
-  )
   return (
-    <Dialog>
-      <Button type="button" variant='outline' asChild className='w-full border-gray-900 dark:border-gray-200'>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <Button
+        type="button"
+        variant="outline"
+        asChild
+        className="w-full border-gray-900 dark:border-gray-200"
+      >
         <DialogTrigger>Add District</DialogTrigger>
       </Button>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create a new District</DialogTitle>
+          <DialogTitle>Create a new {county} District</DialogTitle>
           <DialogDescription>
             Please fill in the form below to create a new district
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form
+            onSubmit={form.handleSubmit(createDistrictHandler)}
+            className="space-y-8"
+          >
             <FormField
               control={form.control}
               name="name"
@@ -146,7 +82,7 @@ const AddDistrictForm = ({
         </Form>
       </DialogContent>
     </Dialog>
-  )
-}
+  );
+};
 
-export default AddDistrictForm
+export default AddDistrictForm;

@@ -2,8 +2,6 @@
 
 import React, { useCallback } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ToastAction } from "@components/ui/toast";
-import { useToast } from "@components/ui/use-toast";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 // redux global state (Model)
@@ -15,6 +13,14 @@ import {
   useGetSubSectionByIdQuery,
   useUpdateSubSectionByIdMutation,
 } from "@global-state/features/editor/editorApiSlice";
+import {
+  isErrorWithMessage,
+  isFetchBaseQueryError,
+} from "@app/global-state/helper";
+
+// components
+import { ToastAction } from "@components/ui/toast";
+import { useToast } from "@components/ui/use-toast";
 
 // zod schemas
 import {
@@ -22,10 +28,12 @@ import {
   partialSectionSchema,
 } from "@models/Section";
 
+export type CreateSectionType = "section" | "subsection" ;
+
 export default function useSectionController(
   sectionId?: string,
   subSectionId?: string,
-  type?: "section" | "subsection",
+  type?: CreateSectionType,
   id?: string
 ) {
   const { toast } = useToast();

@@ -1,27 +1,17 @@
-import {
-  CountyDataProps,
-  DistrictDataProps,
-  DistrictSectionProps,
-  EconomicDataWidgetProps,
+import { EconomicDataWidgetProps } from "@lib/types";
+import { editorApiSlice } from "@global-state/api/apiSlice";
 
-  SubSectionProps,
-  SubSubSectionProps,
-} from '@lib/types'
-import { editorApiSlice } from 'app/global-state/api/apiSlice'
+import { ContentFormProps } from "@models/ContentForm";
+import { CountySchemaProps, PartialCountySchemaProps } from "@models/County";
+import { PartialFormSchemaProps } from "@app/(admin)/admin-portal/admin/county-setting/use-county-setting-controller";
 import {
-  setCounty,
-  setError,
-  setSubSubSection,
-  setEconomicData,
-  setDistrictSection,
-} from './editorSlice'
-import { ContentFormProps } from '@models/ContentForm';
-import { CountySchemaProps } from '@models/County';
-import { PartialFormSchemaProps } from '@app/(admin)/admin-portal/admin/county-setting/use-county-setting-controller';
-import { DistrictSchemaProps, PartialDistrictSchemaProps } from '@models/District';
-import { PartialSourceDirectoryProps } from '@models/SourceDirectory';
-import { PartialSectionSchemaProps } from '@models/Section';
-
+  DistrictSchemaProps,
+  PartialDistrictSchemaProps,
+  PartialDistrictSectionSchemaProps,
+  PartialEconomicDataSchemaProps,
+} from "@models/District";
+import { PartialSourceDirectoryProps } from "@models/SourceDirectory";
+import { PartialSectionSchemaProps } from "@models/Section";
 
 const editorApi = editorApiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -38,7 +28,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     updateCounty: builder.mutation<
       { success: boolean; message: string },
-      Partial<CountyDataProps>
+      PartialCountySchemaProps
     >({
       query: (data) => ({
         url: `editor/county/${data.id}`,
@@ -47,22 +37,11 @@ const editorApi = editorApiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{ type: "Editor", id: arg.id }],
     }),
-    getCountyById: builder.query<CountyDataProps, string>({
+    getCountyById: builder.query<CountySchemaProps, string>({
       query: (id: string) => ({
         url: `editor/county/${id}`,
       }),
       providesTags: (result, error, arg) => [{ type: "Editor", id: arg }],
-      async onQueryStarted(args, { dispatch, queryFulfilled }) {
-        try {
-          const { data } = await queryFulfilled;
-          dispatch(setCounty(data));
-        } catch (error) {
-          if (error instanceof Error) {
-            dispatch(setError({ message: error.message }));
-          }
-          dispatch(setError({ message: "Unable to get County object" }));
-        }
-      },
     }),
     getCounties: builder.query<CountySchemaProps[], void>({
       query: () => ({
@@ -106,7 +85,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     createDistrict: builder.mutation<
       { success: boolean; message: string },
-      DistrictDataProps
+      PartialDistrictSchemaProps
     >({
       query: (data) => ({
         url: "editor/district",
@@ -269,7 +248,10 @@ const editorApi = editorApiSlice.injectEndpoints({
       }),
       providesTags: (result, error, arg) => [{ type: "Editor", id: arg }],
     }),
-    getSubSectionsBySectionId: builder.query<PartialSectionSchemaProps[], string>({
+    getSubSectionsBySectionId: builder.query<
+      PartialSectionSchemaProps[],
+      string
+    >({
       query: (sectionId: string) => ({
         url: `editor/sub-subsections/${sectionId}`,
       }),
@@ -310,7 +292,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     createDistrictSection: builder.mutation<
       { success: boolean; message: string },
-      { districtId: string; name: string; isEconomicData: boolean }
+      PartialDistrictSectionSchemaProps & { districtId: string }
     >({
       query: (data) => ({
         url: "editor/district-section",
@@ -321,7 +303,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     updateDistrictSectionById: builder.mutation<
       { success: boolean; message: string },
-      ContentFormProps & { id: string }
+      PartialDistrictSectionSchemaProps & { id: string }
     >({
       query: (data) => ({
         url: `editor/district-section/${data.id}`,
@@ -330,25 +312,17 @@ const editorApi = editorApiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{ type: "Editor", id: arg.id }],
     }),
-    getDistrictSectionById: builder.query<DistrictSectionProps, string>({
+    getDistrictSectionById: builder.query<
+      PartialDistrictSectionSchemaProps,
+      string
+    >({
       query: (id: string) => ({
         url: `editor/district-section/${id}`,
       }),
       providesTags: (result, error, arg) => [{ type: "Editor", id: arg }],
-      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-        try {
-          const result = await queryFulfilled;
-          dispatch(setDistrictSection(result.data));
-        } catch (error) {
-          if (error instanceof Error) {
-            dispatch(setError({ message: error.message }));
-          }
-          dispatch(setError({ message: "Unable to get County objects" }));
-        }
-      },
     }),
     getDistrictSectionsByDistrictId: builder.query<
-      DistrictSectionProps[],
+      PartialDistrictSectionSchemaProps[],
       string
     >({
       query: (districtId: string) => ({
@@ -391,7 +365,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     createEconomicDataWidget: builder.mutation<
       { success: boolean; message: string },
-      EconomicDataWidgetProps
+      PartialEconomicDataSchemaProps
     >({
       query: (data) => ({
         url: "editor/economic-data",
@@ -402,7 +376,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     updateEconomicDataWidgetById: builder.mutation<
       { success: boolean; message: string },
-      EconomicDataWidgetProps
+      PartialEconomicDataSchemaProps
     >({
       query: (data) => ({
         url: `editor/economic-data/${data.id}`,
@@ -411,9 +385,12 @@ const editorApi = editorApiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{ type: "Editor", id: arg.id }],
     }),
-    getEconomicDataWidgets: builder.query<EconomicDataWidgetProps[], void>({
-      query: () => ({
-        url: "editor/economic-data",
+    getEconomicDataWidgets: builder.query<
+      PartialEconomicDataSchemaProps[],
+      string
+    >({
+      query: (id: string) => ({
+        url: `editor/get-ed-widgets/${id}`,
       }),
       providesTags: (result) =>
         result
@@ -429,22 +406,14 @@ const editorApi = editorApiSlice.injectEndpoints({
             ]
           : [{ type: "Editor", id: "LIST" }],
     }),
-    getEconomicDataWidgetById: builder.query<EconomicDataWidgetProps, string>({
+    getEconomicDataWidgetById: builder.query<
+      PartialEconomicDataSchemaProps,
+      string
+    >({
       query: (id: string) => ({
         url: `editor/economic-data/${id}`,
       }),
       providesTags: (result, error, arg) => [{ type: "Editor", id: arg }],
-      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-        try {
-          const result = await queryFulfilled;
-          dispatch(setEconomicData(result.data));
-        } catch (error) {
-          if (error instanceof Error) {
-            dispatch(setError({ message: error.message }));
-          }
-          dispatch(setError({ message: "Unable to get County objects" }));
-        }
-      },
     }),
     deleteEconomicDataWidgetById: builder.mutation<
       { success: boolean; message: string },
@@ -592,6 +561,7 @@ export const {
   useDeleteDistrictSectionByIdMutation,
   useDeleteManyDistrictSectionsMutation,
   useCreateEconomicDataWidgetMutation,
+  useGetEconomicDataWidgetsQuery,
   useGetEconomicDataWidgetByIdQuery,
   useUpdateEconomicDataWidgetByIdMutation,
   useDeleteEconomicDataWidgetByIdMutation,
@@ -601,4 +571,4 @@ export const {
   useUpdateSDDataMutation,
   useDeleteSDDataMutation,
   useDeleteManySDDataMutation,
-} = editorApi
+} = editorApi;

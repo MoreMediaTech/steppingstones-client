@@ -158,7 +158,7 @@ const generateDistrictsCords = (districts: string[]) => {
     const { lat, lng } = await getLatLng(results[0])
     _districts.push({ lat: lat, lng: lng })
   })
-  console.log(_districts)
+  // console.log(_districts)
   return _districts
 }
 
