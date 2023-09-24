@@ -31,7 +31,6 @@ import { Checkbox } from '@components/ui/checkbox'
 import {
   UserSchemaType,
   UserSchema,
-  UserSchemaWithIdAndOrganisationType,
   Role,
   UserSchemaWithIdType,
 } from '@models/User'
@@ -45,7 +44,7 @@ const UpdateUserForm = ({
   disabled,
 }: {
   refetch: () => void
-  user?: UserSchemaWithIdAndOrganisationType
+  user?: UserSchemaWithIdType
   disabled?: boolean
 }) => {
   const { toast } = useToast()

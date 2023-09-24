@@ -13,7 +13,7 @@ import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
 
 import { useVerifyEmailMutation } from 'app/global-state/features/auth/authApiSlice'
 import Loader from '@components/Loader'
-import { UserSchemaWithIdAndOrganisationType } from '@models/User'
+import { UserSchemaWithIdType } from '@models/User'
 import { UploadImageForm } from '@components/forms/UploadImageForm'
 import Header from '@components/Header'
 
@@ -93,7 +93,7 @@ const UserProfileSection = () => {
                 <UploadImageForm
                   type="user"
                   refetch={refetch}
-                  user={user as UserSchemaWithIdAndOrganisationType}
+                  user={user as UserSchemaWithIdType}
                 />
               </div>
             </div>
@@ -103,7 +103,7 @@ const UserProfileSection = () => {
               <h1 className="text-xl font-bold">General Information</h1>
               <UpdateUserForm
                 refetch={refetch}
-                user={user as UserSchemaWithIdAndOrganisationType}
+                user={user as UserSchemaWithIdType}
                 disabled
               />
             </div>
