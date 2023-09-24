@@ -61,7 +61,7 @@ function PageWrapper({
             style={{ height: SCROLL_AREA_HEIGHT }}
           >
             {/* <PortalHeader
-                user={user as UserSchemaWithIdAndOrganisationType}
+                user={user as UserSchemaWithIdType}
                 title={`Welcome ${userFirstName}`}
                 subTitle="Please select from the menu below"
                 imgUrl={user?.imageUrl}

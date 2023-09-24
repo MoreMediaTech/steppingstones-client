@@ -7,16 +7,11 @@ import { FiMoon, FiSun } from 'react-icons/fi'
 import { usePathname } from 'next/navigation'
 import { CountyDataProps, DistrictDataProps } from '@lib/types'
 import Avatar from 'app/components/Avatar'
-import { useAppSelector, useAppDispatch } from 'app/global-state/hooks'
-import {
-  globalSelector,
-} from 'app/global-state/features/global/globalSlice'
-import FormInput from 'app/components/forms/FormComponents/FormInput'
-import {  MobileAdminSidebar } from '@components/navigation'
-import { UserSchemaWithIdAndOrganisationType } from '@models/User'
+
+import { UserSchemaWithIdType } from '@models/User'
 
 interface IPortalHeaderProps {
-  user?: UserSchemaWithIdAndOrganisationType
+  user?: UserSchemaWithIdType
   title?: string
   subTitle?: string
   imgUrl?: string
@@ -142,14 +137,14 @@ const PortalHeader = ({
                 <span hidden>toggle theme</span>
               </button>
             </div>
-            <FormInput
+            {/* <FormInput
               label="Search"
               type="search"
               aria-label="search"
               placeholder="Search"
               appendComponent={<IoIosSearch fontSize={25} fontWeight={500} />}
               hidden
-            />
+            /> */}
           </div>
         </div>
       </div>

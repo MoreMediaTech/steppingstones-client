@@ -1,8 +1,8 @@
-import { UserSchemaWithIdAndOrganisationType } from '@models/User'
+import { UserSchemaWithIdType } from '@models/User'
 import { usersApiSlice } from 'app/global-state/features/user/usersApiSlice'
 
 
-export const useAuthUser = (): UserSchemaWithIdAndOrganisationType | undefined => {
+export const useAuthUser = (): UserSchemaWithIdType | undefined => {
   const state = usersApiSlice.endpoints.getUser.useQueryState()
   return state.data
 }

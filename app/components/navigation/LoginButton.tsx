@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { MdBusiness } from 'react-icons/md'
 import { FaRegUser, FaSignInAlt, FaSignOutAlt } from 'react-icons/fa'
-import { UserSchemaWithIdAndOrganisationType } from '@models/User'
+import { UserSchemaWithIdType } from '@models/User'
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -22,7 +22,7 @@ export function LoginButton({
   setActivePath,
 }: {
   pos: string
-  currentUser: UserSchemaWithIdAndOrganisationType
+  currentUser: UserSchemaWithIdType
   handleLogout(): void
   setActivePath: React.Dispatch<React.SetStateAction<string>>
 }) {
@@ -105,7 +105,7 @@ export function MobileLoginButton({
   handleLogout,
   setActivePath,
 }: {
-  currentUser: UserSchemaWithIdAndOrganisationType
+  currentUser: UserSchemaWithIdType
   handleLogout(): void
   setActivePath: React.Dispatch<React.SetStateAction<string>>
 }) {

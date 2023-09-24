@@ -2,14 +2,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { RootState } from '../../store'
 import { Error } from '@lib/types'
-import { UserSchemaWithIdAndOrganisationType } from '@models/User'
+import { UserSchemaWithIdType } from '@models/User'
 
 const token =
   typeof window !== 'undefined' ? localStorage.getItem('token') : null
 
 export type UserState = {
     message: string
-    user: UserSchemaWithIdAndOrganisationType | null
+    user: UserSchemaWithIdType | null
     isAuthenticated: boolean
     error: Error
 }
@@ -27,7 +27,7 @@ export const userSlice = createSlice({
   reducers: {
     setUser: (
       state,
-      { payload }: PayloadAction<UserSchemaWithIdAndOrganisationType | null>
+      { payload }: PayloadAction<UserSchemaWithIdType | null>
     ) => {
       state.user = payload
     },

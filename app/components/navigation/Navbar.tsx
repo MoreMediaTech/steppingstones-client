@@ -8,7 +8,7 @@ import { GiHamburgerMenu } from 'react-icons/gi'
 
 // redux-state and types
 import { useGetUserQuery } from '@global-state/features/user/usersApiSlice'
-import { UserSchemaWithIdAndOrganisationType } from '@models/User'
+import { UserSchemaWithIdType } from '@models/User'
 import { useAppSelector } from '@app/global-state/hooks';
 import { authSelector } from '@app/global-state/features/auth/authSlice'
 
@@ -153,7 +153,7 @@ const Navbar = () => {
 
           <LoginButton
             pos={pos}
-            currentUser={currentUser as UserSchemaWithIdAndOrganisationType}
+            currentUser={currentUser as UserSchemaWithIdType}
             handleLogout={handleLogout}
             setActivePath={setActivePath}
           />
@@ -291,7 +291,7 @@ const Navbar = () => {
                     <SheetTrigger>
                       <MobileLoginButton
                         currentUser={
-                          currentUser as UserSchemaWithIdAndOrganisationType
+                          currentUser as UserSchemaWithIdType
                         }
                         handleLogout={handleLogout}
                         setActivePath={setActivePath}
