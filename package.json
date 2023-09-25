@@ -5,7 +5,7 @@
     "build": "next build",
     "start": "next start -p 3001",
     "lint": "next lint",
-    "email": "email dev"
+    "email": "email dev -p 3006"
   },
   "dependencies": {
     "@emotion/react": "^11.11.0",
@@ -35,6 +35,7 @@
     "@radix-ui/react-switch": "^1.0.3",
     "@radix-ui/react-toast": "^1.1.4",
     "@react-email/button": "0.0.9",
+    "@react-email/components": "0.0.7",
     "@react-email/html": "0.0.4",
     "@react-google-maps/api": "^2.12.1",
     "@reduxjs/toolkit": "^1.9.5",

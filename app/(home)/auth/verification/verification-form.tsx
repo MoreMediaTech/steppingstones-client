@@ -48,7 +48,7 @@ export default function VerificationForm() {
               </FormItem>
             )}
           />
-          <Button type="submit" data-testId="verification-form-button" disabled={isLoading} className="w-full">
+          <Button type="submit" data-testid="verification-form-button" disabled={isLoading} className="w-full">
             Verify
           </Button>
         </form>

@@ -3,7 +3,7 @@ import { useRef } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 
 import ReCAPTCHA from 'react-google-recaptcha'
-import { useTheme } from 'next-themes'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { ToastAction } from '@components/ui/toast'
@@ -14,6 +14,7 @@ import { useSendEnquiryMutation } from 'app/global-state/features/messages/messa
 
 // lib
 import { enquiryEmailTemplate } from '@lib/emailTemplates';
+import { EnquiryEmail } from '../../../emails/enquiry-email'
 
 const formSchema = z.object({
   from: z.string().email({ message: 'Invalid email address' }),
@@ -29,6 +30,12 @@ export default function useEnquiryController() {
       const [sendEnquiry, { isLoading }] = useSendEnquiryMutation()
       const form = useForm<FormSchemaProps>({
         resolver: zodResolver(formSchema),
+        defaultValues:{
+          from: '',
+          company: '',
+          subject: '',
+          message: '',
+        }
       })
       const recaptchaRef = useRef<ReCAPTCHA | null>(null)
 
@@ -40,7 +47,7 @@ export default function useEnquiryController() {
           to: 'enquiries@steppingstonesapp.com',
           subject: data.subject,
           company: data.company,
-          html: enquiryEmailTemplate(data.subject, data.message),
+          html: enquiryEmailTemplate(data.from, data.message),
           token,
           message: data.message,
         }

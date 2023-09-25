@@ -15,6 +15,7 @@ export const messageSchema = z.object({
   company: z.string(),
   html: z.string(),
   message: z.string(),
+  react: z.string(),
   type: z.nativeEnum(MessageTypes),
   createdAt: z.string(),
   updatedAt: z.string(),
