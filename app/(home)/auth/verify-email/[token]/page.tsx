@@ -19,7 +19,7 @@ async function checkTokenValidity(token: string) {
 
   if (!data.success) return { valid: false }
 
-  await fetch(`${API_URL}auth/update-user`, {
+  await fetch(`${env.NEXT_PUBLIC_API_URL}auth/update-user`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
