@@ -1,8 +1,8 @@
 
-import { API_URL } from '@config/index'
+import { env } from "@lib/env"
 
 async function checkTokenValidity(token: string) {
-  const response = await fetch(`${API_URL}auth/verify-email`, {
+  const response = await fetch(`${env.NEXT_PUBLIC_API_URL}auth/verify-email`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
