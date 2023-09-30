@@ -46,5 +46,5 @@ jobs:
 #     - run: yarn lint
 #     - run: yarn test
     - run: npm run build
-    - run: pm2 reload ssapp-client
+    - run: pm2 restart ssapp-client
     
