@@ -34,13 +34,13 @@ function PageWrapper({
 
   React.useEffect(() => {
     const handleRouteChange = () => {
-      if (!isCookie && pathname.includes("/admin-portal")) {
+      if (!user?.isAdmin && pathname.includes("/admin-portal")) {
         // dispatch(setAuthState({ isAuthenticated: true, token: token as string }))
         redirect('/auth/login')
       }
     };
     handleRouteChange();
-  }, [isCookie, pathname]);
+  }, [user, pathname]);
 
   return (
     <motion.main
