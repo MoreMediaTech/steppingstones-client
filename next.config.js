@@ -5,7 +5,7 @@ module.exports = {
     return [
       {
         source: '/api/:path*',
-        destination: 'http://localhost:5001/api/:path*',
+        destination: 'https://api.steppingstonesapp.com/:path*',
       },
     ]
   },
