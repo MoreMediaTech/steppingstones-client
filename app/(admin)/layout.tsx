@@ -6,23 +6,24 @@ import  AdminPageWrapper  from './AdminPageWrapper'
 import Provider from '../global-state/providers/provider'
 import '../globals.css'
 
-function checkUserCookie() {
-  const cookie = cookies()
-  console.log('checking auth');
-  const userCookie = cookie.has('ss_refresh_token')
-  if (userCookie) {
-    console.log("auth checked");
-    return true
-  }
-  console.log("auth failed");
-  return false
-}
+
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  function checkUserCookie() {
+    const cookie = cookies();
+    console.log("checking auth");
+    const userCookie = cookie.has("ss_refresh_token");
+    if (userCookie) {
+      console.log("auth checked");
+      return true;
+    }
+    console.log("auth failed");
+    return false;
+  }
   if (!checkUserCookie()) {
     return redirect('/auth/login')
   }
