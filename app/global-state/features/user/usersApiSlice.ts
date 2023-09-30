@@ -18,6 +18,20 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         },
       }),
       providesTags: (result, error, arg) => [{ type: 'User', id: result?.id }],
+      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+        try {
+          const { data } = await queryFulfilled
+          if (data) {
+            dispatch(
+              usersApiSlice.util.updateQueryData('getUser', undefined, (draft) => {
+                Object.assign(draft, data)
+              })
+            )
+          }
+        } catch (err) {
+          console.log(err)
+        }
+      },
     }),
     getUsers: builder.query<UserSchemaWithIdType[], void>({
       query: () => ({

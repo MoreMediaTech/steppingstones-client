@@ -1,34 +1,46 @@
-'use client'
-import React from 'react'
-import { motion } from 'framer-motion'
+"use client";
+import React from "react";
+import { motion } from "framer-motion";
+import { redirect,usePathname } from "next/navigation";
 
 // redux global state (Model)
-import { useGetUserQuery } from '@global-state/features/user/usersApiSlice'
+import { useGetUserQuery } from "@app/global-state/features/user/usersApiSlice";
 import { globalSelector } from "@global-state/features/global/globalSlice";
 import { useAppSelector } from "@global-state/hooks";
+
 // hooks
-import useWindowSize from '@hooks/useWindowSize'
+import useWindowSize from "@hooks/useWindowSize";
 
 // components
-import { ComponentShield } from '@components/NextShield'
-import { AdminSidebar, MobileAdminSidebar } from '@components/navigation'
-import {  AppShell } from '@components/mantine-components'
-import { ScrollArea } from '@components/ui/scroll-area'
+import { ComponentShield } from "@components/NextShield";
+import { AdminSidebar, MobileAdminSidebar } from "@components/navigation";
+import { AppShell } from "@components/mantine-components";
+import { ScrollArea } from "@components/ui/scroll-area";
 
 function PageWrapper({
+  isCookie,
   children,
   className,
 }: {
-  children: React.ReactNode
-  className?: string
+  isCookie?: boolean;
+  children: React.ReactNode;
+  className?: string;
 }) {
-  const [size] = useWindowSize()
+  const pathname = usePathname();
+  const [size] = useWindowSize();
   const { drawerOpened } = useAppSelector(globalSelector);
+  const { data: user } = useGetUserQuery();
+  const SCROLL_AREA_HEIGHT = (size?.innerHeight as number) - 10;
 
-  const SCROLL_AREA_HEIGHT = size?.innerHeight as number - 10
-  const { data: user } = useGetUserQuery()
-  const userFirstName = user?.name.split(' ')[0]
-
+  React.useEffect(() => {
+    const handleRouteChange = () => {
+      if (!isCookie && pathname.includes("/admin-portal")) {
+        // dispatch(setAuthState({ isAuthenticated: true, token: token as string }))
+        redirect('/auth/login')
+      }
+    };
+    handleRouteChange();
+  }, [isCookie, pathname]);
 
   return (
     <motion.main
@@ -80,4 +92,4 @@ function PageWrapper({
   );
 }
 
-export default PageWrapper
+export default PageWrapper;

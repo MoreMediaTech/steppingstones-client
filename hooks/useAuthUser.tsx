@@ -1,3 +1,5 @@
+'use client'
+
 import { UserSchemaWithIdType } from '@models/User'
 import { usersApiSlice } from 'app/global-state/features/user/usersApiSlice'
 
