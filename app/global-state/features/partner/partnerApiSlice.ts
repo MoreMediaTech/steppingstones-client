@@ -9,7 +9,7 @@ export const partnerApi = partnerApiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getPartnerById: builder.query<PartialPartnerWithOrganisationProps, string>({
       query: (id: string) => ({
-        url: `partners/directory/${id}`,
+        url: `/partners/directory/${id}`,
       }),
       providesTags: [{ type: "Partner" }],
     }),
@@ -18,7 +18,7 @@ export const partnerApi = partnerApiSlice.injectEndpoints({
       PartialPartnerProps
     >({
       query: (data) => ({
-        url: `partners/directory`,
+        url: `/partners/directory`,
         method: "POST",
         body: { ...data },
       }),
@@ -29,7 +29,7 @@ export const partnerApi = partnerApiSlice.injectEndpoints({
       PartialPartnerProps
     >({
       query: (data) => ({
-        url: `partners/directory/${data.id}`,
+        url: `/partners/directory/${data.id}`,
         method: "PUT",
         body: { ...data },
       }),
@@ -42,7 +42,7 @@ export const partnerApi = partnerApiSlice.injectEndpoints({
       string
     >({
       query: (id: string) => ({
-        url: `partners/directory/${id}`,
+        url: `/partners/directory/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: [{ type: "Partner", id: "List" }],
@@ -52,7 +52,7 @@ export const partnerApi = partnerApiSlice.injectEndpoints({
       string[]
     >({
       query: (ids: string[]) => ({
-        url: `partners/delete-directories`,
+        url: `/partners/delete-directories`,
         method: "DELETE",
         body: { ids },
       }),
@@ -63,7 +63,7 @@ export const partnerApi = partnerApiSlice.injectEndpoints({
       void
     >({
       query: () => ({
-        url: `partners/directory`,
+        url: `/partners/directory`,
       }),
       providesTags: (result) =>
         result
@@ -84,7 +84,7 @@ export const partnerApi = partnerApiSlice.injectEndpoints({
       string
     >({
       query: (id: string) => ({
-        url: `partners/all/${id}`,
+        url: `/partners/all/${id}`,
       }),
       providesTags: (result) =>
         result

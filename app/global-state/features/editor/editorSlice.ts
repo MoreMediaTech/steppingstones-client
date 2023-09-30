@@ -63,7 +63,7 @@ export const fetchPublicFeed = createAsyncThunk(
   async (): Promise<
     Pick<CountySchemaProps, 'id' | 'name' | 'imageUrl' | 'logoIcon'>[]
   > => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}feed`)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/feed`)
     const data = await res.json()
     return data.counties
   }

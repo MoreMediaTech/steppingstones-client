@@ -21,7 +21,7 @@ export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
       query: ({ email, token }: Auth) => ({
-        url: 'auth/login',
+        url: '/auth/login',
         method: 'POST',
         body: { email, token },
       }),
@@ -29,7 +29,7 @@ export const authApi = apiSlice.injectEndpoints({
     }),
     authenticate: builder.mutation({
       query: ({ email, token, oneTimeCode }: Auth) => ({
-        url: 'auth/authenticate',
+        url: '/auth/authenticate',
         method: 'POST',
         body: { email, token, oneTimeCode },
       }),
@@ -51,7 +51,7 @@ export const authApi = apiSlice.injectEndpoints({
     }),
     registerPartner: builder.mutation({
       query: (data) => ({
-        url: 'auth/register',
+        url: '/auth/register',
         method: 'POST',
         body: { ...data },
         validateStatus: (response: any, result: any) => {
@@ -62,7 +62,7 @@ export const authApi = apiSlice.injectEndpoints({
     }),
     requestPasswordReset: builder.mutation({
       query: ({ email }) => ({
-        url: 'auth/request-reset',
+        url: '/auth/request-reset',
         method: 'POST',
         body: { email },
       }),
@@ -70,7 +70,7 @@ export const authApi = apiSlice.injectEndpoints({
     }),
     resetPassword: builder.mutation({
       query: ({ token, password }) => ({
-        url: 'auth/reset',
+        url: '/auth/reset',
         method: 'POST',
         body: { token, password },
       }),
@@ -81,14 +81,14 @@ export const authApi = apiSlice.injectEndpoints({
       Partial<UserSchemaWithIdType>
     >({
       query: (data) => ({
-        url: 'auth/verify-email',
+        url: '/auth/verify-email',
         method: 'POST',
         body: { ...data },
       }),
     }),
     refresh: builder.mutation<{ token: string }, void>({
       query: () => ({
-        url: 'auth/refresh',
+        url: '/auth/refresh',
         method: 'GET',
       }),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
@@ -104,7 +104,7 @@ export const authApi = apiSlice.injectEndpoints({
     }),
     logout: builder.mutation<void, void>({
       query: () => ({
-        url: 'auth/logout',
+        url: '/auth/logout',
         method: 'POST',
       }),
       async onQueryStarted(args, { dispatch, queryFulfilled }) {

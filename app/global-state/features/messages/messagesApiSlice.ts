@@ -8,7 +8,7 @@ export const messagesApi = messagesApiSlice.injectEndpoints({
       PartialMessageSchemaProps
     >({
       query: (data) => ({
-        url: "messages/sendEnquiry",
+        url: "/messages/sendEnquiry",
         method: "POST",
         body: { ...data },
       }),
@@ -19,7 +19,7 @@ export const messagesApi = messagesApiSlice.injectEndpoints({
       PartialMessageSchemaProps
     >({
       query: (data) => ({
-        url: "messages/sendEmail",
+        url: "/messages/sendEmail",
         method: "POST",
         body: { ...data },
       }),
@@ -30,7 +30,7 @@ export const messagesApi = messagesApiSlice.injectEndpoints({
       PartialMessageSchemaProps
     >({
       query: (data) => ({
-        url: "messages/send-inapp-msg",
+        url: "/messages/send-inapp-msg",
         method: "POST",
         body: { ...data },
       }),
@@ -38,7 +38,7 @@ export const messagesApi = messagesApiSlice.injectEndpoints({
     }),
     getAllInAppEnquiryMsg: builder.query<PartialMessageSchemaProps[], void>({
       query: () => ({
-        url: "messages/",
+        url: "/messages/",
       }),
       providesTags: (result, error, arg) =>
         result
@@ -53,7 +53,7 @@ export const messagesApi = messagesApiSlice.injectEndpoints({
     }),
     getAllMsgSentByUser: builder.query<PartialMessageSchemaProps[], void>({
       query: () => ({
-        url: "messages/sent-by-user",
+        url: "/messages/sent-by-user",
       }),
       providesTags: (result, error, arg) =>
         result
@@ -68,7 +68,7 @@ export const messagesApi = messagesApiSlice.injectEndpoints({
     }),
     getMessageById: builder.query<PartialMessageSchemaProps, string>({
       query: (id) => ({
-        url: `messages/${id}`,
+        url: `/messages/${id}`,
       }),
       providesTags: (result, error, arg) => [
         { type: "Messages", id: result?.id },
@@ -79,7 +79,7 @@ export const messagesApi = messagesApiSlice.injectEndpoints({
       { id: string; isRead: boolean; isArchived: boolean }
     >({
       query: (data) => ({
-        url: `messages/status/${data.id}`,
+        url: `/messages/status/${data.id}`,
         method: "PATCH",
         body: { isRead: data.isRead, isArchived: data.isArchived },
       }),
@@ -89,7 +89,7 @@ export const messagesApi = messagesApiSlice.injectEndpoints({
       string
     >({
       query: (id) => ({
-        url: `messages/${id}`,
+        url: `/messages/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: (result, error, arg) => [{ type: "Messages", id: arg }],
@@ -99,7 +99,7 @@ export const messagesApi = messagesApiSlice.injectEndpoints({
       string[]
     >({
       query: (ids: string[]) => ({
-        url: `messages/delete-many`,
+        url: `/messages/delete-many`,
         method: "DELETE",
         body: { ids },
       }),

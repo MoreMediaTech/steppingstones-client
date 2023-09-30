@@ -20,7 +20,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       PartialFormSchemaProps
     >({
       query: (data) => ({
-        url: "editor/county",
+        url: "/editor/county",
         method: "POST",
         body: { ...data },
       }),
@@ -67,7 +67,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       string
     >({
       query: (id: string) => ({
-        url: `editor/county/${id}`,
+        url: `/editor/county/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: [{ type: "Editor", id: "LIST" }],
@@ -77,7 +77,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       string[]
     >({
       query: (ids: string[]) => ({
-        url: `editor/delete-counties`,
+        url: `/editor/delete-counties`,
         method: "DELETE",
         body: { ids },
       }),
@@ -88,7 +88,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       PartialDistrictSchemaProps
     >({
       query: (data) => ({
-        url: "editor/district",
+        url: "/editor/district",
         method: "POST",
         body: { ...data },
       }),
@@ -96,7 +96,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     getDistricts: builder.query<DistrictSchemaProps[], void>({
       query: () => ({
-        url: "editor/district",
+        url: "/editor/district",
       }),
       providesTags: (result) =>
         result
@@ -114,7 +114,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     getDistrictById: builder.query<DistrictSchemaProps, string>({
       query: (id) => ({
-        url: `editor/district/${id}`,
+        url: `/editor/district/${id}`,
       }),
       providesTags: (result, error, arg) => [{ type: "Editor", id: arg }],
     }),
@@ -123,7 +123,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       PartialDistrictSchemaProps
     >({
       query: (data) => ({
-        url: `editor/district/${data.id}`,
+        url: `/editor/district/${data.id}`,
         method: "PUT",
         body: { ...data },
       }),
@@ -134,7 +134,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       string
     >({
       query: (id: string) => ({
-        url: `editor/district/${id}`,
+        url: `/editor/district/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: [{ type: "Editor", id: "LIST" }],
@@ -144,7 +144,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       string[]
     >({
       query: (ids: string[]) => ({
-        url: `editor/delete-districts`,
+        url: `/editor/delete-districts`,
         method: "DELETE",
         body: { ids },
       }),
@@ -155,7 +155,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       PartialSectionSchemaProps
     >({
       query: (data) => ({
-        url: "editor/section",
+        url: "/editor/section",
         method: "POST",
         body: { ...data },
       }),
@@ -163,7 +163,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     getSections: builder.query<PartialSectionSchemaProps[], void>({
       query: () => ({
-        url: "editor/section",
+        url: "/editor/section",
       }),
       providesTags: (result) =>
         result
@@ -184,7 +184,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       ContentFormProps & { id: string }
     >({
       query: (data) => ({
-        url: `editor/section/${data.id}`,
+        url: `/editor/section/${data.id}`,
         method: "PUT",
         body: { ...data },
       }),
@@ -192,7 +192,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     getSectionById: builder.query<PartialSectionSchemaProps, string>({
       query: (id: string) => ({
-        url: `editor/section/${id}`,
+        url: `/editor/section/${id}`,
         validateStatus: (response: any, result: any) => {
           return response.status === 200 && !result.isError;
         },
@@ -204,7 +204,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       string
     >({
       query: (id: string) => ({
-        url: `editor/section/${id}`,
+        url: `/editor/section/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: [{ type: "Editor", id: "LIST" }],
@@ -214,7 +214,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       string[]
     >({
       query: (ids: string[]) => ({
-        url: `editor/delete-sections`,
+        url: `/editor/delete-sections`,
         method: "DELETE",
         body: { ids },
       }),
@@ -225,7 +225,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       PartialSectionSchemaProps
     >({
       query: (data) => ({
-        url: "editor/subsection",
+        url: "/editor/subsection",
         method: "POST",
         body: { ...data },
       }),
@@ -236,7 +236,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       ContentFormProps & { id: string }
     >({
       query: (data) => ({
-        url: `editor/subsection/${data.id}`,
+        url: `/editor/subsection/${data.id}`,
         method: "PUT",
         body: { ...data },
       }),
@@ -244,7 +244,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     getSubSectionById: builder.query<PartialSectionSchemaProps, string>({
       query: (id: string) => ({
-        url: `editor/subsection/${id}`,
+        url: `/editor/subsection/${id}`,
       }),
       providesTags: (result, error, arg) => [{ type: "Editor", id: arg }],
     }),
@@ -253,7 +253,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       string
     >({
       query: (sectionId: string) => ({
-        url: `editor/sub-subsections/${sectionId}`,
+        url: `/editor/sub-subsections/${sectionId}`,
       }),
       providesTags: (result) =>
         result
@@ -274,7 +274,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       string
     >({
       query: (id: string) => ({
-        url: `editor/subsection/${id}`,
+        url: `/editor/subsection/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: [{ type: "Editor", id: "LIST" }],
@@ -284,7 +284,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       string[]
     >({
       query: (ids: string[]) => ({
-        url: `editor/delete-subsections`,
+        url: `/editor/delete-subsections`,
         method: "DELETE",
         body: { ids },
       }),
@@ -295,7 +295,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       PartialDistrictSectionSchemaProps & { districtId: string }
     >({
       query: (data) => ({
-        url: "editor/district-section",
+        url: "/editor/district-section",
         method: "POST",
         body: { ...data },
       }),
@@ -306,7 +306,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       PartialDistrictSectionSchemaProps & { id: string }
     >({
       query: (data) => ({
-        url: `editor/district-section/${data.id}`,
+        url: `/editor/district-section/${data.id}`,
         method: "PUT",
         body: { ...data },
       }),
@@ -317,7 +317,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       string
     >({
       query: (id: string) => ({
-        url: `editor/district-section/${id}`,
+        url: `/editor/district-section/${id}`,
       }),
       providesTags: (result, error, arg) => [{ type: "Editor", id: arg }],
     }),
@@ -326,7 +326,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       string
     >({
       query: (districtId: string) => ({
-        url: `editor/district-sections/${districtId}`,
+        url: `/editor/district-sections/${districtId}`,
       }),
       providesTags: (result) =>
         result
@@ -347,7 +347,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       string
     >({
       query: (id: string) => ({
-        url: `editor/district-section/${id}`,
+        url: `/editor/district-section/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: [{ type: "Editor", id: "LIST" }],
@@ -357,7 +357,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       string[]
     >({
       query: (ids: string[]) => ({
-        url: `editor/delete-district-sections`,
+        url: `/editor/delete-district-sections`,
         method: "DELETE",
         body: { ids },
       }),
@@ -368,7 +368,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       PartialEconomicDataSchemaProps
     >({
       query: (data) => ({
-        url: "editor/economic-data",
+        url: "/editor/economic-data",
         method: "POST",
         body: { ...data },
       }),
@@ -379,7 +379,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       PartialEconomicDataSchemaProps
     >({
       query: (data) => ({
-        url: `editor/economic-data/${data.id}`,
+        url: `/editor/economic-data/${data.id}`,
         method: "PUT",
         body: { ...data },
       }),
@@ -390,7 +390,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       string
     >({
       query: (id: string) => ({
-        url: `editor/get-ed-widgets/${id}`,
+        url: `/editor/get-ed-widgets/${id}`,
       }),
       providesTags: (result) =>
         result
@@ -411,7 +411,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       string
     >({
       query: (id: string) => ({
-        url: `editor/economic-data/${id}`,
+        url: `/editor/economic-data/${id}`,
       }),
       providesTags: (result, error, arg) => [{ type: "Editor", id: arg }],
     }),
@@ -420,7 +420,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       string
     >({
       query: (id: string) => ({
-        url: `editor/economic-data/${id}`,
+        url: `/editor/economic-data/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: [{ type: "Editor", id: "LIST" }],
@@ -430,7 +430,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       string[]
     >({
       query: (ids: string[]) => ({
-        url: `editor/delete-ed-widgets`,
+        url: `/editor/delete-ed-widgets`,
         method: "DELETE",
         body: { ids },
       }),
@@ -438,7 +438,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     updateOrCreateCountyWelcome: builder.mutation({
       query: (data) => ({
-        url: `editor/county-welcome`,
+        url: `/editor/county-welcome`,
         method: "PUT",
         body: { ...data },
       }),
@@ -446,7 +446,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     updateOrCreateCountyNews: builder.mutation({
       query: (data) => ({
-        url: `editor/county-news`,
+        url: `/editor/county-news`,
         method: "PUT",
         body: { ...data },
       }),
@@ -454,7 +454,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     updateOrCreateCountyLEP: builder.mutation({
       query: (data) => ({
-        url: `editor/county-lep`,
+        url: `/editor/county-lep`,
         method: "PUT",
         body: { ...data },
       }),
@@ -465,7 +465,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       PartialSourceDirectoryProps
     >({
       query: (data) => ({
-        url: `editor/source-directory`,
+        url: `/editor/source-directory`,
         method: "POST",
         body: { ...data },
       }),
@@ -473,7 +473,7 @@ const editorApi = editorApiSlice.injectEndpoints({
     }),
     getAllSDDataByType: builder.query<PartialSourceDirectoryProps[], string>({
       query: (type) => ({
-        url: `editor/source-directory/${type}`,
+        url: `/editor/source-directory/${type}`,
       }),
       providesTags: (result) =>
         result
@@ -494,7 +494,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       PartialSourceDirectoryProps
     >({
       query: (data) => ({
-        url: `editor/source-directory/${data.type}`,
+        url: `/editor/source-directory/${data.type}`,
         method: "PATCH",
         body: { ...data },
       }),
@@ -505,7 +505,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       PartialSourceDirectoryProps
     >({
       query: (data) => ({
-        url: `editor/source-directory/${data.type}`,
+        url: `/editor/source-directory/${data.type}`,
         method: "DELETE",
         body: { ...data },
       }),
@@ -516,7 +516,7 @@ const editorApi = editorApiSlice.injectEndpoints({
       PartialSourceDirectoryProps
     >({
       query: (data) => ({
-        url: `editor/delete-source-directories/${data.type}`,
+        url: `/editor/delete-source-directories/${data.type}`,
         method: "DELETE",
         body: { ...data },
       }),
