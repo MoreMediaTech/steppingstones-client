@@ -34,6 +34,7 @@ import {
 } from '@components/ui/navigation-menu'
 import { Avatar, AvatarFallback } from '@components/ui/avatar'
 import Banner from '@components/Banner'
+import { ModeToggle } from '@components/ModeToggle'
 
 const paths = ['features', 'faqs']
 
@@ -158,21 +159,7 @@ const Navbar = () => {
             setActivePath={setActivePath}
           />
           <li className="m-0 flex list-none ">
-            <button
-              type="button"
-              aria-label="toggle-theme-button"
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className={`focus:ring-none flex cursor-pointer list-none  p-1 font-medium focus:border-transparent focus:outline-none md:block lg:mb-0 lg:ml-0 lg:p-1 lg:px-1 ${
-                pos === 'top' && pathname === '/' ? 'text-textLight' : ' '
-              }`}
-            >
-              {resolvedTheme === 'light' ? (
-                <FiSun fontSize={20} />
-              ) : (
-                <FiMoon fontSize={20} />
-              )}
-              <span hidden>toggle theme</span>
-            </button>
+           <ModeToggle />
           </li>
           <li className="hidden flex-1 items-center md:flex ">
             <Button variant="outline" asChild>
@@ -195,21 +182,7 @@ const Navbar = () => {
 
         <div className="flex w-full flex-1 items-center justify-end md:hidden">
           <div className="flex items-center gap-2">
-            <button
-              type="button"
-              aria-label="toggle-theme-button"
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className={`focus:ring-none flex cursor-pointer list-none  p-1 font-medium focus:border-transparent focus:outline-none md:block lg:mb-0 lg:ml-0 lg:p-1 lg:px-1 ${
-                pos === 'top' && pathname === '/' ? 'text-textLight' : ' '
-              }`}
-            >
-              {resolvedTheme === 'light' ? (
-                <FiSun fontSize={20} />
-              ) : (
-                <FiMoon fontSize={20} />
-              )}
-              <span hidden>toggle theme</span>
-            </button>
+            <ModeToggle />
             {currentUser ? (
               <Avatar>
                 <AvatarFallback>{initials}</AvatarFallback>

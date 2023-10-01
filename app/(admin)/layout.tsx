@@ -10,10 +10,10 @@ import "../globals.css";
 function checkUserCookie() {
   const cookie = cookies();
   console.log("checking auth");
-  const userCookie = cookie.has("ss_refresh_token");
+  const userCookie = cookie.get("ss_refresh_token");
 
   if (!userCookie) {
-    console.log("auth checked");
+    console.log("auth failed");
     return false;
   }
   return true;

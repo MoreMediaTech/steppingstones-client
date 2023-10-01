@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import { redirect,usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 
 // redux global state (Model)
 import { useGetUserQuery } from "@app/global-state/features/user/usersApiSlice";
@@ -22,7 +22,7 @@ function PageWrapper({
   children,
   className,
 }: {
-  isCookie?: boolean;
+  isCookie: boolean;
   children: React.ReactNode;
   className?: string;
 }) {
@@ -30,17 +30,18 @@ function PageWrapper({
   const [size] = useWindowSize();
   const { drawerOpened } = useAppSelector(globalSelector);
   const { data: user } = useGetUserQuery();
+
   const SCROLL_AREA_HEIGHT = (size?.innerHeight as number) - 10;
 
   React.useEffect(() => {
     const handleRouteChange = () => {
-      if (!user?.isAdmin && pathname.includes("/admin-portal")) {
+      if (!isCookie && pathname.includes("/admin-portal")) {
         // dispatch(setAuthState({ isAuthenticated: true, token: token as string }))
-        redirect('/auth/login')
+        redirect("/auth/login");
       }
     };
     handleRouteChange();
-  }, [user, pathname]);
+  }, [isCookie, pathname]);
 
   return (
     <motion.main
@@ -56,36 +57,44 @@ function PageWrapper({
         userRole={user?.role as string}
       >
         <AppShell
-          navbarOffsetBreakpoint="md"
-          navbar={
-            <aside className="hidden h-screen px-4 py-1 md:block">
-              <AdminSidebar height={size?.innerHeight as number} />
-            </aside>
-          }
-          header={
-            <div className="block h-full px-4 py-4 md:hidden ">
+          withBorder={false}
+          className="bg-background transition-all duration-500  ease-in-out"
+          header={{ height: { base: 48, md: 0 } }}
+          navbar={{
+            width: drawerOpened ? 288 : 80,
+            breakpoint: "md",
+          }}
+        >
+          <AppShell.Header>
+            <div className="block px-2 md:hidden ">
               <MobileAdminSidebar height={size?.innerHeight as number} />
             </div>
-          }
-        >
-          <ScrollArea
-            className="relative w-full"
-            style={{ height: SCROLL_AREA_HEIGHT }}
-          >
-            {/* <PortalHeader
+          </AppShell.Header>
+          <AppShell.Navbar>
+            <aside className="hidden h-screen md:block">
+              <AdminSidebar height={size?.innerHeight as number} />
+            </aside>
+          </AppShell.Navbar>
+          <AppShell.Main className="bg-background transition-all duration-500  ease-in-out">
+            <ScrollArea
+              className="relative w-full"
+              style={{ height: SCROLL_AREA_HEIGHT }}
+            >
+              {/* <PortalHeader
                 user={user as UserSchemaWithIdType}
                 title={`Welcome ${userFirstName}`}
                 subTitle="Please select from the menu below"
                 imgUrl={user?.imageUrl}
               /> */}
-            <section
-              className={`${
-                drawerOpened ? "md:ml-72" : "md:ml-20"
-              } transition-all duration-500  ease-in-out `}
-            >
-              {children}
-            </section>
-          </ScrollArea>
+              <section
+                className={`${
+                  drawerOpened ? "md:ml-72" : "md:ml-20"
+                } transition-all p-4 duration-500  ease-in-out `}
+              >
+                {children}
+              </section>
+            </ScrollArea>
+          </AppShell.Main>
         </AppShell>
       </ComponentShield>
     </motion.main>

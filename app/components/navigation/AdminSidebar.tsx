@@ -55,11 +55,11 @@ export function AdminSidebar({ height }: { height: number }) {
   )
 
   return (
-    <aside className="fixed left-0 top-0 z-50 ml-1  h-screen py-1">
+    <aside className="fixed left-0 top-0 z-50 h-screen">
       <div
         className={`relative flex flex-col items-center  ${
           drawerOpened ? "w-72" : "w-24"
-        } hidden h-screen rounded-lg border bg-background shadow-md transition-all duration-500  ease-in-out md:block`}
+        } hidden h-screen  border bg-background shadow-md transition-all duration-500  ease-in-out md:block`}
       >
         <BsArrowLeftShort
           className={`absolute -right-3 top-28 ml-auto h-6 w-6 cursor-pointer rounded-full bg-accent-light-500 text-white shadow-sm ${
