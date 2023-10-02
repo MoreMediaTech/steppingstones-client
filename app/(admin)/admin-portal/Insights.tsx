@@ -100,7 +100,7 @@ export function RenderInsights() {
             </div>
             <SimpleGrid
               cols={4}
-              breakpoints={[{ maxWidth: 980, cols: 1, spacing: 'md' }]}
+              
             >
               {defaultStats(stats).map((item, index) => (
                 <StatsItem key={`stats-${index}`} {...item} />
@@ -127,7 +127,7 @@ export function RenderInsights() {
                 />
                 <SimpleGrid
                   cols={1}
-                  breakpoints={[{ maxWidth: 980, cols: 1, spacing: 'md' }]}
+                  
                 >
                   <Suspense fallback={<Loader size="xl" variant="bars" />}>
                     <BreakdownChart
