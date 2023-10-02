@@ -1,6 +1,10 @@
 import { uploadApiSlice } from 'app/global-state/api/apiSlice'
-import { AxiosError } from 'axios'
 import { setError, setImageUrl } from './uploadSlice'
+import {
+  isErrorWithMessage,
+  isFetchBaseQueryError,
+} from "@app/global-state/helper";
+
 
 type Image = {
   imageUrl: string
@@ -20,9 +24,13 @@ const uploadApi = uploadApiSlice.injectEndpoints({
           const { data } = await queryFulfilled
           dispatch(setImageUrl(data.imageUrl))
         } catch (error) {
-          if (error instanceof AxiosError) {
-            dispatch(setError({ message: error.message }))
-          }
+          if (isFetchBaseQueryError(error)) {
+            const errMsg =
+              "error" in error ? error.error : JSON.stringify(error.message);
+           dispatch(setError({ message: errMsg as string }));
+          } else if (isErrorWithMessage(error)) {
+            dispatch(setError({ message: error.message }));
+          } 
           dispatch(setError({ message: 'Unable to upload file' }))
         }
       },
