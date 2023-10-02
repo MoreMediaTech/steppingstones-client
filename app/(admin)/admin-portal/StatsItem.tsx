@@ -29,10 +29,7 @@ function StatsItem({
     >
       <Header title={title} order={5} iconLeft={icon} />
       <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
+        className="flex justify-between items-center"
       >
         <Box
           className={`inline-flex items-center justify-center p-2 ${textColor} h-12 w-12 rounded-md text-gray-900 shadow-xl dark:text-gray-200`}

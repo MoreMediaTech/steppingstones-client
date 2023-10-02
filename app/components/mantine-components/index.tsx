@@ -11,7 +11,6 @@ import {
   Box,
   Burger,
   Textarea,
-  CSSObject,
   TextInput,
   Modal,
   Container,
@@ -49,4 +48,4 @@ export {
   List,
 }
 
-export type { CSSObject, TitleOrder }
+export type {TitleOrder }

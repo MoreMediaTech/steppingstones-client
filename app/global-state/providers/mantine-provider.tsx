@@ -26,7 +26,6 @@ export default function GlobalMantineProvider({ children }: { children: React.Re
       defaultColorScheme={resolvedTheme as MantineColorScheme}
     >
       <Notifications />
-      {/* <RouterTransition /> */}
       {children}
     </MantineProvider>
   );

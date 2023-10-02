@@ -41,12 +41,12 @@ export function MessagesSection() {
         keepMounted={false}
       >
         <Tabs.List aria-label="messages">
-          <Tabs.Tab value="inbox" icon={<MdEmail fontSize={24} />}>
+          <Tabs.Tab value="inbox" leftSection={<MdEmail fontSize={24} />}>
             <Text fz="md" fw={500} className="text-gray-800 dark:text-gray-200">
               Inbox
             </Text>
           </Tabs.Tab>
-          <Tabs.Tab value="sent" icon={<SiMinutemailer fontSize={24} />}>
+          <Tabs.Tab value="sent" leftSection={<SiMinutemailer fontSize={24} />}>
             <Text fz="md" fw={500} className="text-gray-800 dark:text-gray-200">
               Sent
             </Text>
@@ -54,10 +54,8 @@ export function MessagesSection() {
         </Tabs.List>
         <Tabs.Panel value="inbox" pt="xs">
           <Box
-            sx={{
-              marginTop: "1rem",
-              marginLeft: "1rem",
-            }}
+            mt="1rem"
+            ml="1rem"
           >
             <DataTable
               columns={columns}
@@ -69,10 +67,8 @@ export function MessagesSection() {
         </Tabs.Panel>
         <Tabs.Panel value="sent" pt="xs">
           <Box
-            sx={{
-              marginTop: "1rem",
-              marginLeft: "1rem",
-            }}
+            mt="1rem"
+            ml="1rem"
           >
             <DataTable
               columns={columns}

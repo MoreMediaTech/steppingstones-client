@@ -54,7 +54,7 @@ const Footer = () => {
             <p className="text-xs sm:text-sm">
               Stepping Stones App<sup>&copy;</sup> is the copyright and product
               of{' '}
-              <a href="https://www.buildwithequilibrium.com" target='_blank' className='underline'>
+              <a href="https://www.buildwithequilibrium.com" target='_blank' rel='noreferrer' className='underline'>
                 Equilibrium Startup Lab LLC
               </a>{' '}
               {year}{' '}

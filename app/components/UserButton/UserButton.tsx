@@ -1,16 +1,16 @@
-'use client'
-import { forwardRef } from 'react'
-import { FaChevronRight } from 'react-icons/fa'
-import { Group, Avatar, Text, UnstyledButton } from '../mantine-components'
-import { useTheme } from 'next-themes'
+"use client";
+import { forwardRef } from "react";
+import { FaChevronRight } from "react-icons/fa";
+import { Group, Avatar, Text, UnstyledButton } from "../mantine-components";
+import { useTheme } from "next-themes";
 
-interface UserButtonProps extends React.ComponentPropsWithoutRef<'button'> {
-  image?: string
-  name: string
-  email: string
-  initials?: string
-  show?: boolean
-  icon?: React.ReactNode
+interface UserButtonProps extends React.ComponentPropsWithoutRef<"button"> {
+  image?: string;
+  name: string;
+  email: string;
+  initials?: string;
+  show?: boolean;
+  icon?: React.ReactNode;
 }
 
 const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
@@ -18,20 +18,11 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
     { image, name, email, icon, initials, show, ...others }: UserButtonProps,
     ref
   ) => {
-    const { theme } = useTheme()
+    const { theme } = useTheme();
     return (
       <UnstyledButton
         ref={ref}
-        sx={() => ({
-          display: 'block',
-          width: '100%',
-          padding: '10px 15px',
-          color: theme === 'dark' ? '#5515d4' : '#f9f8fc',
-
-          '&:hover': {
-            backgroundColor: theme === 'dark' ? '#3b3c40' : '#cfb9f9',
-          },
-        })}
+        className="block w-full px-2 py-1 text-[#f9f8fc] hover:bg-[#cfb9f9] dark:text-[#5515d4] hover:dark:bg-[#3b3c40]"
         {...others}
       >
         <Group>
@@ -40,11 +31,11 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
           </Avatar>
 
           <div className="hidden lg:block" style={{ flex: 1 }}>
-            <Text size="sm" color="#5E17EB" weight={500}>
+            <Text size="sm" className="font-semibold text-[#5E17EB]">
               {name}
             </Text>
 
-            <Text color="#00DCB3" size="xs">
+            <Text className="text-[#00DCB3]" size="xs">
               {email}
             </Text>
           </div>
@@ -52,10 +43,10 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
           {show && (icon || <FaChevronRight fontSize={16} color="#5E17EB" />)}
         </Group>
       </UnstyledButton>
-    )
+    );
   }
-)
+);
 
-UserButton.displayName = 'UserButton'
+UserButton.displayName = "UserButton";
 
-export default UserButton
+export default UserButton;

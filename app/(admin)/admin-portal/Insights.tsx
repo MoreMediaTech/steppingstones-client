@@ -87,8 +87,8 @@ export function RenderInsights() {
   }
   return (
     <section>
-      <div className="container mx-auto sm:max-w-screen-sm md:max-w-screen-lg lg:max-w-screen-xl space-y-2 ">
-        <div className='grid grid-cols-1 gap-8'>
+      <div className="container mx-auto space-y-2 sm:max-w-screen-sm md:max-w-screen-lg lg:max-w-screen-xl ">
+        <div className="grid grid-cols-1 gap-8">
           <div>
             <div className="flex items-center">
               <Header
@@ -98,10 +98,7 @@ export function RenderInsights() {
                 subOrder={6}
               />
             </div>
-            <SimpleGrid
-              cols={4}
-              
-            >
+            <SimpleGrid cols={4} spacing="lg">
               {defaultStats(stats).map((item, index) => (
                 <StatsItem key={`stats-${index}`} {...item} />
               ))}
@@ -125,10 +122,7 @@ export function RenderInsights() {
                   subtitle="Breakdown of screens viewed by users"
                   subOrder={6}
                 />
-                <SimpleGrid
-                  cols={1}
-                  
-                >
+                <SimpleGrid cols={1} spacing="lg">
                   <Suspense fallback={<Loader size="xl" variant="bars" />}>
                     <BreakdownChart
                       data={analytics.topFiveViewedScreensByDay || []}
@@ -156,5 +150,5 @@ export function RenderInsights() {
         </div>
       </div>
     </section>
-  )
+  );
 }

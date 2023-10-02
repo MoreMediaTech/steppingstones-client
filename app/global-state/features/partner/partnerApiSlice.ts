@@ -1,4 +1,3 @@
-import { PartnerData, IFormData } from '@lib/types'
 import { partnerApiSlice } from '@global-state/api/apiSlice'
 import {
   PartialPartnerProps,

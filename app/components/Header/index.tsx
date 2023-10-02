@@ -27,7 +27,7 @@ function Header({
   bcg,
 }: Props) {
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box className='w-full'>
       <div className="flex items-center gap-1"
       >
         {iconLeft ? (
@@ -48,7 +48,7 @@ function Header({
           </Box>
         ) : null}
       </div>
-      <Title order={subOrder} color="dimmed">
+      <Title order={subOrder} className='font-light'>
         {subtitle}
       </Title>
     </Box>
