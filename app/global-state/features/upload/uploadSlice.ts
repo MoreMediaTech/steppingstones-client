@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { AxiosError } from 'axios'
 import { RootState } from 'app/global-state/store'
 import { Error } from '@lib/types'
 
@@ -8,7 +7,7 @@ type InitialStateProps = {
   previewSource: string | ArrayBuffer | null
   selectedFile: File | null
   message: string
-  error: AxiosError | Error
+  error: Error
 }
 
 export const initialState: InitialStateProps = {
@@ -39,7 +38,7 @@ const uploadSlice = createSlice({
     setMessage: (state, { payload }: PayloadAction<string>) => {
       state.message = payload
     },
-    setError: (state, { payload }: PayloadAction<AxiosError | Error>) => {
+    setError: (state, { payload }: PayloadAction<Error>) => {
       state.error = payload
     },
   },

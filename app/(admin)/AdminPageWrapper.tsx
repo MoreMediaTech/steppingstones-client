@@ -35,8 +35,7 @@ function PageWrapper({
 
   React.useEffect(() => {
     const handleRouteChange = () => {
-      if (!isCookie && pathname.includes("/admin-portal")) {
-        // dispatch(setAuthState({ isAuthenticated: true, token: token as string }))
+      if (!isCookie) {
         redirect("/auth/login");
       }
     };

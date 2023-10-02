@@ -1,10 +1,9 @@
 import React from "react";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import { Toaster } from "@components/ui/toaster";
 import AdminPageWrapper from "./AdminPageWrapper";
 import Provider from "../global-state/providers/provider";
-import { usersApiSlice } from "app/global-state/features/user/usersApiSlice";
+
 import "../globals.css";
 
 function checkUserCookie() {
