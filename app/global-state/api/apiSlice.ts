@@ -60,7 +60,7 @@ const baseQueryWithReAuth: BaseQueryFn = async (
   
   let result = await baseQuery(args, api, extraOptions)
   if (result?.error?.status === 400) {
-    localStorage.removeItem('token')
+    localStorage.removeItem('_ssapp:token')
     api.dispatch(resetCredentials())
     result = await baseQuery(args, api, extraOptions)
   }
@@ -73,7 +73,7 @@ const baseQueryWithReAuth: BaseQueryFn = async (
     )
     if (refreshResult?.data) {
       // store new token
-      localStorage.setItem('token', refreshResult?.data?.token as string)
+      localStorage.setItem('_ssapp:token', refreshResult?.data?.token as string)
       api.dispatch(
         setAuthState({ token: refreshResult?.data?.token as string, isAuthenticated: true })
       )
