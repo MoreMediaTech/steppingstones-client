@@ -4,12 +4,12 @@ import { RootState } from '../../store'
 import { Error, AuthState } from '@lib/types'
 
 const token =
-  typeof window !== 'undefined' ? localStorage.getItem('token') : null
+  typeof window !== 'undefined' ? localStorage.getItem('_ssap:token') : null
 
 export const initialState: AuthState = {
   message: '',
   token: token,
-  isAuthenticated: false,
+  isAuthenticated: token ? true : false,
   error: { message: '' },
 }
 

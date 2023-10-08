@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import { redirect, usePathname } from "next/navigation";
+import { redirect } from "next/navigation";
 
 // redux global state (Model)
 import { useGetUserQuery } from "@app/global-state/features/user/usersApiSlice";
@@ -17,16 +17,16 @@ import { AdminSidebar, MobileAdminSidebar } from "@components/navigation";
 import { AppShell } from "@components/mantine-components";
 import { ScrollArea } from "@components/ui/scroll-area";
 
+const token =
+  typeof window !== "undefined" ? localStorage.getItem("_ssap:token") : null;
+
 function PageWrapper({
-  isCookie,
   children,
   className,
 }: {
-  isCookie: boolean;
   children: React.ReactNode;
   className?: string;
 }) {
-  const pathname = usePathname();
   const [size] = useWindowSize();
   const { drawerOpened } = useAppSelector(globalSelector);
   const { data: user } = useGetUserQuery();
@@ -35,12 +35,12 @@ function PageWrapper({
 
   React.useEffect(() => {
     const handleRouteChange = () => {
-      if (!isCookie) {
+      if (!token) {
         redirect("/auth/login");
       }
     };
     handleRouteChange();
-  }, [isCookie, pathname]);
+  }, [token]);
 
   return (
     <motion.main

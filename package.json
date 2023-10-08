@@ -8,6 +8,7 @@
     "email": "email dev -p 3006"
   },
   "dependencies": {
+    "@auth0/nextjs-auth0": "^3.2.0",
     "@emotion/react": "^11.11.0",
     "@emotion/server": "^11.11.0",
     "@emotion/styled": "^11.10.5",

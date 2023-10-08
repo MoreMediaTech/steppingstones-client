@@ -52,7 +52,7 @@ export default function useVerificationController({
         dispatch(
           setAuthState({ token: responseData.token, isAuthenticated: true })
         )
-        localStorage.setItem('token', responseData.token)
+        localStorage.setItem('_ssap:token', responseData.token)
         form.reset()
         router.push(`/admin-portal`)
       }

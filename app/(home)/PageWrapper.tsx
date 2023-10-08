@@ -9,21 +9,19 @@ import { setAuthState } from 'app/global-state/features/auth/authSlice'
 const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
 
 function PageWrapper({
-  isCookie,
   children,
   className,
 }: {
   children: React.ReactNode
   className?: string
-  isCookie?: boolean
 }) {
   const dispatch = useAppDispatch()
 
   React.useEffect(() => {
-    if(isCookie){
+    if(token){
       dispatch(setAuthState({ isAuthenticated: true, token: token as string }))
     }
-  }, [isCookie])
+  }, [token])
 
   return (
     <motion.main

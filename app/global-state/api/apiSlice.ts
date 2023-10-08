@@ -38,7 +38,7 @@ const baseQuery: BaseQueryFn<
   FetchBaseQueryMeta
 > = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_API_URL,
-  credentials: 'include',
+  credentials: 'include',     
   prepareHeaders: (headers, api) => {
     const { auth } = api.getState() as RootState
     const token = auth.token
@@ -46,6 +46,7 @@ const baseQuery: BaseQueryFn<
     if (token) {
       headers.set('authorization', `Bearer ${token}`)
     }
+    
     headers.set('Content-Type', 'application/json')
     return headers
   },
