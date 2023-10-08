@@ -2,8 +2,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
-import { FiMoon, FiSun } from 'react-icons/fi'
-import { useTheme } from 'next-themes'
 import { GiHamburgerMenu } from 'react-icons/gi'
 
 // redux-state and types
@@ -24,14 +22,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@components/ui/sheet'
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from '@components/ui/navigation-menu'
 import { Avatar, AvatarFallback } from '@components/ui/avatar'
 import Banner from '@components/Banner'
 import { ModeToggle } from '@components/ModeToggle'
@@ -41,7 +31,6 @@ const paths = ['features', 'faqs']
 const Navbar = () => {
   const pathname = usePathname()
   const router = useRouter()
-  const { theme, setTheme, resolvedTheme } = useTheme()
   const { isAuthenticated } = useAppSelector(authSelector)
   const { data: currentUser } = useGetUserQuery(undefined, {
     skip: !isAuthenticated,

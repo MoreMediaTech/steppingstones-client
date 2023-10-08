@@ -8,6 +8,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useUpdateUserMutation } from "app/global-state/features/user/usersApiSlice";
 import { useGetUserQuery } from "app/global-state/features/user/usersApiSlice";
 import { useVerifyEmailMutation } from "app/global-state/features/auth/authApiSlice";
+import { useAppSelector } from "@app/global-state/hooks";
+import { authSelector } from "@app/global-state/features/auth/authSlice";
 
 // components
 import { ToastAction } from "@components/ui/toast";
@@ -30,9 +32,13 @@ export default function useUserController(defaultValues?: UserSchemaType) {
       Role.COUNTY_EDITOR,
     ]);
     const [responseMessage, setResponseMessage] = useState<string>("");
- 
+  const { isAuthenticated } = useAppSelector(authSelector);
 
-     const { data: user, isLoading: isLoadingUser, refetch } = useGetUserQuery();
+     const { data: user, isLoading: isLoadingUser, refetch } = useGetUserQuery(
+      undefined,{
+        skip: !isAuthenticated,
+      }
+     );
      const [verifyEmail, { isSuccess }] = useVerifyEmailMutation();
 
      const form = useForm<UserSchemaType>({

@@ -6,7 +6,7 @@ import { motion } from 'framer-motion'
 import { useAppDispatch } from 'app/global-state/hooks'
 import { setAuthState } from 'app/global-state/features/auth/authSlice'
 
-const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+const token = typeof window !== 'undefined' ? localStorage.getItem('_ssapp:token') : null
 
 function PageWrapper({
   children,
