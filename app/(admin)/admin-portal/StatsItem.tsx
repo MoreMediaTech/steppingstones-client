@@ -1,18 +1,19 @@
-'use client'
-import { Box } from '@mantine/core'
-import React from 'react'
+"use client";
+import { Box } from "@mantine/core";
+import React from "react";
 
-import Header from '../../components/Header'
+import Header from "../../components/Header";
+import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/card";
 
 export type DefaultStatsProps = {
-  title: string
-  count: number
-  icon: React.ReactElement
-  textColor: string
-  borderColor: string
-  bcg: string
-  percentageInc?: number
-}
+  title: string;
+  count: number;
+  icon: React.ReactElement;
+  textColor: string;
+  borderColor: string;
+  bcg: string;
+  percentageInc?: number;
+};
 
 function StatsItem({
   count,
@@ -24,29 +25,23 @@ function StatsItem({
   percentageInc,
 }: DefaultStatsProps) {
   return (
-    <Box
-      className={`$ mx-2 mt-5 rounded-md border-b-4 bg-white px-4 py-2 shadow-xl ${borderColor} ${bcg}`}
-    >
-      <Header title={title} order={5} iconLeft={icon} />
-      <Box
-        className="flex justify-between items-center"
-      >
-        <Box
-          className={`inline-flex items-center justify-center p-2 ${textColor} h-12 w-12 rounded-md text-gray-900 shadow-xl dark:text-gray-200`}
-        >
-          {count}
-        </Box>
-
+    <Card className="w-full">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <CardTitle className="text-sm font-medium">
+          <Header title={title} order={5} />
+        </CardTitle>
+        {icon}
+      </CardHeader>
+      <CardContent>
+        <div className="text-2xl font-bold">{count}</div>
         {percentageInc ? (
-          <Box
-            className={`inline-flex items-center justify-center p-2 ${textColor} h-12 w-12 rounded-md text-gray-900 shadow-lg dark:text-gray-200`}
-          >
-            {percentageInc}
-          </Box>
+          <p className="text-xs text-muted-foreground">
+            {percentageInc} from last month
+          </p>
         ) : null}
-      </Box>
-    </Box>
-  )
+      </CardContent>
+    </Card>
+  );
 }
 
-export default StatsItem
+export default StatsItem;

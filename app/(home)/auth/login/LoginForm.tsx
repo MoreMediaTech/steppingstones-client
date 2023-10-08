@@ -32,6 +32,7 @@ export function LoginForm() {
                 <FormControl>
                   <Input
                     placeholder="email..."
+                    type='email'
                     {...field}
                     className="border-gray-900 dark:border-gray-200"
                   />

@@ -1,52 +1,26 @@
 'use client'
-import { useState, useCallback } from 'react'
+
 import Link from 'next/link'
 import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa'
 
-import { ToastAction } from '@components/ui/toast'
-import { useToast } from '@components/ui/use-toast'
+// components
 import { Button } from '@components/ui/button'
 import Avatar from '@components/Avatar'
 import UpdateUserForm from './UpdateUserForm'
-
-import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
-
-import { useVerifyEmailMutation } from 'app/global-state/features/auth/authApiSlice'
 import Loader from '@components/Loader'
-import { UserSchemaWithIdType } from '@models/User'
 import { UploadImageForm } from '@components/forms/UploadImageForm'
 import Header from '@components/Header'
 
+// zod schema
+import { UserSchemaWithIdType } from '@models/User'
+
+// hooks (controller)
+import useUserController from './useUserController'
+
 const UserProfileSection = () => {
-  const { toast } = useToast()
-  const [responseMessage, setResponseMessage] = useState<string>('')
-  const { data: user, isLoading, refetch } = useGetUserQuery()
-  const [verifyEmail, { isSuccess }] = useVerifyEmailMutation()
-
-  const handleVerifyEmail = useCallback(async () => {
-    try {
-      const response = await verifyEmail({
-        id: user?.id,
-        name: user?.name,
-        email: user?.email,
-      }).unwrap()
-      if (response?.success) {
-        setResponseMessage(response?.message)
-        toast({
-          title: 'Success!',
-          description: response?.message,
-        })
-      }
-    } catch (error: any) {
-      toast({
-        title: 'Error!',
-        description: error?.data?.message,
-        action: <ToastAction altText="Try again">Try again</ToastAction>,
-      })
-    }
-  }, [])
-
-  if (isLoading) {
+  const { isLoadingUser, isSuccess, responseMessage, user, refetch, verifyEmailHandler } = useUserController()
+  
+  if (isLoadingUser) {
     return (
       <div className="flex h-[700px] items-center justify-center">
         <Loader />
@@ -67,7 +41,7 @@ const UserProfileSection = () => {
                   <span className="text-primary">{user?.email}</span>) is
                   unverified.
                 </p>
-                <Button type="button" onClick={handleVerifyEmail}>
+                <Button type="button" onClick={verifyEmailHandler}>
                   Verify
                 </Button>
               </>
@@ -102,7 +76,6 @@ const UserProfileSection = () => {
             <div className=" w-full space-y-4 rounded-md px-4 pb-8 pt-6 shadow-xl dark:bg-slate-700 dark:text-gray-200">
               <h1 className="text-xl font-bold">General Information</h1>
               <UpdateUserForm
-                refetch={refetch}
                 user={user as UserSchemaWithIdType}
                 disabled
               />

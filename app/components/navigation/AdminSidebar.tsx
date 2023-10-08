@@ -84,14 +84,14 @@ export function AdminSidebar({ height }: { height: number }) {
         </Link>
         <Link
           href="/"
-          className={`origin-left items-center px-4 pt-2 transition-all duration-300 ease-in-out fade-in-10 ${
+          className={`origin-left items-center justify-center px-6 pt-4 transition-all duration-300 ease-in-out fade-in-10 ${
             drawerOpened ? "inline-flex gap-2" : "hidden gap-0"
           }`}
         >
           <Image
             src={ColoLogo2}
             alt="Stepping Stones logo"
-            width={220}
+            width={260}
             height={60}
             sizes="(max-width: 640px) 40vw, 20vw"
             className=""
@@ -105,7 +105,12 @@ export function AdminSidebar({ height }: { height: number }) {
             {NAV_ITEMS.map(({ label, Icon, href }) => {
               if (!Icon && !href) {
                 return (
-                  <div key={label} className="my-2 w-full text-center">
+                  <div
+                    key={label}
+                    className={`my-2 w-full  ${
+                      drawerOpened ? "px-4" : "text-center"
+                    } transition-all duration-300 ease-in-out`}
+                  >
                     <Title
                       order={drawerOpened ? 4 : 6}
                       className="text-textDark dark:text-textLight"
@@ -260,9 +265,9 @@ export function MobileAdminSidebar({ height }: { height: number }) {
   return (
     <header>
       <Sheet open={mobileDrawerOpened} onOpenChange={handleOpenChange}>
-        <SheetTrigger className="navbar-burger flex items-center p-3 text-blue-600">
+        <SheetTrigger className="navbar-burger flex items-center p-4 text-blue-600">
             <svg
-              className="block h-4 w-4 fill-current"
+              className="block h-6 w-6 fill-current"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -294,7 +299,7 @@ export function MobileAdminSidebar({ height }: { height: number }) {
               {NAV_ITEMS.map(({ label, Icon, href }) => {
                 if (!Icon && !href) {
                   return (
-                    <div key={label} className="my-2 w-full text-left">
+                    <div key={label} className="my-2 w-full text-left px-4">
                       <Title
                         order={4}
                         className="text-textDark dark:text-textLight"
@@ -364,13 +369,13 @@ export function MobileAdminSidebar({ height }: { height: number }) {
               <Separator className={`my-2`} />
               <div className="flex w-full flex-col items-center space-y-2 py-2">
                 <Button
-                  className="flex w-full items-center justify-start rounded-lg p-2  font-semibold"
+                  className="flex w-full items-center justify-start rounded-lg p-2 px-4  font-semibold"
                   variant="outline"
                   asChild
                 >
                   <Link
                     href={"/auth/user-profile"}
-                    className="flex items-center justify-start space-x-2 px-2 group-hover:hover:bg-[#00DCB3]/20"
+                    className="flex items-center justify-start space-x-2 group-hover:hover:bg-[#00DCB3]/20"
                   >
                     <FaRegUser className="text-xl" />
                     <span className={`transition-all duration-300 `}>
@@ -379,7 +384,7 @@ export function MobileAdminSidebar({ height }: { height: number }) {
                   </Link>
                 </Button>
                 <Button
-                  className="flex w-full items-center justify-start rounded-lg p-2  font-semibold"
+                  className="flex w-full items-center justify-start rounded-lg p-2 px-4 space-x-2  font-semibold"
                   variant="outline"
                   onClick={() => {
                     handleLogout();
@@ -387,7 +392,7 @@ export function MobileAdminSidebar({ height }: { height: number }) {
                   }}
                 >
                   <FaSignOutAlt className="text-2xl" />
-                  <p className={`transition-all duration-300 `}>Logout</p>
+                  <p className={`transition-all duration-300 text-sm `}>Logout</p>
                 </Button>
               </div>
             </div>

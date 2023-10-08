@@ -11,6 +11,7 @@ export default function Logout() {
   useEffect(() => {
     setTimeout(async () => {
         await logout()
+        localStorage.removeItem('_ssapp:token')
         router.push('/')
     }, 5000)
   }, [])

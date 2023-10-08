@@ -36,7 +36,7 @@ export default function VerificationForm() {
                 </FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="enter one time code..."
+                    placeholder="Enter one time code..."
                     {...field}
                     className="border-gray-900 dark:border-gray-200"
                   />

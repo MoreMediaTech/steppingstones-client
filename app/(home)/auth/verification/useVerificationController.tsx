@@ -16,7 +16,7 @@ import { setAuthState } from 'app/global-state/features/auth/authSlice'
 
 const formSchema = z.object({
   oneTimeCode: z.string().nonempty({
-    message: 'Please enter your email',
+    message: 'A six digit one time code is required...',
   }),
 })
 
@@ -52,7 +52,7 @@ export default function useVerificationController({
         dispatch(
           setAuthState({ token: responseData.token, isAuthenticated: true })
         )
-        localStorage.setItem('_ssap:token', responseData.token)
+        localStorage.setItem('_ssapp:token', responseData.token)
         form.reset()
         router.push(`/admin-portal`)
       }

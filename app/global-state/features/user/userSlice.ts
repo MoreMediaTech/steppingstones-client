@@ -5,7 +5,7 @@ import { Error } from '@lib/types'
 import { UserSchemaWithIdType } from '@models/User'
 
 const token =
-  typeof window !== "undefined" ? localStorage.getItem("_ssap:token") : null;
+  typeof window !== "undefined" ? localStorage.getItem("_ssapp:token") : null;
 
 export type UserState = {
     message: string

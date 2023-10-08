@@ -18,7 +18,7 @@ import { AppShell } from "@components/mantine-components";
 import { ScrollArea } from "@components/ui/scroll-area";
 
 const token =
-  typeof window !== "undefined" ? localStorage.getItem("_ssap:token") : null;
+  typeof window !== "undefined" ? localStorage.getItem("_ssapp:token") : null;
 
 function PageWrapper({
   children,
@@ -58,14 +58,15 @@ function PageWrapper({
         <AppShell
           withBorder={false}
           className="bg-background transition-all duration-500  ease-in-out"
-          header={{ height: { base: 48, md: 0 } }}
+          header={{ height: { base: 40, md: 0 } }}
           navbar={{
             width: drawerOpened ? 288 : 80,
             breakpoint: "md",
+            collapsed:  {mobile: true},
           }}
         >
           <AppShell.Header>
-            <div className="block px-2 md:hidden ">
+            <div className="block bg-background px-2 md:hidden ">
               <MobileAdminSidebar height={size?.innerHeight as number} />
             </div>
           </AppShell.Header>
@@ -74,25 +75,12 @@ function PageWrapper({
               <AdminSidebar height={size?.innerHeight as number} />
             </aside>
           </AppShell.Navbar>
-          <AppShell.Main className="bg-background transition-all duration-500  ease-in-out">
-            <ScrollArea
-              className="relative w-full"
-              style={{ height: SCROLL_AREA_HEIGHT }}
-            >
-              {/* <PortalHeader
-                user={user as UserSchemaWithIdType}
-                title={`Welcome ${userFirstName}`}
-                subTitle="Please select from the menu below"
-                imgUrl={user?.imageUrl}
-              /> */}
-              <section
-                className={`${
-                  drawerOpened ? "md:ml-72" : "md:ml-20"
-                } transition-all p-4 duration-500  ease-in-out `}
-              >
-                {children}
-              </section>
-            </ScrollArea>
+          <AppShell.Main
+            className={`${
+              drawerOpened ? "md:ml-72" : "md:ml-20"
+            } bg-background my-4 md:my-0 md:p-4 transition-all duration-500  ease-in-out `}
+          >
+            {children}
           </AppShell.Main>
         </AppShell>
       </ComponentShield>

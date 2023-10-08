@@ -1,13 +1,6 @@
 'use client'
-import { useCallback, useEffect, useState } from 'react'
-import { useForm, SubmitHandler } from 'react-hook-form'
-import { IFormData } from '@lib/types'
-import { useUpdateUserMutation } from 'app/global-state/features/user/usersApiSlice'
-import { zodResolver } from '@hookform/resolvers/zod'
-import * as z from 'zod'
-import validator from 'validator'
-import { ToastAction } from '@components/ui/toast'
-import { useToast } from '@components/ui/use-toast'
+
+// components
 import { Button } from '@components/ui/button'
 import {
   Form,
@@ -25,35 +18,29 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@components/ui/select'
-
 import { Input } from '@components/ui/input'
 import { Checkbox } from '@components/ui/checkbox'
+
+// zod schema
 import {
   UserSchemaType,
-  UserSchema,
   Role,
   UserSchemaWithIdType,
 } from '@models/User'
 
-
+// hooks (controller)
+import useUserController from './useUserController'
 
 
 const UpdateUserForm = ({
-  refetch,
   user,
   disabled,
 }: {
-  refetch: () => void
+ 
   user?: UserSchemaWithIdType
   disabled?: boolean
 }) => {
-  const { toast } = useToast()
-  const [roles] = useState<Role[]>([
-    Role.USER,
-    Role.SS_EDITOR,
-    Role.PARTNER,
-    Role.COUNTY_EDITOR,
-  ])
+ 
   const defaultValues: UserSchemaType = {
     name: user?.name ? (user?.name as string) : '',
     email: user?.email ? (user?.email as string) : '',
@@ -74,47 +61,12 @@ const UpdateUserForm = ({
       : false,
   }
 
- 
-
-  const form = useForm<UserSchemaType>({
-    resolver: zodResolver(UserSchema),
-    defaultValues: { ...defaultValues },
-  })
-  const [updateUser, { isLoading }] = useUpdateUserMutation()
-
-  useEffect(() => {
-    // reset the form when the user changes
-    form.reset({ ...defaultValues })
-  }, [user])
-
-  const onSubmit: SubmitHandler<UserSchemaType> = useCallback(
-    async (data) => {
-      const newData = {
-        id: user?.id as string,
-        ...data,
-      }
-      try {
-        await updateUser(newData as UserSchemaWithIdType).unwrap()
-        refetch()
-        toast({
-          title: 'User updated',
-          description: 'User updated successfully',
-        })
-      } catch (error) {
-        toast({
-          title: 'Error',
-          description: error.message,
-          action: <ToastAction altText="Try again">Try again</ToastAction>,
-        })
-      }
-    },
-    []
-  )
+  const { form, roles, updateUserHandler } = useUserController(defaultValues)
 
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={form.handleSubmit(updateUserHandler)} className="space-y-6">
           <FormField
             control={form.control}
             name="name"

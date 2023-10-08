@@ -39,11 +39,11 @@ function PerformanceChart({ data }: PerformanceChartProps) {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="avgLoadTime" fill="#8884d8" />
+          <Bar dataKey="avgLoadTime" fill="#005848" radius={[4, 4, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </div>
-  )
+  );
 }
 
 export default PerformanceChart

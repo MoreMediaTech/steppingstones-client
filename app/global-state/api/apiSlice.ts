@@ -46,7 +46,7 @@ const baseQuery: BaseQueryFn<
     if (token) {
       headers.set('authorization', `Bearer ${token}`)
     }
-    
+
     headers.set('Content-Type', 'application/json')
     return headers
   },
@@ -57,6 +57,7 @@ const baseQueryWithReAuth: BaseQueryFn = async (
   api,
   extraOptions
 ) => {
+  
   let result = await baseQuery(args, api, extraOptions)
   if (result?.error?.status === 400) {
     localStorage.removeItem('token')
