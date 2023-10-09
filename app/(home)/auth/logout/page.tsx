@@ -13,7 +13,7 @@ export default function Logout() {
         await logout().unwrap()
         localStorage.removeItem('_ssapp:token')
         router.push('/')
-    }, 3000)
+    }, 5000)
   }, [])
 
   return (
