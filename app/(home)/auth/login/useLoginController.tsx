@@ -54,7 +54,6 @@ export default function useLoginController() {
         email: data.email,
         token: token as string,
       }).unwrap();
-      console.log("🚀 ~ file: useLoginController.tsx:57 ~ constonSubmit:SubmitHandler<z.infer<typeofformSchema>>= ~ responseData:", responseData)
       if (responseData.status === "success") {
         toast({
           title: "Success!",

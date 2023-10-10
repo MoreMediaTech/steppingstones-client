@@ -3,6 +3,8 @@ import { apiSlice } from 'app/global-state/api/apiSlice'
 import {
   UserSchemaWithIdType,
 } from '@models/User'
+import { isFetchBaseQueryError, isErrorWithMessage } from '@app/global-state/helper'
+import { setError } from '@app/global-state/features/global/globalSlice'
 
 export const usersAdapter = createEntityAdapter<UserSchemaWithIdType>({})
 
@@ -29,7 +31,14 @@ export const usersApiSlice = apiSlice.injectEndpoints({
             )
           }
         } catch (err) {
-          console.log(err)
+          if (isFetchBaseQueryError(err)) {
+            console.error(err);
+            const errMsg =
+              "error" in err ? err.error : JSON.stringify(err.message);
+            dispatch(setError({ message: errMsg as string, name: err.name }));
+          } else if (isErrorWithMessage(err)){
+            dispatch(setError({ message: err.message, name: 'FETCH_ERROR'}));
+          };
         }
       },
     }),
