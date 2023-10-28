@@ -20,7 +20,7 @@ import { PartialSectionSchemaProps } from "@models/Section";
 export default function useSectionSettingController() {
   const { toast } = useToast();
   const {
-    data: sectionData,
+    data: sectionData = [],
     isLoading: isLoadingSections,
     refetch: refetchSections,
   } = useGetSectionsQuery();

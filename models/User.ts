@@ -5,8 +5,9 @@ import { Prettify } from './helpers'
 
 export enum Role {
   PARTNER = 'PARTNER',
-  COUNTY_EDITOR = 'COUNTY_EDITOR',
-  SS_EDITOR = 'SS_EDITOR',
+  EDITOR = 'EDITOR',
+  ADMIN = 'ADMIN',
+  SUPERADMIN = 'SUPERADMIN',
   USER = 'USER',
 }
 

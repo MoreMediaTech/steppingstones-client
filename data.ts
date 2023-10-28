@@ -9,10 +9,18 @@ import {
   XCircle,
 } from 'lucide-react'
 import { BiHomeCircle } from 'react-icons/bi'
-import { FaBriefcase, FaRegCalendarAlt, FaRegEnvelope, FaUsers } from 'react-icons/fa'
+import { FaRegCalendarAlt, FaRegEnvelope } from 'react-icons/fa'
 import { GiPortal } from 'react-icons/gi'
 import { GoFileDirectory } from 'react-icons/go'
-import { MdOutlineReviews, MdOutlineSpeakerNotes } from 'react-icons/md'
+import {
+  MdOutlineReviews,
+  MdOutlineSpeakerNotes,
+  MdNotifications,
+  MdSupportAgent,
+  MdManageAccounts,
+  MdSettings,
+} from "react-icons/md";
+import { GrResources } from 'react-icons/gr'
 
 export const faqItems = [
   {
@@ -61,71 +69,71 @@ export const faqItems = [
 
 export const NAV_ITEMS = [
   {
-    label: 'Portal Home',
+    label: "Portal Home",
     Icon: BiHomeCircle,
-    href: '/admin-portal',
+    href: "/admin-portal",
   },
   {
-    label: 'Advertisements',
-    href: '/admin-portal/ads-section',
+    label: "Advertisements",
+    href: "/admin-portal/ads-section",
     Icon: MdOutlineSpeakerNotes,
   },
   {
-    label: 'County Portal',
-    href: '/admin-portal/county-portal',
+    label: "County Portal",
+    href: "/admin-portal/county-portal",
     Icon: GiPortal,
   },
   {
-    label: 'Client Meetings',
-    href: '/admin-portal/client-meeting',
+    label: "Client Meetings",
+    href: "/admin-portal/client-meeting",
     Icon: FaRegCalendarAlt,
   },
   {
-    label: 'Feedback',
-    href: '/admin-portal/feedback',
+    label: "Feedback",
+    href: "/admin-portal/feedback",
     Icon: MdOutlineReviews,
   },
   {
-    label: 'Messages',
+    label: "Messages",
     Icon: FaRegEnvelope,
-    href: '/admin-portal/messages',
+    href: "/admin-portal/messages",
   },
   {
-    label: 'Manage Users',
-    Icon: FaUsers,
-    href: '/admin-portal/users',
+    label: "Notifications",
+    Icon: MdNotifications,
+    href: "/admin-portal/notifications",
   },
   {
-    label: 'Admin',
+    label: "Support",
+    Icon: MdSupportAgent,
+    href: "/admin-portal/support",
+  },
+  {
+    label: "Manage Users",
+    Icon: MdManageAccounts,
+    href: "/admin-portal/users",
+  },
+  {
+    label: "Admin",
     Icon: null,
     href: null,
   },
   {
-    label: 'Manage County',
-    Icon: FaBriefcase,
-    href: '/admin-portal/admin/county-setting',
+    label: "Manage County",
+    Icon: MdSettings,
+    href: "/admin-portal/admin/county-setting",
   },
   {
-    label: 'Manage District',
-    Icon: FaBriefcase,
-    href: '/admin-portal/admin/district-setting',
-  },
-  {
-    label: 'Manage Section',
-    Icon: FaBriefcase,
-    href: '/admin-portal/admin/section-setting',
-  },
-  {
-    label: 'Partner Directory',
+    label: "Partner Directory",
     Icon: GoFileDirectory,
-    href: '/admin-portal/admin/partner-directory',
+    href: "/admin-portal/admin/partner-directory",
   },
   {
-    label: 'Source Directory',
-    Icon: GoFileDirectory,
-    href: '/admin-portal/admin/source-directory',
+    label: "Source Directory",
+    Icon: GrResources,
+    href: "/admin-portal/admin/source-directory",
   },
-]
+];
 
 export const VALUE_CATEGORIES = [
   'NONE',

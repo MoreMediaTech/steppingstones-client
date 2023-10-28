@@ -6,7 +6,7 @@ import { ArrowUpDown } from 'lucide-react'
 import { Button } from '@components/ui/button'
 import { Checkbox } from '@components/ui/checkbox'
 import { DataTableRowActions } from '@components/table/data-table-row-actions'
-import { UpdateUserForm } from './UpdateUserForm'
+import { UpdateUserForm } from './update-user-form'
 
 // zod schemas
 import { UserSchemaWithIdType } from '@models/User'

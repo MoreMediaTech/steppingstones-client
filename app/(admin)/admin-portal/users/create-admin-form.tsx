@@ -23,7 +23,7 @@ import {
 import { Input } from "@components/ui/input";
 
 // hooks (Controller)
-import useUsersController from "./useUsersController";
+import useUsersController from "./use-users-controller";
 
 export function CreateAdminForm() {
   const [open, setOpen] = React.useState<boolean>(false);

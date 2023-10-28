@@ -14,9 +14,11 @@ import { useToast } from "@components/ui/use-toast";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 // redux global state (Model)
-import { useGetUsersQuery } from "@global-state/features/user/usersApiSlice";
-import { useCreateUserMutation } from "app/global-state/features/user/usersApiSlice";
-import { useUpdateUserMutation } from "app/global-state/features/user/usersApiSlice";
+import {
+  useGetUsersQuery,
+  useCreateUserMutation,
+  useUpdateUserMutation,
+} from "@global-state/features/user/usersApiSlice";
 import {
   isErrorWithMessage,
   isFetchBaseQueryError,
@@ -29,9 +31,10 @@ export default function useUsersController(
 ) {
   const [roles] = useState<Role[]>([
     Role.USER,
-    Role.SS_EDITOR,
+    Role.EDITOR,
     Role.PARTNER,
-    Role.COUNTY_EDITOR,
+    Role.ADMIN,
+    Role.SUPERADMIN,
   ]);
 
   const { data: users, isLoading, refetch } = useGetUsersQuery();

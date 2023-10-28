@@ -41,7 +41,7 @@ export default function useCountySettingController(
   const { toast } = useToast()
   const [preview, setPreview] = useState<string | ArrayBuffer | null>(null)
   const {
-    data: counties,
+    data: counties = [],
     isLoading: isLoadingCounties,
     refetch: refetchCounties,
   } = useGetCountiesQuery()

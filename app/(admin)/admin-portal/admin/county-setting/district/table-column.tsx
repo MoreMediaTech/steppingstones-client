@@ -7,8 +7,6 @@ import { format } from "date-fns";
 import { enGB } from "date-fns/locale";
 import Image from "next/image";
 
-import steppingstonesapplogo from "../../../../../public/steppingstonesapplogo.png";
-
 // hooks (Controller)
 import useDistrictSettingController from "./use-district-setting-controller";
 
@@ -66,7 +64,7 @@ export const columns: ColumnDef<DistrictSchemaProps>[] = [
         <div className="flex items-center justify-start space-x-2">
           <div className="relative h-10 w-10 overflow-hidden rounded-full border-2 border-primary-dark-200 p-1">
             <Image
-              src={district.logoIcon ?? steppingstonesapplogo}
+              src={district.imageUrl ?? "/public/steppingstonesapplogo.png"}
               alt={district.name as string}
               sizes="40px"
               width={40}
@@ -99,9 +97,11 @@ export const columns: ColumnDef<DistrictSchemaProps>[] = [
       const district = row.original;
       return (
         <div className="flex items-center justify-start space-x-2">
-          <div className="relative h-10 w-10 overflow-hidden rounded-full flex items-center border-2 border-[#5E17EB] p-1">
+          <div className="relative flex h-10 w-10 items-center overflow-hidden rounded-full border-2 border-[#5E17EB] p-1">
             <Image
-              src={district.county?.logoIcon ?? steppingstonesapplogo}
+              src={
+                district.county?.logoIcon ?? "/public/steppingstonesapplogo.png"
+              }
               alt={district.county?.name as string}
               sizes="40px"
               width={40}

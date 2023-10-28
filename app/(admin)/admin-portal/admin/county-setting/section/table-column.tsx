@@ -2,29 +2,27 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { FaCheck, FaTimes } from "react-icons/fa";
-import { ArrowUpDown, Pen } from "lucide-react";
+import { ArrowUpDown } from "lucide-react";
 import { format } from "date-fns";
 import { enGB } from "date-fns/locale";
 import Image from "next/image";
 
-// types
-import { CountyDataProps } from "@lib/types";
-import { CountySchemaProps } from "@models/County";
+
 
 // components
 import { Button } from "@components/ui/button";
 import { Checkbox } from "@components/ui/checkbox";
 import { DataTableRowActions } from "@components/table/data-table-row-actions";
-import HandleDeleteModal from "@components/HandleDeleteModal/HandleDeleteModal";
-import { UpdateCountyForm } from "./UpdateCountyForm";
+import { SubSectionsTable } from "./SubSectionsTable";
 
-// public
-import steppingstonesapplogo from "@public/steppingstonesapplogo.png";
+// zod schema
+import { PartialSectionSchemaProps, SectionSchemaProps } from "@models/Section";
 
 // hooks (Controller)
-import useCountySettingController from "./use-county-setting-controller";
+import useSectionSettingController from "./use-section-setting-controller";
+import HandleDeleteModal from "@components/HandleDeleteModal/HandleDeleteModal";
 
-export const columns: ColumnDef<CountySchemaProps>[] = [
+export const columns: ColumnDef<PartialSectionSchemaProps>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -55,34 +53,83 @@ export const columns: ColumnDef<CountySchemaProps>[] = [
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            County Name
+            Section Name
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "county",
+    header: ({ column }) => {
+      return (
+        <div className="flex items-center justify-start">
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            County
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         </div>
       );
     },
     cell: ({ row }) => {
-      const county = row.original;
+      const section = row.original;
       return (
         <div className="flex items-center justify-start space-x-2">
-          <div className="relative h-10 w-10 overflow-hidden rounded-full border-2 border-primary-dark-200 p-1">
+          <div className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border-2 border-[#5E17EB] p-1">
             <Image
-              src={county.logoIcon ?? steppingstonesapplogo}
-              alt={county.name as string}
-              fill
-              sizes="(min-width: 640px) 100px, 50px"
+              src={
+                section.county?.logoIcon ?? "/public/steppingstonesapplogo.png"
+              }
+              alt={section.county?.name as string}
+              width={40}
+              height={40}
+              sizes="40px"
             />
           </div>
-          <div className="text-xs font-semibold sm:text-base ">
-            <p>{county?.name}</p>
+          <div className="text-xs font-semibold sm:text-base">
+            <p>{section.county?.name}</p>
           </div>
         </div>
       );
     },
   },
-
   {
-    accessorKey: "published",
+    accessorKey: "subSections",
+    header: ({ column }) => {
+      return (
+        <div className="flex items-center justify-start">
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Sub Section
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      const section = row.original;
+      
+      const { deleteManySubsectionHandler } = useSectionSettingController();
+      return (
+        <div className="flex items-center ">
+          <SubSectionsTable
+            subSectionData={
+              section.subsections as PartialSectionSchemaProps["subsections"] || []
+            }
+            deleteManySubsectionsHandler={deleteManySubsectionHandler}
+          />
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "isLive",
     header: ({ column }) => {
       return (
         <div className="flex items-center justify-center">
@@ -90,17 +137,17 @@ export const columns: ColumnDef<CountySchemaProps>[] = [
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Published
+            Live
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         </div>
       );
     },
     cell: ({ row }) => {
-      const published = row.getValue("published");
+      const isLive = row.getValue("isLive");
       return (
         <div className="flex items-center justify-center">
-          {published ? (
+          {isLive ? (
             <FaCheck className="text-green-400" />
           ) : (
             <FaTimes className="text-red-500" />
@@ -136,30 +183,12 @@ export const columns: ColumnDef<CountySchemaProps>[] = [
   {
     id: "action",
     cell: ({ row }) => {
-      const county = row.original;
-      const { deleteHandler } = useCountySettingController();
+      const section = row.original;
 
-      return (
-        <DataTableRowActions
-          row={row}
-          enableEditItem
-          editItem={
-            <UpdateCountyForm
-              buttonTitle={
-                <div className="flex items-center justify-start">
-                  <Pen className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-                  Edit
-                </div>
-              }
-              county={county}
-            />
-          }
-          enableDeleteItem
-          deleteItem={
-            <HandleDeleteModal deleteHandler={deleteHandler} data={county} />
-          }
-        />
-      );
+      const { handleDelete } = useSectionSettingController();
+      return <DataTableRowActions row={row} enableDeleteItem deleteItem={
+        <HandleDeleteModal data={section as SectionSchemaProps} deleteHandler={handleDelete} />
+      } />;
     },
   },
 ];

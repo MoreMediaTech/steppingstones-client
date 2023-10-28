@@ -1,8 +1,8 @@
 'use client'
 import { useGetUserQuery } from 'app/global-state/features/user/usersApiSlice'
-import { AdminUsersSection } from './AdminUsersSection'
+import { AdminUsersSection } from './admin-users-section'
 import Header from 'app/components/Header'
-import { CreateAdminForm } from './CreateAdminForm'
+import { CreateAdminForm } from './create-admin-form'
 
 
 export default function Users() {

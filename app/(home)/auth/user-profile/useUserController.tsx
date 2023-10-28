@@ -27,9 +27,10 @@ export default function useUserController(defaultValues?: UserSchemaType) {
     const { toast } = useToast();
     const [roles] = useState<Role[]>([
       Role.USER,
-      Role.SS_EDITOR,
+      Role.EDITOR,
       Role.PARTNER,
-      Role.COUNTY_EDITOR,
+      Role.ADMIN,
+      Role.SUPERADMIN,
     ]);
     const [responseMessage, setResponseMessage] = useState<string>("");
   const { isAuthenticated } = useAppSelector(authSelector);

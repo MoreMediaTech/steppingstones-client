@@ -22,6 +22,7 @@ import {
   editorApiSlice,
   uploadApiSlice,
   analyticsApiSlice,
+  notificationsApiSlice,
 } from './api/apiSlice'
 
 const reducers = {
@@ -31,6 +32,7 @@ const reducers = {
   [editorApiSlice.reducerPath]: editorApiSlice.reducer,
   [uploadApiSlice.reducerPath]: uploadApiSlice.reducer,
   [analyticsApiSlice.reducerPath]: analyticsApiSlice.reducer,
+  [notificationsApiSlice.reducerPath]: notificationsApiSlice.reducer,
   auth: authReducer,
   partner: partnerReducer,
   messages: messagesReducer,
@@ -67,6 +69,7 @@ export const store = configureStore({
       editorApiSlice.middleware,
       uploadApiSlice.middleware,
       analyticsApiSlice.middleware,
+      notificationsApiSlice.middleware,
     ]),
   devTools: process.env.NODE_ENV !== 'production',
 })

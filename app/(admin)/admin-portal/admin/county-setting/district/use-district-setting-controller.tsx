@@ -31,7 +31,7 @@ export default function useDistrictSettingController(
   const { toast } = useToast();
 
   const {
-    data: districtData,
+    data: districtData = [],
     isLoading: isLoadingDistricts,
     refetch: refetchDistricts,
   } = useGetDistrictsQuery();

@@ -175,7 +175,9 @@ export function AdminSidebar({ height }: { height: number }) {
                     className={`flex w-auto items-center space-x-2 duration-300 group-hover:hover:bg-[#00DCB3]/20 `}
                     onClick={() => dispatch(setDrawerOpened(false))}
                   >
-                    {<Icon className="text-2xl" />}
+                    {
+                      <Icon className="text-2xl text-textDark dark:text-textLight" />
+                    }
                     <span
                       className={`text-sm duration-300 ${
                         !drawerOpened ? "hidden" : " "
@@ -358,7 +360,9 @@ export function MobileAdminSidebar({ height }: { height: number }) {
                       className={`flex w-auto items-center space-x-2 duration-300 group-hover:hover:bg-[#00DCB3]/20 `}
                       onClick={() => dispatch(setMobileDrawerOpened(false))}
                     >
-                      {<Icon className="text-2xl" />}
+                      {
+                        <Icon className="text-2xl text-textDark dark:text-textLight" />
+                      }
                       <span className={`text-sm duration-300 `}>{label}</span>
                     </Link>
                   </Button>

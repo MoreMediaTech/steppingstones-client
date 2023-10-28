@@ -168,3 +168,16 @@ export const analyticsApiSlice = createApi({
   },
   endpoints: (builder) => ({}),
 })
+export const notificationsApiSlice = createApi({
+  reducerPath: "notificationsApi",
+  baseQuery: baseQueryWithReAuth,
+  keepUnusedDataFor: 300,
+  tagTypes: ["Notifications"],
+  extractRehydrationInfo(action, { reducerPath }) {
+    if (action.type === HYDRATE) {
+      return action.payload[reducerPath];
+    }
+  },
+  endpoints: (builder) => ({}),
+});
+

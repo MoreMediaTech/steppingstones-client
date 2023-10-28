@@ -52,7 +52,7 @@ function PageWrapper({
     >
       <ComponentShield
         RBAC
-        showForRole={"SS_EDITOR"}
+        showForRole={["EDITOR","ADMIN", "SUPERADMIN"]}
         userRole={user?.role as string}
       >
         <AppShell

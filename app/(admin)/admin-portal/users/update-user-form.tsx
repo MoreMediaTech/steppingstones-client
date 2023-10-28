@@ -38,7 +38,7 @@ import { Loader } from "@components/mantine-components";
 import { Role, PartialUserWithIdType } from "@models/User";
 
 // hooks (Controller)
-import useUsersController from "./useUsersController";
+import useUsersController from "./use-users-controller";
 
 type Props = {
   user?: PartialUserWithIdType;
@@ -343,8 +343,14 @@ export function UpdateUserForm({ user, disabled }: Props) {
                   type="submit"
                   className="inline-flex w-full items-center justify-center group-disabled:pointer-events-none"
                 >
-                  <Loader variant="dots" size="sm" className="absolute text-tertiary-400 group-enabled:hidden group-enabled:opacity-0 group-enabled:w-0" />
-                  <span className="group-disabled:opacity-0 w-full">Submit</span>
+                  <Loader
+                    variant="dots"
+                    size="sm"
+                    className="absolute text-tertiary-400 group-enabled:hidden group-enabled:w-0 group-enabled:opacity-0"
+                  />
+                  <span className="w-full group-disabled:opacity-0">
+                    Submit
+                  </span>
                 </Button>
               </fieldset>
             </form>

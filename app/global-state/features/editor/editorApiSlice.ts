@@ -1,9 +1,8 @@
-import { EconomicDataWidgetProps } from "@lib/types";
 import { editorApiSlice } from "@global-state/api/apiSlice";
 
 import { ContentFormProps } from "@models/ContentForm";
 import { CountySchemaProps, PartialCountySchemaProps } from "@models/County";
-import { PartialFormSchemaProps } from "@app/(admin)/admin-portal/admin/county-setting/use-county-setting-controller";
+import { PartialFormSchemaProps } from "@app/(admin)/admin-portal/admin/county-setting/county/use-county-setting-controller";
 import {
   DistrictSchemaProps,
   PartialDistrictSchemaProps,
