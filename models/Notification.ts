@@ -2,10 +2,10 @@ import * as z from 'zod';
 import { Prettify } from './helpers';
 
 export enum NotificationTypes {
-  NEW_MESSAGE = 'NEW_MESSAGE',
-  NEW_COMMENT = 'NEW_COMMENT',
-  NEW_FEEDBACK = 'NEW_FEEDBACK',
-  NEW_CONTENT = 'NEW_CONTENT',
+  MESSAGE = 'MESSAGE',
+  COMMENT = 'COMMENT',
+  FEEDBACK = 'FEEDBACK',
+  CONTENT = 'CONTENT',
 }
 
 export const notificationSchema = z.object({

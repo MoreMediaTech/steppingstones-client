@@ -29,10 +29,10 @@ import {
 export default function useNotificationsController() {
   const { toast } = useToast();
   const [notificationType] = useState<NotificationTypes[]>([
-    NotificationTypes.NEW_COMMENT,
-    NotificationTypes.NEW_CONTENT,
-    NotificationTypes.NEW_FEEDBACK,
-    NotificationTypes.NEW_MESSAGE,
+    NotificationTypes.COMMENT,
+    NotificationTypes.CONTENT,
+    NotificationTypes.FEEDBACK,
+    NotificationTypes.MESSAGE,
   ]);
 
   // get all users
@@ -64,7 +64,7 @@ export default function useNotificationsController() {
     defaultValues: {
       title: "",
       body: "",
-      type: NotificationTypes.NEW_COMMENT,
+      type: NotificationTypes.COMMENT,
     },
   });
 

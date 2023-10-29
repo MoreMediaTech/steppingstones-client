@@ -3,8 +3,8 @@ import { Support } from './support'
 
 export default function SupportPage() {
   return (
-    <section className='w-full'>
-        <Support />
+    <section className="container min-h-screen w-full overflow-y-auto sm:mx-auto">
+      <Support />
     </section>
-  )
+  );
 }

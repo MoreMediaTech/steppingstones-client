@@ -18,14 +18,11 @@ import {
 } from "@components/ui/select";
 import { Input } from "@components/ui/input";
 import { Textarea } from "@components/ui/textarea";
+
 // hooks (Controller)
 import useNotificationsController from "./use-notifications-controller";
 
 export function SendNotificationForm() {
-    const defaultValues = {
-    title: "",
-    body: "",
-    };
   const {
     form,
     handleSendNotificationsToAllUsers,
