@@ -15,7 +15,6 @@ import useWindowSize from "@hooks/useWindowSize";
 import { ComponentShield } from "@components/NextShield";
 import { AdminSidebar, MobileAdminSidebar } from "@components/navigation";
 import { AppShell } from "@components/mantine-components";
-import { ScrollArea } from "@components/ui/scroll-area";
 
 const token =
   typeof window !== "undefined" ? localStorage.getItem("_ssapp:token") : null;
@@ -31,7 +30,7 @@ function PageWrapper({
   const { drawerOpened } = useAppSelector(globalSelector);
   const { data: user } = useGetUserQuery();
 
-  const SCROLL_AREA_HEIGHT = (size?.innerHeight as number) - 10;
+  // const SCROLL_AREA_HEIGHT = (size?.innerHeight as number) - 10;
 
   React.useEffect(() => {
     const handleRouteChange = () => {
@@ -48,7 +47,7 @@ function PageWrapper({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
       transition={{ duration: 0.25 }}
-      className={`${className} h-screen  `}
+      className={`${className} bg-background min-h-screen  `}
     >
       <ComponentShield
         RBAC
