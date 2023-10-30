@@ -1,25 +1,9 @@
-"use client";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useLogoutMutation } from "app/global-state/features/auth/authApiSlice";
+import Logout from "./logout";
 
-export default function Logout() {
-  const [logout] = useLogoutMutation();
-  const router = useRouter();
-
-  useEffect(() => {
-    setTimeout(async () => {
-      localStorage.removeItem("_ssapp:token");
-      await logout();
-      router.push("/");
-    }, 4000);
-  }, []);
-
+export default function LogoutPage() {
   return (
     <section className="relative flex min-h-screen w-full items-center justify-center">
-      <h1 className="font-mono text-3xl font-medium dark:text-gray-200">
-        Logging out.......
-      </h1>
+      <Logout />
     </section>
   );
 }

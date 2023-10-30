@@ -19,7 +19,7 @@ export const authSlice = createSlice({
   reducers: {
     setAuthState: (
       state,
-      { payload: { token, isAuthenticated } }: PayloadAction<{ token: string; isAuthenticated: boolean }>
+      { payload: { token, isAuthenticated } }: PayloadAction<{ token: string | null; isAuthenticated: boolean }>
     ) => {
       state.token = token
       state.isAuthenticated = isAuthenticated
