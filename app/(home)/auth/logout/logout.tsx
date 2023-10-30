@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useLogoutMutation } from "app/global-state/features/auth/authApiSlice";
 
 // redux store (Model)
@@ -10,6 +10,7 @@ import { setAuthState } from "app/global-state/features/auth/authSlice";
 
 export default function Logout() {
   const dispatch = useAppDispatch();
+    const router = useRouter();
   const [logout] = useLogoutMutation();
 
   useEffect(() => {
@@ -17,7 +18,7 @@ export default function Logout() {
       localStorage.removeItem("_ssapp:token");
       await logout();
       dispatch(setAuthState({ isAuthenticated: false, token: null }));
-      redirect("/");
+      router.push("/");
     }, 4000);
   }, []);
 
