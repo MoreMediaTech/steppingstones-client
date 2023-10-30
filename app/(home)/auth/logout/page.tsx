@@ -1,20 +1,19 @@
-'use client'
-import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import { useLogoutMutation } from 'app/global-state/features/auth/authApiSlice'
-
+"use client";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useLogoutMutation } from "app/global-state/features/auth/authApiSlice";
 
 export default function Logout() {
-  const [logout] = useLogoutMutation()
-  const router = useRouter()
+  const [logout] = useLogoutMutation();
+  const router = useRouter();
 
   useEffect(() => {
     setTimeout(async () => {
-        await logout().unwrap()
-        localStorage.removeItem('_ssapp:token')
-        router.push('/')
-    }, 4000)
-  }, [])
+      localStorage.removeItem("_ssapp:token");
+      await logout();
+      router.push("/");
+    }, 4000);
+  }, []);
 
   return (
     <section className="relative flex min-h-screen w-full items-center justify-center">
@@ -22,5 +21,5 @@ export default function Logout() {
         Logging out.......
       </h1>
     </section>
-  )
+  );
 }
