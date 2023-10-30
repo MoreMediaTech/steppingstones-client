@@ -18,10 +18,12 @@ import { Separator } from '@components/ui/separator'
 export function LoginButton({
   pos,
   currentUser,
+  isAuthenticated,
   handleLogout,
   setActivePath,
 }: {
   pos: string
+  isAuthenticated: boolean
   currentUser: UserSchemaWithIdType
   handleLogout(): void
   setActivePath: React.Dispatch<React.SetStateAction<string>>
@@ -29,7 +31,7 @@ export function LoginButton({
   const pathname = usePathname()
   return (
     <>
-      {currentUser ? (
+      {currentUser && isAuthenticated ? (
         <li>
           <NavigationMenu>
             <NavigationMenuList>
@@ -102,16 +104,18 @@ export function LoginButton({
 
 export function MobileLoginButton({
   currentUser,
+  isAuthenticated,
   handleLogout,
   setActivePath,
 }: {
   currentUser: UserSchemaWithIdType
+  isAuthenticated: boolean
   handleLogout(): void
   setActivePath: React.Dispatch<React.SetStateAction<string>>
 }) {
   return (
     <>
-      {currentUser ? (
+      {currentUser && isAuthenticated ? (
         <>
           <Separator className="my-2 w-full" />
           <span className="mb-2 text-[16px]">Admin</span>
@@ -151,6 +155,7 @@ export function MobileLoginButton({
             <Button
               variant="outline"
               className="flex w-full items-center justify-start gap-2"
+              onClick={() => handleLogout()}
             >
               <FaSignOutAlt fontSize={20} />
               <span className="text-lg ">Logout</span>

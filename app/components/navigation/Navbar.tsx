@@ -143,6 +143,7 @@ const Navbar = () => {
 
           <LoginButton
             pos={pos}
+            isAuthenticated={isAuthenticated}
             currentUser={currentUser as UserSchemaWithIdType}
             handleLogout={handleLogout}
             setActivePath={setActivePath}
@@ -252,6 +253,7 @@ const Navbar = () => {
                   <li className="my-2 w-full cursor-pointer font-poppins font-medium">
                     <SheetTrigger>
                       <MobileLoginButton
+                        isAuthenticated={isAuthenticated}
                         currentUser={
                           currentUser as UserSchemaWithIdType
                         }
