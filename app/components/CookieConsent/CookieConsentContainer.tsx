@@ -1,7 +1,7 @@
-'use client'
-import { Button } from '@components/ui/button'
-import { Switch } from '@components/ui/switch'
-import Link from 'next/link'
+"use client";
+import { Button } from "@components/ui/button";
+import { Switch } from "@components/ui/switch";
+import Link from "next/link";
 import {
   Dialog,
   DialogContent,
@@ -9,14 +9,14 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@components/ui/dialog'
+} from "@components/ui/dialog";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@components/ui/accordion'
-import { Label } from '@components/ui/label'
+} from "@components/ui/accordion";
+import { Label } from "@components/ui/label";
 
 const CookieConsentContainer = ({
   snCookies,
@@ -24,15 +24,15 @@ const CookieConsentContainer = ({
   handleAccept,
   handleConfirmChoices,
 }: {
-  snCookies: boolean
-  setSNCookies: React.Dispatch<React.SetStateAction<boolean>>
-  handleAccept: () => void
-  handleConfirmChoices: () => void
+  snCookies: boolean;
+  setSNCookies: React.Dispatch<React.SetStateAction<boolean>>;
+  handleAccept: () => void;
+  handleConfirmChoices: () => void;
 }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" className="text-[#5E17EB] underline">
+        <Button variant="outline" className=" border-primary underline">
           Manage Preferences
         </Button>
       </DialogTrigger>
@@ -47,10 +47,10 @@ const CookieConsentContainer = ({
             allow some types of cookies. Click on the different category
             headings to find out more and change your settings. However,
             blocking some types of cookies may impact your experience of the
-            site and the services we are able to offer.{' '}
+            site and the services we are able to offer.{" "}
             <DialogTrigger asChild>
               <Link
-                href={'/privacy-policy'}
+                href={"/privacy-policy"}
                 className="text-gray-900 underline"
               >
                 Privacy Policy
@@ -102,17 +102,18 @@ const CookieConsentContainer = ({
             </AccordionContent>
           </AccordionItem>
         </Accordion>
-        <section className="space-y-2 border-t border-gray-200 py-4">
-          <div className="px-2 py-4 hover:bg-gray-50">
-            <p className="text-sm text-gray-700 md:text-lg">
+        <section className="space-y-2 border-t border-primary py-4">
+          <div className="px-2 py-4 ">
+            <p className="text-sm md:text-lg">
               For more information about cookies and your choices, please visit
-              our{' '}
+              our{" "}
             </p>
             <DialogTrigger asChild>
-              <Link href={'/cookie-policy'}>
-                <a className="text-sm text-gray-900 underline md:text-lg">
-                  Cookie Policy
-                </a>
+              <Link
+                href={"/cookie-policy"}
+                className="text-sm underline md:text-lg"
+              >
+                Cookie Policy
               </Link>
             </DialogTrigger>
           </div>
@@ -129,7 +130,7 @@ const CookieConsentContainer = ({
             <DialogTrigger asChild>
               <Button
                 type="button"
-                className="w-full text-xs md:w-1/3 md:text-lg"
+                className="w-full text-xs md:w-1/3 md:text-sm"
                 onClick={handleConfirmChoices}
               >
                 Confirm Choices
@@ -139,7 +140,7 @@ const CookieConsentContainer = ({
         </section>
       </DialogContent>
     </Dialog>
-  )
-}
+  );
+};
 
-export default CookieConsentContainer
+export default CookieConsentContainer;

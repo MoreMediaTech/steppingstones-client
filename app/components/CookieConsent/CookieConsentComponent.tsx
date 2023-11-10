@@ -5,10 +5,9 @@ import { OPTIONS, SAME_SITE_OPTIONS, VISIBLE_OPTIONS } from '@lib/types'
 import CookieConsent from './CookieConsent'
 import CookieConsentContainer from './CookieConsentContainer'
 
-import { useAppDispatch, useAppSelector } from 'app/global-state/hooks'
+import { useAppDispatch} from 'app/global-state/hooks'
 import {
   setIsVisible,
-  globalSelector,
 } from 'app/global-state/features/global/globalSlice'
 import { setCookie } from './actions'
 
@@ -21,6 +20,7 @@ const CookieConsentComponent = () => {
 
   // default cookie name
   const COOKIE_NAME = 'ssapp-cookie-consent'
+  const COOKIE_CONSENT = "ssapp-strictly-necessary-cookie-consent"
 
   /**
    * @description - This function is used to set the cookie consent cookie.
@@ -52,6 +52,14 @@ const CookieConsentComponent = () => {
       true,
       SAME_SITE_OPTIONS.LAX
     )
+      setCookie(
+        COOKIE_CONSENT,
+        false,
+        0,
+        { domain: "steppingstonesapp.com" },
+        true,
+        SAME_SITE_OPTIONS.LAX
+      );
     setOpened(false)
     setSNCookies(true)
     setPAndACookies(true)
@@ -70,6 +78,14 @@ const CookieConsentComponent = () => {
       true,
       SAME_SITE_OPTIONS.LAX
     )
+     setCookie(
+       COOKIE_CONSENT,
+       true,
+       0,
+       { domain: "steppingstonesapp.com" },
+       true,
+       SAME_SITE_OPTIONS.LAX
+     );
     dispatch(setIsVisible(false))
   }
 
@@ -88,7 +104,16 @@ const CookieConsentComponent = () => {
       true,
       SAME_SITE_OPTIONS.LAX
     )
+      setCookie(
+        COOKIE_CONSENT,
+        false,
+        0,
+        { domain: "steppingstonesapp.com" },
+        true,
+        SAME_SITE_OPTIONS.LAX
+      );
     dispatch(setIsVisible(false))
+
     setOpened(false)
   }
 
@@ -105,10 +130,10 @@ const CookieConsentComponent = () => {
         location={OPTIONS.BOTTOM}
         buttonText="Accept"
         declineButtonText="Decline"
-        buttonClasses="bg-[#5E17EB] hover:bg-[#3A0B99] text-white text-xs sm:text-md px-4 py-2 opacity-100 rounded-full w-full transition-all duration-300 ease-in-out"
-        declineButtonClasses="bg-transparent hover:bg-gray-900 hover:text-white text-gray-900 mt-2 border border-gray-900 text-xs sm:text-md px-4 py-2 opacity-100 rounded-full w-full "
-        containerClasses="md:container md:max-w-screen-lg !mx-2 md:mx-0 md:ml-8 mb-4 flex flex-col md:flex-row items-center justify-center py-2 md:p-8 bg-slate-300 fixed bottom-0  md:w-full rounded-lg"
-        contentClasses=" text-gray-900 text-center sm:text-left sm:mr-2 "
+        buttonClasses=" text-xs sm:text-md px-4 py-2 rounded w-full transition-all duration-300 ease-in-out"
+        declineButtonClasses="border-primary mt-2 text-xs text-primary sm:text-md px-4 py-2 rounded w-full "
+        containerClasses="md:container md:max-w-screen-sm !mx-2 md:mx-0 md:ml-8 mb-4 flex flex-col md:flex-row items-center justify-center py-2 md:p-8 border-foreground border-2 bg-background text-primary fixed bottom-0  md:w-full rounded-lg"
+        contentClasses=" text-center sm:text-left sm:mr-2 text-primary"
         expires={150}
         handleAccept={handleAccept}
         handleDecline={handleDecline}
@@ -117,13 +142,13 @@ const CookieConsentComponent = () => {
           <h1 className="text-justify text-base font-semibold md:text-lg">
             Stepping Stones uses cookies to create a better experience for you
           </h1>
-          <p className="text-justify text-sm text-gray-700">
+          <p className="text-justify text-sm text-gray-700 dark:text-gray-300">
             Stepping Stones needs your permission to store and access cookies,
             unique identifiers, personal data and information on your browsing
             behaviour on this device. this only applies to
             steppingstonesapp.com. You do not have to accept but some content
             may not work if you don't. click manage preferences to see how we
-            use your data.{' '}
+            use your data.{" "}
           </p>
           <CookieConsentContainer
             snCookies={snCookies}
@@ -134,7 +159,7 @@ const CookieConsentComponent = () => {
         </div>
       </CookieConsent>
     </>
-  )
+  );
 }
 
 export default CookieConsentComponent

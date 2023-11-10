@@ -6,6 +6,7 @@ type GlobalState = {
   loading: boolean
   error: Error;
   openModal: boolean
+  displayCookieConsent: boolean
   drawerOpened: boolean
   mobileDrawerOpened: boolean
   isVisible: boolean
@@ -17,13 +18,25 @@ const checkIsVisible = () => {
   return isVisible
 }
 
+const checkCookieConsent = () => {
+  const cookieConsent = Cookies.get("ssapp-strictly-necessary-cookie-consent");
+  if (cookieConsent === "true") {
+    Cookies.set("ssapp-cookie-consent", "true");
+    return true;
+  }
+
+}
+
 const isVisible = checkIsVisible()
+const cookieConsent = checkCookieConsent()
+
 
 
 
 const initialState: GlobalState = {
   loading: false,
   openModal: false,
+  displayCookieConsent: cookieConsent as boolean,
   error: { name: '', message: 'An Error occurred' },
   drawerOpened: false,
   mobileDrawerOpened: false,
@@ -50,6 +63,9 @@ export const globalSlice = createSlice({
     setIsVisible: (state, { payload }: PayloadAction<boolean>) => {
       state.isVisible = payload
     },
+    setDisplayCookieConsent: (state, { payload }: PayloadAction<boolean>) => {
+      state.displayCookieConsent = payload
+    },
     setIsEdit: (state, { payload }: PayloadAction<boolean>) => {
       state.isEdit = payload
     },
@@ -59,7 +75,7 @@ export const globalSlice = createSlice({
   },
 })
 
-export const { setLoading, setError, setDrawerOpened, setMobileDrawerOpened, setIsVisible, setOpenModal, setIsEdit } =
+export const { setLoading, setError, setDrawerOpened, setMobileDrawerOpened, setDisplayCookieConsent, setIsVisible, setOpenModal, setIsEdit } =
   globalSlice.actions
 export const globalSelector = (state: RootState) => state.global
 

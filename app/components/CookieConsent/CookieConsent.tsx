@@ -4,7 +4,8 @@ import { CookieConsentProps, OPTIONS } from '@lib/types'
 
 import { useAppDispatch, useAppSelector } from 'app/global-state/hooks'
 import { setIsVisible, globalSelector } from 'app/global-state/features/global/globalSlice'
-import { getCookieConsentValue, setCookie } from './actions'
+import {  setCookie } from './actions'
+import { Button } from '@components/ui/button'
 
 
 
@@ -34,29 +35,33 @@ export default function CookieConsent ({
   buttonWrapperClasses,
 }: Partial<CookieConsentProps>){
   const dispatch = useAppDispatch()
-  const { isVisible } = useAppSelector(globalSelector)
+  const { isVisible, displayCookieConsent } = useAppSelector(globalSelector)
 
-  useEffect(() => {
-    function watchScroll() {
-      // if cookie undefined or debug
-      if (!isVisible) {
-        setCookie('ssapp-cookie-consent', false)
-        dispatch(setIsVisible(true))
-      } else {
-        setCookie('ssapp-cookie-consent', true)
-        dispatch(setIsVisible(false))
-      }
-    }
-    watchScroll()
-  }, [])
+  // useEffect(() => {
+  //   function watchScroll() {
+  //     // if cookie undefined or debug
+  //     if (!isVisible && displayCookieConsent) {
+  //       setCookie("ssapp-cookie-consent", false);
+  //       dispatch(setIsVisible(false));
+  //     } else if (!isVisible && !displayCookieConsent) {
+  //       setCookie("ssapp-cookie-consent", false);
+  //       dispatch(setIsVisible(false));
+  //     } else {
+  //       setCookie("ssapp-cookie-consent", true);
+  //       dispatch(setIsVisible(false));
+  //     }
+  //   }
+  //   watchScroll()
+  // }, [])
 
   const buttonsToRender = []
 
   // add decline button
   enableDeclineButton &&
     buttonsToRender.push(
-      <button
+      <Button
         key="declineButton"
+        variant="outline"
         className={`${declineButtonClasses} ${styles.declineButtonStyle}`}
         id={declineButtonId}
         aria-label={ariaDeclineLabel}
@@ -64,12 +69,12 @@ export default function CookieConsent ({
         {...customDeclineButtonProps}
       >
         {declineButtonText}
-      </button>
-    )
+      </Button>
+    );
 
   // add accept button
   buttonsToRender.push(
-    <button
+    <Button
       key="acceptButton"
       className={`${buttonClasses} ${styles.buttonStyle}`}
       id={buttonId}
@@ -78,7 +83,7 @@ export default function CookieConsent ({
       {...customButtonProps}
     >
       {buttonText}
-    </button>
+    </Button>
   )
 
   if (flipButtons) {
