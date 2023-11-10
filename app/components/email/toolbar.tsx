@@ -26,7 +26,10 @@ export function Toolbar() {
   return (
     <div className="sticky top-0 flex h-[60px] items-center justify-between border-b border-gray-200 p-4 dark:border-gray-800">
       <div className="space-x-6">
-        <Link href={`/admin-portal/messages/${params.name}/new`} className="inline-flex">
+        <Link
+          href={`/admin-portal/messages/${params.name}/new`}
+          className="inline-flex"
+        >
           <EmailIcon />
         </Link>
         <form
@@ -40,11 +43,22 @@ export function Toolbar() {
             <TrashIcon />
           </Button>
         </form>
-        <Button variant="ghost">
-          <ArrowLeftIcon />
+        <Button variant="ghost" asChild>
+          <Link
+            href={`/admin-portal/messages/${params.name}/reply?id=${params.id}`}
+            className="inline-flex"
+          >
+            <ArrowLeftIcon />
+          </Link>
         </Button>
-        <Button variant="ghost">
-          <ArrowRightIcon />
+
+        <Button variant="ghost" asChild>
+          <Link
+            href={`/admin-portal/messages/${params.name}/forward?id=${params.id}`}
+            className="inline-flex"
+          >
+            <ArrowRightIcon />
+          </Link>
         </Button>
       </div>
       <Button variant="ghost" className="ml-auto flex">

@@ -186,7 +186,40 @@ export default function useMessagesController(
     useCallback(async (data) => {
       // console.log(data);
 
-      router.replace("/admin-portal/messages");
+      const message = {
+        from: data.from ? data.from as string : user?.email as string,
+        to: data.to,
+        subject: data.subject,
+        message: data.message,
+        html: emailTemplate(data.message as string),
+      };
+      try {
+        const response = await sendEmail(message).unwrap();
+
+        if (response.success) {
+          toast({
+            title: "Success!",
+            description: response.message,
+          });
+          form.reset({ from: user?.email, to: "", subject: "", message: "" });
+        }
+      } catch (error) {
+        if (isFetchBaseQueryError(error)) {
+          const errMsg =
+            "error" in error ? error.error : JSON.stringify(error.message);
+          toast({
+            title: "Error!",
+            description: (errMsg as string) || "Unable to send message",
+            action: <ToastAction altText="Retry">Retry</ToastAction>,
+          });
+        } else if (isErrorWithMessage(error)) {
+          toast({
+            title: "Error!",
+            description: error.message || "Unable to send message",
+            action: <ToastAction altText="Retry">Retry</ToastAction>,
+          });
+        }
+      }
     }, []);
 
   // delete message handler function

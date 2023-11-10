@@ -1,8 +1,6 @@
 "use client";
 
 import React from "react";
-import { useRouter } from "next/navigation";
-
 
 // components
 import { Toolbar } from "@components/email/toolbar";
@@ -12,16 +10,15 @@ import useWindowSize from "@hooks/useWindowSize";
 
 // hooks (Controller)
 import useMessagesController from "../use-messages-controller";
-import { formatEmailString } from "@lib/utils";
 
 // zod schemas
 import { PartialMessageSchemaProps } from "@models/Messages";
 
 // utils
+import { formatEmailString } from "@lib/utils";
 import { getRelativeTime } from "@lib/getRelativeTime";
 
 export function MessagePreviewSection({ messageId, name }: { messageId: string; name: string }) {
-  const router = useRouter();
   const [message, setMessage] = React.useState<PartialMessageSchemaProps>();
  
 
@@ -39,9 +36,6 @@ export function MessagePreviewSection({ messageId, name }: { messageId: string; 
     };
     getMessage();
   }, [messageId]);
-  const handleReply = () => {
-    router.push(`/admin-portal/messages/reply?id=${messageId}`);
-  };
 
 
   return (
@@ -55,7 +49,7 @@ export function MessagePreviewSection({ messageId, name }: { messageId: string; 
           </p>
           <p className="text-sm text-gray-500 dark:text-gray-400">To: {message?.recipient?.email}</p>
           <time className="text-xs text-gray-500 dark:text-gray-400">
-            {getRelativeTime(message?.createdAt as string)}
+            {message && getRelativeTime(message?.createdAt as string)}
           </time>
         </div>
         <div className="w-full px-4 py-2">

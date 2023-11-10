@@ -1,5 +1,5 @@
 import React from "react";
-import { CreateMessage } from "./CreateMessage";
+import { CreateMessage } from "./create-message";
 
 export default function Page() {
   return (
