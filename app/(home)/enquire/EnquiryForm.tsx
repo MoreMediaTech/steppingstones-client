@@ -25,19 +25,22 @@ export function EnquiryForm() {
   const { form, onSubmit, isLoading, recaptchaRef } = useEnquiryController()
 
   return (
-    <div className='md:px-12 py-6 w-full mt-8'>
+    <div className="mt-8 w-full py-6 md:px-12">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full mt-4 md:mt-6 px-2 py-6">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="mt-4 w-full space-y-4 px-2 py-6 md:mt-6"
+        >
           <div className="space-y-2">
             <h1 data-test="enquire-page-title" className="text-lg font-bold ">
               Leave a message
             </h1>
-            <p className="text-tertiary text-justify text-sm font-normal font-montserrat">
+            <p className="text-tertiary text-justify font-montserrat text-sm font-normal">
               Fill the form and we will respond as soon as we can.
-              Alternatively, you can reach out to us at{' '}
+              Alternatively, you can reach out to us at{" "}
               <a
                 href="mailto:admin@steppingstonesapp.com"
-                className="text-primary-dark-100 dark:text-primary-light-100 underline font-semibold"
+                className="font-semibold text-primary-dark-100 underline dark:text-primary-light-100"
               >
                 our email address
               </a>
@@ -45,10 +48,23 @@ export function EnquiryForm() {
           </div>
           <FormField
             control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Full Name:</FormLabel>
+                <FormControl>
+                  <Input placeholder="Your Full Name" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
             name="from"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>From</FormLabel>
+                <FormLabel>Email:</FormLabel>
                 <FormControl>
                   <Input placeholder="Your email address" {...field} />
                 </FormControl>
@@ -64,7 +80,7 @@ export function EnquiryForm() {
             name="company"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Company</FormLabel>
+                <FormLabel>Company:</FormLabel>
                 <FormControl>
                   <Input placeholder="Your company" {...field} />
                 </FormControl>
@@ -90,7 +106,7 @@ export function EnquiryForm() {
             name="message"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Enquiry</FormLabel>
+                <FormLabel>Enquiry:</FormLabel>
                 <FormControl>
                   <Textarea placeholder="Your enquiry..." {...field} />
                 </FormControl>
@@ -99,8 +115,8 @@ export function EnquiryForm() {
             )}
           />
 
-          <Button disabled={isLoading}  type="submit">
-            {isLoading ? 'Sending...' : 'Send enquiry'}
+          <Button disabled={isLoading} type="submit">
+            {isLoading ? "Sending..." : "Send enquiry"}
           </Button>
           {/* <p className="text-justify text-sm font-normal text-gray-500">
             This site is protected by reCAPTCHA and the Google{' '}
@@ -127,9 +143,9 @@ export function EnquiryForm() {
       <ReCAPTCHA
         ref={recaptchaRef}
         size="invisible"
-        theme={theme === 'dark' ? 'dark' : 'light'}
+        theme={theme === "dark" ? "dark" : "light"}
         sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY as string}
       />
     </div>
-  )
+  );
 }

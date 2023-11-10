@@ -7,10 +7,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
-import { MessageProps } from '@lib/types'
-
 // redux global state (Model)
-import { useGetAllInAppEnquiryMsgQuery } from '@global-state/features/messages/messagesApiSlice'
 import { useAppDispatch, useAppSelector } from '@global-state/hooks'
 import { setDrawerOpened, setMobileDrawerOpened } from '@global-state/features/global/globalSlice'
 import { globalSelector } from "@global-state/features/global/globalSlice";
@@ -33,7 +30,6 @@ import { Button } from '@components/ui/button'
 import { ScrollArea } from '@components/ui/scroll-area'
 
 import { NAV_ITEMS } from 'data'
-import { PartialMessageSchemaProps } from '@models/Messages'
 
 export function AdminSidebar({ height }: { height: number }) {
   const SCROLL_AREA_HEIGHT = height - 70
@@ -41,18 +37,11 @@ export function AdminSidebar({ height }: { height: number }) {
   const dispatch = useAppDispatch()
   const router = useRouter()
   let arg: void
-  const { data: messages } = useGetAllInAppEnquiryMsgQuery(arg, {
-    pollingInterval: 100000,
-  })
 
   const handleLogout = async () => {
     router.push(`/auth/logout`)
   }
 
-  // filter all unread messages
-  const unreadMessages = messages?.filter(
-    (message: PartialMessageSchemaProps) => message.isRead === false
-  )
 
   return (
     <aside className="fixed left-0 top-0 z-50 h-screen">
@@ -121,44 +110,6 @@ export function AdminSidebar({ height }: { height: number }) {
                 );
               }
 
-              if (label === "Messages") {
-                return (
-                  <Button
-                    key={`${label}-${href}`}
-                    className={`mb-2 flex w-full items-center rounded-lg font-semibold ${
-                      drawerOpened ? "justify-start" : ""
-                    }`}
-                    variant="outline"
-                    asChild
-                  >
-                    <Link
-                      href={href as string}
-                      className={`group-hover:hover:bg-[#00DCB3]/20" relative inline-flex w-full  space-x-2 rounded-lg`}
-                      onClick={() => dispatch(setDrawerOpened(false))}
-                    >
-                      <Indicator
-                        inline
-                        label={unreadMessages?.length}
-                        size={16}
-                        offset={5}
-                        position="top-end"
-                        color="red"
-                        withBorder
-                        className={`flex items-center duration-100 `}
-                      >
-                        {<Icon size={20} />}
-                      </Indicator>
-                      <span
-                        className={` text-sm transition-all duration-300 ease-in-out ${
-                          !drawerOpened ? "hidden" : ""
-                        }`}
-                      >
-                        {label}
-                      </span>
-                    </Link>
-                  </Button>
-                );
-              }
 
               return (
                 <Button
@@ -246,19 +197,11 @@ export function MobileAdminSidebar({ height }: { height: number }) {
   const dispatch = useAppDispatch()
   const { mobileDrawerOpened } = useAppSelector(globalSelector)
   const router = useRouter()
-  let arg: void
-  const { data: messages } = useGetAllInAppEnquiryMsgQuery(arg, {
-    pollingInterval: 60000,
-  })
 
   const handleLogout = async () => {
     router.push(`/auth/logout`)
   }
 
-  // filter all unread messages
-  const unreadMessages = messages?.filter(
-    (message: PartialMessageSchemaProps) => message.isRead === false
-  )
 
   const handleOpenChange = (opened: boolean) => {
     dispatch(setMobileDrawerOpened(opened))
@@ -309,41 +252,6 @@ export function MobileAdminSidebar({ height }: { height: number }) {
                         {label}
                       </Title>
                     </div>
-                  );
-                }
-
-                if (label === "Messages") {
-                  return (
-                    <Button
-                      key={`${label}-${href}`}
-                      className={`mb-2 flex w-full items-center justify-start rounded-lg font-semibold`}
-                      variant="outline"
-                      asChild
-                    >
-                      <Link
-                        href={href as string}
-                        className={`group-hover:hover:bg-[#00DCB3]/20" relative inline-flex w-full  space-x-2 rounded-lg`}
-                        onClick={() => dispatch(setMobileDrawerOpened(false))}
-                      >
-                        <Indicator
-                          inline
-                          label={unreadMessages?.length}
-                          size={16}
-                          offset={5}
-                          position="top-end"
-                          color="red"
-                          withBorder
-                          className={`flex items-center duration-100 `}
-                        >
-                          {<Icon size={20} />}
-                        </Indicator>
-                        <span
-                          className={` text-sm transition-all duration-300 ease-in-out`}
-                        >
-                          {label}
-                        </span>
-                      </Link>
-                    </Button>
                   );
                 }
 

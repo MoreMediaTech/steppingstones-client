@@ -17,6 +17,7 @@ import { enquiryEmailTemplate } from '@lib/emailTemplates';
 import { EnquiryEmail } from '../../../emails/enquiry-email'
 
 const formSchema = z.object({
+  name: z.string().nonempty({ message: 'Name is required' }),
   from: z.string().email({ message: 'Invalid email address' }),
   subject: z.string().nonempty({ message: 'Subject is required' }),
   message: z.string().nonempty({ message: 'Message is required' }),
@@ -31,6 +32,7 @@ export default function useEnquiryController() {
       const form = useForm<FormSchemaProps>({
         resolver: zodResolver(formSchema),
         defaultValues:{
+          name: '',
           from: '',
           company: '',
           subject: '',
@@ -43,6 +45,7 @@ export default function useEnquiryController() {
         const token = await recaptchaRef.current?.executeAsync()
         recaptchaRef?.current?.reset()
         const message = {
+          name: data.name,
           from: data.from,
           to: 'enquiries@steppingstonesapp.com',
           subject: data.subject,

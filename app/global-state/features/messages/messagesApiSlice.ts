@@ -1,4 +1,8 @@
-import { PartialMessageSchemaProps } from "@models/Messages";
+import {
+  PartialFolderProps,
+  MessageFolderProps,
+  PartialMessageSchemaProps,
+} from "@models/Messages";
 import { messagesApiSlice } from "app/global-state/api/apiSlice";
 
 export const messagesApi = messagesApiSlice.injectEndpoints({
@@ -8,7 +12,7 @@ export const messagesApi = messagesApiSlice.injectEndpoints({
       PartialMessageSchemaProps
     >({
       query: (data) => ({
-        url: "/messages/sendEnquiry",
+        url: "/messages/send-enquiry",
         method: "POST",
         body: { ...data },
       }),
@@ -19,52 +23,52 @@ export const messagesApi = messagesApiSlice.injectEndpoints({
       PartialMessageSchemaProps
     >({
       query: (data) => ({
-        url: "/messages/sendEmail",
+        url: "/messages/send-mail",
         method: "POST",
         body: { ...data },
       }),
       invalidatesTags: [{ type: "Messages", id: "LIST" }],
     }),
-    sendInAppMsg: builder.mutation<
-      { message: string; success: boolean },
-      PartialMessageSchemaProps
+
+    getMessagesForFolder: builder.mutation<
+      Partial<MessageFolderProps[]>,
+      { folderName: string }
     >({
       query: (data) => ({
-        url: "/messages/send-inapp-msg",
+        url: "/messages/folder",
         method: "POST",
         body: { ...data },
       }),
-      invalidatesTags: [{ type: "Messages", id: "LIST" }],
+      invalidatesTags: (result, error, arg) => [
+        { type: "Messages", id: "LIST" },
+      ],
     }),
-    getAllInAppEnquiryMsg: builder.query<PartialMessageSchemaProps[], void>({
-      query: () => ({
-        url: "/messages/",
+    getMessageInFolder: builder.mutation<
+      Partial<MessageFolderProps[]>,
+      { folderName: string; messageId: string }
+    >({
+      query: (data) => ({
+        url: `/messages/folder/${data.messageId}`,
+        method: "POST",
+        body: { ...data },
       }),
-      providesTags: (result, error, arg) =>
-        result
-          ? [
-              ...result.map((email) => ({
-                type: "Messages" as const,
-                id: email.id,
-              })),
-              { type: "Messages", id: "LIST" },
-            ]
-          : [{ type: "Messages", id: "LIST" }],
+      invalidatesTags: (result, error, arg) => [
+        { type: "Messages", id: "LIST" },
+      ],
     }),
-    getAllMsgSentByUser: builder.query<PartialMessageSchemaProps[], void>({
+    getFoldersWithMessagesCount: builder.query<
+      {
+        specialFolders: PartialFolderProps[];
+        otherFolders: PartialFolderProps[];
+      },
+      void
+    >({
       query: () => ({
-        url: "/messages/sent-by-user",
+        url: "/messages/folder",
       }),
-      providesTags: (result, error, arg) =>
-        result
-          ? [
-              ...result.map((email) => ({
-                type: "Messages" as const,
-                id: email.id,
-              })),
-              { type: "Messages", id: "LIST" },
-            ]
-          : [{ type: "Messages", id: "LIST" }],
+      providesTags: (result, error, arg) => [
+        { type: "Messages", id: "LIST" },
+      ],
     }),
     getMessageById: builder.query<PartialMessageSchemaProps, string>({
       query: (id) => ({
@@ -111,12 +115,12 @@ export const messagesApi = messagesApiSlice.injectEndpoints({
 
 export const {
   useSendEnquiryMutation,
-  useGetAllInAppEnquiryMsgQuery,
-  useGetAllMsgSentByUserQuery,
+  useGetMessagesForFolderMutation,
+  useGetFoldersWithMessagesCountQuery,
+  useGetMessageInFolderMutation,
   useGetMessageByIdQuery,
   useDeleteMailByIdMutation,
   useSendEmailMutation,
-  useSendInAppMsgMutation,
   useDeleteManyMailMutation,
   useUpdateMsgStatusByIdMutation,
 } = messagesApi;

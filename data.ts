@@ -96,7 +96,7 @@ export const NAV_ITEMS = [
   {
     label: "Messages",
     Icon: FaRegEnvelope,
-    href: "/admin-portal/messages",
+    href: "/admin-portal/messages/Inbox",
   },
   {
     label: "Notifications",

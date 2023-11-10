@@ -33,21 +33,21 @@ import useWindowSize from "@hooks/useWindowSize";
 import useMessagesController from "../use-messages-controller";
 import { PartialMessageSchemaProps } from "@models/Messages";
 
-export function MessageReplyForm(){
+export function MessageReplyForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const messageId = searchParams.get("id") as string;
   const [windowSize] = useWindowSize();
 
   const { form, message, messageType, handleMessageResponse } =
-    useMessagesController(undefined, messageId, undefined);
+    useMessagesController(undefined, messageId);
 
   const defaultValues = {
     from: message?.to,
     to: message?.from,
     subject: message?.subject,
     message: message?.message,
-    type: message?.type,
+    messageType: message?.messageType,
   };
 
   useEffect(() => {
@@ -162,7 +162,7 @@ export function MessageReplyForm(){
 
               <FormField
                 control={form.control}
-                name="type"
+                name="messageType"
                 disabled
                 render={({ field }) => (
                   <FormItem>
@@ -222,5 +222,4 @@ export function MessageReplyForm(){
       </div>
     </section>
   );
-};
-
+}

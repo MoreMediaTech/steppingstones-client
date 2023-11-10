@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { useForm, SubmitHandler, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ToastAction } from "@components/ui/toast";
@@ -10,11 +10,11 @@ import { useRouter } from "next/navigation";
 // redux global state (Model)
 import {
   useGetMessageByIdQuery,
-  useGetAllInAppEnquiryMsgQuery,
-  useGetAllMsgSentByUserQuery,
+  useGetFoldersWithMessagesCountQuery,
+  useGetMessageInFolderMutation,
+  useGetMessagesForFolderMutation,
   useUpdateMsgStatusByIdMutation,
   useSendEmailMutation,
-  useSendInAppMsgMutation,
   useDeleteMailByIdMutation,
   useDeleteManyMailMutation,
 } from "app/global-state/features/messages/messagesApiSlice";
@@ -34,10 +34,12 @@ import {
 // hooks
 import { useAuthUser } from "@hooks/useAuthUser";
 
+// utils
+import { emailTemplate } from "@lib/emailTemplates";
+
 export default function useMessagesController(
   defaultValues?: PartialMessageSchemaProps,
   messageId?: string,
-  setOpen?: React.Dispatch<React.SetStateAction<boolean>>
 ) {
   const { toast } = useToast();
   const router = useRouter();
@@ -55,18 +57,16 @@ export default function useMessagesController(
   ]);
 
   // get user email addresses
-  const userEmails = users?.map((user) => user.email) as string[];
-  const [emails, setEmails] = React.useState<string[]>(userEmails);
+  const userEmails = users?.map((user) => {
+    return {
+      label: user?.email as string,
+      value: user?.email as string,
+    };
+  }) as { label: string; value: string }[];
+  const [emails, setEmails] =
+    React.useState<{ label: string; value: string }[]>(userEmails);
 
-  // get all messages
-  const {
-    data: messages,
-    isLoading,
-    refetch,
-  } = useGetAllInAppEnquiryMsgQuery();
-
-  // get all messages sent by user
-  const { data: sentMessages } = useGetAllMsgSentByUserQuery();
+  const { data: folders } = useGetFoldersWithMessagesCountQuery();
 
   // get message by id
   const {
@@ -78,8 +78,9 @@ export default function useMessagesController(
   // mutation hooks
   const [updateMsgStatusById] = useUpdateMsgStatusByIdMutation();
   const [sendEmail, { isLoading: isSendingEmail }] = useSendEmailMutation();
-  const [sendInAppMsg, { isLoading: isSendingInAppMsg }] =
-    useSendInAppMsgMutation();
+  const [getMessageInFolder] = useGetMessageInFolderMutation();
+  const [getMessagesForFolder] = useGetMessagesForFolderMutation();
+
   const [deleteMailById, { isLoading: isDeleting }] =
     useDeleteMailByIdMutation();
   const [deleteManyMail, { isLoading: isDeletingMany }] =
@@ -97,7 +98,7 @@ export default function useMessagesController(
   React.useEffect(() => {
     if (searchedEmails) {
       const filteredEmails = userEmails?.filter((userEmail) =>
-        userEmail?.toLowerCase().includes(searchedEmails.toLowerCase())
+        userEmail?.value.toLowerCase().includes(searchedEmails.toLowerCase())
       );
       setEmails(filteredEmails || []);
     }
@@ -111,23 +112,17 @@ export default function useMessagesController(
         to: data.to,
         subject: data.subject,
         message: data.message,
-        html: "",
+        html: emailTemplate(data.message as string),
       };
       try {
-        let response;
-        if (data.type === MessageTypes.EXTERNAL_MESSAGE) {
-          response = await sendEmail(message).unwrap();
-        } else {
-          response = await sendInAppMsg(message).unwrap();
-        }
+        const response = await sendEmail(message).unwrap();
+
         if (response.success) {
           toast({
             title: "Success!",
             description: response.message,
           });
-          refetch();
           form.reset({ from: user?.email, to: "", subject: "", message: "" });
-          setOpen!(false);
         }
       } catch (error) {
         if (isFetchBaseQueryError(error)) {
@@ -190,7 +185,7 @@ export default function useMessagesController(
   const handleMessageResponse: SubmitHandler<PartialMessageSchemaProps> =
     useCallback(async (data) => {
       // console.log(data);
-      refetch();
+
       router.replace("/admin-portal/messages");
     }, []);
 
@@ -203,7 +198,7 @@ export default function useMessagesController(
           title: "Success!",
           description: response.message,
         });
-        refetch();
+
         router.back();
       }
     } catch (error) {
@@ -236,7 +231,6 @@ export default function useMessagesController(
             title: "Success!",
             description: response.message,
           });
-          refetch();
         }
       } catch (error) {
         if (isFetchBaseQueryError(error)) {
@@ -259,17 +253,60 @@ export default function useMessagesController(
     []
   );
 
+  const handleGetMessagesForFolder = useCallback(async (folderName: string) => {
+    try {
+      const response = await getMessagesForFolder({ folderName }).unwrap();
+      return response;
+    } catch (error) {
+      if (isFetchBaseQueryError(error)) {
+        const errMsg =
+          "error" in error ? error.error : JSON.stringify(error.message);
+        toast({
+          title: "Error!",
+          description: (errMsg as string) || "Unable to get messages",
+          action: <ToastAction altText="Retry">Retry</ToastAction>,
+        });
+      } else if (isErrorWithMessage(error)) {
+        toast({
+          title: "Error!",
+          description: error.message || "Unable to get messages",
+          action: <ToastAction altText="Retry">Retry</ToastAction>,
+        });
+      }
+    }
+  }, []);
+
+  const handleGetMessageInFolder = useCallback(async (folderName: string, messageId: string) => {
+    try {
+      const response = await getMessageInFolder({ folderName, messageId }).unwrap();
+      return response;
+    } catch (error) {
+      if (isFetchBaseQueryError(error)) {
+        const errMsg =
+          "error" in error ? error.error : JSON.stringify(error.message);
+        toast({
+          title: "Error!",
+          description: (errMsg as string) || "Unable to get message",
+          action: <ToastAction altText="Retry">Retry</ToastAction>,
+        });
+      } else if (isErrorWithMessage(error)) {
+        toast({
+          title: "Error!",
+          description: error.message || "Unable to get message",
+          action: <ToastAction altText="Retry">Retry</ToastAction>,
+        });
+      }
+    }
+  }, []);
+
   return {
-    messages,
+    folders,
     message,
-    sentMessages,
     emails,
     form,
     messageType,
-    isLoading,
     isMessageLoading,
     isSendingEmail,
-    isSendingInAppMsg,
     isDeleting,
     isDeletingMany,
     createMessageHandler,
@@ -278,5 +315,7 @@ export default function useMessagesController(
     handleUpdateIsRead,
     handleDelete,
     handleDeleteMany,
+    handleGetMessagesForFolder,
+    handleGetMessageInFolder,
   };
 }
