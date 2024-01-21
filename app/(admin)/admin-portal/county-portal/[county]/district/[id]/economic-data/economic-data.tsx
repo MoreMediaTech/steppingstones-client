@@ -15,6 +15,7 @@ import {
   FormItem,
   FormLabel,
 } from '@components/ui/form'
+import { Card, CardContent, CardHeader } from "@components/ui/card";
 import { Checkbox } from '@components/ui/checkbox'
 import { cn } from "@lib/utils";
 
@@ -23,7 +24,9 @@ import { PartialEconomicDataSchemaProps } from "@models/District";
 
 // hooks (Controller)
 import useEconomicDataController from "./use-economic-data-controller";
+import useDistrictController from "../../use-district-controller";
 import { CreateEconomicData } from "./create-economic-data";
+import { useEffect } from "react";
 
 export function EconomicData({
   districtSectionId,
@@ -31,11 +34,21 @@ export function EconomicData({
   districtSectionId: string;
 }) {
   const router = useRouter();
-  const { economicDataWidgets, isLoading, form } = useEconomicDataController(
+  const { economicDataWidgets, isLoading } = useEconomicDataController(
     districtSectionId,
     undefined,
     undefined
   );
+
+  const {districtSection, form, isUpdatingDistrictSection, setEDLive } = useDistrictController(undefined, districtSectionId, undefined);
+
+  const defaultValues = {
+    isLive: districtSection?.isLive,
+  };
+
+  useEffect(() => {
+    form.reset({ ...defaultValues });
+  }, [districtSection]);
 
   if (isLoading) {
     return (
@@ -56,8 +69,11 @@ export function EconomicData({
           <CreateEconomicData districtSectionId={districtSectionId} />
         </div>
       </div>
+      <Card>
+        <CardHeader></CardHeader>
+        <CardContent>
         <Form {...form}>
-        <form className="space-y-8">
+        <form onSubmit={form.handleSubmit(setEDLive)} className="space-y-8">
           <FormField
             control={form.control}
             name="isLive"
@@ -65,7 +81,6 @@ export function EconomicData({
               <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
                 <FormControl>
                   <Checkbox
-                    disabled
                     checked={field.value}
                     onCheckedChange={(event) =>
                       field.onChange(event as boolean)
@@ -83,9 +98,13 @@ export function EconomicData({
               </FormItem>
             )}
           />
-          
+           <div className="my-4 flex w-full items-center justify-between ">
+              <Button type="submit">{isUpdatingDistrictSection ? (<><Loader className="w-4 h-4 mr-2" /> <span>Saving...</span></> ) : 'Save'}</Button>
+          </div>
         </form>
       </Form>
+        </CardContent>
+      </Card>
       <div className="grid w-full grid-cols-1 gap-4  text-xl md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
         {economicDataWidgets?.map(
           (economicData: PartialEconomicDataSchemaProps) => (

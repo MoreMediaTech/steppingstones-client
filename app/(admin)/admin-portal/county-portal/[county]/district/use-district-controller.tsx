@@ -101,6 +101,40 @@ export default function useDistrictController(
       [districtId]
     );
 
+    const setEDLive: SubmitHandler<PartialDistrictSectionSchemaProps> = React.useCallback(async (data) => {
+      const sectionData = { ...data, id: districtSectionId as string };
+
+      try {
+        const response = await updateDistrictSectionById(sectionData).unwrap();
+        if (response.success) {
+          toast({
+            title: "Success!",
+            description: response.message,
+            action: <ToastAction altText="Close">Close</ToastAction>,
+          });
+          form.reset();
+          refetchDistrictSection();
+        }
+      } catch (error) {
+        if (isFetchBaseQueryError(error)) {
+            const errMsg =
+              "error" in error ? error.error : JSON.stringify(error.message);
+            toast({
+              title: "Error!",
+              description:
+                (errMsg as string) || "Unable create district section",
+              action: <ToastAction altText="Retry">Retry</ToastAction>,
+            });
+          } else if (isErrorWithMessage(error)) {
+            toast({
+              title: "Error!",
+              description: error.message || "Unable create district section",
+              action: <ToastAction altText="Retry">Retry</ToastAction>,
+            });
+          }
+      }
+    },[]);
+
     
   return {
     form,
@@ -114,5 +148,6 @@ export default function useDistrictController(
     onSubmit,
     updateDistrictSectionById,
     refetchDistrictSection,
+    setEDLive
   };
 }
