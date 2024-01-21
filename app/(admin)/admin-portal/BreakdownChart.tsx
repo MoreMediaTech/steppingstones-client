@@ -3,7 +3,7 @@ import React from 'react'
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts'
 
 import { themeSettings } from '../../../constants/styles'
-import { Box } from '@components/mantine-components'
+
 import { useTheme } from 'next-themes'
 import { PaletteMode } from '@lib/types'
 

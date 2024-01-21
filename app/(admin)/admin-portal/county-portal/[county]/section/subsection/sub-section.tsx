@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 
-import { Loader } from "@components/mantine-components";
+import Loader from "@components/Loader";
 import { SectionContainer } from "../section-container";
 import { Button } from "@components/ui/button";
 import Header from "@components/Header";
@@ -53,7 +53,7 @@ export default function SubSection({ searchParams }: Props) {
         </div>
         {isLoadingSubSection ? (
           <div className="flex h-[700px] items-center justify-center">
-            <Loader size="xl" variant="bars" />
+            <Loader className="h-12 w-12" />
           </div>
         ) : (
           <section className="w-full overflow-auto">

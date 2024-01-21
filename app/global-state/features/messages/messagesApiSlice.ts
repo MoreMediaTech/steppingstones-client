@@ -1,7 +1,7 @@
 import {
-  PartialFolderProps,
-  MessageFolderProps,
-  PartialMessageSchemaProps,
+  type PartialFolderProps,
+  type MessageFolderProps,
+  type PartialMessageSchemaProps,
 } from "@models/Messages";
 import { messagesApiSlice } from "app/global-state/api/apiSlice";
 

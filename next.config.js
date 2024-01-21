@@ -13,9 +13,11 @@ module.exports = {
     dirs: ['pages', 'utils', 'components'], // Only run ESLint on the 'pages' and 'utils' directories during production builds (next build)
   },
   images: {
-    domains: ['res.cloudinary.com'],
-  },
-  experimental: {
-    serverActions: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com'
+      }
+    ],
   },
 }

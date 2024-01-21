@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { Loader } from "@components/mantine-components";
+
 
 // components
 import CreateSectionForm from "./create-section-form";
@@ -9,6 +9,7 @@ import { Badge } from "@components/ui/badge";
 import { SectionContainer } from "./section-container";
 import PortalButton from "@components/PortalButton";
 import Header from "@components/Header";
+import Loader from "@components/Loader";
 
 // hooks (Controller)
 import useSectionController from "./use-section-controller";
@@ -67,7 +68,7 @@ export default function Section({ county, countyId, sectionId }: SectionProps) {
         </div>
         {isLoadingSection ? (
           <div className="flex h-[700px] items-center justify-center">
-            <Loader size="xl" variant="bars" />
+            <Loader className="h-12 w-12" />
           </div>
         ) : (
           <section className="w-full overflow-auto ">

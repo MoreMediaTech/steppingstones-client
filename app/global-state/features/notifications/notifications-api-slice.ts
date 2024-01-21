@@ -1,5 +1,5 @@
 import { notificationsApiSlice } from "@app/global-state/api/apiSlice";
-import { PartialNotificationSchemaProps } from "@models/Notification";
+import type { PartialNotificationSchemaProps } from "@models/Notification";
 
 
 const notificationsApi = notificationsApiSlice.injectEndpoints({

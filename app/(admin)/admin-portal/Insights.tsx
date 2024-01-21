@@ -1,6 +1,5 @@
 "use client";
 import React, { Suspense } from "react";
-import { Loader, SimpleGrid } from "@components/mantine-components";
 
 import { FaUsers } from "react-icons/fa";
 
@@ -13,6 +12,7 @@ import StatsItem, { DefaultStatsProps } from "./StatsItem";
 import BreakdownChart from "./BreakdownChart";
 import { columns } from "./table-column";
 import { DataTable } from "@components/table/data-table";
+import Loader from "@components/Loader";
 
 const defaultStats = (stats: any): DefaultStatsProps[] => {
   return [
@@ -73,7 +73,7 @@ export function RenderInsights() {
   if (isLoading) {
     return (
       <div className="flex h-[700px] items-center justify-center">
-        <Loader size="xl" variant="bars" />
+        <Loader className="w-8 h-8" />
       </div>
     );
   }
@@ -89,11 +89,11 @@ export function RenderInsights() {
               subOrder={6}
             />
 
-            <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} spacing="lg" className="w-full">
+            <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {defaultStats(stats).map((item, index) => (
                 <StatsItem key={`stats-${index}`} {...item} />
               ))}
-            </SimpleGrid>
+            </div>
           </div>
           <div className="mb-2 space-y-4">
             <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
@@ -113,13 +113,13 @@ export function RenderInsights() {
                   subtitle="Breakdown of screens viewed by users"
                   subOrder={6}
                 />
-                <SimpleGrid cols={1} spacing="lg">
-                  <Suspense fallback={<Loader size="xl" variant="bars" />}>
+                <div className="w-full grid grid-cols-1 gap-4">
+                  <Suspense fallback={<Loader />}>
                     <BreakdownChart
                       data={analytics.topFiveViewedScreensByDay || []}
                     />
                   </Suspense>
-                </SimpleGrid>
+                </div>
               </div>
             </div>
           </div>

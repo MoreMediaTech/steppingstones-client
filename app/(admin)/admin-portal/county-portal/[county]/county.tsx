@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 
 // components
-import { Loader } from "@components/mantine-components";
+import Loader from "@components/Loader";
 import CreateSectionForm from "./section/create-section-form";
 import AddDistrictForm from "./AddDistrictForm";
 import PortalButton from "@components/PortalButton";
@@ -32,7 +32,7 @@ export default function County({ county, countyId }: Props) {
   if (isLoadingCounty) {
     return (
       <div className="mx-auto flex h-[700px] max-w-screen-md items-center justify-center">
-        <Loader size="lg" variant="bars" />
+        <Loader className="h-12 w-12"/>
       </div>
     );
   }

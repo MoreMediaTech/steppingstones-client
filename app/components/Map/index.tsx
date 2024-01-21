@@ -6,10 +6,11 @@ import {
   Marker,
   Circle,
 } from '@react-google-maps/api'
-import { Loader } from '@mantine/core'
+
 import { getGeocode, getLatLng } from 'use-places-autocomplete'
 
 import Places from './Places'
+import Loader from '@components/Loader';
 
 type LatLngLiteral = google.maps.LatLngLiteral
 type MapOptions = google.maps.MapOptions
@@ -70,22 +71,13 @@ const Map = ({
   if (!isLoaded) {
     return (
       <div className="flex h-[700px] items-center justify-center">
-        <Loader size="xl" variant="bars" />
+        <Loader className='h-8 w-8' />
       </div>
     )
   }
 
   return (
     <div className="flex h-full min-h-[500px] w-full flex-col ">
-      <div className="mb-2 text-gray-900 dark:text-gray-200">
-        <Places
-          setRegion={(position) => {
-            setRegion(position)
-            mapRef.current?.panTo(position)
-          }}
-          location={location}
-        />
-      </div>
 
       <GoogleMap
         mapContainerClassName="w-full h-full"

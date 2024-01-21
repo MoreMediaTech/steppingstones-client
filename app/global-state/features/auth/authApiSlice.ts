@@ -8,9 +8,9 @@ import * as z from 'zod'
 import { UserSchemaWithIdType } from '@models/User'
 
 export const authSchema = z.object({
-  token: z.string().nonempty(),
-  email: z.string().email().nonempty(),
-  oneTimeCode: z.string().nonempty().optional(),
+  token: z.string(),
+  email: z.string().email(),
+  oneTimeCode: z.string().optional(),
 })
 
 export type Auth = z.infer<typeof authSchema>

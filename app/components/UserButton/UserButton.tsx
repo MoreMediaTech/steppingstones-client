@@ -1,8 +1,10 @@
 "use client";
 import { forwardRef } from "react";
 import { FaChevronRight } from "react-icons/fa";
-import { Group, Avatar, Text, UnstyledButton } from "../mantine-components";
+
 import { useTheme } from "next-themes";
+import { Button } from "@components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/avatar";
 
 interface UserButtonProps extends React.ComponentPropsWithoutRef<"button"> {
   image?: string;
@@ -20,29 +22,33 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
   ) => {
     const { theme } = useTheme();
     return (
-      <UnstyledButton
+      <Button
         ref={ref}
         className="block w-full px-2 py-1 text-[#f9f8fc] hover:bg-[#cfb9f9] dark:text-[#5515d4] hover:dark:bg-[#3b3c40]"
         {...others}
       >
-        <Group>
-          <Avatar color="#5E17EB" radius="xl">
-            {initials}
+        <div>
+          <Avatar>
+            {image ? (
+              <AvatarImage src={image} alt={name} />
+            ) : (
+              <AvatarFallback>{initials}</AvatarFallback>
+            )}
           </Avatar>
 
           <div className="hidden lg:block" style={{ flex: 1 }}>
-            <Text size="sm" className="font-semibold text-[#5E17EB]">
+            <h3 className="font-semibold text-[#5E17EB] text-sm">
               {name}
-            </Text>
+            </h3>
 
-            <Text className="text-[#00DCB3]" size="xs">
+            <p className="text-[#00DCB3] text-xs">
               {email}
-            </Text>
+            </p>
           </div>
 
           {show && (icon || <FaChevronRight fontSize={16} color="#5E17EB" />)}
-        </Group>
-      </UnstyledButton>
+        </div>
+      </Button>
     );
   }
 );

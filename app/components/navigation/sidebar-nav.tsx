@@ -6,7 +6,6 @@ import { usePathname } from 'next/navigation'
 
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetHeader,
   SheetTitle,

@@ -1,4 +1,4 @@
-import { setupListeners } from '@reduxjs/toolkit/dist/query'
+import { setupListeners } from '@reduxjs/toolkit/query'
 import {
   Action,
   AnyAction,
@@ -7,7 +7,7 @@ import {
   combineReducers,
   Reducer,
 } from '@reduxjs/toolkit'
-import { createWrapper, HYDRATE } from 'next-redux-wrapper'
+
 import authReducer from 'app/global-state/features/auth/authSlice'
 import partnerReducer from 'app/global-state/features/partner/partnerSlice'
 import messagesReducer from 'app/global-state/features/messages/messagesSlice'
@@ -48,15 +48,9 @@ export const rootReducer: Reducer<any, AnyAction> = (
   state,
   action: AnyAction
 ) => {
-  if (action.type === HYDRATE) {
-    const nextState = {
-      ...state, // use previous state
-      ...action.payload, // apply data from hydration
-    }
-    return nextState
-  } else {
+  
     return combinedReducer(state, action)
-  }
+
 }
 
 export const store = configureStore({
@@ -79,7 +73,7 @@ setupListeners(store.dispatch)
 const makeStore = () => store
 export type AppStore = ReturnType<typeof makeStore>
 export type AppDispatch = typeof store.dispatch
-export type RootState = ReturnType<typeof rootReducer>
+export type RootState = ReturnType<typeof store.getState>
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,
@@ -87,4 +81,4 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   Action
 >
 
-export const wrapper = createWrapper<AppStore>(makeStore)
+

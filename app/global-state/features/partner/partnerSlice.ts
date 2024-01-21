@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { AppThunk, RootState } from 'app/global-state/store'
-import { Error, IPartnerState, PartnerData } from '@lib/types'
+import type { RootState } from 'app/global-state/store'
+import {type  IPartnerState,type PartnerData } from '@lib/types'
 
 export const initialState: IPartnerState = {
   partnersData: [],

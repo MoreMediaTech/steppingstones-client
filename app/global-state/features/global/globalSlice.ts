@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import Cookies from 'js-cookie'
-import { RootState } from 'app/global-state/store'
+import type { RootState } from 'app/global-state/store'
 
 type GlobalState = {
   loading: boolean

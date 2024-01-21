@@ -2,7 +2,7 @@
 
 // components
 import { PartnerDirectoryTable } from "./PartnerDirectoryTable";
-import { Loader } from "@components/mantine-components";
+import Loader  from "@components/Loader";
 
 // hooks  (Controller)
 import usePartnerDirectoryController from "./use-partner-directory-controller";
@@ -13,7 +13,7 @@ export function PartnerDirectory() {
   if (isLoadingPartnerData) {
     return (
       <div className="flex h-[700px] items-center justify-center">
-        <Loader size="xl" variant="bars" />
+        <Loader className="h-12 w-12" />
       </div>
     );
   }

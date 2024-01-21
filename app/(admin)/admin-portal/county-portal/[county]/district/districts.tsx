@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import { useRouter } from "next/navigation";
 
 // components
-import { Loader } from "@components/mantine-components";
+import Loader from "@components/Loader";
 import { CreateLASectionForm } from "./create-district-section-form";
 import PortalButton from "@components/PortalButton";
 import Map from "@components/Map";
@@ -37,7 +37,7 @@ export default function Districts({ searchParams }: Props) {
   if (isLoadingDistrict) {
     return (
       <div className="flex h-[700px] items-center justify-center">
-        <Loader size="xl" variant="bars" />
+        <Loader className="h-12 w-12" />
       </div>
     );
   }
@@ -61,7 +61,7 @@ export default function Districts({ searchParams }: Props) {
       <section className="w-full px-2 py-4">
         <div className="grid h-full w-full grid-cols-1 gap-8 lg:grid-cols-4">
           <div className="h-full rounded  p-2 shadow-md md:col-span-2">
-            <Suspense fallback={<Loader size="xl" variant="bars" />}>
+            <Suspense fallback={<Loader  />}>
               <Map location={`${searchParams.district}, UK`} />
             </Suspense>
           </div>

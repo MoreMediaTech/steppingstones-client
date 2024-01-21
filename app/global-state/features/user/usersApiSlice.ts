@@ -1,4 +1,3 @@
-import { createEntityAdapter, createSelector } from '@reduxjs/toolkit'
 import { apiSlice } from 'app/global-state/api/apiSlice'
 import {
   UserSchemaWithIdType,
@@ -6,9 +5,7 @@ import {
 import { isFetchBaseQueryError, isErrorWithMessage } from '@app/global-state/helper'
 import { setError } from '@app/global-state/features/global/globalSlice'
 
-export const usersAdapter = createEntityAdapter<UserSchemaWithIdType>({})
 
-const initialState = usersAdapter.getInitialState()
 
 export const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -102,13 +99,4 @@ export const {
 // returns the query result for the current user
 export const selectUserResult = usersApiSlice.endpoints.getUser.select()
 
-// creates memoized selector for the current user
-const selectUserData = createSelector(selectUserResult, (result) => result.data)
 
-//getSelectors creates these selectors and we rename them with aliases using destructuring
-// export const {
-//     selectAll: selectAllUsers,
-//     selectById: selectUserById,
-//     selectIds: selectUserIds
-//     // Pass in a selector that returns the users slice of state
-// } = usersAdapter.getSelectors(state => selectUserData(state) ?? initialState)

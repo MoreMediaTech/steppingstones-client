@@ -6,7 +6,7 @@ import {
   FetchBaseQueryError,
   FetchBaseQueryMeta,
 } from '@reduxjs/toolkit/query/react'
-import { HYDRATE } from 'next-redux-wrapper'
+
 
 import {
   setAuthState,
@@ -96,11 +96,6 @@ export const apiSlice = createApi({
   baseQuery: baseQueryWithReAuth,
   tagTypes: ['Auth', 'User'],
   keepUnusedDataFor: 500,
-  extractRehydrationInfo(action, { reducerPath }) {
-    if (action.type === HYDRATE) {
-      return action.payload[reducerPath]
-    }
-  },
   endpoints: (builder) => ({}),
 })
 
@@ -109,11 +104,6 @@ export const partnerApiSlice = createApi({
   baseQuery: baseQueryWithReAuth,
   keepUnusedDataFor: 960,
   tagTypes: ['Partner'],
-  extractRehydrationInfo(action, { reducerPath }) {
-    if (action.type === HYDRATE) {
-      return action.payload[reducerPath]
-    }
-  },
   endpoints: (builder) => ({}),
 })
 export const editorApiSlice = createApi({
@@ -122,11 +112,7 @@ export const editorApiSlice = createApi({
   keepUnusedDataFor: 300,
   tagTypes: ['Editor'],
   refetchOnMountOrArgChange: true,
-  extractRehydrationInfo(action, { reducerPath }) {
-    if (action.type === HYDRATE) {
-      return action.payload[reducerPath]
-    }
-  },
+
   endpoints: (builder) => ({}),
 })
 
@@ -136,11 +122,6 @@ export const messagesApiSlice = createApi({
   keepUnusedDataFor: 300,
   tagTypes: ['Messages'],
   refetchOnMountOrArgChange: true,
-  extractRehydrationInfo(action, { reducerPath }) {
-    if (action.type === HYDRATE) {
-      return action.payload[reducerPath]
-    }
-  },
   endpoints: (builder) => ({}),
 })
 
@@ -149,11 +130,6 @@ export const uploadApiSlice = createApi({
   baseQuery: baseQueryWithReAuth,
   keepUnusedDataFor: 300,
   tagTypes: ['Upload'],
-  extractRehydrationInfo(action, { reducerPath }) {
-    if (action.type === HYDRATE) {
-      return action.payload[reducerPath]
-    }
-  },
   endpoints: (builder) => ({}),
 })
 export const analyticsApiSlice = createApi({
@@ -161,11 +137,6 @@ export const analyticsApiSlice = createApi({
   baseQuery: baseQueryWithReAuth,
   keepUnusedDataFor: 300,
   tagTypes: ['Analytics'],
-  extractRehydrationInfo(action, { reducerPath }) {
-    if (action.type === HYDRATE) {
-      return action.payload[reducerPath]
-    }
-  },
   endpoints: (builder) => ({}),
 })
 export const notificationsApiSlice = createApi({
@@ -173,11 +144,6 @@ export const notificationsApiSlice = createApi({
   baseQuery: baseQueryWithReAuth,
   keepUnusedDataFor: 300,
   tagTypes: ["Notifications"],
-  extractRehydrationInfo(action, { reducerPath }) {
-    if (action.type === HYDRATE) {
-      return action.payload[reducerPath];
-    }
-  },
   endpoints: (builder) => ({}),
 });
 

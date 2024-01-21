@@ -46,6 +46,7 @@ export default function useDistrictController(
   // district mutation hooks
   const [createDistrictSection, { isLoading: isCreatingDistrictSection }] =
     useCreateDistrictSectionMutation();
+  const [updateDistrictSectionById,{ isLoading: isUpdatingDistrictSection }] = useUpdateDistrictSectionByIdMutation();
 
   // get district section by id
   const {
@@ -76,7 +77,7 @@ export default function useDistrictController(
             });
             setOpen!(false);
             form.reset();
-            refetchDistrict();
+            refetchDistrictSection();
           }
         } catch (error) {
           if (isFetchBaseQueryError(error)) {
@@ -100,6 +101,7 @@ export default function useDistrictController(
       [districtId]
     );
 
+    
   return {
     form,
     district,
@@ -107,7 +109,10 @@ export default function useDistrictController(
     isLoadingDistrict,
     isCreatingDistrictSection,
     isLoadingDistrictSection,
+    isUpdatingDistrictSection,
     refetchDistrict,
     onSubmit,
+    updateDistrictSectionById,
+    refetchDistrictSection,
   };
 }

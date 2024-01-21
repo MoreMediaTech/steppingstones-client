@@ -3,11 +3,19 @@
 import { useRouter } from "next/navigation";
 
 // components
-import { Loader } from "@components/mantine-components";
+import Loader from "@components/Loader";
 import EconomicDataWidget from "./EconomicDataWidget";
 import Header from "@components/Header";
 import { Button } from "@components/ui/button";
-
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+} from '@components/ui/form'
+import { Checkbox } from '@components/ui/checkbox'
 import { cn } from "@lib/utils";
 
 // zod schemas
@@ -23,7 +31,7 @@ export function EconomicData({
   districtSectionId: string;
 }) {
   const router = useRouter();
-  const { economicDataWidgets, isLoading } = useEconomicDataController(
+  const { economicDataWidgets, isLoading, form } = useEconomicDataController(
     districtSectionId,
     undefined,
     undefined
@@ -32,22 +40,52 @@ export function EconomicData({
   if (isLoading) {
     return (
       <div className="flex h-[700px] w-full items-center justify-center">
-        <Loader size="xl" variant="bars" />
+        <Loader className="h-12 w-12" />
       </div>
     );
   }
 
   return (
-    <section className="relative w-full px-2 py-2 md:container md:mx-auto md:h-screen  md:px-8 md:py-8">
-      <div className="mb-6 flex items-center justify-between">
+    <section className="relative w-full px-2 py-2 space-y-4 md:container md:mx-auto md:h-screen  md:px-8 md:py-8">
+      <div className="mb-6 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0">
         <Header title={`Economic Data`} order={1} />
-        <div className="w-full items-center justify-end gap-2">
-          <Button type="button" variant="outline" onClick={() => router.back()}>
+        <div className="flex flex-col md:flex-row items-center w-full gap-2">
+          <Button type="button" variant="outline" className="w-full" onClick={() => router.back()}>
             Go Back
           </Button>
           <CreateEconomicData districtSectionId={districtSectionId} />
         </div>
       </div>
+        <Form {...form}>
+        <form className="space-y-8">
+          <FormField
+            control={form.control}
+            name="isLive"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+                <FormControl>
+                  <Checkbox
+                    disabled
+                    checked={field.value}
+                    onCheckedChange={(event) =>
+                      field.onChange(event as boolean)
+                    }
+                  />
+                </FormControl>
+                <div className="space-y-1 leading-none">
+                  <FormLabel>
+                    Is Live? <span className="text-red-500">*</span>
+                  </FormLabel>
+                  <FormDescription>
+                    Confirm if the economic data is live
+                  </FormDescription>
+                </div>
+              </FormItem>
+            )}
+          />
+          
+        </form>
+      </Form>
       <div className="grid w-full grid-cols-1 gap-4  text-xl md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
         {economicDataWidgets?.map(
           (economicData: PartialEconomicDataSchemaProps) => (

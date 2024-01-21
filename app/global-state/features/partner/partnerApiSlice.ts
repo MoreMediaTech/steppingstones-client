@@ -1,7 +1,7 @@
 import { partnerApiSlice } from '@global-state/api/apiSlice'
 import {
-  PartialPartnerProps,
-  PartialPartnerWithOrganisationProps,
+  type PartialPartnerProps,
+  type PartialPartnerWithOrganisationProps,
 } from "@models/Partner";
 
 export const partnerApi = partnerApiSlice.injectEndpoints({

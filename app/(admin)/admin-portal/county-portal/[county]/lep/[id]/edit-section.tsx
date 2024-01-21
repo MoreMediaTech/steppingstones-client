@@ -11,7 +11,7 @@ import useCountyController from "../../../use-county-controller";
 
 // components
 import { ContentForm } from "@components/forms";
-import { Loader } from "@components/mantine-components";
+import Loader from "@components/Loader";
 import { Button } from "@components/ui/button";
 import Header from "@components/Header";
 
@@ -61,7 +61,7 @@ export default function EditLEPSection({ countyId }: EditSectionProps) {
   if (isLoadingCounty) {
     return (
       <div className="flex h-[700px] items-center justify-center">
-        <Loader size="xl" variant="bars" />
+        <Loader className="h-12 w-12"/>
       </div>
     );
   }

@@ -14,7 +14,7 @@ import useWindowSize from "@hooks/useWindowSize";
 // components
 import { ComponentShield } from "@components/NextShield";
 import { AdminSidebar, MobileAdminSidebar } from "@components/navigation";
-import { AppShell } from "@components/mantine-components";
+
 
 const token =
   typeof window !== "undefined" ? localStorage.getItem("_ssapp:token") : null;
@@ -54,34 +54,26 @@ function PageWrapper({
         showForRole={["EDITOR","ADMIN", "SUPERADMIN"]}
         userRole={user?.role as string}
       >
-        <AppShell
-          withBorder={false}
-          className="bg-background transition-all duration-500  ease-in-out"
-          header={{ height: { base: 40, md: 0 } }}
-          navbar={{
-            width: drawerOpened ? 288 : 80,
-            breakpoint: "md",
-            collapsed:  {mobile: true},
-          }}
-        >
-          <AppShell.Header>
+          <div className="">
             <div className="block bg-background px-2 md:hidden ">
               <MobileAdminSidebar height={size?.innerHeight as number} />
             </div>
-          </AppShell.Header>
-          <AppShell.Navbar>
-            <aside className="hidden h-screen md:block">
+            <aside className="hidden md:block">
               <AdminSidebar height={size?.innerHeight as number} />
             </aside>
-          </AppShell.Navbar>
-          <AppShell.Main
+          </div>
+        <section
+          className="bg-background transition-all duration-500  ease-in-out"
+         
+        >
+          <div
             className={`${
               drawerOpened ? "md:ml-72" : "md:ml-20"
-            } bg-background my-4 md:my-0 md:p-4 transition-all duration-500  ease-in-out `}
+            } bg-background my-4 md:my-0 md:p-6 transition-all duration-500  ease-in-out  `}
           >
             {children}
-          </AppShell.Main>
-        </AppShell>
+          </div>
+        </section>
       </ComponentShield>
     </motion.main>
   );

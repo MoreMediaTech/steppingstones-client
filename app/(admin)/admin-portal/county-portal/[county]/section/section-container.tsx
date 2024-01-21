@@ -33,7 +33,7 @@ export function SectionContainer({
               onClick={onClick}
               className="flex items-center gap-2"
             >
-              <BiEdit fontSize={34} />
+              <BiEdit fontSize={30} />
               Edit Section
             </Button>
           </div>

@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import { Indicator, Title } from '@mantine/core'
+
 import { BsArrowLeftShort } from 'react-icons/bs'
 import { FaSignOutAlt, FaRegUser } from 'react-icons/fa'
 import Link from 'next/link'
@@ -100,12 +100,13 @@ export function AdminSidebar({ height }: { height: number }) {
                       drawerOpened ? "px-4" : "text-center"
                     } transition-all duration-300 ease-in-out`}
                   >
-                    <Title
-                      order={drawerOpened ? 4 : 6}
-                      className="text-textDark dark:text-textLight"
-                    >
-                      {label}
-                    </Title>
+                    {drawerOpened? (
+                      <h4 className="text-textDark font-extrabold font-montserrat dark:text-textLight">{label}</h4>
+
+                    ): (
+                      <h6 className="text-textDark font-extrabold font-montserrat dark:text-textLight">{label}</h6>
+
+                    )}
                   </div>
                 );
               }
@@ -245,12 +246,7 @@ export function MobileAdminSidebar({ height }: { height: number }) {
                 if (!Icon && !href) {
                   return (
                     <div key={label} className="my-2 w-full text-left px-4">
-                      <Title
-                        order={4}
-                        className="text-textDark dark:text-textLight"
-                      >
-                        {label}
-                      </Title>
+                     <h4 className="text-textDark font-extrabold font-montserrat dark:text-textLight">{label}</h4>
                     </div>
                   );
                 }

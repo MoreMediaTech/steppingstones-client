@@ -1,12 +1,13 @@
 'use client'
 
-import { Loader } from '@components/mantine-components'
+
 
 // zod schema
 import { DistrictSchemaProps } from "@models/District";
 
 // components
 import { DistrictTable } from './DistrictTable'
+import Loader from "@components/Loader";
 
 // hooks (Controller)
 import useDistrictSettingController from './use-district-setting-controller'
@@ -19,7 +20,7 @@ export function DistrictSettings() {
   if (isLoadingDistricts) {
     return (
       <div className="flex h-[700px] items-center justify-center">
-        <Loader size="xl" variant="bars" />
+        <Loader className="h-12 w-12" />
       </div>
     )
   }

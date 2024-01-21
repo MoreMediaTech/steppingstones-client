@@ -1,5 +1,5 @@
 "use client";
-import { Loader } from "@components/mantine-components";
+
 import { BiEdit } from "react-icons/bi";
 import { useRouter } from "next/navigation";
 
@@ -8,6 +8,7 @@ import ContentPreview from "app/components/ContentPreview";
 import Header from "@components/Header";
 import { Button } from "@components/ui/button";
 import { Badge } from "@components/ui/badge";
+import Loader from "@components/Loader";
 
 // hooks (Controller)
 import useCountyController from "../../use-county-controller";
@@ -25,7 +26,7 @@ export default function Welcome({ id, county }: Props) {
   if (isLoadingCounty) {
     return (
       <div className="flex h-[700px] items-center justify-center">
-        <Loader size="xl" variant="bars" />
+        <Loader className="h-12 w-12" />
       </div>
     );
   }

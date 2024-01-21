@@ -32,7 +32,7 @@ import {
 import { Input } from "@components/ui/input";
 import { Checkbox } from "@components/ui/checkbox";
 import { ScrollArea } from "@components/ui/scroll-area";
-import { Loader } from "@components/mantine-components";
+import Loader from "@components/Loader";
 
 // zod schemas
 import { Role, PartialUserWithIdType } from "@models/User";
@@ -343,11 +343,7 @@ export function UpdateUserForm({ user, disabled }: Props) {
                   type="submit"
                   className="inline-flex w-full items-center justify-center group-disabled:pointer-events-none"
                 >
-                  <Loader
-                    variant="dots"
-                    size="sm"
-                    className="absolute text-tertiary-400 group-enabled:hidden group-enabled:w-0 group-enabled:opacity-0"
-                  />
+                  <Loader className="h-6 w-6 mr-2" />
                   <span className="w-full group-disabled:opacity-0">
                     Submit
                   </span>

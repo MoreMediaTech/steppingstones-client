@@ -1,6 +1,5 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { Group } from '@components/mantine-components'
 import { IoIosSearch } from 'react-icons/io'
 import { useTheme } from 'next-themes'
 import { FiMoon, FiSun } from 'react-icons/fi'
@@ -58,7 +57,7 @@ const PortalHeader = ({
           <div className="mb-2 flex items-center justify-between w-full">
             <div className="flex items-center gap-1">
              
-              <Group>
+              <div>
                 <Avatar
                   imageUrl={
                     data ? (data?.logoIcon as string) : (imgUrl as string)
@@ -75,7 +74,7 @@ const PortalHeader = ({
                     {subTitle}
                   </h3>
                 </div>
-              </Group>
+              </div>
             </div>
             <div className="m-0 flex list-none px-1 md:hidden ">
               <button

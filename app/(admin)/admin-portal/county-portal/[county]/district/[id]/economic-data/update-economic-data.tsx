@@ -14,7 +14,7 @@ import {
 } from "@components/ui/dialog";
 import { EconomicDataForm } from "./economic-data-form";
 import { Button } from "@components/ui/button";
-import { Loader } from "@components/mantine-components";
+import Loader from "@components/Loader";
 
 // hooks (Controller)
 import useEconomicDataController from "./use-economic-data-controller";
@@ -81,7 +81,7 @@ export function UpdateEconomicData({
 
         {isLoadingWidget ? (
           <div className="flex h-[500px] w-[500px] items-center justify-center">
-            <Loader size="xl" variant="bars" />
+            <Loader className="h-12 w-12" />
           </div>
         ) : (
           <EconomicDataForm form={form} onSubmit={updateEconomicDataHandler} />

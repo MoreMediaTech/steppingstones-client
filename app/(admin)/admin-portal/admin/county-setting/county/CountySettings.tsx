@@ -1,7 +1,6 @@
 "use client";
-import { Loader } from "@components/mantine-components";
 
-import { CountyDataProps } from "@lib/types";
+import Loader from "@components/Loader";
 import { CountyTable } from "./CountyTable";
 
 // hooks (Controller)
@@ -14,7 +13,7 @@ export function CountySettings() {
   if (isLoadingCounties) {
     return (
       <div className="flex h-[700px] items-center justify-center">
-        <Loader size="xl" variant="bars" />
+        <Loader className="h-12 w-12" />
       </div>
     );
   }

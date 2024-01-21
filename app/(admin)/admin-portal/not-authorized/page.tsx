@@ -2,7 +2,8 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
-import { Button } from '@components/mantine-components'
+import { Button } from '@components/ui/button'
+
 
 export default function NotAuthorized() {
   const router = useRouter()
@@ -26,7 +27,7 @@ export default function NotAuthorized() {
           the home page.
         </h2>
         <div className="flex justify-center">
-          <Button type="button" color="dark" onClick={() => router.back()}>
+          <Button type="button" onClick={() => router.back()}>
             GO BACK
           </Button>
         </div>

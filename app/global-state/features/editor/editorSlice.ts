@@ -1,31 +1,26 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 
-import {
-  DistrictDataProps,
-  DistrictSectionProps,
-  EconomicDataWidgetProps,
-  SectionProps,
-  SubSectionProps,
-  SubSubSectionProps,
-  SourceDataProps,
-  PartnerData,
-} from '../../../../lib/types'
+
 import { RootState } from 'app/global-state/store'
-import { CountyDataProps, Error } from '@lib/types'
+import {  Error } from '@lib/types'
 import { CountySchemaProps } from '@models/County'
+import { DistrictSchemaProps, PartialDistrictSectionSchemaProps, PartialEconomicDataSchemaProps } from '@models/District'
+import { PartialSectionSchemaProps } from '@models/Section'
+import { PartialSourceDirectoryProps } from '@models/SourceDirectory'
+import { PartialPartnerWithOrganisationProps } from '@models/Partner'
 
 interface IEditorState {
   publicFeed: Pick<CountySchemaProps, 'id' | 'name' | 'imageUrl' | 'logoIcon'>[]
   counties: Partial<CountySchemaProps[]> | null
-  district: Partial<DistrictDataProps> | null
-  county: Partial<CountyDataProps> | null
-  section: Partial<SectionProps> | null
-  subSection: Partial<SubSectionProps> | null
-  subSubSection: Partial<SubSubSectionProps> | null
-  districtSection: Partial<DistrictSectionProps> | null
-  economicData: Partial<EconomicDataWidgetProps> | null
-  sdData: Partial<SourceDataProps> | null
-  partner: Partial<PartnerData> | null
+  district: Partial<DistrictSchemaProps> | null
+  county: Partial<CountySchemaProps> | null
+  section: Partial<PartialSectionSchemaProps> | null
+  subSection: Partial<PartialSectionSchemaProps> | null
+  subSubSection: Partial<PartialSectionSchemaProps> | null
+  districtSection: Partial<PartialDistrictSectionSchemaProps> | null
+  economicData: Partial<PartialEconomicDataSchemaProps> | null
+  sdData: Partial<PartialSourceDirectoryProps> | null
+  partner: Partial<PartialPartnerWithOrganisationProps> | null
   openEditModal: boolean
   openDeleteModal: boolean
   openLASectionModal: boolean
@@ -76,48 +71,48 @@ const editorSlice = createSlice({
     setCounties: (state, { payload }: PayloadAction<CountySchemaProps[]>) => {
       state.counties = payload
     },
-    setCounty: (state, { payload }: PayloadAction<CountyDataProps | null>) => {
+    setCounty: (state, { payload }: PayloadAction<CountySchemaProps | null>) => {
       state.county = payload
     },
     setDistrict: (
       state,
-      { payload }: PayloadAction<DistrictDataProps | null>
+      { payload }: PayloadAction<DistrictSchemaProps | null>
     ) => {
       state.district = payload
     },
-    setSection: (state, { payload }: PayloadAction<SectionProps | null>) => {
+    setSection: (state, { payload }: PayloadAction<PartialSectionSchemaProps | null>) => {
       state.section = payload
     },
     setSubSection: (
       state,
-      { payload }: PayloadAction<SubSectionProps | null>
+      { payload }: PayloadAction<PartialSectionSchemaProps | null>
     ) => {
       state.subSection = payload
     },
     setSubSubSection: (
       state,
-      { payload }: PayloadAction<SubSubSectionProps | null>
+      { payload }: PayloadAction<PartialSectionSchemaProps | null>
     ) => {
       state.subSubSection = payload
     },
     setDistrictSection: (
       state,
-      { payload }: PayloadAction<DistrictSectionProps | null>
+      { payload }: PayloadAction<PartialDistrictSectionSchemaProps | null>
     ) => {
       state.districtSection = payload
     },
     setEconomicData: (
       state,
-      { payload }: PayloadAction<EconomicDataWidgetProps | null>
+      { payload }: PayloadAction<PartialEconomicDataSchemaProps | null>
     ) => {
       state.economicData = payload
     },
-    setSDData: (state, { payload }: PayloadAction<SourceDataProps | null>) => {
+    setSDData: (state, { payload }: PayloadAction<PartialSourceDirectoryProps | null>) => {
       state.sdData = payload
     },
     setPartner: (
       state,
-      { payload }: PayloadAction<PartnerData | null>
+      { payload }: PayloadAction<PartialPartnerWithOrganisationProps | null>
     ) => {
       state.partner = payload
     },

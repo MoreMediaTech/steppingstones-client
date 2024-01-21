@@ -1,9 +1,27 @@
+'use client'
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import * as z from "zod"
+
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
 } from 'use-places-autocomplete'
-import { Autocomplete } from '@mantine/core'
-import { FormEventHandler, ReactEventHandler } from 'react'
+import { Button } from "@components/ui/button"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@components/ui/form"
+import { Input } from "@components/ui/input"
+
+const FormSchema = z.object({
+  places: z.string().optional(),
+})
 
 type PlacesProps = {
   setRegion: (position: google.maps.LatLngLiteral) => void
@@ -20,6 +38,13 @@ export default function Places({ setRegion, location }: PlacesProps) {
     clearSuggestions,
   } = usePlacesAutocomplete()
 
+   const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      places: location,
+    },
+  })
+
   const handleSelect = async (val: any) => {
     setValue(val, false);
     clearSuggestions();
@@ -31,18 +56,28 @@ export default function Places({ setRegion, location }: PlacesProps) {
   const newData = status === 'OK' ? data.map((place) => place.description) : [`${location}`]
   return (
     <>
-      <Autocomplete
-        value={value}
-        defaultValue={location}
-        onChange={setValue}
-        data={newData}
-
-        placeholder="Search Map for Locality"
-        radius="md"
-        variant="filled"
-        aria-label="Search Map for Locality input"
-        className='rounded-md outline-none border-2 border-gray-900 dark:border-white ring-0'
-      />
+      <Form {...form}>
+      <form className="w-2/3 space-y-6">
+        <FormField
+          control={form.control}
+          name="places"
+          aria-label="Search Map for Locality input"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Search Map</FormLabel>
+              <FormControl>
+                <Input placeholder="Search Map for Locality" {...field} />
+              </FormControl>
+              <FormDescription>
+                This is your public display name.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </form>
+    </Form>
+    
     </>
   )
 }

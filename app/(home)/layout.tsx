@@ -13,6 +13,7 @@ import { Toaster } from "@app/components/ui/toaster";
 import { Navbar } from "app/components/navigation";
 import Footer from "app/components/footer";
 import CookieConsentComponent from "@components/CookieConsent/CookieConsentComponent";
+import { cn } from "@lib/utils";
 // import { cookies } from "next/headers";
 
 const montserrat = Montserrat({
@@ -40,7 +41,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${montserrat.variable} light font-montserrat sm:scroll-smooth`}
+      className={cn(` light font-montserrat sm:scroll-smooth`, montserrat.variable)}
       style={{ scrollBehavior: "smooth", colorScheme: "light" }}
     >
       <body className="relative grid min-h-screen grid-cols-1 bg-background">

@@ -1,18 +1,14 @@
 'use client'
+import Title from '@components/title'
 import React from 'react'
-import {
-  Box,
-  Title,
-  TitleOrder,
-  ThemeIcon,
-} from '@components/mantine-components'
+
 
 type Props = {
   title: string
   subtitle?: string
   bcg?: string
-  order: TitleOrder
-  subOrder?: TitleOrder
+  order: number
+  subOrder?: number
   iconRight?: React.ReactElement
   iconLeft?: React.ReactElement
 }
@@ -27,31 +23,31 @@ function Header({
   bcg,
 }: Props) {
   return (
-    <Box className='w-full'>
+    <div className='w-full'>
       <div className="flex items-center gap-1"
       >
         {iconLeft ? (
-          <Box className={`flex items-center rounded-md shadow-lg`}>
-            <ThemeIcon radius="md" size="xl" color="lightgreen">
+          <div className={`flex items-center rounded-md shadow-lg`}>
+            <div  className='bg-violet-500 text-xl rounded-md'>
               {iconLeft}
-            </ThemeIcon>
-          </Box>
+            </div>
+          </div>
         ) : null}
         <Title order={order} className="text-gray-800 dark:text-gray-100">
           {title}
         </Title>
         {iconRight ? (
-          <Box className={`flex items-center rounded-md shadow-lg`}>
-            <ThemeIcon radius="md" size="xl" color="violet">
+          <div className={`flex items-center rounded-md shadow-lg`}>
+            <div className='bg-violet-500 text-xl rounded-md'>
               {iconRight}
-            </ThemeIcon>
-          </Box>
+            </div>
+          </div>
         ) : null}
       </div>
-      <Title order={subOrder} className='font-light'>
+      <Title order={subOrder as number} className='font-light'>
         {subtitle}
       </Title>
-    </Box>
+    </div>
   )
 }
 

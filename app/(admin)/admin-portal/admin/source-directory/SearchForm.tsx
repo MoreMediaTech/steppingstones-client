@@ -1,7 +1,6 @@
 "use client";
 
 // components
-import { List } from "@components/mantine-components";
 import {
   Form,
   FormControl,
@@ -75,11 +74,11 @@ const SearchForm = () => {
           </Form>
           <div className="font-poppins text-gray-400 dark:text-gray-100">
             <h3 className="text-semi-bold">Source Types Descriptions</h3>
-            <List size="xs" className="space-y-1 text-gray-400">
-              <List.Item>BSI - Business Support Information</List.Item>
-              <List.Item>IS - Industry Sector</List.Item>
-              <List.Item>EU - Economic Update</List.Item>
-            </List>
+            <ul className="max-w-md list-disc list-inside dark:text-gray-400 space-y-1 text-xs text-gray-400">
+              <li>BSI - Business Support Information</li>
+              <li>IS - Industry Sector</li>
+              <li>EU - Economic Update</li>
+            </ul>
           </div>
         </div>
       </div>

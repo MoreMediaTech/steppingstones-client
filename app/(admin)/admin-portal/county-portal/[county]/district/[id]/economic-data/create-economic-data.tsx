@@ -36,9 +36,9 @@ export function CreateEconomicData({
         type="button"
         variant="outline"
         asChild
-        className="w-1/3 border-gray-900 dark:border-gray-200"
+        className="w-full border-gray-900 dark:border-gray-200"
       >
-        <DialogTrigger>Create Economic Data</DialogTrigger>
+        <DialogTrigger>Add Data</DialogTrigger>
       </Button>
       <DialogContent>
         <DialogHeader>

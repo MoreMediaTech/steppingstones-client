@@ -15,7 +15,7 @@ import { useAppDispatch } from 'app/global-state/hooks'
 import { setAuthState } from 'app/global-state/features/auth/authSlice'
 
 const formSchema = z.object({
-  oneTimeCode: z.string().nonempty({
+  oneTimeCode: z.string().min(6,{
     message: 'A six digit one time code is required...',
   }),
 })

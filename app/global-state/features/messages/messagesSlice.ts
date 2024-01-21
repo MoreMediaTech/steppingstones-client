@@ -1,10 +1,11 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { RootState } from 'app/global-state/store'
-import {  MessageProps } from '../../../../lib/types'
+import { createSlice,type PayloadAction } from '@reduxjs/toolkit'
+import type { RootState } from 'app/global-state/store'
+import type { MessageTypes } from '@models/Messages'
+
 
 export interface EmailState {
-  enquiries: MessageProps[]
-  enquiry: MessageProps | null
+  enquiries: MessageTypes[]
+  enquiry: MessageTypes | null
   message: string
   reply: boolean
   error: Error
@@ -26,7 +27,7 @@ export const messagesSlice = createSlice({
       state,
       {
         payload,
-      }: PayloadAction<{ enquiry: MessageProps | null; reply: boolean }>
+      }: PayloadAction<{ enquiry: MessageTypes | null; reply: boolean }>
     ) => {
       state.enquiry = payload.enquiry
       state.reply = payload.reply

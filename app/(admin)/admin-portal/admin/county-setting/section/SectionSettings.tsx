@@ -1,9 +1,10 @@
 "use client";
 
 import React from "react";
-import { Loader } from "@components/mantine-components";
+
 
 import {SectionsTable} from "./SectionsTable";
+import Loader from "@components/Loader";
 
 import useSectionSettingController from "./use-section-setting-controller";
 
@@ -13,7 +14,7 @@ export function SectionsSettings() {
   if (isLoadingSections) {
     return (
       <div className="flex h-[700px] items-center justify-center">
-        <Loader size="xl" variant="bars" />
+        <Loader className="h-12 w-12" />
       </div>
     );
   }

@@ -3,7 +3,7 @@
 import React from "react";
 
 // components
-import { Loader } from "@components/mantine-components";
+import Loader from "@components/Loader";
 import {
   MobileSideNav,
   SidebarNav,
@@ -31,7 +31,7 @@ export function CountyPortalLayoutWrapper({
 
   if (isLoadingCounties) {
     <div className="flex h-screen items-center justify-center">
-      <Loader size="xl" variant="bars" />
+      <Loader className="h-12 w-12" />
     </div>;
   }
 

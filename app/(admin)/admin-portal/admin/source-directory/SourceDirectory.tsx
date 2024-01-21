@@ -3,7 +3,7 @@
 import React from "react";
 
 // components
-import { Loader } from "@components/mantine-components";
+import Loader from "@components/Loader";
 import { SourceDirectoryTable } from "./SourceDirectoryTable";
 import SearchForm from "./SearchForm";
 
@@ -17,7 +17,7 @@ export function SourceDirectory() {
   if (isLoading) {
     return (
       <div className="flex h-[700px] items-center justify-center">
-        <Loader size="xl" variant="bars" />
+        <Loader className="h-12 w-12" />
       </div>
     );
   }

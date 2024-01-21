@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 // components
-import { Loader } from "@components/mantine-components";
+import Loader from "@components/Loader";
 import { SectionContainer } from "../../section/section-container";
 
 import { Button } from "@components/ui/button";
@@ -39,10 +39,14 @@ export default function District({
     undefined
   );
 
+    const handleClick = () => {
+    router.push(`/admin-portal/county-portal/${county}/district/${districtId}/edit/${districtSection?.id}`);
+  };
+
   if (isLoadingDistrictSection) {
     return (
       <div className="flex h-[700px] items-center justify-center">
-        <Loader size="xl" variant="bars" />
+        <Loader className="h-12 w-12" />
       </div>
     );
   }
@@ -70,6 +74,7 @@ export default function District({
       <section className="w-full overflow-auto px-2 py-2">
         <SectionContainer
           data={districtSection as PartialDistrictSectionSchemaProps}
+          onClick={handleClick}
         />
       </section>
     </section>

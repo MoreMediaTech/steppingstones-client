@@ -1,5 +1,6 @@
 "use client";
-import { Loader, UnstyledButton } from "@components/mantine-components";
+
+import Loader from "@components/Loader";
 import { BiEdit } from "react-icons/bi";
 import { useRouter } from "next/navigation";
 
@@ -28,7 +29,7 @@ export default function LEP({ id, county }: Props) {
   if (isLoadingCounty) {
     return (
       <div className="flex h-[700px] items-center justify-center">
-        <Loader size="xl" variant="bars" />
+        <Loader className="h-12 w-12" />
       </div>
     );
   }
