@@ -52,9 +52,20 @@ export function EconomicData({
 
   if (isLoading) {
     return (
-      <div className="flex h-[700px] w-full items-center justify-center">
+      <section className="relative w-full px-2 py-2 space-y-4 md:container md:mx-auto md:h-screen  md:px-8 md:py-8">
+        <div className="mb-6 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0 w-full">
+        <Header title={`Economic Data`} order={1} />
+        <div className="flex flex-col md:flex-row items-center w-full gap-2">
+          <Button type="button" variant="outline" className="w-full" onClick={() => router.back()}>
+            Go Back
+          </Button>
+          <CreateEconomicData districtSectionId={districtSectionId} />
+        </div>
+      </div>
+      <div className="flex h-full w-full items-center justify-center">
         <Loader className="h-12 w-12" />
       </div>
+      </section>
     );
   }
 

@@ -4,10 +4,10 @@ import { Suspense } from 'react'
 
 export default function AdminPortal() {
   return (
-    <>
+    <section className='w-full'>
       <Suspense fallback={<Loader />}>
         <RenderInsights />
       </Suspense>
-    </>
+    </section>
   )
 }

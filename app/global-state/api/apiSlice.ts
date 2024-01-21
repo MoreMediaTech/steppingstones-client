@@ -98,6 +98,13 @@ export const apiSlice = createApi({
   keepUnusedDataFor: 500,
   endpoints: (builder) => ({}),
 })
+export const advertsApiSlice = createApi({
+  reducerPath: "advertsApi",
+  baseQuery: baseQueryWithReAuth,
+  keepUnusedDataFor: 300,
+  tagTypes: ["Adverts"],
+  endpoints: (builder) => ({}),
+});
 
 export const partnerApiSlice = createApi({
   reducerPath: 'partnerApi',

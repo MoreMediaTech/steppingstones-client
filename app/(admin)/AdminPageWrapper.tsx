@@ -47,7 +47,7 @@ function PageWrapper({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
       transition={{ duration: 0.25 }}
-      className={`${className} bg-background min-h-screen  `}
+      className={`${className} flex min-h-screen flex-col min-w-full bg-background max-h-screen  `}
     >
       <ComponentShield
         RBAC
@@ -69,7 +69,7 @@ function PageWrapper({
           <div
             className={`${
               drawerOpened ? "md:ml-72" : "md:ml-20"
-            } bg-background my-4 md:my-0 md:p-6 transition-all duration-500  ease-in-out  `}
+            } bg-background my-4 md:my-0 md:p-6 transition-all duration-500  ease-in-out flex flex-grow  `}
           >
             {children}
           </div>
