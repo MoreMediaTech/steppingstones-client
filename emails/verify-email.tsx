@@ -47,7 +47,7 @@ export function VerifyEmail({ name = 'Mr X', url = 'https://steppingstonesapp.co
             </Text>
 
             <Section style={buttonContainer}>
-              <Button pY={11} pX={23} style={button} href={url}>
+              <Button  style={button} href={url}>
                 Click to verify email &rarr;
               </Button>
             </Section>

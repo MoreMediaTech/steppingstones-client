@@ -22,7 +22,9 @@ interface KoalaWelcomeEmailProps {
 const baseUrl = process.env.NEXT_PUBLIC_API_URL || "";
 const year = new Date().getFullYear();
 
-export const WelcomeEmail = ({ userFirstname = "Zeno" }: KoalaWelcomeEmailProps) => (
+export const WelcomeEmail = ({
+  userFirstname = "Zeno",
+}: KoalaWelcomeEmailProps) => (
   <Html>
     <Head />
     <Preview>
@@ -46,12 +48,7 @@ export const WelcomeEmail = ({ userFirstname = "Zeno" }: KoalaWelcomeEmailProps)
         </Text>
         <Text style={paragraph}>Click the button below to access the app.</Text>
         <Section style={btnContainer}>
-          <Button
-            pX={12}
-            pY={12}
-            style={button}
-            href="https://steppingstonesapp.com"
-          >
+          <Button style={button} href="https://steppingstonesapp.com">
             Get started
           </Button>
         </Section>
