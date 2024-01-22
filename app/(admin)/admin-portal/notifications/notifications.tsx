@@ -23,11 +23,13 @@ export function Notifications() {
   return (
     <section className="w-full ">
       <Tabs defaultValue="notifications" className="w-full">
-        <TabsList>
-          <TabsTrigger value="notifications">
+        <TabsList className="w-full">
+          <TabsTrigger value="notifications" className="text-xs sm:text-sm">
             Notification to All Users
           </TabsTrigger>
-          <TabsTrigger value="notification">Notification to User</TabsTrigger>
+          <TabsTrigger value="notification" className="text-xs sm:text-sm">
+            Notification to User
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="notifications">
           <Header title="Create Notifications" order={2} />
@@ -41,7 +43,7 @@ export function Notifications() {
 
       <Separator className="my-6 w-full" />
       <Header title="Notifications" order={2} />
-      <section className="grid grid-cols-1 gap-2 rounded-md border my-2 px-2 py-2">
+      <section className="my-2 grid grid-cols-1 gap-2 rounded-md border px-2 py-2">
         {notifications?.map((notification) => (
           <NotificationItem key={notification.id} notification={notification} />
         ))}

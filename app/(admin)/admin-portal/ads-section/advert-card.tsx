@@ -14,7 +14,9 @@ import { Button } from "@components/ui/button";
 import { Skeleton } from "@components/ui/skeleton";
 import Title from "@components/title";
 import EditAds from "./edit-ads";
-import { PartialAdvertSchemaProps } from "@models/Advert";
+import { AdvertSchemaProps, PartialAdvertSchemaProps } from "@models/Advert";
+import HandleDeleteModal from "@components/HandleDeleteModal/HandleDeleteModal";
+import { cn } from "@lib/utils";
 
 interface AdvertCardProps {
   data: PartialAdvertSchemaProps;
@@ -31,16 +33,26 @@ export default function AdvertCard({
 }: AdvertCardProps) {
   const { title, imageUrl, summary, id } = data;
   return (
-    <Card className={className}>
-      <CardHeader className="flex flex-row items-center justify-between pb-2">
+    <Card className={cn("relative flex flex-col", className)}>
+      <CardHeader className="flex flex-col items-center space-y-4 pb-2">
         {imageUrl ? (
-          <Image src={imageUrl} alt={title as string} width={40} height={40} />
+          <div style={{ position: "relative", height: "200px", width: '100%' }}>
+            <Image
+              src={imageUrl}
+              alt={title as string}
+              fill
+              sizes="100vw"
+              style={{
+                objectFit: "contain", // cover, contain, none
+              }}
+            />
+          </div>
         ) : null}
-        <CardTitle className="text-xs font-medium text-muted-foreground">
-          <Title order={4}>{title}</Title>
+        <CardTitle className="text-base font-montserrat font-bold text-muted-foreground">
+          {title}
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex flex-grow">
         <div className="font-cold text-xl">
           {loading ? (
             <Skeleton>
@@ -53,10 +65,10 @@ export default function AdvertCard({
       </CardContent>
       <CardFooter className="flex flex-row items-center justify-between pt-2">
         <EditAds advert={data} />
-        <Button variant={"outline"} onClick={() => onClick(id as string)}>
-          <MdDelete className="text-lg" />
-          Delete
-        </Button>
+        <HandleDeleteModal
+          data={data as AdvertSchemaProps}
+          deleteHandler={onClick}
+        />
       </CardFooter>
     </Card>
   );

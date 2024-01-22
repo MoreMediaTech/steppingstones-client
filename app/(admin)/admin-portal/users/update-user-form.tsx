@@ -70,7 +70,7 @@ export function UpdateUserForm({ user, disabled }: Props) {
   const { form, roles, isUpdating, onSubmitUpdate } = useUsersController(
     defaultValues,
     user,
-    setOpen
+    setOpen,
   );
 
   return (
@@ -86,7 +86,7 @@ export function UpdateUserForm({ user, disabled }: Props) {
           Edit
         </DialogTrigger>
       </Button>
-      <DialogContent className="h-[70vh] w-[60vw]">
+      <DialogContent className="h-[70vh] sm:max-w-[60vw]">
         <DialogHeader>
           <DialogTitle>Update User Details</DialogTitle>
           <DialogDescription>Update the details of the user</DialogDescription>
@@ -343,10 +343,18 @@ export function UpdateUserForm({ user, disabled }: Props) {
                   type="submit"
                   className="inline-flex w-full items-center justify-center group-disabled:pointer-events-none"
                 >
-                  <Loader className="h-6 w-6 mr-2" />
-                  <span className="w-full group-disabled:opacity-0">
-                    Submit
-                  </span>
+                  {isUpdating ? (
+                    <>
+                      <Loader className="mr-2 h-6 w-6" />
+                      <span className="w-full group-disabled:opacity-0">
+                        Submitting...
+                      </span>
+                    </>
+                  ) : (
+                    <span className="w-full group-disabled:opacity-0">
+                      Submit
+                    </span>
+                  )}
                 </Button>
               </fieldset>
             </form>

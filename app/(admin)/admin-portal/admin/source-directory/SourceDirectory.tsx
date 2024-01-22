@@ -22,7 +22,7 @@ export function SourceDirectory() {
     );
   }
   return (
-    <section className="relative mx-2 px-1 py-1 dark:text-gray-200 md:mx-auto md:w-full">
+    <section className="relative px-1 py-1 dark:text-gray-200 space-y-4 md:mx-auto md:w-full">
       <SearchForm  />
       <SourceDirectoryTable
         data={sourceData as PartialSourceDirectoryProps[]}

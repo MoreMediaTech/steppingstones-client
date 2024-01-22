@@ -33,19 +33,19 @@ export function CreateCountyForm() {
   const { form, isCreating, createHandler } = useCountySettingController(
     defaultValues,
     undefined,
-    setOpen
+    setOpen,
   );
 
   return (
-    <Dialog>
-      <Button
-        type="button"
-        variant="outline"
-        asChild
-        className=" w-1/3 border-gray-900 dark:border-gray-200"
-      >
-        <DialogTrigger>Create County</DialogTrigger>
-      </Button>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button
+          variant="outline"
+          className="border-gray-900 dark:border-gray-200 sm:w-1/3"
+        >
+          Create County
+        </Button>
+      </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Create County</DialogTitle>

@@ -20,7 +20,7 @@ export default function AdvertCards({
           key={advert.id}
           data={advert}
           loading={isLoadingAds}
-          className="h-[190px] w-full p-2"
+          className="h-auto w-full p-2"
           onClick={onClick}
         />
       ))}

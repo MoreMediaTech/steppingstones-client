@@ -48,7 +48,7 @@ export default function EditAds({
   return (
     <Dialog open={isEdit} onOpenChange={setIsEdit}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="w-ful gap-1 md:w-1/2">
+        <Button variant="outline" className="w-ful gap-1 md:w-1/3">
           <MdEditSquare className="text-lg" />
           Edit
         </Button>

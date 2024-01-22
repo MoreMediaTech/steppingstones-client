@@ -33,10 +33,7 @@ import { Checkbox } from "@components/ui/checkbox";
 import { ScrollArea } from "@components/ui/scroll-area";
 
 // zod schemas
-import {
-  PartialSourceDirectoryProps,
-  SourceDirectoryType,
-} from "@models/SourceDirectory";
+import { SourceDirectoryType } from "@models/SourceDirectory";
 
 // hooks (Controller)
 import useSourceDirectoryController from "./use-source-directory-controller";
@@ -55,14 +52,11 @@ export function CreateSourceForm() {
   return (
     <>
       <Dialog open={open} onOpenChange={setOpen}>
-        <Button
-          type="button"
-          asChild
-          variant="outline"
-          className="w-1/3 border-gray-900 dark:border-gray-200 "
-        >
-          <DialogTrigger>Create Source</DialogTrigger>
-        </Button>
+        <DialogTrigger asChild>
+          <Button variant="outline" className="sm:w-1/3">
+            Create Source
+          </Button>
+        </DialogTrigger>
         <DialogContent className="h-[70vh] sm:min-w-[800px]">
           <DialogHeader>
             <DialogTitle>Create Source</DialogTitle>

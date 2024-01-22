@@ -1,5 +1,5 @@
 "use client";
-import { Box } from "@mantine/core";
+
 import React from "react";
 
 import Header from "../../components/Header";
@@ -25,7 +25,7 @@ function StatsItem({
   percentageInc,
 }: DefaultStatsProps) {
   return (
-    <Card className="w-full">
+    <Card className="w-full shadow-md shadow-green-300 dark:shadow-green-600">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium">
           <Header title={title} order={5} />
@@ -33,7 +33,7 @@ function StatsItem({
         {icon}
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold">{count}</div>
+        <div className="text-xl font-semibold">{count}</div>
         {percentageInc ? (
           <p className="text-xs text-muted-foreground">
             {percentageInc} from last month
