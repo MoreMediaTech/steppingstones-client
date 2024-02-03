@@ -14,7 +14,7 @@ import {
   useCreateDistrictSectionMutation,
   useGetDistrictSectionByIdQuery,
   useUpdateDistrictSectionByIdMutation,
-} from "@global-state/features/editor/editorApiSlice";
+} from "@app/global-state/features/content/contentApiSlice";
 import {
   isErrorWithMessage,
   isFetchBaseQueryError,
@@ -29,7 +29,7 @@ import {
 export default function useDistrictController(
   districtId?: string,
   districtSectionId?: string,
-  setOpen?: React.Dispatch<React.SetStateAction<boolean>>
+  setOpen?: React.Dispatch<React.SetStateAction<boolean>>,
 ) {
   const { toast } = useToast();
 
@@ -46,7 +46,8 @@ export default function useDistrictController(
   // district mutation hooks
   const [createDistrictSection, { isLoading: isCreatingDistrictSection }] =
     useCreateDistrictSectionMutation();
-  const [updateDistrictSectionById,{ isLoading: isUpdatingDistrictSection }] = useUpdateDistrictSectionByIdMutation();
+  const [updateDistrictSectionById, { isLoading: isUpdatingDistrictSection }] =
+    useUpdateDistrictSectionByIdMutation();
 
   // get district section by id
   const {
@@ -98,10 +99,11 @@ export default function useDistrictController(
           }
         }
       },
-      [districtId]
+      [districtId],
     );
 
-    const setEDLive: SubmitHandler<PartialDistrictSectionSchemaProps> = React.useCallback(async (data) => {
+  const setEDLive: SubmitHandler<PartialDistrictSectionSchemaProps> =
+    React.useCallback(async (data) => {
       const sectionData = { ...data, id: districtSectionId as string };
 
       try {
@@ -117,25 +119,23 @@ export default function useDistrictController(
         }
       } catch (error) {
         if (isFetchBaseQueryError(error)) {
-            const errMsg =
-              "error" in error ? error.error : JSON.stringify(error.message);
-            toast({
-              title: "Error!",
-              description:
-                (errMsg as string) || "Unable create district section",
-              action: <ToastAction altText="Retry">Retry</ToastAction>,
-            });
-          } else if (isErrorWithMessage(error)) {
-            toast({
-              title: "Error!",
-              description: error.message || "Unable create district section",
-              action: <ToastAction altText="Retry">Retry</ToastAction>,
-            });
-          }
+          const errMsg =
+            "error" in error ? error.error : JSON.stringify(error.message);
+          toast({
+            title: "Error!",
+            description: (errMsg as string) || "Unable create district section",
+            action: <ToastAction altText="Retry">Retry</ToastAction>,
+          });
+        } else if (isErrorWithMessage(error)) {
+          toast({
+            title: "Error!",
+            description: error.message || "Unable create district section",
+            action: <ToastAction altText="Retry">Retry</ToastAction>,
+          });
+        }
       }
-    },[]);
+    }, []);
 
-    
   return {
     form,
     district,
@@ -148,6 +148,6 @@ export default function useDistrictController(
     onSubmit,
     updateDistrictSectionById,
     refetchDistrictSection,
-    setEDLive
+    setEDLive,
   };
 }

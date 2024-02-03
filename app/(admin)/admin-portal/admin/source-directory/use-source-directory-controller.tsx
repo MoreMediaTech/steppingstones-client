@@ -12,7 +12,7 @@ import {
   useDeleteSDDataMutation,
   useCreateSDDataMutation,
   useUpdateSDDataMutation,
-} from "@global-state/features/editor/editorApiSlice";
+} from "@app/global-state/features/content/contentApiSlice";
 import {
   isErrorWithMessage,
   isFetchBaseQueryError,
@@ -28,7 +28,7 @@ import {
 export default function useSourceDirectoryController(
   defaultValues?: PartialSourceDirectoryProps,
   source?: PartialSourceDirectoryProps,
-  setOpen?: React.Dispatch<React.SetStateAction<boolean>>
+  setOpen?: React.Dispatch<React.SetStateAction<boolean>>,
 ) {
   const { toast } = useToast();
   const [sdDataType, setSdDataType] = React.useState<string>("BSI");
@@ -164,7 +164,7 @@ export default function useSourceDirectoryController(
         }
       }
     },
-    []
+    [],
   );
 
   return {

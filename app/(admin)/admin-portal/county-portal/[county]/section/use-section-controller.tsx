@@ -12,7 +12,7 @@ import {
   useUpdateSectionByIdMutation,
   useGetSubSectionByIdQuery,
   useUpdateSubSectionByIdMutation,
-} from "@global-state/features/editor/editorApiSlice";
+} from "@app/global-state/features/content/contentApiSlice";
 import {
   isErrorWithMessage,
   isFetchBaseQueryError,
@@ -28,13 +28,13 @@ import {
   partialSectionSchema,
 } from "@models/Section";
 
-export type CreateSectionType = "section" | "subsection" ;
+export type CreateSectionType = "section" | "subsection";
 
 export default function useSectionController(
   sectionId?: string,
   subSectionId?: string,
   type?: CreateSectionType,
-  id?: string
+  id?: string,
 ) {
   const { toast } = useToast();
 
@@ -126,7 +126,7 @@ export default function useSectionController(
           }
         }
       },
-      [id]
+      [id],
     );
 
   return {

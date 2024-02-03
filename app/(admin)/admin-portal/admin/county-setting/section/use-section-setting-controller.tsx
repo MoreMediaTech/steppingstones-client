@@ -11,8 +11,11 @@ import {
   useDeleteManySectionsMutation,
   useDeleteSubSectionByIdMutation,
   useDeleteManySubSectionsMutation,
-} from "app/global-state/features/editor/editorApiSlice";
-import { isErrorWithMessage, isFetchBaseQueryError } from "@app/global-state/helper";
+} from "@app/global-state/features/content/contentApiSlice";
+import {
+  isErrorWithMessage,
+  isFetchBaseQueryError,
+} from "@app/global-state/helper";
 
 // zod schemas
 import { PartialSectionSchemaProps } from "@models/Section";
@@ -24,8 +27,10 @@ export default function useSectionSettingController() {
     isLoading: isLoadingSections,
     refetch: refetchSections,
   } = useGetSectionsQuery();
-  const [deleteSectionById, { isLoading: isDeleting}] = useDeleteSectionByIdMutation();
-  const [deleteManySections, { isLoading: isDeletingMany}] = useDeleteManySectionsMutation();
+  const [deleteSectionById, { isLoading: isDeleting }] =
+    useDeleteSectionByIdMutation();
+  const [deleteManySections, { isLoading: isDeletingMany }] =
+    useDeleteManySectionsMutation();
   const [deleteSubSectionById, { isLoading: isDeletingSubSection }] =
     useDeleteSubSectionByIdMutation();
   const [deleteManySubSections] = useDeleteManySubSectionsMutation();
@@ -64,13 +69,13 @@ export default function useSectionSettingController() {
       const selectedSectionIds = rows.map((row) => row.id);
       try {
         const response = await deleteManySections(
-          selectedSectionIds as string[]
+          selectedSectionIds as string[],
         ).unwrap();
         if (response.success) {
-           toast({
-             title: "Success!",
-             description: response.message,
-           });
+          toast({
+            title: "Success!",
+            description: response.message,
+          });
           refetchSections();
         }
       } catch (error) {
@@ -91,12 +96,45 @@ export default function useSectionSettingController() {
         }
       }
     },
-    []
+    [],
   );
 
-   const deleteSubSectionHandler = React.useCallback(async (id: string) => {
-     try {
-       const response = await deleteSubSectionById(id).unwrap();
+  const deleteSubSectionHandler = React.useCallback(async (id: string) => {
+    try {
+      const response = await deleteSubSectionById(id).unwrap();
+      if (response.success) {
+        toast({
+          title: "Success!",
+          description: response.message,
+        });
+        refetchSections();
+      }
+    } catch (error) {
+      if (isFetchBaseQueryError(error)) {
+        const errMsg =
+          "error" in error ? error.error : JSON.stringify(error.message);
+        toast({
+          title: "Error!",
+          description: (errMsg as string) || "Unable to delete section",
+          action: <ToastAction altText="Retry">Retry</ToastAction>,
+        });
+      } else if (isErrorWithMessage(error)) {
+        toast({
+          title: "Error!",
+          description: error.message || "Unable to delete section",
+          action: <ToastAction altText="Retry">Retry</ToastAction>,
+        });
+      }
+    }
+  }, []);
+
+  const deleteManySubsectionHandler = React.useCallback(
+    async (rows: PartialSectionSchemaProps[]) => {
+      const selectedSectionIds = rows.map((row) => row.id);
+      try {
+        const response = await deleteManySubSections(
+          selectedSectionIds as string[],
+        ).unwrap();
         if (response.success) {
           toast({
             title: "Success!",
@@ -104,59 +142,26 @@ export default function useSectionSettingController() {
           });
           refetchSections();
         }
-     } catch (error) {
+      } catch (error) {
         if (isFetchBaseQueryError(error)) {
           const errMsg =
             "error" in error ? error.error : JSON.stringify(error.message);
           toast({
             title: "Error!",
-            description: (errMsg as string) || "Unable to delete section",
+            description: (errMsg as string) || "Unable to delete sections",
             action: <ToastAction altText="Retry">Retry</ToastAction>,
           });
         } else if (isErrorWithMessage(error)) {
           toast({
             title: "Error!",
-            description: error.message || "Unable to delete section",
+            description: error.message || "Unable to delete sections",
             action: <ToastAction altText="Retry">Retry</ToastAction>,
           });
         }
-     }
-   }, []);
-
-   const deleteManySubsectionHandler = React.useCallback(
-     async (rows: PartialSectionSchemaProps[]) => {
-       const selectedSectionIds = rows.map((row) => row.id);
-       try {
-         const response = await deleteManySubSections(
-           selectedSectionIds as string[]
-         ).unwrap();
-         if (response.success) {
-            toast({
-              title: "Success!",
-              description: response.message,
-            });
-            refetchSections();
-         }
-       } catch (error) {
-          if (isFetchBaseQueryError(error)) {
-            const errMsg =
-              "error" in error ? error.error : JSON.stringify(error.message);
-            toast({
-              title: "Error!",
-              description: (errMsg as string) || "Unable to delete sections",
-              action: <ToastAction altText="Retry">Retry</ToastAction>,
-            });
-          } else if (isErrorWithMessage(error)) {
-            toast({
-              title: "Error!",
-              description: error.message || "Unable to delete sections",
-              action: <ToastAction altText="Retry">Retry</ToastAction>,
-            });
-          }
-       }
-     },
-     []
-   );
+      }
+    },
+    [],
+  );
 
   return {
     sectionData,

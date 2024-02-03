@@ -11,7 +11,7 @@ import {
   useCreateEconomicDataWidgetMutation,
   useUpdateEconomicDataWidgetByIdMutation,
   useDeleteEconomicDataWidgetByIdMutation,
-} from "@app/global-state/features/editor/editorApiSlice";
+} from "@app/global-state/features/content/contentApiSlice";
 import {
   isErrorWithMessage,
   isFetchBaseQueryError,
@@ -30,7 +30,7 @@ import { useToast } from "@components/ui/use-toast";
 export default function useEconomicDataController(
   districtSectionId?: string,
   economicDataId?: string,
-  setOpen?: React.Dispatch<React.SetStateAction<boolean>>
+  setOpen?: React.Dispatch<React.SetStateAction<boolean>>,
 ) {
   const { toast } = useToast();
 
@@ -44,10 +44,11 @@ export default function useEconomicDataController(
   });
 
   // get economic data widget by id
-  const { data: economicDataWidget, isLoading: isLoadingWidget } = useGetEconomicDataWidgetByIdQuery(economicDataId as string, {
-    refetchOnMountOrArgChange: true,
-    skip: !economicDataId,
-  });
+  const { data: economicDataWidget, isLoading: isLoadingWidget } =
+    useGetEconomicDataWidgetByIdQuery(economicDataId as string, {
+      refetchOnMountOrArgChange: true,
+      skip: !economicDataId,
+    });
   // economic data widget mutation hooks
   const [createEconomicDataWidget, { isLoading: isCreating }] =
     useCreateEconomicDataWidgetMutation();
@@ -79,7 +80,7 @@ export default function useEconomicDataController(
             districtSectionId,
           };
           const response = await createEconomicDataWidget(
-            formData as PartialEconomicDataSchemaProps
+            formData as PartialEconomicDataSchemaProps,
           ).unwrap();
           if (response.success) {
             toast({
@@ -108,7 +109,7 @@ export default function useEconomicDataController(
           }
         }
       },
-      [districtSectionId]
+      [districtSectionId],
     );
 
   const updateEconomicDataHandler: SubmitHandler<PartialEconomicDataSchemaProps> =
@@ -121,7 +122,7 @@ export default function useEconomicDataController(
           };
 
           const response = await updateEconomicDataWidgetById(
-            formData as PartialEconomicDataSchemaProps
+            formData as PartialEconomicDataSchemaProps,
           ).unwrap();
           if (response.success) {
             toast({
@@ -150,7 +151,7 @@ export default function useEconomicDataController(
           }
         }
       },
-      [economicDataId]
+      [economicDataId],
     );
 
   const handleDelete = useCallback(async (id: string) => {

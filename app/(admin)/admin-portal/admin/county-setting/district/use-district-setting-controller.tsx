@@ -9,7 +9,7 @@ import {
   useUpdateDistrictByIdMutation,
   useDeleteDistrictByIdMutation,
   useDeleteDistrictSectionByIdMutation,
-} from "app/global-state/features/editor/editorApiSlice";
+} from "@app/global-state/features/content/contentApiSlice";
 import {
   isErrorWithMessage,
   isFetchBaseQueryError,
@@ -26,7 +26,7 @@ import {
 export default function useDistrictSettingController(
   defaultValues?: PartialDistrictSchemaProps,
   dataProps?: PartialDistrictSchemaProps,
-  setOpen?: React.Dispatch<React.SetStateAction<boolean>>
+  setOpen?: React.Dispatch<React.SetStateAction<boolean>>,
 ) {
   const { toast } = useToast();
 
@@ -65,7 +65,7 @@ export default function useDistrictSettingController(
             title: "Success!",
             description: response.message,
           });
-          setOpen!(false); 
+          setOpen!(false);
           refetchDistricts();
         }
       } catch (error) {

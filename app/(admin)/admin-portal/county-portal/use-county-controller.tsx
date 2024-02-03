@@ -16,7 +16,7 @@ import {
   useUpdateOrCreateCountyNewsMutation,
   useUpdateOrCreateCountyWelcomeMutation,
   useUpdateOrCreateCountyLEPMutation,
-} from "@global-state/features/editor/editorApiSlice";
+} from "@app/global-state/features/content/contentApiSlice";
 import {
   isErrorWithMessage,
   isFetchBaseQueryError,
@@ -30,7 +30,7 @@ import {
 
 export default function useCountyController(
   countyId?: string,
-  setOpen?: React.Dispatch<React.SetStateAction<boolean>>
+  setOpen?: React.Dispatch<React.SetStateAction<boolean>>,
 ) {
   const { toast } = useToast();
   // get all counties
@@ -95,7 +95,7 @@ export default function useCountyController(
           }
         }
       },
-      [countyId]
+      [countyId],
     );
 
   return {
