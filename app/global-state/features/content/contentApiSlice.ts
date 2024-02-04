@@ -1,50 +1,51 @@
-import { editorApiSlice } from "@global-state/api/apiSlice";
+import { contentApiSlice } from "@global-state/api/apiSlice";
 
 import { ContentFormProps } from "@models/ContentForm";
-import { CountySchemaProps, PartialCountySchemaProps } from "@models/County";
-import { PartialFormSchemaProps } from "@app/(admin)/admin-portal/admin/county-setting/county/use-county-setting-controller";
+import { PartialFeedContentSchema } from "@models/FeedContent";
+
 import {
-  DistrictSchemaProps,
-  PartialDistrictSchemaProps,
-  PartialDistrictSectionSchemaProps,
+  PartialLocalFeedContentSchemaProps,
   PartialEconomicDataSchemaProps,
-} from "@models/District";
+} from "@models/LocalFeedContent";
 import { PartialSourceDirectoryProps } from "@models/SourceDirectory";
 import { PartialSectionSchemaProps } from "@models/Section";
+import { PartialFormSchemaProps } from "@app/(admin)/admin-portal/admin/content-setting/feed-content/use-feed-content-setting-controller";
 
-const editorApi = editorApiSlice.injectEndpoints({
+const contentApi = contentApiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    createCounty: builder.mutation<
+    createFeedContent: builder.mutation<
       { success: boolean; message: string },
       PartialFormSchemaProps
     >({
       query: (data) => ({
-        url: "/editor/county",
+        url: "/content/feed-content",
         method: "POST",
         body: { ...data },
       }),
-      invalidatesTags: ["Editor"],
+      invalidatesTags: ["Content"],
     }),
-    updateCounty: builder.mutation<
+    updateFeedContent: builder.mutation<
       { success: boolean; message: string },
-      PartialCountySchemaProps
+      PartialFeedContentSchema
     >({
       query: (data) => ({
-        url: `editor/county/${data.id}`,
+        url: `/content/feed-content/${data.id}`,
         method: "PUT",
         body: { ...data },
       }),
-      invalidatesTags: (result, error, arg) => [{ type: "Editor", id: arg.id }],
+      invalidatesTags: (result, error, arg) => [
+        { type: "Content", id: arg.id },
+      ],
     }),
-    getCountyById: builder.query<CountySchemaProps, string>({
+    getFeedContentById: builder.query<PartialFeedContentSchema, string>({
       query: (id: string) => ({
-        url: `editor/county/${id}`,
+        url: `/content/feed-content/${id}`,
       }),
-      providesTags: (result, error, arg) => [{ type: "Editor", id: arg }],
+      providesTags: (result, error, arg) => [{ type: "Content", id: arg }],
     }),
-    getCounties: builder.query<CountySchemaProps[], void>({
+    getFeedContent: builder.query<PartialFeedContentSchema[], void>({
       query: () => ({
-        url: "editor/county",
+        url: "/content/feed-content",
       }),
 
       providesTags: (result) =>
@@ -53,49 +54,49 @@ const editorApi = editorApiSlice.injectEndpoints({
               ...result?.map(
                 (county) =>
                   ({
-                    type: "Editor",
+                    type: "Content",
                     id: county?.id,
-                  } as const)
+                  }) as const,
               ),
-              { type: "Editor", id: "LIST" },
+              { type: "Content", id: "LIST" },
             ]
-          : [{ type: "Editor", id: "LIST" }],
+          : [{ type: "Content", id: "LIST" }],
     }),
-    removeCounty: builder.mutation<
+    removeFeedContent: builder.mutation<
       { success: boolean; message: string },
       string
     >({
       query: (id: string) => ({
-        url: `/editor/county/${id}`,
+        url: `/content/feed-content/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: [{ type: "Editor", id: "LIST" }],
+      invalidatesTags: [{ type: "Content", id: "LIST" }],
     }),
-    removeManyCounties: builder.mutation<
+    removeManyFeedContent: builder.mutation<
       { success: boolean; message: string },
       string[]
     >({
       query: (ids: string[]) => ({
-        url: `/editor/delete-counties`,
+        url: `/content/feed-content`,
         method: "DELETE",
         body: { ids },
       }),
-      invalidatesTags: [{ type: "Editor", id: "LIST" }],
+      invalidatesTags: [{ type: "Content", id: "LIST" }],
     }),
-    createDistrict: builder.mutation<
+    createLocalFeedContent: builder.mutation<
       { success: boolean; message: string },
-      PartialDistrictSchemaProps
+      PartialLocalFeedContentSchemaProps
     >({
       query: (data) => ({
-        url: "/editor/district",
+        url: "/content/local-feed",
         method: "POST",
         body: { ...data },
       }),
-      invalidatesTags: [{ type: "Editor", id: "LIST" }],
+      invalidatesTags: [{ type: "Content", id: "LIST" }],
     }),
-    getDistricts: builder.query<DistrictSchemaProps[], void>({
+    getLocalFeed: builder.query<PartialLocalFeedContentSchemaProps[], void>({
       query: () => ({
-        url: "/editor/district",
+        url: "/content/local-feed",
       }),
       providesTags: (result) =>
         result
@@ -103,66 +104,71 @@ const editorApi = editorApiSlice.injectEndpoints({
               ...result?.map(
                 (district) =>
                   ({
-                    type: "Editor",
+                    type: "Content",
                     id: district?.id,
-                  } as const)
+                  }) as const,
               ),
-              { type: "Editor", id: "LIST" },
+              { type: "Content", id: "LIST" },
             ]
-          : [{ type: "Editor", id: "LIST" }],
+          : [{ type: "Content", id: "LIST" }],
     }),
-    getDistrictById: builder.query<DistrictSchemaProps, string>({
+    getLocalFeedContentById: builder.query<
+      PartialLocalFeedContentSchemaProps,
+      string
+    >({
       query: (id) => ({
-        url: `/editor/district/${id}`,
+        url: `/content/local-feed/${id}`,
       }),
-      providesTags: (result, error, arg) => [{ type: "Editor", id: arg }],
+      providesTags: (result, error, arg) => [{ type: "Content", id: arg }],
     }),
-    updateDistrictById: builder.mutation<
+    updateLocalFeedContentById: builder.mutation<
       { success: boolean; message: string },
-      PartialDistrictSchemaProps
+      PartialLocalFeedContentSchemaProps
     >({
       query: (data) => ({
-        url: `/editor/district/${data.id}`,
+        url: `/content/local-feed/${data.id}`,
         method: "PUT",
         body: { ...data },
       }),
-      invalidatesTags: (result, error, arg) => [{ type: "Editor", id: arg.id }],
+      invalidatesTags: (result, error, arg) => [
+        { type: "Content", id: arg.id },
+      ],
     }),
-    deleteDistrictById: builder.mutation<
+    deleteLocalFeedContentById: builder.mutation<
       { success: boolean; message: string },
       string
     >({
       query: (id: string) => ({
-        url: `/editor/district/${id}`,
+        url: `/content/local-feed/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: [{ type: "Editor", id: "LIST" }],
+      invalidatesTags: [{ type: "Content", id: "LIST" }],
     }),
-    deleteManyDistricts: builder.mutation<
+    deleteManyLocalFeedContent: builder.mutation<
       { success: boolean; message: string },
       string[]
     >({
       query: (ids: string[]) => ({
-        url: `/editor/delete-districts`,
+        url: `/content/local-feed`,
         method: "DELETE",
         body: { ids },
       }),
-      invalidatesTags: [{ type: "Editor", id: "LIST" }],
+      invalidatesTags: [{ type: "Content", id: "LIST" }],
     }),
     createSection: builder.mutation<
       { success: boolean; message: string },
       PartialSectionSchemaProps
     >({
       query: (data) => ({
-        url: "/editor/section",
+        url: "/content/section",
         method: "POST",
         body: { ...data },
       }),
-      invalidatesTags: [{ type: "Editor", id: "LIST" }],
+      invalidatesTags: [{ type: "Content", id: "LIST" }],
     }),
     getSections: builder.query<PartialSectionSchemaProps[], void>({
       query: () => ({
-        url: "/editor/section",
+        url: "/content/section",
       }),
       providesTags: (result) =>
         result
@@ -170,226 +176,120 @@ const editorApi = editorApiSlice.injectEndpoints({
               ...result?.map(
                 (section) =>
                   ({
-                    type: "Editor",
+                    type: "Content",
                     id: section?.id,
-                  } as const)
+                  }) as const,
               ),
-              { type: "Editor", id: "LIST" },
+              { type: "Content", id: "LIST" },
             ]
-          : [{ type: "Editor", id: "LIST" }],
+          : [{ type: "Content", id: "LIST" }],
     }),
     updateSectionById: builder.mutation<
       { success: boolean; message: string },
-      ContentFormProps & { id: string }
+      Partial<ContentFormProps> & { id: string }
     >({
       query: (data) => ({
-        url: `/editor/section/${data.id}`,
+        url: `/content/section/${data.id}`,
         method: "PUT",
         body: { ...data },
       }),
-      invalidatesTags: (result, error, arg) => [{ type: "Editor", id: arg.id }],
+      invalidatesTags: (result, error, arg) => [
+        { type: "Content", id: arg.id },
+      ],
     }),
     getSectionById: builder.query<PartialSectionSchemaProps, string>({
       query: (id: string) => ({
-        url: `/editor/section/${id}`,
+        url: `/content/section/${id}`,
         validateStatus: (response: any, result: any) => {
           return response.status === 200 && !result.isError;
         },
       }),
-      providesTags: (result, error, arg) => [{ type: "Editor", id: arg }],
+      providesTags: (result, error, arg) => [{ type: "Content", id: arg }],
+    }),
+    getSectionByParentId: builder.query<PartialSectionSchemaProps[], string>({
+      query: (parentId: string) => ({
+        url: `/content/section/${parentId}`,
+        validateStatus: (response: any, result: any) => {
+          return response.status === 200 && !result.isError;
+        },
+      }),
+      providesTags: (result, error, arg) => [{ type: "Content", id: arg }],
+    }),
+    getSectionByFeedContentId: builder.query<
+      PartialSectionSchemaProps[],
+      string
+    >({
+      query: (feedContentId: string) => ({
+        url: `/content/section/${feedContentId}`,
+        validateStatus: (response: any, result: any) => {
+          return response.status === 200 && !result.isError;
+        },
+      }),
+      providesTags: (result, error, arg) => [{ type: "Content", id: arg }],
+    }),
+    getSectionByLocalFeedContentId: builder.query<
+      PartialSectionSchemaProps,
+      string
+    >({
+      query: (localFeedContentId: string) => ({
+        url: `/content/section/${localFeedContentId}`,
+        validateStatus: (response: any, result: any) => {
+          return response.status === 200 && !result.isError;
+        },
+      }),
+      providesTags: (result, error, arg) => [{ type: "Content", id: arg }],
     }),
     deleteSectionById: builder.mutation<
       { success: boolean; message: string },
       string
     >({
       query: (id: string) => ({
-        url: `/editor/section/${id}`,
+        url: `/content/section/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: [{ type: "Editor", id: "LIST" }],
+      invalidatesTags: [{ type: "Content", id: "LIST" }],
     }),
     deleteManySections: builder.mutation<
       { success: boolean; message: string },
       string[]
     >({
       query: (ids: string[]) => ({
-        url: `/editor/delete-sections`,
+        url: `/content/delete-sections`,
         method: "DELETE",
         body: { ids },
       }),
-      invalidatesTags: [{ type: "Editor", id: "LIST" }],
-    }),
-    createSubSection: builder.mutation<
-      { success: boolean; message: string },
-      PartialSectionSchemaProps
-    >({
-      query: (data) => ({
-        url: "/editor/subsection",
-        method: "POST",
-        body: { ...data },
-      }),
-      invalidatesTags: [{ type: "Editor", id: "LIST" }],
-    }),
-    updateSubSectionById: builder.mutation<
-      { success: boolean; message: string },
-      ContentFormProps & { id: string }
-    >({
-      query: (data) => ({
-        url: `/editor/subsection/${data.id}`,
-        method: "PUT",
-        body: { ...data },
-      }),
-      invalidatesTags: (result, error, arg) => [{ type: "Editor", id: arg.id }],
-    }),
-    getSubSectionById: builder.query<PartialSectionSchemaProps, string>({
-      query: (id: string) => ({
-        url: `/editor/subsection/${id}`,
-      }),
-      providesTags: (result, error, arg) => [{ type: "Editor", id: arg }],
-    }),
-    getSubSectionsBySectionId: builder.query<
-      PartialSectionSchemaProps[],
-      string
-    >({
-      query: (sectionId: string) => ({
-        url: `/editor/sub-subsections/${sectionId}`,
-      }),
-      providesTags: (result) =>
-        result
-          ? [
-              ...result?.map(
-                (subSection) =>
-                  ({
-                    type: "Editor",
-                    id: subSection?.id,
-                  } as const)
-              ),
-              { type: "Editor", id: "LIST" },
-            ]
-          : [{ type: "Editor", id: "LIST" }],
-    }),
-    deleteSubSectionById: builder.mutation<
-      { success: boolean; message: string },
-      string
-    >({
-      query: (id: string) => ({
-        url: `/editor/subsection/${id}`,
-        method: "DELETE",
-      }),
-      invalidatesTags: [{ type: "Editor", id: "LIST" }],
-    }),
-    deleteManySubSections: builder.mutation<
-      { success: boolean; message: string },
-      string[]
-    >({
-      query: (ids: string[]) => ({
-        url: `/editor/delete-subsections`,
-        method: "DELETE",
-        body: { ids },
-      }),
-      invalidatesTags: [{ type: "Editor", id: "LIST" }],
-    }),
-    createDistrictSection: builder.mutation<
-      { success: boolean; message: string },
-      PartialDistrictSectionSchemaProps & { districtId: string }
-    >({
-      query: (data) => ({
-        url: "/editor/district-section",
-        method: "POST",
-        body: { ...data },
-      }),
-      invalidatesTags: [{ type: "Editor", id: "LIST" }],
-    }),
-    updateDistrictSectionById: builder.mutation<
-      { success: boolean; message: string },
-      PartialDistrictSectionSchemaProps & { id: string }
-    >({
-      query: (data) => ({
-        url: `/editor/district-section/${data.id}`,
-        method: "PUT",
-        body: { ...data },
-      }),
-      invalidatesTags: (result, error, arg) => [{ type: "Editor", id: arg.id }],
-    }),
-    getDistrictSectionById: builder.query<
-      PartialDistrictSectionSchemaProps,
-      string
-    >({
-      query: (id: string) => ({
-        url: `/editor/district-section/${id}`,
-      }),
-      providesTags: (result, error, arg) => [{ type: "Editor", id: arg }],
-    }),
-    getDistrictSectionsByDistrictId: builder.query<
-      PartialDistrictSectionSchemaProps[],
-      string
-    >({
-      query: (districtId: string) => ({
-        url: `/editor/district-sections/${districtId}`,
-      }),
-      providesTags: (result) =>
-        result
-          ? [
-              ...result?.map(
-                (section) =>
-                  ({
-                    type: "Editor",
-                    id: section?.id,
-                  } as const)
-              ),
-              { type: "Editor", id: "LIST" },
-            ]
-          : [{ type: "Editor", id: "LIST" }],
-    }),
-    deleteDistrictSectionById: builder.mutation<
-      { success: boolean; message: string },
-      string
-    >({
-      query: (id: string) => ({
-        url: `/editor/district-section/${id}`,
-        method: "DELETE",
-      }),
-      invalidatesTags: [{ type: "Editor", id: "LIST" }],
-    }),
-    deleteManyDistrictSections: builder.mutation<
-      { success: boolean; message: string },
-      string[]
-    >({
-      query: (ids: string[]) => ({
-        url: `/editor/delete-district-sections`,
-        method: "DELETE",
-        body: { ids },
-      }),
-      invalidatesTags: [{ type: "Editor", id: "LIST" }],
+      invalidatesTags: [{ type: "Content", id: "LIST" }],
     }),
     createEconomicDataWidget: builder.mutation<
       { success: boolean; message: string },
       PartialEconomicDataSchemaProps
     >({
       query: (data) => ({
-        url: "/editor/economic-data",
+        url: "/content/economic-data",
         method: "POST",
         body: { ...data },
       }),
-      invalidatesTags: [{ type: "Editor", id: "LIST" }],
+      invalidatesTags: [{ type: "Content", id: "LIST" }],
     }),
     updateEconomicDataWidgetById: builder.mutation<
       { success: boolean; message: string },
       PartialEconomicDataSchemaProps
     >({
       query: (data) => ({
-        url: `/editor/economic-data/${data.id}`,
+        url: `/content/economic-data/${data.id}`,
         method: "PUT",
         body: { ...data },
       }),
-      invalidatesTags: (result, error, arg) => [{ type: "Editor", id: arg.id }],
+      invalidatesTags: (result, error, arg) => [
+        { type: "Content", id: arg.id },
+      ],
     }),
     getEconomicDataWidgets: builder.query<
       PartialEconomicDataSchemaProps[],
       string
     >({
       query: (id: string) => ({
-        url: `/editor/get-ed-widgets/${id}`,
+        url: `/content/get-ed-widgets/${id}`,
       }),
       providesTags: (result) =>
         result
@@ -397,67 +297,43 @@ const editorApi = editorApiSlice.injectEndpoints({
               ...result?.map(
                 (item) =>
                   ({
-                    type: "Editor",
+                    type: "Content",
                     id: item?.id,
-                  } as const)
+                  }) as const,
               ),
-              { type: "Editor", id: "LIST" },
+              { type: "Content", id: "LIST" },
             ]
-          : [{ type: "Editor", id: "LIST" }],
+          : [{ type: "Content", id: "LIST" }],
     }),
     getEconomicDataWidgetById: builder.query<
       PartialEconomicDataSchemaProps,
       string
     >({
       query: (id: string) => ({
-        url: `/editor/economic-data/${id}`,
+        url: `/content/economic-data/${id}`,
       }),
-      providesTags: (result, error, arg) => [{ type: "Editor", id: arg }],
+      providesTags: (result, error, arg) => [{ type: "Content", id: arg }],
     }),
     deleteEconomicDataWidgetById: builder.mutation<
       { success: boolean; message: string },
       string
     >({
       query: (id: string) => ({
-        url: `/editor/economic-data/${id}`,
+        url: `/content/economic-data/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: [{ type: "Editor", id: "LIST" }],
+      invalidatesTags: [{ type: "Content", id: "LIST" }],
     }),
     deleteManyEconomicDataWidgets: builder.mutation<
       { success: boolean; message: string },
       string[]
     >({
       query: (ids: string[]) => ({
-        url: `/editor/delete-ed-widgets`,
+        url: `/content/delete-ed-widgets`,
         method: "DELETE",
         body: { ids },
       }),
-      invalidatesTags: [{ type: "Editor", id: "LIST" }],
-    }),
-    updateOrCreateCountyWelcome: builder.mutation({
-      query: (data) => ({
-        url: `/editor/county-welcome`,
-        method: "PUT",
-        body: { ...data },
-      }),
-      invalidatesTags: (result, error, arg) => [{ type: "Editor", id: arg.id }],
-    }),
-    updateOrCreateCountyNews: builder.mutation({
-      query: (data) => ({
-        url: `/editor/county-news`,
-        method: "PUT",
-        body: { ...data },
-      }),
-      invalidatesTags: (result, error, arg) => [{ type: "Editor", id: arg.id }],
-    }),
-    updateOrCreateCountyLEP: builder.mutation({
-      query: (data) => ({
-        url: `/editor/county-lep`,
-        method: "PUT",
-        body: { ...data },
-      }),
-      invalidatesTags: (result, error, arg) => [{ type: "Editor", id: arg.id }],
+      invalidatesTags: [{ type: "Content", id: "LIST" }],
     }),
     createSDData: builder.mutation<
       { success: boolean; message: boolean },
@@ -468,11 +344,11 @@ const editorApi = editorApiSlice.injectEndpoints({
         method: "POST",
         body: { ...data },
       }),
-      invalidatesTags: [{ type: "Editor", id: "LIST" }],
+      invalidatesTags: [{ type: "Content", id: "LIST" }],
     }),
     getAllSDDataByType: builder.query<PartialSourceDirectoryProps[], string>({
       query: (type) => ({
-        url: `/editor/source-directory/${type}`,
+        url: `/content/source-directory/${type}`,
       }),
       providesTags: (result) =>
         result
@@ -480,85 +356,79 @@ const editorApi = editorApiSlice.injectEndpoints({
               ...result?.map(
                 (item) =>
                   ({
-                    type: "Editor",
+                    type: "Content",
                     id: item?.id,
-                  } as const)
+                  }) as const,
               ),
-              { type: "Editor", id: "LIST" },
+              { type: "Content", id: "LIST" },
             ]
-          : [{ type: "Editor", id: "LIST" }],
+          : [{ type: "Content", id: "LIST" }],
     }),
     updateSDData: builder.mutation<
       { success: boolean; message: boolean },
       PartialSourceDirectoryProps
     >({
       query: (data) => ({
-        url: `/editor/source-directory/${data.type}`,
+        url: `/content/source-directory/${data.type}`,
         method: "PATCH",
         body: { ...data },
       }),
-      invalidatesTags: (result, error, arg) => [{ type: "Editor", id: arg.id }],
+      invalidatesTags: (result, error, arg) => [
+        { type: "Content", id: arg.id },
+      ],
     }),
     deleteSDData: builder.mutation<
       { success: boolean; message: boolean },
       PartialSourceDirectoryProps
     >({
       query: (data) => ({
-        url: `/editor/source-directory/${data.type}`,
+        url: `/content/source-directory/${data.type}`,
         method: "DELETE",
         body: { ...data },
       }),
-      invalidatesTags: (result, error, arg) => [{ type: "Editor", id: "LIST" }],
+      invalidatesTags: (result, error, arg) => [
+        { type: "Content", id: "LIST" },
+      ],
     }),
     deleteManySDData: builder.mutation<
       { success: boolean; message: boolean },
       PartialSourceDirectoryProps
     >({
       query: (data) => ({
-        url: `/editor/delete-source-directories/${data.type}`,
+        url: `/content/delete-source-directories/${data.type}`,
         method: "DELETE",
         body: { ...data },
       }),
-      invalidatesTags: (result, error, arg) => [{ type: "Editor", id: "LIST" }],
+      invalidatesTags: (result, error, arg) => [
+        { type: "Content", id: "LIST" },
+      ],
     }),
   }),
   overrideExisting: true,
 });
 
 export const {
-  useCreateCountyMutation,
-  useGetCountiesQuery,
-  useGetCountyByIdQuery,
-  useUpdateCountyMutation,
-  useRemoveCountyMutation,
-  useRemoveManyCountiesMutation,
-  useCreateDistrictMutation,
-  useGetDistrictsQuery,
-  useGetDistrictByIdQuery,
-  useUpdateDistrictByIdMutation,
-  useDeleteDistrictByIdMutation,
-  useDeleteManyDistrictsMutation,
-  useUpdateOrCreateCountyWelcomeMutation,
-  useUpdateOrCreateCountyNewsMutation,
-  useUpdateOrCreateCountyLEPMutation,
+  useCreateFeedContentMutation,
+  useUpdateFeedContentMutation,
+  useGetFeedContentByIdQuery,
+  useGetFeedContentQuery,
+  useRemoveFeedContentMutation,
+  useRemoveManyFeedContentMutation,
+  useCreateLocalFeedContentMutation,
+  useGetLocalFeedQuery,
+  useGetLocalFeedContentByIdQuery,
+  useUpdateLocalFeedContentByIdMutation,
+  useDeleteLocalFeedContentByIdMutation,
+  useDeleteManyLocalFeedContentMutation,
   useCreateSectionMutation,
   useGetSectionsQuery,
   useGetSectionByIdQuery,
+  useGetSectionByParentIdQuery,
+  useGetSectionByFeedContentIdQuery,
+  useGetSectionByLocalFeedContentIdQuery,
   useUpdateSectionByIdMutation,
   useDeleteSectionByIdMutation,
   useDeleteManySectionsMutation,
-  useCreateSubSectionMutation,
-  useGetSubSectionByIdQuery,
-  useGetSubSectionsBySectionIdQuery,
-  useUpdateSubSectionByIdMutation,
-  useDeleteSubSectionByIdMutation,
-  useDeleteManySubSectionsMutation,
-  useCreateDistrictSectionMutation,
-  useGetDistrictSectionByIdQuery,
-  useGetDistrictSectionsByDistrictIdQuery,
-  useUpdateDistrictSectionByIdMutation,
-  useDeleteDistrictSectionByIdMutation,
-  useDeleteManyDistrictSectionsMutation,
   useCreateEconomicDataWidgetMutation,
   useGetEconomicDataWidgetsQuery,
   useGetEconomicDataWidgetByIdQuery,
@@ -570,4 +440,4 @@ export const {
   useUpdateSDDataMutation,
   useDeleteSDDataMutation,
   useDeleteManySDDataMutation,
-} = editorApi;
+} = contentApi;

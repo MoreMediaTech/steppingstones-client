@@ -11,7 +11,7 @@ import {
 import authReducer from "app/global-state/features/auth/authSlice";
 import partnerReducer from "app/global-state/features/partner/partnerSlice";
 import messagesReducer from "app/global-state/features/messages/messagesSlice";
-import editorReducer from "@app/global-state/features/content/contentSlice";
+import contentReducer from "@app/global-state/features/content/contentSlice";
 import uploadReducer from "app/global-state/features/upload/uploadSlice";
 import globalReducer from "app/global-state/features/global/globalSlice";
 import userReducer from "app/global-state/features/user/userSlice";
@@ -19,7 +19,7 @@ import {
   apiSlice,
   messagesApiSlice,
   partnerApiSlice,
-  editorApiSlice,
+  contentApiSlice,
   uploadApiSlice,
   analyticsApiSlice,
   notificationsApiSlice,
@@ -30,7 +30,7 @@ const reducers = {
   [apiSlice.reducerPath]: apiSlice.reducer,
   [messagesApiSlice.reducerPath]: messagesApiSlice.reducer,
   [partnerApiSlice.reducerPath]: partnerApiSlice.reducer,
-  [editorApiSlice.reducerPath]: editorApiSlice.reducer,
+  [contentApiSlice.reducerPath]: contentApiSlice.reducer,
   [uploadApiSlice.reducerPath]: uploadApiSlice.reducer,
   [analyticsApiSlice.reducerPath]: analyticsApiSlice.reducer,
   [notificationsApiSlice.reducerPath]: notificationsApiSlice.reducer,
@@ -38,7 +38,7 @@ const reducers = {
   auth: authReducer,
   partner: partnerReducer,
   messages: messagesReducer,
-  editor: editorReducer,
+  content: contentReducer,
   upload: uploadReducer,
   global: globalReducer,
   user: userReducer,
@@ -60,7 +60,7 @@ export const store = configureStore({
       apiSlice.middleware,
       messagesApiSlice.middleware,
       partnerApiSlice.middleware,
-      editorApiSlice.middleware,
+      contentApiSlice.middleware,
       uploadApiSlice.middleware,
       analyticsApiSlice.middleware,
       notificationsApiSlice.middleware,

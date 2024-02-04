@@ -4,9 +4,9 @@ import { motion } from "framer-motion";
 import { Button } from "@components/ui/button";
 import { Carousel } from "@components/ImageTickerCarousel";
 
-import { editorSelector } from "@app/global-state/features/content/contentSlice";
+import { contentSelector } from "@app/global-state/features/content/contentSlice";
 import { useAppSelector } from "@app/global-state/hooks";
-import { CountySchemaProps } from "@models/County";
+import { PartialFeedContentSchema } from "@models/FeedContent";
 
 const imageVariants = {
   initial: { y: "100%", opacity: 0 },
@@ -25,7 +25,7 @@ const imageVariants3 = {
 };
 
 export default function HeroSection() {
-  const { publicFeed } = useAppSelector(editorSelector);
+  const { publicFeed } = useAppSelector(contentSelector);
 
   return (
     <>
@@ -143,7 +143,7 @@ export default function HeroSection() {
           </div>
         </div>
       </section>
-      <Carousel counties={publicFeed as CountySchemaProps[]} />
+      <Carousel feedContent={publicFeed as PartialFeedContentSchema[]} />
     </>
   );
 }

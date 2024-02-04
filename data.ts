@@ -80,7 +80,7 @@ export const NAV_ITEMS = [
   },
   {
     label: "County Portal",
-    href: "/admin-portal/county-portal",
+    href: "/admin-portal/content-portal",
     Icon: GiPortal,
   },
   {
@@ -121,7 +121,7 @@ export const NAV_ITEMS = [
   {
     label: "Manage County",
     Icon: MdSettings,
-    href: "/admin-portal/admin/county-setting",
+    href: "/admin-portal/admin/content-setting",
   },
   {
     label: "Partner Directory",

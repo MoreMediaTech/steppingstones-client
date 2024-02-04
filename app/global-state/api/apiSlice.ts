@@ -113,13 +113,12 @@ export const partnerApiSlice = createApi({
   tagTypes: ['Partner'],
   endpoints: (builder) => ({}),
 })
-export const editorApiSlice = createApi({
-  reducerPath: 'editorApi',
+export const contentApiSlice = createApi({
+  reducerPath: 'contentApi',
   baseQuery: baseQueryWithReAuth,
   keepUnusedDataFor: 300,
-  tagTypes: ['Editor'],
+  tagTypes: ['Content'],
   refetchOnMountOrArgChange: true,
-
   endpoints: (builder) => ({}),
 })
 

@@ -14,7 +14,7 @@ import { PartialSectionSchemaProps } from "@models/Section";
 interface Props {
   defaultValues: PartialSectionSchemaProps & { countyId?: string };
   updateOrCreate: MutationTrigger<
-    MutationDefinition<any, BaseQueryFn, "Editor", any, "editorApi">
+    MutationDefinition<any, BaseQueryFn, "Content", any, "contentApi">
   >;
 }
 

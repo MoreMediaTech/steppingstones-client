@@ -1,6 +1,9 @@
-'use client'
-import { SubmitHandler, UseFormReturn } from 'react-hook-form'
-import RichTextEditor from '@components/RichText'
+"use client";
+import { SubmitHandler, UseFormReturn } from "react-hook-form";
+import Image from "next/image";
+import { Editor } from "novel";
+
+import RichTextEditor from "@components/RichText";
 import {
   Form,
   FormControl,
@@ -9,21 +12,21 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@components/ui/form'
-import { Checkbox } from '@components/ui/checkbox'
-import { Input } from '@components/ui/input'
-import { Button } from '@components/ui/button'
-import { Textarea } from '@components/ui/textarea'
-import { ContentFormProps } from '@models/ContentForm'
-import Image from 'next/image'
+} from "@components/ui/form";
+import { Checkbox } from "@components/ui/checkbox";
+import { Input } from "@components/ui/input";
+import { Button } from "@components/ui/button";
+import { Textarea } from "@components/ui/textarea";
+import { ContentFormProps } from "@models/ContentForm";
+import { defaultExtensions } from "@components/novel-extenstions";
 
 interface IContentForm {
-  form: UseFormReturn<ContentFormProps, any, undefined>
-  isLoading: boolean
-  preview: string | ArrayBuffer | null
-  onSubmit: SubmitHandler<ContentFormProps>
-  setIsEdit: React.Dispatch<React.SetStateAction<boolean>>
-  onChangePicture: (event: React.FormEvent<HTMLInputElement>) => void
+  form: UseFormReturn<ContentFormProps, any, undefined>;
+  isLoading: boolean;
+  preview: string | ArrayBuffer | null;
+  onSubmit: SubmitHandler<ContentFormProps>;
+  setIsEdit: React.Dispatch<React.SetStateAction<boolean>>;
+  onChangePicture: (event: React.FormEvent<HTMLInputElement>) => void;
 }
 
 export const ContentForm = ({
@@ -181,7 +184,8 @@ export const ContentForm = ({
                   <Textarea placeholder="Enter a description" {...field} />
                 </FormControl>
                 <FormDescription>
-                  A short description of the video you want to add to the content
+                  A short description of the video you want to add to the
+                  content
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -194,7 +198,17 @@ export const ContentForm = ({
               <FormItem>
                 <FormLabel>Content</FormLabel>
                 <FormControl>
-                  <RichTextEditor field={field} />
+                  {/* <RichTextEditor field={field} /> */}
+                  <Editor
+                    className="relative min-h-[500px] w-full max-w-screen-lg border-stone-200 bg-background text-primary sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:shadow-lg"
+                    defaultValue={{
+                      type: "doc",
+                      content: [{ type: "paragraph", content: [{ text: "" }] }],
+                    }}
+                    disableLocalStorage={true}
+                    onDebouncedUpdate={(value) => field.onChange(value?.getHTML())}
+                    // add extensions here
+                  />
                 </FormControl>
                 <FormDescription>
                   The content of the section you want to create
@@ -206,19 +220,26 @@ export const ContentForm = ({
           <div className="my-4 flex w-full items-center justify-between ">
             <Button
               type="button"
-              className=" rounded-md border border-red-700 bg-red-600 px-4 py-2 text-white hover:bg-red-700"
+              variant={"destructive"}
+              className="border-primary !bg-red-600 text-primary"
               onClick={() => {
-                setIsEdit(false)
-                form.reset()
+                setIsEdit(false);
+                form.reset();
               }}
             >
               Cancel
             </Button>
 
-            <Button type="submit">{isLoading ? 'Saving...' : 'Save'}</Button>
+            <Button
+              type="submit"
+              variant={"outline"}
+              className="border-primary text-primary"
+            >
+              {isLoading ? "Saving..." : "Save"}
+            </Button>
           </div>
         </form>
       </Form>
     </>
-  )
-}
+  );
+};
