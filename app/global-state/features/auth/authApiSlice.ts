@@ -3,7 +3,7 @@ import {
   setAuthState,
   setError,
 } from 'app/global-state/features/auth/authSlice'
-import { apiSlice, editorApiSlice } from 'app/global-state/api/apiSlice'
+import { apiSlice, contentApiSlice } from 'app/global-state/api/apiSlice'
 import * as z from 'zod'
 import { UserSchemaWithIdType } from '@models/User'
 
@@ -112,7 +112,7 @@ export const authApi = apiSlice.injectEndpoints({
           await queryFulfilled
           dispatch(resetCredentials())
           dispatch(apiSlice.util.resetApiState())
-          dispatch(editorApiSlice.util.resetApiState())
+          dispatch(contentApiSlice.util.resetApiState())
         } catch (error) {
           console.error(error)
           dispatch(setError({ message: error.message }))

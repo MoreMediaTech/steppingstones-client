@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 // components
 import Loader from "@components/Loader";
@@ -63,20 +64,18 @@ export default function Content({ location, contentId }: Props) {
               {feedContent.sections?.map((section) => {
                 if (section.type === SectionType.ABOVE_THE_FOLD_CONTENT) {
                   return (
-                    <>
+                    <Link
+                      key={section?.id}
+                      href={`/admin-portal/content-portal/${location}/section?contentId=${contentId}&sectionId=${section?.id}`}
+                    >
                       <PortalButton
                         type="button"
                         color="primaryFilled"
                         isLive={section?.isLive}
-                        onClick={() => {
-                          router.push(
-                            `/admin-portal/content-portal/${location}/section?contentId=${contentId}&sectionId=${section?.id}`,
-                          );
-                        }}
                       >
                         {section?.name}
                       </PortalButton>
-                    </>
+                    </Link>
                   );
                 }
               })}
@@ -91,19 +90,18 @@ export default function Content({ location, contentId }: Props) {
                 <div className="grid grid-cols-1 gap-x-10 gap-y-4 sm:grid-cols-2 ">
                   {feedContent?.localFeedContent?.map(
                     (content: PartialLocalFeedContentSchemaProps) => (
-                      <PortalButton
+                      <Link
                         key={content?.id}
-                        type="button"
-                        color="primaryFilled"
-                        isLive={content?.isLive}
-                        onClick={() =>
-                          router.push(
-                            `/admin-portal/content-portal/${location}/local-feed?contentId=${contentId}&localFeedContent=${content?.name}&localFeedContentId=${content?.id}`,
-                          )
-                        }
+                        href={`/admin-portal/content-portal/${location}/local-feed?contentId=${contentId}&localFeedContent=${content?.name}&localFeedContentId=${content?.id}`}
                       >
-                        {content?.name}
-                      </PortalButton>
+                        <PortalButton
+                          type="button"
+                          color="primaryFilled"
+                          isLive={content?.isLive}
+                        >
+                          {content?.name}
+                        </PortalButton>
+                      </Link>
                     ),
                   )}
                 </div>
@@ -112,19 +110,18 @@ export default function Content({ location, contentId }: Props) {
                     (section: PartialSectionSchemaProps) => {
                       if (section.type === SectionType.FEED_SECTION) {
                         return (
-                          <PortalButton
+                          <Link
                             key={`${section?.id}`}
-                            type="button"
-                            color="primaryFilled"
-                            isLive={section?.isLive}
-                            onClick={() =>
-                              router.push(
-                                `/admin-portal/content-portal/${location}/section?contentId=${contentId}&section=${section.name}&sectionId=${section.id}`,
-                              )
-                            }
+                            href={`/admin-portal/content-portal/${location}/section?contentId=${contentId}&section=${section.name}&sectionId=${section.id}`}
                           >
-                            {section?.name}
-                          </PortalButton>
+                            <PortalButton
+                              type="button"
+                              color="primaryFilled"
+                              isLive={section?.isLive}
+                            >
+                              {section?.name}
+                            </PortalButton>
+                          </Link>
                         );
                       }
                     },

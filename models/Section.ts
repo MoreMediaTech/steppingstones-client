@@ -9,6 +9,18 @@ export enum SectionType {
   CHILD_SECTION = "CHILD_SECTION",
 }
 
+// This is a recursive type that represents a JSON object
+// It can contain strings, numbers, booleans, nulls, arrays, and other objects
+// It's used to represent the "content" field of a Section
+// It's used in the Section schema to allow for arbitrary JSON objects
+// It's used in the ContentForm schema to allow for arbitrary JSON objects
+const literalSchema = z.union([z.string(), z.number(), z.boolean(), z.null()]);
+type Literal = z.infer<typeof literalSchema>;
+type Json = Literal | { [key: string]: Json } | Json[];
+export const jsonSchema: z.ZodType<Json> = z.lazy(() =>
+  z.union([literalSchema, z.array(jsonSchema), z.record(jsonSchema)]),
+);
+
 export const economicDataSchema = z.object({
   id: z.string({ required_error: "ID is required" }),
   ids: z.array(z.string()).optional(),

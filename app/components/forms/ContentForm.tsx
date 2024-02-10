@@ -1,7 +1,6 @@
 "use client";
 import { SubmitHandler, UseFormReturn } from "react-hook-form";
 import Image from "next/image";
-import { Editor } from "novel";
 
 import RichTextEditor from "@components/RichText";
 import {
@@ -18,7 +17,7 @@ import { Input } from "@components/ui/input";
 import { Button } from "@components/ui/button";
 import { Textarea } from "@components/ui/textarea";
 import { ContentFormProps } from "@models/ContentForm";
-import { defaultExtensions } from "@components/novel-extenstions";
+
 
 interface IContentForm {
   form: UseFormReturn<ContentFormProps, any, undefined>;
@@ -198,17 +197,7 @@ export const ContentForm = ({
               <FormItem>
                 <FormLabel>Content</FormLabel>
                 <FormControl>
-                  {/* <RichTextEditor field={field} /> */}
-                  <Editor
-                    className="relative min-h-[500px] w-full max-w-screen-lg border-stone-200 bg-background text-primary sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:shadow-lg"
-                    defaultValue={{
-                      type: "doc",
-                      content: [{ type: "paragraph", content: [{ text: "" }] }],
-                    }}
-                    disableLocalStorage={true}
-                    onDebouncedUpdate={(value) => field.onChange(value?.getHTML())}
-                    // add extensions here
-                  />
+                  <RichTextEditor field={field} />
                 </FormControl>
                 <FormDescription>
                   The content of the section you want to create

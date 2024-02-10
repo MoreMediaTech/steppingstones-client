@@ -1,5 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 
 // components
@@ -51,10 +52,10 @@ export default function Section({ location, contentId, sectionId }: SectionProps
           <div className="flex w-full flex-row items-center justify-between gap-2 sm:w-1/3 sm:justify-end">
             <Button
               type="button"
-              className="w-1/3 border-gray-900 dark:border-gray-200 sm:w-full"
+              className="w-1/3 border-primary sm:w-full"
               onClick={() => {
                 router.push(
-                  `/admin-portal/content-portal/${location}?contentId=${contentId}`
+                  `/admin-portal/content-portal/${location}?contentId=${contentId}`,
                 );
               }}
             >
@@ -62,7 +63,11 @@ export default function Section({ location, contentId, sectionId }: SectionProps
             </Button>
 
             {section?.isSubSection && (
-              <CreateSectionForm btnTitle="Create Subsection" type="section" parentId={sectionId} />
+              <CreateSectionForm
+                btnTitle="Create Subsection"
+                type="section"
+                parentId={sectionId}
+              />
             )}
           </div>
         </div>
@@ -78,20 +83,19 @@ export default function Section({ location, contentId, sectionId }: SectionProps
                   <div className=" grid grid-cols-1 gap-4 sm:grid-cols-2">
                     {subSectionData?.map(
                       (section: PartialSectionSchemaProps) => (
-                        <PortalButton
+                        <Link
+                          href={`/admin-portal/content-portal/${location}/section/${section?.id}?contentId=${contentId}&sectionId=${sectionId}&subSectionId=${section.id}`}
                           key={`${section?.id}`}
-                          type="button"
-                          color="primaryFilled"
-                          isLive={section?.isLive}
-                          onClick={() =>
-                            router.push(
-                              `/admin-portal/content-portal/${location}/section/${section?.id}?contentId=${contentId}&sectionId=${sectionId}&subSectionId=${section.id}`
-                            )
-                          }
                         >
-                          {section?.name}
-                        </PortalButton>
-                      )
+                          <PortalButton
+                            type="button"
+                            color="primaryFilled"
+                            isLive={section?.isLive}
+                          >
+                            {section?.name}
+                          </PortalButton>
+                        </Link>
+                      ),
                     )}
                   </div>
                 )}

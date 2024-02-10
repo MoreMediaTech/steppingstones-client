@@ -1,8 +1,7 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import {
   Sheet,
@@ -10,20 +9,20 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '@components/ui/sheet'
+} from "@components/ui/sheet";
 
-import { cn } from '@lib/utils'
-import { Button, buttonVariants } from '@components/ui/button'
-import { ScrollArea } from '@components/ui/scroll-area'
-import { Separator } from '@components/ui/separator'
+import { cn } from "@lib/utils";
+import { Button, buttonVariants } from "@components/ui/button";
+import { ScrollArea } from "@components/ui/scroll-area";
+import { Separator } from "@components/ui/separator";
 
 export interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
   items: {
-    href: string
-    title: string
-  }[]
-  title: string
-  height: number
+    href: string;
+    title: string;
+  }[];
+  title: string;
+  height: number;
 }
 
 export function SidebarNav({
@@ -33,19 +32,19 @@ export function SidebarNav({
   height,
   ...props
 }: SidebarNavProps) {
-  const pathname = usePathname()
-  const SCROLL_AREA_HEIGHT = height - 70
+  const pathname = usePathname();
+  const SCROLL_AREA_HEIGHT = height - 80;
   return (
     <nav
       className={cn(
-        ' md:h-screen flex  px-2 py-0 md:flex-col',
-        className
+        ` fixed z-0 flex px-2  py-0 bg-background w-[250px]  md:flex-col`,
+        className,
       )}
       {...props}
     >
-      <div className="hidden md:block">
+      <div className="hidden md:block w-full">
         <ScrollArea
-          className={`hidden rounded-md border p-4 sm:flex  sm:flex-col`}
+          className={`hidden rounded-md border p-4 sm:flex w-full sm:flex-col`}
           style={{ height: SCROLL_AREA_HEIGHT }}
         >
           <h4 className="mb-4 text-sm font-medium leading-none">{title}</h4>
@@ -55,11 +54,11 @@ export function SidebarNav({
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  buttonVariants({ variant: 'ghost' }),
+                  buttonVariants({ variant: "ghost" }),
                   item.href.includes(pathname)
-                    ? 'bg-gray-300 text-justify dark:bg-gray-800 '
-                    : 'hover:bg-gray-300 hover:underline dark:hover:bg-gray-800',
-                  'w-full justify-start subpixel-antialiased'
+                    ? "bg-gray-300 text-justify dark:bg-gray-800 "
+                    : "hover:bg-gray-300 hover:underline dark:hover:bg-gray-800",
+                  "w-full justify-start subpixel-antialiased",
                 )}
               >
                 {item.title}
@@ -70,7 +69,7 @@ export function SidebarNav({
         </ScrollArea>
       </div>
     </nav>
-  )
+  );
 }
 
 export function MobileSideNav({
@@ -80,20 +79,30 @@ export function MobileSideNav({
   height,
   ...props
 }: SidebarNavProps) {
-  const pathname = usePathname()
-    const SCROLL_AREA_HEIGHT = height - 70
+  const pathname = usePathname();
+  const SCROLL_AREA_HEIGHT = height - 200;
   return (
-    <nav>
+    <nav className="max-h-[900px]">
       <Sheet>
         <SheetTrigger asChild>
-          <Button variant="outline">Open</Button>
+          <Button variant="ghost">
+            <svg
+              className="block h-6 w-6 fill-current"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>Mobile menu</title>
+              <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+            </svg>
+            <span hidden>Mobile Menu</span>
+          </Button>
         </SheetTrigger>
-        <SheetContent side={'left'}>
+        <SheetContent side={"left"}>
           <SheetHeader>
             <SheetTitle className="text-left">{title}</SheetTitle>
           </SheetHeader>
           <ScrollArea
-            className={`flex flex-col rounded-md border  p-4`}
+            className={`flex h-[700px] flex-col rounded-md border  p-4`}
             style={{ height: SCROLL_AREA_HEIGHT }}
           >
             {items?.map((item, index) => (
@@ -102,11 +111,11 @@ export function MobileSideNav({
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    buttonVariants({ variant: 'ghost' }),
+                    buttonVariants({ variant: "ghost" }),
                     item.href.includes(pathname)
-                      ? 'bg-gray-300 text-justify dark:bg-gray-800 '
-                      : 'hover:bg-gray-300 hover:underline dark:hover:bg-gray-800',
-                    'w-full justify-start subpixel-antialiased'
+                      ? "bg-gray-300 text-justify dark:bg-gray-800 "
+                      : "hover:bg-gray-300 hover:underline dark:hover:bg-gray-800",
+                    "w-full justify-start subpixel-antialiased",
                   )}
                 >
                   {item.title}
@@ -118,5 +127,5 @@ export function MobileSideNav({
         </SheetContent>
       </Sheet>
     </nav>
-  )
+  );
 }
