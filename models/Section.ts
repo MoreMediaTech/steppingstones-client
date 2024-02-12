@@ -92,6 +92,7 @@ export const sectionSchema = z.object({
 export const partialSectionSchema = sectionSchema
   .extend({
     economicDataWidgets: z.array(economicDataSchema).optional(),
+    children: z.lazy(() => z.array(sectionSchema)).optional(),
   })
   .partial();
 

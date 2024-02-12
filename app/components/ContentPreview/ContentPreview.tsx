@@ -19,17 +19,20 @@ const ContentPreview = ({ content }: ContentPreviewProps) => {
     <div className="w-full  overflow-auto py-2">
       <div className="space-y-2 rounded-md border border-gray-800 p-2 dark:border-gray-200 md:p-4">
         <Header
-          title={content?.title ? content.title : 'Create New Content'}
+          title={content?.title ? content.title : "Create New Content"}
           order={1}
         />
-       
+
         {!!content?.imageUrl && (
-          <div className="w-full">
+          <div style={{ position: "relative", height: "400px" }}>
             <Image
               src={content?.imageUrl}
               alt={content?.title as string}
-              width={900}
-              height={400}
+              fill
+              sizes="(min-width: 808px) 50vw, 100vw"
+              style={{
+                objectFit: "cover", // cover, contain, none
+              }}
             />
           </div>
         )}
@@ -42,7 +45,7 @@ const ContentPreview = ({ content }: ContentPreviewProps) => {
         )}
       </div>
     </div>
-  )
+  );
 }
 
 export default ContentPreview

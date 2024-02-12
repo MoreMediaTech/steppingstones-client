@@ -16,7 +16,7 @@ export default function ErrorPage({ error }: { error: Error }) {
         </h1>
         <p className="text-lg text-center">{error.message}</p>
         <Button asChild>
-          <Link href="/">Go back home</Link>
+          <Link href="/admin-portal">Go back home</Link>
         </Button>
       </div>
     </div>

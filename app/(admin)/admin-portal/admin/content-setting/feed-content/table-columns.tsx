@@ -61,12 +61,21 @@ export const columns: ColumnDef<FeedContentSchemaProps>[] = [
       const county = row.original;
       return (
         <div className="flex items-center justify-start space-x-2">
-          <div className="relative h-10 w-10 overflow-hidden rounded-full border-2 border-primary-dark-200 p-1">
+          <div
+            className="relative h-10 w-10 overflow-hidden rounded-full border-2 border-primary-dark-200 p-1"
+            style={{ position: "relative", height: "40px" }}
+          >
             <Image
-              src={county.logoIcon ?? "/public/steppingstonesapplogo.png"}
+              src={
+                county.logoIcon ??
+                "https://res.cloudinary.com/dhdcepksp/image/upload/v1695671545/icon_x68kbx.png"
+              }
               alt={county.name as string}
               fill
-              sizes="(min-width: 640px) 100px, 50px"
+              sizes="(min-width: 808px) 50vw, 100vw"
+              style={{
+                objectFit: "cover", // cover, contain, none
+              }}
             />
           </div>
           <div className="text-xs font-semibold sm:text-base ">

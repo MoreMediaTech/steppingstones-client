@@ -76,15 +76,21 @@ export const columns: ColumnDef<PartialSectionSchemaProps>[] = [
       const section = row.original;
       return (
         <div className="flex items-center justify-start space-x-2">
-          <div className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border-2 border-[#5E17EB] p-1">
+          <div
+            className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border-2 border-[#5E17EB] p-1"
+            style={{ position: "relative", height: "40px" }}
+          >
             <Image
               src={
-                section.feedContent?.logoIcon ?? "/public/steppingstonesapplogo.png"
+                section.feedContent?.logoIcon ??
+                "https://res.cloudinary.com/dhdcepksp/image/upload/v1695671545/icon_x68kbx.png"
               }
               alt={section.feedContent?.name as string}
-              width={40}
-              height={40}
-              sizes="40px"
+              fill
+              sizes="(min-width: 808px) 50vw, 100vw"
+              style={{
+                objectFit: "cover", // cover, contain, none
+              }}
             />
           </div>
           <div className="text-xs font-semibold sm:text-base">

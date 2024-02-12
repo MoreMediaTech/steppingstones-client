@@ -208,7 +208,7 @@ const contentApi = contentApiSlice.injectEndpoints({
     }),
     getSectionByParentId: builder.query<PartialSectionSchemaProps[], string>({
       query: (parentId: string) => ({
-        url: `/content/section/${parentId}`,
+        url: `/content/sections/${parentId}`,
         validateStatus: (response: any, result: any) => {
           return response.status === 200 && !result.isError;
         },

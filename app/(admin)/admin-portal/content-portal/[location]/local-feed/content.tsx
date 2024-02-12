@@ -1,10 +1,11 @@
 "use client";
 import { Suspense } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 // components
 import Loader from "@components/Loader";
-import { CreateLocalFeedSectionForm} from "./create-local-feed-form";
+import { CreateLocalFeedSectionForm } from "./create-local-feed-form";
 import PortalButton from "@components/PortalButton";
 import Map from "@components/Map";
 import Header from "@components/Header";
@@ -28,11 +29,12 @@ type Props = {
 export default function Content({ searchParams }: Props) {
   const router = useRouter();
 
-  const { localFeedContent, isLoadingLocalFeedContent } = useLocalFeedController(
-    searchParams.localFeedContentId,
-    undefined,
-    undefined,
-  );
+  const { localFeedContent, isLoadingLocalFeedContent } =
+    useLocalFeedController(
+      searchParams.localFeedContentId,
+      undefined,
+      undefined,
+    );
 
   if (isLoadingLocalFeedContent) {
     return (
@@ -71,35 +73,33 @@ export default function Content({ searchParams }: Props) {
                 (section: PartialSectionSchemaProps) => {
                   if (section.name === "Economic Data") {
                     return (
-                      <PortalButton
+                      <Link
                         key={`${section.id}`}
-                        type="button"
-                        color="primaryFilled"
-                        isLive={section.isLive}
-                        onClick={() =>
-                          router.push(
-                            `/admin-portal/content-portal/${searchParams.location}/local-feed/${section.id}/economic-data?contentId=${searchParams.contentId}&localFeedContentId=${searchParams.localFeedContentId}`,
-                          )
-                        }
+                        href={`/admin-portal/content-portal/${searchParams.location}/local-feed/${section.id}/economic-data?contentId=${searchParams.contentId}&localFeedContentId=${searchParams.localFeedContentId}`}
                       >
-                        {section.name}
-                      </PortalButton>
+                        <PortalButton
+                          type="button"
+                          color="primaryFilled"
+                          isLive={section.isLive}
+                        >
+                          {section.name}
+                        </PortalButton>
+                      </Link>
                     );
                   }
                   return (
-                    <PortalButton
+                    <Link
                       key={`${section.id}`}
-                      type="button"
-                      color="primaryFilled"
-                      isLive={section.isLive}
-                      onClick={() =>
-                        router.push(
-                          `/admin-portal/content-portal/${searchParams.location}/local-feed/${section.id}?&contentId=${searchParams.contentId}&localFeedContent=${searchParams.localFeedContent}&localFeedContentId=${searchParams.localFeedContentId}`,
-                        )
-                      }
+                      href={`/admin-portal/content-portal/${searchParams.location}/local-feed/${section.id}?&contentId=${searchParams.contentId}&localFeedContent=${searchParams.localFeedContent}&localFeedContentId=${searchParams.localFeedContentId}`}
                     >
-                      {section.name}
-                    </PortalButton>
+                      <PortalButton
+                        type="button"
+                        color="primaryFilled"
+                        isLive={section.isLive}
+                      >
+                        {section.name}
+                      </PortalButton>
+                    </Link>
                   );
                 },
               )}

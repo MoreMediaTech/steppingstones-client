@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 
 // components
 import Loader from "@components/Loader";
@@ -25,10 +25,10 @@ type Props = {
 
 export default function Content({
   id,
-    location,
-    contentId,
-    localFeedContent,
-    localFeedContentId,
+  location,
+  contentId,
+  localFeedContent,
+  localFeedContentId,
 }: Props) {
   const router = useRouter();
 
@@ -37,12 +37,6 @@ export default function Content({
     id,
     undefined,
   );
-
-  const handleClick = () => {
-    router.push(
-      `/admin-portal/content-portal/${location}/local-feed/${localFeedContentId}/edit-content/${section?.id}`,
-    );
-  };
 
   if (isLoadingSection) {
     return (
@@ -61,11 +55,7 @@ export default function Content({
             type="button"
             color="outline"
             className="w-full md:w-1/4 "
-            onClick={() => {
-              router.push(
-                `/admin-portal/content-portal/${location}/local-feed?contentId=${contentId}&localFeedContentId=${localFeedContentId}&localFeedContent=${localFeedContent}`,
-              );
-            }}
+            onClick={() => router.back()}
           >
             Go Back
           </Button>
@@ -75,7 +65,7 @@ export default function Content({
       <section className="w-full overflow-auto px-2 py-2">
         <SectionContainer
           data={section as PartialSectionSchemaProps}
-          onClick={handleClick}
+          href={`/admin-portal/content-portal/${location}/local-feed/${localFeedContentId}/edit-content/${section?.id}`}
         />
       </section>
     </section>

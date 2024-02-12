@@ -1,5 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 import Loader from "@components/Loader";
 import { SectionContainer } from "../section-container";
@@ -18,20 +19,14 @@ type Props = {
   };
 };
 
-export default function SubSection({params, searchParams }: Props) {
+export default function SubSection({ params, searchParams }: Props) {
   const router = useRouter();
-
   const { section, isLoadingSection } = useSectionController(
     params.id,
     undefined,
-    undefined
+    undefined,
   );
 
-  const handleClick = () => {
-    router.push(
-      `/admin-portal/content-portal/${params.location}/section/${params.id}/edit-section/${section?.id}`
-    );
-  };
   return (
     <>
       <section className="space-y-2">
@@ -41,11 +36,7 @@ export default function SubSection({params, searchParams }: Props) {
             <Button
               type="button"
               className="w-1/3 sm:w-full "
-              onClick={() => {
-                router.push(
-                  `/admin-portal/content-portal/${params.location}/section?contentId=${searchParams.contentId}&sectionId=${searchParams.sectionId}`
-                );
-              }}
+              onClick={() => router.back()}
             >
               Go Back
             </Button>
@@ -59,7 +50,7 @@ export default function SubSection({params, searchParams }: Props) {
           <section className="w-full overflow-auto">
             <SectionContainer
               data={section as PartialSectionSchemaProps}
-              onClick={handleClick}
+              href={`/admin-portal/content-portal/${params.location}/section/${params.id}/edit-section/${section?.id}`}
             />
           </section>
         )}

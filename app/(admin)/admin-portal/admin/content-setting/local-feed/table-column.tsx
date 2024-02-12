@@ -11,7 +11,10 @@ import Image from "next/image";
 import useDistrictSettingController from "./use-local-feed-setting-controller";
 
 // zod schema
-import { LocalFeedContentSchemaProps, PartialLocalFeedContentSchemaProps } from "@models/LocalFeedContent";
+import {
+  LocalFeedContentSchemaProps,
+  PartialLocalFeedContentSchemaProps,
+} from "@models/LocalFeedContent";
 
 // components
 import { Button } from "@components/ui/button";
@@ -62,13 +65,21 @@ export const columns: ColumnDef<PartialLocalFeedContentSchemaProps>[] = [
       const localFeed = row.original;
       return (
         <div className="flex items-center justify-start space-x-2">
-          <div className="relative h-10 w-10 overflow-hidden rounded-full border-2 border-primary-dark-200 p-1">
+          <div
+            className="relative h-10 w-10 overflow-hidden rounded-full border-2 border-primary-dark-200 p-1"
+            style={{ position: "relative", height: "40px" }}
+          >
             <Image
-              src={localFeed.imageUrl ?? "/public/steppingstonesapplogo.png"}
+              src={
+                localFeed.imageUrl ??
+                "https://res.cloudinary.com/dhdcepksp/image/upload/v1695671545/icon_x68kbx.png"
+              }
               alt={localFeed.name as string}
-              sizes="40px"
-              width={40}
-              height={40}
+              fill
+              sizes="(min-width: 808px) 50vw, 100vw"
+              style={{
+                objectFit: "cover", // cover, contain, none
+              }}
             />
           </div>
           <div className="text-xs font-semibold sm:text-base ">
@@ -97,16 +108,21 @@ export const columns: ColumnDef<PartialLocalFeedContentSchemaProps>[] = [
       const localFeed = row.original;
       return (
         <div className="flex items-center justify-start space-x-2">
-          <div className="relative flex h-10 w-10 items-center overflow-hidden rounded-full border-2 border-[#5E17EB] p-1">
+          <div
+            className="relative flex h-10 w-10 items-center overflow-hidden rounded-full border-2 border-[#5E17EB] p-1"
+            style={{ position: "relative", height: "40px" }}
+          >
             <Image
               src={
                 localFeed.feedContent?.logoIcon ??
                 "/public/steppingstonesapplogo.png"
               }
               alt={localFeed.feedContent?.name as string}
-              sizes="40px"
-              width={40}
-              height={40}
+              fill
+              sizes="(min-width: 808px) 50vw, 100vw"
+              style={{
+                objectFit: "cover", // cover, contain, none
+              }}
             />
           </div>
           <div className="text-xs font-semibold sm:text-base">

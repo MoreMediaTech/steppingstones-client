@@ -66,7 +66,7 @@ export default function useSectionController(
   );
 
   // get section by parent id
-  const { data: subSectionData, isLoading: isLoadingSubSection } =
+  const { data: subSectionData, isLoading: isLoadingSubSection, refetch: refetchSubSection } =
     useGetSectionByParentIdQuery(parentId as string, {
       skip: !parentId,
     });
@@ -106,7 +106,7 @@ export default function useSectionController(
             refetchFeedContent();
           }
           if (data.type === SectionType.CHILD_SECTION) {
-            refetchSection();
+            refetchSubSection();
           }
           form.reset();
         } catch (error) {
@@ -139,6 +139,7 @@ export default function useSectionController(
     isCreatingSection,
     isUpdatingSection,
     refetchSection,
+    refetchSubSection,
     createSectionHandler,
     updateSectionById,
   };

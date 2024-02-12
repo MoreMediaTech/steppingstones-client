@@ -1,7 +1,7 @@
 "use client";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
 
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 // components
 import CreateSectionForm from "./create-section-form";
@@ -24,27 +24,36 @@ type SectionProps = {
   sectionId: string;
 };
 
-export default function Section({ location, contentId, sectionId }: SectionProps) {
+export default function Section({
+  location,
+  contentId,
+  sectionId,
+}: SectionProps) {
   const router = useRouter();
 
-  const { section, subSectionData, isLoadingSection } = useSectionController(sectionId, undefined, sectionId);
-
-  const handleClick = () => {
-    router.push(`/admin-portal/content-portal/${location}/section/${sectionId}`);
-  };
+  const { section, subSectionData, isLoadingSection } = useSectionController(
+    sectionId,
+    undefined,
+    sectionId,
+  );
 
   return (
     <>
       <section className="space-y-2">
         <div className="my-4 flex w-full flex-col-reverse  items-center justify-between sm:flex-row">
-          <div className="flex items-center justify-start gap-2">
+          <div className="flex items-center justify-start gap-2 sm:w-1/2 ">
             <Header title={section?.name as string} order={1} />
             {section?.isSubSection && (
               <>
                 {section?.isLive ? (
                   <Badge>Live</Badge>
                 ) : (
-                  <Badge variant="destructive">Not Live</Badge>
+                  <Badge
+                    variant="destructive"
+                    className="flex w-[90px] items-center justify-center"
+                  >
+                    Not Live
+                  </Badge>
                 )}
               </>
             )}
@@ -53,11 +62,7 @@ export default function Section({ location, contentId, sectionId }: SectionProps
             <Button
               type="button"
               className="w-1/3 border-primary sm:w-full"
-              onClick={() => {
-                router.push(
-                  `/admin-portal/content-portal/${location}?contentId=${contentId}`,
-                );
-              }}
+              onClick={() => router.back()}
             >
               Go Back
             </Button>
@@ -79,7 +84,7 @@ export default function Section({ location, contentId, sectionId }: SectionProps
           <section className="w-full overflow-auto ">
             {section?.isSubSection ? (
               <section className=" w-full overflow-auto md:py-24">
-                {section && (
+                {subSectionData ? (
                   <div className=" grid grid-cols-1 gap-4 sm:grid-cols-2">
                     {subSectionData?.map(
                       (section: PartialSectionSchemaProps) => (
@@ -98,12 +103,12 @@ export default function Section({ location, contentId, sectionId }: SectionProps
                       ),
                     )}
                   </div>
-                )}
+                ) : null}
               </section>
             ) : (
               <SectionContainer
                 data={section as PartialSectionSchemaProps}
-                onClick={handleClick}
+                href={`/admin-portal/content-portal/${location}/section/${sectionId}`}
               />
             )}
           </section>
