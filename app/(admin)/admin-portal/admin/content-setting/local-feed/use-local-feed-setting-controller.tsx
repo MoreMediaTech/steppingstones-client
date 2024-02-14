@@ -53,44 +53,47 @@ export default function useLocalFeedSettingController(
    * @description Update district handler
    */
   const updateLocalFeedContentHandler: SubmitHandler<PartialLocalFeedContentSchemaProps> =
-    useCallback(async (data) => {
-      const newData = {
-        id: dataProps?.id as string,
-        ...data,
-      };
-      try {
-        const response = await updateLocalFeedContentById(newData).unwrap();
-        if (response.success) {
-          toast({
-            title: "Success!",
-            description: response.message,
-          });
-          setOpen!(false);
-          refetchLocalFeed();
+    useCallback(
+      async (data) => {
+        const newData = {
+          id: dataProps?.id as string,
+          ...data,
+        };
+        try {
+          const response = await updateLocalFeedContentById(newData).unwrap();
+          if (response.success) {
+            toast({
+              title: "Success!",
+              description: response.message,
+            });
+            setOpen!(false);
+            refetchLocalFeed();
+          }
+        } catch (error) {
+          if (isFetchBaseQueryError(error)) {
+            const errMsg =
+              "error" in error ? error.error : JSON.stringify(error.message);
+            toast({
+              variant: "destructive",
+              title: "Uh oh! Something went wrong.",
+              description:
+                (errMsg as string) ||
+                "Unable to update district. Please try again.",
+              action: <ToastAction altText="Try again">Try again</ToastAction>,
+            });
+          } else if (isErrorWithMessage(error)) {
+            toast({
+              variant: "destructive",
+              title: "Uh oh! Something went wrong.",
+              description:
+                error.message || "Unable to update district Please try again.",
+              action: <ToastAction altText="Try again">Try again</ToastAction>,
+            });
+          }
         }
-      } catch (error) {
-        if (isFetchBaseQueryError(error)) {
-          const errMsg =
-            "error" in error ? error.error : JSON.stringify(error.message);
-          toast({
-            variant: "destructive",
-            title: "Uh oh! Something went wrong.",
-            description:
-              (errMsg as string) ||
-              "Unable to update district. Please try again.",
-            action: <ToastAction altText="Try again">Try again</ToastAction>,
-          });
-        } else if (isErrorWithMessage(error)) {
-          toast({
-            variant: "destructive",
-            title: "Uh oh! Something went wrong.",
-            description:
-              error.message || "Unable to update district Please try again.",
-            action: <ToastAction altText="Try again">Try again</ToastAction>,
-          });
-        }
-      }
-    }, []);
+      },
+      [dataProps],
+    );
 
   /**
    * @description Delete district handler

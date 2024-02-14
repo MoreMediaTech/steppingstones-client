@@ -47,7 +47,7 @@ export default function SubSection({ params, searchParams }: Props) {
             <Loader className="h-12 w-12" />
           </div>
         ) : (
-          <section className="w-full overflow-auto">
+          <section className="w-full">
             <SectionContainer
               data={section as PartialSectionSchemaProps}
               href={`/admin-portal/content-portal/${params.location}/section/${params.id}/edit-section/${section?.id}`}

@@ -21,7 +21,11 @@ import {
 } from "@app/global-state/helper";
 
 // zod schemas
-import { PartialSectionSchemaProps, SectionType, partialSectionSchema } from "@models/Section";
+import {
+  PartialSectionSchemaProps,
+  SectionType,
+  partialSectionSchema,
+} from "@models/Section";
 
 export default function useLocalFeedController(
   localFeedId?: string,
@@ -62,7 +66,11 @@ export default function useLocalFeedController(
 
   const onSubmit: SubmitHandler<PartialSectionSchemaProps> = React.useCallback(
     async (data) => {
-      const sectionData = { ...data, localFeedContentId: localFeedId as string, type: SectionType.LOCAL_FEED_SECTION };
+      const sectionData = {
+        ...data,
+        localFeedContentId: localFeedId as string,
+        type: SectionType.LOCAL_FEED_SECTION,
+      };
 
       try {
         const response = await createSection(sectionData).unwrap();
@@ -74,7 +82,7 @@ export default function useLocalFeedController(
           });
           setOpen!(false);
           form.reset();
-          refetchSection();
+          refetchLocalFeedContent();
         }
       } catch (error) {
         if (isFetchBaseQueryError(error)) {
@@ -97,8 +105,8 @@ export default function useLocalFeedController(
     [localFeedId],
   );
 
-  const setEDLive: SubmitHandler<PartialSectionSchemaProps> =
-    React.useCallback(async (data) => {
+  const setEDLive: SubmitHandler<PartialSectionSchemaProps> = React.useCallback(
+    async (data) => {
       const sectionData = { ...data, id: sectionId as string };
 
       try {
@@ -129,7 +137,9 @@ export default function useLocalFeedController(
           });
         }
       }
-    }, []);
+    },
+    [],
+  );
 
   return {
     form,

@@ -10,14 +10,15 @@ module.exports = {
   //   ]
   // },
   eslint: {
-    dirs: ['pages', 'utils', 'components'], // Only run ESLint on the 'pages' and 'utils' directories during production builds (next build)
+    dirs: ["app", "lib", "hooks", "utils", "components"], // Only run ESLint on the 'pages' and 'utils' directories during production builds (next build)
   },
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'res.cloudinary.com'
-      }
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+      },
     ],
   },
-}
+  pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
+};

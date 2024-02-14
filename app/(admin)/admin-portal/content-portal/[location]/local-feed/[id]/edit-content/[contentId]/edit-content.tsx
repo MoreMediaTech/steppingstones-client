@@ -20,9 +20,7 @@ type EditSectionProps = {
   sectionId: string;
 };
 
-export default function EditContent({
-  sectionId,
-}: EditSectionProps) {
+export default function EditContent({ sectionId }: EditSectionProps) {
   const router = useRouter();
   const {
     section,
@@ -34,23 +32,13 @@ export default function EditContent({
 
   const defaultValues = {
     title: section?.title ? (section?.title as string) : "",
-    isLive: section?.isLive
-      ? (section?.isLive as boolean)
-      : false,
-    content: section?.content
-      ? (section?.content as string)
-      : "",
+    isLive: section?.isLive ? (section?.isLive as boolean) : false,
+    content: section?.content ? (section?.content as string) : "",
     author: section?.author ? (section?.author as string) : "",
-    summary: section?.summary
-      ? (section?.summary as string)
-      : "",
+    summary: section?.summary ? (section?.summary as string) : "",
     imageFile: undefined,
-    videoUrl: section?.videoUrl
-      ? (section?.videoUrl as string)
-      : "",
-    videoTitle: section?.videoTitle
-      ? (section?.videoTitle as string)
-      : "",
+    videoUrl: section?.videoUrl ? (section?.videoUrl as string) : "",
+    videoTitle: section?.videoTitle ? (section?.videoTitle as string) : "",
     videoDescription: section?.videoDescription
       ? (section?.videoDescription as string)
       : "",
@@ -79,29 +67,27 @@ export default function EditContent({
   }
 
   return (
-    <section className="max-h-screen min-h-screen">
-      <ScrollArea>
-        <div className="flex items-center justify-between px-1 py-4 sm:px-2">
-          <Header title={`Edit ${section?.title} Section`} order={2} />
-          <Button
-            variant="outline"
-            className="w-1/3"
-            onClick={() => router.back()}
-          >
-            <span>Go Back</span>
-          </Button>
-        </div>
-        <div className="py-4">
-          <ContentForm
-            form={form}
-            preview={preview}
-            isLoading={isUpdatingSection}
-            onChangePicture={onChangePicture}
-            onSubmit={onSubmit}
-            setIsEdit={setIsEdit}
-          />
-        </div>
-      </ScrollArea>
+    <section className="h-full">
+      <div className="flex items-center justify-between px-1 py-4 sm:px-2">
+        <Header title={`Edit ${section?.title} Section`} order={2} />
+        <Button
+          variant="outline"
+          className="w-1/3"
+          onClick={() => router.back()}
+        >
+          <span>Go Back</span>
+        </Button>
+      </div>
+      <div className="py-4">
+        <ContentForm
+          form={form}
+          preview={preview}
+          isLoading={isUpdatingSection}
+          onChangePicture={onChangePicture}
+          onSubmit={onSubmit}
+          setIsEdit={setIsEdit}
+        />
+      </div>
     </section>
   );
 }

@@ -18,6 +18,7 @@ import { PartialSectionSchemaProps, SectionSchemaProps } from "@models/Section";
 
 // hooks (Controller)
 import useSectionSettingController from "./use-section-setting-controller";
+import { UpdateSectionSettingsForm } from "./update-section-settings-form";
 
 export const columns: ColumnDef<PartialSectionSchemaProps>[] = [
   {
@@ -158,9 +159,20 @@ export const columns: ColumnDef<PartialSectionSchemaProps>[] = [
       const section = row.original;
 
       const { handleDelete } = useSectionSettingController();
-      return <DataTableRowActions row={row} enableDeleteItem deleteItem={
-        <HandleDeleteModal data={section as SectionSchemaProps} deleteHandler={handleDelete} />
-      } />;
+      return (
+        <DataTableRowActions
+          row={row}
+          enableDeleteItem
+          enableEditItem
+          editItem={<UpdateSectionSettingsForm data={section} />}
+          deleteItem={
+            <HandleDeleteModal
+              data={section as SectionSchemaProps}
+              deleteHandler={handleDelete}
+            />
+          }
+        />
+      );
     },
   },
 ];

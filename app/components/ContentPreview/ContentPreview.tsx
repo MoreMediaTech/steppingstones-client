@@ -1,14 +1,14 @@
-import Image from 'next/image'
-import React from 'react'
-import parse from 'html-react-parser'
-import 'react-quill/dist/quill.snow.css'
-import styles from './ContentPreview.module.css'
+import Image from "next/image";
+import React from "react";
+import parse from "html-react-parser";
+import "react-quill/dist/quill.snow.css";
+import styles from "./ContentPreview.module.css";
 
 // components
-import Header from '@components/Header'
+import Header from "@components/Header";
 
 // zod schemas
-import { PartialSectionSchemaProps } from '@models/Section'
+import { PartialSectionSchemaProps } from "@models/Section";
 
 type ContentPreviewProps = {
   content?: PartialSectionSchemaProps;
@@ -16,7 +16,7 @@ type ContentPreviewProps = {
 
 const ContentPreview = ({ content }: ContentPreviewProps) => {
   return (
-    <div className="w-full  overflow-auto py-2">
+    <div className="w-full py-2">
       <div className="space-y-2 rounded-md border border-gray-800 p-2 dark:border-gray-200 md:p-4">
         <Header
           title={content?.title ? content.title : "Create New Content"}
@@ -46,6 +46,6 @@ const ContentPreview = ({ content }: ContentPreviewProps) => {
       </div>
     </div>
   );
-}
+};
 
-export default ContentPreview
+export default ContentPreview;
