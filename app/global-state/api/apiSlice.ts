@@ -5,30 +5,9 @@ import {
   FetchArgs,
   FetchBaseQueryError,
   FetchBaseQueryMeta,
-} from '@reduxjs/toolkit/query/react'
+} from "@reduxjs/toolkit/query/react";
 
-
-import {
-  setAuthState,
-  resetCredentials,
-} from 'app/global-state/features/auth/authSlice'
-import { RootState } from 'app/global-state/store'
-
-interface RefreshResult {
-  error?: FetchBaseQueryError | undefined
-  data?:
-    | {
-        token: string
-      }
-    | undefined
-  meta?: FetchBaseQueryMeta | undefined
-}
-
-function checkIsError(obj: unknown): obj is Error {
-  return (
-    typeof obj === 'object' && obj !== null && 'data' in obj && 'status' in obj
-  )
-}
+import { RootState } from "app/global-state/store";
 
 const baseQuery: BaseQueryFn<
   string | FetchArgs,
@@ -38,118 +17,74 @@ const baseQuery: BaseQueryFn<
   FetchBaseQueryMeta
 > = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_API_URL,
-  credentials: 'include',     
+  credentials: "include",
   prepareHeaders: (headers, api) => {
-    const { auth } = api.getState() as RootState
-    const token = auth.token
+    const { auth } = api.getState() as RootState;
+    headers.set("Content-Type", "application/json");
+    headers.set("Accept", "application/json");
 
-    if (token) {
-      headers.set('authorization', `Bearer ${token}`)
-    }
-
-    headers.set('Content-Type', 'application/json')
-    return headers
+    return headers;
   },
-})
-
-const baseQueryWithReAuth: BaseQueryFn = async (
-  args: string | FetchArgs,
-  api,
-  extraOptions
-) => {
-  
-  let result = await baseQuery(args, api, extraOptions)
-  if (result?.error?.status === 400) {
-    localStorage.removeItem('_ssapp:token')
-    api.dispatch(resetCredentials())
-    result = await baseQuery(args, api, extraOptions)
-  }
-  if (result?.error?.status === 401 || result?.error?.status === 403) {
-    // send refresh token to get new token
-    const refreshResult: RefreshResult = await baseQuery(
-      '/refresh/',
-      api,
-      extraOptions
-    )
-    if (refreshResult?.data) {
-      // store new token
-      localStorage.setItem('_ssapp:token', refreshResult?.data?.token as string)
-      api.dispatch(
-        setAuthState({ token: refreshResult?.data?.token as string, isAuthenticated: true })
-      )
-      // retry original request
-      result = await baseQuery(args, api, extraOptions)
-    } else {
-      if (refreshResult?.error?.status === 403) {
-        if (checkIsError(refreshResult?.error?.data)) {
-          refreshResult.error.data.message =
-            'You Session has expired. Please login again. '
-        }
-      }
-    }
-  }
-  return result
-}
+});
 
 export const apiSlice = createApi({
-  reducerPath: 'api',
-  baseQuery: baseQueryWithReAuth,
-  tagTypes: ['Auth', 'User'],
+  reducerPath: "api",
+  baseQuery: baseQuery,
+  tagTypes: ["Auth", "User"],
   keepUnusedDataFor: 500,
   endpoints: (builder) => ({}),
-})
+});
 export const advertsApiSlice = createApi({
   reducerPath: "advertsApi",
-  baseQuery: baseQueryWithReAuth,
+  baseQuery: baseQuery,
   keepUnusedDataFor: 300,
   tagTypes: ["Adverts"],
   endpoints: (builder) => ({}),
 });
 
 export const partnerApiSlice = createApi({
-  reducerPath: 'partnerApi',
-  baseQuery: baseQueryWithReAuth,
+  reducerPath: "partnerApi",
+  baseQuery: baseQuery,
   keepUnusedDataFor: 960,
-  tagTypes: ['Partner'],
+  tagTypes: ["Partner"],
   endpoints: (builder) => ({}),
-})
+});
 export const contentApiSlice = createApi({
-  reducerPath: 'contentApi',
-  baseQuery: baseQueryWithReAuth,
+  reducerPath: "contentApi",
+  baseQuery: baseQuery,
   keepUnusedDataFor: 300,
-  tagTypes: ['Content'],
+  tagTypes: ["Content"],
   refetchOnMountOrArgChange: true,
   endpoints: (builder) => ({}),
-})
+});
 
 export const messagesApiSlice = createApi({
-  reducerPath: 'messagesApi',
-  baseQuery: baseQueryWithReAuth,
+  reducerPath: "messagesApi",
+  baseQuery: baseQuery,
   keepUnusedDataFor: 300,
-  tagTypes: ['Messages'],
+  tagTypes: ["Messages"],
   refetchOnMountOrArgChange: true,
   endpoints: (builder) => ({}),
-})
+});
 
 export const uploadApiSlice = createApi({
-  reducerPath: 'uploadApi',
-  baseQuery: baseQueryWithReAuth,
+  reducerPath: "uploadApi",
+  baseQuery: baseQuery,
   keepUnusedDataFor: 300,
-  tagTypes: ['Upload'],
+  tagTypes: ["Upload"],
   endpoints: (builder) => ({}),
-})
+});
 export const analyticsApiSlice = createApi({
-  reducerPath: 'analyticsApi',
-  baseQuery: baseQueryWithReAuth,
+  reducerPath: "analyticsApi",
+  baseQuery: baseQuery,
   keepUnusedDataFor: 300,
-  tagTypes: ['Analytics'],
+  tagTypes: ["Analytics"],
   endpoints: (builder) => ({}),
-})
+});
 export const notificationsApiSlice = createApi({
   reducerPath: "notificationsApi",
-  baseQuery: baseQueryWithReAuth,
+  baseQuery: baseQuery,
   keepUnusedDataFor: 300,
   tagTypes: ["Notifications"],
   endpoints: (builder) => ({}),
 });
-

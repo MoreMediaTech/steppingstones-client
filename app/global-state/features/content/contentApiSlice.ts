@@ -340,7 +340,7 @@ const contentApi = contentApiSlice.injectEndpoints({
       PartialSourceDirectoryProps
     >({
       query: (data) => ({
-        url: `/editor/source-directory`,
+        url: `/content/source-directory`,
         method: "POST",
         body: { ...data },
       }),

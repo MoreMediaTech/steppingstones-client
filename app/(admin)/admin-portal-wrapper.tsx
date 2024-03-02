@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import { redirect } from "next/navigation";
 
 // redux global state (Model)
 import { useGetUserQuery } from "@app/global-state/features/user/usersApiSlice";
@@ -16,30 +15,20 @@ import { ComponentShield } from "@components/NextShield";
 import { AdminSidebar, MobileAdminSidebar } from "@components/navigation";
 import { AdminNavbar } from "@components/navigation/admin-navbar";
 
-const token =
-  typeof window !== "undefined" ? localStorage.getItem("_ssapp:token") : null;
-
 function PageWrapper({
   children,
   className,
+  isAuthenticated,
 }: {
   children: React.ReactNode;
   className?: string;
+  isAuthenticated?: boolean;
 }) {
   const [size] = useWindowSize();
   const { drawerOpened } = useAppSelector(globalSelector);
-  const { data: user } = useGetUserQuery();
+  const { data: user } = useGetUserQuery(undefined, { skip: !isAuthenticated });
 
   // const SCROLL_AREA_HEIGHT = (size?.innerHeight as number) - 10;
-
-  React.useEffect(() => {
-    const handleRouteChange = () => {
-      if (!token) {
-        redirect("/auth/login");
-      }
-    };
-    handleRouteChange();
-  }, [token]);
 
   return (
     <motion.main
@@ -69,7 +58,7 @@ function PageWrapper({
           <div
             className={`${
               drawerOpened ? "md:ml-72" : "md:ml-20"
-            } my-4 flex flex-grow bg-background transition-all duration-500 md:my-20 ease-in-out md:p-6  `}
+            } my-4 flex flex-grow bg-background transition-all duration-500 ease-in-out md:my-20 md:p-6  `}
           >
             {children}
           </div>

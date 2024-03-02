@@ -37,12 +37,9 @@ export default function HandleDeleteModal<T extends DataObj>({
     <AlertDialog>
       <AlertDialogTrigger
         asChild
-        className={cn(
-          `flex items-center justify-start border-gray-900 px-4 py-2 dark:border-gray-200`,
-          className,
-        )}
+        className={cn(`flex items-center justify-start px-4 py-2 `, className)}
       >
-        <Button variant={'outline'}>
+        <Button variant={"ghost"}>
           <Trash className="mr-2 h-3.5 w-3.5" />
           Delete
         </Button>

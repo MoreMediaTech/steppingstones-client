@@ -1,22 +1,25 @@
-import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
+import { redirect } from "next/navigation";
+import { getSession } from "@lib/getSession";
 
-function checkUserCookie() {
-  const cookie = cookies()
-  const userCookie = cookie.get('ss_refresh_token')
-  if (userCookie) {
-    return true
+function checkIsAuthenticated() {
+  const session = getSession();
+
+  if (!session) {
+    return false;
+  } else {
+    return true;
   }
-  return false
 }
 
 export default function LoginLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
-  if (checkUserCookie()) {
-    return redirect('/')
+  const isAuthenticated = checkIsAuthenticated();
+
+  if (isAuthenticated) {
+    redirect("/admin-portal");
   }
-  return <section>{children}</section>
+  return <section>{children}</section>;
 }

@@ -2,43 +2,49 @@ import React from "react";
 // import { cookies } from "next/headers";
 import { Toaster } from "@components/ui/toaster";
 import { Montserrat } from "next/font/google";
-import AdminPageWrapper from "./AdminPageWrapper";
+import AdminPageWrapper from "./admin-portal-wrapper";
 import Provider from "../global-state/providers/provider";
 
 import "../globals.css";
 import { cn } from "@lib/utils";
+import { getSession } from "@lib/getSession";
+import { redirect } from "next/navigation";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
   variable: "--font-montserrat",
 });
 
+function checkIsAuthenticated() {
+  const session = getSession();
 
-// function to check if cookie exists
-// TODO: Resolve issue caused by recent nextjs update that broke cookies method in next/headers module
-// function checkUserCookie() {
-//   const cookie = cookies();
-//   console.log("checking auth");
-//   const userCookie = cookie.get("ss_refresh_token");
-
-//   if (!userCookie) {
-//     console.log("auth failed");
-//     return false;
-//   }
-//   return true;
-// }
+  if (!session) {
+    return false;
+  } else {
+    return true;
+  }
+}
 
 export default function AdminRootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const isAuthenticated = checkIsAuthenticated();
 
+  if (!isAuthenticated) {
+    redirect("/auth/login");
+  }
   return (
-    <html lang="en" className={cn(`font-montserrat sm:scroll-smooth`, montserrat.variable)}>
+    <html
+      lang="en"
+      className={cn(`font-montserrat sm:scroll-smooth`, montserrat.variable)}
+    >
       <body className="min-h-screen bg-background">
         <Provider>
-          <AdminPageWrapper>{children}</AdminPageWrapper>
+          <AdminPageWrapper isAuthenticated={isAuthenticated}>
+            {children}
+          </AdminPageWrapper>
           <Toaster />
         </Provider>
       </body>

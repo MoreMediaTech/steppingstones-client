@@ -2,7 +2,10 @@ import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { RootState } from "app/global-state/store";
 import { Error } from "@lib/types";
-import {  FeedContentSchemaProps, PartialFeedContentSchema } from "@models/FeedContent";
+import {
+  FeedContentSchemaProps,
+  PartialFeedContentSchema,
+} from "@models/FeedContent";
 import {
   PartialEconomicDataSchemaProps,
   PartialLocalFeedContentSchemaProps,
@@ -59,7 +62,7 @@ export const fetchPublicFeed = createAsyncThunk(
   > => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/feed`);
     const data = await res.json();
-    return data.counties;
+    return data.feedContent;
   },
 );
 

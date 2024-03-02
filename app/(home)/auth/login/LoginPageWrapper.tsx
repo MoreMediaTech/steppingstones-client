@@ -1,31 +1,27 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import { redirect } from "next/navigation";
 
 // redux store (Model)
 import { useAppDispatch } from "app/global-state/hooks";
 import { setAuthState } from "app/global-state/features/auth/authSlice";
 
-
-const token =
-  typeof window !== "undefined" ? localStorage.getItem("_ssapp:token") : null;
-
 export default function LoginPageWrapper({
   children,
   className,
+  isAuthenticated,
 }: {
   children: React.ReactNode;
   className?: string;
+  isAuthenticated?: boolean;
 }) {
   const dispatch = useAppDispatch();
 
   React.useEffect(() => {
-    if (token) {
-      dispatch(setAuthState({ isAuthenticated: true, token: token as string }));
-      redirect('/')
+    if (isAuthenticated) {
+      dispatch(setAuthState({ isAuthenticated: isAuthenticated }));
     }
-  }, [token]);
+  }, [isAuthenticated]);
 
   return (
     <motion.section
@@ -39,4 +35,3 @@ export default function LoginPageWrapper({
     </motion.section>
   );
 }
-

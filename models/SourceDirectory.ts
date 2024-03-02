@@ -1,5 +1,5 @@
 import * as z from "zod";
-import { Prettify } from './helpers';
+import { Prettify } from "./helpers";
 
 export enum SourceDirectoryType {
   BSI = "BSI",
@@ -11,7 +11,7 @@ export const sourceDirectorySchema = z.object({
   id: z.string(),
   category: z.string(),
   description: z.string(),
-  webLink: z.string(),
+  webLink: z.string().url().optional(),
   canEmail: z.boolean(),
   type: z.nativeEnum(SourceDirectoryType),
   createdAt: z.string(),
@@ -20,6 +20,10 @@ export const sourceDirectorySchema = z.object({
 
 export const partialSourceDirectorySchema = sourceDirectorySchema.partial();
 
-export type SourceDirectoryProps = Prettify<z.infer<typeof sourceDirectorySchema>>;
+export type SourceDirectoryProps = Prettify<
+  z.infer<typeof sourceDirectorySchema>
+>;
 
-export type PartialSourceDirectoryProps = Prettify<z.infer<typeof partialSourceDirectorySchema>>;
+export type PartialSourceDirectoryProps = Prettify<
+  z.infer<typeof partialSourceDirectorySchema>
+>;

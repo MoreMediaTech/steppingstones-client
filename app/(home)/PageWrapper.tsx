@@ -1,6 +1,6 @@
-'use client';
-import React from 'react'
-import { motion } from 'framer-motion'
+"use client";
+import React from "react";
+import { motion } from "framer-motion";
 
 // redux store (Model)
 import { useAppDispatch, useAppSelector } from "app/global-state/hooks";
@@ -8,26 +8,26 @@ import {
   setIsVisible,
   globalSelector,
 } from "app/global-state/features/global/globalSlice";
-import { setAuthState } from 'app/global-state/features/auth/authSlice'
-import { setCookie } from '@components/CookieConsent/actions';
-
-const token = typeof window !== 'undefined' ? localStorage.getItem('_ssapp:token') : null
+import { setAuthState } from "app/global-state/features/auth/authSlice";
+import { setCookie } from "@components/CookieConsent/actions";
 
 function PageWrapper({
   children,
   className,
+  isAuthenticated,
 }: {
-  children: React.ReactNode
-  className?: string
+  children: React.ReactNode;
+  className?: string;
+  isAuthenticated?: boolean;
 }) {
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   const { isVisible, displayCookieConsent } = useAppSelector(globalSelector);
 
   React.useEffect(() => {
-    if(token){
-      dispatch(setAuthState({ isAuthenticated: true, token: token as string }))
+    if (isAuthenticated) {
+      dispatch(setAuthState({ isAuthenticated: isAuthenticated }));
     }
-  }, [token])
+  }, [isAuthenticated]);
 
   React.useEffect(() => {
     function watchScroll() {
@@ -35,7 +35,7 @@ function PageWrapper({
       if (!isVisible && displayCookieConsent) {
         setCookie("ssapp-cookie-consent", false);
         dispatch(setIsVisible(false));
-      }else if (!isVisible && !displayCookieConsent) {
+      } else if (!isVisible && !displayCookieConsent) {
         setCookie("ssapp-cookie-consent", false);
         dispatch(setIsVisible(true));
       } else {
@@ -56,7 +56,7 @@ function PageWrapper({
     >
       {children}
     </motion.main>
-  )
+  );
 }
 
-export default PageWrapper
+export default PageWrapper;
