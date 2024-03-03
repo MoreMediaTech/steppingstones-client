@@ -1,8 +1,11 @@
-'use client'
+"use client";
 
-import { useSearchParams } from 'next/navigation'
-import ReCAPTCHA from 'react-google-recaptcha'
-import { Button } from '@components/ui/button'
+import { useSearchParams } from "next/navigation";
+import ReCAPTCHA from "react-google-recaptcha";
+import { OTPInput } from "input-otp";
+
+// components
+import { Button } from "@components/ui/button";
 import {
   Form,
   FormControl,
@@ -11,17 +14,21 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@components/ui/form'
-import { Input } from '@components/ui/input'
+} from "@components/ui/form";
 
-import useVerificationController from './useVerificationController'
+import { Slot } from "@components/otp-input/slot";
+import { FakeDash } from "@components/otp-input/fake-dash";
+
+import useVerificationController from "./useVerificationController";
 
 export default function VerificationForm() {
-  const searchParams = useSearchParams()
-  const email = searchParams.get('email')
+  const searchParams = useSearchParams();
+  const email = searchParams.get("email");
 
-  const { form, onSubmit, recaptchaRef, isLoading } = useVerificationController({ email: email as string })
-  
+  const { form, onSubmit, recaptchaRef, isLoading } = useVerificationController(
+    { email: email as string },
+  );
+
   return (
     <>
       <Form {...form}>
@@ -35,10 +42,27 @@ export default function VerificationForm() {
                   One Time Code<span className="text-red">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Enter one time code..."
+                  <OTPInput
                     {...field}
-                    className="border-gray-900 dark:border-gray-200"
+                    maxLength={6}
+                    containerClassName="group flex items-center has-[:disabled]:opacity-30"
+                    render={({ slots }) => (
+                      <>
+                        <div className="flex">
+                          {slots.slice(0, 3).map((slot, idx) => (
+                            <Slot key={idx} {...slot} />
+                          ))}
+                        </div>
+
+                        <FakeDash />
+
+                        <div className="flex">
+                          {slots.slice(3).map((slot, idx) => (
+                            <Slot key={idx} {...slot} />
+                          ))}
+                        </div>
+                      </>
+                    )}
                   />
                 </FormControl>
                 <FormDescription>
@@ -48,7 +72,12 @@ export default function VerificationForm() {
               </FormItem>
             )}
           />
-          <Button type="submit" data-testid="verification-form-button" disabled={isLoading} className="w-full">
+          <Button
+            type="submit"
+            data-testid="verification-form-button"
+            disabled={isLoading}
+            className="w-full"
+          >
             Verify
           </Button>
         </form>
@@ -59,5 +88,5 @@ export default function VerificationForm() {
         />
       </Form>
     </>
-  )
+  );
 }

@@ -46,6 +46,7 @@ export default function useVerificationController({
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (data) => {
     const token = await recaptchaRef.current?.executeAsync();
     recaptchaRef?.current?.reset();
+
     try {
       const responseData = await authenticate({
         email: email as string,
