@@ -28,7 +28,6 @@ export const messageFolderSchema: z.ZodType<MessageFolder> =
     folder: z.lazy(() => folderSchema),
   });
 
-
 export type MessageFolderProps = Prettify<z.infer<typeof messageFolderSchema>>;
 
 // define the schema for user folder
@@ -51,7 +50,6 @@ export const userFolderSchema: z.ZodType<UserFolder> =
   });
 
 export type UserFolderProps = Prettify<z.infer<typeof userFolderSchema>>;
-
 
 // define the schema for the folders
 export const folderSchema = z.object({
@@ -84,6 +82,7 @@ export const messageSchema = z.object({
   createdAt: z.string(),
   updatedAt: z.string(),
   isRead: z.boolean(),
+  folderName: z.string().optional(),
   messageFolders: z.array(z.lazy(() => messageFolderSchema)),
 });
 

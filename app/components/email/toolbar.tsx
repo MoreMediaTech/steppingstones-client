@@ -2,6 +2,7 @@
 
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import { FaFolderPlus } from "react-icons/fa";
 
 // components
 import { ArrowLeftIcon } from "@app/icons/arrow-left";
@@ -12,6 +13,7 @@ import { TrashIcon } from "@app/icons/trash";
 import { Button } from "@components/ui/button";
 
 import useMessagesController from "@app/(admin)/admin-portal/messages/[name]/use-messages-controller";
+import CreateFolderModal from "./create-folder-modal";
 
 type Params = {
   name: string;
@@ -25,7 +27,7 @@ export function Toolbar() {
 
   return (
     <div className="sticky top-0 flex h-[60px] items-center justify-between border-b border-gray-200 p-4 dark:border-gray-800">
-      <div className="space-x-6">
+      <div className="w-1/2 space-x-6">
         <Link
           href={`/admin-portal/messages/${params.name}/new`}
           className="inline-flex"
@@ -39,10 +41,11 @@ export function Toolbar() {
             await handleDelete(params.id);
           }}
         >
-          <Button type="submit">
+          <Button variant="ghost" type="submit">
             <TrashIcon />
           </Button>
         </form>
+        <CreateFolderModal />
         <Button variant="ghost" asChild>
           <Link
             href={`/admin-portal/messages/${params.name}/reply?id=${params.id}`}

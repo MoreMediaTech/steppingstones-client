@@ -1,19 +1,19 @@
-'use client'
+"use client";
 
-import { Table } from '@tanstack/react-table'
-import { Trash, X } from 'lucide-react'
+import { Table } from "@tanstack/react-table";
+import { Trash, X } from "lucide-react";
 
-import { Button } from '@components/ui/button'
-import { Input } from '@components/ui/input'
-import { DataTableViewOptions } from './/data-table-view-options'
+import { Button } from "@components/ui/button";
+import { Input } from "@components/ui/input";
+import { DataTableViewOptions } from ".//data-table-view-options";
 
-import { priorities, statuses } from '../../../data'
-import { DataTableFacetedFilter } from './data-table-faceted-filter'
+import { priorities, statuses } from "../../../data";
+import { DataTableFacetedFilter } from "./data-table-faceted-filter";
 
 interface DataTableToolbarProps<TData> {
-  table: Table<TData>
-  name: string
-  handleDeleteManyById?: (rows: TData[]) => void
+  table: Table<TData>;
+  name: string;
+  handleDeleteManyById?: (rows: TData[]) => void;
 }
 
 export function DataTableToolbar<TData>({
@@ -23,19 +23,19 @@ export function DataTableToolbar<TData>({
 }: DataTableToolbarProps<TData>) {
   const isFiltered =
     table.getPreFilteredRowModel().rows.length >
-    table.getFilteredRowModel().rows.length
+    table.getFilteredRowModel().rows.length;
 
   const selectedRows = table
     .getRowModel()
     .rows.filter((row) => row.getIsSelected())
-    .map((row) => row.original)
+    .map((row) => row.original);
 
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
         <Input
           placeholder="Filter tasks..."
-          value={(table.getColumn(name)?.getFilterValue() as string) ?? ''}
+          value={(table.getColumn(name)?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn(name)?.setFilterValue(event.target.value)
           }
@@ -57,12 +57,12 @@ export function DataTableToolbar<TData>({
         )} */}
         {selectedRows.length > 0 && (
           <Button
-            variant="ghost"
+            variant="outline"
             onClick={() => handleDeleteManyById?.(selectedRows)}
-            className="h-8 px-2 font-semibold text-red-500 lg:px-3"
+            className=" gap-2 border-red-500 font-semibold text-red-500 hover:bg-red-500 hover:text-white"
           >
-            Delete
-            <Trash className="mr-2 h-3.5 w-3.5 font-semibold text-muted-foreground/70 text-red-500" />
+            <Trash fontSize={28} />
+            <span>Delete</span>
           </Button>
         )}
         {isFiltered && (
@@ -78,5 +78,5 @@ export function DataTableToolbar<TData>({
       </div>
       <DataTableViewOptions table={table} />
     </div>
-  )
+  );
 }

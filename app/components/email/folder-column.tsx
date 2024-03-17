@@ -11,17 +11,17 @@ import { SentIcon } from "@app/icons/sent";
 // hooks (Controller)
 import useMessagesController from "@app/(admin)/admin-portal/messages/[name]/use-messages-controller";
 
-export async function FolderColumn() {
+export function FolderColumn() {
   const { folders } = useMessagesController();
 
   return (
-    <div className="space-y-2 overflow-y-auto border-r border-gray-200 p-2 dark:border-gray-800">
+    <div className="h-full space-y-2 overflow-y-auto border-r border-gray-200 p-2 dark:border-gray-800">
       <ul>
         {folders?.specialFolders.map((folder, index) => (
           <Link
             key={index}
             href={`/admin-portal/messages/${encodeURIComponent(
-              (folder.name as string).toLowerCase()
+              (folder.name as string).toLowerCase(),
             )}`}
           >
             <li className="flex cursor-pointer items-center justify-between rounded-lg p-3 hover:bg-gray-100 dark:hover:bg-gray-800">
@@ -48,7 +48,7 @@ export async function FolderColumn() {
           <Link
             key={index}
             href={`/admin-portal/messages/${encodeURIComponent(
-              (folder.name as string).toLowerCase()
+              (folder.name as string).toLowerCase(),
             )}`}
           >
             <li className="flex cursor-pointer items-center justify-between space-x-3 rounded-lg px-3 py-4 hover:bg-gray-100 dark:hover:bg-gray-800">

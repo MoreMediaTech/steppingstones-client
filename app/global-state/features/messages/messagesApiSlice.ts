@@ -29,7 +29,19 @@ export const messagesApi = messagesApiSlice.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Messages", id: "LIST" }],
     }),
-
+    createFolder: builder.mutation<
+      { status: string; success: boolean; message: string; folderId: string },
+      { folderName: string }
+    >({
+      query: (data) => ({
+        url: "/messages/create-folder",
+        method: "POST",
+        body: { ...data },
+      }),
+      invalidatesTags: (result, error, arg) => [
+        { type: "Messages", id: "LIST" },
+      ],
+    }),
     getMessagesForFolder: builder.mutation<
       Partial<MessageFolderProps[]>,
       { folderName: string }
@@ -66,9 +78,7 @@ export const messagesApi = messagesApiSlice.injectEndpoints({
       query: () => ({
         url: "/messages/folder",
       }),
-      providesTags: (result, error, arg) => [
-        { type: "Messages", id: "LIST" },
-      ],
+      providesTags: (result, error, arg) => [{ type: "Messages", id: "LIST" }],
     }),
     getMessageById: builder.query<PartialMessageSchemaProps, string>({
       query: (id) => ({
@@ -115,6 +125,7 @@ export const messagesApi = messagesApiSlice.injectEndpoints({
 
 export const {
   useSendEnquiryMutation,
+  useCreateFolderMutation,
   useGetMessagesForFolderMutation,
   useGetFoldersWithMessagesCountQuery,
   useGetMessageInFolderMutation,

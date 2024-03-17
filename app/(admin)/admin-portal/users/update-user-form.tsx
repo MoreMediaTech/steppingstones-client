@@ -62,6 +62,8 @@ export function UpdateUserForm({ user, disabled }: Props) {
       ? (user?.emailVerified as boolean)
       : false,
     isAdmin: user?.isAdmin ? (user?.isAdmin as boolean) : false,
+    isSuperAdmin: user?.isSuperAdmin ? (user?.isSuperAdmin as boolean) : false,
+    isDisabled: user?.isDisabled ? (user?.isDisabled as boolean) : false,
     acceptTermsAndConditions: user?.acceptTermsAndConditions
       ? (user?.acceptTermsAndConditions as boolean)
       : false,
@@ -284,6 +286,55 @@ export function UpdateUserForm({ user, disabled }: Props) {
                         <FormDescription>
                           This is the role that will be displayed on your
                           profile
+                        </FormDescription>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="isSuperAdmin"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={(event) =>
+                            field.onChange(event as boolean)
+                          }
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel>
+                          Super Admin<span className="text-red">*</span>
+                        </FormLabel>
+                        <FormDescription>
+                          This is to provide an admin with super admin
+                          privileges
+                        </FormDescription>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="isDisabled"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={(event) =>
+                            field.onChange(event as boolean)
+                          }
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel>
+                          Disabled<span className="text-red">*</span>
+                        </FormLabel>
+                        <FormDescription>
+                          This is to disable the user from accessing the system
                         </FormDescription>
                       </div>
                     </FormItem>

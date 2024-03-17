@@ -17,7 +17,7 @@ import { MessageFolderProps } from "@models/Messages";
 export function EmailListColumn({ folderName }: { folderName: string }) {
   const { handleGetMessagesForFolder } = useMessagesController();
   const [emails, setEmails] = React.useState<MessageFolderProps[]>([]);
-  
+
   // capitalize first letter of folder name
   const updatedFolderName =
     folderName.charAt(0).toUpperCase() + folderName.slice(1).toLowerCase();
@@ -31,7 +31,7 @@ export function EmailListColumn({ folderName }: { folderName: string }) {
   }, [updatedFolderName]);
 
   return (
-    <div className="col-span-2 overflow-y-auto border-r border-gray-200 p-2 dark:border-gray-800">
+    <div className="col-span-2 h-full overflow-y-auto border-r border-gray-200 p-2 dark:border-gray-800">
       <ul className="divide-y divide-gray-200 dark:divide-gray-800">
         {emails
           .filter((email) => email.folder?.name === updatedFolderName)
@@ -44,7 +44,7 @@ export function EmailListColumn({ folderName }: { folderName: string }) {
                 <div className="w-full truncate">
                   <h2 className="text-base font-bold">
                     {formatEmailString(
-                      email?.message.sender as PartialUserWithIdType
+                      email?.message.sender as PartialUserWithIdType,
                     )}
                   </h2>
                   <p className="text-sm text-gray-500 dark:text-gray-400">

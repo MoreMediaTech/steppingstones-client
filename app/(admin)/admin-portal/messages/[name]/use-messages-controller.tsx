@@ -17,6 +17,7 @@ import {
   useSendEmailMutation,
   useDeleteMailByIdMutation,
   useDeleteManyMailMutation,
+  useCreateFolderMutation,
 } from "app/global-state/features/messages/messagesApiSlice";
 import { useGetUsersQuery } from "@global-state/features/user/usersApiSlice";
 import {
@@ -43,6 +44,7 @@ export default function useMessagesController(
 ) {
   const { toast } = useToast();
   const router = useRouter();
+  const [open, setOpen] = React.useState<boolean>(false);
 
   // get signed in user
   const user = useAuthUser();
@@ -66,7 +68,8 @@ export default function useMessagesController(
   const [emails, setEmails] =
     React.useState<{ label: string; value: string }[]>(userEmails);
 
-  const { data: folders } = useGetFoldersWithMessagesCountQuery();
+  const { data: folders, refetch: refetchFoldersWithMessage } =
+    useGetFoldersWithMessagesCountQuery();
 
   // get message by id
   const {
@@ -80,6 +83,7 @@ export default function useMessagesController(
   const [sendEmail, { isLoading: isSendingEmail }] = useSendEmailMutation();
   const [getMessageInFolder] = useGetMessageInFolderMutation();
   const [getMessagesForFolder] = useGetMessagesForFolderMutation();
+  const [createFolder, { isLoading: isCreating }] = useCreateFolderMutation();
 
   const [deleteMailById, { isLoading: isDeleting }] =
     useDeleteMailByIdMutation();
@@ -89,7 +93,13 @@ export default function useMessagesController(
   // form hooks
   const form = useForm<PartialMessageSchemaProps>({
     resolver: zodResolver(partialMessageSchema),
-    defaultValues: { from: user?.email, to: "", subject: "", message: "" },
+    defaultValues: {
+      from: user?.email,
+      to: "",
+      subject: "",
+      message: "",
+      ...defaultValues,
+    },
   });
   // watch to get the value of input field
   const searchedEmails = useWatch({ control: form.control, name: "to" });
@@ -98,7 +108,7 @@ export default function useMessagesController(
   React.useEffect(() => {
     if (searchedEmails) {
       const filteredEmails = userEmails?.filter((userEmail) =>
-        userEmail?.value.toLowerCase().includes(searchedEmails.toLowerCase())
+        userEmail?.value.toLowerCase().includes(searchedEmails.toLowerCase()),
       );
       setEmails(filteredEmails || []);
     }
@@ -178,7 +188,7 @@ export default function useMessagesController(
         }
       }
     },
-    []
+    [],
   );
 
   // handle message response
@@ -187,7 +197,7 @@ export default function useMessagesController(
       // console.log(data);
 
       const message = {
-        from: data.from ? data.from as string : user?.email as string,
+        from: data.from ? (data.from as string) : (user?.email as string),
         to: data.to,
         subject: data.subject,
         message: data.message,
@@ -283,7 +293,7 @@ export default function useMessagesController(
         }
       }
     },
-    []
+    [],
   );
 
   const handleGetMessagesForFolder = useCallback(async (folderName: string) => {
@@ -309,28 +319,68 @@ export default function useMessagesController(
     }
   }, []);
 
-  const handleGetMessageInFolder = useCallback(async (folderName: string, messageId: string) => {
-    try {
-      const response = await getMessageInFolder({ folderName, messageId }).unwrap();
-      return response;
-    } catch (error) {
-      if (isFetchBaseQueryError(error)) {
-        const errMsg =
-          "error" in error ? error.error : JSON.stringify(error.message);
-        toast({
-          title: "Error!",
-          description: (errMsg as string) || "Unable to get message",
-          action: <ToastAction altText="Retry">Retry</ToastAction>,
-        });
-      } else if (isErrorWithMessage(error)) {
-        toast({
-          title: "Error!",
-          description: error.message || "Unable to get message",
-          action: <ToastAction altText="Retry">Retry</ToastAction>,
-        });
+  const handleGetMessageInFolder = useCallback(
+    async (folderName: string, messageId: string) => {
+      try {
+        const response = await getMessageInFolder({
+          folderName,
+          messageId,
+        }).unwrap();
+        return response;
+      } catch (error) {
+        if (isFetchBaseQueryError(error)) {
+          const errMsg =
+            "error" in error ? error.error : JSON.stringify(error.message);
+          toast({
+            title: "Error!",
+            description: (errMsg as string) || "Unable to get message",
+            action: <ToastAction altText="Retry">Retry</ToastAction>,
+          });
+        } else if (isErrorWithMessage(error)) {
+          toast({
+            title: "Error!",
+            description: error.message || "Unable to get message",
+            action: <ToastAction altText="Retry">Retry</ToastAction>,
+          });
+        }
       }
-    }
-  }, []);
+    },
+    [],
+  );
+
+  const handleCreateFolder: SubmitHandler<PartialMessageSchemaProps> =
+    useCallback(async (data) => {
+      try {
+        const response = await createFolder({
+          folderName: data.folderName as string,
+        }).unwrap();
+        if (response.success) {
+          toast({
+            title: "Success!",
+            description: response.message,
+          });
+          setOpen(false);
+          refetchFoldersWithMessage();
+          refetchMessage();
+        }
+      } catch (error) {
+        if (isFetchBaseQueryError(error)) {
+          const errMsg =
+            "error" in error ? error.error : JSON.stringify(error.message);
+          toast({
+            title: "Error!",
+            description: (errMsg as string) || "Unable to create folder",
+            action: <ToastAction altText="Retry">Retry</ToastAction>,
+          });
+        } else if (isErrorWithMessage(error)) {
+          toast({
+            title: "Error!",
+            description: error.message || "Unable to create folder",
+            action: <ToastAction altText="Retry">Retry</ToastAction>,
+          });
+        }
+      }
+    }, []);
 
   return {
     folders,
@@ -342,6 +392,9 @@ export default function useMessagesController(
     isSendingEmail,
     isDeleting,
     isDeletingMany,
+    isCreating,
+    open,
+    setOpen,
     createMessageHandler,
     suggestionClickedHandler,
     handleMessageResponse,
@@ -350,5 +403,6 @@ export default function useMessagesController(
     handleDeleteMany,
     handleGetMessagesForFolder,
     handleGetMessageInFolder,
+    handleCreateFolder,
   };
 }

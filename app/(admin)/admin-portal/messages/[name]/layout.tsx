@@ -13,10 +13,14 @@ export default function EmailLayout({
   params: { name: string; id: string };
 }) {
   return (
-    <div className="grid h-screen grid-cols-6 gap-2 p-2">
-      <FolderColumn />
-      <EmailListColumn folderName={params.name} />
-      {children}
+    <div className="grid h-screen w-full grid-cols-6">
+      <div className="h-full">
+        <FolderColumn />
+      </div>
+      <div className="col-span-2 h-full">
+        <EmailListColumn folderName={params.name} />
+      </div>
+      <div className="col-span-3 h-full">{children}</div>
     </div>
   );
 }
