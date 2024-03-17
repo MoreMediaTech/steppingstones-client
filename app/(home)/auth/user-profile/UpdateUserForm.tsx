@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
 // components
-import { Button } from '@components/ui/button'
+import { Button } from "@components/ui/button";
 import {
   Form,
   FormControl,
@@ -10,47 +10,40 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@components/ui/form'
+} from "@components/ui/form";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@components/ui/select'
-import { Input } from '@components/ui/input'
-import { Checkbox } from '@components/ui/checkbox'
+} from "@components/ui/select";
+import { Input } from "@components/ui/input";
+import { Checkbox } from "@components/ui/checkbox";
 
 // zod schema
-import {
-  UserSchemaType,
-  Role,
-  UserSchemaWithIdType,
-} from '@models/User'
+import { UserSchemaType, Role, UserSchemaWithIdType } from "@models/User";
 
 // hooks (controller)
-import useUserController from './useUserController'
-
+import useUserController from "./useUserController";
 
 const UpdateUserForm = ({
   user,
   disabled,
 }: {
- 
-  user?: UserSchemaWithIdType
-  disabled?: boolean
+  user?: UserSchemaWithIdType;
+  disabled?: boolean;
 }) => {
- 
   const defaultValues: UserSchemaType = {
-    name: user?.name ? (user?.name as string) : '',
-    email: user?.email ? (user?.email as string) : '',
-    contactNumber: user?.contactNumber ? (user?.contactNumber as string) : '',
-    postCode: user?.postCode ? (user?.postCode as string) : '',
-    district: user?.district ? (user?.district as string) : '',
-    county: user?.county ? (user?.county as string) : '',
+    name: user?.name ? (user?.name as string) : "",
+    email: user?.email ? (user?.email as string) : "",
+    contactNumber: user?.contactNumber ? (user?.contactNumber as string) : "",
+    postCode: user?.postCode ? (user?.postCode as string) : "",
+    district: user?.district ? (user?.district as string) : "",
+    county: user?.county ? (user?.county as string) : "",
     organisation: user?.organisation?.name
       ? (user?.organisation?.name as string)
-      : '',
+      : "",
     role: user?.role ? (user?.role as Role) : Role.USER,
     emailVerified: user?.emailVerified
       ? (user?.emailVerified as boolean)
@@ -59,14 +52,18 @@ const UpdateUserForm = ({
     acceptTermsAndConditions: user?.acceptTermsAndConditions
       ? (user?.acceptTermsAndConditions as boolean)
       : false,
-  }
+    isDisabled: user?.isDisabled ? (user?.isDisabled as boolean) : false,
+  };
 
-  const { form, roles, updateUserHandler } = useUserController(defaultValues)
+  const { form, roles, updateUserHandler } = useUserController(defaultValues);
 
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(updateUserHandler)} className="space-y-6">
+        <form
+          onSubmit={form.handleSubmit(updateUserHandler)}
+          className="space-y-6"
+        >
           <FormField
             control={form.control}
             name="name"
@@ -224,7 +221,7 @@ const UpdateUserForm = ({
                         >
                           {itemValue}
                         </SelectItem>
-                      )
+                      );
                     })}
                   </SelectContent>
                 </Select>
@@ -315,7 +312,7 @@ const UpdateUserForm = ({
         </form>
       </Form>
     </>
-  )
-}
+  );
+};
 
-export default UpdateUserForm
+export default UpdateUserForm;
