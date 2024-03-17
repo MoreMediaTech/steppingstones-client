@@ -11,19 +11,18 @@ import { MutationTrigger } from "@reduxjs/toolkit/dist/query/react/buildHooks";
 import { BaseQueryFn, MutationDefinition } from "@reduxjs/toolkit/dist/query";
 import { PartialSectionSchemaProps } from "@models/Section";
 
+// TODO: Add the correct type for the updateOrCreate function
 interface Props {
   defaultValues: PartialSectionSchemaProps & { countyId?: string };
-  updateOrCreate: MutationTrigger<
-    MutationDefinition<any, BaseQueryFn, "Content", any, "contentApi">
-  >;
+  updateOrCreate: any;
 }
 
 export function useContentForm(
   { defaultValues, updateOrCreate }: Props,
-  refetch: () => void
+  refetch: () => void,
 ) {
   const [preview, setPreview] = React.useState<string | ArrayBuffer | null>(
-    null
+    null,
   );
   const [isEdit, setIsEdit] = React.useState<boolean>(false);
   const { toast } = useToast();
@@ -71,7 +70,7 @@ export function useContentForm(
         });
       }
     },
-    []
+    [],
   );
 
   const onSubmit: SubmitHandler<ContentFormProps> = React.useCallback(
@@ -83,14 +82,14 @@ export function useContentForm(
           countyId: defaultValues.countyId || "",
           author: formData.author,
           summary: formData.summary,
-          imageFile: preview,
+          imageFile: preview as string,
           isLive: formData.isLive,
           videoUrl: formData.videoUrl,
           videoTitle: formData.videoTitle,
           videoDescription: formData.videoDescription,
-          id: defaultValues.id,
+          id: defaultValues.id as string,
         };
-        
+
         const response = await updateOrCreate(newData).unwrap();
         if (response.success) {
           toast({
@@ -111,7 +110,7 @@ export function useContentForm(
         });
       }
     },
-    [preview]
+    [preview],
   );
   return { form, preview, isEdit, setIsEdit, onChangePicture, onSubmit };
 }
