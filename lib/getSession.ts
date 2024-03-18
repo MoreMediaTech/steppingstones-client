@@ -1,3 +1,4 @@
+"user server";
 import { cookies } from "next/headers";
 
 export function getSession() {
