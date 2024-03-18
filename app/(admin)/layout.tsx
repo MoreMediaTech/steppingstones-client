@@ -19,8 +19,10 @@ function checkIsAuthenticated() {
   const session = getSession();
 
   if (!session) {
+    console.log("No session found");
     return false;
   } else {
+    console.log("Session found");
     return true;
   }
 }
