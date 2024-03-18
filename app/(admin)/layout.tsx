@@ -15,14 +15,13 @@ const montserrat = Montserrat({
   variable: "--font-montserrat",
 });
 
-export const dynamic = 'force-dynamic'
-export const runtime = 'nodejs'
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 function checkIsAuthenticated() {
   const session = getSession();
 
   if (!session) {
-
     return false;
   } else {
     console.log("Session found");
@@ -35,11 +34,6 @@ export default function AdminRootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const isAuthenticated = checkIsAuthenticated();
-
-  if (!isAuthenticated) {
-    redirect("/auth/login");
-  }
   return (
     <html
       lang="en"
@@ -47,9 +41,7 @@ export default function AdminRootLayout({
     >
       <body className="min-h-screen bg-background">
         <Provider>
-          <AdminPageWrapper isAuthenticated={isAuthenticated}>
-            {children}
-          </AdminPageWrapper>
+          <AdminPageWrapper>{children}</AdminPageWrapper>
           <Toaster />
         </Provider>
       </body>
