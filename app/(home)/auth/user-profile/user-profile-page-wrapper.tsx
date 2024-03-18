@@ -3,13 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
-
-export function getSession() {
-  const session = cookies().get("connect.sid")?.value;
-  if (!session) return null;
-  return session;
-}
+import { getSession } from "@lib/getSession";
 
 function checkIsAuthenticated() {
   const session = getSession();
