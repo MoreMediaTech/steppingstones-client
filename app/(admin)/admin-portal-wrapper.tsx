@@ -14,23 +14,11 @@ import useWindowSize from "@hooks/useWindowSize";
 import { ComponentShield } from "@components/NextShield";
 import { AdminSidebar, MobileAdminSidebar } from "@components/navigation";
 import { AdminNavbar } from "@components/navigation/admin-navbar";
-import { redirect } from "next/navigation";
-import { getSession } from "@lib/getSession";
-
-function checkIsAuthenticated() {
-  const session = getSession();
-
-  if (!session) {
-    return false;
-  } else {
-    console.log("Session found");
-    return true;
-  }
-}
 
 function PageWrapper({
   children,
   className,
+  isAuthenticated,
 }: {
   children: React.ReactNode;
   className?: string;
@@ -38,15 +26,10 @@ function PageWrapper({
 }) {
   const [size] = useWindowSize();
   const { drawerOpened } = useAppSelector(globalSelector);
-  const isAuthenticated = checkIsAuthenticated();
 
   const { data: user } = useGetUserQuery(undefined, { skip: !isAuthenticated });
 
   // const SCROLL_AREA_HEIGHT = (size?.innerHeight as number) - 10;
-
-  if (!isAuthenticated) {
-    redirect("/auth/login");
-  }
 
   return (
     <motion.main
