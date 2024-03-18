@@ -14,7 +14,6 @@ export default function ForgotPasswordLayout({
     if (!session) {
       return false;
     } else {
-      console.log("Session found");
       return true;
     }
   }

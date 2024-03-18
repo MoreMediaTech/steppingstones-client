@@ -35,7 +35,6 @@ export default function RootLayout({
     if (!session) {
       return false;
     } else {
-      console.log("Session found");
       return true;
     }
   }

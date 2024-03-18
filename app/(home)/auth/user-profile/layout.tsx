@@ -17,7 +17,6 @@ export default function UserProfileLayout({
     if (!session) {
       return false;
     } else {
-      console.log("Session found");
       return true;
     }
   }

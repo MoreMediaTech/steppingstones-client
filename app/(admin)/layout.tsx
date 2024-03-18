@@ -31,7 +31,6 @@ export default function AdminRootLayout({
     if (!session) {
       return false;
     } else {
-      console.log("Session found");
       return true;
     }
   }
