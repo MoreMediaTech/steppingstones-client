@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
+import { cookies } from "next/headers";
 
 // redux global state (Model)
 import { useGetUserQuery } from "@app/global-state/features/user/usersApiSlice";
@@ -14,8 +15,13 @@ import useWindowSize from "@hooks/useWindowSize";
 import { ComponentShield } from "@components/NextShield";
 import { AdminSidebar, MobileAdminSidebar } from "@components/navigation";
 import { AdminNavbar } from "@components/navigation/admin-navbar";
-import { getSession } from "@lib/getSession";
 import { redirect } from "next/navigation";
+
+export function getSession() {
+  const session = cookies().get("connect.sid")?.value;
+  if (!session) return null;
+  return session;
+}
 
 function checkIsAuthenticated() {
   const session = getSession();
