@@ -15,6 +15,9 @@ const montserrat = Montserrat({
   variable: "--font-montserrat",
 });
 
+export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
+
 function checkIsAuthenticated() {
   const session = getSession();
 
