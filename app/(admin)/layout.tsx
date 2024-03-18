@@ -1,5 +1,6 @@
 import React from "react";
-// import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
 import { Toaster } from "@components/ui/toaster";
 import { Montserrat } from "next/font/google";
@@ -8,8 +9,7 @@ import Provider from "../global-state/providers/provider";
 
 import "../globals.css";
 import { cn } from "@lib/utils";
-import { getSession } from "@lib/getSession";
-import { redirect } from "next/navigation";
+// import { getSession } from "@lib/getSession";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -19,22 +19,22 @@ const montserrat = Montserrat({
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
-function checkIsAuthenticated() {
-  const session = getSession();
-
-  if (!session) {
-    return false;
-  } else {
-    console.log("Session found");
-    return true;
-  }
-}
-
 export default function AdminRootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  function checkIsAuthenticated() {
+    const session = cookies().get("connect.sid")?.value;
+    if (!session) return null;
+
+    if (!session) {
+      return false;
+    } else {
+      console.log("Session found");
+      return true;
+    }
+  }
   const isAuthenticated = checkIsAuthenticated();
 
   if (!isAuthenticated) {

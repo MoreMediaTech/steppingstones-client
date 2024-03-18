@@ -1,29 +1,31 @@
 import { redirect } from "next/navigation";
-import { getSession } from "@lib/getSession";
+import { cookies } from "next/headers";
+// import { getSession } from "@lib/getSession";
 import LoginPageWrapper from "./LoginPageWrapper";
-
-function checkIsAuthenticated() {
-  const session = getSession();
-
-  if (!session) {
-    return false;
-  } else {
-    return true;
-  }
-}
 
 export default function LoginLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  function checkIsAuthenticated() {
+    const session = cookies().get("connect.sid")?.value;
+    if (!session) return null;
+
+    if (!session) {
+      return false;
+    } else {
+      console.log("Session found");
+      return true;
+    }
+  }
   const isAuthenticated = checkIsAuthenticated();
 
   if (isAuthenticated) {
     redirect("/admin-portal");
   }
   return (
-    <LoginPageWrapper isAuthenticated={isAuthenticated}>
+    <LoginPageWrapper isAuthenticated={isAuthenticated as boolean}>
       {children}
     </LoginPageWrapper>
   );
