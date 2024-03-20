@@ -27,9 +27,9 @@ export const userSlice = createSlice({
       {
         payload,
       }: PayloadAction<{
-        currentUser: UserSchemaWithIdType;
+        currentUser: UserSchemaWithIdType | null;
         isAuthenticated: boolean;
-      } | null>,
+      }>,
     ) => {
       state.user = payload?.currentUser || null;
       state.isAuthenticated = payload?.isAuthenticated as boolean;
