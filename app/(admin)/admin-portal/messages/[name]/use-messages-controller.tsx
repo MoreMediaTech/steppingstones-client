@@ -24,6 +24,8 @@ import {
   isErrorWithMessage,
   isFetchBaseQueryError,
 } from "@app/global-state/helper";
+import { userSelector } from "@app/global-state/features/user/userSlice";
+import { useAppSelector } from "@global-state/hooks";
 
 // zod schemas
 import {
@@ -31,9 +33,6 @@ import {
   partialMessageSchema,
   MessageTypes,
 } from "@models/Messages";
-
-// hooks
-import { useAuthUser } from "@lib/checkAuth";
 
 // utils
 import { emailTemplate } from "@lib/emailTemplates";
@@ -47,7 +46,7 @@ export default function useMessagesController(
   const [open, setOpen] = React.useState<boolean>(false);
 
   // get signed in user
-  const user = useAuthUser();
+  const { user } = useAppSelector(userSelector);
 
   // get all users
   const { data: users } = useGetUsersQuery();
