@@ -6,7 +6,7 @@ import { NEXT_URL } from "./config";
 
 export function middleware(request: NextRequest) {
   function checkIsAuthenticated() {
-    const session = cookies().get("connect.sid")?.value;
+    const session = request.cookies.get("connect.sid")?.value;
     if (!session) return null;
 
     if (!session) {

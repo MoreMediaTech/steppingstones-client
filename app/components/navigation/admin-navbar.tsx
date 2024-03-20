@@ -3,9 +3,9 @@
 import { usePathname } from "next/navigation";
 
 // redux-state and types
-import { useGetUserQuery } from "@global-state/features/user/usersApiSlice";
+
 import { useAppSelector } from "@app/global-state/hooks";
-import { authSelector } from "@app/global-state/features/auth/authSlice";
+import { userSelector } from "@app/global-state/features/user/userSlice";
 
 // components
 import { AppLogo } from "./AppLogo";
@@ -14,11 +14,7 @@ import { ModeToggle } from "@components/ModeToggle";
 
 export function AdminNavbar() {
   const pathname = usePathname();
-
-  const { isAuthenticated } = useAppSelector(authSelector);
-  const { data: currentUser } = useGetUserQuery(undefined, {
-    skip: !isAuthenticated,
-  });
+  const { user: currentUser } = useAppSelector(userSelector);
 
   const initials = currentUser?.name
     ?.split(" ")

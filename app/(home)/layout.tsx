@@ -1,7 +1,5 @@
 import React from "react";
 import { Montserrat } from "next/font/google";
-import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
 import "../globals.css";
 
 // redux store (Model)
@@ -16,7 +14,6 @@ import { Navbar } from "app/components/navigation";
 import Footer from "app/components/footer";
 import CookieConsentComponent from "@components/CookieConsent/CookieConsentComponent";
 import { cn } from "@lib/utils";
-// import { getSession } from "@lib/getSession";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -28,18 +25,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  function checkIsAuthenticated() {
-    const session = cookies().get("connect.sid")?.value;
-    if (!session) return null;
-
-    if (!session) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-  const isAuthenticated = checkIsAuthenticated();
-
   return (
     <html
       lang="en"
@@ -49,12 +34,10 @@ export default function RootLayout({
       )}
       style={{ scrollBehavior: "smooth", colorScheme: "light" }}
     >
-      <body className="relative grid min-h-screen grid-cols-1 bg-background">
+      <body className="relative grid max-h-screen min-h-screen grid-cols-1 bg-background">
         <Provider>
           <Navbar />
-          <PageWrapper isAuthenticated={isAuthenticated as boolean}>
-            {children}
-          </PageWrapper>
+          <PageWrapper>{children}</PageWrapper>
           <Footer />
           <Toaster />
           <CookieConsentComponent />

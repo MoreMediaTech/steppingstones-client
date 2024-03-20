@@ -1,19 +1,19 @@
-'use client'
-import { useState, useEffect, useCallback } from 'react'
-import Link from 'next/link'
-import { useRouter, usePathname } from 'next/navigation'
-import { GiHamburgerMenu } from 'react-icons/gi'
+"use client";
+import { useState, useEffect, useCallback } from "react";
+import Link from "next/link";
+import { useRouter, usePathname } from "next/navigation";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 // redux-state and types
-import { useGetUserQuery } from '@global-state/features/user/usersApiSlice'
-import { UserSchemaWithIdType } from '@models/User'
-import { useAppSelector } from '@app/global-state/hooks';
-import { authSelector } from '@app/global-state/features/auth/authSlice'
+import { UserSchemaWithIdType } from "@models/User";
+import { useAppSelector } from "@app/global-state/hooks";
+import { authSelector } from "@app/global-state/features/auth/authSlice";
+import { userSelector } from "@app/global-state/features/user/userSlice";
 
 // components
-import { AppLogo } from './AppLogo'
-import { LoginButton, MobileLoginButton } from './LoginButton'
-import { Button } from '@components/ui/button'
+import { AppLogo } from "./AppLogo";
+import { LoginButton, MobileLoginButton } from "./LoginButton";
+import { Button } from "@components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -21,51 +21,49 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '@components/ui/sheet'
-import { Avatar, AvatarFallback } from '@components/ui/avatar'
-import Banner from '@components/Banner'
-import { ModeToggle } from '@components/ModeToggle'
+} from "@components/ui/sheet";
+import { Avatar, AvatarFallback } from "@components/ui/avatar";
+import Banner from "@components/Banner";
+import { ModeToggle } from "@components/ModeToggle";
 
-const paths = ['features', 'faqs']
+const paths = ["features", "faqs"];
 
 const Navbar = () => {
-  const pathname = usePathname()
-  const router = useRouter()
-  const { isAuthenticated } = useAppSelector(authSelector)
-  const { data: currentUser } = useGetUserQuery(undefined, {
-    skip: !isAuthenticated,
-  })
-  const [pos, setPos] = useState<string>('top')
-  const [activePath, setActivePath] = useState<string>('')
+  const pathname = usePathname();
+  const router = useRouter();
+  const { user: currentUser, isAuthenticated } = useAppSelector(userSelector);
+
+  const [pos, setPos] = useState<string>("top");
+  const [activePath, setActivePath] = useState<string>("");
 
   const initials = currentUser?.name
-    ?.split(' ')
+    ?.split(" ")
     ?.map((n) => n[0])
-    ?.join('')
+    ?.join("");
 
   useEffect(() => {
     const handleScrollTop = () => {
-      const scrolled = document.scrollingElement?.scrollTop ?? 5
+      const scrolled = document.scrollingElement?.scrollTop ?? 5;
       if (scrolled >= 5) {
-        setPos('moved')
+        setPos("moved");
       } else {
-        setPos('top')
+        setPos("top");
       }
-    }
-    document.addEventListener('scroll', handleScrollTop)
-    return () => document.removeEventListener('scroll', handleScrollTop)
-  }, [])
+    };
+    document.addEventListener("scroll", handleScrollTop);
+    return () => document.removeEventListener("scroll", handleScrollTop);
+  }, []);
 
   const handleLogout = useCallback(async () => {
-    router.push('/auth/logout')
-  }, [])
+    router.push("/auth/logout");
+  }, []);
 
   return (
     <nav
-      className={`top-0 z-10  flex w-full flex-col ${
-        pos === 'top'
-          ? 'absolute bg-transparent shadow-md hover:bg-background/50'
-          : 'shadow-b-2xl fixed border-b border-primary-dark-100 bg-background dark:border-primary-light-100'
+      className={`top-0 z-30  flex w-full flex-col ${
+        pos === "top"
+          ? "absolute bg-transparent shadow-md hover:bg-background/50"
+          : "shadow-b-2xl fixed border-b border-primary-dark-100 bg-background dark:border-primary-light-100"
       }`}
     >
       <Banner />
@@ -100,17 +98,17 @@ const Navbar = () => {
               </NavigationMenuList>
             </NavigationMenu> */}
             <Link
-              href={'/about'}
+              href={"/about"}
               className={`cursor-pointer font-poppins text-[16px] font-normal capitalize ${
-                pos === 'top' && pathname === '/' ? 'text-textLight' : ' '
+                pos === "top" && pathname === "/" ? "text-textLight" : " "
               }`}
               scroll
             >
               <span
                 className={`${
-                  activePath === 'about'
-                    ? 'w-full border-b-2 border-primary-dark-100 pb-1 dark:border-primary-light-100'
-                    : 'border-0'
+                  activePath === "about"
+                    ? "w-full border-b-2 border-primary-dark-100 pb-1 dark:border-primary-light-100"
+                    : "border-0"
                 }`}
               >
                 About
@@ -121,24 +119,24 @@ const Navbar = () => {
             return (
               <li key={`${path}-${index}`}>
                 <Link
-                  href={pathname === '/' ? `/#${path}` : '/'}
+                  href={pathname === "/" ? `/#${path}` : "/"}
                   className={`cursor-pointer font-poppins text-[16px] font-normal capitalize ${
-                    pos === 'top' && pathname === '/' ? 'text-textLight' : ' '
+                    pos === "top" && pathname === "/" ? "text-textLight" : " "
                   }`}
                   scroll
                 >
                   <span
                     className={`${
                       activePath === path
-                        ? 'w-full border-b-2 border-primary-dark-100 pb-1 dark:border-primary-light-100'
-                        : 'border-0'
+                        ? "w-full border-b-2 border-primary-dark-100 pb-1 dark:border-primary-light-100"
+                        : "border-0"
                     }`}
                   >
                     {path}
                   </span>
                 </Link>
               </li>
-            )
+            );
           })}
 
           <LoginButton
@@ -149,18 +147,18 @@ const Navbar = () => {
             setActivePath={setActivePath}
           />
           <li className="m-0 flex list-none ">
-           <ModeToggle />
+            <ModeToggle />
           </li>
           <li className="hidden flex-1 items-center md:flex ">
             <Button variant="outline" asChild>
               <Link
-                href={'/enquire'}
+                href={"/enquire"}
                 className={`rounded-lg  px-4 py-1 text-lg font-medium  ${
-                  pos === 'top' && pathname === '/'
-                    ? 'border-primary-light-100 text-textLight '
-                    : ' border-primary-dark-100 dark:border-primary-light-100 '
+                  pos === "top" && pathname === "/"
+                    ? "border-primary-light-100 text-textLight "
+                    : " border-primary-dark-100 dark:border-primary-light-100 "
                 }`}
-                onClick={() => setActivePath('enquire')}
+                onClick={() => setActivePath("enquire")}
               >
                 <span>Enquire</span>
               </Link>
@@ -184,7 +182,7 @@ const Navbar = () => {
                 <GiHamburgerMenu
                   fontSize={24}
                   className={`${
-                    pos === 'top' && pathname === '/' ? 'text-textLight' : ' '
+                    pos === "top" && pathname === "/" ? "text-textLight" : " "
                   }`}
                 />
               </SheetTrigger>
@@ -211,8 +209,8 @@ const Navbar = () => {
                               <span
                                 className={`text-lg ${
                                   activePath === path
-                                    ? ' w-full border-b-2 border-primary-dark-100 pb-1 dark:border-primary-light-100'
-                                    : 'border-0'
+                                    ? " w-full border-b-2 border-primary-dark-100 pb-1 dark:border-primary-light-100"
+                                    : "border-0"
                                 }`}
                               >
                                 {path}
@@ -221,7 +219,7 @@ const Navbar = () => {
                           </Button>
                         </SheetTrigger>
                       </li>
-                    )
+                    );
                   })}
                   <li className="my-2 w-full cursor-pointer font-poppins font-medium">
                     <SheetTrigger>
@@ -231,17 +229,17 @@ const Navbar = () => {
                         className="flex items-center justify-start"
                       >
                         <Link
-                          href={'/enquire'}
+                          href={"/enquire"}
                           className="w-full font-medium "
                           onClick={() => {
-                            setActivePath('enquire')
+                            setActivePath("enquire");
                           }}
                         >
                           <span
                             className={`text-lg ${
-                              pathname === '/enquire'
-                                ? 'w-full border-b-2 border-primary-light-100'
-                                : 'border-0'
+                              pathname === "/enquire"
+                                ? "w-full border-b-2 border-primary-light-100"
+                                : "border-0"
                             }`}
                           >
                             Enquire
@@ -254,9 +252,7 @@ const Navbar = () => {
                     <SheetTrigger>
                       <MobileLoginButton
                         isAuthenticated={isAuthenticated}
-                        currentUser={
-                          currentUser as UserSchemaWithIdType
-                        }
+                        currentUser={currentUser as UserSchemaWithIdType}
                         handleLogout={handleLogout}
                         setActivePath={setActivePath}
                       />
@@ -271,7 +267,7 @@ const Navbar = () => {
         </div>
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

@@ -2,19 +2,23 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-// redux store (Model)
+// redux global state (Model)
 import { useAppDispatch, useAppSelector } from "app/global-state/hooks";
+import { useGetUserQuery } from "@app/global-state/features/user/usersApiSlice";
 import {
   setIsVisible,
   globalSelector,
 } from "app/global-state/features/global/globalSlice";
-import { setAuthState } from "app/global-state/features/auth/authSlice";
+import {
+  setAuthState,
+  authSelector,
+} from "app/global-state/features/auth/authSlice";
+
 import { setCookie } from "@components/CookieConsent/actions";
 
 function PageWrapper({
   children,
   className,
-  isAuthenticated,
 }: {
   children: React.ReactNode;
   className?: string;
@@ -22,12 +26,6 @@ function PageWrapper({
 }) {
   const dispatch = useAppDispatch();
   const { isVisible, displayCookieConsent } = useAppSelector(globalSelector);
-
-  React.useEffect(() => {
-    if (isAuthenticated) {
-      dispatch(setAuthState({ isAuthenticated: isAuthenticated }));
-    }
-  }, [isAuthenticated]);
 
   React.useEffect(() => {
     function watchScroll() {
@@ -52,7 +50,7 @@ function PageWrapper({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
       transition={{ duration: 0.25 }}
-      className={`${className}  w-full`}
+      className={`${className}  h-full w-full`}
     >
       {children}
     </motion.main>

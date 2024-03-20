@@ -1,35 +1,31 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
+import { redirect } from "next/navigation";
 
 // redux store (Model)
-import { useAppDispatch } from "app/global-state/hooks";
-import { setAuthState } from "app/global-state/features/auth/authSlice";
+import { userSelector } from "@app/global-state/features/user/userSlice";
+import { useAppSelector } from "@global-state/hooks";
+
+import useHasMounted from "@hooks/useHasMounted";
+
+// utils
+import { cn } from "@lib/utils";
 
 export default function LoginPageWrapper({
   children,
   className,
-  isAuthenticated,
 }: {
   children: React.ReactNode;
   className?: string;
-  isAuthenticated?: boolean;
 }) {
-  const dispatch = useAppDispatch();
-
-  React.useEffect(() => {
-    if (isAuthenticated) {
-      dispatch(setAuthState({ isAuthenticated: isAuthenticated }));
-    }
-  }, [isAuthenticated]);
-
   return (
     <motion.section
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
       transition={{ duration: 0.25 }}
-      className={`${className}  w-full`}
+      className={cn(` min-h-screen w-full`, className)}
     >
       {children}
     </motion.section>

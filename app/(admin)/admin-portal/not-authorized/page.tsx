@@ -1,22 +1,21 @@
-'use client'
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
-import Image from 'next/image'
-import { Button } from '@components/ui/button'
-
+"use client";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { Button } from "@components/ui/button";
 
 export default function NotAuthorized() {
-  const router = useRouter()
+  const router = useRouter();
   useEffect(() => {
     setTimeout(() => {
-      router.push('/admin-portal')
-    }, 5000)
-  }, [])
+      router.push("/admin-portal");
+    }, 5000);
+  }, []);
   return (
     <section className="flex h-screen items-center justify-center overflow-hidden  text-gray-900 dark:text-gray-100">
       <div className="mt-20 flex flex-col ">
         <Image
-          src={'/android-chrome-512x512.png'}
+          src={"/android-chrome-512x512.png"}
           alt="Steppingstones logo"
           width={300}
           height={300}
@@ -33,5 +32,5 @@ export default function NotAuthorized() {
         </div>
       </div>
     </section>
-  )
+  );
 }

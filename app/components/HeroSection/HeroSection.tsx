@@ -75,7 +75,7 @@ export default function HeroSection() {
                 Get Started
               </Button>
             </div>
-            <div className="relative z-50 col-span-3">
+            <div className="relative z-10 col-span-3">
               <motion.div
                 initial="initial"
                 animate="animate"

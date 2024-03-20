@@ -33,7 +33,7 @@ import {
 } from "@models/Messages";
 
 // hooks
-import { useAuthUser } from "@hooks/useAuthUser";
+import { useAuthUser } from "@lib/checkAuth";
 
 // utils
 import { emailTemplate } from "@lib/emailTemplates";

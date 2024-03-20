@@ -1,8 +1,5 @@
-import {
-  resetCredentials,
-  setAuthState,
-  setError,
-} from "app/global-state/features/auth/authSlice";
+import { resetCredentials, setAuthState, setError } from "./authSlice";
+import { setSession } from "../user/userSlice";
 import { apiSlice, contentApiSlice } from "app/global-state/api/apiSlice";
 import * as z from "zod";
 import { UserSchemaWithIdType } from "@models/User";
@@ -36,7 +33,8 @@ export const authApi = apiSlice.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           dispatch(
-            setAuthState({
+            setSession({
+              currentUser: data as UserSchemaWithIdType,
               isAuthenticated: true,
             }),
           );
@@ -108,6 +106,7 @@ export const authApi = apiSlice.injectEndpoints({
         try {
           await queryFulfilled;
           dispatch(resetCredentials());
+          dispatch(setSession({ currentUser: null, isAuthenticated: false }));
           dispatch(apiSlice.util.resetApiState());
           dispatch(contentApiSlice.util.resetApiState());
         } catch (error) {
